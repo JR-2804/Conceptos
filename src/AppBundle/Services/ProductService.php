@@ -301,6 +301,9 @@ class ProductService
             }
             $qbProduct->setParameter('current', new \DateTime(), Type::DATE);
             $qbProductCount->setParameter('current', new \DateTime(), Type::DATE);
+        } else {
+          $qbProduct->leftJoin('p.offers', 'o');
+          $qbProductCount->leftJoin('p.offers', 'o');
         }
 
         $firstResult = 0;
@@ -309,7 +312,9 @@ class ProductService
         }
 
         $products = $qbProduct
-            ->orderBy('p.inStore', 'DESC')
+            ->orderBy('o.price', 'DESC')
+            ->addOrderBy('p.inStore', 'DESC')
+            ->addOrderBy('p.recent', 'DESC')
             ->addOrderBy('p.popular', 'DESC')
             ->addOrderBy('p.price', 'ASC')
             ->addOrderBy('p.name', 'DESC')
