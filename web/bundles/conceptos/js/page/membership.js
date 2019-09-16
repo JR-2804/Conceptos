@@ -363,6 +363,9 @@ function init() {
   if (data.giftCardSection) {
     $("#card-main-text").val(data.giftCardSection.mainText);
     $("#card-bottom-text").val(data.giftCardSection.bottomText);
+    if (data.giftCardSection.modalText) {
+      $("#card-modal-text").val(data.giftCardSection.modalText);
+    }
   }
 }
 
@@ -383,6 +386,7 @@ function generateData() {
     giftCardSection: {
       mainText: $("#card-main-text").val(),
       bottomText: $("#card-bottom-text").val(),
+      modalText: $("#card-modal-text").val(),
       image: giftCardImage,
       generalImage: giftCardGeneralImage,
       giftCard15Image: giftCard15Image,
@@ -427,6 +431,9 @@ function validateSubmitData() {
     valid = false;
   }
   if (!$("#card-bottom-text").val()) {
+    valid = false;
+  }
+  if (!$("#card-modal-text").val()) {
     valid = false;
   }
   if (!giftCardImage) {
