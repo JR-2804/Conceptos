@@ -472,6 +472,10 @@ $(document).ready(function() {
 function init() {
   populateHeaderImages();
   populateAdvertisementsImages();
+  if (data.top.image1Link) {
+    $("#top-image-1-link").val(data.top.image1Link);
+    $("#top-image-2-link").val(data.top.image2Link);
+  }
   if (data.subtitles) {
     $("#in-store-subtitle").val(data.subtitles.inStore);
     $("#recent-subtitle").val(data.subtitles.recent);
@@ -497,7 +501,9 @@ function generateData() {
     slides: headerImages,
     top: {
       image1: topImage1,
-      image2: topImage2
+      image2: topImage2,
+      image1Link: $("#top-image-1-link").val(),
+      image2Link: $("#top-image-2-link").val(),
     },
     subtitles: {
       inStore: $("#in-store-subtitle").val(),
@@ -543,6 +549,9 @@ function generateData() {
 function validateSubmitData() {
   var valid = true;
   if (headerImages.length == 0) {
+    valid = false;
+  }
+  if (!topImage1 || !$("#top-image-1-link").val() || !topImage2 || !$("#top-image-2-link").val()) {
     valid = false;
   }
   if (!$("#in-store-subtitle").val() || !$("#recent-subtitle").val()) {

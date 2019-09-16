@@ -92,23 +92,39 @@
     <div class="col-12">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Seccion Superior</h3>
+                <h3 class="panel-title">Sección Superior</h3>
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-12">
-                        <form class="dropzone" id="picture-dropzone-top-1" action="{{ path('upload_site_image') }}">
-                            <div class="dz-message needsclick colp" style="font-size: 25px;">
-                                Seleccione una imágen
+                    <div class="col-6">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="control-label">Enlace de la imágen</label>
+                                <input type="text" class="form-control" id="top-image-1-link">
                             </div>
-                        </form>
+                        </div>
+                        <div class="col-12">
+                            <form class="dropzone" id="picture-dropzone-top-1" action="{{ path('upload_site_image') }}">
+                                <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                    Seleccione una imágen
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="col-12">
-                        <form class="dropzone" id="picture-dropzone-top-2" action="{{ path('upload_site_image') }}">
-                            <div class="dz-message needsclick colp" style="font-size: 25px;">
-                                Seleccione una imágen
+                    <div class="col-6">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="control-label">Enlace de la imágen</label>
+                                <input type="text" class="form-control" id="top-image-2-link">
                             </div>
-                        </form>
+                        </div>
+                        <div class="col-12">
+                            <form class="dropzone" id="picture-dropzone-top-2" action="{{ path('upload_site_image') }}">
+                                <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                    Seleccione una imágen
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -368,7 +384,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group">
-                            <label class="control-label">Seccion</label>
+                            <label class="control-label">Sección</label>
                             <select id="advertisement-section" class="form-control">
                                 <option value="1">Home</option>
                                 <option value="2">Detalles del Producto</option>
