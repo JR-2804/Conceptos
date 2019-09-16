@@ -221,7 +221,10 @@ $(document).ready(function() {
 
 function persistProductCount(product, count) {
   var path = $("#persist-count").val() + "/" + product + "/" + count;
-  ajax(path, "POST", {}, function(response) {}, function(error) {});
+  ajax(path, "POST", {}, function(response) {
+    var count = response.count;
+    $(".badge-shop-cart").text(count);
+  });
 }
 
 function CheckIfCanPerformHomeCollect() {

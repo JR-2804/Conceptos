@@ -282,11 +282,15 @@ class BlogController extends Controller
 
     private function countShopCart(Request $request)
     {
+      $total = 0;
         $session = $request->getSession();
         if ($session->has('products')) {
-            return count(json_decode($session->get('products'), true));
+            $products = json_decode($session->get('products'), true);
+            foreach ($products as $product) {
+              $total += $product['count'];
+            }
         }
 
-        return 0;
+        return $total;
     }
 }

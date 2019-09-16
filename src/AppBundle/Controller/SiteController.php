@@ -423,7 +423,14 @@ class SiteController extends Controller
         }
         $session->set('products', json_encode($productsDB));
 
-        return new JsonResponse();
+        $count = 0;
+        foreach ($productsDB as $product) {
+          $count += $product['count'];
+        }
+
+        return new JsonResponse([
+          'count' => $count,
+        ]);
     }
 
     /**
@@ -830,8 +837,13 @@ class SiteController extends Controller
         }
         $session->set('products', json_encode($products));
 
+        $count = 0;
+        foreach ($products as $product) {
+          $count += $product['count'];
+        }
+
         return new JsonResponse([
-            'count' => count($products),
+            'count' => $count,
             'exist' => $exist,
         ]);
     }
@@ -864,8 +876,13 @@ class SiteController extends Controller
         }
         $session->set('products', json_encode($newProducts));
 
+        $count = 0;
+        foreach ($newProducts as $product) {
+          $count += $product['count'];
+        }
+
         return new JsonResponse([
-            'count' => count($newProducts),
+            'count' => $count,
         ]);
     }
 
@@ -1358,11 +1375,15 @@ class SiteController extends Controller
 
     private function countShopCart(Request $request)
     {
+      $total = 0;
         $session = $request->getSession();
         if ($session->has('products')) {
-            return count(json_decode($session->get('products'), true));
+            $products = json_decode($session->get('products'), true);
+            foreach ($products as $product) {
+              $total += $product['count'];
+            }
         }
 
-        return 0;
+        return $total;
     }
 }
