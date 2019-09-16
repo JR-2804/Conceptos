@@ -1002,7 +1002,7 @@ a.header-text.active {
 
 .testimony-section {
   background-color: #f7ed4a;
-  padding: 40px;
+  padding: 25px;
   min-height: 50vh;
   background: linear-gradient(160deg, #ffffff 50%, #f7ed4a 50%);
 }
