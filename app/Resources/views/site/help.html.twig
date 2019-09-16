@@ -8,8 +8,18 @@
     <section>
         <div class="container">
             <div class="row">
+                <div class="col-12 mt-3">
+                    <span class="decoration-design-description d-none d-lg-block">{{page.data.introduction.text}}</span>
+                    <span class="decoration-design-description-short d-lg-none">{{page.data.introduction.text}}</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <div class="row">
                 <div class="col-12">
-                    <div id="help-accordion" role="tablist" aria-multiselectable="true">
+                    <div id="help-accordion" class="mt-2 mt-lg-3" role="tablist" aria-multiselectable="true">
                         {% for faq in page.data.faqs %}
                             <div class="card card-category" role="tab">
                                 <div class="card-header card-header-category" id="{{faq.question}}heading">

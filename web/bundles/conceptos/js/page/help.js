@@ -63,12 +63,19 @@ $(document).ready(function() {
   });
 });
 
-function init() {}
+function init() {
+  if (data.introduction) {
+    $("#introduction-text").val(data.introduction.text);
+  }
+}
 
 function generateData() {
   var data = {
     header: {
       image: headerImage
+    },
+    introduction: {
+      text: $("#introduction-text").val(),
     },
     faqs: faqs
   };
@@ -78,6 +85,9 @@ function generateData() {
 function validateSubmitData() {
   var valid = true;
   if (!headerImage) {
+    valid = false;
+  }
+  if (!$("#introduction-text").val()) {
     valid = false;
   }
   return valid;
