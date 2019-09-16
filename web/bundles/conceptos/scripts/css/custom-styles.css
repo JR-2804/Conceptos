@@ -972,6 +972,16 @@ a.header-text.active {
   margin-top: 50px;
 }
 
+.projects-title-short {
+  font-family: "Univers LT Std";
+  font-weight: bold;
+  font-size: 25px;
+  color: #282828;
+  display: block;
+  text-align: center;
+  margin-top: 50px;
+}
+
 .project-title {
   font-family: "Univers LT Std";
   font-weight: bold;
@@ -985,13 +995,34 @@ a.header-text.active {
   padding-right: 10px;
 }
 
+.project-title-short {
+  font-family: "Univers LT Std";
+  font-weight: bold;
+  font-size: 20px;
+  color: #282828;
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  background-color: #ffffff;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .projects-subtitle {
   font-family: "Univers LT Std";
   font-weight: lighter;
-  font-size: 32px;
+  font-size: 28px;
   color: #282828;
   display: block;
-  text-transform: uppercase;
+  text-align: center;
+}
+
+.projects-subtitle-short {
+  font-family: "Univers LT Std";
+  font-weight: lighter;
+  font-size: 20px;
+  color: #282828;
+  display: block;
   text-align: center;
 }
 
@@ -1010,7 +1041,17 @@ a.header-text.active {
 .testimony-title {
   font-family: "Roboto";
   font-weight: bold;
-  font-size: 40px;
+  font-size: 30px;
+  color: #282828;
+  display: block;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.testimony-title-short {
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 25px;
   color: #282828;
   display: block;
   text-align: center;

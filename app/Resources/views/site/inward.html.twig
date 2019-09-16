@@ -24,8 +24,8 @@
       <div class="container-fluid pl-0 pr-0">
           <div class="row justify-content-between">
               <div class="col-12 col-lg-6 pl-0">
-                  <span class="decoration-design-title">{{page.data.services.arg.title|raw}}</span>
-                  <p class="decoration-design-description">{{page.data.services.arg.description|raw}}</p>
+                  <span class="decoration-design-title-short">{{page.data.services.arg.title|raw}}</span>
+                  <p class="decoration-design-description-short">{{page.data.services.arg.description|raw}}</p>
               </div>
           </div>
       </div>
@@ -77,8 +77,8 @@
                   <div class="d-flex">
                       <div class="d-flex flex-column justify-content-between align-items-center decoration-design-text ml-0">
                           <div class="d-flex flex-column">
-                              <span class="decoration-design-title">{{page.data.services.designersTeam.title|raw}}</span>
-                              <p class="decoration-design-description">{{page.data.services.designersTeam.description|raw}}</p>
+                              <span class="decoration-design-title-short">{{page.data.services.designersTeam.title|raw}}</span>
+                              <p class="decoration-design-description-short">{{page.data.services.designersTeam.description|raw}}</p>
                               <div class="d-flex">
                                   <select class="form-control" id="service-select">
                                       <option value="">Diferentes Servicios</option>
@@ -89,7 +89,7 @@
                               </div>
                           </div>
                           <div class="d-flex">
-                              <a class="btn navigation-button btn-previous-store" href="{{ path('request_service') }}">Solicitud de Servicio</a>
+                              <a class="btn navigation-button btn-previous-store mt-3" href="{{ path('request_service') }}">Solicitud de Servicio</a>
                           </div>
                       </div>
                   </div>
@@ -101,17 +101,19 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 ">
-                    <span class="projects-title mt-2 mt-lg-4">{{page.data.services.projects.title|raw}}</span>
+                    <span class="projects-title mt-2 mt-lg-4 d-none d-lg-block">{{page.data.services.projects.title|raw}}</span>
+                    <span class="projects-title-short mt-2 mt-lg-4 d-lg-none">{{page.data.services.projects.title|raw}}</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <span class="projects-subtitle">{{page.data.services.projects.subtitle|raw}}</span>
+                    <span class="projects-subtitle d-none d-lg-block">{{page.data.services.projects.subtitle|raw}}</span>
+                    <span class="projects-subtitle-short d-lg-none">{{page.data.services.projects.subtitle|raw}}</span>
                 </div>
             </div>
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8 pl-0">
-                    <div class="d-flex mbr-slider slide carousel" id="projects-carousel"
+                    <div class="d-flex mbr-slider slide carousel mb-3" id="projects-carousel"
                          data-keyboard="false" data-ride="carousel" data-interval="10000">
                         <div class="carousel-inner" role="listbox">
                             {% if page.data.services.projects.projects | length == 0 %}
@@ -124,7 +126,8 @@
                                     <a href="{{ path('project_details', {projectTitle: image.title}) }}">
                                         <img class="highlight-image" src="{{ image.path }}">
                                         <div class="d-flex justify-content-center">
-                                            <span class="project-title">{{image.title}}</span>
+                                            <span class="project-title d-none d-lg-block">{{image.title}}</span>
+                                            <span class="project-title-short d-lg-none">{{image.title}}</span>
                                         </div>
                                     </a>
                                 </div>
@@ -176,7 +179,7 @@
               <div class="col-12">
                   <div class="d-flex flex-column align-items-center">
                       <span class="testimony-author">{{page.data.services.testimony.author|raw}}</span>
-                      <img src="{{ asset('bundles/conceptos/images/home/3538.png') }}" class="testimony-quote-close">
+                      <img src="{{ asset('bundles/conceptos/images/home/3538.png') }}" class="testimony-quote-close mb-0">
                   </div>
               </div>
           </div>
@@ -186,7 +189,7 @@
       <div class="container-fluid pl-0 pr-0">
           <div class="row">
               <div class="col-12 pl-0">
-                  <span class="testimony-title mt-0">{{page.data.services.testimony.title|raw}}</span>
+                  <span class="testimony-title-short mt-0">{{page.data.services.testimony.title|raw}}</span>
               </div>
           </div>
           <div class="row">
@@ -201,7 +204,7 @@
               <div class="col-12 pl-0">
                   <div class="d-flex flex-column align-items-center">
                       <span class="testimony-author testimony-author-short mt-3">{{page.data.services.testimony.author|raw}}</span>
-                      <img src="{{ asset('bundles/conceptos/images/home/3538.png') }}" class="testimony-quote-close">
+                      <img src="{{ asset('bundles/conceptos/images/home/3538.png') }}" class="testimony-quote-close mb-0">
                   </div>
               </div>
           </div>
