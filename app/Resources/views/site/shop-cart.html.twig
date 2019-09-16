@@ -115,9 +115,11 @@
                     <div class="row" data-product="{{ product.product.id }}">
                         <div class="col-lg-6 col-12 mt-3 mt-lg-0 pl-0">
                             <div class="d-flex flex-column flex-lg-row align-items-center">
-                                <img src="{{ vich_uploader_asset(product.product.mainImage, 'imageFile') }}"
-                                      width="200"
-                                      height="200" alt="{{ product.product.description }}">
+                                <div class="product-card-clickable" data-path="{{ path('product_details', {id: product.product.id, name: product.product.name}) }}">
+                                    <img src="{{ vich_uploader_asset(product.product.mainImage, 'imageFile') }}"
+                                          width="200"
+                                          height="200" alt="{{ product.product.description }}">
+                                </div>
                                 <div class="d-flex flex-column justify-content-center">
                                     {% set oldProduct = product %}
                                     {% set product = product.product %}
