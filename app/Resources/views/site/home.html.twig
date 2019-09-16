@@ -355,10 +355,10 @@
                                     <div class="container-fluid carousel-item {% if loop.first %}active{% endif %}">
                                         <div class="d-flex justify-content-center w-100">
                                             {% for cat in brand %}
-                                                <div class="col-3 pl-0">
+                                                <div class="col-3 pl-0 m-1">
                                                     {% set categoriesIds = cat.parents.first.id ~ ',' ~ cat.id %}
                                                     <a href="{{ path('products', {categories: categoriesIds, page: 1}) }}">
-                                                        <div class="brand-image"
+                                                        <div class="brand-image w-100"
                                                             style="background-image: url('{{ vich_uploader_asset(cat, 'imageFile') }}')"></div>
                                                     </a>
                                                 </div>
@@ -381,7 +381,6 @@
     {% endif %}
 
     <div class="w-100 cuban-brand-divider d-none d-lg-flex"></div>
-    <div class="w-100 cuban-brand-divider cuban-brand-divider-short d-lg-none"></div>
 
     {% if lasted is not empty %}
         <section class="mbr-section content4 cid-qQ6mxM0ThU pt-0 pb-0 pb-lg-3" id="content4-8">

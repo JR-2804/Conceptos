@@ -630,7 +630,7 @@ a.header-text.active {
 }
 
 .rob-header-short {
-  font-size: 40px;
+  font-size: 30px;
 }
 
 .rob-subtitle {
@@ -643,7 +643,8 @@ a.header-text.active {
 }
 
 .rob-subtitle-short {
-  font-size: 20px;
+  text-transform: none;
+  font-size: 15px;
 }
 
 .rob-button {
