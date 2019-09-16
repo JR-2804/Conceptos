@@ -8,17 +8,16 @@
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/blog/index.css') }}">
 {% endblock %}
 {% block body %}
-    <div class="container-fluid content-post">
+    <div class="container-fluid content-post pl-2 pr-4">
         <div class="row">
-            <main class="posts-listing col-lg-8">
+            <main class="posts-listing col-lg-8 pt-3 pt-lg-5">
                 <div class="container">
                     <div class="row">
                         {% for post in posts %}
                             <div class="post col-xl-6">
                                 <div class="post-thumbnail">
                                     <a href="{{ path('blog_details', {id: post.id, title: post.path}) }}">
-                                        <img src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.title }}"
-                                             class="img-fluid">
+                                        <img src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.title }}" class="img-fluid">
                                     </a>
                                 </div>
                                 <div class="post-details">
@@ -48,8 +47,9 @@
                         <nav aria-label="Page navigation example">
                             <ul class="pagination pagination-template d-flex justify-content-center">
                                 {% for page in 1..pages %}
-                                    <li class="page-item"><a href="{{ url_to_go }}?page={{ page }}"
-                                                             class="page-link active">{{ page }}</a></li>
+                                    <li class="page-item">
+                                        <a href="{{ url_to_go }}?page={{ page }}" class="page-link active">{{ page }}</a>
+                                    </li>
                                 {% endfor %}
                             </ul>
                         </nav>
@@ -70,7 +70,7 @@
                         </div>
                     </form>
                 </div>
-                <!-- Widget [Latest Posts Widget]        -->
+                <!-- Widget [Latest Posts Widget] -->
                 <div class="widget latest-posts">
                     <header class="header-custom">
                         <h3 class="h6">Últimos artículos</h3>
