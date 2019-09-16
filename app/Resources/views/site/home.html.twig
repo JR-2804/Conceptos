@@ -11,7 +11,7 @@
         {% endif %}
     {% endfor %}
 
-    <div id="social-networks" class="flex-column sn-opacity">
+    <div id="social-networks" class="flex-column sn-opacity d-none d-lg-flex">
         <div class="dropdown">
             <p class="dropdown-toggle" data-toggle="dropdown" href="">
                 <i class="socicon socicon-sharethis main-share-icon"></i>
@@ -175,10 +175,17 @@
     </section>
 
     {% if inStore is not empty %}
-        <section class="mbr-section content4 cid-qQ6mxM0ThU pb-0 pb-lg-3" id="content4-8">
+        <section class="mbr-section content4 cid-qQ6mxM0ThU pb-0 pb-lg-3 pt-1 pt-lg-3" id="content4-8">
+            <div class="home-badge in-store-text d-flex align-items-center justify-content-between d-lg-none">
+                <div class="d-flex flex-column align-items-center">
+                    <span class="in-store-text-short">En Almacén</span>
+                    <span class="section-subtitle">{{page.data.subtitles.inStore|raw}}</span>
+                </div>
+                <a href="{{ path('products', {inStore:true}) }}" class="btn btn-success btn-custom view-all-text-short">Ver Todos</a>
+            </div>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-4 col-12 pl-0">
+                    <div class="col-lg-4 col-12 pl-0 order-2 order-lg-1">
                         <div class="d-flex flex-column justify-content-end product-card-clickable h-100"
                              data-path="{{ path('product_details', {id: inStoreHighlight.id}) }}">
                             <div class="d-flex">
@@ -211,20 +218,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-8 col-12 pl-0 pl-lg-3">
+                    <div class="col-lg-8 col-12 pl-0 pl-lg-3 order-1 order-lg-2">
                         <div class="all-in-store-content d-flex flex-column justify-content-end h-100">
-                            <div class="in-store-text d-flex align-items-center justify-content-between">
+                            <div class="in-store-text align-items-center justify-content-between d-none d-lg-flex">
                                 <div class="d-flex flex-column align-items-center">
-                                    <span class="d-none d-lg-block">En Almacén</span>
-                                    <span class="in-store-text-short d-lg-none">En Almacén</span>
+                                    <span class="d-lg-block">En Almacén</span>
                                     <span class="section-subtitle">{{page.data.subtitles.inStore|raw}}</span>
                                 </div>
-                                <a href="{{ path('products', {inStore:true}) }}" class="btn btn-success btn-custom d-none d-lg-block">
-                                    Ver Todos
-                                </a>
-                                <a href="{{ path('products', {inStore:true}) }}" class="btn btn-success btn-custom view-all-text-short d-lg-none">
-                                    Ver Todos
-                                </a>
+                                <a href="{{ path('products', {inStore:true}) }}" class="btn btn-success btn-custom d-lg-block">Ver Todos</a>
                             </div>
                             <div class="d-flex mbr-slider slide carousel h-100" id="in-store-carousel"
                                  data-keyboard="false" data-ride="carousel" data-interval="5000">
@@ -384,22 +385,23 @@
 
     {% if lasted is not empty %}
         <section class="mbr-section content4 cid-qQ6mxM0ThU pt-0 pb-0 pb-lg-3" id="content4-8">
+            <div class="home-badge in-store-text d-flex align-items-center justify-content-between d-lg-none">
+                <div class="d-flex flex-column align-items-center">
+                    <span class="in-store-text-short">Novedades</span>
+                    <span class="section-subtitle">{{page.data.subtitles.recent|raw}}</span>
+                </div>
+                <a href="{{ path('products', {recent:true}) }}" class="btn btn-success btn-custom view-all-text-short">Ver Todos</a>
+            </div>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-8 col-12 pl-0 order-2 order-lg-1">
+                    <div class="col-lg-8 col-12 pl-0 order-1 order-lg-2">
                         <div class="all-in-store-content d-flex flex-column justify-content-end h-100">
-                            <div class="in-store-text d-flex align-items-center justify-content-between">
+                            <div class="in-store-text align-items-center justify-content-between d-none d-lg-flex">
                                 <div class="d-flex flex-column align-items-center">
-                                    <span class="d-none d-lg-block">Novedades</span>
-                                    <span class="in-store-text-short d-lg-none">Novedades</span>
+                                    <span class="d-lg-block">Novedades</span>
                                     <span class="section-subtitle">{{page.data.subtitles.recent|raw}}</span>
                                 </div>
-                                <a href="{{ path('products', {recent:true}) }}" class="btn btn-success btn-custom d-none d-lg-block">
-                                    Ver Todos
-                                </a>
-                                <a href="{{ path('products', {recent:true}) }}" class="btn btn-success btn-custom view-all-text-short d-lg-none">
-                                    Ver Todos
-                                </a>
+                                <a href="{{ path('products', {recent:true}) }}" class="btn btn-success btn-custom d-lg-block">Ver Todos</a>
                             </div>
                             <div class="d-flex mbr-slider slide carousel h-100" id="lasted-carousel"
                                  data-keyboard="false" data-ride="carousel" data-interval="5000">
@@ -440,7 +442,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-12 pl-0 pl-lg-3 order-1 order-lg-2">
+                    <div class="col-lg-4 col-12 pl-0 pl-lg-3 order-2 order-lg-1">
                         <div class="d-flex flex-column justify-content-end product-card-clickable h-100"
                              data-path="{{ path('product_details', {id: lastedHighlight.id}) }}">
                             <div class="d-flex">
