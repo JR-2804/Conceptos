@@ -93,7 +93,7 @@
                             <span class="bottom-text bottom-text-short ml-2 mr-2 ml-lg-4 d-lg-none">{{page.data.giftCardSection.bottomText|raw}}</span>
                         </div>
                         <div class="col-12 col-lg-7 pl-0 pl-lg-2">
-                            <div class="h-100 align-items-end pt-3 d-none d-lg-flex">
+                            <div class="align-items-end pt-3 d-none d-lg-flex">
                                 <a class="d-flex" data-toggle="modal" data-target="#giftCardsModal" href="">
                                     <img class="gift-card-section-img" src="{{page.data.giftCardSection.generalImage.path}}">
                                 </a>
@@ -125,25 +125,27 @@
             </div>
         </div>
     </section>
-    <section class="membership-offers-section">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12 pl-2 pr-2">
-                    <span class="related-products-header pl-0 pl-lg-4 mt-2 mt-lg-4t">Ofertas solo para miembros</span>
-                    <div class="product-description-divider"> </div>
-                    <div class="related-products w-100">
-                        <div class="d-flex flex-wrap">
-                            {% for product in products %}
-                                <div class="col-6 col-lg-3 pl-0">
-                                    {{include('site/components/product-summary.html.twig')}}
-                                </div>
-                            {% endfor %}
+    {% if products|length > 0 %}
+        <section class="membership-offers-section">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 pl-2 pr-2">
+                        <span class="related-products-header pl-0 pl-lg-4 mt-2 mt-lg-4t">Ofertas solo para miembros</span>
+                        <div class="product-description-divider"> </div>
+                        <div class="related-products w-100">
+                            <div class="d-flex flex-wrap">
+                                {% for product in products %}
+                                    <div class="col-6 col-lg-2 pl-0">
+                                        {{include('site/components/product-summary.html.twig')}}
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    {% endif %}
 {% endblock %}
 {% block js %}
     <script src="{{ asset('bundles/conceptos/scripts/js/membership.js') }}"></script>
