@@ -473,14 +473,34 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-4">
-                        <div class="center-block">
-                            <form class="dropzone" id="picture-dropzone-login"
-                                  action="{{ path('upload_site_image') }}">
-                                <div class="dz-message needsclick colp" style="font-size: 25px;">
-                                    Seleccione una imágen
-                                </div>
-                            </form>
+                    <div class="col-6">
+                        <div class="col-12">
+                            <h4>Imágen de Login para pantallas grandes</h4>
+                        </div>
+                        <div class="col-12">
+                            <div class="center-block">
+                                <form class="dropzone" id="picture-dropzone-login"
+                                      action="{{ path('upload_site_image') }}">
+                                    <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                        Seleccione una imágen
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="col-12">
+                            <h4>Imágen de Login para pantallas pequeñas</h4>
+                        </div>
+                        <div class="col-12">
+                            <div class="center-block">
+                                <form class="dropzone" id="picture-dropzone-login-short"
+                                      action="{{ path('upload_site_image') }}">
+                                    <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                        Seleccione una imágen
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -17,6 +17,7 @@ var topImage2 = undefined;
 var appImage = undefined;
 var contactImage = undefined;
 var loginImage = undefined;
+var loginImageShort = undefined;
 var cataloge = undefined;
 var advertisementImages = undefined;
 var advertisementImage = undefined;
@@ -32,6 +33,9 @@ $(document).ready(function() {
   }
   if (data.login) {
     loginImage = data.login.image;
+    if (data.login.imageShort) {
+      loginImageShort = data.login.imageShort;
+    }
   }
   if (data.successMail) {
     successMailImage = data.successMail.image;
@@ -269,6 +273,33 @@ $(document).ready(function() {
     },
     success: function(e, r) {
       loginImage = r;
+    }
+  });
+  dropzoneLoginShort = new Dropzone("form#picture-dropzone-login-short", {
+    url: $("#picture-dropzone-login-short").attr("action"),
+    maxFiles: 1,
+    thumbnailWidth: 100,
+    thumbnailHeight: 100,
+    addRemoveLinks: true,
+    dictCancelUpload: "Cancelar",
+    dictRemoveFile: "Eliminar",
+    previewTemplate: document.querySelector("#preview-template").innerHTML,
+    acceptedFiles: ".jpg,.jpeg,.png,.gif",
+    init: function() {
+      dropzoneLoginShort = this;
+      if (loginImageShort != undefined) {
+        var mockFile = { name: loginImageShort.name, size: loginImageShort.size };
+        dropzoneLoginShort.emit("addedfile", mockFile);
+        dropzoneLoginShort.emit("thumbnail", mockFile, loginImageShort.path);
+        dropzoneLoginShort.emit("complete", mockFile);
+      }
+      dropzoneLoginShort.on("removedfile", function() {
+        loginImageShort = undefined;
+        dropzoneLoginShort.options.maxFiles = 1;
+      });
+    },
+    success: function(e, r) {
+      loginImageShort = r;
     }
   });
   dropzoneSuccessMail = new Dropzone("form#picture-dropzone-success-mail", {
@@ -534,7 +565,8 @@ function generateData() {
     },
     advertisements: advertisementImages,
     login: {
-      image: loginImage
+      image: loginImage,
+      imageShort: loginImageShort,
     },
     successMail: {
       image: successMailImage
@@ -573,6 +605,9 @@ function validateSubmitData() {
     valid = false;
   }
   if (!loginImage) {
+    valid = false;
+  }
+  if (!loginImageShort) {
     valid = false;
   }
   if (!successMailImage) {
