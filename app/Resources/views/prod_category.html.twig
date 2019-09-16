@@ -1,0 +1,60 @@
+{% extends ':easy_admin:layout.html.twig' %}
+
+{% block content_title %}
+    Productos por categoría
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        Cantidad de productos por categoría
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th style="width:80%;">Categoría</th>
+                                <th style="width: 20%;" class="text-center">Productos</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for category in categories %}
+                                <tr class="success">
+                                    <td style="padding-left: 20px;">
+                                        <strong>{{ category['parent']['name'] }}</strong>
+                                    </td>
+                                    <td class="text-center">
+                                        {{ category['parent']['count'] }}
+                                    </td>
+                                </tr>
+                                {% for child in category['children'] %}
+                                    <tr>
+                                        <td style="padding-left: 40px;">
+                                            {{ child['name'] }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ child['count'] }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <a class="btn btn-primary pull-right" href="{{ url('easyadmin', {entity:'Category', action: 'list'}) }}">
+                Atrás
+            </a>
+        </div>
+    </div>
+{% endblock %}

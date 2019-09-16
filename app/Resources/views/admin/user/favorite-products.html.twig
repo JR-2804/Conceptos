@@ -1,0 +1,56 @@
+{% extends ':easy_admin:layout.html.twig' %}
+
+{% block content_title %}
+    Productos favoritos
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        Productos favoritos de: {{ user.username }}
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th style="width:25%;">Producto</th>
+                                <th style="width:25%;" class="text-center">Imágen</th>
+                                <th style="width:25%;" class="text-center">Código</th>
+                                <th style="width: 25%;" class="text-center">Fecha</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for product in products %}
+                                <tr>
+                                    <td style="padding-left: 20px;">
+                                        <strong>{{ product.product.item }}</strong>
+                                    </td>
+                                    <td>
+                                        <img src="{{ vich_uploader_asset(product.product.mainImage, 'imageFile') }}"
+                                             class="center-block img-responsive" style="max-width: 100px;">
+                                    </td>
+                                    <td class="text-center">{{ product.product.code }}</td>
+                                    <td class="text-center">
+                                        {{ product.date|date('d/m/Y') }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <a class="btn btn-secondary"
+               href="{{ path('easyadmin', {entity: 'User', action: 'list', menuIndex: app.request.query.get('menuIndex'), submenuIndex: app.request.query.get('submenuIndex')}) }}">Volver a los miembros</a>
+        </div>
+    </div>
+{% endblock %}

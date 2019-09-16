@@ -1,0 +1,29 @@
+<div class="table-responsive">
+    <table class="table table-condensed">
+        <thead>
+        <tr>
+            <th>Producto</th>
+            <th></th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for productRequest in value %}
+            <tr>
+                <td>
+                    <img src="{{ vich_uploader_asset(productRequest.product.mainImage, 'imageFile') }}"
+                         class="img-responsive" width="200" height="200">
+                </td>
+                <td>{{ productRequest.product.item }}</td>
+                <td>{{ productRequest.count }}</td>
+                <td>${{ productRequest.product.price }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" class="text-center">Sin productos pedidos</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

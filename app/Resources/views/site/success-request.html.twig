@@ -1,0 +1,255 @@
+{% extends ':site:base.html.twig' %}
+
+{% block title %}Pedido enviado correctamente{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/shop-cart/success-request.css') }}">
+{% endblock %}
+{% block body %}
+    <section class="mbr-section content4 cid-qW2yXfyyIt pt-3 pt-lg-5 pb-3 pb-lg-5" id="content4-2k">
+        <div class="container">
+            <div class="media-container-row">
+                <div class="title col-12 col-md-8 pl-0">
+                    <h2 class="align-center pb-3 mbr-fonts-style display-2">
+                        {{page.data.main|raw}}
+                    </h2>
+                    <h3 class="mbr-section-subtitle align-center mbr-light mbr-fonts-style display-5">
+                        {{page.data.secondary|raw}}
+                    </h3>
+                    <div class="d-flex justify-content-center">
+                        <a class="btn navigation-button" href="{{ path('print_request', {id:request.id}) }}">Exportar a PDF</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="export-section" data-name="{{request.id}}-{{currentDate|date('Y')}} ({{request.client.name}})">
+        <section class="checkout-data-section mb-0 pb-3">
+            <div class="container-fluid pl-4 pr-4 pl-lg-5 pr-lg-5">
+                <div class="row">
+                    <div class="col-12 pl-0">
+                        <div class="d-flex flex-column align-items-center checkout-data-section-header mb-3">
+                            <span class="rob-table-text checkout-title mt-2">Factura</span>
+                            <span class="rob-table-text checkout-subtitle">{{request.id}}-{{currentDate|date('Y')}}</span>
+                        </div>
+                        <div class="d-flex justify-content-between ml-2 flex-wrap">
+                            <span class="rob-table-text checkout-subtitle d-none d-lg-block"><strong>Nombre y Apellidos:</strong> {{request.client.name}}</span>
+                            <span class="rob-table-text checkout-subtitle d-lg-none"><strong>Nombre:</strong> {{request.client.name}}</span>
+                            <span class="rob-table-text checkout-subtitle"><strong>Correo:</strong> {{request.client.email}}</span>
+                            <span class="rob-table-text checkout-subtitle"><strong>Teléfono Movil:</strong> {{request.client.movil}}</span>
+                            <span class="rob-table-text checkout-subtitle"><strong>Teléfono de Casa:</strong> {{request.client.phone}}</span>
+                            {% if request.client.memberNumber %}
+                                <span class="rob-table-text checkout-subtitle"><strong>Número de Miembro:</strong> {{request.client.memberNumber}}</span>
+                            {% endif %}
+                        </div>
+                        <div class="d-flex ml-2 mt-2">
+                            <span class="rob-table-text checkout-subtitle"><strong>Dirección:</strong> {{request.client.address}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="shop-cart pb-3">
+            <div class="container-fluid pl-4 pr-4 pl-lg-5 pr-lg-5">
+                <div class="row cart-table-header d-none d-lg-flex">
+                    <div class="col col-lg-6 col-12">
+                        <div class="d-flex align-items-center h-100">
+                            <span class="rob-table-text">Producto</span>
+                        </div>
+                    </div>
+                    <div class="col col-lg-3 col-12">
+                    </div>
+                    <div class="col col-lg-3 col-12">
+                        <div class="d-flex align-items-center h-100">
+                            <span class="rob-table-text">Precio</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row cart-table-header d-lg-none">
+                    <div class="col col-lg-6 col-12">
+                        <div class="d-flex align-items-center h-100">
+                            <span class="rob-table-text">Productos</span>
+                        </div>
+                    </div>
+                </div>
+                {% for product in products %}
+                    {% if product.product is defined %}
+                        <div class="row">
+                            <div class="col-lg-9 col-12 mt-3 mt-lg-0 pl-0">
+                                <div class="d-flex flex-column flex-lg-row align-items-center">
+                                    <img src="{{ vich_uploader_asset(product.product.mainImage, 'imageFile') }}"
+                                          width="200"
+                                          height="200" alt="{{ product.product.description }}">
+                                    <div class="d-flex flex-column justify-content-center">
+                                        {% set oldProduct = product %}
+                                        {% set product = product.product %}
+                                        <div class="tags-section d-flex align-items-center">
+                                            <span class="product-code">{{ product.code }}</span>
+                                            {% set priceOffer = -1 %}
+                                            {% set offerId = 'false' %}
+                                            {% set onlyForMembers = false %}
+                                            {% for offer in product.offers %}
+                                                {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
+                                                    {% set priceOffer = offer.price %}
+                                                    {% set offerId = offer.id %}
+                                                    {% if offer.onlyForMembers %}
+                                                        {% set onlyForMembers = true %}
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if priceOffer != -1 %}
+                                                <span class="badge-custom badge-offer">O</span>
+                                            {% endif %}
+                                            {% if product.recent %}
+                                                <span class="badge-custom badge-new">N</span>
+                                            {% endif %}
+                                            {% if product.inStore %}
+                                                <span class="badge-custom badge-in-store">A</span>
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            <span class="product-title">{{ product.name }}</span>
+                                        </div>
+                                        <div>
+                                            <span class="product-subtitle-card d-none d-lg-block">{{ product.item }}</span>
+                                            <span class="product-subtitle-card product-subtitle-card-short d-lg-none">{{ product.item }}</span>
+                                        </div>
+                                        {% if onlyForMembers %}
+                                            <span class="badge-custom badge-new only-for-members">Oferta solo para Miembros</span>
+                                        {% endif %}
+                                        {% set product = oldProduct %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-12 total-price-product mt-3 mt-lg-0 pl-0">
+                                <div class="d-flex flex-column justify-content-center h-100 mr-0 mr-lg-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="price-header d-none d-lg-block">Costo</span>
+                                        <span class="price-header price-header-short d-lg-none">Costo</span>
+                                        <div class="d-flex align-items-center">
+                                            <span class="product-count">{{product.count}} X</span>
+                                            <span class="product-price mb-2">${{product.price}}.00</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-description-divider d-flex justify-content-between align-items-center">
+                                        <span class="price-header d-none d-lg-block">Subtotal</span>
+                                        <span class="price-header price-header-short d-lg-none">Subtotal</span>
+                                        <span class="product-subtotal">${{product.count * product.price}}.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shop-cart-divider d-lg-none" role="separator"></div>
+                    {% else %}
+                        <div class="row">
+                            <div class="col-lg-9 col-12 mt-3 mt-lg-0 pl-0">
+                                {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
+                                {% set cardName = 'Tarjeta de 15 CUC' %}
+                                {% if product.price == 25 %}
+                                    {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
+                                    {% set cardName = 'Tarjeta de 25 CUC' %}
+                                {% elseif product.price == 50 %}
+                                    {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
+                                    {% set cardName = 'Tarjeta de 50 CUC' %}
+                                {% elseif product.price == 100 %}
+                                    {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
+                                    {% set cardName = 'Tarjeta de 100 CUC' %}
+                                {% endif %}
+                                <div class="d-flex flex-column flex-lg-row align-items-center">
+                                    <img src="{{ imagePath }}" style="max-width: 200px;">
+                                    <span class="product-subtitle-card">{{cardName}}</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-12 total-price-product mt-3 mt-lg-0 pl-0">
+                                <div class="d-flex flex-column justify-content-center h-100 mr-0 mr-lg-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="price-header d-none d-lg-block">Costo</span>
+                                        <span class="price-header price-header-short d-lg-none">Costo</span>
+                                        <div class="d-flex align-items-center">
+                                            <span class="product-count">{{product.count}} X</span>
+                                            <span class="product-price mb-2">{{product.price}}.00</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-description-divider d-flex justify-content-between align-items-center">
+                                        <span class="price-header d-none d-lg-block">Subtotal</span>
+                                        <span class="price-header price-header-short d-lg-none">Subtotal</span>
+                                        <span class="product-subtotal">${{product.count * product.price}}.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shop-cart-divider d-lg-none" role="separator"></div>
+                    {% endif %}
+                {% endfor %}
+                <div class="row">
+                    <div class="col-12 pl-0">
+                        <div class="container-fluid">
+                            {% if request.client.memberNumber %}
+                                <div class="row membership-discount-row">
+                                    <div class="col-12 pl-0">
+                                        <hr />
+                                    </div>
+                                </div>
+                                <div class="row membership-discount-row">
+                                    <div class="col-12 pl-0">
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <div class="col-lg-3 pl-0">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <span class="price-header d-none d-lg-block">Descuento de Miembro</span>
+                                                    <span class="price-header price-header-short d-lg-none">Descuento de Miembro</span>
+                                                    <span id="membership-discount" class="product-price mr-0 mr-lg-3">${{request.discount}}.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-12 pl-0">
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12 pl-0">
+                                    <div class="d-flex align-items-center justify-content-end">
+                                        <div class="col-lg-3 pl-0">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <span class="price-header d-none d-lg-block">Costo de Transporte</span>
+                                                <span class="price-header price-header-short d-lg-none">Costo de Transporte</span>
+                                                <span id="transport-cost" class="product-price mr-0 mr-lg-3">${{request.transportCost}}.00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row cart-table-header">
+                    <div class="col">
+                        <div class="d-flex align-items-center justify-content-between h-100">
+                            <span class="rob-table-text">
+                                Total
+                            </span>
+                            <span class="rob-header total-price mr-4">{{ request.finalPrice }}.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <section class="checkout-data-section mb-0">
+        <div class="container-fluid p-3 p-lg-5">
+            <div class="row">
+                <div class="col-12 pl-0">
+                    <div class="d-flex flex-column align-items-center ">
+                        <span class="rob-table-text checkout-title">Términos y Condiciones</span>
+                        <hr />
+                    </div>
+                    <div class="d-flex flex-column pl-2 pr-2 pl-lg-0 pr-lg-0">
+                        <span class="rob-table-text checkout-subtitle">{{terms|raw}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

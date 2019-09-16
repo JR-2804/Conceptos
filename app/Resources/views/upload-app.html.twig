@@ -1,0 +1,33 @@
+{% extends ':easy_admin:layout.html.twig' %}
+
+{% block content_title %}
+    Actualizar aplicación
+{% endblock %}
+{% block main %}
+    <div class="container-fluid">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-12">
+                <div class="center-block">
+                    <div class="form-group">
+                        {{ form_label(form.app, 'Aplicación', {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_widget(form.app, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-primary pull-left" type="submit" id="save_data">
+                    <i class="fa fa-plus"></i>
+                    Aceptar
+                </button>
+                <a class="btn btn-secondary action-list pull-left"
+                   href="{{ path('easyadmin', {'entity': 'Product', 'action': 'list', 'menuIndex': 0, 'submenuIndex': -1}) }}">
+                    Cancelar
+                </a>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends '@EasyAdmin/default/list.html.twig' %}
+{% block new_action %}
+    <div class="button-action">
+        <a class="{{ _action.css_class|default('') }}"
+           href="{{ path('easyadmin', _request_parameters|merge({ action: _action.name })) }}"
+           target="{{ _action.target }}">
+            {% if _action.icon %}<i class="fa fa-{{ _action.icon }}"></i>{% endif %}
+            {{ _action.label is defined and not _action.label is empty ? _action.label|trans(_trans_parameters) }}
+        </a>
+    </div>
+    {% if _entity_config.name == 'Product' %}
+        <div class="button-action">
+            <a class="btn btn-primary action-new"
+               href="{{ path('export_db_view', {menuIndex: app.request.query.get('menuIndex'), submenuIndex: app.request.query.get('submenuIndex')}) }}">Exportar
+                BD</a>
+        </div>
+        <div class="button-action">
+            <a class="btn btn-primary action-new" href="{{ asset('download/db/conceptos-lasted.conceptos') }}">Descargar
+                BD</a>
+        </div>
+    {% elseif _entity_config.name == 'Category' %}
+        <div class="button-action">
+            <a class="btn btn-primary action-new" href="{{ url('prod_by_category') }}">Prod x Categoría</a>
+        </div>
+    {% endif %}
+{% endblock new_action %}

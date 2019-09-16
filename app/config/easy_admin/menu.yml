@@ -1,0 +1,19 @@
+easy_admin:
+    design:
+        menu:
+            - { entity: 'Product', label: 'Producto' }
+            - { entity: 'Category', label: 'Categoría' }
+            - { entity: 'Phone', label: 'Teléfonos' }
+            - { entity: 'Offer', label: 'Ofertas' }
+            - { entity: 'Request', label: 'Pedidos'}
+            - { entity: 'Member', label: 'Miembros' }
+            - {entity: 'Client', label: 'Clientes'}
+            - { label: 'Actualizar App', route: 'upload_app'}
+            - { label: 'Configuración General', route: 'config_view' }
+            - label: 'Blog'
+              children:
+                  - { entity: 'Post', label: 'Artículos'}
+                  - { entity: 'BlogCategory', label: 'Categorías'}
+                  - { entity: 'Tag', label: 'Tags'}
+            - { entity: 'Page', label: 'Páginas'}
+            - { entity: 'User', label: 'Usuarios'}

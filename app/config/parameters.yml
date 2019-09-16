@@ -1,0 +1,22 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: conceptos_new_version_db
+    database_user: conceptos_user
+    database_password: Conceptos.123
+    mailer_transport: smtp
+    mailer_host: mail.tiendaconceptos.com
+    mailer_user: comercial@tiendaconceptos.com
+    mailer_password: Comercial.123
+    mailer_port: 25
+    mailer_password: null
+    secret: ThisTokenIsNotSoSecretChangeIt
+    lionware_session_expiration_time: 3600
+    app.path.blog.images: /uploads/images/blog
+    app.path.site.images: /uploads/images/site
+    app.path.offer.images: /uploads/images/offer
+    app.recaptcha.public: 6LcrvV8UAAAAAMFS5GFWN-xu8atBgd59kuiYMj4z
+    app.recaptcha.public.dev: 6LeYwF8UAAAAAP5A7lf5AqmJUcCRu4En8buBJIoB
+    app.recaptcha.private: 6LcrvV8UAAAAACLD_QDmm9E3j7d48Cm5Mw6YvIeC
+    app.recaptcha.private.dev: 6LeYwF8UAAAAAJ7wqTNyU0-EDHCDR9M5B86Qt4Rg

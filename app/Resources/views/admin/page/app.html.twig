@@ -1,0 +1,129 @@
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Encabezado</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="center-block">
+                            <label class="control-label">Imágen de Fondo</label>
+                            <form class="dropzone" id="picture-dropzone-header"
+                                  action="{{ path('upload_site_image') }}" style="margin-top: 0px">
+                                <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                    Seleccione una imágen
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Pasos</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label">Principal</label>
+                            <input type="text" class="form-control" id="step-main">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label">Secundario</label>
+                            <input type="text" class="form-control" id="step-secondary">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="control-label">Título</label>
+                                    <input type="text" class="form-control" id="step-title">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="control-label">Contenido</label>
+                                    <textarea class="form-control" id="step-content" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <button class="btn btn-primary btn-add-step-app pull-right"
+                                        data-edit="false">Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover table-condensed table-steps">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Título</th>
+                                    <th class="text-center">Contenido</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="text-center" colspan="4">Sin pasos añadidos</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">APP</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="control-label">App</label>
+                            <input type="text" class="form-control" id="app-app">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="control-label">Base de datos</label>
+                            <input type="text" class="form-control" id="app-db">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="center-block">
+                            <form class="dropzone" id="picture-dropzone-app" action="{{ path('upload_site_image') }}">
+                                <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                    Seleccione una imágen
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

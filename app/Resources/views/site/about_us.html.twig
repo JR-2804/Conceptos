@@ -1,0 +1,63 @@
+{% extends ':site:base.html.twig' %}
+
+{% block title %}Sobre nosotros{% endblock %}
+
+{% block body %}
+    <section class="page-header mbr-parallax-background d-none d-lg-block" style="background-image: url('{{ page.data.header.image.path }}')"></section>
+    <section class="page-header-short mbr-parallax-background d-lg-none" style="background-image: url('{{ page.data.header.image.path }}')"></section>
+    <section class="about-us-short-description-section pt-2 pt-lg-4 pl-0 pl-lg-4">
+      <div class="container-fluid">
+          <div class="row justify-content-between">
+              <div class="col-12 col-lg-6 pl-2 pr-2">
+                  <span class="decoration-design-title d-none d-lg-block">{{page.data.shortDescription.title|raw}}</span>
+                  <span class="decoration-design-title-short d-lg-none">{{page.data.shortDescription.title|raw}}</span>
+                  <p class="decoration-design-description d-none d-lg-block">{{page.data.shortDescription.text|raw}}</p>
+                  <p class="decoration-design-description-short d-lg-none">{{page.data.shortDescription.text|raw}}</p>
+              </div>
+              <div class="col-12 col-lg-6 pl-0">
+                  <div class="d-flex justify-content-end align-items-end h-100">
+                      <img class="about-us-image" src="{{ page.data.shortDescription.image.path }}">
+                  </div>
+              </div>
+          </div>
+      </div>
+    </section>
+    <section class="members-section">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-12 pl-0">
+                  <span class="testimony-title mt-0 mt-lg-4">{{page.data.members.title|raw}}</span>
+              </div>
+          </div>
+          <div class="row justify-content-center">
+              {% for image in page.data.members.members %}
+                  <div class="col-12 col-lg-4 d-flex flex-wrap flex-column align-items-center pl-0">
+                      <div class="square">
+                          <img class="pic member-image" src="{{image.path}}" />
+                      </div>
+                      <span class="member-name">{{image.name|raw}}</span>
+                      <span class="member-role">{{image.rol|raw}}</span>
+                      <span class="member-description pl-2 pr-2">{{image.description|raw}}</span>
+                  </div>
+              {% endfor %}
+          </div>
+      </div>
+    </section>
+    <section class="members-section-footer">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-12 pl-0">
+                  <img class="w-100" src="{{ page.data.footer.image.path }}">
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-12 pl-0">
+                  <div class="d-flex align-items-end justify-content-center">
+                      <span class="w-100 d-none d-lg-block">{{page.data.footer.text|raw}}</span>
+                      <span class="short-span w-100 d-lg-none pl-2 pr-2">{{page.data.footer.text|raw}}</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </section>
+{% endblock %}

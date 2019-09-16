@@ -1,0 +1,34 @@
+form#picture-dropzone,
+form#app-dropzone {
+  background: none !important;
+  padding: 0em;
+  border: 3px dashed rgba(95, 111, 109, 0.66);
+  margin-top: 25px;
+}
+
+form#app-dropzone {
+  margin-bottom: 20px;
+}
+
+form#pictures-dropzone {
+  background: none !important;
+  padding: 0em;
+  border: 3px dashed rgba(95, 111, 109, 0.66);
+  margin-top: 25px;
+}
+
+form#picture-highlight-dropzone {
+  background: none !important;
+  padding: 0em;
+  border: 3px dashed rgba(95, 111, 109, 0.66);
+  margin-top: 25px;
+}
+
+.dropzone-error {
+  background-color: red;
+  color: red;
+}
+
+form[name="product"] {
+  margin-top: 20px;
+}

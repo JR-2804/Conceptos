@@ -1,0 +1,212 @@
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Tarjetas de Regalo</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="control-label">Texto principal</label>
+                            <textarea rows="5" class="form-control" id="gift_text_main"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Imágen Principal</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="center-block">
+                                    <form class="dropzone" id="picture-dropzone-gift_main"
+                                          action="{{ path('upload_site_image') }}">
+                                        <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                            Seleccione una imágen
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Tarjeta de 15 CUC</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="center-block">
+                                    <form class="dropzone" id="picture-dropzone-gift-15"
+                                          action="{{ path('upload_site_image') }}">
+                                        <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                            Seleccione una imágen
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Tarjeta de 25 CUC</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="center-block">
+                                    <form class="dropzone" id="picture-dropzone-gift-25"
+                                          action="{{ path('upload_site_image') }}">
+                                        <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                            Seleccione una imágen
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Tarjeta de 50 CUC</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="center-block">
+                                    <form class="dropzone" id="picture-dropzone-gift-50"
+                                          action="{{ path('upload_site_image') }}">
+                                        <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                            Seleccione una imágen
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Tarjetas de Miembro</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    {#<div class="col-3">#}
+
+                    {#</div>#}
+                    <div class="col-12">
+                        <div class="panel-group">
+                            <label class="control-label">Texto</label>
+                            <textarea class="form-control" rows="5" id="member_main_text"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Imágen Principal</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="center-block">
+                                    <form class="dropzone" id="picture-dropzone-member_main"
+                                          action="{{ path('upload_site_image') }}">
+                                        <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                            Seleccione una imágen
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Imágen Gold</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="center-block">
+                                    <form class="dropzone" id="picture-dropzone-member_gold"
+                                          action="{{ path('upload_site_image') }}">
+                                        <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                            Seleccione una imágen
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Imágen Platinum</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="center-block">
+                                    <form class="dropzone" id="picture-dropzone-member_platinum"
+                                          action="{{ path('upload_site_image') }}">
+                                        <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                            Seleccione una imágen
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Imágen Premium</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="center-block">
+                                    <form class="dropzone" id="picture-dropzone-member_premium"
+                                          action="{{ path('upload_site_image') }}">
+                                        <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                            Seleccione una imágen
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Sobre el equipo
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="center-block">
+                            <form class="dropzone" id="picture-dropzone-team"
+                                  action="{{ path('upload_site_image') }}">
+                                <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                    Seleccione una imágen
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <div class="form-group">
+                            <label class="control-label">Texto</label>
+                            <textarea class="form-control" id="team_text" rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

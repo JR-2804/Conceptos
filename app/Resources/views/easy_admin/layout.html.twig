@@ -1,0 +1,18 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block head_stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap-grid.min.css') }}">
+{% endblock %}
+{% block user_menu %}
+    <span class="sr-only">{{ 'user.logged_in_as'|trans(domain = 'EasyAdminBundle') }}</span>
+    {% if app.user|default %}
+        <a href="{{ path('fos_user_security_logout') }}">
+            <i class="hidden-xs fa fa-user"></i>
+            Salir( {{ app.user.username|default('user.unnamed'|trans(domain = 'EasyAdminBundle')) }})
+        </a>
+    {% else %}
+        <i class="hidden-xs fa fa-user"></i>
+        {{ 'user.anonymous'|trans(domain = 'EasyAdminBundle') }}
+    {% endif %}
+{% endblock %}

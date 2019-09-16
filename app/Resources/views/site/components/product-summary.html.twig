@@ -1,0 +1,17 @@
+<div class="product-card product-card-clickable d-flex flex-column mt-0" data-path="{{ path('product_details', {id: product.id, name: product.name}) }}">
+    <div class="d-flex align-items-center justify-content-center">
+        {% if app.user|default %}
+            <a data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"
+               data-path-remove="{{ path('remove_from_favorite', {id: product.id}) }}"
+               class="favorite-product mt-2 {% if product.favorite %}favorite{% endif %}">
+                <span class="fa fa-star"></span>
+            </a>
+        {% endif %}
+        <img class="img-product"
+              src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}"
+              alt="{{ product.item }}">
+    </div>
+    <div class="d-flex flex-column">
+        {{include('site/components/product-summary-data.html.twig')}}
+    </div>
+</div>

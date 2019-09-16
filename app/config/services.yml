@@ -1,0 +1,48 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+  #    service_name:
+  #        class: AppBundle\Directory\ClassName
+  #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+  email_service:
+    class: AppBundle\Services\EmailService
+    arguments: ["@mailer"]
+  export_service:
+    class: AppBundle\Services\ExportService
+    arguments: ["@doctrine.orm.entity_manager", "@vich_uploader.templating.helper.uploader_helper"]
+
+  product_service:
+    class: AppBundle\Services\ProductService
+    arguments: ["@doctrine.orm.entity_manager", "@vich_uploader.templating.helper.uploader_helper"]
+
+  page_service:
+    class: AppBundle\Services\PageService
+    arguments: ["@doctrine.orm.entity_manager"]
+
+  category_service:
+    class: AppBundle\Services\CategoryService
+    arguments: ["@doctrine.orm.entity_manager"]
+
+  color_service:
+    class: AppBundle\Services\ColorService
+    arguments: ["@doctrine.orm.entity_manager"]
+
+  material_service:
+    class: AppBundle\Services\MaterialService
+    arguments: ["@doctrine.orm.entity_manager"]
+
+  member_service:
+    class: AppBundle\Services\MemberService
+    arguments: ["@doctrine.orm.entity_manager"]
+
+  app_form_registration:
+    class: AppBundle\Form\RegistrationType
+    tags:
+      - {name: form.type, alias: app_user_registration}
+
+  api_category_service:
+    class: AppBundle\Api\Services\CategoryService
+    arguments: ["@doctrine.orm.entity_manager"]

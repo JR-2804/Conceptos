@@ -1,0 +1,258 @@
+easy_admin:
+    site_name: 'Conceptos'
+    formats:
+        date: 'd/m/Y'
+        datetime: 'd/m/Y H:i:s'
+    design:
+        brand_color: '#dd4b39'
+        assets:
+            js:
+                - '/bundles/conceptos/js/easy_admin.js'
+        templates:
+            flash_messages: '/easy_admin/flash_messages.html.twig'
+    entities:
+        Product:
+            class: AppBundle\Entity\Product
+            label: Producto
+            list:
+                title: Productos
+                actions:
+                    - { name: 'new', label: 'Nuevo producto' }
+                fields:
+                    - id
+                    - {property: 'name', label: 'Nombre'}
+                    - {property: 'item', label: 'Item'}
+                    - {property: 'code', label: 'Código'}
+                    - {property: 'price', label: 'Precio'}
+                    - {property: 'categoryText', label: 'Categoría'}
+                    - {property: 'parentCategoryText', label: 'Categoría Padre'}
+                    - {property: 'popular', label: 'Popular', type: 'toggle'}
+                    - {property: 'recent', label: 'Novedades', type: 'toggle'}
+                    - {property: 'inStore', label: 'En almacén', type: 'toggle'}
+                    - {property: 'mainImage', label: 'Imágen Principal', type: 'image', base_path: '/uploads'}
+                    - {property: 'color', label: 'Color'}
+                    - {property: 'material', label: 'Material'}
+                    - {property: 'images', label: 'Otras imágenes'}
+        Category:
+            class: AppBundle\Entity\Category
+            label: Categoría
+            list:
+                title: Categorías
+                actions:
+                    - {name: 'new', label: 'Nueva categoría'}
+                    - {name: 'show', label: 'Ver'}
+                fields:
+                    - id
+                    - {property: 'name', label: 'Nombre'}
+                    - {property: 'parents', label: 'Categorías padre'}
+                    - {property: 'image', label: 'Image', type: 'image', base_path: '/categories'}
+                    - {property: 'imageSite', label: 'Image Sitio', type: 'image', base_path: '/categories/site'}
+                    - {property: 'subCategories', label: 'Categorías Hijas'}
+            form:
+                fields:
+                    - {property: 'name', label: 'Nombre'}
+                    - {property: 'parents', label: 'Categorías padre'}
+                    - {property: 'imageFile', type: 'vich_image', label: 'Imágen'}
+                    - {property: 'imageSiteFile', type: 'vich_image', label: 'Imágen Sitio'}
+                    - {property: 'subCategories', label: 'Categorías Hijas'}
+                    - {property: 'isBrand', label: 'Es Marca Cubana?'}
+                    - {property: 'brandDescription', label: 'Descripción de la marca', type: 'ckeditor'}
+            new:
+                title: 'Nueva categoría'
+            edit:
+                title: 'Editar categoría'
+            show:
+                  title: Ver categoría
+                  fields:
+                      - id
+                      - {property: 'name', label: 'Nombre'}
+                      - {property: 'parent', label: 'Categoría padre'}
+                      - {property: 'subCategories', label: 'Categorías Hijas'}
+                      - { property: 'image', type: 'image', base_path: "/categories" }
+        Offer:
+            class: AppBundle\Entity\Offer
+            label: Ofertas
+            list:
+                title: Ofertas registradas
+                fields:
+                    - id
+                    - {property: 'name', label: 'Nombre'}
+                    - {property: 'description', label: 'Descripción'}
+                    - {property: 'startDate', label: 'Fecha de inicio'}
+                    - {property: 'endDate', label: 'Fecha de fin'}
+                    - {property: 'price', label: 'Precio'}
+                    - {property: 'products', label: 'Productos'}
+                    - {property: 'image', label: 'Image', base_path: "%app.path.offer.images%", type: 'image'}
+                    - {property: 'onlyForMembers', label: 'Solo Para Miembros'}
+            form:
+                fields:
+                    - {property: 'name', label: 'Nombre'}
+                    - {property: 'description', label: 'Descripción'}
+                    - {property: 'startDate', label: 'Fecha de inicio', type_options: {widget: 'single_text'}}
+                    - {property: 'endDate', label: 'Fecha de fin', type_options: {widget: 'single_text'}}
+                    - {property: 'price', label: 'Precio'}
+                    - {property: 'imageFile', type: 'vich_image', label: 'Imágen'}
+                    - {property: 'products', label: 'Productos'}
+                    - {property: 'onlyForMembers', label: 'Solo Para Miembros'}
+        Request:
+            class: AppBundle\Entity\Request\Request
+            label: Pedidos
+            disabled_actions: ['new', 'delete', 'edit']
+            list:
+                title: Pedidos realizados
+                actions:
+                    - {name: 'show'}
+                    - {name: 'print_request', type: 'route', label: 'Exportar a PDF' }
+                fields:
+                    - id
+                    - {property: 'date', label: 'Fecha'}
+                    - {property: 'client', label: 'Cliente'}
+                    - {property: 'clientEmail', label: 'Correo', type: 'email'}
+                    - {property: 'requestProducts', label: 'Productos'}
+                    - {property: 'requestCards', label: 'Tarjetas de Regalo'}
+                    - {property: 'finalPrice', label: 'Precio final'}
+            show:
+                title: Detalles del pedido
+                fields:
+                    - {property: 'date', label: 'Fecha'}
+                    - {property: 'finalPrice', label: 'Precio final'}
+                    - {property: 'client', label: 'Cliente'}
+                    - {property: 'requestProducts', label: 'Productos', template: 'show_products.html.twig'}
+                    - {property: 'requestCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
+        Client:
+            class: AppBundle\Entity\Request\Client
+            label: Clientes
+            disabled_actions: ['new', 'delete', 'edit']
+            list:
+                title: Clientes registrados
+                actions:
+                    - {name: 'show'}
+                fields:
+                    - id
+                    - {property: 'name', label: 'Nombre'}
+                    - {property: 'address', label: 'Dirección'}
+                    - {property: 'email', label: 'Correo', type: 'email'}
+                    - {property: 'movil', label: 'Movil', type: 'tel'}
+                    - {property: 'phone', label: 'Fijo', type: 'tel'}
+                    - {property: 'requests', label: 'Pedidos'}
+            show:
+                title: Detalles del cliente
+                fields:
+                    - {property: 'name', label: 'Nombre'}
+                    - {property: 'address', label: 'Dirección'}
+                    - {property: 'email', label: 'Correo', type: 'email'}
+                    - {property: 'movil', label: 'Movil', type: 'tel'}
+                    - {property: 'phone', label: 'Fijo', type: 'tel'}
+                    - {property: 'requests', label: 'Pedidos', template: 'show_request.html.twig'}
+        Phone:
+            class: AppBundle\Entity\Phone
+            label: Teléfono
+            list:
+                title: Teléfonos almacenados
+                actions:
+                    - {name: 'new', label: 'Nuevo'}
+                    - {name: 'delete', label: 'Eliminar'}
+                fields:
+                    - id
+                    - {property: 'number', label: 'Número'}
+        Post:
+            class: AppBundle\Entity\Blog\Post
+            list:
+                title: Artículos
+                fields:
+                    - id
+                    - {property: 'title', label: 'Título'}
+                    - {property: 'image', label: 'Imágen', type: 'image', base_path: '%app.path.blog.images%'}
+                    - {property: 'createdDate', label: 'Creado'}
+                    - {property: 'visitCount', label: 'Cantidad de visitas'}
+                    - {property: 'promoted', label: 'Detacado', type: 'toggle'}
+                    - {property: 'tags', label: 'Tags', template: 'tags.html.twig'}
+                    - {property: 'category', label: 'Categoría'}
+                    - {property: 'user', label: 'Usuario'}
+            form:
+                fields:
+                    - {property: 'title', label: 'Título'}
+                    - {property: 'imageFile', type: 'file', label: 'Imágen principal'}
+                    - {property: 'summary', label: 'Resumen'}
+                    - {property: 'tags', label: 'Tags'}
+                    - {property: 'category', label: 'Categoría'}
+                    - { property: 'body', label: 'Cuerpo', type: 'ckeditor' }
+        BlogCategory:
+            class: AppBundle\Entity\Blog\Category
+            list:
+                title: Categorías
+                fields:
+                    - id
+                    - name
+        Tag:
+            class: AppBundle\Entity\Blog\Tag
+            list:
+                title: Tags
+                fields:
+                    - id
+                    - value
+        Page:
+            class: AppBundle\Entity\Page\Page
+            list:
+                title: Páginas
+                fields:
+                    - id
+                    - name
+        Member:
+            class: AppBundle\Entity\Member
+            actions:
+                - {name: 'new', label: 'Crear Miembro'}
+            list:
+                title: 'Miembros Registrados'
+                fields:
+                    - id
+                    - {property: 'firstName', label: 'Nombre'}
+                    - {property: 'lastName', label: 'Apellidos'}
+                    - {property: 'email', label: 'Correo', type: 'email'}
+                    - {property: 'phone', label: 'Teléfono'}
+                    - {property: 'number', label: 'Número de Miembro'}
+                    - {property: 'user', label: 'Usuario Asociado'}
+            form:
+                title: 'Nuevo Miembro'
+                fields:
+                    - {property: 'firstName', label: 'Nombre'}
+                    - {property: 'lastName', label: 'Apellidos'}
+                    - {property: 'email', label: 'Correo'}
+                    - {property: 'phone', label: 'Teléfono'}
+                    - {property: 'address', label: 'Dirección'}
+                    - {property: 'number', label: 'Número de Miembro'}
+                    - {property: 'user', label: 'Usuario Asociado'}
+            edit:
+                title: 'Editar Miembro'
+
+        User:
+            class: AppBundle\Entity\User
+            list:
+                title: Usuarios registrados
+                actions:
+                    - { name: 'favorite_products_user', type: 'route', label: 'Productos Favoritos' }
+                fields:
+                    - id
+                    - {property: 'username', label: 'Usuario'}
+                    - {property: 'email', label: 'Correo'}
+                    - {property: 'enabled', label: 'Habilitado', type: 'toggle'}
+                    - {property: 'lastLogin', label: 'Último acceso'}
+            edit:
+                fields:
+                    - { property: 'plainPassword', type_options: { required: false} }
+                form_options: { validation_groups: ['Profile'] }
+            new:
+                fields:
+                    - { property: 'plainPassword', type_options: { required: true} }
+                form_options: { validation_groups: ['Registration'] }
+            form:
+                fields:
+                    - {property: 'username', label: 'Usuario'}
+                    - {property: 'email', label: 'Correo'}
+                    - {property: 'plainPassword', type: 'text', type_options: {required: false} }
+                    - {property: 'firstName', label: 'Nombre', type_options: {required: false}}
+                    - {property: 'lastName', label: 'Apellidos', type_options: {required: false}}
+                    - {property: 'mobileNumber', label: 'Teléfono Movil', type_options: {required: false}}
+                    - {property: 'homeNumber', label: 'Teléfono de Casa', type_options: {required: false}}
+                    - {property: 'birthDate', label: 'Fecha de Nacimiento', type_options: {required: false, widget: 'single_text'}}
+                    - {property: 'roles', label: 'Roles'}

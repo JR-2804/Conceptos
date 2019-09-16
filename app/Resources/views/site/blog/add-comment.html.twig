@@ -1,0 +1,35 @@
+<div class="add-comment">
+    <header>
+        <h3 class="h6">Déjanos un comentario</h3>
+    </header>
+    {{ form_start(form) }}
+    <form action="{{ path('add_comment') }}" class="commenting-form" method="post">
+        {#<input type="hidden" name="id" value="{{ post.id }}">#}
+        <div class="row">
+            <div class="form-group col-md-6">
+                {{ form_widget(form.name, {'attr': {'placeholder': 'Nombre', 'required': 'true', 'class': 'form-control'}}) }}
+                {#<input type="text" name="name" id="username" placeholder="Nombre" required#}
+                {#class="form-control">#}
+            </div>
+            <div class="form-group col-md-6">
+                {{ form_widget(form.email, {'attr': {'placeholder': 'Correo (no será publicado)', 'class': 'form-control', 'requierd': 'true'}}) }}
+                {#<input type="email" name="email" id="useremail" required#}
+                {#placeholder="Correo (no será pulicado)"#}
+                {#class="form-control">#}
+            </div>
+            <div class="form-group col-md-12">
+                {{ form_widget(form.text, {'attr': {'placeholder': 'Escriba su comentario', 'class': 'form-control', 'required': 'true'}}) }}
+                {#<textarea name="text" id="usercomment" required#}
+                {#placeholder="Type your comment" class="form-control"></textarea>#}
+            </div>
+            <div class="form-group col-md-12">
+                {{ form_widget(form.recaptcha) }}
+            </div>
+            <div class="form-group col-md-12">
+                <button type="submit" class="btn btn-success display-4">
+                    Enviar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

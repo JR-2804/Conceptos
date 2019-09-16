@@ -1,0 +1,122 @@
+{% extends ':site:base.html.twig' %}
+
+{% block title %}Descargar APP{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/app/css/app.css') }}">
+{% endblock %}
+
+{% block body %}
+    <section class="page-header mbr-parallax-background d-none d-lg-block" style="background-image: url('{{ page.data.header.image.path }}')"></section>
+    <section class="page-header-short mbr-parallax-background d-lg-none" style="background-image: url('{{ page.data.header.image.path }}')"></section>
+    <section class="mbr-section content4 cid-qQ6sl7huFc" id="content4-o">
+        <div class="container">
+            <div class="media-container-row">
+                <div class="title col-12 col-md-8">
+                    <h2 class="align-center pb-3 mbr-fonts-style display-2">
+                        {{page.data.steps.main|raw}}
+                    </h2>
+                    <h3 class="mbr-section-subtitle align-center mbr-light mbr-fonts-style display-5">
+                        {{page.data.steps.secondary}}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="mbr-section article content11 cid-qQ6sjiVhZb" id="content11-n">
+        <div class="container">
+            <div class="media-container-row">
+                <div class="mbr-text counter-container col-12 col-md-8 mbr-fonts-style display-7">
+                    <ol>
+                        {% for step in page.data.steps.steps %}
+                            <li>
+                                <strong>{{step.title|raw}}</strong> - {{step.content|raw}}
+                            </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="features8 cid-qQ6ueXUNp2 mbr-parallax-background pt-0 pt-lg-4 pb-lg-4" id="features8-s"
+             style="background-image: url('{{page.data.app.image.path}}')">
+        <div class="mbr-overlay" style="opacity: 0.2; background-color: rgb(35, 35, 35);">
+        </div>
+        <div class="container d-none d-lg-block">
+            <div class="media-container-row">
+                <div class="card col-6 pl-0 mb-0">
+                    <div class="card-img">
+                        <span class="mbr-iconfont mbri-touch"></span>
+                    </div>
+                    <div class="d-flex flex-column justify-content-between card-box align-center">
+                        <div class="d-flex flex-column">
+                            <h4 class="card-title mbr-fonts-style display-7 pl-1 pr-1">
+                                Aplicación Android</h4>
+                            <p class="mbr-text mbr-fonts-style display-7 pl-1 pr-1">
+                                {{page.data.app.app|raw}}
+                            </p>
+                        </div>
+                        <div class="mbr-section-btn text-center">
+                            <a href="{{ asset('download/app/app-lasted.apk') }}" class="btn navigation-button">DESCARGAR</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card col-6 pl-0 mb-0">
+                    <div class="card-img">
+                        <span class="mbr-iconfont mbri-upload"></span>
+                    </div>
+                    <div class="d-flex flex-column justify-content-between card-box align-center">
+                        <div class="d-flex flex-column">
+                            <h4 class="card-title mbr-fonts-style display-7 pl-1 pr-1">
+                                Base de Datos</h4>
+                            <p class="mbr-text mbr-fonts-style display-7 pl-1 pr-1">
+                                {{page.data.app.db|raw}}
+                            </p>
+                        </div>
+                        <div class="mbr-section-btn text-center">
+                            <a href="{{ '/db/' ~  config.lastDBExported }}" class="btn navigation-button">DESCARGAR</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid d-lg-none">
+            <div class="row">
+                <div class="card col-6 pl-0 mb-0">
+                    <div class="d-flex flex-column justify-content-between card-box align-center h-100">
+                        <div class="d-flex flex-column">
+                            <div class="card-img">
+                                <span class="mbr-iconfont mbri-touch"></span>
+                            </div>
+                            <h4 class="card-title mbr-fonts-style display-7 pl-1 pr-1">
+                                Aplicación Android</h4>
+                            <p class="mbr-text mbr-fonts-style display-7 pl-1 pr-1">
+                                {{page.data.app.app|raw}}
+                            </p>
+                        </div>
+                        <div class="mbr-section-btn text-center">
+                            <a href="{{ asset('download/app/app-lasted.apk') }}" class="btn navigation-button">Descargar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card col-6 pl-0 mb-0">
+                    <div class="d-flex flex-column justify-content-between card-box align-center h-100">
+                        <div class="d-flex flex-column">
+                            <div class="card-img">
+                                <span class="mbr-iconfont mbri-upload"></span>
+                            </div>
+                            <h4 class="card-title mbr-fonts-style display-7 pl-1 pr-1">
+                                Base de Datos</h4>
+                            <p class="mbr-text mbr-fonts-style display-7 pl-1 pr-1">
+                                {{page.data.app.db|raw}}
+                            </p>
+                        </div>
+                        <div class="mbr-section-btn text-center">
+                            <a href="{{ '/db/' ~  config.lastDBExported }}" class="btn navigation-button">Descargar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

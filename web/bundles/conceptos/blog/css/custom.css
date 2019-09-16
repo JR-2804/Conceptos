@@ -1,0 +1,42 @@
+/* your styles go here */
+
+.display-4 {
+  line-height: 1;
+  font-size: 1rem;
+}
+
+.btn {
+  font-weight: 500;
+  border: 2px solid transparent;
+}
+
+.mbr-section-btn a.btn:not(.btn-form) {
+  border-radius: 100px !important;
+}
+
+section {
+  padding: 0;
+  overflow-x: auto;
+}
+
+.content-post {
+  background-color: #ffff;
+  padding-left: 65px;
+  padding-right: 65px;
+}
+
+.widget header.header-custom {
+  margin-top: 0px;
+}
+
+.blog-post {
+  padding-left: 65px;
+}
+
+img:not(.logo-menu) {
+  width: 100%;
+}
+
+.sharetastic {
+  margin-left: 10px;
+}

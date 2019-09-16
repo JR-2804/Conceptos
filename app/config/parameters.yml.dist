@@ -1,0 +1,28 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     symfony
+    database_user:     root
+    database_password: ~
+    # You should uncomment this if you want use pdo_sqlite
+    # database_path: "%kernel.root_dir%/data.db3"
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+    mailer_port:       ~
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+    lionware_session_expiration_time: 3600
+    app.path.blog.images: /uploads/images/blog
+    app.path.site.images: /uploads/images/site
+    app.path.offer.images: /uploads/images/offer
+    app.recaptcha.public: 6LcrvV8UAAAAAMFS5GFWN-xu8atBgd59kuiYMj4z
+    app.recaptcha.public.dev: 6LeYwF8UAAAAAP5A7lf5AqmJUcCRu4En8buBJIoB
+    app.recaptcha.private: 6LcrvV8UAAAAACLD_QDmm9E3j7d48Cm5Mw6YvIeC
+    app.recaptcha.private.dev: 6LeYwF8UAAAAAJ7wqTNyU0-EDHCDR9M5B86Qt4Rg

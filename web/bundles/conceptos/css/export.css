@@ -1,0 +1,16 @@
+.element {
+    font-size: 20px;
+}
+
+.loading {
+    background-image: url("/bundles/conceptos/images/loading.gif");
+}
+
+.progress {
+    margin-top: 20px;
+}
+
+.export-text {
+    font-size: 25px;
+    margin-top: 20px;
+}

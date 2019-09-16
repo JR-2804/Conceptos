@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    {% block open_graph %}
+        <meta property="og:image" content="{{ absolute_url(asset('bundles/conceptos/images/logo.png')) }}">
+        <meta property="og:title" content="TIENDA CONCEPTOS"/>
+        <meta property="og:url" content="http://tiendaconceptos.com"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:locale" content="es_ES"/>
+    {% endblock %}
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <link rel="shortcut icon" href="{{ asset('bundles/conceptos/images/logo.png') }}">
+    <title>Conceptos - {% block title %}{% endblock %}</title>
+    {% block stylesheet %}
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/fonts/FontAwesome/css/font-awesome.min.css') }}">
+        <link rel="stylesheet"
+              href="{{ asset('bundles/conceptos/assets/web/assets/mobirise-icons/mobirise-icons.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/tether/tether.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap-grid.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap-reboot.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/dropdown/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/animatecss/animate.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/socicon/css/styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/theme/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/gallery/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/mobirise/css/mbr-additional.css') }}"
+              type="text/css">
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/libs/toast/jquery.toast.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/css/component.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/css/base.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/scripts/css/custom-styles.css') }}" type="text/css">
+    {% endblock %}
+    {% block css %}{% endblock %}
+</head>
+<body>
+<div class="la-anim-10 d-none d-lg-block"></div>
+<div class="la-anim-10 small-anim d-lg-none"></div>
+
+<div id="termsAndConditionsModal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Términos y Condiciones</h4>
+            </div>
+            <div class="modal-body">
+                {{terms|raw}}
+            </div>
+            <div class="modal-footer">
+                <button class="btn navigation-button" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="privacyPolicyModal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Política de Privacidad</h4>
+            </div>
+            <div class="modal-body">
+                {{privacy|raw}}
+            </div>
+            <div class="modal-footer">
+                <button class="btn navigation-button" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block header %}
+    <section class="menu cid-qQ6pVr9Hx2" once="menu" id="menu1-e">
+        <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+            <div class="menu-logo">
+                <div class="navbar-brand">
+                <span class="navbar-logo">
+                    <a href="{{ path('site_home') }}">
+                         <img src="{{ asset('bundles/conceptos/assets/images/logo_blanco.png') }}" alt="Conceptos"
+                              title="Conceptos"
+                              style="height: 3.8rem;" class="logo-menu">
+                    </a>
+                </span>
+                </div>
+            </div>
+            <div class="d-flex flex-column align-items-end collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="d-none d-lg-block">
+                    <div class="d-flex">
+                        <div class="d-flex align-items-center mbr-section-btn">
+                            <form class="d-flex" action="{{ path('products') }}" method="get">
+                                <input class="form-control global-search" type="text" name="term">
+                                <button class="btn navigation-button global-search-button">
+                                    <i class="mbri-search"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="navbar-buttons mbr-section-btn">
+                            <a class="btn btn-success btn-success-inverse" href="{{ home.data.cataloge.path }}">
+                                <span class="mbri-save mbr-iconfont mbr-iconfont-btn "></span>
+                                CATÁLOGO
+                            </a>
+                        </div>
+                        <div class="navbar-buttons mbr-section-btn">
+                            <a class="btn btn-success" href="{{ path('download_app') }}">
+                                <span class="mbri-save mbr-iconfont mbr-iconfont-btn "></span>
+                                APP
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex d-lg-none">
+                    <div class="navbar-buttons mbr-section-btn">
+                        <a class="btn btn btn-success btn-success-inverse" href="{{ home.data.cataloge.path }}">
+                            <span class="mbri-save mbr-iconfont mbr-iconfont-btn "></span>
+                            CATÁLOGO
+                        </a>
+                    </div>
+                    <div class="navbar-buttons mbr-section-btn">
+                        <a class="btn btn-success" href="{{ path('download_app') }}">
+                            <span class="mbri-save mbr-iconfont mbr-iconfont-btn "></span>
+                            APP
+                        </a>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center d-lg-none">
+                    <div class="d-flex align-items-center mbr-section-btn">
+                        <form class="d-flex" action="{{ path('products') }}" method="get">
+                            <input class="form-control global-search" type="text" name="term">
+                            <button class="btn navigation-button global-search-button">
+                                <i class="mbri-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+                    <li class="nav-item dropdown d-none d-lg-block">
+                        <a class="nav-link dropdown-toggle text-white" href="{{ path('products') }}"
+                           data-toggle="dropdown" data-mouse-inside="false"
+                           onclick="onTopDropdownClick(this)" onmouseenter="onDropdownMouseEnter(this)" onmouseleave="onDropdownMouseLeave(this)">
+                            PRODUCTOS
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item " href="{{ path('products', {inOffer:true}) }}">
+                                    <span class="badge-custom badge-offer">OFERTA</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item " href="{{ path('products', {recent:true}) }}">
+                                    <span class="badge-custom badge-new">NUEVO</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item " href="{{ path('products', {inStore:true}) }}">
+                                    <span class="badge-custom badge-in-store">ALMACÉN</span>
+                                </a>
+                            </li>
+                            <div class="dropdown-divider" role="separator"></div>
+                            <li>
+                                <a class="dropdown-item" href="{{ path('products') }}">Todos</a>
+                            </li>
+                            {% for category in categories %}
+                                {% if (category.parents | length) == 0 %}
+                                    {% set subCategories = '' %}
+                                    {% for subCategory in category.subCategories %}
+                                        {% set subCategories = subCategory.id ~ ', '~ subCategories %}
+                                    {% endfor %}
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="{{ path('products', {categories:subCategories}) }}"
+                                           onclick="onBottomDropdownClick(this)">
+                                            {{category.name}}
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            {% for subCategory in category.subCategories %}
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ path('products', {categories:subCategory.id}) }}">{{subCategory.name}}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="dropdown-divider" role="separator"></div>
+                        </ul>
+                    </li>
+                    <li class="nav-item d-lg-none">
+                        <a class="nav-link link text-white" href="{{ path('products') }}">
+                            PRODUCTOS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link text-white" href="{{ path('inward') }}">
+                            PROYECTOS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link text-white" href="{{ path('services') }}">
+                            OBRAS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link text-white" href="{{ path('membership') }}">
+                            MEMBRESÍA
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link text-white" href="{{ path('blog_home') }}">
+                            INSPIRACIONES
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link text-white" href="{{ path('about_us') }}">
+                            SOBRE NOSOTROS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link text-white" href="{{ path('help') }}">
+                            AYUDA
+                        </a>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link link text-white nav-shop-cart-icon"
+                           href="{{ path('shop-cart') }}">
+                            <span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>
+                            <span class="badge badge-shop-cart">{{ count }}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown d-none d-lg-block">
+                        {% if app.user|default and app.user.image %}
+                            <img class="user-image-thumbnail" src="{{ vich_uploader_asset(app.user.image, 'imageFile') }}">
+                        {% endif %}
+                        <a class="nav-link dropdown-toggle btn {% if app.user|default %}btn-success{% else %}login-button{% endif %} btn-user" href="#" data-toggle="dropdown">
+                            <span class="mbri-user mbr-iconfont mbr-iconfont-btn"></span>
+                        </a>
+                        {% if app.user|default %}
+                            <div class="dropdown-menu dropdown-menu-right">
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a class="dropdown-item" href="{{ path('easyadmin') }}">Administrar</a>
+                                {% endif %}
+                                <a class="dropdown-item" href="{{ path('favorite_products') }}">Favoritos</a>
+                                <div class="dropdown-divider" role="separator"></div>
+                                <a class="dropdown-item" href="{{ path('site_profile') }}">Perfil</a>
+                                <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">Cerrar Session</a>
+                            </div>
+                        {% else %}
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-divider" role="separator"></div>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#loginModal" href="">Acceder</a>
+                            </div>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item d-lg-none">
+                        <div class="dropdown-divider" role="separator"></div>
+                        {% if app.user|default %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="dropdown-item" href="{{ path('easyadmin') }}">Administrar</a>
+                            {% endif %}
+                            <a class="dropdown-item" href="{{ path('favorite_products') }}">Favoritos</a>
+                            <a class="dropdown-item" href="{{ path('site_profile') }}">Perfil</a>
+                            <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">Cerrar Session</a>
+                        {% else %}
+                            <a class="dropdown-item" data-toggle="modal" data-target="#loginModal" href="">Acceder</a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item d-lg-none">
+                        <a class="nav-link link text-white nav-shop-cart-icon"
+                           href="{{ path('shop-cart') }}">
+                            <span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>
+                            <span class="badge badge-shop-cart">{{ count }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </section>
+{% endblock %}
+{% block body %}{% endblock %}
+{% block login %}
+    {{ render(controller('AppBundle:Security:login')) }}
+{% endblock %}
+{% block contact %}
+    <section class="app-separator"></section>
+    {{ render(controller('AppBundle:Site:handleEmailNotification')) }}
+{% endblock %}
+{% block footer %}
+    <section once="" class="cid-qQ6pEg97ho mbr-reveal" id="app-footer">
+        <div class="container-fluid">
+            <div class="media-container-row align-center mbr-white">
+                <div class="row row-links">
+                    <ul class="foot-menu">
+                        <li class="foot-menu-item mbr-fonts-style display-7">
+                            <a class="text-white mbr-bold" href="{{ path('products') }}">Productos</a>
+                        </li>
+                        <li class="foot-menu-item mbr-fonts-style display-7">
+                            <a class="text-white mbr-bold" href="{{ url('inward') }}">Proyectos</a>
+                        </li>
+                        <li class="foot-menu-item mbr-fonts-style display-7">
+                            <a class="text-white mbr-bold" href="{{ url('services') }}">Obras</a>
+                        </li>
+                        <li class="foot-menu-item mbr-fonts-style display-7">
+                            <a class="text-white mbr-bold" href="{{ url('membership') }}">Membresía</a>
+                        </li>
+                        <li class="foot-menu-item mbr-fonts-style display-7">
+                            <a class="text-white mbr-bold" href="{{ url('blog_home') }}">Inspiraciones</a>
+                        </li>
+                        <li class="foot-menu-item mbr-fonts-style display-7">
+                            <a class="text-white mbr-bold" href="{{ url('about_us') }}">Sobre Nosotros</a>
+                        </li>
+                        <li class="foot-menu-item mbr-fonts-style display-7">
+                            <a class="text-white mbr-bold" href="{{ url('help') }}">Ayuda</a>
+                        </li>
+                        <li class="foot-menu-item mbr-fonts-style display-7">
+                            <a class="text-white mbr-bold" data-toggle="modal" data-target="#termsAndConditionsModal" href="">Términos y Condiciones</a>
+                        </li>
+                        <li class="foot-menu-item mbr-fonts-style display-7">
+                            <a class="text-white mbr-bold" data-toggle="modal" data-target="#privacyPolicyModal" href="">Política de Privacidad</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row align-self-center m-2">
+                    <div class="col">
+                        {% for network in home.data.social_network.networks %}
+                            {% if network.network == 'facebook' %}
+                                <a href="{{ network.link }}" target="_blank">
+                                    <span class="facebook mx-2" title="Compartir en Facebook">
+                                        <i class="socicon socicon-facebook share-icon"></i>
+                                    </span>
+                                </a>
+                            {% elseif network.network == 'twitter' %}
+                                <a href="{{ network.link }}" target="_blank">
+                                    <span class="twitter mx-2" title="Compartir en Twitter">
+                                        <i class="socicon socicon-twitter share-icon"></i>
+                                    </span>
+                                </a>
+                            {% elseif network.network == 'google' %}
+                                <a href="{{ network.link }}" target="_blank">
+                                    <span class="plusone mx-2" title="Compartir en Google+">
+                                        <i class="socicon socicon-googleplus share-icon"></i>
+                                    </span>
+                                </a>
+                            {% elseif network.network == 'pinterest' %}
+                                <a href="{{ network.link }}" target="_blank">
+                                    <span class="pinterest mx-2" title="Compartir en Pinterest">
+                                        <i class="socicon socicon-pinterest share-icon"></i>
+                                    </span>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row row-copirayt">
+                    <p class="mbr-text mb-0 mbr-fonts-style mbr-white align-center display-7"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block javascript %}
+
+ <script async src="https://www.googletagmanager.com/gtag/js?id=UA-132757745-1"></script>
+
+ <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+
+     gtag('config', 'UA-132757745-1');
+ </script>
+
+<script src="{{ asset('bundles/conceptos/assets/web/assets/jquery/jquery.min.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/popper/popper.min.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/tether/tether.min.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/bootstrap/js/bootstrap.min.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/smoothscroll/smooth-scroll.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/dropdown/js/script.min.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/touchswipe/jquery.touch-swipe.min.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/viewportchecker/jquery.viewportchecker.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/masonry/masonry.pkgd.min.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/bootstrapcarouselswipe/bootstrap-carousel-swipe.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/mbr-popup-btns/mbr-popup-btns.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/vimeoplayer/jquery.mb.vimeo_player.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/sociallikes/social-likes.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/parallax/jarallax.min.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/theme/js/script.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/slidervideo/script.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/gallery/player.min.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/assets/gallery/script.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/libs/toast/jquery.toast.min.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/js/svgcheckbx.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/js/common.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/scripts/js/main.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/scripts/js/cart-management.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/scripts/js/products-navigation.js') }}"></script>
+ <script src="{{ asset('bundles/conceptos/scripts/js/website-navigation.js') }}"></script>
+ <input name="animation" type="hidden">
+{% endblock %}
+{% block js %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,393 @@
+{% extends ':site:base.html.twig' %}
+
+{% block title %}Carrito de compras{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/shop-cart/shop-cart.css') }}">
+{% endblock %}
+{% block body %}
+    <input type="hidden" value="{{ path('site_home') }}" id="site-path">
+    <input type="hidden" value="{{ path('persist_count_shop_car') }}" id="persist-count">
+    <section class="header-shop-car mt-5 pt-4 pt-lg-5">
+        <div class="container-fluid pl-4 pr-4 pl-lg-5 pr-lg-5">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex flex-column">
+                    <h2 class="rob-header d-none d-lg-block">Carrito de Compra</h2>
+                    <h2 class="rob-header rob-header-short d-lg-none">Carrito</h2>
+                    <div class="d-flex align-items-center">
+                        <span class="rob-subtitle">
+                            {{ products | length }} {% if products | length == 1 %}producto{% else %}productos{% endif %}
+                        </span>
+                        {% if products | length > 0 %}
+                            <a href="{{ path('empty_shop_car') }}" class="btn btn-empty">
+                                <i class="empty-all-cart-icon mbri-trash"></i>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <img class="d-none d-lg-flex" src="{{ asset('bundles/conceptos/images/cart/cart.png') }}">
+            </div>
+        </div>
+    </section>
+    <section class="shop-cart">
+        <div class="container-fluid pl-4 pr-4 pl-lg-5 pr-lg-5">
+            <div class="row cart-table-header d-none d-lg-flex">
+                <div class="col col-lg-6 col-12">
+                    <div class="d-flex align-items-center h-100">
+                        <span class="rob-table-text">Producto</span>
+                    </div>
+                </div>
+                <div class="col col-lg-3 col-12">
+                    <div class="d-flex align-items-center h-100">
+                        <span class="rob-table-text">Cantidad y Tipo de Envío</span>
+                    </div>
+                </div>
+                <div class="col col-lg-3 col-12">
+                    <div class="d-flex align-items-center h-100">
+                        <span class="rob-table-text">Precio</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row cart-table-header d-lg-none">
+                <div class="col col-lg-6 col-12">
+                    <div class="d-flex align-items-center h-100">
+                        <span class="rob-table-text">Productos</span>
+                    </div>
+                </div>
+            </div>
+            {% for product in products %}
+                {% if 'offer' not in product | keys %}
+                    <div class="row" data-product="{{ product.id }}">
+                        <div class="col-lg-6 col-12 mt-3 mt-lg-0 pl-0">
+                            {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
+                            {% set altImage = 'Tarjeta de 15 CUC' %}
+                            {% if product.amount == 25 %}
+                                {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
+                                {% set altImage = 'Tarjeta de 25 CUC' %}
+                            {% elseif product.amount == 50 %}
+                                {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
+                                {% set altImage = 'Tarjeta de 50 CUC' %}
+                            {% elseif product.amount == 100 %}
+                                {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
+                                {% set altImage = 'Tarjeta de 100 CUC' %}
+                            {% endif %}
+                            <div class="d-flex flex-column flex-lg-row align-items-center">
+                                <img src="{{ imagePath }}" alt="{{ altImage }}" style="max-width: 200px;">
+                                <span class="product-subtitle-card">{{product.name}}</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 mt-3 mt-lg-0 pl-0">
+                            <div class="cart-quantity-button d-flex flex-column align-items-start justify-content-center h-100">
+                                <span class="price-header">Cantidad de Tarjetas</span>
+                                <div class="cart-quantity">
+                                    <a class="cart-quantity-down" data-uuid="{{ product.uuid }}" data-product="{{ product.id }}">-</a>
+                                    <input class="cart-quantity-input" type="text" name="quantity"
+                                           value="{{ product.count }}" autocomplete="off" size="2"
+                                           data-product="{{ product.id }}">
+                                    <a class="cart-quantity-up" data-product="{{ product.id }}" data-uuid="{{ product.uuid }}">+</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 total-price-product mt-3 mt-lg-0 pl-0"
+                            data-price="{{ product.amount }}"
+                            data-product="{{ product.id }}">
+                            <div class="d-flex flex-column justify-content-center h-100 mr-0 mr-lg-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price-header d-none d-lg-block">Costo</span>
+                                    <span class="price-header price-header-short d-lg-none">Costo</span>
+                                    <div class="d-flex align-items-center">
+                                        <span class="product-count"></span>
+                                        <span class="product-price mb-2"></span>
+                                        <a class="cart-quantity-delete mb-1" data-product="{{ product.id }}" data-path="{{ path('remove_from_cart_shop', {id: product.id}) }}">
+                                            <i class="remove-from-cart-icon mbri-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="product-description-divider d-flex justify-content-between align-items-center">
+                                    <span class="price-header d-none d-lg-block">Subtotal</span>
+                                    <span class="price-header price-header-short d-lg-none">Subtotal</span>
+                                    <span class="product-subtotal"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shop-cart-divider d-lg-none" role="separator"></div>
+                {% else %}
+                    <div class="row" data-product="{{ product.product.id }}">
+                        <div class="col-lg-6 col-12 mt-3 mt-lg-0 pl-0">
+                            <div class="d-flex flex-column flex-lg-row align-items-center">
+                                <img src="{{ vich_uploader_asset(product.product.mainImage, 'imageFile') }}"
+                                      width="200"
+                                      height="200" alt="{{ product.product.description }}">
+                                <div class="d-flex flex-column justify-content-center">
+                                    {% set oldProduct = product %}
+                                    {% set product = product.product %}
+                                    <div class="tags-section d-flex align-items-center">
+                                        <span class="product-code">{{ product.code }}</span>
+                                        {% set priceOffer = -1 %}
+                                        {% set offerId = 'false' %}
+                                        {% set onlyForMembers = false %}
+                                        {% for offer in product.offers %}
+                                            {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
+                                                {% set priceOffer = offer.price %}
+                                                {% set offerId = offer.id %}
+                                                {% if offer.onlyForMembers %}
+                                                    {% set onlyForMembers = true %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if priceOffer != -1 %}
+                                            <span class="badge-custom badge-offer">O</span>
+                                        {% endif %}
+                                        {% if product.recent %}
+                                            <span class="badge-custom badge-new">N</span>
+                                        {% endif %}
+                                        {% if product.inStore %}
+                                            <span class="badge-custom badge-in-store">A</span>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <span class="product-title">{{ product.name }}</span>
+                                    </div>
+                                    <div>
+                                        <span class="product-subtitle-card d-none d-lg-block">{{ product.item }}</span>
+                                        <span class="product-subtitle-card product-subtitle-card-short d-lg-none">{{ product.item }}</span>
+                                    </div>
+                                    {% if onlyForMembers %}
+                                        <span class="badge-custom badge-new only-for-members">Oferta solo para Miembros</span>
+                                    {% endif %}
+                                    {% set product = oldProduct %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 mt-3 mt-lg-0 pl-0">
+                            <div class="cart-quantity-button d-flex flex-column align-items-start justify-content-center h-100">
+                                <div class="delivery-type">
+                                    {% if product.isFurniture and product.isAriplaneForniture %}
+                                        <span class="price-header">Tipo de Entrega</span>
+                                        <div>
+                                            <select class="form-control" data-product="{{ product.product.id }}"
+                                                    data-path="{{ path('calculate_product_price') }}">
+                                                <option value="1">Envio Marítimo</option>
+                                                <option value="2">Envio Aereo</option>
+                                            </select>
+                                        </div>
+                                    {% elseif product.isFurniture %}
+                                        <span class="price-header mb-2">Envio Marítimo</span>
+                                    {% else %}
+                                        <span class="price-header mb-2">Envio Aereo</span>
+                                    {% endif %}
+                                </div>
+                                <span class="price-header">Cantidad de Productos</span>
+                                <div class="cart-quantity">
+                                    <a class="cart-quantity-down" data-uuid="{{ product.uuid }}" data-product="{{ product.product.id }}">-</a>
+                                    <input class="cart-quantity-input" type="text" name="quantity"
+                                           value="{{ product.count }}" autocomplete="off" size="2"
+                                           data-product="{{ product.product.id }}">
+                                    <a class="cart-quantity-up" data-product="{{ product.product.id }}" data-uuid="{{ product.uuid }}">+</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 total-price-product mt-3 mt-lg-0 pl-0"
+                            data-price="{{product.product.price}}"
+                            data-offer="{% if product.offer %}{{product.offer.price}}{% endif %}"
+                            data-offer-members="{% if product.offer %}{{product.offer.onlyForMembers}}{% endif %}"
+                            data-product="{{ product.product.id }}">
+                            <div class="d-flex flex-column justify-content-center h-100 mr-0 mr-lg-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price-header d-none d-lg-block">Costo</span>
+                                    <span class="price-header price-header-short d-lg-none">Costo</span>
+                                    <div class="d-flex align-items-center">
+                                        <span class="product-count"></span>
+                                        <span class="product-price mb-2"></span>
+                                        <a class="cart-quantity-delete mb-1" data-product="{{ product.product.id }}" data-path="{{ path('remove_from_cart_shop', {id: product.product.id}) }}">
+                                            <i class="remove-from-cart-icon mbri-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="product-description-divider d-flex justify-content-between align-items-center">
+                                    <span class="price-header d-none d-lg-block">Subtotal</span>
+                                    <span class="price-header price-header-short d-lg-none">Subtotal</span>
+                                    <span class="product-subtotal"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shop-cart-divider d-lg-none" role="separator"></div>
+                {% endif %}
+            {% else %}
+                <div class"row">
+                    <div class="col">
+                        <div class="d-flex justify-content-center">
+                            <span class="price-header m-4">Sin productos en el carrito</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="row">
+                <div class="col-12 pl-0">
+                    <div class="container-fluid">
+                        <div class="row membership-discount-row" style="display: none;">
+                            <div class="col-12 pl-0">
+                                <hr />
+                            </div>
+                        </div>
+                        <div class="row membership-discount-row" style="display: none;">
+                            <div class="col-12 pl-0">
+                                <div class="d-flex align-items-center justify-content-end">
+                                    <div class="col-lg-3 pl-0">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="price-header d-none d-lg-block">Descuento de Miembro</span>
+                                            <span class="price-header price-header-short d-lg-none">Descuento de Miembro</span>
+                                            <span id="membership-discount" class="product-price mr-0 mr-lg-3"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 pl-0">
+                                <hr />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-12 pl-0">
+                                <div class="d-flex align-items-center justify-content-end">
+                                    <div class="col-lg-3 pl-0">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="price-header d-none d-lg-block">Costo de Transporte</span>
+                                            <span class="price-header price-header-short d-lg-none">Costo de Transporte</span>
+                                            <span id="transport-cost" class="product-price mr-0 mr-lg-3"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row cart-table-header">
+                <div class="col">
+                    <div class="d-flex align-items-center justify-content-between h-100">
+                        <span class="rob-table-text">
+                            Total
+                        </span>
+                        <span class="rob-header total-price mr-4 d-none d-lg-block"></span>
+                        <span class="rob-header total-price total-price-short mr-4 d-lg-none"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center" id="shop-cart-member">
+                            <div class="d-flex ac-custom ac-checkmark">
+                                <ul>
+                                    <li>
+                                        <div class="d-none d-lg-flex">
+                                            <input class="shop-cart-membership-checkbox" type="checkbox">
+                                            <label class="mb-0">Soy Miembro</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="short-checkbox d-flex d-lg-none mt-3 mb-2">
+                                            <input class="shop-cart-membership-checkbox" type="checkbox">
+                                            <label class="mb-0">Soy Miembro</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="d-flex ml-0">
+                                            <input id="shop-cart-membership-number" class="form-control" type="text" placeholder="Número de Miembro" style="display: none;">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="d-flex">
+                                            <button id="shop-cart-membership-number-check" class="btn navigation-button ml-0" style="display: none;">
+                                                Comprobar
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <div id="home-collect" style="display: none;">
+                                        <li class="d-none d-lg-flex">
+                                            <input class="home-collect-checkbox" type="checkbox">
+                                            <label class="mb-0">Recojida de Anticipo a Domicilio</label>
+                                        </li>
+                                        <li class="short-checkbox d-flex d-lg-none mt-1">
+                                            <input class="home-collect-checkbox" type="checkbox">
+                                            <label class="mb-0">Recojida de Anticipo a Domicilio</label>
+                                        </li>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                        {% if products | length > 0 %}
+                            <div class="d-flex">
+                                <a class="btn navigation-button btn-send-request d-none d-lg-block" data-path="{{ path('check_out') }}">
+                                    Datos de entrega
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex justify-content-start">
+                        {% if products | length > 0 %}
+                            <a class="btn navigation-button btn-send-request d-lg-none ml-0" data-path="{{ path('check_out') }}">
+                                Datos de entrega
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block js %}
+    <script>
+        products = [];
+        {% for product in products %}
+        products.push({
+            {% if product.weight is defined %}
+                weight: {{product.weight}},
+            {% else %}
+                weight: 0,
+            {% endif %}
+            {% if product.ikeaPrice is defined %}
+                ikeaPrice: {{product.ikeaPrice}},
+            {% else %}
+                ikeaPrice: 0,
+            {% endif %}
+            {% if product.isFurniture is defined %}
+                isFurniture: true,
+            {% else %}
+                isFurniture: false,
+            {% endif %}
+            {% if product.isAriplaneForniture is defined %}
+                isAriplaneForniture: true,
+            {% else %}
+                isAriplaneForniture: false,
+            {% endif %}
+            {% if product.categories is defined %}
+                categories: {{product.categories}},
+            {% else %}
+                categories: false,
+            {% endif %}
+            {% if product.type is defined %}
+                id: '{{ product.id }}',
+                type: 'target',
+                count: {{ product.count }},
+                amount: {{ product.amount }},
+            {% endif %}
+            {% if product.product is defined %}
+                id: '{{ product.product.id }}',
+                name: '{{ product.product.name }}',
+                storeCount: '{{ product.storeCount }}',
+                count: {{ product.count }},
+            {% endif %}
+            {% if 'offer' in product | keys and product.offer %}
+                offer: {{ product.offer.id }},
+            {% else %}
+                offer: false
+            {% endif %}
+        });
+        {% endfor %}
+    </script>
+    <script src="{{ asset('bundles/conceptos/shop-cart/js/shop-cart.js') }}"></script>
+{% endblock %}

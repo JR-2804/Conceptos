@@ -1,0 +1,21 @@
+.panel-primary {
+  border-color: #dd4b39;
+}
+
+.panel-primary > .panel-heading {
+  color: #fff;
+  background-color: #dd4b39;
+  border-color: #dd4b39;
+}
+
+.dropzone {
+  background: none !important;
+  padding: 0em;
+  border: 3px dashed rgba(95, 111, 109, 0.66);
+  margin-top: 25px;
+}
+
+.video-link {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

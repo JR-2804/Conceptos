@@ -1,0 +1,118 @@
+{% extends ':site:base.html.twig' %}
+{% block title %}Detalles del Proyecto - {{ project.title }}{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/product-details.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/products.css') }}">
+{% endblock %}
+{% block body %}
+    <section class="product-details-section">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-lg-10 pl-0">
+                    <div class="container-fluid">
+                        <div class="row product-details pt-0 pt-lg-5">
+                            <div class="col-12 pl-0 product-image">
+                                <div class="d-flex">
+                                    <div class="carousel flex-column align-items-center justify-content-between d-none d-lg-flex pl-3 pl-lg-5"
+                                         id="product-images-nav-carousel" data-interval="0">
+                                          <a class="prev-button" role="button">
+                                              <span aria-hidden="true" class="mbri-up mbr-iconfont"></span>
+                                          </a>
+                                          <div class="carousel-inner d-flex flex-column justify-content-start align-items-center">
+                                              {% set index = 0 %}
+                                              {% for imageSet in imageSets %}
+                                                  <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                                      <div class="d-flex flex-column">
+                                                          {% for image in imageSet %}
+                                                              <span data-app-prevent-settings="" data-target="#product-images-carousel" data-slide-to="{{ index }}">
+                                                                  <img class="product-image-thumbnail" src="{{ image.path }}">
+                                                              </span>
+                                                              {% set index = index + 1 %}
+                                                          {% endfor %}
+                                                      </div>
+                                                  </div>
+                                              {% endfor %}
+                                          </div>
+                                          <a class="next-button" role="button">
+                                              <span aria-hidden="true" class="mbri-down mbr-iconfont"></span>
+                                          </a>
+                                    </div>
+                                    <div class="carousel mbr-slider d-flex" id="product-images-carousel" data-interval="5000">
+                                        <div class="carousel-inner" role="listbox">
+                                            {% for image in project.images %}
+                                                <div class="carousel-item slider-fullscreen-image {% if loop.first %}active{% endif %}" data-bg-video-slide="false">
+                                                    <div class="container container-slide">
+                                                        <div class="row">
+                                                            <div class="d-flex col-12 justify-content-end pl-0 pl-lg-3">
+                                                                <img class="mt-0" src="{{ image.path }}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <a data-app-prevent-settings="" class="carousel-control carousel-control-prev carousel-control-short d-lg-none" role="button"
+                                            data-slide="prev" href="#product-images-carousel">
+                                            <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+                                        </a>
+                                        <a data-app-prevent-settings="" class="carousel-control carousel-control-next carousel-control-short d-lg-none" role="button"
+                                            data-slide="next" href="#product-images-carousel">
+                                            <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pl-3 pl-lg-5">
+                            <div class="col-12 pl-0 d-flex flex-column align-items-start">
+                                <span class="product-description-header pt-2 pt-lg-5">{{project.title}}</span>
+                                <div class="w-100 pl-0">
+                                    <div class="product-description-divider"></div>
+                                </div>
+                                <span class="product-description">{{project.description}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 pl-0 d-flex flex-column align-items-start">
+                                <span class="product-description-header pl-3 pl-lg-5 pt-3 pt-lg-5">Productos</span>
+                                <div class="w-100 pl-3 pl-lg-5">
+                                    <div class="product-description-divider"></div>
+                                </div>
+                                <div class="related-products w-100">
+                                    <div class="d-flex flex-wrap">
+                                        {% for product in products %}
+                                            <div class="col-6 col-lg-3 col-no-padding-left">
+                                                {{include('site/components/product-summary.html.twig')}}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if home.data.advertisements|length > 0 %}
+                <div class="col-12 col-lg-2">
+                    <div class="container-fluid advertisement-section">
+                        {% for advertisement in home.data.advertisements %}
+                            {% if advertisement.section == 2 %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <a href="{{advertisement.link}}">
+                                        <img src="{{ advertisement.path }}">
+                                    </a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block js %}
+    <script src="{{ asset('bundles/conceptos/products/js/product-details.js') }}"></script>
+{% endblock %}

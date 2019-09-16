@@ -1,0 +1,497 @@
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Slide</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="control-label">Principal</label>
+                                    <input type="text" class="form-control" id="header-main">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="control-label">Secundario</label>
+                                    <input type="text" class="form-control" id="header-secondary">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="control-label">URL del Video</label>
+                                    <input type="text" class="form-control" id="video-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="center-block">
+                            <form class="dropzone" id="picture-dropzone-header"
+                                  action="{{ path('upload_site_image') }}">
+                                <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                    Seleccione una imágen
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <button class="btn btn-primary pull-right" id="btn-add-image-video">
+                            Añadir
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="panel panel-default" style="margin-top: 20px;">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Slides añadidos</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row row-header-images">
+                                    <div class="col-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Slide #%6</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <img src="%1"
+                                                     class="img-responsive img-header center-block"
+                                                     height="150" width="150">
+                                                <p class="video-link">%4</p>
+                                                <p class="video-link">%5</p>
+                                                <p class="video-link">%3</p>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <div class="center-block">
+                                                    <a class="btn btn-link btn-secondary pull-right btn-remove-header-image"
+                                                       data-id="%2">Eliminar</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Seccion Superior</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-12">
+                        <form class="dropzone" id="picture-dropzone-top-1" action="{{ path('upload_site_image') }}">
+                            <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                Seleccione una imágen
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-12">
+                        <form class="dropzone" id="picture-dropzone-top-2" action="{{ path('upload_site_image') }}">
+                            <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                Seleccione una imágen
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Subtítulos</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label">Subtítulo de En Almacén</label>
+                            <input type="text" class="form-control" id="in-store-subtitle">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label">Subtítulo de Novedades</label>
+                            <input type="text" class="form-control" id="recent-subtitle">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Marcas Cubanas</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label">Título</label>
+                            <input type="text" class="form-control" id="cuban-brands-title">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label">Subtítulo</label>
+                            <input type="text" class="form-control" id="cuban-brands-subtitle">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">APP</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="control-label">App</label>
+                            <input type="text" class="form-control" id="app-app">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="control-label">Base de Datos</label>
+                            <input type="text" class="form-control" id="app-db">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <form class="dropzone" id="picture-dropzone-app" action="{{ path('upload_site_image') }}">
+                            <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                Seleccione una imágen
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Redes sociales</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="control-label">Texto</label>
+                            <input type="text" class="form-control" id="social-network">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label">Red social</label>
+                                    <select class="control-label" multiple id="social-network-select">
+                                        <option value="facebook">Facebook</option>
+                                        <option value="google">Google +</option>
+                                        <option value="pinterest">Pinterest</option>
+                                        <option value="twitter">Twitter</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label">Enlace</label>
+                                    <input type="text" class="form-control" id="social-network-link">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <button class="btn btn-primary btn-add-social-network pull-right"
+                                        data-edit="false">
+                                    Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped table-condensed table-social-networks">
+                                <thead>
+                                <tr>
+                                    <th>Red</th>
+                                    <th class="text-center">Enlace</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td colspan="3" class="text-center">Sin redes sociales añadidas</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Blog</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label">Principal</label>
+                            <input type="text" class="form-control" id="blog-main">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="control-label">Secundario</label>
+                            <input type="text" class="form-control" id="blog-secondary">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Catálogo
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-4"></div>
+                <div class="col-4">
+                    <div class="center-block">
+                        <form class="dropzone" id="picture-dropzone-cataloge"
+                              action="{{ path('upload_site_image') }}">
+                            <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                Seleccione un PDF
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-4"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Contacto</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="control-label">Principal</label>
+                            <input type="text" class="form-control" id="contact-main">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="control-label">Secundario</label>
+                            <input type="text" class="form-control" id="contact-secondary">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="center-block">
+                            <form class="dropzone" id="picture-dropzone-contact"
+                                  action="{{ path('upload_site_image') }}">
+                                <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                    Seleccione una imágen
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Propaganda</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="control-label">Nombre</label>
+                            <input type="text" class="form-control" id="advertisement-name">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="control-label">Seccion</label>
+                            <select id="advertisement-section" class="form-control">
+                                <option value="1">Home</option>
+                                <option value="2">Detalles del Producto</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="control-label">Enlace</label>
+                            <input type="text" class="form-control" id="advertisement-link">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="control-label">Prioridad</label>
+                            <input type="number" class="form-control" id="advertisement-priority">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="center-block">
+                            <form class="dropzone" id="picture-dropzone-advertisement-image"
+                                  action="{{ path('upload_site_image') }}">
+                                <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                    Seleccione una imágen
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="margin-top: 20px;">
+                        <button class="btn btn-primary" id="btn-add-advertisement">Añadir</button>
+                        <button class="btn btn-primary" id="btn-edit-advertisement" style="display:none;">Editar</button>
+                        <button class="btn btn-primary" id="btn-cancel-edit-advertisement" style="display:none;">Cancelar</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="panel panel-default" style="margin-top: 20px;">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Propaganda añadida</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="d-flex flex-wrap row-advertisement">
+                                    <div class="col-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Propaganda #%6</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <img src="%1"
+                                                     class="img-responsive img-header center-block"
+                                                     height="150" width="150">
+                                                <p class="video-link">%3</p>
+                                                <p class="video-link">%4</p>
+                                                <p class="video-link">%5</p>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <div class="center-block">
+                                                    <a class="btn btn-link btn-secondary pull-right btn-remove-advertisement"
+                                                       data-id="%2">Eliminar</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Login</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="center-block">
+                            <form class="dropzone" id="picture-dropzone-login"
+                                  action="{{ path('upload_site_image') }}">
+                                <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                    Seleccione una imágen
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Correo de compra exitosa</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="center-block">
+                            <form class="dropzone" id="picture-dropzone-success-mail"
+                                  action="{{ path('upload_site_image') }}">
+                                <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                    Seleccione una imágen
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,213 @@
+{% extends ':site:base.html.twig' %}
+{% block title %}Obras{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/services/services.css') }}" type="text/css">
+{% endblock %}
+{% block body %}
+    <section class="page-header mbr-parallax-background d-none d-lg-block" style="background-image: url('{{ page.data.services.header.image.path }}')"></section>
+    <section class="page-header-short mbr-parallax-background d-lg-none" style="background-image: url('{{ page.data.services.header.image.path }}')"></section>
+    <section class="decoration-design-section d-none d-lg-block">
+      <div class="container-fluid">
+          <div class="row justify-content-between">
+              <div class="col-12 col-lg-6">
+                  <span class="decoration-design-title">{{page.data.services.arg.title|raw}}</span>
+                  <p class="decoration-design-description">{{page.data.services.arg.description|raw}}</p>
+              </div>
+              <div class="col-12 col-lg-6 d-none d-lg-flex">
+                  <img class="decoration-design-image" src="{{page.data.services.arg.image.path}}">
+              </div>
+          </div>
+      </div>
+    </section>
+    <section class="decoration-design-section d-lg-none pt-3 pb-3">
+      <div class="container-fluid pl-0 pr-0">
+          <div class="row justify-content-between">
+              <div class="col-12 col-lg-6 pl-0">
+                  <span class="decoration-design-title">{{page.data.services.arg.title|raw}}</span>
+                  <p class="decoration-design-description">{{page.data.services.arg.description|raw}}</p>
+              </div>
+          </div>
+      </div>
+    </section>
+    <section class="mbr-parallax-background inspiration-section"
+             style="background-image: url('{{page.data.services.inspiration.image.path}}')">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-12 h-100 pl-0">
+                    <div class="d-flex align-items-center justify-content-center h-100">
+                        <span class="inspiration-text d-none d-lg-flex">{{page.data.services.inspiration.text|raw}}</span>
+                        <span class="inspiration-text inspiration-text-short d-lg-none">{{page.data.services.inspiration.text|raw}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="designers-team-section d-none d-lg-block">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-12">
+                  <div class="d-flex">
+                      <img class="d-flex" src="{{page.data.services.designersTeam.image.path}}">
+                      <div class="d-flex flex-column justify-content-between align-items-end decoration-design-text">
+                          <div class="d-flex flex-column">
+                              <span class="decoration-design-title">{{page.data.services.designersTeam.title|raw}}</span>
+                              <p class="decoration-design-description">{{page.data.services.designersTeam.description|raw}}</p>
+                              <div class="d-flex flex-wrap">
+                                  {% for service in page.data.services.designersTeam.services %}
+                                      <a class="header-button header-button-black" href="{{ path('service_details', {serviceTitle: service.title, pageName: 'inward'}) }}">
+                                          {{service.title|raw}}
+                                      </a>
+                                  {% endfor %}
+                              </div>
+                          </div>
+                          <a class="btn navigation-button btn-previous-store" href="{{ path('request_service') }}">
+                              Solicitud de Servicio
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </section>
+    <section class="designers-team-section d-lg-none pt-3 pb-3">
+      <div class="container-fluid pl-0 pr-0">
+          <div class="row">
+              <div class="col-12 pl-0">
+                  <div class="d-flex">
+                      <div class="d-flex flex-column justify-content-between align-items-center decoration-design-text ml-0">
+                          <div class="d-flex flex-column">
+                              <span class="decoration-design-title">{{page.data.services.designersTeam.title|raw}}</span>
+                              <p class="decoration-design-description">{{page.data.services.designersTeam.description|raw}}</p>
+                              <div class="d-flex">
+                                  <select class="form-control" id="service-select">
+                                      <option value="">Diferentes Servicios</option>
+                                      {% for service in page.data.services.designersTeam.services %}
+                                          <option value="{{ service.title }}" data-path="{{ path('service_details', {serviceTitle: service.title, pageName: 'inward'}) }}">{{ service.title }}</option>
+                                      {% endfor %}
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="d-flex">
+                              <a class="btn navigation-button btn-previous-store" href="{{ path('request_service') }}">Solicitud de Servicio</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </section>
+    <section style="background-image: url('{{page.data.services.projects.image.path}}')">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 ">
+                    <span class="projects-title mt-2 mt-lg-4">{{page.data.services.projects.title|raw}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <span class="projects-subtitle">{{page.data.services.projects.subtitle|raw}}</span>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8 pl-0">
+                    <div class="d-flex mbr-slider slide carousel" id="projects-carousel"
+                         data-keyboard="false" data-ride="carousel" data-interval="10000">
+                        <div class="carousel-inner" role="listbox">
+                            {% if page.data.services.projects.projects | length == 0 %}
+                              <div class="carousel-item slider-fullscreen-image active">
+                                  <img class="highlight-image" src="{{ asset('bundles/conceptos/images/home/home_002.jpg') }}">
+                              </div>
+                            {% endif %}
+                            {% for image in page.data.services.projects.projects %}
+                                <div class="carousel-item slider-fullscreen-image {% if loop.first %}active{% endif %}">
+                                    <a href="{{ path('project_details', {projectTitle: image.title}) }}">
+                                        <img class="highlight-image" src="{{ image.path }}">
+                                        <div class="d-flex justify-content-center">
+                                            <span class="project-title">{{image.title}}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if page.data.services.projects.projects | length > 1 %}
+                            <a data-app-prevent-settings="" class="carousel-control carousel-control-prev d-none d-lg-block" role="button"
+                                data-slide="prev" href="#projects-carousel">
+                                <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+                                <span class="sr-only">Anterior</span>
+                            </a>
+                            <a data-app-prevent-settings="" class="carousel-control carousel-control-prev carousel-control-short d-lg-none ml-2" role="button"
+                                data-slide="prev" href="#projects-carousel">
+                                <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+                                <span class="sr-only">Anterior</span>
+                            </a>
+                            <a data-app-prevent-settings="" class="carousel-control carousel-control-next d-none d-lg-block" role="button"
+                                data-slide="next" href="#projects-carousel">
+                                <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+                                <span class="sr-only">Siguiente</span>
+                            </a>
+                            <a data-app-prevent-settings="" class="carousel-control carousel-control-next carousel-control-short d-lg-none mr-2" role="button"
+                                data-slide="next" href="#projects-carousel">
+                                <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+                                <span class="sr-only">Siguiente</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="testimony-section d-none d-lg-block">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-12">
+                  <span class="testimony-title">{{page.data.services.testimony.title|raw}}</span>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-12">
+                  <div class="d-flex flex-column align-items-center">
+                      <img src="{{ asset('bundles/conceptos/images/home/3538.png') }}" class="testimony-quote-open">
+                      <span class="testimony-description">{{page.data.services.testimony.description|raw}}</span>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-12">
+                  <div class="d-flex flex-column align-items-center">
+                      <span class="testimony-author">{{page.data.services.testimony.author|raw}}</span>
+                      <img src="{{ asset('bundles/conceptos/images/home/3538.png') }}" class="testimony-quote-close">
+                  </div>
+              </div>
+          </div>
+      </div>
+    </section>
+    <section class="testimony-section d-lg-none pt-3 pb-3">
+      <div class="container-fluid pl-0 pr-0">
+          <div class="row">
+              <div class="col-12 pl-0">
+                  <span class="testimony-title">{{page.data.services.testimony.title|raw}}</span>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-12 pl-0">
+                  <div class="d-flex flex-column align-items-center">
+                      <img src="{{ asset('bundles/conceptos/images/home/3538.png') }}" class="testimony-quote-open">
+                      <span class="testimony-description testimony-description-short">{{page.data.services.testimony.description|raw}}</span>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-12 pl-0">
+                  <div class="d-flex flex-column align-items-center">
+                      <span class="testimony-author testimony-author-short">{{page.data.services.testimony.author|raw}}</span>
+                      <img src="{{ asset('bundles/conceptos/images/home/3538.png') }}" class="testimony-quote-close">
+                  </div>
+              </div>
+          </div>
+      </div>
+    </section>
+{% endblock %}
+{% block js %}
+    <script src="{{ asset('bundles/conceptos/services/services.js') }}"></script>
+{% endblock %}

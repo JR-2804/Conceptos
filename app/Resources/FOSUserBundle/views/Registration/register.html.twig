@@ -1,0 +1,15 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+{% block title %}Registro{% endblock %}
+{% block css %}
+    <link href="{{ asset('bundles/conceptos/libs/dropzone/dropzone.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+{% block fos_user_content %}
+    <div class="ml-5 mr-5">
+        {{ include('FOSUserBundle:Registration:register_content.html.twig') }}
+    </div>
+{% endblock fos_user_content %}
+{% block js %}
+    <script src="{{ asset('bundles/conceptos/libs/dropzone/dropzone.js') }}"></script>
+    <script src="{{ asset('bundles/conceptos/scripts/js/edit-profile.js') }}"></script>
+{% endblock %}

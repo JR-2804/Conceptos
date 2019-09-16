@@ -1,0 +1,9 @@
+.request-details-section {
+    background-color: #ffffff;
+}
+
+.table .thead-custom th {
+    color: #3f3c03 !important;
+    background-color: #f7ed4a !important;
+    border-color: #f7ed4a !important;
+}
