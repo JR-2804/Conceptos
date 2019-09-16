@@ -21,6 +21,7 @@ var cataloge = undefined;
 var advertisementImages = undefined;
 var advertisementImage = undefined;
 var successMailImage = undefined;
+var logoImage = undefined;
 
 var editingAdvertisement = undefined;
 
@@ -34,6 +35,9 @@ $(document).ready(function() {
   }
   if (data.successMail) {
     successMailImage = data.successMail.image;
+  }
+  if (data.logo) {
+    logoImage = data.logo.image;
   }
 
   headerImages = data.slides;
@@ -298,6 +302,36 @@ $(document).ready(function() {
       successMailImage = r;
     }
   });
+  dropzoneLogo = new Dropzone("form#picture-dropzone-logo", {
+    url: $("#picture-dropzone-logo").attr("action"),
+    maxFiles: 1,
+    thumbnailWidth: 100,
+    thumbnailHeight: 100,
+    addRemoveLinks: true,
+    dictCancelUpload: "Cancelar",
+    dictRemoveFile: "Eliminar",
+    previewTemplate: document.querySelector("#preview-template").innerHTML,
+    acceptedFiles: ".jpg,.jpeg,.png,.gif",
+    init: function() {
+      dropzoneLogo = this;
+      if (logoImage != undefined) {
+        var mockFile = {
+          name: logoImage.name,
+          size: logoImage.size
+        };
+        dropzoneLogo.emit("addedfile", mockFile);
+        dropzoneLogo.emit("thumbnail", mockFile, logoImage.path);
+        dropzoneLogo.emit("complete", mockFile);
+      }
+      dropzoneLogo.on("removedfile", function() {
+        logoImage = undefined;
+        dropzoneLogo.options.maxFiles = 1;
+      });
+    },
+    success: function(e, r) {
+      logoImage = r;
+    }
+  });
 
   $("#social-network-select").select2({
     theme: "bootstrap",
@@ -498,7 +532,10 @@ function generateData() {
     },
     successMail: {
       image: successMailImage
-    }
+    },
+    logo: {
+      image: logoImage
+    },
   };
   return data;
 }
@@ -530,6 +567,9 @@ function validateSubmitData() {
     valid = false;
   }
   if (!successMailImage) {
+    valid = false;
+  }
+  if (!logoImage) {
     valid = false;
   }
   return valid;
