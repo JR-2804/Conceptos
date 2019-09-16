@@ -1,7 +1,7 @@
 $(document).ready(function() {
   if (window.screen.width > 1000) {
-    $("#membership-header-short").remove();
+    $("#membership-form-short").remove();
   } else {
-    $("#membership-header").remove();
+    $("#membership-form-large").remove();
   }
 });

@@ -51,11 +51,11 @@
         </div>
     </div>
 
-    <section class="page-header mbr-parallax-background d-none d-lg-block" style="background-image: url('{{ page.data.header.image.path }}')">
+    <section id="membership-form-large" class="page-header mbr-parallax-background d-none d-lg-block" style="background-image: url('{{ page.data.header.image.path }}')">
         {{ render(controller('AppBundle:Site:requestMembership')) }}
     </section>
     <section class="page-header-short mbr-parallax-background d-lg-none" style="background-image: url('{{ page.data.header.image.path }}')"></section>
-    <section class="membership-form-section d-lg-none">
+    <section id="membership-form-short" class="membership-form-section d-lg-none">
         <div class="pt-3">
             {{ render(controller('AppBundle:Site:requestMembership')) }}
         </div>
@@ -144,4 +144,7 @@
             </div>
         </div>
     </section>
+{% endblock %}
+{% block js %}
+    <script src="{{ asset('bundles/conceptos/scripts/js/membership.js') }}"></script>
 {% endblock %}
