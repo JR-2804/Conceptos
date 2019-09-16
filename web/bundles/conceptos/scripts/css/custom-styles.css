@@ -1488,10 +1488,10 @@ a.header-text.active {
 }
 
 #products-search {
-  top: 20%;
+  top: 25%;
   left: 20px;
   position: fixed;
-  z-index: 5000;
+  z-index: 900;
 }
 
 #products-search i {
@@ -1867,10 +1867,6 @@ i.share-icon:hover {
   margin: 5px 0px 0px 0px;
 }
 
-#loginModal .modal-dialog {
-  max-width: 75vh;
-}
-
 #loginModal .modal-body {
   height: 60vh;
   padding: 0px;
@@ -2059,6 +2055,10 @@ i.share-icon:hover {
 
 .product-subtotal {
   font-size: 25px;
+}
+
+.gift-card-container {
+  background-color: #ffffff;
 }
 
 .gift-card-section {
