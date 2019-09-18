@@ -5,10 +5,26 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div id="login-modal" class="container-fluid membership-form h-100 d-none d-lg-flex" style="background-image: url('{{home.data.login.image.path}}'); background-size: contain; background-repeat: round;">
-                    {{ include('FOSUserBundle:Security:login_modal_content.html.twig') }}
+                    <div class="row w-100 h-100">
+                        <div class="col-12 col-lg-6 h-100 pl-0">
+                            <div class="d-flex align-items-end h-100">
+                                <div class="d-flex flex-column w-100 pb-3">
+                                    {{ include('FOSUserBundle:Security:login_modal_content.html.twig') }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div id="login-modal-short" class="container-fluid membership-form h-100 d-lg-none" style="background-image: url('{{home.data.login.imageShort.path}}'); background-size: contain; background-repeat: round;">
-                    {{ include('FOSUserBundle:Security:login_modal_content.html.twig') }}
+                    <div class="row w-100 h-100">
+                        <div class="col-12 col-lg-6 h-100 pl-0">
+                            <div class="d-flex align-items-end h-100">
+                                <div class="d-flex flex-column h-100 w-100 pb-3 add-scroll">
+                                    {{ include('FOSUserBundle:Security:login_modal_content.html.twig') }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

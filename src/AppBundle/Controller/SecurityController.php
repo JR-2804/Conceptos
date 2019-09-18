@@ -199,7 +199,7 @@ class SecurityController extends Controller
             $jsonImage = json_encode([
                 'id' => $user->getImage()->getId(),
                 'name' => $user->getImage()->getOriginalName(),
-                'size' => filesize($this->getParameter('kernel.root_dir').'/../web'.$helper->asset($user->getImage(), 'imageFile')),
+                'size' => filesize($this->getParameter('kernel.root_dir').'/../public_html'.$helper->asset($user->getImage(), 'imageFile')),
                 'path' => $helper->asset($user->getImage(), 'imageFile'),
             ]);
             $form->get('jsonImage')->setData($jsonImage);

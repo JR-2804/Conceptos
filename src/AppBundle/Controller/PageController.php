@@ -79,7 +79,7 @@ class PageController extends Controller
         $data = [
             'id' => $image->getId(),
             'name' => $image->getOriginalName(),
-            'size' => filesize($this->getParameter('kernel.root_dir').'/../web'.$helper->asset($image, 'imageFile')),
+            'size' => filesize($this->getParameter('kernel.root_dir').'/../public_html'.$helper->asset($image, 'imageFile')),
             'path' => $helper->asset($image, 'imageFile'),
         ];
 

@@ -1,91 +1,83 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="row w-100 h-100">
-    <div class="col-12 col-lg-6 h-100 pl-0">
-        <div class="d-flex align-items-end h-100">
-            <div class="d-flex flex-column h-100 w-100 pb-3 add-scroll">
-                <div class="d-flex flex-column ml-3 mr-3">
-                    <div id ="login-form">
-                        <form class="container pl-0 pr-0" role="form" method="POST" action="{{ path('fos_user_security_check') }}">
-                            {% if csrf_token %}
-                                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
-                            {% endif %}
-                            {# <div class="d-flex mb-2">
-                                <span class="bottom-text">Acceder con mis redes sociales</span>
-                            </div>
-                            <div class="d-flex">
-                                <a href="">
-                                    <span class="facebook mx-2">
-                                        <i class="socicon socicon-facebook share-icon"></i>
-                                    </span>
-                                </a>
-                                <a href="">
-                                    <span class="plusone mx-2">
-                                        <i class="socicon socicon-googleplus share-icon"></i>
-                                    </span>
-                                </a>
-                                <a href="">
-                                    <span class="twitter mx-2">
-                                        <i class="socicon socicon-twitter share-icon"></i>
-                                    </span>
-                                </a>
-                            </div> #}
-                            <div class="d-flex mt-2">
-                                <span class="bottom-text">Acceder al sitio</span>
-                            </div>
-                            <div class="col-12 pl-0 mb-2">
-                                <div class="form-group">
-                                    <input type="text" name="_username" class="form-control" id="username" placeholder="Usuario" required autofocus>
-                                </div>
-                            </div>
-                            <div class="col-12 pl-0 mb-0">
-                                <div class="form-group">
-                                    <input type="password" name="_password" class="form-control" id="password" placeholder="Password" required>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <button href="" type="submit" class="btn btn-success btn-form mb-3 mr-0">
-                                    <span>></span>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <div id="register-form" class="collapse">
-                        {# <div class="d-flex mb-2">
-                            <span class="bottom-text">Registrarme con mis redes sociales</span>
-                        </div>
-                        <div class="d-flex">
-                            <a href="">
-                                <span class="facebook mx-2">
-                                    <i class="socicon socicon-facebook share-icon"></i>
-                                </span>
-                            </a>
-                            <a href="">
-                                <span class="plusone mx-2">
-                                    <i class="socicon socicon-googleplus share-icon"></i>
-                                </span>
-                            </a>
-                            <a href="">
-                                <span class="twitter mx-2">
-                                    <i class="socicon socicon-twitter share-icon"></i>
-                                </span>
-                            </a>
-                        </div> #}
-                        <div class="d-flex mt-2">
-                            <span class="bottom-text">Crear un perfil en el sitio</span>
-                        </div>
-                        {{ render(controller('AppBundle:Security:register')) }}
-                    </div>
-                    <div class="ac-custom ac-checkmark register-checkbox">
-                        <ul>
-                            <li>
-                                <input type="checkbox" name="register">
-                                <label class="mb-0">Registrarme</label>
-                            </li>
-                        </ul>
-                    </div>
+<div class="d-flex flex-column ml-3 mr-3">
+    <div id ="login-form">
+        <form class="container pl-0 pr-0" role="form" method="POST" action="{{ path('fos_user_security_check') }}">
+            {% if csrf_token %}
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+            {% endif %}
+            {# <div class="d-flex mb-2">
+                <span class="bottom-text">Acceder con mis redes sociales</span>
+            </div>
+            <div class="d-flex">
+                <a href="">
+                    <span class="facebook mx-2">
+                        <i class="socicon socicon-facebook share-icon"></i>
+                    </span>
+                </a>
+                <a href="">
+                    <span class="plusone mx-2">
+                        <i class="socicon socicon-googleplus share-icon"></i>
+                    </span>
+                </a>
+                <a href="">
+                    <span class="twitter mx-2">
+                        <i class="socicon socicon-twitter share-icon"></i>
+                    </span>
+                </a>
+            </div> #}
+            <div class="d-flex mt-2">
+                <span class="bottom-text">Acceder al sitio</span>
+            </div>
+            <div class="col-12 pl-0 mb-2">
+                <div class="form-group">
+                    <input type="text" name="_username" class="form-control" id="username" placeholder="Usuario" required autofocus>
                 </div>
             </div>
+            <div class="col-12 pl-0 mb-0">
+                <div class="form-group">
+                    <input type="password" name="_password" class="form-control" id="password" placeholder="Password" required>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button href="" type="submit" class="btn btn-success btn-form mb-3 mr-0">
+                    <span>></span>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div id="register-form" class="collapse">
+        {# <div class="d-flex mb-2">
+            <span class="bottom-text">Registrarme con mis redes sociales</span>
         </div>
+        <div class="d-flex">
+            <a href="">
+                <span class="facebook mx-2">
+                    <i class="socicon socicon-facebook share-icon"></i>
+                </span>
+            </a>
+            <a href="">
+                <span class="plusone mx-2">
+                    <i class="socicon socicon-googleplus share-icon"></i>
+                </span>
+            </a>
+            <a href="">
+                <span class="twitter mx-2">
+                    <i class="socicon socicon-twitter share-icon"></i>
+                </span>
+            </a>
+        </div> #}
+        <div class="d-flex mt-2">
+            <span class="bottom-text">Crear un perfil en el sitio</span>
+        </div>
+        {{ render(controller('AppBundle:Security:register')) }}
+    </div>
+    <div class="ac-custom ac-checkmark register-checkbox">
+        <ul>
+            <li>
+                <input type="checkbox" name="register">
+                <label class="mb-0">Registrarme</label>
+            </li>
+        </ul>
     </div>
 </div>

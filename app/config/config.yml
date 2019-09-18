@@ -79,7 +79,7 @@ vich_uploader:
     mappings:
         product_pictures:
             uri_prefix: "/uploads"
-            upload_destination: "%kernel.root_dir%/../web/uploads"
+            upload_destination: "%kernel.root_dir%/../public_html/uploads"
             namer: vich_uploader.namer_uniqid
 
             inject_on_load:     false
@@ -87,7 +87,7 @@ vich_uploader:
             delete_on_remove:   true
         category_pictures:
             uri_prefix: "/categories"
-            upload_destination: "%kernel.root_dir%/../web/categories"
+            upload_destination: "%kernel.root_dir%/../public_html/categories"
             namer: vich_uploader.namer_uniqid
 
             inject_on_load:     false
@@ -95,7 +95,7 @@ vich_uploader:
             delete_on_remove:   true
         category_site_pictures:
             uri_prefix: "/categories/site"
-            upload_destination: "%kernel.root_dir%/../web/categories/site"
+            upload_destination: "%kernel.root_dir%/../public_html/categories/site"
             namer: vich_uploader.namer_uniqid
 
             inject_on_load:     false
@@ -103,7 +103,7 @@ vich_uploader:
             delete_on_remove:   true
         blog_images:
             uri_prefix: "%app.path.blog.images%"
-            upload_destination: "%kernel.root_dir%/../web/uploads/images/blog"
+            upload_destination: "%kernel.root_dir%/../public_html/uploads/images/blog"
             namer: vich_uploader.namer_uniqid
 
             inject_on_load:     false
@@ -111,7 +111,7 @@ vich_uploader:
             delete_on_remove:   true
         site_images:
             uri_prefix: "%app.path.site.images%"
-            upload_destination: "%kernel.root_dir%/../web/uploads/images/site"
+            upload_destination: "%kernel.root_dir%/../public_html/uploads/images/site"
             namer: vich_uploader.namer_uniqid
 
             inject_on_load:     false
@@ -119,7 +119,7 @@ vich_uploader:
             delete_on_remove:   true
         offer_images:
             uri_prefix: "%app.path.offer.images%"
-            upload_destination: "%kernel.root_dir%/../web/uploads/images/offer"
+            upload_destination: "%kernel.root_dir%/../public_html/uploads/images/offer"
             namer: vich_uploader.namer_uniqid
 
             inject_on_load:     false

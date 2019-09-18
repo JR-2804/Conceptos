@@ -12,7 +12,7 @@
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /vendor/
-/web/categories
-/web/uploads
-/web/download
-/web/db
+/public_html/categories
+/public_html/uploads
+/public_html/download
+/public_html/db

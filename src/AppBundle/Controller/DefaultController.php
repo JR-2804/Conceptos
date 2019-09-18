@@ -40,7 +40,7 @@ class DefaultController extends Controller
                 $arr = [
                     'id' => $configDB->getId(),
                     'name' => $configDB->getImage()->getOriginalName(),
-                    'size' => filesize($this->getParameter('kernel.root_dir').'/../web'.$helper->asset($configDB->getImage(), 'imageFile')),
+                    'size' => filesize($this->getParameter('kernel.root_dir').'/../public_html'.$helper->asset($configDB->getImage(), 'imageFile')),
                     'path' => $helper->asset($configDB->getImage(), 'imageFile'),
                 ];
             } else {
@@ -110,7 +110,7 @@ class DefaultController extends Controller
     public function uploadAppAction(Request $request)
     {
         $dto = new ConfigDTO();
-        $path = $this->getParameter('kernel.root_dir').'/../web/download/app/app-lasted.apk';
+        $path = $this->getParameter('kernel.root_dir').'/../public_html/download/app/app-lasted.apk';
         $uploadedFile = new UploadedFile($path, 'app-lasted.apk', null, filesize($path));
         $dto->setApp($uploadedFile);
         $form = $this->createForm(UploadAppType::class, $dto);
@@ -118,7 +118,7 @@ class DefaultController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->getData()->getApp();
             $this->addFlash('success', 'Aplicación actualizada con éxito');
-            $pathApp = $this->getParameter('kernel.root_dir').'/../web/download/app/';
+            $pathApp = $this->getParameter('kernel.root_dir').'/../public_html/download/app/';
             $file->move($pathApp, 'app-lasted.apk');
 
             return $this->redirectToRoute('easyadmin', [

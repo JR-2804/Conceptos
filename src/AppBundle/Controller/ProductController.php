@@ -279,7 +279,7 @@ class ProductController extends Controller
         $dto->setImage(json_encode([
             'id' => $product->getMainImage()->getId(),
             'name' => $product->getMainImage()->getOriginalName(),
-            'size' => filesize($this->getParameter('kernel.root_dir').'/../web'.$helper->asset($product->getMainImage(), 'imageFile')),
+            'size' => filesize($this->getParameter('kernel.root_dir').'/../public_html'.$helper->asset($product->getMainImage(), 'imageFile')),
             'path' => $helper->asset($product->getMainImage(), 'imageFile'),
         ]));
         $images = [];
@@ -287,7 +287,7 @@ class ProductController extends Controller
             $images[] = [
                 'id' => $image->getId(),
                 'name' => $image->getOriginalName(),
-                'size' => filesize($this->getParameter('kernel.root_dir').'/../web'.$helper->asset($image, 'imageFile')),
+                'size' => filesize($this->getParameter('kernel.root_dir').'/../public_html'.$helper->asset($image, 'imageFile')),
                 'path' => $helper->asset($image, 'imageFile'),
             ];
         }
@@ -297,7 +297,7 @@ class ProductController extends Controller
             $highlightImages[] = [
                 'id' => $image->getId(),
                 'name' => $image->getOriginalName(),
-                'size' => filesize($this->getParameter('kernel.root_dir').'/../web'.$helper->asset($image, 'imageFile')),
+                'size' => filesize($this->getParameter('kernel.root_dir').'/../public_html'.$helper->asset($image, 'imageFile')),
                 'path' => $helper->asset($image, 'imageFile'),
             ];
         }
@@ -559,7 +559,7 @@ class ProductController extends Controller
         $this->getDoctrine()->getManager()->persist($image);
         $this->getDoctrine()->getManager()->flush();
         $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
-        $imagePath = $this->getParameter('kernel.root_dir').'/../web'.$helper->asset($image, 'imageFile');
+        $imagePath = $this->getParameter('kernel.root_dir').'/../public_html'.$helper->asset($image, 'imageFile');
         $clientExtention = strtoupper($upload->getClientMimeType());
         $maxWidth = 500;
         $maxHeight = 500;
@@ -592,7 +592,7 @@ class ProductController extends Controller
         $data = [
             'id' => $image->getId(),
             'name' => $image->getOriginalName(),
-            'size' => filesize($this->getParameter('kernel.root_dir').'/../web'.$helper->asset($image, 'imageFile')),
+            'size' => filesize($this->getParameter('kernel.root_dir').'/../public_html'.$helper->asset($image, 'imageFile')),
             'path' => $helper->asset($image, 'imageFile'),
         ];
 
@@ -632,7 +632,7 @@ class ProductController extends Controller
         foreach ($products as $product) {
             $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
             $image = $product->getMainImage();
-            $imagePath = $this->getParameter('kernel.root_dir').'/../web'.$helper->asset($image, 'imageFile');
+            $imagePath = $this->getParameter('kernel.root_dir').'/../public_html'.$helper->asset($image, 'imageFile');
             $clientExtention = strtoupper(substr($image->getOriginalName(), strrpos($image->getOriginalName(), '.'), strlen($image->getOriginalName())));
             $maxWidth = 500;
             $maxHeight = 500;
@@ -663,7 +663,7 @@ class ProductController extends Controller
                 imagejpeg($resized, $imagePath);
             }
             foreach ($product->getImages() as $image) {
-                $imagePath = $this->getParameter('kernel.root_dir').'/../web'.$helper->asset($image, 'imageFile');
+                $imagePath = $this->getParameter('kernel.root_dir').'/../public_html'.$helper->asset($image, 'imageFile');
                 $clientExtention = strtoupper(substr($image->getOriginalName(), strrpos($image->getOriginalName(), '.'), strlen($image->getOriginalName())));
                 $maxWidth = 500;
                 $maxHeight = 500;
@@ -709,7 +709,7 @@ class ProductController extends Controller
         $categories = $this->getDoctrine()->getManager()->getRepository('AppBundle:Category')->findAll();
         $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
         foreach ($categories as $image) {
-            $imagePath = $this->getParameter('kernel.root_dir').'/../web'.$helper->asset($image, 'imageFile');
+            $imagePath = $this->getParameter('kernel.root_dir').'/../public_html'.$helper->asset($image, 'imageFile');
             $clientExtention = strtoupper(substr($image->getImage(), strrpos($image->getImage(), '.'), strlen($image->getImage())));
             $maxWidth = 500;
             $maxHeight = 250;
@@ -740,7 +740,7 @@ class ProductController extends Controller
                 imagejpeg($resized, $imagePath);
             }
             foreach ($image->getSubCategories() as $subCategory) {
-                $imagePath = $this->getParameter('kernel.root_dir').'/../web'.$helper->asset($subCategory, 'imageFile');
+                $imagePath = $this->getParameter('kernel.root_dir').'/../public_html'.$helper->asset($subCategory, 'imageFile');
                 $clientExtention = strtoupper(substr($subCategory->getImage(), strrpos($subCategory->getImage(), '.'), strlen($subCategory->getImage())));
                 $maxWidth = 500;
                 $maxHeight = 250;
