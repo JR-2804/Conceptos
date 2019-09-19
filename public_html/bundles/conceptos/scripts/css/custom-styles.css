@@ -480,7 +480,7 @@ a.header-text.active {
 }
 
 .badge-custom-short {
-  font-size: 10px !important;
+  font-size: 9px !important;
   margin: 0px 0px 0px 3px;
   padding: 0px 5px 0px 5px;
 }
@@ -845,7 +845,7 @@ a.header-text.active {
 }
 
 .cuban-brand-divider-short {
-  height: 30px !important;
+  height: 20px !important;
 }
 
 .tooltip-inner {
@@ -860,8 +860,8 @@ a.header-text.active {
 .section-subtitle {
   font-family: "Roboto" !important;
   font-weight: lighter !important;
-  font-size: 20px !important;
-  margin-top: -15px;
+  font-size: 15px !important;
+  margin-top: -10px;
 }
 
 .btn-social {
@@ -917,6 +917,7 @@ a.header-text.active {
 
 .decoration-design-title-short {
   font-size: 28px !important;
+  line-height: 30px;
 }
 
 .decoration-design-description {
@@ -929,6 +930,7 @@ a.header-text.active {
 
 .decoration-design-description-short {
   font-size: 15px;
+  line-height: 18px;
 }
 
 .decoration-design-image {
@@ -1069,6 +1071,7 @@ a.header-text.active {
   display: block;
   text-align: center;
   font-style: italic;
+  line-height: 25px;
 }
 
 .testimony-description-short {
@@ -1209,6 +1212,12 @@ a.header-text.active {
 
 .form-control:focus {
   box-shadow: 0 0 0 0.2rem #f6ed4a;
+}
+
+#filter-section {
+  top: 0;
+  position: -webkit-sticky;
+  position: sticky;
 }
 
 .filter-section .ac-custom label {
@@ -2211,6 +2220,7 @@ i.share-icon:hover {
 
 .home-badge {
   top: 77px;
+  position: -webkit-sticky;
   position: sticky;
   z-index: 1000;
 }

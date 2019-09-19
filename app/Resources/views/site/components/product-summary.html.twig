@@ -1,4 +1,4 @@
-<div class="product-card product-card-clickable d-flex flex-column mt-0 pl-0 pr-0 ml-0 mr-0" data-path="{{ path('product_details', {id: product.id, name: product.name}) }}">
+<div class="product-card product-card-clickable d-flex flex-column mt-0 pl-1 pr-1 ml-1 mr-1 pl-lg-2 pr-lg-2 ml-lg-2 mr-lg-2" data-path="{{ path('product_details', {id: product.id, name: product.name}) }}">
     <div class="d-flex align-items-center justify-content-center">
         {% if app.user|default %}
             <a data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"
