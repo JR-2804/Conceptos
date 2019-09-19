@@ -481,6 +481,8 @@ a.header-text.active {
 
 .badge-custom-short {
   font-size: 10px !important;
+  margin: 0px 0px 0px 3px;
+  padding: 0px 5px 0px 5px;
 }
 
 .badge-offer {
