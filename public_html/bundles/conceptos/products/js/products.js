@@ -142,6 +142,12 @@ function initFilters() {
     categories.forEach(function(c) {
       c = c.trim();
       $('.category-checkbox[value="' + c + '"]').click();
+
+      var parent = $('.category-checkbox[value="' + c + '"]').data("parent")
+      if (!$('a[data-target="#' + parent + '"]').data("open")) {
+        $('a[data-target="#' + parent + '"]').data("open", true)
+        $('a[data-target="#' + parent + '"]').click()
+      }
     });
   }
 }
