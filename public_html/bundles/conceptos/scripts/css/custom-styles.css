@@ -2079,8 +2079,7 @@ i.share-icon:hover {
 }
 
 .gift-card-img-short {
-  width: 150px;
-  height: 150px;
+  width: 100%;
 }
 
 .gift-card-section .dropdown-menu {
