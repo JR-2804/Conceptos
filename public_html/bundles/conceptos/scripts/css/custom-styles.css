@@ -1586,6 +1586,13 @@ i.share-icon:hover {
   margin-bottom: -20px;
 }
 
+.only-for-members-short {
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: -20px;
+  font-size: 10px !important;
+}
+
 .shop-cart {
   background-color: #ffffff;
 }

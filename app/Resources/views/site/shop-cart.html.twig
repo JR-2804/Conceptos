@@ -155,7 +155,8 @@
                                         <span class="product-subtitle-card product-subtitle-card-short d-lg-none">{{ product.item }}</span>
                                     </div>
                                     {% if onlyForMembers %}
-                                        <span class="badge-custom badge-new only-for-members">Oferta solo para Miembros</span>
+                                        <span class="badge-custom badge-new only-for-members d-none d-lg-block">Oferta solo para Miembros</span>
+                                        <span class="badge-custom badge-new only-for-members-short d-lg-none">Oferta solo para Miembros</span>
                                     {% endif %}
                                     {% set product = oldProduct %}
                                 </div>
