@@ -109,16 +109,22 @@
                                             <div class="ac-custom ac-checkmark">
                                                 <ul>
                                                     <li>
-                                                        <input type="checkbox" id="in-offer-checkbox" name="inOffer">
-                                                        <label>Oferta</label>
+                                                        <div class="d-flex mb-3">
+                                                            <input type="checkbox" id="in-offer-checkbox" name="inOffer">
+                                                            <label>Oferta</label>
+                                                        </div>
                                                     </li>
                                                     <li>
-                                                        <input type="checkbox" id="recent-checkbox" name="recent">
-                                                        <label>Nuevo</label>
+                                                        <div class="d-flex mb-3">
+                                                            <input type="checkbox" id="recent-checkbox" name="recent">
+                                                            <label>Nuevo</label>
+                                                        </div>
                                                     </li>
                                                     <li>
-                                                        <input type="checkbox" id="in-store-checkbox" name="inStore">
-                                                        <label>En Almacén</label>
+                                                        <div class="d-flex mb-3">
+                                                            <input type="checkbox" id="in-store-checkbox" name="inStore">
+                                                            <label>En Almacén</label>
+                                                        </div>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -126,13 +132,13 @@
                                     </div>
                                     <div class="row pl-3">
                                         <div class="col-11">
-                                            <h3 class="categories-header">Categorías</h3>
+                                            <h3 class="categories-header mt-0">Categorías</h3>
                                             <div class="card card-category-parent">
                                                 <div id="accordion" role="tablist">
                                                     {% for category in categories %}
                                                         {% if category.parents is empty %}
                                                             <div class="card card-category">
-                                                                <div class="card-header card-header-category pr-0" role="tab"
+                                                                <div class="card-header card-header-category pt-0 pr-0" role="tab"
                                                                     id="{{ category.id }}heading">
                                                                     <h5 class="mb-0">
                                                                         <a class="d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#{{ category.id }}" href="javascript:void(0);">
@@ -144,16 +150,20 @@
                                                                     </h5>
                                                                 </div>
                                                                 <div id="{{ category.id }}" class="collapse {% if loop.index == 0 %}show{% endif %}" role="tabpanel">
-                                                                    <div class="card-body card-body-subcategory ac-custom ac-checkmark">
+                                                                    <div class="card-body card-body-subcategory ac-custom ac-checkmark ml-0 pr-0">
                                                                         <ul>
                                                                             <li>
-                                                                                <input type="checkbox" data-parent="-1" class="category-checkbox" value="{{ category.id }}">
-                                                                                <label>Todos</label>
+                                                                                <div class="d-flex mb-3">
+                                                                                    <input type="checkbox" data-parent="-1" class="category-checkbox" value="{{ category.id }}">
+                                                                                    <label>Todos</label>
+                                                                                </div>
                                                                             </li>
                                                                             {% for child in category.subCategories %}
                                                                                 <li>
-                                                                                    <input type="checkbox" data-parent="{{ category.id }}" class="category-checkbox" value="{{ child.id }}">
-                                                                                    <label>{{child.name}}</label>
+                                                                                    <div class="d-flex mb-3">
+                                                                                        <input type="checkbox" data-parent="{{ category.id }}" class="category-checkbox" value="{{ child.id }}">
+                                                                                        <label>{{child.name}}</label>
+                                                                                    </div>
                                                                                 </li>
                                                                             {% endfor %}
                                                                         </ul>
@@ -168,24 +178,24 @@
                                     </div>
                                     <div class="row pl-3">
                                         <div class="col-11">
-                                            <h3 class="categories-header">Precios</h3>
+                                            <h3 class="categories-header mt-0 pt-2">Precios</h3>
                                             <div class="card card-category-parent">
                                                 <div class="d-flex">
                                                     <input type="number" min="0" name="priceMin" placeholder="Min"
                                                           {% if app.request.query.get('priceMin') is not null %}value="{{ app.request.query.get('priceMin') }}"{% endif %}
-                                                          class="form-control">
+                                                          class="form-control mb-2">
                                                     <input type="number" min="0" name="priceMax" placeholder="Max"
                                                           {% if app.request.query.get('priceMax') is not null %}value="{{ app.request.query.get('priceMax') }}" {% endif %}
-                                                          class="form-control ml-2">
+                                                          class="form-control mb-2 ml-2">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row pl-3">
                                         <div class="col-11">
-                                            <h3 class="categories-header">Color</h3>
+                                            <h3 class="categories-header mt-0">Color</h3>
                                             <div class="card card-category-parent">
-                                                <select class="form-control" name="color">
+                                                <select class="form-control mb-2" name="color">
                                                     <option value="-1">Todos</option>
                                                     {% set selectedSerie = app.request.query.get('color', -1) %}
                                                     {% for color in colors %}
@@ -198,7 +208,7 @@
                                     </div>
                                     <div class="row pl-3">
                                         <div class="col-11">
-                                            <h3 class="categories-header">Materiales</h3>
+                                            <h3 class="categories-header mt-0">Materiales</h3>
                                             <div class="card card-category-parent">
                                                 <select class="form-control" name="material">
                                                     <option value="-1">Todos</option>

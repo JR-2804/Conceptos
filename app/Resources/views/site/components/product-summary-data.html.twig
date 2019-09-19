@@ -1,4 +1,4 @@
-<div class="tags-section d-flex align-items-center">
+<div class="tags-section d-flex align-items-center pt-3 pt-lg-0">
     <span class="product-code d-none d-lg-block">{{ product.code }}</span>
     <span class="product-code product-code-short d-lg-none">{{ product.code }}</span>
     {% set priceOffer = -1 %}
@@ -27,18 +27,21 @@
     {% endif %}
 </div>
 <span class="product-title d-none d-lg-block">{{ product.name }}</span>
-<span class="product-title product-title-short d-lg-none">{{ product.name }}</span>
+<span class="product-title product-title-short d-lg-none pt-0">{{ product.name }}</span>
 <div class="prices-product d-flex">
     {% if priceOffer != -1 %}
-        <span class="price-product">{{ priceOffer }} CUC</span>
-        <span class="price-offer">{{ product.price }} CUC</span>
+        <span class="price-product d-none d-lg-block">{{ priceOffer }} CUC</span>
+        <span class="price-product price-product-short d-lg-none">{{ priceOffer }} CUC</span>
+        <span class="price-offer d-none d-lg-block">{{ product.price }} CUC</span>
+        <span class="price-offer price-offer-short d-lg-none">{{ product.price }} CUC</span>
     {% else %}
-        <span class="price-product">{{ product.price }} CUC</span>
+        <span class="price-product d-none d-lg-block">{{ product.price }} CUC</span>
+        <span class="price-product price-product-short d-lg-none">{{ product.price }} CUC</span>
     {% endif %}
 </div>
 <span class="product-subtitle d-none d-lg-block">{{ product.item }}</span>
 <span class="product-subtitle product-subtitle-short d-lg-none">{{ product.item }}</span>
-<div class="d-flex justify-content-center add-to-cart-button-container">
+<div class="d-flex justify-content-center add-to-cart-button-container mt-1 mt-lg-0">
     <a class="d-flex justify-content-center header-button add-to-cart-button m-0" data-path="{{ path('add_shop_card', {id: product.id, offer: offerId}) }}">
         <span class="d-none d-lg-block">Añadir al carrito</span>
         <img class="add-to-cart-icon" src="{{ asset('bundles/conceptos/images/products/cart.png') }}">

@@ -199,7 +199,7 @@
                                 <img class="h-100 w-100 d-none d-lg-block"
                                      src="{{ vich_uploader_asset(inStoreHighlight.mainImage, 'imageFile') }}"
                                      alt="{{ inStoreHighlight.item }}">
-                                <img class="w-100 d-lg-none"
+                                <img class="h-100 w-100 d-lg-none"
                                      src="{{ vich_uploader_asset(inStoreHighlight.mainImage, 'imageFile') }}"
                                      alt="{{ inStoreHighlight.item }}">
                             </div>
@@ -341,47 +341,64 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center d-none d-lg-flex pb-4">
-                    <div class="col-1">
-                        <a class="carousel-control carousel-control-prev control-brands" role="button">
-                            <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                            <span class="sr-only">Anterior</span>
-                        </a>
-                    </div>
-                    <div class="col-10">
-                        <div class="carousel slide" data-ride="carousel" id="carousel-brands" data-interval="10000">
-                            <div class="carousel-inner">
-                                {% for brand in brands %}
-                                    <div class="container-fluid carousel-item {% if loop.first %}active{% endif %}">
-                                        <div class="d-flex justify-content-center w-100">
-                                            {% for cat in brand %}
-                                                <div class="col-3 pl-0 m-1">
-                                                    {% set categoriesIds = cat.parents.first.id ~ ',' ~ cat.id %}
-                                                    <a href="{{ path('products', {categories: categoriesIds, page: 1}) }}">
-                                                        <div class="brand-image w-100"
-                                                            style="background-image: url('{{ vich_uploader_asset(cat, 'imageFile') }}')"></div>
-                                                    </a>
-                                                </div>
-                                            {% endfor %}
+                <div class="row d-flex pb-4">
+                    <div class="d-flex justify-content-center w-100">
+                        {% if brands|length > 1 %}
+                            <div class="col-1 d-none d-lg-flex align-items-center justify-content-center">
+                                <a class="carousel-control carousel-control-prev control-brands" role="button">
+                                    <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+                                    <span class="sr-only">Anterior</span>
+                                </a>
+                            </div>
+                            <div class="col-1 d-flex d-lg-none m-0 p-0 align-items-center justify-content-center">
+                                <a class="carousel-control carousel-control-prev carousel-control-shorter control-brands" role="button">
+                                    <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+                                    <span class="sr-only">Anterior</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                        <div class="col-10 pl-0">
+                            <div class="carousel slide" data-ride="carousel" id="carousel-brands" data-interval="10000">
+                                <div class="carousel-inner">
+                                    {% for brand in brands %}
+                                        <div class="container-fluid carousel-item {% if loop.first %}active{% endif %}">
+                                            <div class="d-flex justify-content-center w-100">
+                                                {% for cat in brand %}
+                                                    <div class="col-3 pl-0 m-1">
+                                                        {% set categoriesIds = cat.parents.first.id ~ ',' ~ cat.id %}
+                                                        <a href="{{ path('products', {categories: categoriesIds, page: 1}) }}">
+                                                            <div class="brand-image w-100 d-none d-lg-block" style="background-image: url('{{ vich_uploader_asset(cat, 'imageFile') }}')"></div>
+                                                            <div class="brand-image brand-image-short w-100 d-lg-none" style="background-image: url('{{ vich_uploader_asset(cat, 'imageFile') }}')"></div>
+                                                        </a>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
                                         </div>
-                                    </div>
-                                {% endfor %}
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-1">
-                        <a class="carousel-control carousel-control-prev control-brands" role="button">
-                            <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                            <span class="sr-only">Siguiente</span>
-                        </a>
+                        {% if brands|length > 1 %}
+                            <div class="col-1 d-none d-lg-flex align-items-center justify-content-center">
+                                <a class="carousel-control carousel-control-prev control-brands" role="button">
+                                    <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+                                    <span class="sr-only">Siguiente</span>
+                                </a>
+                            </div>
+                            <div class="col-1 d-flex d-lg-none m-0 p-0 align-items-center justify-content-center">
+                                <a class="carousel-control carousel-control-prev carousel-control-shorter control-brands" role="button">
+                                    <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+                                    <span class="sr-only">Siguiente</span>
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </section>
     {% endif %}
 
-    <div class="w-100 cuban-brand-divider d-none d-lg-flex"></div>
-    <div class="w-100 cuban-brand-divider cuban-brand-divider-short d-lg-none"></div>
+    <div class="w-100 cuban-brand-divider"></div>
 
     {% if lasted is not empty %}
         <section class="mbr-section content4 cid-qQ6mxM0ThU pt-0 pb-0 pb-lg-3" id="content4-8">
@@ -537,7 +554,7 @@
         <div class="container d-none d-lg-block">
             <div class="media-container-row">
                 <div class="card col-6 pl-0 mb-0">
-                    <div class="card-img">
+                    <div class="card-img pt-1">
                         <span class="mbr-iconfont mbri-touch"></span>
                     </div>
                     <div class="d-flex flex-column justify-content-between card-box align-center">
@@ -554,7 +571,7 @@
                     </div>
                 </div>
                 <div class="card col-6 pl-0 mb-0">
-                    <div class="card-img">
+                    <div class="card-img pt-1">
                         <span class="mbr-iconfont mbri-upload"></span>
                     </div>
                     <div class="d-flex flex-column justify-content-between card-box align-center">
