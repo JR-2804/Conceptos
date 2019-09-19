@@ -386,7 +386,7 @@ a.header-text.active {
   font-family: "Roboto";
   font-weight: bold;
   color: #9a9a9a;
-  font-size: 20px;
+  font-size: 15px;
   display: block;
 }
 
@@ -615,7 +615,7 @@ a.header-text.active {
   font-family: "Roboto";
   font-weight: bold;
   color: #9a9a9a;
-  font-size: 13.51;
+  font-size: 13px;
   display: block;
   margin-left: 5px;
 }
