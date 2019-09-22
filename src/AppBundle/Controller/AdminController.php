@@ -8,8 +8,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends BaseAdmin
 {
-
-
     /**
      * @Route(path="/", name="easyadmin")
      * @param Request $request
@@ -84,6 +82,25 @@ class AdminController extends BaseAdmin
     public function preRemoveCategoryEntity($category)
     {
         $this->updateDateUpdate();
+    }
+
+    public function prePersistClientEntity($client)
+    {
+        $this->updateClientRequests($client);
+    }
+
+    public function preUpdateClientEntity($client)
+    {
+        $this->updateClientRequests($client);
+    }
+
+    private function updateClientRequests($client)
+    {
+      foreach ($client->getRequests() as $request) {
+          $requestDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->find($request->getId());
+          $requestDB->setClient($client);
+          $this->getDoctrine()->getManager()->persist($requestDB);
+      }
     }
 
     private function updateDateUpdate()

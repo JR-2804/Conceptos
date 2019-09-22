@@ -97,28 +97,44 @@ easy_admin:
         Request:
             class: AppBundle\Entity\Request\Request
             label: Pedidos
-            disabled_actions: ['new', 'delete', 'edit']
             list:
                 title: Pedidos realizados
                 actions:
                     - {name: 'show'}
+                    - {name: 'new', label: 'Nuevo Pedido'}
                     - {name: 'print_request', type: 'route', label: 'Exportar a PDF' }
                 fields:
                     - id
                     - {property: 'date', label: 'Fecha'}
                     - {property: 'client', label: 'Cliente'}
-                    - {property: 'clientEmail', label: 'Correo', type: 'email'}
                     - {property: 'requestProducts', label: 'Productos'}
                     - {property: 'requestCards', label: 'Tarjetas de Regalo'}
+                    - {property: 'transportCost', label: 'Costo de Transporte'}
+                    - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'finalPrice', label: 'Precio final'}
             show:
                 title: Detalles del pedido
                 fields:
                     - {property: 'date', label: 'Fecha'}
-                    - {property: 'finalPrice', label: 'Precio final'}
                     - {property: 'client', label: 'Cliente'}
                     - {property: 'requestProducts', label: 'Productos', template: 'show_products.html.twig'}
                     - {property: 'requestCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
+                    - {property: 'transportCost', label: 'Costo de transporte'}
+                    - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'finalPrice', label: 'Precio final'}
+            form:
+                fields:
+                    - {property: 'date', label: 'Fecha'}
+                    - {property: 'client', label: 'Cliente'}
+                    - {property: 'requestProducts', label: 'Productos', template: 'show_products.html.twig'}
+                    - {property: 'requestCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
+                    - {property: 'transportCost', label: 'Costo de transporte'}
+                    - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'finalPrice', label: 'Precio final'}
+            new:
+                title: 'Nuevo pedido'
+            edit:
+                title: 'Editar pedido'
         Client:
             class: AppBundle\Entity\Request\Client
             label: Clientes
@@ -153,6 +169,7 @@ easy_admin:
                     - {property: 'movil', label: 'Movil'}
                     - {property: 'phone', label: 'Fijo'}
                     - {property: 'memberNumber', label: 'Número de miembro'}
+                    - {property: 'requests', label: 'Pedidos'}
             new:
                 title: 'Nuevo cliente'
             edit:
@@ -267,5 +284,4 @@ easy_admin:
                     - {property: 'lastName', label: 'Apellidos', type_options: {required: false}}
                     - {property: 'mobileNumber', label: 'Teléfono Movil', type_options: {required: false}}
                     - {property: 'homeNumber', label: 'Teléfono de Casa', type_options: {required: false}}
-                    - {property: 'birthDate', label: 'Fecha de Nacimiento', type_options: {required: false, widget: 'single_text'}}
                     - {property: 'roles', label: 'Roles'}
