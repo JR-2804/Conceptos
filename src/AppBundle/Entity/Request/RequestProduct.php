@@ -105,4 +105,9 @@ class RequestProduct
     {
         return $this->isAriplaneForniture;
     }
+
+    function __toString()
+    {
+        return $this->product->getName();
+    }
 }

@@ -122,11 +122,11 @@ easy_admin:
         Client:
             class: AppBundle\Entity\Request\Client
             label: Clientes
-            disabled_actions: ['new', 'delete', 'edit']
             list:
                 title: Clientes registrados
                 actions:
                     - {name: 'show'}
+                    - {name: 'new', label: 'Nuevo Cliente'}
                 fields:
                     - id
                     - {property: 'name', label: 'Nombre'}
@@ -143,7 +143,20 @@ easy_admin:
                     - {property: 'email', label: 'Correo', type: 'email'}
                     - {property: 'movil', label: 'Movil', type: 'tel'}
                     - {property: 'phone', label: 'Fijo', type: 'tel'}
+                    - {property: 'memberNumber', label: 'Número de miembro'}
                     - {property: 'requests', label: 'Pedidos', template: 'show_request.html.twig'}
+            form:
+                fields:
+                    - {property: 'name', label: 'Nombre'}
+                    - {property: 'address', label: 'Dirección'}
+                    - {property: 'email', label: 'Correo', type: 'email'}
+                    - {property: 'movil', label: 'Movil'}
+                    - {property: 'phone', label: 'Fijo'}
+                    - {property: 'memberNumber', label: 'Número de miembro'}
+            new:
+                title: 'Nuevo cliente'
+            edit:
+                title: 'Editar cliente'
         Phone:
             class: AppBundle\Entity\Phone
             label: Teléfono

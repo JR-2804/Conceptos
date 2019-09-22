@@ -2,19 +2,15 @@
     <table class="table table-condensed">
         <thead>
         <tr>
-            <th>Tarjeta</th>
-            <th>Cantidad</th>
             <th>Precio</th>
+            <th>Cantidad</th>
         </tr>
         </thead>
         <tbody>
         {% for productCard in value %}
             <tr>
-                <td>
-                    {{ productCard.card }}
-                </td>
-                <td>{{ productCard.count }}</td>
                 <td>${{ productCard.price }}</td>
+                <td>{{ productCard.count }}</td>
             </tr>
         {% else %}
             <tr>

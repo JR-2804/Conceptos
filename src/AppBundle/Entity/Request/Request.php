@@ -26,7 +26,6 @@ class Request
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
     private $client;
-
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Request\RequestProduct", mappedBy="request")
      */
@@ -156,5 +155,10 @@ class Request
     public function getDiscount()
     {
         return $this->discount;
+    }
+
+    function __toString()
+    {
+        return "Pedido: ".$this->id;
     }
 }

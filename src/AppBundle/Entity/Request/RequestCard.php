@@ -74,4 +74,9 @@ class RequestCard
     {
         return $this->price;
     }
+
+    function __toString()
+    {
+        return "Tarjeta";
+    }
 }

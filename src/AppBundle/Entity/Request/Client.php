@@ -219,13 +219,6 @@ class Client
         return $this->requests;
     }
 
-    function __toString()
-    {
-        return $this->name;
-    }
-
-
-
     /**
      * Set memberNumber
      *
@@ -248,5 +241,10 @@ class Client
     public function getMemberNumber()
     {
         return $this->memberNumber;
+    }
+
+    function __toString()
+    {
+        return $this->name;
     }
 }
