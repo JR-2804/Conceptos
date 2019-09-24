@@ -46,6 +46,10 @@ class Request
      * @ORM\Column(type="float")
      */
     private $discount;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $firstClientDiscount;
 
     public function __construct()
     {
@@ -155,6 +159,18 @@ class Request
     public function getDiscount()
     {
         return $this->discount;
+    }
+
+    public function setFirstClientDiscount($firstClientDiscount)
+    {
+        $this->firstClientDiscount = $firstClientDiscount;
+
+        return $this;
+    }
+
+    public function getFirstClientDiscount()
+    {
+        return $this->firstClientDiscount;
     }
 
     function __toString()

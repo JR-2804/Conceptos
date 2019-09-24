@@ -204,6 +204,26 @@
                                     </div>
                                 </div>
                             {% endif %}
+                            {% if request.firstClientDiscount > 0 %}
+                                <div class="row membership-discount-row">
+                                    <div class="col-12 pl-0">
+                                        <hr />
+                                    </div>
+                                </div>
+                                <div class="row membership-discount-row">
+                                    <div class="col-12 pl-0">
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <div class="col-lg-3 pl-0">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <span class="price-header d-none d-lg-block">Descuento de Primera Compra</span>
+                                                    <span class="price-header price-header-short d-lg-none">Descuento de Primera Compra</span>
+                                                    <span id="membership-discount" class="product-price mr-0 mr-lg-3">${{request.firstClientDiscount}}.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
                             <div class="row">
                                 <div class="col-12 pl-0">
                                     <hr />

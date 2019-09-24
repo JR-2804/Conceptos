@@ -979,8 +979,10 @@ class SiteController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $repoClient = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Client');
+            $newClient = false;
             $client = $repoClient->findOneBy(['email' => $data->getEmail()]);
             if (null == $client) {
+                $newClient = true;
                 $client = new Client();
             }
             $client->setName($data->getName());
@@ -1018,7 +1020,15 @@ class SiteController extends Controller
                     $requestDB->addRequestProduct($requestProd);
                 }
             }
+
+            $firstClientDiscount = 0;
+            if ($newClient && $discount == 0) {
+              $firstClientDiscount = ceil($totalPrice * 0.05);
+              $totalPrice -= $firstClientDiscount;
+            }
+
             $requestDB->setDiscount($discount);
+            $requestDB->setFirstClientDiscount($firstClientDiscount);
             $requestDB->setTransportCost($transportCost);
             $requestDB->setFinalPrice($totalPrice);
             $this->getDoctrine()->getManager()->persist($requestDB);

@@ -913,6 +913,11 @@
                               <span style="font-size: 18px;">Descuento de Miembro<strong>${{request.discount}}</strong></span>
                             </p>
                           {% endif %}
+                          {% if request.firstClientDiscount > 0 %}
+                            <p style="font-size: 14px; line-height: 21px; text-align: right; margin: 0;">
+                              <span style="font-size: 18px;">Descuento de Primera Compra<strong>${{request.firstClientDiscount}}</strong></span>
+                            </p>
+                          {% endif %}
                           <p style="font-size: 14px; line-height: 21px; text-align: right; margin: 0;">
                             <span style="font-size: 18px;">Costo de Transporte <strong>${{request.transportCost}}</strong></span>
                           </p>
