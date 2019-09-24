@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\DTO\CheckOutDTO;
 use AppBundle\DTO\EmailDTO;
 use AppBundle\DTO\MembershipRequestDTO;
+use AppBundle\Entity\Evaluation;
 use AppBundle\Entity\FavoriteProduct;
 use AppBundle\Entity\Request\Client;
 use AppBundle\Entity\Request\Request as ProductRequest;
@@ -1381,6 +1382,33 @@ class SiteController extends Controller
             'privacy' => $config->getPrivacyPolicy(),
             'currentDate' => new \DateTime(),
         ]);
+    }
+
+    /**
+     * @Route(name="evaluate_product", path="/product/evaluate/{productId}/{evaluationValue}", methods={"POST"})
+     *
+     * @return JsonResponse
+     */
+    public function evaluateProductAction($productId, $evaluationValue)
+    {
+        $evaluations = $this->getDoctrine()->getManager()->getRepository('AppBundle:Evaluation')->findAll();
+        foreach ($evaluations as $persitedEvaluation) {
+          if ($persitedEvaluation->getUser()->getId() == $this->getUser()->getId() && $persitedEvaluation->getProduct()->getId() == $productId) {
+            $persitedEvaluation->setEvaluationValue($evaluationValue);
+            $this->getDoctrine()->getManager()->persist($persitedEvaluation);
+            $this->getDoctrine()->getManager()->flush();
+            return new JsonResponse();
+          }
+        }
+
+        $evaluation = new Evaluation();
+        $evaluation->setEvaluationValue($evaluationValue);
+        $evaluation->setUser($this->getUser());
+        $evaluation->setProduct($this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($productId));
+        $this->getDoctrine()->getManager()->persist($evaluation);
+        $this->getDoctrine()->getManager()->flush();
+
+        return new JsonResponse();
     }
 
     private function countShopCart(Request $request)

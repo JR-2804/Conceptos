@@ -2,7 +2,7 @@
 parameters:
     database_host: 127.0.0.1
     database_port: null
-    database_name: conceptos_db_last
+    database_name: conceptos_new_version_db
     database_user: conceptos_user
     database_password: Conceptos.123
     mailer_transport: smtp

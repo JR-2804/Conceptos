@@ -33,6 +33,27 @@ easy_admin:
                     - {property: 'color', label: 'Color'}
                     - {property: 'material', label: 'Material'}
                     - {property: 'images', label: 'Otras imágenes'}
+        Evaluation:
+            class: AppBundle\Entity\Evaluation
+            label: Evaluaciones
+            list:
+                title: Evaluaciones
+                actions:
+                    - {name: 'new', label: 'Nueva Evaluación'}
+                fields:
+                    - id
+                    - {property: 'product.name', label: 'Producto'}
+                    - {property: 'user', label: 'Usuario'}
+                    - {property: 'evaluationValue', label: 'Evaluación'}
+            form:
+                fields:
+                    - {property: 'product', label: 'Producto'}
+                    - {property: 'user', label: 'Usuario'}
+                    - {property: 'evaluationValue', label: 'Evaluación'}
+            new:
+                title: 'Nueva evaluación'
+            edit:
+                title: 'Editar evaluación'
         Category:
             class: AppBundle\Entity\Category
             label: Categoría

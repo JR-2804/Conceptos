@@ -128,6 +128,7 @@ class Product
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\FavoriteProduct", mappedBy="product")
      */
     private $userFavorites;
+
     /**
      * @ORM\Column(type="boolean")
      */
@@ -167,6 +168,10 @@ class Product
      * @ORM\Column(type="boolean")
      */
     private $isLamp;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Evaluation", mappedBy="product")
+     */
+    private $evaluations;
 
     /**
      * Product constructor.
@@ -181,6 +186,7 @@ class Product
         $this->userFavorites = new ArrayCollection();
         $this->favorite = false;
         $this->highlightImages = new ArrayCollection();
+        $this->evaluations = new ArrayCollection();
     }
 
     public function __toString()
@@ -637,5 +643,22 @@ class Product
     public function getIsLamp()
     {
         return $this->isLamp;
+    }
+
+    public function addEvaluation(Evaluation $evaluation)
+    {
+        $this->evaluations[] = $evaluation;
+
+        return $this;
+    }
+
+    public function removeEvaluation(Evaluation $evaluation)
+    {
+        $this->evaluations->removeElement($evaluation);
+    }
+
+    public function getEvaluations()
+    {
+        return $this->evaluations;
     }
 }

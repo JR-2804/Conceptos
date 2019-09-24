@@ -2,6 +2,7 @@ easy_admin:
     design:
         menu:
             - { entity: 'Product', label: 'Producto' }
+            - { entity: 'Evaluation', label: 'Evaluaciones' }
             - { entity: 'Category', label: 'Categoría' }
             - { entity: 'Phone', label: 'Teléfonos' }
             - { entity: 'Offer', label: 'Ofertas' }

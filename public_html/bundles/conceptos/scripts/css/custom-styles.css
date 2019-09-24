@@ -2302,3 +2302,22 @@ i.share-icon:hover {
   color: #000000;
   line-height: 20px;
 }
+
+.display-product-evaluation {
+  font-size: 20px;
+  color: #b3aeae !important;
+}
+
+.display-product-evaluation.favorite {
+  color: #f7ed4a !important;
+}
+
+.change-product-evaluation {
+  font-size: 30px;
+  color: #b3aeae !important;
+  cursor: pointer;
+}
+
+.change-product-evaluation.favorite {
+  color: #f7ed4a !important;
+}

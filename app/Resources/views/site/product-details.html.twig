@@ -77,7 +77,60 @@
                                             </a>
                                             <hr class="d-none d-lg-block" />
                                         {% endif %}
-                                        {{include('site/components/product-summary-data.html.twig')}}
+                                        <div class="tags-section d-flex align-items-center pt-1">
+                                            <span class="product-code d-none d-lg-block">{{ product.code }}</span>
+                                            <span class="product-code product-code-short d-lg-none">{{ product.code }}</span>
+                                            {% set priceOffer = -1 %}
+                                            {% set offerId = 'false' %}
+                                            {% set onlyForMembers = false %}
+                                            {% for offer in product.offers %}
+                                                {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
+                                                    {% set priceOffer = offer.price %}
+                                                    {% set offerId = offer.id %}
+                                                    {% if offer.onlyForMembers %}
+                                                        {% set onlyForMembers = true %}
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if priceOffer != -1 %}
+                                                <span class="badge-custom badge-offer d-none d-lg-block">O</span>
+                                                <span class="badge-custom badge-custom-short badge-offer d-lg-none">O</span>
+                                            {% endif %}
+                                            {% if product.recent %}
+                                                <span class="badge-custom badge-new d-none d-lg-block">N</span>
+                                                <span class="badge-custom badge-custom-short badge-new d-lg-none">N</span>
+                                            {% endif %}
+                                            {% if product.inStore %}
+                                                <span class="badge-custom badge-in-store d-none d-lg-block">A</span>
+                                                <span class="badge-custom badge-custom-short badge-in-store d-lg-none">A</span>
+                                            {% endif %}
+                                        </div>
+                                        <span class="product-title d-none d-lg-block">{{ product.name }}</span>
+                                        <span class="product-title product-title-short d-lg-none pt-0">{{ product.name }}</span>
+                                        <div class="prices-product d-flex">
+                                            {% if priceOffer != -1 %}
+                                                <span class="price-product d-none d-lg-block">{{ priceOffer }} CUC</span>
+                                                <span class="price-product price-product-short d-lg-none">{{ priceOffer }} CUC</span>
+                                                <span class="price-offer d-none d-lg-block">{{ product.price }} CUC</span>
+                                                <span class="price-offer price-offer-short d-lg-none">{{ product.price }} CUC</span>
+                                            {% else %}
+                                                <span class="price-product d-none d-lg-block">{{ product.price }} CUC</span>
+                                                <span class="price-product price-product-short d-lg-none">{{ product.price }} CUC</span>
+                                            {% endif %}
+                                        </div>
+                                        <span class="product-subtitle d-none d-lg-block">{{ product.item }}</span>
+                                        <span class="product-subtitle product-subtitle-short d-lg-none">{{ product.item }}</span>
+                                        {{include('site/components/change-product-evaluation.html.twig')}}
+                                        <div class="d-flex justify-content-center add-to-cart-button-container mt-1 mt-lg-0 pt-2">
+                                            <a class="d-flex justify-content-center header-button add-to-cart-button m-0" data-path="{{ path('add_shop_card', {id: product.id, offer: offerId}) }}">
+                                                <span class="d-none d-lg-block">Añadir al carrito</span>
+                                                <img class="add-to-cart-icon" src="{{ asset('bundles/conceptos/images/products/cart.png') }}">
+                                            </a>
+                                        </div>
+                                        {% if onlyForMembers %}
+                                            <span class="badge-custom badge-new only-for-members mt-2 ml-0 d-none d-lg-block">Oferta solo para Miembros</span>
+                                            <span class="badge-custom badge-new only-for-members-short mt-2 ml-0 pl-0 pr-0 d-lg-none">Oferta solo para Miembros</span>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

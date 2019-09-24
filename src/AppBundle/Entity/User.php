@@ -57,11 +57,16 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\FavoriteProduct", mappedBy="user")
      */
     private $favorites;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Evaluation", mappedBy="user")
+     */
+    private $evaluations;
 
     public function __construct()
     {
         parent::__construct();
         $this->favorites = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->evaluations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString()
@@ -180,5 +185,22 @@ class User extends BaseUser
     public function getFavorites()
     {
         return $this->favorites;
+    }
+
+    public function addEvaluation(Evaluation $evaluation)
+    {
+        $this->evaluations[] = $evaluation;
+
+        return $this;
+    }
+
+    public function removeEvaluation(Evaluation $evaluation)
+    {
+        $this->evaluations->removeElement($evaluation);
+    }
+
+    public function getEvaluations()
+    {
+        return $this->evaluations;
     }
 }
