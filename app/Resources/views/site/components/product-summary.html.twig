@@ -7,7 +7,7 @@
                 <span class="fa fa-star"></span>
             </a>
         {% endif %}
-        <img class="img-product"
+        <img class="w-100"
               src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}"
               alt="{{ product.item }}">
         {{include('site/components/display-product-evaluation.html.twig')}}

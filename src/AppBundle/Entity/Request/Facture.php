@@ -1,15 +1,15 @@
 <?php
 
-namespace AppBundle\Entity\Checkout;
+namespace AppBundle\Entity\Request;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
  * @ORM\Table()
- * Class PreCheckout
+ * Class Facture
  */
-class PreCheckout
+class Facture
 {
     /**
      * @ORM\Id()
@@ -159,6 +159,6 @@ class PreCheckout
 
     function __toString()
     {
-        return "Prefactura: ".$this->id;
+        return "Factura: ".$this->id;
     }
 }
