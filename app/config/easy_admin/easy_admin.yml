@@ -132,6 +132,7 @@ easy_admin:
                     - {property: 'requestCards', label: 'Tarjetas de Regalo'}
                     - {property: 'transportCost', label: 'Costo de Transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'firstClientDiscount', label: 'Descuento de primera compra'}
                     - {property: 'finalPrice', label: 'Precio final'}
             show:
                 title: Detalles del pedido
@@ -156,6 +157,88 @@ easy_admin:
                 title: 'Nuevo pedido'
             edit:
                 title: 'Editar pedido'
+        PreFacture:
+            class: AppBundle\Entity\Request\PreFacture
+            label: Factura
+            list:
+                title: Prefacturas realizadas
+                actions:
+                    - {name: 'show'}
+                    - {name: 'new', label: 'Nueva Prefactura'}
+                fields:
+                    - id
+                    - {property: 'date', label: 'Fecha'}
+                    - {property: 'client', label: 'Cliente'}
+                    - {property: 'preFactureProducts', label: 'Productos'}
+                    - {property: 'preFactureCards', label: 'Tarjetas de Regalo'}
+                    - {property: 'transportCost', label: 'Costo de Transporte'}
+                    - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'firstClientDiscount', label: 'Descuento de primera compra'}
+                    - {property: 'finalPrice', label: 'Precio final'}
+            show:
+                title: Detalles de la prefactura
+                fields:
+                    - {property: 'date', label: 'Fecha'}
+                    - {property: 'client', label: 'Cliente'}
+                    - {property: 'preFactureProducts', label: 'Productos', template: 'show_products.html.twig'}
+                    - {property: 'preFactureCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
+                    - {property: 'transportCost', label: 'Costo de transporte'}
+                    - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'finalPrice', label: 'Precio final'}
+            form:
+                fields:
+                    - {property: 'date', label: 'Fecha'}
+                    - {property: 'client', label: 'Cliente'}
+                    - {property: 'preFactureProducts', label: 'Productos', template: 'show_products.html.twig'}
+                    - {property: 'preFactureCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
+                    - {property: 'transportCost', label: 'Costo de transporte'}
+                    - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'finalPrice', label: 'Precio final'}
+            new:
+                title: 'Nueva prefactura'
+            edit:
+                title: 'Editar prefactura'
+        Facture:
+            class: AppBundle\Entity\Request\Facture
+            label: Factura
+            list:
+                title: Facturas realizadas
+                actions:
+                    - {name: 'show'}
+                    - {name: 'new', label: 'Nueva Factura'}
+                fields:
+                    - id
+                    - {property: 'date', label: 'Fecha'}
+                    - {property: 'client', label: 'Cliente'}
+                    - {property: 'factureProducts', label: 'Productos'}
+                    - {property: 'factureCards', label: 'Tarjetas de Regalo'}
+                    - {property: 'transportCost', label: 'Costo de Transporte'}
+                    - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'firstClientDiscount', label: 'Descuento de primera compra'}
+                    - {property: 'finalPrice', label: 'Precio final'}
+            show:
+                title: Detalles de la factura
+                fields:
+                    - {property: 'date', label: 'Fecha'}
+                    - {property: 'client', label: 'Cliente'}
+                    - {property: 'factureProducts', label: 'Productos', template: 'show_products.html.twig'}
+                    - {property: 'factureCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
+                    - {property: 'transportCost', label: 'Costo de transporte'}
+                    - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'finalPrice', label: 'Precio final'}
+            form:
+                fields:
+                    - {property: 'date', label: 'Fecha'}
+                    - {property: 'client', label: 'Cliente'}
+                    - {property: 'factureProducts', label: 'Productos', template: 'show_products.html.twig'}
+                    - {property: 'factureCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
+                    - {property: 'transportCost', label: 'Costo de transporte'}
+                    - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'finalPrice', label: 'Precio final'}
+            new:
+                title: 'Nueva factura'
+            edit:
+                title: 'Editar factura'
         Client:
             class: AppBundle\Entity\Request\Client
             label: Clientes

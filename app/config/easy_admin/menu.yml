@@ -7,6 +7,8 @@ easy_admin:
             - { entity: 'Phone', label: 'Teléfonos' }
             - { entity: 'Offer', label: 'Ofertas' }
             - { entity: 'Request', label: 'Pedidos'}
+            - { entity: 'PreFacture', label: 'Prefacturas'}
+            - { entity: 'Facture', label: 'Facturas'}
             - { entity: 'Member', label: 'Miembros' }
             - {entity: 'Client', label: 'Clientes'}
             - { label: 'Actualizar App', route: 'upload_app'}

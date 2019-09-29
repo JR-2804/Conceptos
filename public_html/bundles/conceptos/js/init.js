@@ -51,10 +51,7 @@ $(document).ready(function() {
   if (highlightImages) {
     data.highlightImages = JSON.parse(highlightImages);
   }
-  $("#is-airplane-furniture").prop(
-    "checked",
-    $("#product_isAriplaneForniture").val() == 1
-  );
+  $("#is-airplane-furniture").prop("checked", $("#product_isAriplaneForniture").val() == 1);
   $("#is-fragile").prop("checked", $("#product_isFragile").val() == 1);
   $("#is-oversize").prop("checked", $("#product_isOversize").val() == 1);
   $("#is-tableware").prop("checked", $("#product_isTableware").val() == 1);

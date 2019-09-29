@@ -22,18 +22,18 @@ class PreFacture
      */
     private $date;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Request\Client", inversedBy="requests")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Request\Client", inversedBy="preFactures")
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
     private $client;
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Request\RequestProduct", mappedBy="request")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Request\PreFactureProduct", mappedBy="preFacture")
      */
-    private $requestProducts;
+    private $preFactureProducts;
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Request\RequestCard", mappedBy="request")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Request\PreFactureCard", mappedBy="preFacture")
      */
-    private $requestCards;
+    private $preFactureCards;
     /**
      * @ORM\Column(type="float")
      */
@@ -46,10 +46,14 @@ class PreFacture
      * @ORM\Column(type="float")
      */
     private $discount;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $firstClientDiscount;
 
     public function __construct()
     {
-        $this->requestProducts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->preFactureProducts = new \Doctrine\Common\Collections\ArrayCollection();
         $this->date = new \DateTime();
     }
 
@@ -82,21 +86,21 @@ class PreFacture
         return $this->client;
     }
 
-    public function addRequestProduct(RequestProduct $requestProduct)
+    public function addPreFactureProduct(PreFactureProduct $preFactureProduct)
     {
-        $this->requestProducts[] = $requestProduct;
+        $this->preFactureProducts[] = $preFactureProduct;
 
         return $this;
     }
 
-    public function removeRequestProduct(RequestProduct $requestProduct)
+    public function removePreFactureProduct(PreFactureProduct $preFactureProduct)
     {
-        $this->requestProducts->removeElement($requestProduct);
+        $this->preFactureProducts->removeElement($preFactureProduct);
     }
 
-    public function getRequestProducts()
+    public function getPreFactureProducts()
     {
-        return $this->requestProducts;
+        return $this->preFactureProducts;
     }
 
     public function setFinalPrice($finalPrice)
@@ -116,21 +120,21 @@ class PreFacture
         return $this->client->getEmail();
     }
 
-    public function addRequestCard(RequestCard $requestCard)
+    public function addPreFactureCard(PreFactureCard $preFactureCard)
     {
-        $this->requestCards[] = $requestCard;
+        $this->preFactureCards[] = $preFactureCard;
 
         return $this;
     }
 
-    public function removeRequestCard(RequestCard $requestCard)
+    public function removePreFactureCard(PreFactureCard $preFactureCard)
     {
-        $this->requestCards->removeElement($requestCard);
+        $this->preFactureCards->removeElement($preFactureCard);
     }
 
-    public function getRequestCards()
+    public function getPreFactureCards()
     {
-        return $this->requestCards;
+        return $this->preFactureCards;
     }
 
     public function setTransportCost($transportCost)
@@ -155,6 +159,18 @@ class PreFacture
     public function getDiscount()
     {
         return $this->discount;
+    }
+
+    public function setFirstClientDiscount($firstClientDiscount)
+    {
+        $this->firstClientDiscount = $firstClientDiscount;
+
+        return $this;
+    }
+
+    public function getFirstClientDiscount()
+    {
+        return $this->firstClientDiscount;
     }
 
     function __toString()
