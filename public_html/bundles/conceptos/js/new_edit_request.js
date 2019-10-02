@@ -1,5 +1,5 @@
-var request_product_template = '<tr class="product-row"><td>%1</td><td>%2</td><td>%3</td><td><a class="btn btn-secondary btn-edit-product" data-code="%4"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-product" data-code="%5"><i class="fa fa-remove"></i></a></td></tr>';
-var request_card_template = '<tr class="card-row"><td>%1</td><td>%2</td><td><a class="btn btn-secondary btn-edit-card" data-code="%3"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-card" data-code="%4"><i class="fa fa-remove"></i></a></td></tr>';
+var request_product_template = '<tr class="product-row"><td><img src="/uploads/%0" class="img-responsive" width="50" height="50"></td><td>%1</td><td>%2</td><td>%3</td><td><a class="btn btn-secondary btn-edit-product" data-code="%4"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-product" data-code="%5"><i class="fa fa-remove"></i></a></td></tr>';
+var request_card_template = '<tr class="card-row"><td>%1$</td><td>%2</td><td><a class="btn btn-secondary btn-edit-card" data-code="%3"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-card" data-code="%4"><i class="fa fa-remove"></i></a></td></tr>';
 
 var requestProductToEdit;
 var requestCardToEdit;
@@ -21,16 +21,20 @@ $(document).ready(function() {
     var count = $("#product-count").val();
     var airplaneFurniture = $("#product-airplane-forniture").prop("checked");
     if (product && count && count > 0) {
+      var productData = product[0].split("--");
       var exists = false;
       requestProducts.forEach(function(requestProduct) {
-        if (requestProduct.product == product) {
+        if (requestProduct.product == productData[0]) {
           exists = true;
-          requestProduct.count += parseInt(count);
+          requestProduct.count = parseInt(count);
+          requestProduct.airplaneFurniture = airplaneFurniture;
         }
       });
       if (!exists) {
         requestProducts.push({
-          product: parseInt(product[0]),
+          product: parseInt(productData[0]),
+          code: productData[1],
+          image: productData[2],
           count: parseInt(count),
           airplaneFurniture: airplaneFurniture,
         });
@@ -46,6 +50,7 @@ $(document).ready(function() {
     var count = $("#product-count").val();
     var airplaneFurniture = $("#product-airplane-forniture").prop("checked");
     if (product && count && count > 0) {
+      var productData = product[0].split("--");
       var tmpRequestProducts = [];
       requestProducts.forEach(function(requestProduct) {
         if (requestProduct.product != requestProductToEdit.product) {
@@ -55,7 +60,9 @@ $(document).ready(function() {
       requestProducts = tmpRequestProducts;
 
       requestProducts.push({
-        product: parseInt(product[0]),
+        product: parseInt(productData[0]),
+        code: productData[1],
+        image: productData[2],
         count: parseInt(count),
         airplaneFurniture: airplaneFurniture,
       });
@@ -159,7 +166,7 @@ $(document).ready(function() {
 
 function init() {
   if ($("#request_date").val()) {
-    $("#date").val(JSON.parse($("#request_date").val()));
+    $("#date").val(JSON.parse($("#request_date").val()).date.substring(0, 10));
     $("#client").val(JSON.parse($("#request_client").val())).trigger("change");
     $("#transportCost").val($("#request_transportCost").val());
     $("#discount").val($("#request_discount").val());
@@ -246,7 +253,8 @@ function populateRequestProducts() {
 
       var template = request_product_template
         .substring(-1)
-        .replace("%1", productRequest.product)
+        .replace("%0", productRequest.image)
+        .replace("%1", productRequest.code)
         .replace("%2", productRequest.count)
         .replace("%3", airplaneFurnitureReplacement)
         .replace("%4", productRequest.product)
@@ -275,7 +283,7 @@ function populateRequestProducts() {
           requestProductToEdit = requestProduct;
         }
       });
-      $("#product").val([requestProductToEdit.product]).trigger("change");
+      $("#product").val([requestProductToEdit.product + "--" + requestProductToEdit.code + "--" + requestProductToEdit.image]).trigger("change");
       $("#product-count").val(requestProductToEdit.count);
       $("#product-airplane-forniture").prop("checked", requestProductToEdit.airplaneFurniture);
     });

@@ -110,6 +110,8 @@ class FactureController extends Controller
       $factureProducts[] = [
         'id' => $factureProduct->getId(),
         'product' => $factureProduct->getProduct()->getId(),
+        'code' => $factureProduct->getProduct()->getCode(),
+        'image' => $factureProduct->getProduct()->getMainImage()->getImage(),
         'count' => $factureProduct->getCount(),
         'airplaneFurniture' => $factureProduct->getIsAriplaneForniture(),
       ];

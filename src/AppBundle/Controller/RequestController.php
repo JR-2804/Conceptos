@@ -110,6 +110,8 @@ class RequestController extends Controller
       $requestProducts[] = [
         'id' => $requestProduct->getId(),
         'product' => $requestProduct->getProduct()->getId(),
+        'code' => $requestProduct->getProduct()->getCode(),
+        'image' => $requestProduct->getProduct()->getMainImage()->getImage(),
         'count' => $requestProduct->getCount(),
         'airplaneFurniture' => $requestProduct->getIsAriplaneForniture(),
       ];

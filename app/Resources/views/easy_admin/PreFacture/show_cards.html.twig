@@ -1,0 +1,22 @@
+<div class="table-responsive">
+    <table class="table table-condensed">
+        <thead>
+        <tr>
+            <th>Precio</th>
+            <th>Cantidad</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for productCard in value %}
+            <tr>
+                <td>${{ productCard.price }}</td>
+                <td>{{ productCard.count }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" class="text-center">Sin tarjetas pedidas</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

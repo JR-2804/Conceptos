@@ -1,5 +1,5 @@
-var pre_facture_product_template = '<tr class="product-row"><td>%1</td><td>%2</td><td>%3</td><td><a class="btn btn-secondary btn-edit-product" data-code="%4"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-product" data-code="%5"><i class="fa fa-remove"></i></a></td></tr>';
-var pre_facture_card_template = '<tr class="card-row"><td>%1</td><td>%2</td><td><a class="btn btn-secondary btn-edit-card" data-code="%3"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-card" data-code="%4"><i class="fa fa-remove"></i></a></td></tr>';
+var pre_facture_product_template = '<tr class="product-row"><td><img src="/uploads/%0" class="img-responsive" width="50" height="50"></td><td>%1</td><td>%2</td><td>%3</td><td><a class="btn btn-secondary btn-edit-product" data-code="%4"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-product" data-code="%5"><i class="fa fa-remove"></i></a></td></tr>';
+var pre_facture_card_template = '<tr class="card-row"><td>%1$</td><td>%2</td><td><a class="btn btn-secondary btn-edit-card" data-code="%3"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-card" data-code="%4"><i class="fa fa-remove"></i></a></td></tr>';
 
 var preFactureProductToEdit;
 var preFactureCardToEdit;
@@ -21,16 +21,20 @@ $(document).ready(function() {
     var count = $("#product-count").val();
     var airplaneFurniture = $("#product-airplane-forniture").prop("checked");
     if (product && count && count > 0) {
+      var productData = product[0].split("--");
       var exists = false;
       preFactureProducts.forEach(function(preFactureProduct) {
-        if (preFactureProduct.product == product) {
+        if (preFactureProduct.product == productData[0]) {
           exists = true;
-          preFactureProduct.count += parseInt(count);
+          preFactureProduct.count = parseInt(count);
+          preFactureProduct.airplaneFurniture = airplaneFurniture;
         }
       });
       if (!exists) {
         preFactureProducts.push({
-          product: parseInt(product[0]),
+          product: parseInt(productData[0]),
+          code: productData[1],
+          image: productData[2],
           count: parseInt(count),
           airplaneFurniture: airplaneFurniture,
         });
@@ -46,6 +50,7 @@ $(document).ready(function() {
     var count = $("#product-count").val();
     var airplaneFurniture = $("#product-airplane-forniture").prop("checked");
     if (product && count && count > 0) {
+      var productData = product[0].split("--");
       var tmpPreFactureProducts = [];
       preFactureProducts.forEach(function(preFactureProduct) {
         if (preFactureProduct.product != preFactureProductToEdit.product) {
@@ -55,7 +60,9 @@ $(document).ready(function() {
       preFactureProducts = tmpPreFactureProducts;
 
       preFactureProducts.push({
-        product: parseInt(product[0]),
+        product: parseInt(productData[0]),
+        code: productData[1],
+        image: productData[2],
         count: parseInt(count),
         airplaneFurniture: airplaneFurniture,
       });
@@ -159,7 +166,7 @@ $(document).ready(function() {
 
 function init() {
   if ($("#pre_facture_date").val()) {
-    $("#date").val(JSON.parse($("#pre_facture_date").val()));
+    $("#date").val(JSON.parse($("#pre_facture_date").val()).date.substring(0, 10));
     $("#client").val(JSON.parse($("#pre_facture_client").val())).trigger("change");
     $("#transportCost").val($("#pre_facture_transportCost").val());
     $("#discount").val($("#pre_facture_discount").val());
@@ -246,7 +253,8 @@ function populatePreFactureProducts() {
 
       var template = pre_facture_product_template
         .substring(-1)
-        .replace("%1", productPreFacture.product)
+        .replace("%0", productPreFacture.image)
+        .replace("%1", productPreFacture.code)
         .replace("%2", productPreFacture.count)
         .replace("%3", airplaneFurnitureReplacement)
         .replace("%4", productPreFacture.product)
@@ -275,7 +283,7 @@ function populatePreFactureProducts() {
           preFactureProductToEdit = preFactureProduct;
         }
       });
-      $("#product").val([preFactureProductToEdit.product]).trigger("change");
+      $("#product").val([preFactureProductToEdit.product + "--" + preFactureProductToEdit.code + "--" + preFactureProductToEdit.image]).trigger("change");
       $("#product-count").val(preFactureProductToEdit.count);
       $("#product-airplane-forniture").prop("checked", preFactureProductToEdit.airplaneFurniture);
     });

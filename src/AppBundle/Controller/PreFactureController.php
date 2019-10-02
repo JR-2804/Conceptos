@@ -110,6 +110,8 @@ class PreFactureController extends Controller
       $preFactureProducts[] = [
         'id' => $preFactureProduct->getId(),
         'product' => $preFactureProduct->getProduct()->getId(),
+        'code' => $preFactureProduct->getProduct()->getCode(),
+        'image' => $preFactureProduct->getProduct()->getMainImage()->getImage(),
         'count' => $preFactureProduct->getCount(),
         'airplaneFurniture' => $preFactureProduct->getIsAriplaneForniture(),
       ];
