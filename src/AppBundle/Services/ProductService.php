@@ -88,7 +88,8 @@ class ProductService
         $isAriplaneForniture,
         $isOversize,
         $isTableware,
-        $isLamp
+        $isLamp,
+        $numberOfPackages
     ) {
         $transportExtra = 0;
         if (!$isFurniture || ($isFurniture && $isAriplaneForniture)) {
@@ -120,8 +121,12 @@ class ProductService
         if ($isFurniture) {
             $shipExtra = 21;
         }
+        $numberOfPackagesExtra = 10;
+        if ($numberOfPackages && $numberOfPackages > 1) {
+            $numberOfPackagesExtra = $numberOfPackages * 10;
+        }
 
-        $newPrice = (((($ikeaPrice * 1.1) + $transportExtra) * 2) + $fragileExtra + $lampExtra + $airplaneFornitureExtra + $oversizeExtra + $tablewareExtra + $shipExtra) * 1.1;
+        $newPrice = ((($ikeaPrice * 1.2) + $transportExtra) * 2) + $fragileExtra + $lampExtra + $airplaneFornitureExtra + $oversizeExtra + $tablewareExtra + $shipExtra + $numberOfPackagesExtra;
 
         return ceil($newPrice);
     }
@@ -142,7 +147,8 @@ class ProductService
                 false,
                 $product->getIsOversize(),
                 $product->getIsTableware(),
-                $product->getIsLamp()
+                $product->getIsLamp(),
+                $product->getNumberOfPackages()
             );
             $product->setPrice($finalPrice);
             if (0 === ($i % $batchSize)) {

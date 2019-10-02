@@ -378,6 +378,7 @@ class SiteController extends Controller
                     'isFurniture' => $productDB->getIsFurniture(),
                     'isAriplaneForniture' => $productDB->getIsAriplaneForniture(),
                     'categories' => json_encode($categories),
+                    'numberOfPackages' => $productDB->getNumberOfPackages(),
                 ];
             }
         }
@@ -1105,7 +1106,8 @@ class SiteController extends Controller
                 $productDB->getIsAriplaneForniture(),
                 $productDB->getIsOversize(),
                 $productDB->getIsTableware(),
-                $productDB->getIsLamp()
+                $productDB->getIsLamp(),
+                $productDB->getNumberOfPackages()
             );
           }
 
@@ -1211,7 +1213,8 @@ class SiteController extends Controller
                 $productDB->getIsAriplaneForniture(),
                 $productDB->getIsOversize(),
                 $productDB->getIsTableware(),
-                $productDB->getIsLamp()
+                $productDB->getIsLamp(),
+                $productDB->getNumberOfPackages()
             );
           }
 

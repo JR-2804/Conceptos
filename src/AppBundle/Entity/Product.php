@@ -169,6 +169,10 @@ class Product
      */
     private $isLamp;
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $numberOfPackages;
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Evaluation", mappedBy="product")
      */
     private $evaluations;
@@ -643,6 +647,18 @@ class Product
     public function getIsLamp()
     {
         return $this->isLamp;
+    }
+
+    public function setNumberOfPackages($numberOfPackages)
+    {
+        $this->numberOfPackages = $numberOfPackages;
+
+        return $this;
+    }
+
+    public function getNumberOfPackages()
+    {
+        return $this->numberOfPackages;
     }
 
     public function addEvaluation(Evaluation $evaluation)

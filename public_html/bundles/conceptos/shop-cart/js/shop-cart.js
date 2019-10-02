@@ -148,7 +148,8 @@ $(document).ready(function() {
         isAriplaneForniture: isAriplaneForniture,
         isOversize: product.isOversize,
         isTableware: product.isTableware,
-        isLamp: product.isLamp
+        isLamp: product.isLamp,
+        numberOfPackages: product.numberOfPackages
       },
       function(response) {
         var calculatedPrice = Number(response);

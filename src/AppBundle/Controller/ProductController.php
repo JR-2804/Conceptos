@@ -39,6 +39,7 @@ class ProductController extends Controller
             $product->setWeight($form->get('weight')->getData());
             $product->setShippingLimit($form->get('shippingLimit')->getData());
             $product->setIkeaPrice($form->get('ikeaPrice')->getData());
+            $product->setNumberOfPackages($form->get('numberOfPackages')->getData());
 
             $isFurniture = $form->get('isFurniture')->getData();
             if (is_string($isFurniture) && ('1' == $isFurniture || 'true' == $isFurniture)) {
@@ -252,6 +253,7 @@ class ProductController extends Controller
         $dto->setIsOversize($product->getIsOversize());
         $dto->setIsTableware($product->getIsTableware());
         $dto->setIsLamp($product->getIsLamp());
+        $dto->setNumberOfPackages($product->getNumberOfPackages());
 
         $categories = [];
         foreach ($product->getCategories() as $category) {
@@ -310,6 +312,7 @@ class ProductController extends Controller
             $productDB->setItem($form->get('item')->getData());
             $productDB->setCode($form->get('code')->getData());
             $productDB->setDescription($form->get('description')->getData());
+            $productDB->setNumberOfPackages($form->get('numberOfPackages')->getData());
 
             $isFurniture = $form->get('isFurniture')->getData();
             if (is_string($isFurniture) && ('1' == $isFurniture || 'true' == $isFurniture)) {
@@ -802,6 +805,7 @@ class ProductController extends Controller
         $ikeaPrice = $request->request->get('ikeaPrice');
         $ikeaPrice = floatval($ikeaPrice);
         $isFurniture = $request->request->get('isFurniture');
+        $numberOfPackages = $request->request->get('numberOfPackages');
         if (is_string($isFurniture) && 'true' == $isFurniture) {
             $isFurniture = true;
         } elseif (is_int($isFurniture) && 1 == $isFurniture) {
@@ -870,7 +874,8 @@ class ProductController extends Controller
             $isAriplaneForniture,
             $isOversize,
             $isTableware,
-            $isLamp
+            $isLamp,
+            $numberOfPackages
         );
 
         return new JsonResponse($price);
@@ -898,7 +903,8 @@ class ProductController extends Controller
                 $product->getIsAriplaneForniture(),
                 $product->getIsOversize(),
                 $product->getIsTableware(),
-                $product->getIsLamp()
+                $product->getIsLamp(),
+                $product->getNumberOfPackages()
             );
             $product->setPrice($finalPrice);
             $product->setIsFurniture(true);

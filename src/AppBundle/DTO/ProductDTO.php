@@ -33,6 +33,7 @@ class ProductDTO
     private $isOversize;
     private $isTableware;
     private $isLamp;
+    private $numberOfPackages;
 
     public function getId()
     {
@@ -322,5 +323,15 @@ class ProductDTO
     public function getIsLamp()
     {
         return $this->isLamp;
+    }
+
+    public function setNumberOfPackages($numberOfPackages)
+    {
+        $this->numberOfPackages = $numberOfPackages;
+    }
+
+    public function getNumberOfPackages()
+    {
+        return $this->numberOfPackages;
     }
 }

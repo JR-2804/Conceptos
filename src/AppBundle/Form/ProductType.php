@@ -39,6 +39,7 @@ class ProductType extends AbstractType
             ->add('isOversize', HiddenType::class)
             ->add('isTableware', HiddenType::class)
             ->add('isLamp', HiddenType::class)
+            ->add('numberOfPackages', HiddenType::class)
         ;
         parent::buildForm($builder, $options);
     }

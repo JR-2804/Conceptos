@@ -157,7 +157,8 @@ $(document).ready(function() {
           isAriplaneForniture: false,
           isOversize: $("#is-oversize").prop("checked"),
           isTableware: $("#is-tableware").prop("checked"),
-          isLamp: $("#is-lamp").prop("checked")
+          isLamp: $("#is-lamp").prop("checked"),
+          numberOfPackages: $("#number-of-packages").val(),
         },
         function(response) {
           var valueResponse = Number(response).toFixed(2);
@@ -217,6 +218,7 @@ $(document).ready(function() {
         $("#is-tableware").prop("checked") == true ? 1 : 0
       );
       $("#product_isLamp").val($("#is-lamp").prop("checked") == true ? 1 : 0);
+      $("#product_numberOfPackages").val($("#number-of-packages").val());
     }
   });
 });

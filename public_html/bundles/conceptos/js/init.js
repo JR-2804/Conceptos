@@ -56,4 +56,5 @@ $(document).ready(function() {
   $("#is-oversize").prop("checked", $("#product_isOversize").val() == 1);
   $("#is-tableware").prop("checked", $("#product_isTableware").val() == 1);
   $("#is-lamp").prop("checked", $("#product_isLamp").val() == 1);
+  $("#number-of-packages").val($("#product_numberOfPackages").val());
 });
