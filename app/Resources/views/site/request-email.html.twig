@@ -444,18 +444,22 @@
                   <span style="font-size: 15px;">Dirección: {{request.client.address}}</span>
                 </p>
               </div>
-              <div
-                style="line-height: 14px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size: 12px; color: #052d3d;">
-                <p style="line-height: 18px; text-align: left; font-size: 12px; margin-left: 10px;">
-                  <span style="font-size: 15px;">Teléfono Movil: {{request.client.movil}}</span>
-                </p>
-              </div>
-              <div
-                style="line-height: 14px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size: 12px; color: #052d3d;">
-                <p style="line-height: 18px; text-align: left; font-size: 12px; margin-left: 10px;">
-                  <span style="font-size: 15px;">Teléfono de Casa: {{request.client.phone}}</span>
-                </p>
-              </div>
+              {% if request.client.movil %}
+                <div
+                  style="line-height: 14px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size: 12px; color: #052d3d;">
+                  <p style="line-height: 18px; text-align: left; font-size: 12px; margin-left: 10px;">
+                    <span style="font-size: 15px;">Teléfono Movil: {{request.client.movil}}</span>
+                  </p>
+                </div>
+              {% endif %}
+              {% if request.client.phone %}
+                <div
+                  style="line-height: 14px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size: 12px; color: #052d3d;">
+                  <p style="line-height: 18px; text-align: left; font-size: 12px; margin-left: 10px;">
+                    <span style="font-size: 15px;">Teléfono de Casa: {{request.client.phone}}</span>
+                  </p>
+                </div>
+              {% endif %}
               {% if request.client.memberNumber %}
                 <div
                   style="line-height: 14px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size: 12px; color: #052d3d;">

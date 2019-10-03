@@ -17,12 +17,10 @@ class CheckOutType extends AbstractType
         $builder->add('name', TextType::class)
             ->add('email', EmailType::class)
             ->add('address', TextType::class)
-            ->add('phone', TextType::class)
-            ->add('movil', TextType::class)
+            ->add('phone', TextType::class, ['required' => false,])
+            ->add('movil', TextType::class, ['required' => false,])
             ->add('products', HiddenType::class)
-            ->add('memberNumber', HiddenType::class, [
-                'required' => false,
-            ])
+            ->add('memberNumber', HiddenType::class, ['required' => false,])
             ->add('recaptcha', EWZRecaptchaType::class, ['language' => 'es'])
         ;
         parent::buildForm($builder, $options);

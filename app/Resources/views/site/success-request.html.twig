@@ -35,8 +35,8 @@
                             <span class="rob-table-text checkout-subtitle d-none d-lg-block"><strong>Nombre y Apellidos:</strong> {{request.client.name}}</span>
                             <span class="rob-table-text checkout-subtitle d-lg-none"><strong>Nombre:</strong> {{request.client.name}}</span>
                             <span class="rob-table-text checkout-subtitle"><strong>Correo:</strong> {{request.client.email}}</span>
-                            <span class="rob-table-text checkout-subtitle"><strong>Teléfono Movil:</strong> {{request.client.movil}}</span>
-                            <span class="rob-table-text checkout-subtitle"><strong>Teléfono de Casa:</strong> {{request.client.phone}}</span>
+                            {% if request.client.movil %}<span class="rob-table-text checkout-subtitle"><strong>Teléfono Movil:</strong> {{request.client.movil}}</span>{% endif %}
+                            {% if request.client.phone %}<span class="rob-table-text checkout-subtitle"><strong>Teléfono de Casa:</strong> {{request.client.phone}}</span>{% endif %}
                             {% if request.client.memberNumber %}
                                 <span class="rob-table-text checkout-subtitle"><strong>Número de Miembro:</strong> {{request.client.memberNumber}}</span>
                             {% endif %}

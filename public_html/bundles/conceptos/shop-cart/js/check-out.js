@@ -33,8 +33,7 @@ $(document).ready(function() {
       !$("#check_out_name").val() ||
       !$("#check_out_email").val() ||
       !$("#check_out_address").val() ||
-      !$("#check_out_phone").val() ||
-      !$("#check_out_movil").val() ||
+      (!$("#check_out_phone").val() && !$("#check_out_movil").val()) ||
       !$("#termsAndConditions").prop("checked") ||
       !$("#privacyPolicy").prop("checked")
     ) {
