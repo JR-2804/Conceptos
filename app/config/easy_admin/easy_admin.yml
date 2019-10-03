@@ -307,10 +307,11 @@ easy_admin:
                 fields:
                     - {property: 'title', label: 'Título'}
                     - {property: 'imageFile', type: 'file', label: 'Imágen principal'}
+                    - {property: 'createdDate', label: 'Creado'}
                     - {property: 'summary', label: 'Resumen'}
                     - {property: 'tags', label: 'Tags'}
                     - {property: 'category', label: 'Categoría'}
-                    - { property: 'body', label: 'Cuerpo', type: 'ckeditor' }
+                    - {property: 'body', label: 'Cuerpo', type: 'ckeditor' }
         BlogCategory:
             class: AppBundle\Entity\Blog\Category
             list:
