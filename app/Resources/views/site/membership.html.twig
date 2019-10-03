@@ -91,15 +91,15 @@
                             <span class="decoration-design-title-short mt-2 ml-2 mr-2 d-lg-none">{{page.data.giftCardSection.mainText|raw}}</span>
                             <span class="bottom-text mr-2 ml-4 d-none d-lg-block">{{page.data.giftCardSection.bottomText|raw}}</span>
                             <span class="decoration-design-description-short ml-2 mr-2 d-lg-none">{{page.data.giftCardSection.bottomText|raw}}</span>
-                        </div>
-                        <div class="col-12 col-lg-7 pl-0 pl-lg-2">
-                            <div class="align-items-end pt-3 d-none d-lg-flex">
-                                <a class="d-flex" data-toggle="modal" data-target="#giftCardsModal" href="">
+                            <div class="d-flex align-items-end pt-3 d-lg-none">
+                                <a id="gift-card-modal-toggle" class="d-flex" data-toggle="modal" data-target="#giftCardsModal" href="">
                                     <img class="gift-card-section-img" src="{{page.data.giftCardSection.generalImage.path}}">
                                 </a>
                             </div>
-                            <div class="d-flex align-items-end pt-3 d-lg-none">
-                                <a id="gift-card-modal-toggle" class="d-flex" data-toggle="modal" data-target="#giftCardsModal" href="">
+                        </div>
+                        <div class="col-7 pl-2 d-none d-lg-flex">
+                            <div class="align-items-end pt-3">
+                                <a class="d-flex" data-toggle="modal" data-target="#giftCardsModal" href="">
                                     <img class="gift-card-section-img" src="{{page.data.giftCardSection.generalImage.path}}">
                                 </a>
                             </div>
