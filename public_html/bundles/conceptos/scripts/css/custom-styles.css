@@ -1506,7 +1506,7 @@ a.header-text.active {
 }
 
 #social-networks {
-  top: 20%;
+  top: 40%;
   left: 20px;
   position: fixed;
   z-index: 5000;

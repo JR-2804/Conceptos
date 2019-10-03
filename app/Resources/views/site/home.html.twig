@@ -11,7 +11,7 @@
         {% endif %}
     {% endfor %}
 
-    <div id="social-networks" class="flex-column sn-opacity d-none d-lg-flex">
+    <div id="social-networks" class="flex-column sn-opacity d-flex>
         <div class="dropdown">
             <p class="dropdown-toggle" data-toggle="dropdown" href="">
                 <i class="socicon socicon-sharethis main-share-icon"></i>
@@ -41,6 +41,12 @@
                             <a class="dropdown-item" href="{{ network.link }}" target="_blank">
                                 <span title="Compartir en Pinterest">
                                     <i class="socicon socicon-pinterest share-icon"></i>
+                                </span>
+                            </a>
+                        {% elseif network.network == 'instagram' %}
+                            <a class="dropdown-item" href="{{ network.link }}" target="_blank">
+                                <span title="Compartir en Instagram">
+                                    <i class="socicon socicon-instagram share-icon"></i>
                                 </span>
                             </a>
                         {% endif %}

@@ -363,6 +363,12 @@
                                         <i class="socicon socicon-pinterest share-icon"></i>
                                     </span>
                                 </a>
+                            {% elseif network.network == 'instagram' %}
+                                <a href="{{ network.link }}" target="_blank">
+                                    <span class="instagram mx-2" title="Compartir en Instagram">
+                                        <i class="socicon socicon-instagram share-icon"></i>
+                                    </span>
+                                </a>
                             {% endif %}
                         {% endfor %}
                     </div>
