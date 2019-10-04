@@ -63,8 +63,19 @@
         </a>
     </div>
 
-    <section class="page-header mbr-parallax-background d-none d-lg-block" style="background-image: url('{{ vich_uploader_asset(mainCategory, 'imageFile') }}')"></section>
-    <section class="page-header-short mbr-parallax-background d-lg-none" style="background-image: url('{{ vich_uploader_asset(mainCategory, 'imageFile') }}')"></section>
+    {% if inOfferHeader %}
+        {% set image = page.data.inOfferImage.path %}
+    {% elseif inStoreHeader %}
+        {% set image = page.data.inStoreImage.path %}
+    {% elseif recentHeader %}
+        {% set image = page.data.newImage.path %}
+    {% elseif generalHeader %}
+        {% set image = page.data.generalImage.path %}
+    {% else %}
+        {% set image = vich_uploader_asset(mainCategory, 'imageFile') %}
+    {% endif%}
+    <section class="page-header mbr-parallax-background d-none d-lg-block" style="background-image: url('{{ image }}')"></section>
+    <section class="page-header-short mbr-parallax-background d-lg-none" style="background-image: url('{{ image }}')"></section>
     <div class="gift-card-container d-flex justify-content-center d-lg-none">
         <a id="gift-card-modal-toggle" class="d-flex" data-toggle="modal" data-target="#giftCardsModal" href="">
             <img class="gift-card-section-img" src="{{membership.data.giftCardSection.generalImage.path}}">

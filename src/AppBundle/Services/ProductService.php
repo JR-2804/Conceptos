@@ -337,14 +337,33 @@ class ProductService
             }
         }
 
+        $inOfferHeader = false;
+        $inStoreHeader = false;
+        $recentHeader = false;
+        $generalHeader = false;
         if (null == $mainCategory) {
-            $mainCategory = $this->categoryRepository->findAll()[0];
+            if (-1 != $inOffer) {
+                $inOfferHeader = true;
+            }
+            elseif (-1 != $inStore) {
+                $inStoreHeader = true;
+            }
+            elseif (-1 != $recent) {
+                $recentHeader = true;
+            }
+            else {
+                $generalHeader = true;
+            }
         }
 
         return [
             'products' => $products,
             'countProducts' => $countProducts,
             'mainCategory' => $mainCategory,
+            'inOfferHeader' => $inOfferHeader,
+            'inStoreHeader' => $inStoreHeader,
+            'recentHeader' => $recentHeader,
+            'generalHeader' => $generalHeader,
         ];
     }
 }
