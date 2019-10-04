@@ -154,7 +154,7 @@ $(document).ready(function() {
           ikeaPrice: ikeaPrice,
           isFurniture: $("#is-furniture").prop("checked"),
           isFragile: $("#is-fragile").prop("checked"),
-          isAriplaneForniture: false,
+          isAriplaneForniture: $("#is-airplane-furniture").prop("checked"),
           isOversize: $("#is-oversize").prop("checked"),
           isTableware: $("#is-tableware").prop("checked"),
           isLamp: $("#is-lamp").prop("checked"),

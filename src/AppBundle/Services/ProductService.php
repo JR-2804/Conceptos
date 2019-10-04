@@ -92,10 +92,10 @@ class ProductService
         $numberOfPackages
     ) {
         $transportExtra = 0;
-        if (!$isFurniture || ($isFurniture && $isAriplaneForniture)) {
-            $transportExtra = $weight * 16;
-        } else {
+        if ($isFurniture && !$isAriplaneForniture) {
             $transportExtra = $weight * 4.4;
+        } else {
+            $transportExtra = $weight * 16;
         }
         $fragileExtra = 0;
         if ($isFragile) {
@@ -118,12 +118,15 @@ class ProductService
             $tablewareExtra = 60;
         }
         $shipExtra = 0;
-        if ($isFurniture) {
+        if ($isFurniture && !$isAriplaneForniture) {
             $shipExtra = 21;
         }
-        $numberOfPackagesExtra = 10;
-        if ($numberOfPackages && $numberOfPackages > 1) {
-            $numberOfPackagesExtra = $numberOfPackages * 10;
+        $numberOfPackagesExtra = 0;
+        if ($isFurniture && !$isAriplaneForniture) {
+            $numberOfPackagesExtra = 10;
+            if ($numberOfPackages && $numberOfPackages > 1) {
+                $numberOfPackagesExtra = $numberOfPackages * 10;
+            }
         }
 
         $newPrice = ((($ikeaPrice * 1.2) + $transportExtra) * 2) + $fragileExtra + $lampExtra + $airplaneFornitureExtra + $oversizeExtra + $tablewareExtra + $shipExtra + $numberOfPackagesExtra;
