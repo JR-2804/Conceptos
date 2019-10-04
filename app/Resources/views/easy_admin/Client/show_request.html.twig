@@ -10,27 +10,19 @@
         </thead>
         <tbody>
         {% for request in value %}
+            {% set numberOfCards = 0 %}
+            {% for card in request.requestCards %}
+                {% set numberOfCards = numberOfCards + 1 %}
+            {% endfor %}
+            {% set numberOfProducts = 0 %}
+            {% for product in request.requestProducts %}
+                {% set numberOfProducts = numberOfProducts + 1 %}
+            {% endfor %}
             <tr>
                 <td class="text-center">{{ request.date | date('d-m-Y') }}</td>
                 <td class="text-center">${{ request.finalPrice }}</td>
-                <td class="text-center">
-                    {% for prodCard in request.requestCards %}
-                        <p>{{ prodCard.card }} - {{ prodCard.person }}</p>
-                    {% else %}
-                        Sin tarjetas pedidas
-                    {% endfor %}
-                </td>
-                <td class="text-center">
-                    <div style="display: inline-block">
-                        {% for prodRequest in request.requestProducts %}
-                            <img style="padding: 2px; display: inline-block;"
-                                 src="{{ vich_uploader_asset(prodRequest.product.mainImage, 'imageFile') }}"
-                                 class="img-responsive" width="100" height="100">
-                        {% else %}
-                            Sin productos pedidos
-                        {% endfor %}
-                    </div>
-                </td>
+                <td class="text-center">{{numberOfCards}}</td>
+                <td class="text-center">{{numberOfProducts}}</td>
             </tr>
         {% endfor %}
         </tbody>
