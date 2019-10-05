@@ -72,7 +72,7 @@
     {% elseif generalHeader %}
         {% set image = page.data.generalImage.path %}
     {% else %}
-        {% set image = vich_uploader_asset(mainCategory, 'imageFile') %}
+        {% set image = vich_uploader_asset(mainCategory, 'imageSiteFile') %}
     {% endif%}
     <section class="page-header mbr-parallax-background d-none d-lg-block" style="background-image: url('{{ image }}')"></section>
     <section class="page-header-short mbr-parallax-background d-lg-none" style="background-image: url('{{ image }}')"></section>
