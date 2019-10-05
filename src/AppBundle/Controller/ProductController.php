@@ -52,7 +52,17 @@ class ProductController extends Controller
                 $isFurniture = false;
             }
             $product->setIsFurniture($isFurniture);
-
+            $isMattress = $form->get('isMattress')->getData();
+            if (is_string($isMattress) && ('1' == $isMattress || 'true' == $isMattress)) {
+                $isMattress = true;
+            } elseif (is_int($isMattress) && 1 == $isMattress) {
+                $isMattress = true;
+            } elseif (is_bool($isMattress) && $isMattress) {
+                $isMattress = true;
+            } else {
+                $isMattress = false;
+            }
+            $product->setIsMattress($isMattress);
             $isHighlight = $form->get('isHighlight')->getData();
             if (is_string($isHighlight) && ('1' == $isHighlight || 'true' == $isHighlight)) {
                 $isHighlight = true;
@@ -86,6 +96,17 @@ class ProductController extends Controller
                 $isAriplaneForniture = false;
             }
             $product->setIsAriplaneForniture($isAriplaneForniture);
+            $isAriplaneMattress = $form->get('isAriplaneMattress')->getData();
+            if (is_string($isAriplaneMattress) && ('1' == $isAriplaneMattress || 'true' == $isAriplaneMattress)) {
+                $isAriplaneMattress = true;
+            } elseif (is_int($isAriplaneMattress) && 1 == $isAriplaneMattress) {
+                $isAriplaneMattress = true;
+            } elseif (is_bool($isAriplaneMattress) && $isAriplaneMattress) {
+                $isAriplaneMattress = true;
+            } else {
+                $isAriplaneMattress = false;
+            }
+            $product->setIsAriplaneMattress($isAriplaneMattress);
             $isOversize = $form->get('isOversize')->getData();
             if (is_string($isOversize) && ('1' == $isOversize || 'true' == $isOversize)) {
                 $isOversize = true;
@@ -247,9 +268,11 @@ class ProductController extends Controller
         $dto->setIkeaPrice($product->getIkeaPrice());
         $dto->setCalculatePrice($product->getCalculatePrice());
         $dto->setIsFurniture($product->getIsFurniture());
+        $dto->setIsMattress($product->getIsMattress());
         $dto->setIsHighlight($product->getIsHighlight());
         $dto->setIsFragile($product->getIsFragile());
         $dto->setIsAriplaneForniture($product->getIsAriplaneForniture());
+        $dto->setIsAriplaneMattress($product->getIsAriplaneMattress());
         $dto->setIsOversize($product->getIsOversize());
         $dto->setIsTableware($product->getIsTableware());
         $dto->setIsLamp($product->getIsLamp());
@@ -326,6 +349,18 @@ class ProductController extends Controller
             }
             $productDB->setIsFurniture($isFurniture);
 
+            $isMattress = $form->get('isMattress')->getData();
+            if (is_string($isMattress) && ('1' == $isMattress || 'true' == $isMattress)) {
+                $isMattress = true;
+            } elseif (is_int($isMattress) && 1 == $isMattress) {
+                $isMattress = true;
+            } elseif (is_bool($isMattress) && $isMattress) {
+                $isMattress = true;
+            } else {
+                $isMattress = false;
+            }
+            $productDB->setIsMattress($isMattress);
+
             $isHighlight = $form->get('isHighlight')->getData();
             if (is_string($isHighlight) && ('1' == $isHighlight || 'true' == $isHighlight)) {
                 $isHighlight = true;
@@ -359,6 +394,17 @@ class ProductController extends Controller
                 $isAriplaneForniture = false;
             }
             $productDB->setIsAriplaneForniture($isAriplaneForniture);
+            $isAriplaneMattress = $form->get('isAriplaneMattress')->getData();
+            if (is_string($isAriplaneMattress) && ('1' == $isAriplaneMattress || 'true' == $isAriplaneMattress)) {
+                $isAriplaneMattress = true;
+            } elseif (is_int($isAriplaneMattress) && 1 == $isAriplaneMattress) {
+                $isAriplaneMattress = true;
+            } elseif (is_bool($isAriplaneMattress) && $isAriplaneMattress) {
+                $isAriplaneMattress = true;
+            } else {
+                $isAriplaneMattress = false;
+            }
+            $productDB->setIsAriplaneMattress($isAriplaneMattress);
             $isOversize = $form->get('isOversize')->getData();
             if (is_string($isOversize) && ('1' == $isOversize || 'true' == $isOversize)) {
                 $isOversize = true;
@@ -815,6 +861,17 @@ class ProductController extends Controller
         } else {
             $isFurniture = false;
         }
+        $isMattress = $request->request->get('isMattress');
+        $numberOfPackages = $request->request->get('numberOfPackages');
+        if (is_string($isMattress) && 'true' == $isMattress) {
+            $isMattress = true;
+        } elseif (is_int($isMattress) && 1 == $isMattress) {
+            $isMattress = true;
+        } elseif (is_bool($isMattress) && $isMattress) {
+            $isMattress = true;
+        } else {
+            $isMattress = false;
+        }
         $isFragile = $request->request->get('isFragile');
         if (is_string($isFragile) && 'true' == $isFragile) {
             $isFragile = true;
@@ -834,6 +891,16 @@ class ProductController extends Controller
             $isAriplaneForniture = true;
         } else {
             $isAriplaneForniture = false;
+        }
+        $isAriplaneMattress = $request->request->get('isAriplaneMattress');
+        if (is_string($isAriplaneMattress) && 'true' == $isAriplaneMattress) {
+            $isAriplaneMattress = true;
+        } elseif (is_int($isAriplaneMattress) && 1 == $isAriplaneMattress) {
+            $isAriplaneMattress = true;
+        } elseif (is_bool($isAriplaneMattress) && $isAriplaneMattress) {
+            $isAriplaneMattress = true;
+        } else {
+            $isAriplaneMattress = false;
         }
         $isOversize = $request->request->get('isOversize');
         if (is_string($isOversize) && 'true' == $isOversize) {
@@ -875,7 +942,9 @@ class ProductController extends Controller
             $isOversize,
             $isTableware,
             $isLamp,
-            $numberOfPackages
+            $numberOfPackages,
+            $isMattress,
+            $isAriplaneMattress
         );
 
         return new JsonResponse($price);
@@ -904,7 +973,9 @@ class ProductController extends Controller
                 $product->getIsOversize(),
                 $product->getIsTableware(),
                 $product->getIsLamp(),
-                $product->getNumberOfPackages()
+                $product->getNumberOfPackages(),
+                $product->getIsMattress(),
+                $product->getIsAriplaneMattress()
             );
             $product->setPrice($finalPrice);
             $product->setIsFurniture(true);

@@ -123,7 +123,8 @@ easy_admin:
                 actions:
                     - {name: 'show'}
                     - {name: 'new', label: 'Nuevo Pedido'}
-                    - {name: 'print_request', type: 'route', label: 'Exportar a PDF' }
+                    # TODO: Hide export to PDF
+                    # - {name: 'print_request', type: 'route', label: 'Exportar a PDF' }
                 fields:
                     - id
                     - {property: 'date', label: 'Fecha'}

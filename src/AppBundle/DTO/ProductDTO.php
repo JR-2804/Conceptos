@@ -26,10 +26,12 @@ class ProductDTO
     private $ikeaPrice;
     private $calculatePrice;
     private $isFurniture;
+    private $isMattress;
     private $isHighlight;
     private $highlightImages;
     private $isFragile;
     private $isAriplaneForniture;
+    private $isAriplaneMattress;
     private $isOversize;
     private $isTableware;
     private $isLamp;
@@ -255,6 +257,16 @@ class ProductDTO
         $this->isFurniture = $isFurniture;
     }
 
+    public function getIsMattress()
+    {
+        return $this->isMattress;
+    }
+
+    public function setIsMattress($isMattress)
+    {
+        $this->isMattress = $isMattress;
+    }
+
     public function getIsHighlight()
     {
         return $this->isHighlight;
@@ -293,6 +305,16 @@ class ProductDTO
     public function getIsAriplaneForniture()
     {
         return $this->isAriplaneForniture;
+    }
+
+    public function setIsAriplaneMattress($isAriplaneMattress)
+    {
+        $this->isAriplaneMattress = $isAriplaneMattress;
+    }
+
+    public function getIsAriplaneMattress()
+    {
+        return $this->isAriplaneMattress;
     }
 
     public function setIsOversize($isOversize)

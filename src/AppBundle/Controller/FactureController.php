@@ -51,6 +51,7 @@ class FactureController extends Controller
         $factureProduct->setProduct($this->getDoctrine()->getRepository('AppBundle:Product')->find($product['product']));
         $factureProduct->setCount($product['count']);
         $factureProduct->setIsAriplaneForniture($product['airplaneFurniture']);
+        $factureProduct->setIsAriplaneMattress($product['airplaneMattress']);
         $this->getDoctrine()->getManager()->persist($factureProduct);
         $facture->addFactureProduct($factureProduct);
       }
@@ -114,6 +115,7 @@ class FactureController extends Controller
         'image' => $factureProduct->getProduct()->getMainImage()->getImage(),
         'count' => $factureProduct->getCount(),
         'airplaneFurniture' => $factureProduct->getIsAriplaneForniture(),
+        'airplaneMattress' => $factureProduct->getIsAriplaneMattress(),
       ];
     }
     $dto->setFactureProducts(json_encode($factureProducts));
@@ -159,6 +161,7 @@ class FactureController extends Controller
         $factureProduct->setProduct($this->getDoctrine()->getRepository('AppBundle:Product')->find($product['product']));
         $factureProduct->setCount($product['count']);
         $factureProduct->setIsAriplaneForniture($product['airplaneFurniture']);
+        $factureProduct->setIsAriplaneMattress($product['airplaneMattress']);
         $this->getDoctrine()->getManager()->persist($factureProduct);
         $factureDB->addFactureProduct($factureProduct);
       }

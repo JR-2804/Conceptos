@@ -133,6 +133,10 @@ class Product
      * @ORM\Column(type="boolean")
      */
     private $isFurniture;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isMattress;
 
     private $priceOffer;
 
@@ -156,6 +160,10 @@ class Product
      * @ORM\Column(type="boolean")
      */
     private $isAriplaneForniture;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isAriplaneMattress;
     /**
      * @ORM\Column(type="boolean")
      */
@@ -560,6 +568,18 @@ class Product
         return $this->isFurniture;
     }
 
+    public function setIsMattress($isMattress)
+    {
+        $this->isMattress = $isMattress;
+
+        return $this;
+    }
+
+    public function getIsMattress()
+    {
+        return $this->isMattress;
+    }
+
     public function setIsHighlight($isHighlight)
     {
         $this->isHighlight = $isHighlight;
@@ -611,6 +631,18 @@ class Product
     public function getIsAriplaneForniture()
     {
         return $this->isAriplaneForniture;
+    }
+
+    public function setIsAriplaneMattress($isAriplaneMattress)
+    {
+        $this->isAriplaneMattress = $isAriplaneMattress;
+
+        return $this;
+    }
+
+    public function getIsAriplaneMattress()
+    {
+        return $this->isAriplaneMattress;
     }
 
     public function setIsOversize($isOversize)

@@ -133,8 +133,10 @@ $(document).ready(function() {
     product.deliveryType = deliveryType;
 
     var isAriplaneForniture = false;
+    var isAriplaneMattress = false;
     if (deliveryType == 2) {
       isAriplaneForniture = true;
+      isAriplaneMattress = true;
     }
 
     ajax(
@@ -144,8 +146,10 @@ $(document).ready(function() {
         weight: product.weight,
         ikeaPrice: product.ikeaPrice,
         isFurniture: product.isFurniture,
+        isMattress: product.isMattress,
         isFragile: product.isFragile,
         isAriplaneForniture: isAriplaneForniture,
+        isAriplaneMattress: isAriplaneMattress,
         isOversize: product.isOversize,
         isTableware: product.isTableware,
         isLamp: product.isLamp,

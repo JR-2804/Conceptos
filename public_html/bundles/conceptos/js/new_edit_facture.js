@@ -1,4 +1,4 @@
-var facture_product_template = '<tr class="product-row"><td><img src="/uploads/%0" class="img-responsive" width="50" height="50"></td><td>%1</td><td>%2</td><td>%3</td><td><a class="btn btn-secondary btn-edit-product" data-code="%4"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-product" data-code="%5"><i class="fa fa-remove"></i></a></td></tr>';
+var facture_product_template = '<tr class="product-row"><td><img src="/uploads/%0" class="img-responsive" width="50" height="50"></td><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td><a class="btn btn-secondary btn-edit-product" data-code="%5"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-product" data-code="%6"><i class="fa fa-remove"></i></a></td></tr>';
 var facture_card_template = '<tr class="card-row"><td>%1$</td><td>%2</td><td><a class="btn btn-secondary btn-edit-card" data-code="%3"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-card" data-code="%4"><i class="fa fa-remove"></i></a></td></tr>';
 
 var factureProductToEdit;
@@ -20,6 +20,7 @@ $(document).ready(function() {
     var product = $("#product").val();
     var count = $("#product-count").val();
     var airplaneFurniture = $("#product-airplane-forniture").prop("checked");
+    var airplaneMattress = $("#product-airplane-mattress").prop("checked");
     if (product && count && count > 0) {
       var productData = product[0].split("--");
       var exists = false;
@@ -28,6 +29,7 @@ $(document).ready(function() {
           exists = true;
           factureProduct.count = parseInt(count);
           factureProduct.airplaneFurniture = airplaneFurniture;
+          factureProduct.airplaneMattress = airplaneMattress;
         }
       });
       if (!exists) {
@@ -37,6 +39,7 @@ $(document).ready(function() {
           image: productData[2],
           count: parseInt(count),
           airplaneFurniture: airplaneFurniture,
+          airplaneMattress: airplaneMattress,
         });
       }
       populateFactureProducts();
@@ -49,6 +52,7 @@ $(document).ready(function() {
     var product = $("#product").val();
     var count = $("#product-count").val();
     var airplaneFurniture = $("#product-airplane-forniture").prop("checked");
+    var airplaneMattress = $("#product-airplane-mattress").prop("checked");
     if (product && count && count > 0) {
       var productData = product[0].split("--");
       var tmpFactureProducts = [];
@@ -65,6 +69,7 @@ $(document).ready(function() {
         image: productData[2],
         count: parseInt(count),
         airplaneFurniture: airplaneFurniture,
+        airplaneMattress: airplaneMattress,
       });
 
       populateFactureProducts();
@@ -80,6 +85,7 @@ $(document).ready(function() {
     $("#product").val([]).trigger("change");
     $("#product-count").val("");
     $("#product-airplane-forniture").prop("checked", false);
+    $("#product-airplane-mattress").prop("checked", false);
 
     $("#add-product").show();
     $("#edit-product").hide();
@@ -242,6 +248,7 @@ function populateFactureProducts() {
   $("#product").val([]).trigger("change");
   $("#product-count").val("");
   $("#product-airplane-forniture").prop("checked", false);
+  $("#product-airplane-mattress").prop("checked", false);
 
   $(".product-row").remove();
   if (factureProducts) {
@@ -250,6 +257,10 @@ function populateFactureProducts() {
       if (productFacture.airplaneFurniture) {
         airplaneFurnitureReplacement = "Si";
       }
+      var airplaneMattressReplacement = "No";
+      if (productFacture.airplaneMattress) {
+        airplaneMattressReplacement = "Si";
+      }
 
       var template = facture_product_template
         .substring(-1)
@@ -257,8 +268,9 @@ function populateFactureProducts() {
         .replace("%1", productFacture.code)
         .replace("%2", productFacture.count)
         .replace("%3", airplaneFurnitureReplacement)
-        .replace("%4", productFacture.product)
-        .replace("%5", productFacture.product);
+        .replace("%4", airplaneMattressReplacement)
+        .replace("%5", productFacture.product)
+        .replace("%6", productFacture.product);
 
       $(".product-rows").append(template);
     });
@@ -286,6 +298,7 @@ function populateFactureProducts() {
       $("#product").val([factureProductToEdit.product + "--" + factureProductToEdit.code + "--" + factureProductToEdit.image]).trigger("change");
       $("#product-count").val(factureProductToEdit.count);
       $("#product-airplane-forniture").prop("checked", factureProductToEdit.airplaneFurniture);
+      $("#product-airplane-mattress").prop("checked", factureProductToEdit.airplaneMattress);
     });
   }
 }
@@ -329,7 +342,6 @@ function populateFactureCards() {
       });
       $("#card").val([factureCardToEdit.card]).trigger("change");
       $("#card-count").val(factureCardToEdit.count);
-      $("#card-airplane-forniture").prop("checked", factureCardToEdit.airplaneFurniture);
     });
   }
 }

@@ -153,8 +153,10 @@ $(document).ready(function() {
           weight: weight,
           ikeaPrice: ikeaPrice,
           isFurniture: $("#is-furniture").prop("checked"),
+          isMattress: $("#is-mattress").prop("checked"),
           isFragile: $("#is-fragile").prop("checked"),
-          isAriplaneForniture: $("#is-airplane-furniture").prop("checked"),
+          isAriplaneForniture: false,
+          isAriplaneMattress: false,
           isOversize: $("#is-oversize").prop("checked"),
           isTableware: $("#is-tableware").prop("checked"),
           isLamp: $("#is-lamp").prop("checked"),
@@ -182,6 +184,7 @@ $(document).ready(function() {
       $("#product_code").val($("#code").val());
       $("#product_item").val($("#item").val());
       $("#product_isFurniture").val($("#is-furniture").prop("checked"));
+      $("#product_isMattress").val($("#is-mattress").prop("checked"));
       $("#product_description").val($("#description").val());
       $("#product_category").val(JSON.stringify($("#category").val()));
       $("#product_image").val(data.image.id);
@@ -207,6 +210,9 @@ $(document).ready(function() {
       $("#product_highlightImages").val(JSON.stringify(data.highlightImages));
       $("#product_isAriplaneForniture").val(
         $("#is-airplane-furniture").prop("checked") == true ? 1 : 0
+      );
+      $("#product_isAriplaneMattress").val(
+        $("#is-airplane-mattress").prop("checked") == true ? 1 : 0
       );
       $("#product_isFragile").val(
         $("#is-fragile").prop("checked") == true ? 1 : 0

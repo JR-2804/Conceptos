@@ -51,6 +51,7 @@ class RequestController extends Controller
         $requestProduct->setProduct($this->getDoctrine()->getRepository('AppBundle:Product')->find($product['product']));
         $requestProduct->setCount($product['count']);
         $requestProduct->setIsAriplaneForniture($product['airplaneFurniture']);
+        $requestProduct->setIsAriplaneMattress($product['airplaneMattress']);
         $this->getDoctrine()->getManager()->persist($requestProduct);
         $request->addRequestProduct($requestProduct);
       }
@@ -114,6 +115,7 @@ class RequestController extends Controller
         'image' => $requestProduct->getProduct()->getMainImage()->getImage(),
         'count' => $requestProduct->getCount(),
         'airplaneFurniture' => $requestProduct->getIsAriplaneForniture(),
+        'airplaneMattress' => $requestProduct->getIsAriplaneMattress(),
       ];
     }
     $dto->setRequestProducts(json_encode($requestProducts));
@@ -159,6 +161,7 @@ class RequestController extends Controller
         $requestProduct->setProduct($this->getDoctrine()->getRepository('AppBundle:Product')->find($product['product']));
         $requestProduct->setCount($product['count']);
         $requestProduct->setIsAriplaneForniture($product['airplaneFurniture']);
+        $requestProduct->setIsAriplaneMattress($product['airplaneMattress']);
         $this->getDoctrine()->getManager()->persist($requestProduct);
         $requestDB->addRequestProduct($requestProduct);
       }

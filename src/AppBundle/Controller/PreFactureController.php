@@ -51,6 +51,7 @@ class PreFactureController extends Controller
         $preFactureProduct->setProduct($this->getDoctrine()->getRepository('AppBundle:Product')->find($product['product']));
         $preFactureProduct->setCount($product['count']);
         $preFactureProduct->setIsAriplaneForniture($product['airplaneFurniture']);
+        $preFactureProduct->setIsAriplaneMattress($product['airplaneMattress']);
         $this->getDoctrine()->getManager()->persist($preFactureProduct);
         $preFacture->addPreFactureProduct($preFactureProduct);
       }
@@ -114,6 +115,7 @@ class PreFactureController extends Controller
         'image' => $preFactureProduct->getProduct()->getMainImage()->getImage(),
         'count' => $preFactureProduct->getCount(),
         'airplaneFurniture' => $preFactureProduct->getIsAriplaneForniture(),
+        'airplaneMattress' => $preFactureProduct->getIsAriplaneMattress(),
       ];
     }
     $dto->setPreFactureProducts(json_encode($preFactureProducts));
@@ -159,6 +161,7 @@ class PreFactureController extends Controller
         $preFactureProduct->setProduct($this->getDoctrine()->getRepository('AppBundle:Product')->find($product['product']));
         $preFactureProduct->setCount($product['count']);
         $preFactureProduct->setIsAriplaneForniture($product['airplaneFurniture']);
+        $preFactureProduct->setIsAriplaneMattress($product['airplaneMattress']);
         $this->getDoctrine()->getManager()->persist($preFactureProduct);
         $preFactureDB->addPreFactureProduct($preFactureProduct);
       }

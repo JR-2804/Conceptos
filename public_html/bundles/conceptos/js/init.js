@@ -16,6 +16,14 @@ $(document).ready(function() {
   ) {
     $("#is-furniture").prop("checked", true);
   }
+  if (
+    $("#product_isMattress").val() == "1" ||
+    $("#product_isMattress").val() == 1 ||
+    $("#product_isMattress").val() == "true" ||
+    $("#product_isMattress").val()
+  ) {
+    $("#is-mattress").prop("checked", true);
+  }
   $("#calculate-price").val($("#product_calculatePrice").val());
   var categories = JSON.parse($("#product_category").val());
   $("#category")
@@ -52,6 +60,7 @@ $(document).ready(function() {
     data.highlightImages = JSON.parse(highlightImages);
   }
   $("#is-airplane-furniture").prop("checked", $("#product_isAriplaneForniture").val() == 1);
+  $("#is-airplane-mattress").prop("checked", $("#product_isAriplaneMattress").val() == 1);
   $("#is-fragile").prop("checked", $("#product_isFragile").val() == 1);
   $("#is-oversize").prop("checked", $("#product_isOversize").val() == 1);
   $("#is-tableware").prop("checked", $("#product_isTableware").val() == 1);

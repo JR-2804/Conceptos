@@ -40,6 +40,10 @@ class FactureProduct
      * @ORM\Column(type="boolean")
      */
     private $isAriplaneForniture;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isAriplaneMattress;
 
     public function getId()
     {
@@ -104,6 +108,18 @@ class FactureProduct
     public function getIsAriplaneForniture()
     {
         return $this->isAriplaneForniture;
+    }
+
+    public function setIsAriplaneMattress($isAriplaneMattress)
+    {
+        $this->isAriplaneMattress = $isAriplaneMattress;
+
+        return $this;
+    }
+
+    public function getIsAriplaneMattress()
+    {
+        return $this->isAriplaneMattress;
     }
 
     function __toString()

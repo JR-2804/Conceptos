@@ -377,6 +377,8 @@ class SiteController extends Controller
                     'ikeaPrice' => $productDB->getIkeaPrice(),
                     'isFurniture' => $productDB->getIsFurniture(),
                     'isAriplaneForniture' => $productDB->getIsAriplaneForniture(),
+                    'isMattress' => $productDB->getIsMattress(),
+                    'isAriplaneMattress' => $productDB->getIsAriplaneMattress(),
                     'categories' => json_encode($categories),
                     'numberOfPackages' => $productDB->getNumberOfPackages(),
                 ];
@@ -451,7 +453,7 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="services", path="/servicios")
+     * @Route(name="services", path="/obras")
      *
      * @param Request $request
      *
@@ -463,10 +465,10 @@ class SiteController extends Controller
             'name' => 'Home',
         ]);
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Servicios',
+            'name' => 'Obras',
         ]);
         $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Servicios',
+            'name' => 'Obras',
         ]);
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
@@ -483,7 +485,7 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="inward", path="/interiorismo")
+     * @Route(name="inward", path="/diseños")
      *
      * @param Request $request
      *
@@ -495,7 +497,7 @@ class SiteController extends Controller
             'name' => 'Home',
         ]);
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Interiorismo',
+            'name' => 'Diseños',
         ]);
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
@@ -591,10 +593,10 @@ class SiteController extends Controller
             'name' => 'Home',
         ]);
         $inwardPage = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Interiorismo',
+            'name' => 'Diseños',
         ]);
         $servicesPage = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Servicios',
+            'name' => 'Obras',
         ]);
 
         $project = null;
@@ -658,11 +660,11 @@ class SiteController extends Controller
         $page = null;
         if ($pageName == "services") {
           $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-              'name' => 'Servicios',
+              'name' => 'Obras',
           ]);
         } elseif ($pageName == "inward") {
           $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-              'name' => 'Interiorismo',
+              'name' => 'Diseños',
           ]);
         }
 
@@ -1014,8 +1016,10 @@ class SiteController extends Controller
                     $requestProd->setOffer($productR['offer']);
                     if ($productR['price'] > $productR['product']->getPrice()){
                       $requestProd->setIsAriplaneForniture(true);
+                      $requestProd->setIsAriplaneMattress(true);
                     } else {
                       $requestProd->setIsAriplaneForniture(false);
+                      $requestProd->setIsAriplaneMattress(false);
                     }
 
                     $this->getDoctrine()->getManager()->persist($requestProd);
@@ -1097,7 +1101,7 @@ class SiteController extends Controller
           $offer = $product->getOffer();
 
           $price = $productDB->getPrice();
-          if ($product->getIsAriplaneForniture()) {
+          if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
             $price = $this->get('product_service')->calculateProductPrice(
                 $productDB->getWeight(),
                 $productDB->getIkeaPrice(),
@@ -1107,7 +1111,9 @@ class SiteController extends Controller
                 $productDB->getIsOversize(),
                 $productDB->getIsTableware(),
                 $productDB->getIsLamp(),
-                $productDB->getNumberOfPackages()
+                $productDB->getNumberOfPackages(),
+                $productDB->getIsMattress(),
+                $productDB->getIsAriplaneMattress()
             );
           }
 
@@ -1204,7 +1210,7 @@ class SiteController extends Controller
           $offer = $product->getOffer();
 
           $price = $productDB->getPrice();
-          if ($product->getIsAriplaneForniture()) {
+          if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
             $price = $this->get('product_service')->calculateProductPrice(
                 $productDB->getWeight(),
                 $productDB->getIkeaPrice(),
@@ -1214,7 +1220,9 @@ class SiteController extends Controller
                 $productDB->getIsOversize(),
                 $productDB->getIsTableware(),
                 $productDB->getIsLamp(),
-                $productDB->getNumberOfPackages()
+                $productDB->getNumberOfPackages(),
+                $productDB->getIsMattress(),
+                $productDB->getIsAriplaneMattress()
             );
           }
 
