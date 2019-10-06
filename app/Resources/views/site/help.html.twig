@@ -2,9 +2,12 @@
 {% block title %}Ayuda{% endblock %}
 
 {% block body %}
-    <section class="page-header mbr-parallax-background d-none d-lg-block" style="background-image: url('{{ page.data.header.image.path }}')"></section>
-    <section class="page-header-short mbr-parallax-background d-lg-none" style="background-image: url('{{ page.data.header.image.path }}')"></section>
-    </section>
+    <div class="d-none d-lg-block">
+        <img class="help-page-header" src="{{ page.data.header.image.path }}">
+    </div>
+    <div class="d-lg-none">
+        <img class="help-page-header-short" src="{{ page.data.header.image.path }}">
+    </div>
     <section>
         <div class="container">
             <div class="row">
