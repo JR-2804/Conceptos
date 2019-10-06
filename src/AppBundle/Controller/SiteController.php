@@ -920,7 +920,6 @@ class SiteController extends Controller
 
         $productsResponse = [];
         $totalPrice = 0;
-        $totalPriceInOffers = 0;
         foreach ($productsCount as $product) {
             if (!array_key_exists('type', $product)) {
                 $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['id']);
@@ -941,12 +940,9 @@ class SiteController extends Controller
                         $price = $offer->getPrice();
                         $offerDB = $offer;
                     }
-                    $price = $price * $product['count'];
-                    $totalPriceInOffers += $price;
-                } else {
-                    $price = $price * $product['count'];
-                    $totalPrice += $price;
                 }
+                $price = $price * $product['count'];
+                $totalPrice += $price;
 
                 $productsResponse[] = [
                     'price' => $product['price'],
@@ -972,10 +968,9 @@ class SiteController extends Controller
         }
         $discount = 0;
         if ($memberNumber) {
-          $discount = ceil($totalPrice * 0.1);
+          $discount = floor($totalPrice * 0.1);
           $totalPrice -= $discount;
         }
-        $totalPrice += $totalPriceInOffers;
         $totalPrice += $transportCost;
 
         $form = $this->createForm(CheckOutType::class, $dto);
@@ -1029,7 +1024,7 @@ class SiteController extends Controller
 
             $firstClientDiscount = 0;
             if ($newClient && $discount == 0) {
-              $firstClientDiscount = ceil($totalPrice * 0.05);
+              $firstClientDiscount = floor($totalPrice * 0.05);
               $totalPrice -= $firstClientDiscount;
             }
 

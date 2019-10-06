@@ -259,7 +259,6 @@ function recalculateAllPrices() {
   CheckIfCanPerformHomeCollect();
 
   var totalPrice = 0;
-  var totalPriceInOffers = 0;
   $(".total-price-product").each(function(i, input) {
     var productId = $(input).data("product");
     var price = $(input).data("price");
@@ -275,10 +274,8 @@ function recalculateAllPrices() {
       } else if (!offerOnlyForMembers) {
         price = offer;
       }
-      totalPriceInOffers += count * price;
-    } else {
-      totalPrice += count * price;
     }
+    totalPrice += count * price;
 
     var subtotal = count * price;
     $(
@@ -304,7 +301,7 @@ function recalculateAllPrices() {
   });
 
   if (memberNumber) {
-    var discount = Math.ceil(totalPrice * 0.1).toFixed(2);
+    var discount = Math.floor(totalPrice * 0.1).toFixed(2);
     $("#membership-discount").text("$" + discount);
     $(".membership-discount-row").show();
     totalPrice -= discount;
@@ -318,7 +315,6 @@ function recalculateAllPrices() {
     transportCost = 5;
   }
   $("#transport-cost").text("$" + transportCost.toFixed(2));
-  totalPrice += totalPriceInOffers;
   totalPrice += transportCost;
 
   totalPrice = Number(totalPrice).toFixed(2);
