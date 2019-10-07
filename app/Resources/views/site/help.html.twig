@@ -25,9 +25,9 @@
                     <div id="help-accordion" class="mt-2 mt-lg-3" role="tablist" aria-multiselectable="true">
                         {% for faq in page.data.faqs %}
                             <div class="card card-category" role="tab">
-                                <div class="card-header card-header-category" id="{{faq.question}}heading">
+                                <div class="card-header card-header-category" id="{{loop.index}}heading">
                                     <h5 class="mb-0">
-                                        <a data-toggle="collapse" data-target="#{{faq.question}}" href="javascript:void(0);">
+                                        <a data-toggle="collapse" data-target="#{{loop.index}}" href="javascript:void(0);">
                                             <span class="badge text-right badge-plus">
                                                 <i class="mbri-plus"></i>
                                             </span>
@@ -35,7 +35,7 @@
                                         </a>
                                     </h5>
                                 </div>
-                                <div id="{{faq.question}}" class="collapse {% if loop.index == 0 %}show{% endif %}" role="tabpanel">
+                                <div id="{{loop.index}}" class="collapse {% if loop.index == 0 %}show{% endif %}" role="tabpanel">
                                     <div class="card-body card-body-subcategory ac-custom ac-checkmark ml-0">
                                         <span>{{faq.answer|raw}}</span>
                                     </div>

@@ -28,7 +28,7 @@
         <script src="{{ asset('bundles/conceptos/js/page/app.js') }}"></script>
     {% elseif page.name | lower == 'productos' %}
         <script src="{{ asset('bundles/conceptos/js/page/products.js') }}"></script>
-    {% elseif page.name | lower == 'diseños' %}
+    {% elseif page.name | lower == 'interiorismo' %}
         <script src="{{ asset('bundles/conceptos/js/page/inward.js') }}"></script>
     {% elseif page.name | lower == 'pantallas de la aplicación' %}
         <script src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
@@ -58,7 +58,7 @@
             {{ include(':admin/page:products.html.twig') }}
         {% elseif page.name | lower == 'pantallas de la aplicación' %}
             {{ include(':admin/page:app_screens.html.twig') }}
-        {% elseif page.name | lower == 'diseños' %}
+        {% elseif page.name | lower == 'interiorismo' %}
             {{ include(':admin/page:inward.html.twig') }}
         {% elseif page.name | lower == 'sobre nosotros' %}
             {{ include(':admin/page:about-us.html.twig') }}

@@ -73,13 +73,15 @@ class SiteController extends Controller
         $lasted = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findBy([
             'recent' => true,
         ], null, 50);
-
         $inStore = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findBy([
             'inStore' => true,
         ], null, 50);
+        $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findAll();
 
         $inStoreHighlight = null;
-        foreach ($inStore as $product) {
+        $lastedHighlight = null;
+        foreach ($products as $product) {
+          if ($product->getIsHighlight()) {
             $offersInStore = $this->get('product_service')->findOffersByProductAndDate($product->getId(), $currentDate);
             if (count($offersInStore) > 0) {
                 $product->setPriceOffer($offersInStore[0]->getPrice());
@@ -88,15 +90,31 @@ class SiteController extends Controller
                 $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
             }
 
-            if ($product->getIsHighlight()) {
+            if ($product->getInStore()) {
               $inStoreHighlight = $product;
             }
+            elseif ($product->getRecent()) {
+              $lastedHighlight = $product;
+            }
+          }
         }
         if (!$inStoreHighlight) {
-            $inStoreHighlight = $inStore[count($inStore) - 1];
+          $inStoreHighlight = $inStore[count($inStore) - 1];
+        }
+        if (!$lastedHighlight) {
+          $lastedHighlight = $lasted[count($lasted) - 1];
         }
 
-        $lastedHighlight = null;
+        foreach ($inStore as $product) {
+            $offersInStore = $this->get('product_service')->findOffersByProductAndDate($product->getId(), $currentDate);
+            if (count($offersInStore) > 0) {
+                $product->setPriceOffer($offersInStore[0]->getPrice());
+            }
+            if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+                $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
+            }
+        }
+
         foreach ($lasted as $product) {
             $offersInLast = $this->get('product_service')->findOffersByProductAndDate($product->getId(), $currentDate);
             if (count($offersInLast) > 0) {
@@ -105,13 +123,6 @@ class SiteController extends Controller
             if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
                 $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
             }
-
-            if ($product->getIsHighlight()) {
-              $lastedHighlight = $product;
-            }
-        }
-        if (!$lastedHighlight) {
-            $lastedHighlight = $lasted[count($lasted) - 1];
         }
         $brands = $this->getDoctrine()->getRepository('AppBundle:Category')->findBy([
             'isBrand' => true,
@@ -485,7 +496,7 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="inward", path="/diseños")
+     * @Route(name="inward", path="/interiorismo")
      *
      * @param Request $request
      *
@@ -497,7 +508,7 @@ class SiteController extends Controller
             'name' => 'Home',
         ]);
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Diseños',
+            'name' => 'Interiorismo',
         ]);
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
@@ -593,7 +604,7 @@ class SiteController extends Controller
             'name' => 'Home',
         ]);
         $inwardPage = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Diseños',
+            'name' => 'Interiorismo',
         ]);
         $servicesPage = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Obras',
@@ -664,7 +675,7 @@ class SiteController extends Controller
           ]);
         } elseif ($pageName == "inward") {
           $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-              'name' => 'Diseños',
+              'name' => 'Interiorismo',
           ]);
         }
 
