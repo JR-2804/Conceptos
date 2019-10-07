@@ -131,8 +131,8 @@ class ProductService
             $airplaneFornitureExtra = 50;
         }
         $airplaneMattressExtra = 0;
-        if ($isMattress && !$isAriplaneMattress) {
-            $airplaneMattressExtra = 20;
+        if ($isMattress && $isAriplaneMattress) {
+            $airplaneMattressExtra = 70;
         }
 
         $newPrice = ((($ikeaPrice * 1.2) + $transportExtra) * 2) + $fragileExtra + $lampExtra + $airplaneFornitureExtra + $airplaneMattressExtra + $oversizeExtra + $tablewareExtra + $shipExtra + $numberOfPackagesExtra;
