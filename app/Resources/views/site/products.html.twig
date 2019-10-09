@@ -74,8 +74,12 @@
     {% else %}
         {% set image = vich_uploader_asset(mainCategory, 'imageSiteFile') %}
     {% endif%}
-    <section class="page-header mbr-parallax-background d-none d-lg-block" style="background-image: url('{{ image }}')"></section>
-    <section class="page-header-short mbr-parallax-background d-lg-none" style="background-image: url('{{ image }}')"></section>
+    <div class="d-none d-lg-block">
+        <img class="help-page-header" src="{{ image }}">
+    </div>
+    <div class="d-lg-none">
+        <img class="help-page-header-short pt-0" src="{{ image }}">
+    </div>
     <div class="gift-card-container d-flex justify-content-center d-lg-none">
         <a id="gift-card-modal-toggle" class="d-flex" data-toggle="modal" data-target="#giftCardsModal" href="">
             <img class="gift-card-section-img" src="{{membership.data.giftCardSection.generalImage.path}}">

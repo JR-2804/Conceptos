@@ -3,8 +3,14 @@
 {% block title %}Sobre nosotros{% endblock %}
 
 {% block body %}
-    <section class="page-header mbr-parallax-background d-none d-lg-block" style="background-image: url('{{ page.data.header.image.path }}')"></section>
-    <section class="page-header-short mbr-parallax-background d-lg-none" style="background-image: url('{{ page.data.header.image.path }}')"></section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 pl-0">
+                <img class="help-page-header d-none d-lg-block" src="{{ page.data.header.image.path }}">
+                <img class="help-page-header-short d-lg-none" src="{{ page.data.header.image.path }}">
+            </div>
+        </div>
+    </div>
     <section class="about-us-short-description-section pt-2 pt-lg-4 pl-0 pl-lg-4">
       <div class="container-fluid">
           <div class="row justify-content-between">

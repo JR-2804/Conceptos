@@ -54,7 +54,13 @@
     <section id="membership-form-large" class="page-header mbr-parallax-background d-none d-lg-block" style="background-image: url('{{ page.data.header.image.path }}')">
         {{ render(controller('AppBundle:Site:requestMembership')) }}
     </section>
-    <section class="page-header-short mbr-parallax-background d-lg-none" style="background-image: url('{{ page.data.header.image.path }}')"></section>
+    <div class="container-fluid d-lg-none">
+        <div class="row">
+            <div class="col-12 pl-0">
+                <img class="help-page-header-short" src="{{ page.data.header.image.path }}">
+            </div>
+        </div>
+    </div>
     <section id="membership-form-short" class="membership-form-section d-lg-none">
         <div class="pt-3">
             {{ render(controller('AppBundle:Site:requestMembership')) }}
@@ -81,23 +87,25 @@
             </div>
         </div>
     </section>
-    <section class="membership-gift-card-section pt-2">
+    <section class="membership-gift-card-section pt-0 pt-lg-2">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-lg-5 pl-0">
                     <div class="d-flex flex-column justify-content-between h-100">
                         <div class="d-flex flex-column">
-                            <span class="main-text mt-4 ml-2 mr-4 d-none d-lg-block">{{page.data.giftCardSection.mainText|raw}}</span>
-                            <span class="decoration-design-title-short mt-2 ml-2 mr-2 d-lg-none">{{page.data.giftCardSection.mainText|raw}}</span>
-                            <span class="bottom-text mr-2 ml-4 d-none d-lg-block">{{page.data.giftCardSection.bottomText|raw}}</span>
-                            <span class="decoration-design-description-short ml-2 mr-2 d-lg-none">{{page.data.giftCardSection.bottomText|raw}}</span>
-                            <div class="d-flex align-items-end pt-3 d-lg-none">
+                            <div class="d-flex flex-column order-2 order-lg-1">
+                                <span class="main-text mt-4 ml-2 mr-4 d-none d-lg-block">{{page.data.giftCardSection.mainText|raw}}</span>
+                                <span class="decoration-design-title-short mt-2 ml-2 mr-2 d-lg-none">{{page.data.giftCardSection.mainText|raw}}</span>
+                                <span class="bottom-text mr-2 ml-4 d-none d-lg-block">{{page.data.giftCardSection.bottomText|raw}}</span>
+                                <span class="decoration-design-description-short ml-2 mr-2 d-lg-none">{{page.data.giftCardSection.bottomText|raw}}</span>
+                            </div>
+                            <div class="d-flex align-items-end pt-0 d-lg-none order-1 order-lg-2">
                                 <a id="gift-card-modal-toggle" class="d-flex" data-toggle="modal" data-target="#giftCardsModal" href="">
                                     <img class="gift-card-section-img" src="{{page.data.giftCardSection.generalImage.path}}">
                                 </a>
                             </div>
                         </div>
-                        <div class="col-7 pl-2 d-none d-lg-flex">
+                        <div class="col-7 pl-0 d-none d-lg-flex">
                             <div class="align-items-end pt-3">
                                 <a class="d-flex" data-toggle="modal" data-target="#giftCardsModal" href="">
                                     <img class="gift-card-section-img" src="{{page.data.giftCardSection.generalImage.path}}">

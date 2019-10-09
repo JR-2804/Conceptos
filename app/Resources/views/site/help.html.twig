@@ -2,11 +2,13 @@
 {% block title %}Ayuda{% endblock %}
 
 {% block body %}
-    <div class="d-none d-lg-block">
-        <img class="help-page-header" src="{{ page.data.header.image.path }}">
-    </div>
-    <div class="d-lg-none">
-        <img class="help-page-header-short" src="{{ page.data.header.image.path }}">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 pl-0">
+                <img class="help-page-header d-none d-lg-block" src="{{ page.data.header.image.path }}">
+                <img class="help-page-header-short d-lg-none" src="{{ page.data.header.image.path }}">
+            </div>
+        </div>
     </div>
     <section>
         <div class="container">
