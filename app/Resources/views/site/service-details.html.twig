@@ -21,19 +21,19 @@
                                             </a>
                                         {% endif %}
                                         <div class="carousel-inner d-flex flex-column justify-content-start align-items-center">
-                                              {% set index = 0 %}
-                                              {% for imageSet in imageSets %}
-                                                  <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                                      <div class="d-flex flex-column">
-                                                          {% for image in imageSet %}
-                                                              <span data-app-prevent-settings="" data-target="#product-images-carousel" data-slide-to="{{ index }}">
-                                                                  <img class="product-image-thumbnail {% if not loop.first %}mt-3{% endif %}" src="{{ image.path }}">
-                                                              </span>
-                                                              {% set index = index + 1 %}
-                                                          {% endfor %}
-                                                      </div>
-                                                  </div>
-                                              {% endfor %}
+                                            {% set index = 0 %}
+                                            {% for imageSet in imageSets %}
+                                                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                                    <div class="d-flex flex-column">
+                                                        {% for image in imageSet %}
+                                                            <span data-app-prevent-settings="" data-target="#product-images-carousel" data-slide-to="{{ index }}">
+                                                                <img class="product-image-thumbnail {% if not loop.first %}mt-3{% endif %}" src="{{ image.path }}">
+                                                            </span>
+                                                            {% set index = index + 1 %}
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
                                         </div>
                                         {% if imageSets|length > 1 %}
                                             <a class="carousel-control carousel-control-prev control-brands next-button mt-3" role="button">
@@ -80,23 +80,27 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12 pl-0 d-flex flex-column align-items-start">
-                                <span class="product-description-header pl-1 pl-lg-5 pt-3 pt-lg-5">Productos</span>
-                                <div class="w-100 pl-1 pl-lg-5">
-                                    <div class="product-description-divider"></div>
-                                </div>
-                                <div class="related-products w-100">
-                                    <div class="d-flex flex-wrap">
-                                        {% for product in products %}
-                                            <div class="col-6 col-lg-3 col-no-padding-left">
-                                                {{include('site/components/product-summary.html.twig')}}
-                                            </div>
-                                        {% endfor %}
+                        {% if products|length > 0 %}
+                            <div class="row">
+                                <div class="col-12 pl-0 d-flex flex-column align-items-start">
+                                    <span class="product-description-header pl-1 pl-lg-5 pt-3 pt-lg-5">Productos</span>
+                                    <div class="w-100 pl-1 pl-lg-5">
+                                        <div class="product-description-divider"></div>
+                                    </div>
+                                    <div class="related-products w-100">
+                                        <div class="d-flex flex-wrap">
+                                            {% for product in products %}
+                                                <div class="col-6 col-lg-3 col-no-padding-left">
+                                                    {{include('site/components/product-summary.html.twig')}}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        {% else %}
+                            <div class="pb-5"></div>
+                        {% endif %}
                     </div>
                 </div>
                 {% if home.data.advertisements|length > 0 %}

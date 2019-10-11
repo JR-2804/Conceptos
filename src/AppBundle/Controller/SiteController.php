@@ -625,10 +625,10 @@ class SiteController extends Controller
             }
         }
 
-        $prod = implode(', ', $project['products']);
-
-        $project['images'] = array_merge([$project], $project['extraImages']);
-        $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')
+        $products = [];
+        if ($project['products'] != null) {
+          $prod = implode(', ', $project['products']);
+          $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')
             ->createQueryBuilder('p')
             ->where('p.id IN ('.$prod.')')
             ->orderBy('p.inStore', 'DESC')
@@ -637,7 +637,10 @@ class SiteController extends Controller
             ->addOrderBy('p.name', 'DESC')
             ->getQuery()
             ->getResult()
-        ;
+          ;
+        }
+
+        $project['images'] = array_merge([$project], $project['extraImages']);
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
@@ -687,17 +690,20 @@ class SiteController extends Controller
             }
         }
 
-        $prod = implode(', ', $service['products']);
-        $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')
-            ->createQueryBuilder('p')
-            ->where('p.id IN ('.$prod.')')
-            ->orderBy('p.inStore', 'DESC')
-            ->addOrderBy('p.popular', 'DESC')
-            ->addOrderBy('p.price', 'ASC')
-            ->addOrderBy('p.name', 'DESC')
-            ->getQuery()
-            ->getResult()
-        ;
+        $products = [];
+        if ($service['products'] != null) {
+          $prod = implode(', ', $service['products']);
+          $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')
+              ->createQueryBuilder('p')
+              ->where('p.id IN ('.$prod.')')
+              ->orderBy('p.inStore', 'DESC')
+              ->addOrderBy('p.popular', 'DESC')
+              ->addOrderBy('p.price', 'ASC')
+              ->addOrderBy('p.name', 'DESC')
+              ->getQuery()
+              ->getResult()
+          ;
+        }
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 

@@ -326,8 +326,7 @@ $(document).ready(function() {
       projectImage &&
       $("#new-project-title").val() &&
       $("#new-project-description").val() &&
-      extraProjectImages.length > 0 &&
-      $("#products").val()
+      extraProjectImages.length > 0
     ) {
       projectImage.title = $("#new-project-title").val();
       projectImage.description = $("#new-project-description").val();
@@ -420,8 +419,7 @@ $(document).ready(function() {
     if (
       $("#new-service-title").val() &&
       $("#new-service-description").val() &&
-      servicesImages.length > 0 &&
-      $("#products-service").val()
+      servicesImages.length > 0
     ) {
       service = {};
       service.title = $("#new-service-title").val();
@@ -448,8 +446,7 @@ $(document).ready(function() {
     if (
       $("#new-service-title").val() &&
       $("#new-service-description").val() &&
-      servicesImages.length > 0 &&
-      $("#products-service").val()
+      servicesImages.length > 0
     ) {
       service = {};
       service.title = $("#new-service-title").val();
@@ -646,7 +643,7 @@ function populateProjectImages() {
         .replace("%7", image.id)
         .replace("%3", image.title)
         .replace("%4", image.extraImages.length + " imágenes extra")
-        .replace("%5", image.products.length + " productos asociados")
+        .replace("%5", image.products ? image.products.length : 0 + " productos asociados")
         .replace("%6", index + 1);
       $(".row-project-images").append(tmp_image);
     });
@@ -704,7 +701,7 @@ function populateServices() {
         .replace("%7", service.title)
         .replace("%3", service.title)
         .replace("%4", service.images.length + " imágenes")
-        .replace("%5", service.products.length + " productos asociados")
+        .replace("%5", service.products ? service.products.length : 0 + " productos asociados")
         .replace("%6", index + 1);
       $(".row-service-images").append(tmp_service);
     });
