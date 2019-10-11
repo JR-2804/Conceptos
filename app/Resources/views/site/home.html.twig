@@ -637,50 +637,52 @@
     </section>
     -->
 
-    <section class="features18 popup-btn-cards cid-qQ6nHgXHV4" id="features18-9">
-        <div class="container">
-            <div class="row">
-                <div class="col align-center pl-1 pr-1">
-                    <h2 class="rob-header d-none d-lg-block">{{page.data.blog.main|raw}}</h2>
-                    <h2 class="rob-header rob-header-short d-lg-none">{{page.data.blog.main|raw}}</h2>
-                    <h3 class="rob-subtitle d-none d-lg-block">{{page.data.blog.secondary|raw}}</h3>
-                    <h3 class="rob-subtitle rob-subtitle-short d-lg-none">{{page.data.blog.secondary|raw}}</h3>
-                    <div class="d-flex justify-content-center">
-                        <a class="square-button" href="{{ path('blog_home') }}">Ver Todos</a>
+    {% if lasts|length > 0 %}
+        <section class="features18 popup-btn-cards cid-qQ6nHgXHV4" id="features18-9">
+            <div class="container">
+                <div class="row">
+                    <div class="col align-center pl-1 pr-1">
+                        <h2 class="rob-header d-none d-lg-block">{{page.data.blog.main|raw}}</h2>
+                        <h2 class="rob-header rob-header-short d-lg-none">{{page.data.blog.main|raw}}</h2>
+                        <h3 class="rob-subtitle d-none d-lg-block">{{page.data.blog.secondary|raw}}</h3>
+                        <h3 class="rob-subtitle rob-subtitle-short d-lg-none">{{page.data.blog.secondary|raw}}</h3>
+                        <div class="d-flex justify-content-center">
+                            <a class="square-button" href="{{ path('blog_home') }}">Ver Todos</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row justify-content-center">
-                {% for post in lasts %}
-                    <div class="col-lg-4 col-12 blog-card pl-0">
-                        <div class="card-wrapper car-blog">
-                            <div class="blog-summary ml-2 mr-2">
-                                <div class="card-img">
-                                    <div class="mbr-overlay"></div>
-                                    <div class="mbr-section-btn text-center">
-                                        <a href="{{ path('blog_details', {id: post.id, title: post.path}) }}"
-                                          class="btn btn-success display-4 view-more">Ver más</a>
+                <div class="row justify-content-center">
+                    {% for post in lasts %}
+                        <div class="col-lg-4 col-12 blog-card pl-0">
+                            <div class="card-wrapper car-blog">
+                                <div class="blog-summary ml-2 mr-2">
+                                    <div class="card-img">
+                                        <div class="mbr-overlay"></div>
+                                        <div class="mbr-section-btn text-center">
+                                            <a href="{{ path('blog_details', {id: post.id, title: post.path}) }}"
+                                              class="btn btn-success display-4 view-more">Ver más</a>
+                                        </div>
+                                        <img src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.title }}">
                                     </div>
-                                    <img src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.title }}">
-                                </div>
-                                <div class="d-flex flex-row justify-content-between">
-                                    <div class="bs-date">
-                                        <span>{{post.updatedAt | date('d M | Y')}}</span>
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <div class="bs-date">
+                                            <span>{{post.createdDate | date('d M | Y')}}</span>
+                                        </div>
+                                        <div class="bs-category">
+                                            <span>{{post.category.name}}</span>
+                                        </div>
                                     </div>
-                                    <div class="bs-category">
-                                        <span>{{post.category.name}}</span>
+                                    <div class="bs-title">
+                                        <span class="card-title mbr-fonts-style display-7">{{post.title}}</span>
                                     </div>
-                                </div>
-                                <div class="bs-title">
-                                    <span class="card-title mbr-fonts-style display-7">{{post.title}}</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    {% endif %}
 {% endblock %}
 {% block js %}
     <script src="{{ asset('bundles/conceptos/home/js/home.js') }}"></script>
