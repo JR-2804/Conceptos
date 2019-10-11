@@ -50,10 +50,20 @@ class PreFacture
      * @ORM\Column(type="float")
      */
     private $firstClientDiscount;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Request\Request", inversedBy="preFactures")
+     * @ORM\JoinColumn(name="request_id", referencedColumnName="id")
+     */
+    private $request;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Request\Facture", mappedBy="preFacture")
+     */
+    private $factures;
 
     public function __construct()
     {
         $this->preFactureProducts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->factures = new \Doctrine\Common\Collections\ArrayCollection();
         $this->date = new \DateTime();
     }
 
@@ -171,6 +181,35 @@ class PreFacture
     public function getFirstClientDiscount()
     {
         return $this->firstClientDiscount;
+    }
+
+    public function setRequest(Request $request = null)
+    {
+        $this->request = $request;
+
+        return $this;
+    }
+
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    public function addFacture(Facture $facture)
+    {
+        $this->factures[] = $facture;
+
+        return $this;
+    }
+
+    public function removeFacture(Facture $facture)
+    {
+        $this->facture->removeElement($facture);
+    }
+
+    public function getFactures()
+    {
+        return $this->factures;
     }
 
     function __toString()

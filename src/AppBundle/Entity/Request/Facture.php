@@ -50,6 +50,16 @@ class Facture
      * @ORM\Column(type="float")
      */
     private $firstClientDiscount;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Request\Request", inversedBy="factures")
+     * @ORM\JoinColumn(name="request_id", referencedColumnName="id")
+     */
+    private $request;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Request\PreFacture", inversedBy="factures")
+     * @ORM\JoinColumn(name="pre_facture_id", referencedColumnName="id")
+     */
+    private $preFacture;
 
     public function __construct()
     {
@@ -171,6 +181,30 @@ class Facture
     public function getFirstClientDiscount()
     {
         return $this->firstClientDiscount;
+    }
+
+    public function setRequest(Request $request = null)
+    {
+        $this->request = $request;
+
+        return $this;
+    }
+
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    public function setPreFacture(PreFacture $preFacture = null)
+    {
+        $this->preFacture = $preFacture;
+
+        return $this;
+    }
+
+    public function getPreFacture()
+    {
+        return $this->preFacture;
     }
 
     function __toString()
