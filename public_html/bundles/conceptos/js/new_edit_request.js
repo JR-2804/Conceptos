@@ -1,14 +1,18 @@
 var request_product_template = '<tr class="product-row"><td><img src="/uploads/%0" class="img-responsive" width="50" height="50"></td><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td><a class="btn btn-secondary btn-edit-product" data-code="%5"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-product" data-code="%6"><i class="fa fa-remove"></i></a></td></tr>';
 var request_card_template = '<tr class="card-row"><td>%1$</td><td>%2</td><td><a class="btn btn-secondary btn-edit-card" data-code="%3"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-card" data-code="%4"><i class="fa fa-remove"></i></a></td></tr>';
+var prefacture_template = '<tr class="prefacture-row"><td>%1</td><td><a class="btn btn-secondary btn-remove-prefacture" data-id="%2"><i class="fa fa-remove"></i></a></td></tr>';
+var facture_template = '<tr class="facture-row"><td>%1</td><td><a class="btn btn-secondary btn-remove-facture" data-id="%2"><i class="fa fa-remove"></i></a></td></tr>';
 
 var requestProductToEdit;
 var requestCardToEdit;
 
 var requestProducts = [];
 var requestCards = [];
+var prefactures = [];
+var factures = [];
 
 $(document).ready(function() {
-  $("#client, #product, #card").select2({
+  $("#client, #product, #card, #prefacture, #facture").select2({
     theme: "bootstrap",
     language: "es",
     allowClear: true,
@@ -150,6 +154,50 @@ $(document).ready(function() {
     $("#cancel-edit-card").hide();
   });
 
+  $("#add-prefacture").click(function() {
+    var prefacture = $("#prefacture").val();
+    if (prefacture) {
+      var prefactureData = prefacture[0].split("--");
+      var exists = false;
+      prefactures.forEach(function(p) {
+        if (p.id == prefactureData[0]) {
+          exists = true;
+        }
+      });
+      if (!exists) {
+        prefactures.push({
+          id: parseInt(prefactureData[0]),
+          date: prefactureData[1],
+        });
+      }
+      populatePrefactures();
+    } else {
+      alert("Inserte los datos correctamente");
+    }
+  });
+
+  $("#add-facture").click(function() {
+    var facture = $("#facture").val();
+    if (facture) {
+      var factureData = facture[0].split("--");
+      var exists = false;
+      factures.forEach(function(p) {
+        if (p.id == factureData[0]) {
+          exists = true;
+        }
+      });
+      if (!exists) {
+        factures.push({
+          id: parseInt(factureData[0]),
+          date: factureData[1],
+        });
+      }
+      populateFactures();
+    } else {
+      alert("Inserte los datos correctamente");
+    }
+  });
+
   $('form[name="request"]').submit(function(e) {
     if (!validForm()) {
       e.preventDefault();
@@ -162,12 +210,16 @@ $(document).ready(function() {
       $("#request_finalPrice").val($("#finalPrice").val());
       $("#request_requestProducts").val(JSON.stringify(requestProducts));
       $("#request_requestCards").val(JSON.stringify(requestCards));
+      $("#request_preFactures").val(JSON.stringify(prefactures));
+      $("#request_factures").val(JSON.stringify(factures));
     }
   });
 
   init();
   populateRequestProducts();
   populateRequestCards();
+  populatePrefactures();
+  populateFactures();
 });
 
 function init() {
@@ -184,6 +236,8 @@ function init() {
     requestCards.forEach(function(requestCard) {
       requestCard.card = requestCard.price;
     });
+    prefactures = JSON.parse($("#request_preFactures").val());
+    factures = JSON.parse($("#request_factures").val());
   }
 }
 
@@ -342,6 +396,60 @@ function populateRequestCards() {
       });
       $("#card").val([requestCardToEdit.card]).trigger("change");
       $("#card-count").val(requestCardToEdit.count);
+    });
+  }
+}
+
+function populatePrefactures() {
+  $("#prefacture").val([]).trigger("change");
+
+  $(".prefacture-row").remove();
+  if (prefactures) {
+    prefactures.forEach(function(prefacture) {
+      var template = prefacture_template
+        .substring(-1)
+        .replace("%1", prefacture.id + '-' + prefacture.date)
+        .replace("%2", prefacture.id)
+
+      $(".prefacture-rows").append(template);
+    });
+    $(".btn-remove-prefacture").click(function() {
+      var id = $(this).data("id");
+      var tmpPrefactures = [];
+      prefactures.forEach(function(prefacture) {
+        if (prefacture.id != id) {
+          tmpPrefactures.push(prefacture);
+        }
+      });
+      prefactures = tmpPrefactures;
+      populatePrefactures();
+    });
+  }
+}
+
+function populateFactures() {
+  $("#facture").val([]).trigger("change");
+
+  $(".facture-row").remove();
+  if (factures) {
+    factures.forEach(function(facture) {
+      var template = facture_template
+        .substring(-1)
+        .replace("%1", facture.id + '-' + facture.date)
+        .replace("%2", facture.id)
+
+      $(".facture-rows").append(template);
+    });
+    $(".btn-remove-facture").click(function() {
+      var id = $(this).data("id");
+      var tmpFactures = [];
+      factures.forEach(function(facture) {
+        if (facture.id != id) {
+          tmpFactures.push(facture);
+        }
+      });
+      factures = tmpFactures;
+      populateFactures();
     });
   }
 }

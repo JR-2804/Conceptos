@@ -13,6 +13,8 @@ class RequestDTO
   private $transportCost;
   private $discount;
   private $firstClientDiscount;
+  private $preFactures;
+  private $factures;
 
   public function getId()
   {
@@ -102,5 +104,25 @@ class RequestDTO
   public function setFirstClientDiscount($firstClientDiscount)
   {
       $this->firstClientDiscount = $firstClientDiscount;
+  }
+
+  public function getPreFactures()
+  {
+      return $this->preFactures;
+  }
+
+  public function setPreFactures($preFactures)
+  {
+      $this->preFactures = $preFactures;
+  }
+
+  public function getFactures()
+  {
+      return $this->factures;
+  }
+
+  public function setFactures($factures)
+  {
+      $this->factures = $factures;
   }
 }

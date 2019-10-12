@@ -355,8 +355,7 @@ $(document).ready(function() {
       projectImage &&
       $("#new-project-title").val() &&
       $("#new-project-description").val() &&
-      extraProjectImages.length > 0 &&
-      $("#products").val()
+      extraProjectImages.length > 0
     ) {
       projectImage.title = $("#new-project-title").val();
       projectImage.description = $("#new-project-description").val();

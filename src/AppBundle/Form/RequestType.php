@@ -19,6 +19,8 @@ class RequestType extends AbstractType
             ->add('transportCost', HiddenType::class)
             ->add('discount', HiddenType::class)
             ->add('firstClientDiscount', HiddenType::class)
+            ->add('preFactures', HiddenType::class)
+            ->add('factures', HiddenType::class)
         ;
         parent::buildForm($builder, $options);
     }

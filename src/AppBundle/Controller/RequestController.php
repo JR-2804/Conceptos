@@ -69,6 +69,24 @@ class RequestController extends Controller
         $request->addRequestCard($requestCard);
       }
 
+      $preFactures = json_decode($form->get('preFactures')->getData(), true);
+      if (!is_array($preFactures)) {
+        $preFactures = [];
+      }
+      foreach ($preFactures as $preFacture) {
+        $preFactureDB = $this->getDoctrine()->getRepository('AppBundle:Request\PreFacture')->find($preFacture['id']);
+        $preFactureDB->setRequest($request);
+      }
+
+      $factures = json_decode($form->get('factures')->getData(), true);
+      if (!is_array($factures)) {
+        $factures = [];
+      }
+      foreach ($factures as $facture) {
+        $factureDB = $this->getDoctrine()->getRepository('AppBundle:Request\Facture')->find($facture['id']);
+        $factureDB->setRequest($request);
+      }
+
       $this->getDoctrine()->getManager()->persist($request);
       $this->getDoctrine()->getManager()->flush();
 
@@ -81,6 +99,8 @@ class RequestController extends Controller
       'action' => 'new',
       'clients' => $this->getDoctrine()->getRepository('AppBundle:Request\Client')->findAll(),
       'products' => $this->getDoctrine()->getRepository('AppBundle:Product')->findAll(),
+      'factures' => $this->getDoctrine()->getRepository('AppBundle:Request\Facture')->findAll(),
+      'prefactures' => $this->getDoctrine()->getRepository('AppBundle:Request\PreFacture')->findAll(),
       'form' => $form->createView(),
     ]);
   }
@@ -129,6 +149,24 @@ class RequestController extends Controller
       ];
     }
     $dto->setRequestCards(json_encode($requestCards));
+
+    $preFactures = [];
+    foreach ($requestDB->getPreFactures() as $preFacture) {
+      $preFactures[] = [
+        'id' => $preFacture->getId(),
+        'date' => date_format($preFacture->getDate(), 'Y'),
+      ];
+    }
+    $dto->setPreFactures(json_encode($preFactures));
+
+    $factures = [];
+    foreach ($requestDB->getFactures() as $facture) {
+      $factures[] = [
+        'id' => $facture->getId(),
+        'date' => date_format($facture->getDate(), 'Y'),
+      ];
+    }
+    $dto->setFactures(json_encode($factures));
 
     $form = $this->createForm(RequestType::class, $dto);
     $form->handleRequest($request);
@@ -184,6 +222,32 @@ class RequestController extends Controller
         $requestDB->addRequestCard($requestCard);
       }
 
+      foreach ($requestDB->getPreFactures() as $preFacture) {
+        $preFacture->setRequest(null);
+      }
+      $requestDB->getPreFactures()->clear();
+      $preFactures = json_decode($form->get('preFactures')->getData(), true);
+      if (!is_array($preFactures)) {
+        $preFactures = [];
+      }
+      foreach ($preFactures as $preFacture) {
+        $preFactureDB = $this->getDoctrine()->getRepository('AppBundle:Request\PreFacture')->find($preFacture['id']);
+        $preFactureDB->setRequest($requestDB);
+      }
+
+      foreach ($requestDB->getFactures() as $facture) {
+        $facture->setRequest(null);
+      }
+      $requestDB->getFactures()->clear();
+      $factures = json_decode($form->get('factures')->getData(), true);
+      if (!is_array($factures)) {
+        $factures = [];
+      }
+      foreach ($factures as $facture) {
+        $factureDB = $this->getDoctrine()->getRepository('AppBundle:Request\Facture')->find($facture['id']);
+        $factureDB->setRequest($requestDB);
+      }
+
       $this->getDoctrine()->getManager()->flush();
 
       return $this->redirectToRoute('easyadmin', [
@@ -195,6 +259,8 @@ class RequestController extends Controller
       'action' => 'edit',
       'clients' => $this->getDoctrine()->getRepository('AppBundle:Request\Client')->findAll(),
       'products' => $this->getDoctrine()->getRepository('AppBundle:Product')->findAll(),
+      'factures' => $this->getDoctrine()->getRepository('AppBundle:Request\Facture')->findAll(),
+      'prefactures' => $this->getDoctrine()->getRepository('AppBundle:Request\PreFacture')->findAll(),
       'form' => $form->createView(),
     ]);
   }

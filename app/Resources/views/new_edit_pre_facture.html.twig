@@ -181,6 +181,42 @@
           </div>
         </div>
       </div>
+      <div class="col-12">
+          <div class="col-12" style="padding-left: 0;">
+          <div class="panel panel-primary" style="height: 100%;">
+            <div class="panel-heading">
+                <h3 class="panel-title">Facturas Asociadas</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-12" style="padding-left: 0;">
+                <div class="form-group">
+                  <label class="control-label">Facturas</label>
+                  <select id="facture" class="form-control" multiple>
+                    {% for facture in factures %}
+                      <option value="{{facture.id}}--{{facture.date|date('Y')}}">Factura: {{ facture.id }}-{{facture.date|date('Y')}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="d-flex">
+                <button id="add-facture" class="btn btn-primary align-self-start" style="margin-top: 10px;margin-bottom: 10px;">Añadir</button>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-condensed">
+                  <thead>
+                  <tr>
+                    <th>Factura</th>
+                    <th>Acciones</th>
+                  </tr>
+                  </thead>
+                  <tbody class="facture-rows">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="row">
       <div class="col-12">
