@@ -743,7 +743,10 @@ class SiteController extends Controller
         if ($form->isValid() && $form->isSubmitted()) {
             $email = $form->getData();
             $body = $this->renderView(':site:email-body.html.twig', [
-                'message' => $email->getText(),
+                'name' => $email->getName(),
+                'email' => $email->getEmail(),
+                'phone' => $email->getPhone(),
+                'description' => $email->getText(),
                 'member' => $email->getMemberNumber(),
             ]);
             $this->get('email_service')->send($email->getEmail(), $email->getName(), $config->getEmail(), 'Solicitud de Servicio', $body);
@@ -1300,7 +1303,10 @@ class SiteController extends Controller
         if ($form->isValid() && $form->isSubmitted()) {
             $email = $form->getData();
             $body = $this->renderView(':site:email-body.html.twig', [
-                'message' => $email->getText(),
+                'name' => $email->getName(),
+                'email' => $email->getEmail(),
+                'phone' => $email->getPhone(),
+                'description' => $email->getText(),
                 'member' => $email->getMemberNumber(),
             ]);
             $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
