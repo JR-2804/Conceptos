@@ -21,6 +21,51 @@
     {% endif %}
 {% endblock %}
 {% block main %}
+  {% if prefactureId is defined %}
+      <div id="factureModal" class="modal fade" data-action="{{action}}" data-path="{{ path('prefacture_facture_data', {id: prefactureId}) }}">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="d-flex">
+                        <img class="img-responsive modal-header-image" width="100" height="100">
+                        <div class="d-flex align-items-center" style="padding-left: 10px;">
+                            <h4 class="modal-title"></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="control-label">Facturas</label>
+                                <select id="modal-factures" class="form-control" multiple>
+                                  {% for facture in factures %}
+                                    {% if facture.prefacture and facture.prefacture.id == prefactureId %}
+                                      <option value="{{facture.id}}--{{facture.date|date('Y')}}">Factura: {{ facture.id }}-{{facture.date|date('Y')}}</option>
+                                    {% endif %}
+                                  {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                              <label class="control-label">Cantidad</label>
+                              <input id="modal-factures-count" type="number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-factures-accept" class="btn navigation-button"
+                            data-path="{{ path('set_prefacture_facture_data', {id: prefactureId}) }}">
+                        Aceptar
+                    </button>
+                    <button class="btn navigation-button" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+      </div>
+  {% endif %}
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">

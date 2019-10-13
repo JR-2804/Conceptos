@@ -3,6 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Request\Request as RequestEntity;
+use AppBundle\Entity\Request\PreFactureProduct;
+use AppBundle\Entity\Request\PreFactureCard;
+use AppBundle\Entity\Request\FactureProduct;
+use AppBundle\Entity\Request\FactureCard;
 use AppBundle\Entity\Request\RequestProduct;
 use AppBundle\Entity\Request\RequestCard;
 use AppBundle\DTO\RequestDTO;
@@ -10,6 +14,7 @@ use AppBundle\Form\RequestType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RequestController extends Controller
@@ -256,6 +261,7 @@ class RequestController extends Controller
       ]);
     }
     return $this->render('::new_edit_request.html.twig', [
+      'requestId' => $id,
       'action' => 'edit',
       'clients' => $this->getDoctrine()->getRepository('AppBundle:Request\Client')->findAll(),
       'products' => $this->getDoctrine()->getRepository('AppBundle:Product')->findAll(),
@@ -263,5 +269,262 @@ class RequestController extends Controller
       'prefactures' => $this->getDoctrine()->getRepository('AppBundle:Request\PreFacture')->findAll(),
       'form' => $form->createView(),
     ]);
+  }
+
+  /**
+   * @Route(name="request_facture_data", path="/admin/request/facture-data/{id}")
+   *
+   * @param Request $request
+   * @param $id
+   *
+   * @return JsonResponse
+   *
+   * @internal param Request $request
+   */
+  public function getRequestFactureDataAction(Request $request, $id)
+  {
+    $request = $this->getDoctrine()->getRepository('AppBundle:Request\Request')->find($id);
+    $preFactures = $request->getPreFactures();
+    $factures = $request->getFactures();
+
+    $productsData = [];
+    foreach ($request->getRequestProducts() as $product) {
+      $productId = $product->getProduct()->getId();
+      $productCount = $product->getCount();
+
+      $productsData[$productId] = [
+        "data" => [
+          "id" => $productId,
+          "code" => $product->getProduct()->getCode(),
+          "image" => $product->getProduct()->getMainImage()->getImage(),
+          "count" => $product->getCount(),
+          "isAriplaneForniture" => $product->getIsAriplaneForniture(),
+          "isAriplaneMattress" => $product->getIsAriplaneMattress(),
+          "requestProductId" => $product->getId(),
+        ],
+        "request" => 0,
+        "prefactures" => [],
+        "factures" => [],
+      ];
+      if ($product->getOffer()) {
+        $productsData[$productId]["data"]["offerId"] = $product->getOffer()->getId();
+      }
+
+      foreach ($preFactures as $preFacture) {
+        $exists = false;
+        foreach ($preFacture->getPreFactureProducts() as $preFactureProduct) {
+          if ($preFactureProduct->getId() == $productId) {
+            $productsData[$productId]["prefactures"][$preFacture->getId()."-".date_format($preFacture->getDate(), 'Y')] = 0;
+            $exists = true;
+          }
+        }
+        if (!$exists) {
+          $productsData[$productId]["prefactures"][$preFacture->getId()."-".date_format($preFacture->getDate(), 'Y')] = 0;
+        }
+      }
+      foreach ($factures as $facture) {
+        $exists = false;
+        foreach ($facture->getFactureProducts() as $factureProduct) {
+          if ($factureProduct->getId() == $productId) {
+            $productsData[$productId]["factures"][$facture->getId()."-".date_format($facture->getDate(), 'Y')] = 0;
+            $exists = true;
+          }
+        }
+        if (!$exists) {
+          $productsData[$productId]["factures"][$facture->getId()."-".date_format($facture->getDate(), 'Y')] = 0;
+        }
+      }
+      $productsData[$productId]["request"] = $productCount;
+    }
+
+    $cardsData = [];
+    foreach ($request->getRequestCards() as $card) {
+      $cardPrice = $card->getPrice();
+      $cardCount = $card->getCount();
+      $cardsData[$cardPrice] = [
+        "data" => [
+          "price" => $cardPrice,
+          "count" => $cardCount,
+          "requestCardId" => $card->getId(),
+        ],
+        "request" => 0,
+        "prefactures" => [],
+        "factures" => [],
+      ];
+
+      foreach ($preFactures as $preFacture) {
+        $exists = false;
+        foreach ($preFacture->getPreFactureCards() as $preFactureCard) {
+          if ($preFactureCard->getPrice() == $cardPrice) {
+            $cardsData[$cardPrice]["prefactures"][$preFacture->getId()."-".date_format($preFacture->getDate(), 'Y')] = 0;
+            $exists = true;
+          }
+        }
+        if (!$exists) {
+          $cardsData[$cardPrice]["prefactures"][$preFacture->getId()."-".date_format($preFacture->getDate(), 'Y')] = 0;
+        }
+      }
+      foreach ($factures as $facture) {
+        $exists = false;
+        foreach ($facture->getFactureCards() as $factureCard) {
+          if ($factureCard->getPrice() == $cardPrice) {
+            $cardsData[$cardPrice]["factures"][$facture->getId()."-".date_format($facture->getDate(), 'Y')] = 0;
+            $exists = true;
+          }
+        }
+        if (!$exists) {
+          $cardsData[$cardPrice]["factures"][$facture->getId()."-".date_format($facture->getDate(), 'Y')] = 0;
+        }
+      }
+      $cardsData[$cardPrice]["request"] = $cardCount;
+    }
+
+    return new JsonResponse([
+      'productsData' => json_encode($productsData),
+      'cardsData' => json_encode($cardsData),
+    ]);
+  }
+
+  /**
+   * @Route(name="set_request_facture_data", path="/admin/request/set-facture-data/{id}")
+   *
+   * @param Request $request
+   * @param $id
+   *
+   * @return JsonResponse
+   *
+   * @internal param Request $request
+   */
+  public function setRequestFactureDataAction(Request $request, $id)
+  {
+    $productsData = json_decode($request->request->get('productsData'), true);
+    $cardsData = json_decode($request->request->get('cardsData'), true);
+    $requestDB = $this->getDoctrine()->getRepository('AppBundle:Request\Request')->find($id);
+    $preFactures = $requestDB->getPreFactures();
+    $factures = $requestDB->getFactures();
+
+    foreach ($productsData as $productData) {
+      $productId = $productData["data"]["id"];
+
+      foreach ($preFactures as $preFacture) {
+        $newCount = $productsData[$productId]["prefactures"][$preFacture->getId()."-".date_format($preFacture->getDate(), 'Y')];
+        if ($newCount > 0) {
+          $exists = false;
+          foreach ($preFacture->getPreFactureProducts() as $preFactureProduct) {
+            if ($preFactureProduct->getProduct()->getId() == $productId) {
+              $preFactureProduct->setCount($preFactureProduct->getCount() + $newCount);
+              $exists = true;
+            }
+          }
+          if (!$exists) {
+            $preFactureProduct = new PreFactureProduct();
+            $preFactureProduct->setPreFacture($preFacture);
+            $preFactureProduct->setProduct($this->getDoctrine()->getRepository('AppBundle:Product')->find($productId));
+            $preFactureProduct->setCount($newCount);
+            $preFactureProduct->setIsAriplaneForniture($productsData[$productId]["data"]["isAriplaneForniture"]);
+            $preFactureProduct->setIsAriplaneMattress($productsData[$productId]["data"]["isAriplaneMattress"]);
+
+            if (array_key_exists("offerId", $productsData[$productId]["data"])) {
+              $preFactureProduct->setOffer($this->getDoctrine()->getRepository('AppBundle:Offer')->find($productsData[$productId]["data"]["offerId"]));
+            }
+
+            $this->getDoctrine()->getManager()->persist($preFactureProduct);
+            $preFacture->addPreFactureProduct($preFactureProduct);
+          }
+
+          $requestProduct = $this->getDoctrine()->getRepository('AppBundle:Request\RequestProduct')->find($productsData[$productId]["data"]["requestProductId"]);
+          $requestProduct->setCount($requestProduct->getCount() - $newCount);
+        }
+      }
+
+      foreach ($factures as $facture) {
+        $newCount = $productsData[$productId]["factures"][$facture->getId()."-".date_format($facture->getDate(), 'Y')];
+        if ($newCount > 0) {
+          $exists = false;
+          foreach ($facture->getFactureProducts() as $factureProduct) {
+            if ($factureProduct->getProduct()->getId() == $productId) {
+              $factureProduct->setCount($factureProduct->getCount() + $newCount);
+              $exists = true;
+            }
+          }
+          if (!$exists) {
+            $factureProduct = new factureProduct();
+            $factureProduct->setFacture($facture);
+            $factureProduct->setProduct($this->getDoctrine()->getRepository('AppBundle:Product')->find($productId));
+            $factureProduct->setCount($newCount);
+            $factureProduct->setIsAriplaneForniture($productsData[$productId]["data"]["isAriplaneForniture"]);
+            $factureProduct->setIsAriplaneMattress($productsData[$productId]["data"]["isAriplaneMattress"]);
+
+            if (array_key_exists("offerId", $productsData[$productId]["data"])) {
+              $factureProduct->setOffer($this->getDoctrine()->getRepository('AppBundle:Offer')->find($productsData[$productId]["data"]["offerId"]));
+            }
+
+            $this->getDoctrine()->getManager()->persist($factureProduct);
+            $facture->addFactureProduct($factureProduct);
+          }
+
+          $requestProduct = $this->getDoctrine()->getRepository('AppBundle:Request\RequestProduct')->find($productsData[$productId]["data"]["requestProductId"]);
+          $requestProduct->setCount($requestProduct->getCount() - $newCount);
+        }
+      }
+    }
+
+    foreach ($cardsData as $cardData) {
+      $cardPrice = $cardData["data"]["price"];
+
+      foreach ($preFactures as $preFacture) {
+        $newCount = $cardsData[$cardPrice]["prefactures"][$preFacture->getId()."-".date_format($preFacture->getDate(), 'Y')];
+        if ($newCount > 0) {
+          $exists = false;
+          foreach ($preFacture->getPreFactureCards() as $preFactureCard) {
+            if ($preFactureCard->getPrice() == $cardPrice) {
+              $preFactureCard->setCount($preFactureCard->getCount() + $newCount);
+              $exists = true;
+            }
+          }
+          if (!$exists) {
+            $preFactureCard = new PreFactureCard();
+            $preFactureCard->setPreFacture($preFacture);
+            $preFactureCard->setPrice($cardPrice);
+            $preFactureCard->setCount($newCount);
+
+            $this->getDoctrine()->getManager()->persist($preFactureCard);
+            $preFacture->addPreFactureCard($preFactureCard);
+          }
+
+          $requestCard = $this->getDoctrine()->getRepository('AppBundle:Request\RequestCard')->find($cardsData[$cardPrice]["data"]["requestCardId"]);
+          $requestCard->setCount($requestCard->getCount() - $newCount);
+        }
+      }
+
+      foreach ($factures as $facture) {
+        $newCount = $cardsData[$cardPrice]["factures"][$facture->getId()."-".date_format($facture->getDate(), 'Y')];
+        if ($newCount > 0) {
+          $exists = false;
+          foreach ($facture->getFactureCards() as $factureCard) {
+            if ($factureCard->getPrice() == $cardPrice) {
+              $factureCard->setCount($factureCard->getCount() + $newCount);
+              $exists = true;
+            }
+          }
+          if (!$exists) {
+            $factureCard = new factureCard();
+            $factureCard->setFacture($facture);
+            $factureCard->setPrice($cardPrice);
+            $factureCard->setCount($newCount);
+
+            $this->getDoctrine()->getManager()->persist($factureCard);
+            $facture->addFactureCard($factureCard);
+          }
+
+          $requestCard = $this->getDoctrine()->getRepository('AppBundle:Request\RequestCard')->find($cardsData[$cardPrice]["data"]["requestCardId"]);
+          $requestCard->setCount($requestCard->getCount() - $newCount);
+        }
+      }
+    }
+
+    $this->getDoctrine()->getManager()->flush();
+
+    return new JsonResponse();
   }
 }

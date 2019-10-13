@@ -21,6 +21,94 @@
     {% endif %}
 {% endblock %}
 {% block main %}
+  {% if requestId is defined %}
+      <div id="prefactureModal" class="modal fade" data-path="{{ path('request_facture_data', {id: requestId}) }}">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="d-flex">
+                        <img class="img-responsive modal-header-image" width="100" height="100">
+                        <div class="d-flex align-items-center" style="padding-left: 10px;">
+                            <h4 class="modal-title"></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="control-label">Prefacturas</label>
+                                <select id="modal-prefactures" class="form-control" multiple>
+                                  {% for prefacture in prefactures %}
+                                    {% if prefacture.request and prefacture.request.id == requestId %}
+                                      <option value="{{prefacture.id}}--{{prefacture.date|date('Y')}}">Prefactura: {{ prefacture.id }}-{{prefacture.date|date('Y')}}</option>
+                                    {% endif %}
+                                  {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                              <label class="control-label">Cantidad</label>
+                              <input id="modal-prefactures-count" type="number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-prefactures-accept" class="btn navigation-button"
+                            data-path="{{ path('set_request_facture_data', {id: requestId}) }}">
+                        Aceptar
+                    </button>
+                    <button class="btn navigation-button" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div id="factureModal" class="modal fade" data-action="{{action}}" data-path="{{ path('request_facture_data', {id: requestId}) }}">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="d-flex">
+                        <img class="img-responsive modal-header-image" width="100" height="100">
+                        <div class="d-flex align-items-center" style="padding-left: 10px;">
+                            <h4 class="modal-title"></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="control-label">Facturas</label>
+                                <select id="modal-factures" class="form-control" multiple>
+                                  {% for facture in factures %}
+                                    {% if facture.request and facture.request.id == requestId %}
+                                      <option value="{{facture.id}}--{{facture.date|date('Y')}}">Factura: {{ facture.id }}-{{facture.date|date('Y')}}</option>
+                                    {% endif %}
+                                  {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                              <label class="control-label">Cantidad</label>
+                              <input id="modal-factures-count" type="number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-factures-accept" class="btn navigation-button"
+                            data-path="{{ path('set_request_facture_data', {id: requestId}) }}">
+                        Aceptar
+                    </button>
+                    <button class="btn navigation-button" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+      </div>
+  {% endif %}
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">

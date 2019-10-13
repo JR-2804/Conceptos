@@ -1,6 +1,8 @@
-var pre_facture_product_template = '<tr class="product-row"><td><img src="/uploads/%0" class="img-responsive" width="50" height="50"></td><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td><a class="btn btn-secondary btn-edit-product" data-code="%5"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-product" data-code="%6"><i class="fa fa-remove"></i></a></td></tr>';
-var pre_facture_card_template = '<tr class="card-row"><td>%1$</td><td>%2</td><td><a class="btn btn-secondary btn-edit-card" data-code="%3"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-card" data-code="%4"><i class="fa fa-remove"></i></a></td></tr>';
+var pre_facture_product_template = '<tr class="product-row"><td><img src="/uploads/%0" class="img-responsive" width="50" height="50"></td><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td><a class="btn btn-secondary btn-facture-product" data-code="%5"><i class="fa fa-euro"></i></a><a class="btn btn-secondary btn-edit-product" data-code="%6"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-product" data-code="%7"><i class="fa fa-remove"></i></a></td></tr>';
+var pre_facture_card_template = '<tr class="card-row"><td>%1$</td><td>%2</td><td><a class="btn btn-secondary btn-facture-card" data-code="%3"><i class="fa fa-euro"></i></a><a class="btn btn-secondary btn-edit-card" data-code="%4"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-card" data-code="%5"><i class="fa fa-remove"></i></a></td></tr>';
 var facture_template = '<tr class="facture-row"><td>%1</td><td><a class="btn btn-secondary btn-remove-facture" data-id="%2"><i class="fa fa-remove"></i></a></td></tr>';
+var product_destiny_template = '<tr class="product-destiny-row"><td>%1</td><td><input type="number" value="%2"/></td></tr>';
+var card_destiny_template = '<tr class="card-destiny-row"><td>%1</td><td><input type="number" value="%2"/></td></tr>';
 
 var preFactureProductToEdit;
 var preFactureCardToEdit;
@@ -9,8 +11,13 @@ var preFactureProducts = [];
 var preFactureCards = [];
 var factures = [];
 
+var productsData;
+var cardsData;
+var currentFacturingProduct;
+var currentFacturingCard;
+
 $(document).ready(function() {
-  $("#client, #product, #card, #facture").select2({
+  $("#client, #product, #card, #facture, #modal-prefactures, #modal-factures").select2({
     theme: "bootstrap",
     language: "es",
     allowClear: true,
@@ -174,6 +181,71 @@ $(document).ready(function() {
     }
   });
 
+  $("#modal-factures-accept").click(function() {
+    if ($("#modal-factures").val() && $("#modal-factures-count").val()) {
+      if (currentFacturingProduct) {
+        var count = parseInt($("#modal-factures-count").val());
+        if (count > productsData[currentFacturingProduct].data.count) {
+          alert("La cantidad a facturar no puede ser superior a la cantidad actual del producto");
+        }
+        productsData[currentFacturingProduct].factures[$("#modal-factures").val()[0].replace("--", "-")] += count;
+        productsData[currentFacturingProduct].prefacture -= count;
+      }
+      if (currentFacturingCard) {
+        var count = parseInt($("#modal-factures-count").val());
+        if (count > cardsData[currentFacturingCard].data.count) {
+          alert("La cantidad a facturar no puede ser superior a la cantidad actual de la tarjeta");
+        }
+        cardsData[currentFacturingCard].factures[$("#modal-factures").val()[0].replace("--", "-")] += count;
+        cardsData[currentFacturingCard].prefacture -= count;
+      }
+
+      ajax(
+        $(this).data("path"),
+        "POST",
+        {
+          productsData: JSON.stringify(productsData),
+          cardsData: JSON.stringify(cardsData),
+        },
+        function() {
+          $("#modal-factures").val([]).trigger("change");
+          $("#modal-factures-count").val("");
+          $("#factureModal").modal("hide");
+
+          if (currentFacturingProduct) {
+            preFactureProducts.forEach(function(productPrefacture) {
+              if (productPrefacture.product == currentFacturingProduct) {
+                productPrefacture.count = productPrefacture.count - count;
+              }
+            });
+            populatePreFactureProducts();
+          }
+          if (currentFacturingCard) {
+            preFactureCards.forEach(function(cardPrefacture) {
+              if (cardPrefacture.card == currentFacturingCard) {
+                cardPrefacture.count = cardPrefacture.count - count;
+              }
+            });
+            populatePreFactureCards();
+          }
+
+          currentFacturingProduct = undefined;
+          currentFacturingCard = undefined;
+        },
+        function() {
+          alert("Ocurrió un error realizando la factura");
+          $("#modal-factures").val([]).trigger("change");
+          $("#modal-factures-count").val("");
+          $("#factureModal").modal("hide");
+          currentFacturingProduct = undefined;
+          currentFacturingCard = undefined;
+        },
+      );
+    } else {
+      alert("Inserte los datos correctamente");
+    }
+  });
+
   $('form[name="pre_facture"]').submit(function(e) {
     if (!validForm()) {
       e.preventDefault();
@@ -297,10 +369,16 @@ function populatePreFactureProducts() {
         .replace("%3", airplaneFurnitureReplacement)
         .replace("%4", airplaneMattressReplacement)
         .replace("%5", productPreFacture.product)
-        .replace("%6", productPreFacture.product);
+        .replace("%6", productPreFacture.product)
+        .replace("%7", productPreFacture.product);
 
       $(".product-rows").append(template);
     });
+    if (!$("#factureModal").data("action")) {
+      $(".btn-prefacture-product").hide();
+      $(".btn-facture-product").hide();
+    }
+
     $(".btn-remove-product").click(function() {
       var code = $(this).data("code");
       var tmpProducts = [];
@@ -327,6 +405,28 @@ function populatePreFactureProducts() {
       $("#product-airplane-forniture").prop("checked", preFactureProductToEdit.airplaneFurniture);
       $("#product-airplane-mattress").prop("checked", preFactureProductToEdit.airplaneMattress);
     });
+    $(".btn-facture-product").click(function() {
+      var productId = $(this).data("code");
+      ajax(
+        $("#factureModal").data("path"),
+        "POST",
+        {},
+        function(response) {
+          productsData = JSON.parse(response.productsData);
+          cardsData = JSON.parse(response.cardsData);
+          var productCode = productsData[productId].data.code;
+          var productImage = productsData[productId].data.image;
+
+          $(".product-destiny-row").remove();
+          $("#factureModal").modal("show");
+          $("#factureModal img.modal-header-image").show();
+          $("#factureModal img.modal-header-image").prop("src", "/uploads/" + productImage);
+          $("#factureModal .modal-title").text("Facturar Producto (" + productCode + ")");
+
+          currentFacturingProduct = productId;
+        }
+      );
+    });
   }
 }
 
@@ -342,10 +442,16 @@ function populatePreFactureCards() {
         .replace("%1", cardPreFacture.card)
         .replace("%2", cardPreFacture.count)
         .replace("%3", cardPreFacture.card)
-        .replace("%4", cardPreFacture.card);
+        .replace("%4", cardPreFacture.card)
+        .replace("%5", cardPreFacture.card);
 
       $(".card-rows").append(template);
     });
+    if (!$("#factureModal").data("action")) {
+      $(".btn-prefacture-card").hide();
+      $(".btn-facture-card").hide();
+    }
+
     $(".btn-remove-card").click(function() {
       var code = $(this).data("code");
       var tmpCards = [];
@@ -369,6 +475,25 @@ function populatePreFactureCards() {
       });
       $("#card").val([preFactureCardToEdit.card]).trigger("change");
       $("#card-count").val(preFactureCardToEdit.count);
+    });
+    $(".btn-facture-card").click(function() {
+      var cardPrice = $(this).data("code");
+      ajax(
+        $("#factureModal").data("path"),
+        "POST",
+        {},
+        function(response) {
+          productsData = JSON.parse(response.productsData);
+          cardsData = JSON.parse(response.cardsData);
+
+          $(".card-destiny-row").remove();
+          $("#factureModal").modal("show");
+          $("#factureModal img.modal-header-image").hide();
+          $("#factureModal .modal-title").text("Facturar Tarjeta (" + cardPrice + ")");
+
+          currentFacturingCard = cardPrice;
+        }
+      );
     });
   }
 }
