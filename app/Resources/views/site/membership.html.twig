@@ -157,4 +157,21 @@
 {% endblock %}
 {% block js %}
     <script src="{{ asset('bundles/conceptos/scripts/js/membership.js') }}"></script>
+    {% if showSuccesToast is defined %}
+      <script>
+        $.toast({
+          text: "Solicitud de Membresia enviada correctamente",
+          showHideTransition: "fade",
+          bgColor: "#f7ed4a",
+          textColor: "#3f3c03",
+          allowToastClose: true,
+          hideAfter: 5000,
+          stack: 5,
+          textAlign: "center",
+          position: "mid-center",
+          icon: "success",
+          heading: "Correcto"
+        });
+      </script>
+    {% endif %}
 {% endblock %}

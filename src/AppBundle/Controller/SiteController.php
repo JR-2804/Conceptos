@@ -796,8 +796,27 @@ class SiteController extends Controller
             $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
             $this->get('email_service')->send($membershipRequest->getEmail(), $membershipRequest->getFirstName(), $config->getEmail(), 'Solicitud de Membresia', $body);
 
-            $path = $form->get('path')->getData();
-            return $this->redirect($path);
+            $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')
+              ->createQueryBuilder('p')
+              ->join('p.offers', 'o')
+              ->where('o.startDate <= :current AND o.endDate >= :current')
+              ->andWhere('o.onlyForMembers = 1')
+              ->setParameter('current', new \DateTime(), Type::DATE)
+              ->getQuery()
+              ->getResult()
+            ;
+
+            return $this->render(':site:membership.html.twig', [
+              'showSuccesToast' => true,
+              'home' => $home,
+              'count' => $this->countShopCart($request),
+              'page' => $membership,
+              'terms' => $config->getTermAndConditions(),
+              'privacy' => $config->getPrivacyPolicy(),
+              'categories' => $this->get('category_service')->getAll(),
+              'products' => $products,
+              'currentDate' => new \DateTime(),
+          ]);
         }
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
