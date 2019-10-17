@@ -121,15 +121,20 @@ class PreFactureController extends Controller
 
     $preFactureProducts = [];
     foreach ($preFactureDB->getPreFactureProducts() as $preFactureProduct) {
-      $preFactureProducts[] = [
+      $newPreFactureProduct = [
         'id' => $preFactureProduct->getId(),
         'product' => $preFactureProduct->getProduct()->getId(),
         'code' => $preFactureProduct->getProduct()->getCode(),
         'image' => $preFactureProduct->getProduct()->getMainImage()->getImage(),
+        'price' => $preFactureProduct->getProduct()->getPrice(),
         'count' => $preFactureProduct->getCount(),
         'airplaneFurniture' => $preFactureProduct->getIsAriplaneForniture(),
         'airplaneMattress' => $preFactureProduct->getIsAriplaneMattress(),
       ];
+      if ($preFactureProduct->getOffer()) {
+        $newRequestPnewPreFactureProductroduct["offerPrice"] = $preFactureProduct->getOffer()->getPrice();
+      }
+      $preFactureProducts[] = $newPreFactureProduct;
     }
     $dto->setPreFactureProducts(json_encode($preFactureProducts));
 

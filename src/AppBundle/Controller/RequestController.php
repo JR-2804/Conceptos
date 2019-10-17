@@ -133,15 +133,20 @@ class RequestController extends Controller
 
     $requestProducts = [];
     foreach ($requestDB->getRequestProducts() as $requestProduct) {
-      $requestProducts[] = [
+      $newRequestProduct = [
         'id' => $requestProduct->getId(),
         'product' => $requestProduct->getProduct()->getId(),
         'code' => $requestProduct->getProduct()->getCode(),
         'image' => $requestProduct->getProduct()->getMainImage()->getImage(),
+        'price' => $requestProduct->getProduct()->getPrice(),
         'count' => $requestProduct->getCount(),
         'airplaneFurniture' => $requestProduct->getIsAriplaneForniture(),
         'airplaneMattress' => $requestProduct->getIsAriplaneMattress(),
       ];
+      if ($requestProduct->getOffer()) {
+        $newRequestProduct["offerPrice"] = $requestProduct->getOffer()->getPrice();
+      }
+      $requestProducts[] = $newRequestProduct;
     }
     $dto->setRequestProducts(json_encode($requestProducts));
 

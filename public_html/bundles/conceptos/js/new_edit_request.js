@@ -1,7 +1,7 @@
 var request_product_template = '<tr class="product-row"><td><img src="/uploads/%0" class="img-responsive" width="50" height="50"></td><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td><a class="btn btn-secondary btn-prefacture-product" data-code="%5"><i class="fa fa-dollar"></i></a><a class="btn btn-secondary btn-facture-product" data-code="%6"><i class="fa fa-euro"></i></a><a class="btn btn-secondary btn-edit-product" data-code="%7"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-product" data-code="%8"><i class="fa fa-remove"></i></a></td></tr>';
 var request_card_template = '<tr class="card-row"><td>%1$</td><td>%2</td><td><a class="btn btn-secondary btn-prefacture-card" data-code="%3"><i class="fa fa-dollar"></i></a><a class="btn btn-secondary btn-facture-card" data-code="%4"><i class="fa fa-euro"></i></a><a class="btn btn-secondary btn-edit-card" data-code="%5"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-card" data-code="%6"><i class="fa fa-remove"></i></a></td></tr>';
-var prefacture_template = '<tr class="prefacture-row"><td>%1</td><td><a class="btn btn-secondary btn-remove-prefacture" data-id="%2"><i class="fa fa-remove"></i></a></td></tr>';
-var facture_template = '<tr class="facture-row"><td>%1</td><td><a class="btn btn-secondary btn-remove-facture" data-id="%2"><i class="fa fa-remove"></i></a></td></tr>';
+var prefacture_template = '<tr class="prefacture-row"><td>%1</td><td><a class="btn btn-secondary btn-remove-prefacture" data-id="%2"><i class="fa fa-remove"></i></a><a class="btn btn-secondary btn-view-prefacture" href="/admin/?action=show&entity=PreFacture&id=%3"><i class="fa fa-eye"></i></a></td></tr>';
+var facture_template = '<tr class="facture-row"><td>%1</td><td><a class="btn btn-secondary btn-remove-facture" data-id="%2"><i class="fa fa-remove"></i></a><a class="btn btn-secondary btn-view-facture" href="/admin/?action=show&entity=Facture&id=%3"><i class="fa fa-eye"></i></a></td></tr>';
 var product_destiny_template = '<tr class="product-destiny-row"><td>%1</td><td><input type="number" value="%2"/></td></tr>';
 var card_destiny_template = '<tr class="card-destiny-row"><td>%1</td><td><input type="number" value="%2"/></td></tr>';
 
@@ -81,6 +81,7 @@ $(document).ready(function() {
         count: parseInt(count),
         airplaneFurniture: airplaneFurniture,
         airplaneMattress: airplaneMattress,
+        price: requestProductToEdit.price,
       });
 
       populateRequestProducts();
@@ -335,6 +336,23 @@ $(document).ready(function() {
     }
   });
 
+  $("#calculate-price-button").click(function() {
+    var finalPrice = 0;
+
+    requestProducts.forEach(function(requestProduct) {
+      if (requestProduct.offerPrice) {
+        finalPrice += requestProduct.offerPrice * requestProduct.count;
+      } else {
+        finalPrice += requestProduct.price * requestProduct.count;
+      }
+    });
+    requestCards.forEach(function(requestCard) {
+      finalPrice += requestCard.price * requestCard.count;
+    });
+
+    $("#finalPrice").val(finalPrice);
+  });
+
   $('form[name="request"]').submit(function(e) {
     if (!validForm()) {
       e.preventDefault();
@@ -462,7 +480,8 @@ function populateRequestProducts() {
         .replace("%4", airplaneMattressReplacement)
         .replace("%5", productRequest.product)
         .replace("%6", productRequest.product)
-        .replace("%7", productRequest.product);
+        .replace("%7", productRequest.product)
+        .replace("%8", productRequest.product);
 
       $(".product-rows").append(template);
     });
@@ -642,6 +661,7 @@ function populatePrefactures() {
         .substring(-1)
         .replace("%1", prefacture.id + '-' + prefacture.date)
         .replace("%2", prefacture.id)
+        .replace("%3", prefacture.id);
 
       $(".prefacture-rows").append(template);
     });
@@ -669,6 +689,7 @@ function populateFactures() {
         .substring(-1)
         .replace("%1", facture.id + '-' + facture.date)
         .replace("%2", facture.id)
+        .replace("%3", facture.id);
 
       $(".facture-rows").append(template);
     });

@@ -1,6 +1,6 @@
 var pre_facture_product_template = '<tr class="product-row"><td><img src="/uploads/%0" class="img-responsive" width="50" height="50"></td><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td><a class="btn btn-secondary btn-facture-product" data-code="%5"><i class="fa fa-euro"></i></a><a class="btn btn-secondary btn-edit-product" data-code="%6"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-product" data-code="%7"><i class="fa fa-remove"></i></a></td></tr>';
 var pre_facture_card_template = '<tr class="card-row"><td>%1$</td><td>%2</td><td><a class="btn btn-secondary btn-facture-card" data-code="%3"><i class="fa fa-euro"></i></a><a class="btn btn-secondary btn-edit-card" data-code="%4"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-card" data-code="%5"><i class="fa fa-remove"></i></a></td></tr>';
-var facture_template = '<tr class="facture-row"><td>%1</td><td><a class="btn btn-secondary btn-remove-facture" data-id="%2"><i class="fa fa-remove"></i></a></td></tr>';
+var facture_template = '<tr class="facture-row"><td>%1</td><td><a class="btn btn-secondary btn-remove-facture" data-id="%2"><i class="fa fa-remove"></i></a><a class="btn btn-secondary btn-view-facture" href="/admin/?action=show&entity=Facture&id=%3"><i class="fa fa-eye"></i></a></td></tr>';
 var product_destiny_template = '<tr class="product-destiny-row"><td>%1</td><td><input type="number" value="%2"/></td></tr>';
 var card_destiny_template = '<tr class="card-destiny-row"><td>%1</td><td><input type="number" value="%2"/></td></tr>';
 
@@ -79,6 +79,7 @@ $(document).ready(function() {
         count: parseInt(count),
         airplaneFurniture: airplaneFurniture,
         airplaneMattress: airplaneMattress,
+        price: preFactureProductToEdit.price,
       });
 
       populatePreFactureProducts();
@@ -244,6 +245,23 @@ $(document).ready(function() {
     } else {
       alert("Inserte los datos correctamente");
     }
+  });
+
+  $("#calculate-price-button").click(function() {
+    var finalPrice = 0;
+
+    preFactureProducts.forEach(function(preFactureProduct) {
+      if (preFactureProduct.offerPrice) {
+        finalPrice += preFactureProduct.offerPrice * preFactureProduct.count;
+      } else {
+        finalPrice += preFactureProduct.price * preFactureProduct.count;
+      }
+    });
+    preFactureCards.forEach(function(preFactureCard) {
+      finalPrice += preFactureCard.card * preFactureCard.count;
+    });
+
+    $("#finalPrice").val(finalPrice);
   });
 
   $('form[name="pre_facture"]').submit(function(e) {
@@ -508,6 +526,7 @@ function populateFactures() {
         .substring(-1)
         .replace("%1", facture.id + '-' + facture.date)
         .replace("%2", facture.id)
+        .replace("%3", facture.id);
 
       $(".facture-rows").append(template);
     });

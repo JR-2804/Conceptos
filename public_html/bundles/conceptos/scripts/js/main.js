@@ -143,19 +143,18 @@ $(document).ready(function() {
   });
 
   $("#loginModal label").addClass("collapse");
-  $("#fos_user_registration_form_first_name").attr("required", false);
-  $("#fos_user_registration_form_last_name").attr("required", false);
-  $("#fos_user_registration_form_mobile_number").attr("required", false);
-  $("#fos_user_registration_form_home_number").attr("required", false);
-  $("#fos_user_registration_form_address").attr("required", false);
 
   $(".register-checkbox input").change(function() {
     if ($(this).prop("checked")) {
       $("#login-form").addClass("collapse");
       $("#register-form").removeClass("collapse");
+
+      FlagRegisterFieldsAsNonRequired();
     } else {
       $("#login-form").removeClass("collapse");
       $("#register-form").addClass("collapse");
+
+      FlagRegisterFieldsAsNonRequired();
     }
   });
 
@@ -171,5 +170,13 @@ $(document).ready(function() {
       .parent()
       .children("span.badge-custom")
       .show();
+  }
+
+  function FlagRegisterFieldsAsNonRequired() {
+    $("#fos_user_registration_form_first_name").attr("required", false);
+    $("#fos_user_registration_form_last_name").attr("required", false);
+    $("#fos_user_registration_form_mobile_number").attr("required", false);
+    $("#fos_user_registration_form_home_number").attr("required", false);
+    $("#fos_user_registration_form_address").attr("required", false);
   }
 });
