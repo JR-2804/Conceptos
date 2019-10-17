@@ -249,6 +249,9 @@ $(document).ready(function() {
 
   $("#calculate-price-button").click(function() {
     var finalPrice = 0;
+    var transportCost = $("#transportCost").val();
+    var membershipDiscount = $("#discount").val();
+    var firstClientDiscount = $("#firstClientDiscount").val();
 
     preFactureProducts.forEach(function(preFactureProduct) {
       if (preFactureProduct.offerPrice) {
@@ -261,6 +264,9 @@ $(document).ready(function() {
       finalPrice += preFactureCard.card * preFactureCard.count;
     });
 
+    finalPrice += parseFloat(transportCost);
+    finalPrice -= parseFloat(membershipDiscount);
+    finalPrice -= parseFloat(firstClientDiscount);
     $("#finalPrice").val(finalPrice);
   });
 

@@ -150,6 +150,29 @@ $(document).ready(function() {
     $("#cancel-edit-card").hide();
   });
 
+  $("#calculate-price-button").click(function() {
+    var finalPrice = 0;
+    var transportCost = $("#transportCost").val();
+    var membershipDiscount = $("#discount").val();
+    var firstClientDiscount = $("#firstClientDiscount").val();
+
+    factureProducts.forEach(function(factureProduct) {
+      if (factureProduct.offerPrice) {
+        finalPrice += factureProduct.offerPrice * factureProduct.count;
+      } else {
+        finalPrice += factureProduct.price * factureProduct.count;
+      }
+    });
+    factureCards.forEach(function(factureCard) {
+      finalPrice += factureCard.card * factureCard.count;
+    });
+
+    finalPrice += parseFloat(transportCost);
+    finalPrice -= parseFloat(membershipDiscount);
+    finalPrice -= parseFloat(firstClientDiscount);
+    $("#finalPrice").val(finalPrice);
+  });
+
   $('form[name="facture"]').submit(function(e) {
     if (!validForm()) {
       e.preventDefault();

@@ -108,15 +108,20 @@ class FactureController extends Controller
 
     $factureProducts = [];
     foreach ($factureDB->getFactureProducts() as $factureProduct) {
-      $factureProducts[] = [
+      $newfactureProduct = [
         'id' => $factureProduct->getId(),
         'product' => $factureProduct->getProduct()->getId(),
         'code' => $factureProduct->getProduct()->getCode(),
         'image' => $factureProduct->getProduct()->getMainImage()->getImage(),
+        'price' => $factureProduct->getProduct()->getPrice(),
         'count' => $factureProduct->getCount(),
         'airplaneFurniture' => $factureProduct->getIsAriplaneForniture(),
         'airplaneMattress' => $factureProduct->getIsAriplaneMattress(),
       ];
+      if ($factureProduct->getOffer()) {
+        $newfactureProduct["offerPrice"] = $factureProduct->getOffer()->getPrice();
+      }
+      $factureProducts[] = $newfactureProduct;
     }
     $dto->setFactureProducts(json_encode($factureProducts));
 
