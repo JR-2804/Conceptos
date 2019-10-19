@@ -267,6 +267,8 @@ class RequestController extends Controller
     }
     return $this->render('::new_edit_request.html.twig', [
       'requestId' => $id,
+      'memberNumber' => $requestDB->getClient()->getMemberNumber(),
+      'firstClient' => $requestDB->getClient()->getRequests()->count() == 1,
       'action' => 'edit',
       'clients' => $this->getDoctrine()->getRepository('AppBundle:Request\Client')->findAll(),
       'products' => $this->getDoctrine()->getRepository('AppBundle:Product')->findAll(),

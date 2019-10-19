@@ -233,6 +233,8 @@ class PreFactureController extends Controller
     }
     return $this->render('::new_edit_pre_facture.html.twig', [
       'prefactureId' => $id,
+      'memberNumber' => $preFactureDB->getClient()->getMemberNumber(),
+      'firstClient' => $preFactureDB->getClient()->getRequests()->count() == 1,
       'action' => 'edit',
       'clients' => $this->getDoctrine()->getRepository('AppBundle:Request\Client')->findAll(),
       'products' => $this->getDoctrine()->getRepository('AppBundle:Product')->findAll(),

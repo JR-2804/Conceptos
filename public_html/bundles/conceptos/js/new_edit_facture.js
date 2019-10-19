@@ -153,8 +153,6 @@ $(document).ready(function() {
   $("#calculate-price-button").click(function() {
     var finalPrice = 0;
     var transportCost = $("#transportCost").val();
-    var membershipDiscount = $("#discount").val();
-    var firstClientDiscount = $("#firstClientDiscount").val();
 
     factureProducts.forEach(function(factureProduct) {
       if (factureProduct.offerPrice) {
@@ -167,10 +165,21 @@ $(document).ready(function() {
       finalPrice += factureCard.card * factureCard.count;
     });
 
+    var membershipDiscount = 0;
+    var firstClientDiscount = 0;
+    if ($("#calculate-price-button").data("member-number")) {
+      membershipDiscount = Math.floor(finalPrice * 0.1);
+    }
+    else if($("#calculate-price-button").data("first-client")) {
+      firstClientDiscount = Math.floor(finalPrice * 0.05);
+    }
+
     finalPrice += parseFloat(transportCost);
     finalPrice -= parseFloat(membershipDiscount);
     finalPrice -= parseFloat(firstClientDiscount);
     $("#finalPrice").val(finalPrice);
+    $("#discount").val(membershipDiscount)
+    $("#firstClientDiscount").val(firstClientDiscount)
   });
 
   $('form[name="facture"]').submit(function(e) {

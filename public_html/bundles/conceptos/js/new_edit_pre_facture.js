@@ -188,6 +188,7 @@ $(document).ready(function() {
         var count = parseInt($("#modal-factures-count").val());
         if (count > productsData[currentFacturingProduct].data.count) {
           alert("La cantidad a facturar no puede ser superior a la cantidad actual del producto");
+          return;
         }
         productsData[currentFacturingProduct].factures[$("#modal-factures").val()[0].replace("--", "-")] += count;
         productsData[currentFacturingProduct].prefacture -= count;
@@ -196,6 +197,7 @@ $(document).ready(function() {
         var count = parseInt($("#modal-factures-count").val());
         if (count > cardsData[currentFacturingCard].data.count) {
           alert("La cantidad a facturar no puede ser superior a la cantidad actual de la tarjeta");
+          return;
         }
         cardsData[currentFacturingCard].factures[$("#modal-factures").val()[0].replace("--", "-")] += count;
         cardsData[currentFacturingCard].prefacture -= count;
@@ -250,8 +252,6 @@ $(document).ready(function() {
   $("#calculate-price-button").click(function() {
     var finalPrice = 0;
     var transportCost = $("#transportCost").val();
-    var membershipDiscount = $("#discount").val();
-    var firstClientDiscount = $("#firstClientDiscount").val();
 
     preFactureProducts.forEach(function(preFactureProduct) {
       if (preFactureProduct.offerPrice) {
@@ -264,10 +264,21 @@ $(document).ready(function() {
       finalPrice += preFactureCard.card * preFactureCard.count;
     });
 
+    var membershipDiscount = 0;
+    var firstClientDiscount = 0;
+    if ($("#calculate-price-button").data("member-number")) {
+      membershipDiscount = Math.floor(finalPrice * 0.1);
+    }
+    else if($("#calculate-price-button").data("first-client")) {
+      firstClientDiscount = Math.floor(finalPrice * 0.05);
+    }
+
     finalPrice += parseFloat(transportCost);
     finalPrice -= parseFloat(membershipDiscount);
     finalPrice -= parseFloat(firstClientDiscount);
     $("#finalPrice").val(finalPrice);
+    $("#discount").val(membershipDiscount)
+    $("#firstClientDiscount").val(firstClientDiscount)
   });
 
   $('form[name="pre_facture"]').submit(function(e) {

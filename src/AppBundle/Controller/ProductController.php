@@ -969,13 +969,13 @@ class ProductController extends Controller
                 $product->getIkeaPrice(),
                 true,
                 $product->getIsFragile(),
-                $product->getIsAriplaneForniture(),
+                false,
                 $product->getIsOversize(),
                 $product->getIsTableware(),
                 $product->getIsLamp(),
                 $product->getNumberOfPackages(),
                 $product->getIsMattress(),
-                $product->getIsAriplaneMattress()
+                false
             );
             $product->setPrice($finalPrice);
             $product->setIsFurniture(true);

@@ -159,7 +159,7 @@ class ProductService
                 $product->getIsLamp(),
                 $product->getNumberOfPackages(),
                 $product->getIsMattress(),
-                $product->getIsAriplaneMattress()
+                false
             );
             $product->setPrice($finalPrice);
             if (0 === ($i % $batchSize)) {

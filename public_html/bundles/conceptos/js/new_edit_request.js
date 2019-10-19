@@ -212,6 +212,7 @@ $(document).ready(function() {
         var count = parseInt($("#modal-prefactures-count").val());
         if (count > productsData[currentFacturingProduct].data.count) {
           alert("La cantidad a prefacturar no puede ser superior a la cantidad actual del producto");
+          return;
         }
         productsData[currentFacturingProduct].prefactures[$("#modal-prefactures").val()[0].replace("--", "-")] += count;
         productsData[currentFacturingProduct].request -= count;
@@ -220,6 +221,7 @@ $(document).ready(function() {
         var count = parseInt($("#modal-prefactures-count").val());
         if (count > cardsData[currentFacturingCard].data.count) {
           alert("La cantidad a prefacturar no puede ser superior a la cantidad actual de la tarjeta");
+          return;
         }
         cardsData[currentFacturingCard].prefactures[$("#modal-prefactures").val()[0].replace("--", "-")] += count;
         cardsData[currentFacturingCard].request -= count;
@@ -277,6 +279,7 @@ $(document).ready(function() {
         var count = parseInt($("#modal-factures-count").val());
         if (count > productsData[currentFacturingProduct].data.count) {
           alert("La cantidad a facturar no puede ser superior a la cantidad actual del producto");
+          return;
         }
         productsData[currentFacturingProduct].factures[$("#modal-factures").val()[0].replace("--", "-")] += count;
         productsData[currentFacturingProduct].request -= count;
@@ -285,6 +288,7 @@ $(document).ready(function() {
         var count = parseInt($("#modal-factures-count").val());
         if (count > cardsData[currentFacturingCard].data.count) {
           alert("La cantidad a facturar no puede ser superior a la cantidad actual de la tarjeta");
+          return;
         }
         cardsData[currentFacturingCard].factures[$("#modal-factures").val()[0].replace("--", "-")] += count;
         cardsData[currentFacturingCard].request -= count;
@@ -339,24 +343,41 @@ $(document).ready(function() {
   $("#calculate-price-button").click(function() {
     var finalPrice = 0;
     var transportCost = $("#transportCost").val();
-    var membershipDiscount = $("#discount").val();
-    var firstClientDiscount = $("#firstClientDiscount").val();
 
     requestProducts.forEach(function(requestProduct) {
       if (requestProduct.offerPrice) {
         finalPrice += requestProduct.offerPrice * requestProduct.count;
       } else {
-        finalPrice += requestProduct.price * requestProduct.count;
+        if (requestProduct.airplaneFurniture) {
+          finalPrice += requestProduct.price * requestProduct.count;
+        }
+        else if(requestProduct.airplaneMattress) {
+          finalPrice += requestProduct.price * requestProduct.count;
+        }
+        else {
+          finalPrice += requestProduct.price * requestProduct.count;
+        }
       }
     });
     requestCards.forEach(function(requestCard) {
       finalPrice += requestCard.price * requestCard.count;
     });
 
+    var membershipDiscount = 0;
+    var firstClientDiscount = 0;
+    if ($("#calculate-price-button").data("member-number")) {
+      membershipDiscount = Math.floor(finalPrice * 0.1);
+    }
+    else if($("#calculate-price-button").data("first-client")) {
+      firstClientDiscount = Math.floor(finalPrice * 0.05);
+    }
+
     finalPrice += parseFloat(transportCost);
     finalPrice -= parseFloat(membershipDiscount);
     finalPrice -= parseFloat(firstClientDiscount);
     $("#finalPrice").val(finalPrice);
+    $("#discount").val(membershipDiscount)
+    $("#firstClientDiscount").val(firstClientDiscount)
   });
 
   $('form[name="request"]').submit(function(e) {
