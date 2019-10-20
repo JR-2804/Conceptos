@@ -62,6 +62,7 @@ class Request
     public function __construct()
     {
         $this->requestProducts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->requestCards = new \Doctrine\Common\Collections\ArrayCollection();
         $this->preFactures = new \Doctrine\Common\Collections\ArrayCollection();
         $this->factures = new \Doctrine\Common\Collections\ArrayCollection();
         $this->date = new \DateTime();
@@ -215,6 +216,58 @@ class Request
     public function getFactures()
     {
         return $this->factures;
+    }
+
+    public function calculatePrice($productService) {
+      $membershipDiscount = 0;
+      $firstClientDiscount = 0;
+      $finalPrice = 0;
+
+      $memberNumber = $this->getClient()->getMemberNumber();
+      $numberOfClientRequests = $this->getClient()->getRequests()->count();
+
+      foreach ($this->getRequestProducts() as $requestProduct) {
+        $offer = $requestProduct->getOffer();
+        if ($offer && ((!$offer->getOnlyForMembers()) || ($offer->getOnlyForMembers() && $memberNumber))) {
+          $price = $requestProduct->getOffer()->getPrice();
+        }
+        else if ($requestProduct->getIsAriplaneForniture() || $requestProduct->getIsAriplaneMattress()) {
+          $price = $productService->calculateProductPrice(
+            $requestProduct->getProduct()->getWeight(),
+            $requestProduct->getProduct()->getIkeaPrice(),
+            $requestProduct->getProduct()->getIsFurniture(),
+            $requestProduct->getProduct()->getIsFragile(),
+            $requestProduct->getIsAriplaneForniture(),
+            $requestProduct->getProduct()->getIsOversize(),
+            $requestProduct->getProduct()->getIsTableware(),
+            $requestProduct->getProduct()->getIsLamp(),
+            $requestProduct->getProduct()->getNumberOfPackages(),
+            $requestProduct->getProduct()->getIsMattress(),
+            $requestProduct->getIsAriplaneMattress()
+          );
+        } else {
+          $price = $requestProduct->getProduct()->getPrice();
+        }
+        $finalPrice += $price * $requestProduct->getCount();
+      }
+
+      foreach ($this->getRequestCards() as $requestCard) {
+        $finalPrice += $requestCard->getPrice() * $requestCard->getCount();
+      }
+
+      if ($memberNumber) {
+        $membershipDiscount = floor($finalPrice * 0.1);
+      } else if ($numberOfClientRequests == 1) {
+        $firstClientDiscount = floor($finalPrice * 0.05);
+      }
+
+      $finalPrice -= $membershipDiscount;
+      $finalPrice -= $firstClientDiscount;
+      $finalPrice += $this->getTransportCost();
+
+      $this->setDiscount($membershipDiscount);
+      $this->setFirstClientDiscount($firstClientDiscount);
+      $this->setFinalPrice($finalPrice);
     }
 
     function __toString()

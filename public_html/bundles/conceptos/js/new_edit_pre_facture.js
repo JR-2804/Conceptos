@@ -249,38 +249,6 @@ $(document).ready(function() {
     }
   });
 
-  $("#calculate-price-button").click(function() {
-    var finalPrice = 0;
-    var transportCost = $("#transportCost").val();
-
-    preFactureProducts.forEach(function(preFactureProduct) {
-      if (preFactureProduct.offerPrice) {
-        finalPrice += preFactureProduct.offerPrice * preFactureProduct.count;
-      } else {
-        finalPrice += preFactureProduct.price * preFactureProduct.count;
-      }
-    });
-    preFactureCards.forEach(function(preFactureCard) {
-      finalPrice += preFactureCard.card * preFactureCard.count;
-    });
-
-    var membershipDiscount = 0;
-    var firstClientDiscount = 0;
-    if ($("#calculate-price-button").data("member-number")) {
-      membershipDiscount = Math.floor(finalPrice * 0.1);
-    }
-    else if($("#calculate-price-button").data("first-client")) {
-      firstClientDiscount = Math.floor(finalPrice * 0.05);
-    }
-
-    finalPrice += parseFloat(transportCost);
-    finalPrice -= parseFloat(membershipDiscount);
-    finalPrice -= parseFloat(firstClientDiscount);
-    $("#finalPrice").val(finalPrice);
-    $("#discount").val(membershipDiscount)
-    $("#firstClientDiscount").val(firstClientDiscount)
-  });
-
   $('form[name="pre_facture"]').submit(function(e) {
     if (!validForm()) {
       e.preventDefault();
@@ -343,27 +311,6 @@ function validForm() {
     valid = false;
   } else {
     addRemoveErrorClass(transportCost, false);
-  }
-  var discount = $("#discount");
-  if (!$(discount).val()) {
-    addRemoveErrorClass(discount, true);
-    valid = false;
-  } else {
-    addRemoveErrorClass(discount, false);
-  }
-  var firstClientDiscount = $("#firstClientDiscount");
-  if (!$(firstClientDiscount).val()) {
-    addRemoveErrorClass(firstClientDiscount, true);
-    valid = false;
-  } else {
-    addRemoveErrorClass(firstClientDiscount, false);
-  }
-  var finalPrice = $("#finalPrice");
-  if (!$(finalPrice).val()) {
-    addRemoveErrorClass(finalPrice, true);
-    valid = false;
-  } else {
-    addRemoveErrorClass(finalPrice, false);
   }
   return valid;
 }

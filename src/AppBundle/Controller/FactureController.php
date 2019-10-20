@@ -69,6 +69,7 @@ class FactureController extends Controller
         $facture->addFactureCard($factureCard);
       }
 
+      $facture->calculatePrice($this->get('product_service'));
       $this->getDoctrine()->getManager()->persist($facture);
       $this->getDoctrine()->getManager()->flush();
 
@@ -119,6 +120,7 @@ class FactureController extends Controller
         'airplaneMattress' => $factureProduct->getIsAriplaneMattress(),
       ];
       if ($factureProduct->getOffer()) {
+        $newfactureProduct["offerId"] = $factureProduct->getOffer()->getId();
         $newfactureProduct["offerPrice"] = $factureProduct->getOffer()->getPrice();
       }
       $factureProducts[] = $newfactureProduct;
@@ -167,6 +169,10 @@ class FactureController extends Controller
         $factureProduct->setCount($product['count']);
         $factureProduct->setIsAriplaneForniture($product['airplaneFurniture']);
         $factureProduct->setIsAriplaneMattress($product['airplaneMattress']);
+        if (array_key_exists('offerId', $product)) {
+          $factureProduct->setOffer($this->getDoctrine()->getRepository('AppBundle:Offer')->find($product['offerId']));
+        }
+
         $this->getDoctrine()->getManager()->persist($factureProduct);
         $factureDB->addFactureProduct($factureProduct);
       }
@@ -189,6 +195,7 @@ class FactureController extends Controller
         $factureDB->addFactureCard($factureCard);
       }
 
+      $factureDB->calculatePrice($this->get('product_service'));
       $this->getDoctrine()->getManager()->flush();
 
       return $this->redirectToRoute('easyadmin', [

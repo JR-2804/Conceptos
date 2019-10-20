@@ -1141,13 +1141,13 @@ class SiteController extends Controller
                 $productDB->getIkeaPrice(),
                 $productDB->getIsFurniture(),
                 $productDB->getIsFragile(),
-                $productDB->getIsAriplaneForniture(),
+                $product->getIsAriplaneForniture(),
                 $productDB->getIsOversize(),
                 $productDB->getIsTableware(),
                 $productDB->getIsLamp(),
                 $productDB->getNumberOfPackages(),
                 $productDB->getIsMattress(),
-                $productDB->getIsAriplaneMattress()
+                $product->getIsAriplaneMattress()
             );
           }
 
@@ -1250,13 +1250,13 @@ class SiteController extends Controller
                 $productDB->getIkeaPrice(),
                 $productDB->getIsFurniture(),
                 $productDB->getIsFragile(),
-                $productDB->getIsAriplaneForniture(),
+                $product->getIsAriplaneForniture(),
                 $productDB->getIsOversize(),
                 $productDB->getIsTableware(),
                 $productDB->getIsLamp(),
                 $productDB->getNumberOfPackages(),
                 $productDB->getIsMattress(),
-                $productDB->getIsAriplaneMattress()
+                $product->getIsAriplaneMattress()
             );
           }
 
