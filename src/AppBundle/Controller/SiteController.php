@@ -52,6 +52,7 @@ class SiteController extends Controller
                     'description' => $offer->getDescription(),
                     'start' => date_format($offer->getStartDate(), 'd/m/Y'),
                     'end' => date_format($offer->getEndDate(), 'd/m/Y'),
+                    'products' => $offer->getProducts(),
                 ];
             }
             foreach ($offer->getProducts() as $product) {

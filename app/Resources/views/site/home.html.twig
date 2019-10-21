@@ -77,6 +77,10 @@
             </ol>
             <div class="carousel-inner" role="listbox">
                 {% for offer in offersImage %}
+                    {% set offerPath = path('products', {inOffer:true}) %}
+                    {% if offer.products|length == 1 %}
+                      {% set offerPath = path('product_details', {id:offer.products[0].id}) %}
+                    {% endif %}
                     <div class="carousel-item slider-fullscreen-image {% if loop.first %}active{% endif %}"
                           data-bg-video-slide="false"
                           style="background-image: url('{{ offer.image }}');">
@@ -93,8 +97,8 @@
                                             <p class="lead mbr-text mbr-fonts-style display-5">{{ offer.description }}</p>
                                         {% endif %}
                                         <div class="d-flex justify-content-center">
-                                            <a class="btn btn-success display-4 d-none d-lg-block" href="{{ path('products', {inOffer:true}) }}">VER OFERTA</a>
-                                            <a class="btn btn-success display-4 short-button d-lg-none" href="{{ path('products', {inOffer:true}) }}">VER OFERTA</a>
+                                            <a class="btn btn-success display-4 d-none d-lg-block" href="{{ offerPath }}">VER OFERTA</a>
+                                            <a class="btn btn-success display-4 short-button d-lg-none" href="{{ offerPath }}">VER OFERTA</a>
                                         </div>
                                     </div>
                                 </div>
