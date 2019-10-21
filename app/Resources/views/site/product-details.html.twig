@@ -55,14 +55,16 @@
                                                 </div>
                                             {% endfor %}
                                         </div>
-                                        <a data-app-prevent-settings="" class="carousel-control carousel-control-prev carousel-control-short d-lg-none" role="button"
-                                            data-slide="prev" href="#product-images-carousel">
-                                            <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                                        </a>
-                                        <a data-app-prevent-settings="" class="carousel-control carousel-control-next carousel-control-short d-lg-none" role="button"
-                                            data-slide="next" href="#product-images-carousel">
-                                            <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                                        </a>
+                                        {% if product.images|length > 1 %}
+                                            <a data-app-prevent-settings="" class="carousel-control carousel-control-prev carousel-control-short d-lg-none" role="button"
+                                                data-slide="prev" href="#product-images-carousel">
+                                                <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+                                            </a>
+                                            <a data-app-prevent-settings="" class="carousel-control carousel-control-next carousel-control-short d-lg-none" role="button"
+                                                data-slide="next" href="#product-images-carousel">
+                                                <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+                                            </a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
