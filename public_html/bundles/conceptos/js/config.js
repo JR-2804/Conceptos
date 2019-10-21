@@ -62,40 +62,9 @@ $(document).ready(function() {
       data.image = r;
     }
   });
-  // dropzoneApp = new Dropzone('form#app-dropzone', {
-  //     url: $('#app-dropzone').attr('action'),
-  //     maxFiles: 1,
-  //     thumbnailWidth: 100,
-  //     thumbnailHeight: 100,
-  //     addRemoveLinks: true,
-  //     dictCancelUpload: 'Cancelar',
-  //     dictRemoveFile: 'Eliminar',
-  //     // previewTemplate: document.querySelector('#preview-template').innerHTML,
-  //     acceptedFiles: '.apk',
-  //     init: function () {
-  //         dropzoneApp = this;
-  //         if (data.app.id != 0) {
-  //             var mockFile = {name: data.app.name, size: data.app.size};
-  //             dropzoneApp.emit("addedfile", mockFile);
-  //             dropzoneApp.emit("thumbnail", mockFile, data.app.path);
-  //             dropzoneApp.emit("complete", mockFile);
-  //             dropzoneApp.files.push(mockFile);
-  //             var existingFileCount = 1;
-  //             dropzoneApp.options.maxFiles = dropzoneApp.options.maxFiles - existingFileCount;
-  //         }
-  //         dropzoneApp.on("removedfile", function () {
-  //             dropzoneApp.removeAllFiles(true);
-  //             dropzoneApp.options.maxFiles = 1;
-  //             data.app = {
-  //                 id: 0
-  //             }
-  //         });
-  //     },
-  //     success: function (e, r) {
-  //         data.app = r;
-  //     }
-  // });
 
+  $("#terms").ckeditor();
+  $("#privacyPolicy").ckeditor();
   $("#terms").val($("#config_terms").val());
   $("#privacyPolicy").val($("#config_privacyPolicy").val());
 
