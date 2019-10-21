@@ -77,8 +77,10 @@
             </ol>
             <div class="carousel-inner" role="listbox">
                 {% for offer in offersImage %}
+                    {% set offerText = "VER OFERTAS" %}
                     {% set offerPath = path('products', {inOffer:true}) %}
                     {% if offer.products|length == 1 %}
+                      {% set offerText = "VER OFERTA" %}
                       {% set offerPath = path('product_details', {id:offer.products[0].id}) %}
                     {% endif %}
                     <div class="carousel-item slider-fullscreen-image {% if loop.first %}active{% endif %}"
@@ -97,8 +99,8 @@
                                             <p class="lead mbr-text mbr-fonts-style display-5">{{ offer.description }}</p>
                                         {% endif %}
                                         <div class="d-flex justify-content-center">
-                                            <a class="btn btn-success display-4 d-none d-lg-block" href="{{ offerPath }}">VER OFERTA</a>
-                                            <a class="btn btn-success display-4 short-button d-lg-none" href="{{ offerPath }}">VER OFERTA</a>
+                                            <a class="btn btn-success display-4 d-none d-lg-block" href="{{ offerPath }}">{{offerText}}</a>
+                                            <a class="btn btn-success display-4 short-button d-lg-none" href="{{ offerPath }}">{{offerText}}</a>
                                         </div>
                                     </div>
                                 </div>
