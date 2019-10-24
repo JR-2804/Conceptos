@@ -9,8 +9,14 @@ use AppBundle\Entity\Evaluation;
 use AppBundle\Entity\FavoriteProduct;
 use AppBundle\Entity\Request\Client;
 use AppBundle\Entity\Request\Request as ProductRequest;
+use AppBundle\Entity\Request\Facture;
+use AppBundle\Entity\Request\PreFacture;
 use AppBundle\Entity\Request\RequestCard;
+use AppBundle\Entity\Request\FactureCard;
+use AppBundle\Entity\Request\PreFactureCard;
 use AppBundle\Entity\Request\RequestProduct;
+use AppBundle\Entity\Request\FactureProduct;
+use AppBundle\Entity\Request\PreFactureProduct;
 use AppBundle\Form\CheckOutType;
 use AppBundle\Form\MembershipRequestType;
 use AppBundle\Form\EmailType;
@@ -931,7 +937,7 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="check_out", path="/datos-entrega")
+     * @Route(name="check_out", path="/datos-entrega/")
      *
      * @param Request $request
      *
@@ -1032,10 +1038,77 @@ class SiteController extends Controller
             $client->setMemberNumber($data->getMemberNumber());
             $this->getDoctrine()->getManager()->persist($client);
 
-            $requestDB = new ProductRequest();
-            $requestDB->setClient($client);
+            if ($this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              if ($data->getType() == "facture") {
+                $facture = new Facture();
+                $facture->setClient($client);
+                if ($data->getPrefacture() != "0") {
+                  $prefacture = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->find((int) $data->getPrefacture());
+                  $facture->setPreFacture($prefacture);
+                }
 
-            foreach ($productsResponse as $productR) {
+                foreach ($productsResponse as $productR) {
+                  if (array_key_exists('type', $productR)) {
+                      $factureCard = new FactureCard();
+                      $factureCard->setCount($productR['count']);
+                      $factureCard->setFacture($facture);
+                      $factureCard->setPrice($productR['amount']);
+                      $this->getDoctrine()->getManager()->persist($factureCard);
+                      $facture->addFactureCard($factureCard);
+                  } else {
+                      $factureProduct = new FactureProduct();
+                      $factureProduct->setCount($productR['count']);
+                      $factureProduct->setFacture($facture);
+                      $factureProduct->setProduct($productR['product']);
+                      $factureProduct->setOffer($productR['offer']);
+                      if ($productR['price'] > $productR['product']->getPrice()){
+                        $factureProduct->setIsAriplaneForniture(true);
+                        $factureProduct->setIsAriplaneMattress(true);
+                      } else {
+                        $factureProduct->setIsAriplaneForniture(false);
+                        $factureProduct->setIsAriplaneMattress(false);
+                      }
+
+                      $this->getDoctrine()->getManager()->persist($factureProduct);
+                      $facture->addFactureProduct($factureProduct);
+                  }
+                }
+              } else {
+                $prefacture = new PreFacture();
+                $prefacture->setClient($client);
+
+                foreach ($productsResponse as $productR) {
+                  if (array_key_exists('type', $productR)) {
+                      $prefactureCard = new PreFactureCard();
+                      $prefactureCard->setCount($productR['count']);
+                      $prefactureCard->setPreFacture($prefacture);
+                      $prefactureCard->setPrice($productR['amount']);
+                      $this->getDoctrine()->getManager()->persist($prefactureCard);
+                      $prefacture->addPreFactureCard($prefactureCard);
+                  } else {
+                      $preFactureProduct = new PreFactureProduct();
+                      $preFactureProduct->setCount($productR['count']);
+                      $preFactureProduct->setPreFacture($prefacture);
+                      $preFactureProduct->setProduct($productR['product']);
+                      $preFactureProduct->setOffer($productR['offer']);
+                      if ($productR['price'] > $productR['product']->getPrice()){
+                        $preFactureProduct->setIsAriplaneForniture(true);
+                        $preFactureProduct->setIsAriplaneMattress(true);
+                      } else {
+                        $preFactureProduct->setIsAriplaneForniture(false);
+                        $preFactureProduct->setIsAriplaneMattress(false);
+                      }
+
+                      $this->getDoctrine()->getManager()->persist($preFactureProduct);
+                      $prefacture->addPreFactureProduct($preFactureProduct);
+                  }
+                }
+              }
+            } else {
+              $requestDB = new ProductRequest();
+              $requestDB->setClient($client);
+
+              foreach ($productsResponse as $productR) {
                 if (array_key_exists('type', $productR)) {
                     $requestCard = new RequestCard();
                     $requestCard->setCount($productR['count']);
@@ -1060,6 +1133,7 @@ class SiteController extends Controller
                     $this->getDoctrine()->getManager()->persist($requestProd);
                     $requestDB->addRequestProduct($requestProd);
                 }
+              }
             }
 
             $firstClientDiscount = 0;
@@ -1068,15 +1142,36 @@ class SiteController extends Controller
               $totalPrice -= $firstClientDiscount;
             }
 
-            $requestDB->setDiscount($discount);
-            $requestDB->setFirstClientDiscount($firstClientDiscount);
-            $requestDB->setTransportCost($transportCost);
-            $requestDB->setFinalPrice($totalPrice);
-            $this->getDoctrine()->getManager()->persist($requestDB);
+            if ($this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              if ($data->getType() == "facture") {
+                $facture->setDiscount($discount);
+                $facture->setFirstClientDiscount($firstClientDiscount);
+                $facture->setTransportCost($transportCost);
+                $facture->setFinalPrice($totalPrice);
+                $this->getDoctrine()->getManager()->persist($facture);
+              } else {
+                $prefacture->setDiscount($discount);
+                $prefacture->setFirstClientDiscount($firstClientDiscount);
+                $prefacture->setTransportCost($transportCost);
+                $prefacture->setFinalPrice($totalPrice);
+                $this->getDoctrine()->getManager()->persist($prefacture);
+              }
+            } else {
+              $requestDB->setDiscount($discount);
+              $requestDB->setFirstClientDiscount($firstClientDiscount);
+              $requestDB->setTransportCost($transportCost);
+              $requestDB->setFinalPrice($totalPrice);
+              $this->getDoctrine()->getManager()->persist($requestDB);
+            }
+
             $this->getDoctrine()->getManager()->flush();
             $request->getSession()->invalidate();
 
-            return $this->redirectToRoute('success_request', ['id' => $requestDB->getId()]);
+            if ($this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              return $this->redirectToRoute('site_home');
+            } else {
+              return $this->redirectToRoute('success_request', ['id' => $requestDB->getId()]);
+            }
         }
 
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
@@ -1090,6 +1185,7 @@ class SiteController extends Controller
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
         return $this->render(':site:check-out.html.twig', [
+            'prefactures' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->findAll(),
             'memberNumber' => $memberNumber,
             'discount' => $discount,
             'transportCost' => $transportCost,
