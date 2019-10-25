@@ -181,6 +181,7 @@ $(document).ready(function() {
       e.preventDefault();
     } else {
       $("#product_name").val($("#name").val());
+      $("#product_priority").val($("#priority").val());
       $("#product_code").val($("#code").val());
       $("#product_item").val($("#item").val());
       $("#product_isFurniture").val($("#is-furniture").prop("checked"));

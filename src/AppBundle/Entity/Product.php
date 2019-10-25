@@ -63,6 +63,10 @@ class Product
      */
     private $popular;
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $priority;
+    /**
      * @ORM\Column(type="boolean")
      */
     private $recent;
@@ -298,6 +302,18 @@ class Product
     public function getPopular()
     {
         return $this->popular;
+    }
+
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+
+        return $this;
+    }
+
+    public function getPriority()
+    {
+        return $this->priority;
     }
 
     public function setRecent($recent)

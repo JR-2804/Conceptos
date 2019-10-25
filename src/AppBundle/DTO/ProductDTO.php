@@ -15,6 +15,7 @@ class ProductDTO
     private $category;
     private $price;
     private $popular;
+    private $priority;
     private $recent;
     private $inStore;
     private $countStore;
@@ -125,6 +126,16 @@ class ProductDTO
     public function setPopular($popular)
     {
         $this->popular = $popular;
+    }
+
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
     }
 
     public function getRecent()

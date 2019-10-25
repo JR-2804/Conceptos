@@ -511,6 +511,10 @@ function init() {
     $("#in-store-subtitle").val(data.subtitles.inStore);
     $("#recent-subtitle").val(data.subtitles.recent);
   }
+  if (data.populars) {
+    $("#populars-title").val(data.populars.title);
+    $("#populars-subtitle").val(data.populars.subtitle);
+  }
   if (data.cubanBrands) {
     $("#cuban-brands-title").val(data.cubanBrands.title);
     $("#cuban-brands-subtitle").val(data.cubanBrands.subtitle);
@@ -539,6 +543,10 @@ function generateData() {
     subtitles: {
       inStore: $("#in-store-subtitle").val(),
       recent: $("#recent-subtitle").val()
+    },
+    populars: {
+      title: $("#populars-title").val(),
+      subtitle: $("#populars-subtitle").val()
     },
     cubanBrands: {
       title: $("#cuban-brands-title").val(),
@@ -587,6 +595,9 @@ function validateSubmitData() {
     valid = false;
   }
   if (!$("#in-store-subtitle").val() || !$("#recent-subtitle").val()) {
+    valid = false;
+  }
+  if (!$("#populars-title").val()) {
     valid = false;
   }
   if (!$("#cuban-brands-title").val() || !$("#cuban-brands-subtitle").val()) {

@@ -21,6 +21,7 @@ class ProductType extends AbstractType
             ->add('image', HiddenType::class)
             ->add('price', HiddenType::class)
             ->add('popular', HiddenType::class)
+            ->add('priority', HiddenType::class)
             ->add('recent', HiddenType::class)
             ->add('imagesToDelete', HiddenType::class)
             ->add('color', HiddenType::class)

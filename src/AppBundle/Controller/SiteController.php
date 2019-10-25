@@ -83,6 +83,13 @@ class SiteController extends Controller
         $inStore = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findBy([
             'inStore' => true,
         ], null, 50);
+        $populars = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')
+          ->createQueryBuilder('product')
+          ->where('product.popular = true')
+          ->orderBy('product.priority', 'DESC')
+          ->setMaxResults(50)
+          ->getQuery()
+          ->getResult();
         $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findAll();
 
         $inStoreHighlight = null;
@@ -147,6 +154,7 @@ class SiteController extends Controller
             'lasts' => $lasts,
             'inStore' => $inStore,
             'inStoreHighlight' => $inStoreHighlight,
+            'populars' => array_chunk($populars, 4),
             'count' => $this->countShopCart($request),
             'config' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1),
             'brands' => array_chunk($brands, 4),

@@ -1,5 +1,6 @@
 $(document).ready(function() {
   $("#name").val($("#product_name").val());
+  $("#priority").val($("#product_priority").val());
   $("#code").val($("#product_code").val());
   $("#item").val($("#product_item").val());
   $("#description").val($("#product_description").val());

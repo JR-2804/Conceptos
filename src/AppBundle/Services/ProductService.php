@@ -194,6 +194,7 @@ class ProductService
         $qbProduct = $this->productRepository->createQueryBuilder('p');
         $qbProductCount = $this->productRepository->createQueryBuilder('p')->select('count(p.id) as count_products');
 
+        $populars = $request->query->get('populars', -1);
         $inStore = $request->query->get('inStore', -1);
         $category = $request->query->get('categories', -1);
         $priceMin = $request->query->get('priceMin', -1);
@@ -285,6 +286,16 @@ class ProductService
             $qbProductCount->setParameter('categories', $category);
 
             $mainCategory = $this->categoryRepository->find($category[0]);
+        }
+        if (-1 != $populars) {
+          if ($hasWhere) {
+              $qbProduct->andWhere('p.popular = true');
+              $qbProductCount->andWhere('p.popular = true');
+          } else {
+              $qbProduct->where('p.popular = true');
+              $qbProductCount->where('p.popular = true');
+              $hasWhere = true;
+          }
         }
         if (-1 != $recent) {
             if ($hasWhere) {

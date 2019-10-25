@@ -7,4 +7,11 @@ $(document).ready(function() {
   $(".control-brands.carousel-control-next").click(function() {
     $("#carousel-brands").carousel("next");
   });
+
+  $(".control-populars.control-prev").click(function() {
+    $("#carousel-populars").carousel("prev");
+  });
+  $(".control-populars.control-next").click(function() {
+    $("#carousel-populars").carousel("next");
+  });
 });
