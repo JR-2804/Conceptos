@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdmin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use AppBundle\Entity\BalanceUpdate;
 
 class AdminController extends BaseAdmin
 {
@@ -106,6 +107,24 @@ class AdminController extends BaseAdmin
     public function preUpdateClientEntity($client)
     {
         $this->updateClientRequests($client);
+    }
+
+    public function prePersistEntity($member)
+    {
+      $this->createBalanceUpdate($member);
+    }
+
+    public function preUpdateMemberEntity($member)
+    {
+      $this->createBalanceUpdate($member);
+    }
+
+    private function createBalanceUpdate($member) {
+      $balanceUpdate = new BalanceUpdate();
+      $balanceUpdate->setDate(new \DateTime());
+      $balanceUpdate->setMember($member);
+      $balanceUpdate->setBalance($member->getBalance());
+      $this->getDoctrine()->getManager()->persist($balanceUpdate);
     }
 
     private function updateClientRequests($client)
