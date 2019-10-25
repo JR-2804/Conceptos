@@ -2253,8 +2253,9 @@ i.share-icon:hover {
 }
 
 .short-button {
-  padding: 5px 10px 5px 10px;
+  padding: 0px 5px 0px 5px;
   border-radius: 50px;
+  font-size: 10px !important;
 }
 
 .membership-form-section {
