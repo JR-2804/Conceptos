@@ -1046,7 +1046,7 @@ class SiteController extends Controller
             $client->setMemberNumber($data->getMemberNumber());
             $this->getDoctrine()->getManager()->persist($client);
 
-            if ($this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+            if ($this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
               if ($data->getType() == "facture") {
                 $facture = new Facture();
                 $facture->setClient($client);
@@ -1150,7 +1150,7 @@ class SiteController extends Controller
               $totalPrice -= $firstClientDiscount;
             }
 
-            if ($this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+            if ($this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
               if ($data->getType() == "facture") {
                 $facture->setDiscount($discount);
                 $facture->setFirstClientDiscount($firstClientDiscount);
@@ -1175,7 +1175,7 @@ class SiteController extends Controller
             $this->getDoctrine()->getManager()->flush();
             $request->getSession()->invalidate();
 
-            if ($this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+            if ($this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
               return $this->redirectToRoute('site_home');
             } else {
               return $this->redirectToRoute('success_request', ['id' => $requestDB->getId()]);

@@ -40,19 +40,14 @@ $(document).ready(function() {
   });
 
   $(".btn-send-request").click(function() {
-    if ($(".total-price").data("total-price") < 56) {
-      alert("La compra mínima es de 56.00 CUC");
-      e.preventDefault();
-    } else {
-      window.location =
-        $(this).data("path") +
-        "?memberNumber=" +
-        JSON.stringify(memberNumber) +
-        "&transportCost=" +
-        JSON.stringify(transportCost) +
-        "&products=" +
-        JSON.stringify(products);
-    }
+    window.location =
+      $(this).data("path") +
+      "?memberNumber=" +
+      JSON.stringify(memberNumber) +
+      "&transportCost=" +
+      JSON.stringify(transportCost) +
+      "&products=" +
+      JSON.stringify(products);
   });
 
   $("#modal-confirm").on("show.bs.modal", function() {
