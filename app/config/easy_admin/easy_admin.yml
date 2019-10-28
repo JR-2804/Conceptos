@@ -123,8 +123,6 @@ easy_admin:
                 actions:
                     - {name: 'show'}
                     - {name: 'new', label: 'Nuevo Pedido'}
-                    # TODO: Hide export to PDF
-                    # - {name: 'print_request', type: 'route', label: 'Exportar a PDF' }
                 fields:
                     - id
                     - {property: 'date', label: 'Fecha'}
@@ -166,6 +164,7 @@ easy_admin:
                 actions:
                     - {name: 'show'}
                     - {name: 'new', label: 'Nueva Prefactura'}
+                    - {name: 'print_prefacture', type: 'route', label: 'Exportar a PDF' }
                 fields:
                     - id
                     - {property: 'date', label: 'Fecha'}
@@ -207,6 +206,7 @@ easy_admin:
                 actions:
                     - {name: 'show'}
                     - {name: 'new', label: 'Nueva Factura'}
+                    - {name: 'print_facture', type: 'route', label: 'Exportar a PDF' }
                 fields:
                     - id
                     - {property: 'date', label: 'Fecha'}

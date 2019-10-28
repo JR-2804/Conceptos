@@ -1046,7 +1046,7 @@ class SiteController extends Controller
             $client->setMemberNumber($data->getMemberNumber());
             $this->getDoctrine()->getManager()->persist($client);
 
-            if ($this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+            if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
               if ($data->getType() == "facture") {
                 $facture = new Facture();
                 $facture->setClient($client);
@@ -1150,7 +1150,7 @@ class SiteController extends Controller
               $totalPrice -= $firstClientDiscount;
             }
 
-            if ($this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+            if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
               if ($data->getType() == "facture") {
                 $facture->setDiscount($discount);
                 $facture->setFirstClientDiscount($firstClientDiscount);
@@ -1175,7 +1175,7 @@ class SiteController extends Controller
             $this->getDoctrine()->getManager()->flush();
             $request->getSession()->invalidate();
 
-            if ($this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+            if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
               return $this->redirectToRoute('site_home');
             } else {
               return $this->redirectToRoute('success_request', ['id' => $requestDB->getId()]);
@@ -1319,32 +1319,20 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="print_request", path="/imprimir-factura/{id}")
+     * @Route(name="print_prefacture", path="/imprimir-prefactura/{id}")
      *
      * @param Request $request
      * @param $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function printRequestAction(Request $request, $id)
+    public function printPreFactureAction(Request $request, $id)
     {
-        if ($id) {
-            $requestDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->find($id);
-        } else {
-            $requestDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->find($request->query->get('id'));
-        }
-
-        $client = $requestDB->getClient();
-
-        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Home',
-        ]);
-        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Membresia',
-        ]);
+        $prefactureDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->find($id);
+        $client = $prefactureDB->getClient();
 
         $productsResponse = [];
-        foreach ($requestDB->getRequestProducts() as $product) {
+        foreach ($prefactureDB->getPreFactureProducts() as $product) {
           $productDB = $product->getProduct();
           $offer = $product->getOffer();
 
@@ -1377,37 +1365,105 @@ class SiteController extends Controller
           }
 
           $productsResponse[] = [
+              'name' => $productDB->getName(),
+              'code' => $productDB->getCode(),
+              'count' => $product->getCount(),
               'price' => $price,
               'product' => $productDB,
               'offer' => $offerDB,
-              'count' => $product->getCount(),
           ];
         }
 
-        foreach ($requestDB->getRequestCards() as $card) {
+        foreach ($prefactureDB->getPreFactureCards() as $card) {
           $price = $card->getPrice();
 
           $productsResponse[] = [
-              'price' => $price,
+              'name' => 'Tarjeta de $'.$price,
+              'code' => $price,
               'count' => $card->getCount(),
+              'price' => $price,
           ];
         }
 
-        $html = $this->renderView(':site:request-pdf.html.twig', [
-            'request' => $requestDB,
-            'home' => $home,
+        return $this->render(':site:prefacture-pdf.html.twig', [
+            'prefacture' => $prefactureDB,
             'products' => $productsResponse,
-            'membership' => $membership,
+            'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
         ]);
+    }
 
-        return new Response(
-          $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
-          200,
-          [
-              'Content-Type' => 'application/pdf',
-              'Content-Disposition' => sprintf('attachment; filename="%s"', "Factura-".$id."-".$requestDB->getDate()->format('Y').".pdf"),
-          ]
-      );
+    /**
+     * @Route(name="print_facture", path="/imprimir-factura/{id}")
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function printFactureAction(Request $request, $id)
+    {
+        $factureDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Facture')->find($id);
+        $client = $factureDB->getClient();
+
+        $productsResponse = [];
+        foreach ($factureDB->getFactureProducts() as $product) {
+          $productDB = $product->getProduct();
+          $offer = $product->getOffer();
+
+          $price = $productDB->getPrice();
+          if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
+            $price = $this->get('product_service')->calculateProductPrice(
+                $productDB->getWeight(),
+                $productDB->getIkeaPrice(),
+                $productDB->getIsFurniture(),
+                $productDB->getIsFragile(),
+                $product->getIsAriplaneForniture(),
+                $productDB->getIsOversize(),
+                $productDB->getIsTableware(),
+                $productDB->getIsLamp(),
+                $productDB->getNumberOfPackages(),
+                $productDB->getIsMattress(),
+                $product->getIsAriplaneMattress()
+            );
+          }
+
+          $offerDB = null;
+          if (null != $offer) {
+              if ($client->getMemberNumber() && $offer->getOnlyForMembers()) {
+                  $price = $offer->getPrice();
+                  $offerDB = $offer;
+              } elseif (!$offer->getOnlyForMembers()) {
+                  $price = $offer->getPrice();
+                  $offerDB = $offer;
+              }
+          }
+
+          $productsResponse[] = [
+              'name' => $productDB->getName(),
+              'code' => $productDB->getCode(),
+              'count' => $product->getCount(),
+              'price' => $price,
+              'product' => $productDB,
+              'offer' => $offerDB,
+          ];
+        }
+
+        foreach ($factureDB->getFactureCards() as $card) {
+          $price = $card->getPrice();
+
+          $productsResponse[] = [
+              'name' => 'Tarjeta de $'.$price,
+              'code' => $price,
+              'count' => $card->getCount(),
+              'price' => $price,
+          ];
+        }
+
+        return $this->render(':site:facture-pdf.html.twig', [
+            'facture' => $factureDB,
+            'products' => $productsResponse,
+            'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
+        ]);
     }
 
     /**
