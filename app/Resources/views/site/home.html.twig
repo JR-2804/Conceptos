@@ -223,10 +223,14 @@
                                         <div class="container-fluid carousel-item {% if loop.first %}active{% endif %}">
                                             <div class="d-flex justify-content-center w-100">
                                                 {% for cat in popular %}
-                                                    <div class="col-3 pl-0 m-1">
+                                                    <div class="col-3 pl-0 m-1 d-none d-lg-block">
                                                         <a class="d-flex justify-content-center" href="{{ path('product_details', {id: cat.id}) }}">
-                                                            <img class="brand-image d-none d-lg-block" src="{{ vich_uploader_asset(cat.mainImage, 'imageFile') }}">
-                                                            <img class="brand-image brand-image-short d-lg-none" src="{{ vich_uploader_asset(cat.mainImage, 'imageFile') }}">
+                                                            <img class="brand-image" src="{{ vich_uploader_asset(cat.mainImage, 'imageFile') }}">
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-3 pl-0 m-1 d-lg-none">
+                                                        <a class="d-flex justify-content-center" href="{{ path('product_details', {id: cat.id}) }}">
+                                                            <img class="brand-image brand-image-short" src="{{ vich_uploader_asset(cat.mainImage, 'imageFile') }}">
                                                         </a>
                                                     </div>
                                                 {% endfor %}
