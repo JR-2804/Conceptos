@@ -1,6 +1,12 @@
 $(document).ready(function() {
   $(".carousel-in-store").carousel();
 
+  if (window.screen.width > 1000) {
+    $("#popular-products-section-short").remove();
+  } else {
+    $("#popular-products-section").remove();
+  }
+
   $(".control-brands.carousel-control-prev").click(function() {
     $("#carousel-brands").carousel("prev");
   });

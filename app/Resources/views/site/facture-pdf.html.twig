@@ -25,6 +25,10 @@
     .content {
       padding-top: 80px;
     }
+    .product-image {
+      height: 50px;
+      width: 50px;
+    }
     .footer {
       position: absolute;
       bottom: 0;
@@ -104,27 +108,42 @@
         <table class="table table-bordered">
           <thead>
           <tr>
-            <th>PRODUCTOS</th>
-            <th>CÓDIGO</th>
-            <th>CANTIDAD</th>
-            <th>PRECIO UNIDAD</th>
-            <th>PRECIO SUBTOTAL</th>
+            <th class="pl-2">PRODUCTOS</th>
+            <th class="pl-2">CÓDIGO</th>
+            <th class="pl-2">CANTIDAD</th>
+            <th class="pl-2">PRECIO UNIDAD</th>
+            <th class="pl-2">PRECIO SUBTOTAL</th>
           </tr>
           </thead>
           <tbody class="table-members">
             {% for product in products %}
               <tr>
-                <td>{{product.name}}</td>
-                <td>{{product.code}}</td>
-                <td>{{product.count}}</td>
-                <td>{{product.price}}</td>
-                <td>{{product.price * product.count}}</td>
+                <td>
+                  {% if product.image is defined %}
+                    <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.image, 'imageFile')) }}" />
+                  {% else %}
+                    {% if product.price == 15 %}
+                      {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
+                    {% elseif product.price == 25 %}
+                      {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
+                    {% elseif product.price == 50 %}
+                      {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
+                    {% else %}
+                      {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
+                    {% endif %}
+                    <img class="ml-5 mt-2 mb-2 product-image" src="{{imagePath}}" />
+                  {% endif %}
+                </td>
+                <td class="pl-2">{{product.code}}</td>
+                <td class="pl-2">{{product.count}}</td>
+                <td class="pl-2">{{product.price}}</td>
+                <td class="pl-2">{{product.price * product.count}}</td>
               </tr>
             {% endfor %}
             <tr>
-              <td>Total (cuc): ${{facture.finalPrice}}.00</td>
-              <td>Total (cup): ${{facture.finalPrice * cupConversionRate}}.00</td>
-              <td>
+              <td class="pl-2">Total (cuc): ${{facture.finalPrice}}.00</td>
+              <td class="pl-2">Total (cup): ${{facture.finalPrice * cupConversionRate}}.00</td>
+              <td class="pl-2">
                 <div class="d-flex flex-column">
                   <span>Descuento por membresía:</span>
                   <div class="d-flex">
@@ -137,7 +156,7 @@
                   </div>
                 </div>
               </td>
-              <td>
+              <td class="pl-2">
                 <div class="d-flex flex-column">
                   <span>Descuento por primera compra:</span>
                   <div class="d-flex">
@@ -150,7 +169,7 @@
                   </div>
                 </div>
               </td>
-              <td>
+              <td class="pl-2">
                 <div class="d-flex flex-column">
                   <span>Entrega a domicilio:</span>
                   <div class="d-flex">

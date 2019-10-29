@@ -23,6 +23,10 @@ class FactureProduct
      */
     private $product;
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $productPrice;
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Request\Facture", inversedBy="factureProducts")
      * @ORM\JoinColumn(name="facture_id", referencedColumnName="id")
      */
@@ -72,6 +76,18 @@ class FactureProduct
     public function getProduct()
     {
         return $this->product;
+    }
+
+    public function setProductPrice($productPrice = null)
+    {
+        $this->productPrice = $productPrice;
+
+        return $this;
+    }
+
+    public function getProductPrice()
+    {
+        return $this->productPrice;
     }
 
     public function setFacture(Facture $facture = null)

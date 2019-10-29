@@ -155,6 +155,7 @@ class SiteController extends Controller
             'inStore' => $inStore,
             'inStoreHighlight' => $inStoreHighlight,
             'populars' => array_chunk($populars, 4),
+            'popularsForShortScreen' => array_chunk($populars, 2),
             'count' => $this->countShopCart($request),
             'config' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1),
             'brands' => array_chunk($brands, 4),
@@ -979,27 +980,27 @@ class SiteController extends Controller
                 $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['id']);
                 $offer = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')->find($product['offer']);
 
-                $price = $productDB->getPrice();
+                $productPrice = $productDB->getPrice();
                 if (array_key_exists('price', $product)) {
-                  $price = $product['price'];
+                  $productPrice = $product['price'];
                 }
-                $product['price'] = $price;
+                $product['price'] = $productPrice;
 
                 $offerDB = null;
                 if (null != $offer) {
                     if ($memberNumber && $offer->getOnlyForMembers()) {
-                        $price = $offer->getPrice();
+                        $productPrice = $offer->getPrice();
                         $offerDB = $offer;
                     } elseif (!$offer->getOnlyForMembers()) {
-                        $price = $offer->getPrice();
+                        $productPrice = $offer->getPrice();
                         $offerDB = $offer;
                     }
                 }
-                $price = $price * $product['count'];
+                $price = $productPrice * $product['count'];
                 $totalPrice += $price;
 
                 $productsResponse[] = [
-                    'price' => $product['price'],
+                    'price' => $productPrice,
                     'subtotal' => $price,
                     'product' => $productDB,
                     'offer' => $offerDB,
@@ -1068,6 +1069,7 @@ class SiteController extends Controller
                       $factureProduct->setCount($productR['count']);
                       $factureProduct->setFacture($facture);
                       $factureProduct->setProduct($productR['product']);
+                      $factureProduct->setProductPrice($productR['price']);
                       $factureProduct->setOffer($productR['offer']);
                       if ($productR['price'] > $productR['product']->getPrice()){
                         $factureProduct->setIsAriplaneForniture(true);
@@ -1098,6 +1100,7 @@ class SiteController extends Controller
                       $preFactureProduct->setCount($productR['count']);
                       $preFactureProduct->setPreFacture($prefacture);
                       $preFactureProduct->setProduct($productR['product']);
+                      $preFactureProduct->setProductPrice($productR['price']);
                       $preFactureProduct->setOffer($productR['offer']);
                       if ($productR['price'] > $productR['product']->getPrice()){
                         $preFactureProduct->setIsAriplaneForniture(true);
@@ -1129,6 +1132,7 @@ class SiteController extends Controller
                     $requestProd->setCount($productR['count']);
                     $requestProd->setRequest($requestDB);
                     $requestProd->setProduct($productR['product']);
+                    $requestProd->setProductPrice($productR['price']);
                     $requestProd->setOffer($productR['offer']);
                     if ($productR['price'] > $productR['product']->getPrice()){
                       $requestProd->setIsAriplaneForniture(true);
@@ -1236,50 +1240,16 @@ class SiteController extends Controller
 
         $productsResponse = [];
         foreach ($requestDB->getRequestProducts() as $product) {
-          $productDB = $product->getProduct();
-          $offer = $product->getOffer();
-
-          $price = $productDB->getPrice();
-          if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
-            $price = $this->get('product_service')->calculateProductPrice(
-                $productDB->getWeight(),
-                $productDB->getIkeaPrice(),
-                $productDB->getIsFurniture(),
-                $productDB->getIsFragile(),
-                $product->getIsAriplaneForniture(),
-                $productDB->getIsOversize(),
-                $productDB->getIsTableware(),
-                $productDB->getIsLamp(),
-                $productDB->getNumberOfPackages(),
-                $productDB->getIsMattress(),
-                $product->getIsAriplaneMattress()
-            );
-          }
-
-          $offerDB = null;
-          if (null != $offer) {
-              if ($client->getMemberNumber() && $offer->getOnlyForMembers()) {
-                  $price = $offer->getPrice();
-                  $offerDB = $offer;
-              } elseif (!$offer->getOnlyForMembers()) {
-                  $price = $offer->getPrice();
-                  $offerDB = $offer;
-              }
-          }
-
           $productsResponse[] = [
-              'price' => $price,
-              'product' => $productDB,
-              'offer' => $offerDB,
+              'price' => $product->getProductPrice(),
+              'product' => $product->getProduct(),
               'count' => $product->getCount(),
           ];
         }
 
         foreach ($requestDB->getRequestCards() as $card) {
-          $price = $card->getPrice();
-
           $productsResponse[] = [
-              'price' => $price,
+              'price' => $card->getPrice(),
               'count' => $card->getCount(),
           ];
         }
@@ -1334,43 +1304,13 @@ class SiteController extends Controller
         $productsResponse = [];
         foreach ($prefactureDB->getPreFactureProducts() as $product) {
           $productDB = $product->getProduct();
-          $offer = $product->getOffer();
-
-          $price = $productDB->getPrice();
-          if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
-            $price = $this->get('product_service')->calculateProductPrice(
-                $productDB->getWeight(),
-                $productDB->getIkeaPrice(),
-                $productDB->getIsFurniture(),
-                $productDB->getIsFragile(),
-                $product->getIsAriplaneForniture(),
-                $productDB->getIsOversize(),
-                $productDB->getIsTableware(),
-                $productDB->getIsLamp(),
-                $productDB->getNumberOfPackages(),
-                $productDB->getIsMattress(),
-                $product->getIsAriplaneMattress()
-            );
-          }
-
-          $offerDB = null;
-          if (null != $offer) {
-              if ($client->getMemberNumber() && $offer->getOnlyForMembers()) {
-                  $price = $offer->getPrice();
-                  $offerDB = $offer;
-              } elseif (!$offer->getOnlyForMembers()) {
-                  $price = $offer->getPrice();
-                  $offerDB = $offer;
-              }
-          }
 
           $productsResponse[] = [
-              'name' => $productDB->getName(),
+              'image' => $productDB->getMainImage(),
               'code' => $productDB->getCode(),
               'count' => $product->getCount(),
-              'price' => $price,
+              'price' => $product->getProductPrice(),
               'product' => $productDB,
-              'offer' => $offerDB,
           ];
         }
 
@@ -1389,6 +1329,7 @@ class SiteController extends Controller
             'prefacture' => $prefactureDB,
             'products' => $productsResponse,
             'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
+            'membership' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Membresia']),
         ]);
     }
 
@@ -1408,43 +1349,13 @@ class SiteController extends Controller
         $productsResponse = [];
         foreach ($factureDB->getFactureProducts() as $product) {
           $productDB = $product->getProduct();
-          $offer = $product->getOffer();
-
-          $price = $productDB->getPrice();
-          if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
-            $price = $this->get('product_service')->calculateProductPrice(
-                $productDB->getWeight(),
-                $productDB->getIkeaPrice(),
-                $productDB->getIsFurniture(),
-                $productDB->getIsFragile(),
-                $product->getIsAriplaneForniture(),
-                $productDB->getIsOversize(),
-                $productDB->getIsTableware(),
-                $productDB->getIsLamp(),
-                $productDB->getNumberOfPackages(),
-                $productDB->getIsMattress(),
-                $product->getIsAriplaneMattress()
-            );
-          }
-
-          $offerDB = null;
-          if (null != $offer) {
-              if ($client->getMemberNumber() && $offer->getOnlyForMembers()) {
-                  $price = $offer->getPrice();
-                  $offerDB = $offer;
-              } elseif (!$offer->getOnlyForMembers()) {
-                  $price = $offer->getPrice();
-                  $offerDB = $offer;
-              }
-          }
 
           $productsResponse[] = [
-              'name' => $productDB->getName(),
+              'image' => $productDB->getMainImage(),
               'code' => $productDB->getCode(),
               'count' => $product->getCount(),
-              'price' => $price,
+              'price' => $product->getProductPrice(),
               'product' => $productDB,
-              'offer' => $offerDB,
           ];
         }
 
@@ -1463,6 +1374,7 @@ class SiteController extends Controller
             'facture' => $factureDB,
             'products' => $productsResponse,
             'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
+            'membership' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Membresia']),
         ]);
     }
 
