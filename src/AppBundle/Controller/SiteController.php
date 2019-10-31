@@ -389,15 +389,31 @@ class SiteController extends Controller
             } else {
                 $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['product']);
                 $offerDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')->find($product['offer']);
+                $categoryOffer = 0;
+                $categoryOfferForMembers = false;
                 $categories = [];
                 foreach ($productDB->getCategories() as $category) {
-                    $categories[] = $category->getId();
+                  $categories[] = $category->getId();
+
+                  if ($category->getOffers()[0]) {
+                    $categoryOffer = ceil($productDB->getPrice()*(1 - $category->getOffers()[0]->getPrice()/100));
+                    $categoryOfferForMembers = $category->getOffers()[0]->getOnlyForMembers();
+                  } else {
+                    foreach ($category->getParents() as $parentCategory) {
+                      if ($parentCategory->getOffers()[0]) {
+                        $categoryOffer = ceil($productDB->getPrice()*(1 - $parentCategory->getOffers()[0]->getPrice()/100));
+                        $categoryOfferForMembers = $parentCategory->getOffers()[0]->getOnlyForMembers();
+                      }
+                    }
+                  }
                 }
 
                 $productsDB[] = [
                     'uuid' => $product['uuid'],
                     'product' => $productDB,
                     'offer' => $offerDB,
+                    'categoryOffer' => $categoryOffer,
+                    'categoryOfferForMembers' => $categoryOfferForMembers,
                     'count' => $product['count'],
                     'storeCount' => $productDB->getStoreCount(),
                     'weight' => $productDB->getWeight(),
@@ -995,6 +1011,18 @@ class SiteController extends Controller
                         $productPrice = $offer->getPrice();
                         $offerDB = $offer;
                     }
+                } else {
+                  foreach ($productDB->getCategories() as $category) {
+                    if ($category->getOffers()[0]) {
+                      $productPrice = ceil($productDB->getPrice()*(1 - $category->getOffers()[0]->getPrice()/100));
+                    } else {
+                      foreach ($category->getParents() as $parentCategory) {
+                        if ($parentCategory->getOffers()[0]) {
+                          $productPrice = ceil($productDB->getPrice()*(1 - $parentCategory->getOffers()[0]->getPrice()/100));
+                        }
+                      }
+                    }
+                  }
                 }
                 $price = $productPrice * $product['count'];
                 $totalPrice += $price;

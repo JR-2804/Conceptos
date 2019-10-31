@@ -103,6 +103,7 @@ easy_admin:
                     - {property: 'endDate', label: 'Fecha de fin'}
                     - {property: 'price', label: 'Precio'}
                     - {property: 'products', label: 'Productos'}
+                    - {property: 'categories', label: 'Categorías'}
                     - {property: 'image', label: 'Image', base_path: "%app.path.offer.images%", type: 'image'}
                     - {property: 'onlyForMembers', label: 'Solo Para Miembros'}
             form:
@@ -114,6 +115,7 @@ easy_admin:
                     - {property: 'price', label: 'Precio'}
                     - {property: 'imageFile', type: 'vich_image', label: 'Imágen'}
                     - {property: 'products', label: 'Productos'}
+                    - {property: 'categories', label: 'Categorías'}
                     - {property: 'onlyForMembers', label: 'Solo Para Miembros'}
         Request:
             class: AppBundle\Entity\Request\Request

@@ -40,7 +40,10 @@ class Category
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product", mappedBy="categories")
      */
     private $products;
-
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Offer", mappedBy="categories")
+     */
+    private $offers;
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -85,6 +88,7 @@ class Category
         $this->parents = new ArrayCollection();
         $this->favoritesProducts = new ArrayCollection();
         $this->products = new ArrayCollection();
+        $this->offers = new ArrayCollection();
     }
 
 
@@ -398,6 +402,23 @@ class Category
     public function getProducts()
     {
         return $this->products;
+    }
+
+    public function addOffer($offer)
+    {
+        $this->offers[] = $offer;
+
+        return $this;
+    }
+
+    public function removeOffer($offer)
+    {
+        $this->offers->removeElement($offer);
+    }
+
+    public function getOffers()
+    {
+        return $this->offers;
     }
 
     /**

@@ -45,6 +45,11 @@ class Offer
      */
     private $products;
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="offers")
+     * @ORM\JoinTable(name="offer_category")
+     */
+    private $categories;
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
@@ -71,6 +76,7 @@ class Offer
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->categories = new ArrayCollection();
         $this->requests = new ArrayCollection();
     }
 
@@ -212,6 +218,23 @@ class Offer
     public function getProducts()
     {
         return $this->products;
+    }
+
+    public function addCategory($category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    public function removeCategory($category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    public function getCategories()
+    {
+        return $this->categories;
     }
 
     /**
