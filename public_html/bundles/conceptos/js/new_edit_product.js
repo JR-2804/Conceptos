@@ -160,7 +160,7 @@ $(document).ready(function() {
           isOversize: $("#is-oversize").prop("checked"),
           isTableware: $("#is-tableware").prop("checked"),
           isLamp: $("#is-lamp").prop("checked"),
-          numberOfPackages: $("#number-of-packages").val(),
+          numberOfPackages: $("#number-of-packages").val()
         },
         function(response) {
           var valueResponse = Number(response).toFixed(2);
@@ -180,6 +180,10 @@ $(document).ready(function() {
     if (!validForm()) {
       e.preventDefault();
     } else {
+      if (!$("#priority").val()) {
+        $("#priority").val(0);
+      }
+
       $("#product_name").val($("#name").val());
       $("#product_priority").val($("#priority").val());
       $("#product_code").val($("#code").val());
@@ -252,6 +256,69 @@ function validForm() {
     valid = false;
   } else {
     addRemoveErrorClass(description, false);
+  }
+  var item = $("#item");
+  if (!$(item).val()) {
+    addRemoveErrorClass(item, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(item, false);
+  }
+  var material = $("#material");
+  if (!$(material).val()) {
+    addRemoveErrorClass(material, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(material, false);
+  }
+  var color = $("#color");
+  if (!$(color).val()) {
+    addRemoveErrorClass(color, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(color, false);
+  }
+  var weight = $("#weight");
+  if (!$(weight).val()) {
+    addRemoveErrorClass(weight, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(weight, false);
+  }
+  var ikeaPrice = $("#ikea-price");
+  if (!$(ikeaPrice).val()) {
+    addRemoveErrorClass(ikeaPrice, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(ikeaPrice, false);
+  }
+  var shippingLimit = $("#shipping-limit");
+  if (!$(shippingLimit).val()) {
+    addRemoveErrorClass(shippingLimit, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(shippingLimit, false);
+  }
+  var numberOfPackages = $("#number-of-packages");
+  if (!$(numberOfPackages).val()) {
+    addRemoveErrorClass(numberOfPackages, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(numberOfPackages, false);
+  }
+  var calculatePrice = $("#calculate-price");
+  if (!$(calculatePrice).val()) {
+    addRemoveErrorClass(calculatePrice, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(calculatePrice, false);
+  }
+  var price = $("#price");
+  if (!$(price).val()) {
+    addRemoveErrorClass(price, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(price, false);
   }
   var category = $("#category");
   if ($(category).val() == null || $(category).val().length == 0) {
