@@ -155,7 +155,7 @@ class SiteController extends Controller
             'inStore' => $inStore,
             'inStoreHighlight' => $inStoreHighlight,
             'populars' => array_chunk($populars, 4),
-            'popularsForShortScreen' => array_chunk($populars, 2),
+            'popularsForShortScreen' => array_chunk($populars, 3),
             'count' => $this->countShopCart($request),
             'config' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1),
             'brands' => array_chunk($brands, 4),
@@ -1060,6 +1060,10 @@ class SiteController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
+            if ($data->getIgnoreTransport()) {
+              $totalPrice -= $transportCost;
+              $transportCost = 0;
+            }
             $repoClient = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Client');
             $newClient = false;
             $client = $repoClient->findOneBy(['email' => $data->getEmail()]);

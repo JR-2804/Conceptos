@@ -29,7 +29,7 @@ $(document).ready(function() {
   }
 
   $("#type-select").change(function() {
-    if ($(this).val() === 'facture') {
+    if ($(this).val() === "facture") {
       $("#prefactures-select").show();
     } else {
       $("#prefactures-select").hide();
@@ -49,8 +49,9 @@ $(document).ready(function() {
       e.preventDefault();
     } else {
       $("#check_out_type").val($("#type-select").val());
+      $("#check_out_ignoreTransport").val($("#ignoreTransport").val());
 
-      if ($("#type-select").val() === 'facture') {
+      if ($("#type-select").val() === "facture") {
         $("#check_out_prefacture").val($("#prefactures-select").val());
       }
     }

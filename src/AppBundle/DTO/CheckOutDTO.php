@@ -15,6 +15,7 @@ class CheckOutDTO
     private $memberNumber;
     private $type;
     private $prefacture;
+    private $ignoreTransport;
 
     /**
      * @Recaptcha\IsTrue
@@ -167,5 +168,15 @@ class CheckOutDTO
     public function setPrefacture($prefacture)
     {
         $this->prefacture = $prefacture;
+    }
+
+    public function getIgnoreTransport()
+    {
+        return $this->ignoreTransport;
+    }
+
+    public function setIgnoreTransport($ignoreTransport)
+    {
+        $this->ignoreTransport = $ignoreTransport;
     }
 }

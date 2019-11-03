@@ -16,11 +16,11 @@
     {% if priceOffer == -1 %}
       {% for category in product.categories %}
         {% if category.offers[0] is defined %}
-          {% set priceOffer = (product.price * (1 - category.offers[0].price / 100))|upper %}
+          {% set priceOffer = (product.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
         {% else %}
           {% for parentCategory in category.parents %}
             {% if parentCategory.offers[0] is defined %}
-              {% set priceOffer = (product.price * (1 - parentCategory.offers[0].price / 100))|upper %}
+              {% set priceOffer = (product.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
             {% endif %}
           {% endfor %}
         {% endif %}

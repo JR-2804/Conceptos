@@ -180,6 +180,14 @@ $(document).ready(function() {
     if (!validForm()) {
       e.preventDefault();
     } else {
+      var weight = $("#weight").val();
+      var weightUnity = $("#weight-unity").val();
+      if (weightUnity === "oz") {
+        weight = (weight / 35.27).toFixed(2);
+      } else if (weightUnity === "lbs") {
+        weight = (weight / 2.2).toFixed(2);
+      }
+
       if (!$("#priority").val()) {
         $("#priority").val(0);
       }
@@ -205,7 +213,7 @@ $(document).ready(function() {
       $("#product_favoritesCategories").val(
         JSON.stringify($("#category-favorite").val())
       );
-      $("#product_weight").val($("#weight").val());
+      $("#product_weight").val(weight);
       $("#product_shippingLimit").val($("#shipping-limit").val());
       $("#product_ikeaPrice").val($("#ikea-price").val());
       $("#product_calculatePrice").val($("#calculate-price").val());

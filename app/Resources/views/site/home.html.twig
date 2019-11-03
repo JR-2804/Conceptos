@@ -110,12 +110,18 @@
                 {% endfor %}
                 {% for image in page.data.slides %}
                     <div class="carousel-item slider-fullscreen-image {% if loop.first and originalCountImagesOffer == 0 %}active{% endif %}"
-                          data-bg-video-slide="{% if image.video is defined %}{{ image.video }}{% else %}false{% endif %}"
                           style="background-image: url('{{ image.path }}');">
                         <div class="container container-slide">
                             <div class="image_wrapper">
-                                <img class="main-carousel-image d-none d-lg-block" src="{{ image.path }}">
-                                <img class="main-carousel-image-small d-lg-none" src="{{ image.path }}">
+                                {% if image.link is defined %}
+                                    <a href="{{image.link}}">
+                                        <img class="main-carousel-image d-none d-lg-block" src="{{ image.path }}">
+                                        <img class="main-carousel-image-small d-lg-none" src="{{ image.path }}">
+                                    </a>
+                                {% else %}
+                                    <img class="main-carousel-image d-none d-lg-block" src="{{ image.path }}">
+                                    <img class="main-carousel-image-small d-lg-none" src="{{ image.path }}">
+                                {% endif %}
                                 <div class="carousel-caption justify-content-center">
                                     <div class="col-10 align-center">
                                         {% if image.main is defined %}
@@ -289,7 +295,7 @@
                                         <div class="container-fluid carousel-item {% if loop.first %}active{% endif %}">
                                             <div class="d-flex justify-content-center w-100">
                                                 {% for cat in popular %}
-                                                    <div class="col-6 pl-0 m-1">
+                                                    <div class="col-4 pl-0 m-1">
                                                         <a class="d-flex justify-content-center" href="{{ path('product_details', {id: cat.id}) }}">
                                                             <img class="w-100" src="{{ vich_uploader_asset(cat.mainImage, 'imageFile') }}">
                                                         </a>

@@ -154,17 +154,21 @@
                     {{ form_widget(form.recaptcha) }}
                     <hr class="mb-4">
                     {% if is_granted('ROLE_COMMERCIAL') %}
-                        <select id="type-select" class="form-control mb-4">
+                        <select id="type-select" class="form-control mb-2">
                             <option value="request">Pedido</option>
                             <option value="prefacture">Prefactura</option>
                             <option value="facture">Factura</option>
                         </select>
-                        <select id="prefactures-select" class="form-control mb-4" style="display: none;">
+                        <select id="prefactures-select" class="form-control mb-2" style="display: none;">
                             <option value="0">Ninguna</option>
                             {% for prefacture in prefactures %}
                                 <option value="{{prefacture.id}}">Prefactura: {{prefacture.id}}-{{prefacture.date|date('Y')}}</option>
                             {% endfor %}
                         </select>
+                        <div class="mb-2">
+                            <input type="checkbox" id="ignoreTransport">
+                            <span class="terms-label">Ignorar costo de transporte</span>
+                        </div>
                     {% endif %}
                     <div class="d-flex">
                         <div class="d-flex w-100">

@@ -23,6 +23,7 @@ class CheckOutType extends AbstractType
             ->add('memberNumber', HiddenType::class, ['required' => false,])
             ->add('type', HiddenType::class)
             ->add('prefacture', HiddenType::class)
+            ->add('ignoreTransport', HiddenType::class)
             ->add('recaptcha', EWZRecaptchaType::class, ['language' => 'es'])
         ;
         parent::buildForm($builder, $options);
