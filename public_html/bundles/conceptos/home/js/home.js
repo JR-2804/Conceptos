@@ -16,8 +16,10 @@ $(document).ready(function() {
 
   $(".control-populars.control-prev").click(function() {
     $("#carousel-populars").carousel("prev");
+    $("#carousel-populars-short").carousel("prev");
   });
   $(".control-populars.control-next").click(function() {
     $("#carousel-populars").carousel("next");
+    $("#carousel-populars-short").carousel("next");
   });
 });

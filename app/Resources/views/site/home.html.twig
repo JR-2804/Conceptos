@@ -197,10 +197,8 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col align-center pl-1 pr-1">
-                        <h2 class="align-center rob-header d-none d-lg-block">{{page.data.populars.title|raw}}</h2>
-                        <h2 class="align-center rob-header rob-header-short d-lg-none">{{page.data.populars.title|raw}}</h2>
-                        <h3 class="align-center rob-subtitle d-none d-lg-block">{{page.data.populars.subtitle|raw}}</h3>
-                        <h3 class="align-center rob-subtitle rob-subtitle-short d-lg-none">{{page.data.populars.subtitle|raw}}</h3>
+                        <h2 class="align-center rob-header">{{page.data.populars.title|raw}}</h2>
+                        <h3 class="align-center rob-subtitle">{{page.data.populars.subtitle|raw}}</h3>
                         <div class="d-flex justify-content-center">
                             <a href="{{ path('products', {populars: true, page: 1}) }}" class="square-button">Ver Todos</a>
                         </div>
@@ -209,21 +207,15 @@
                 <div class="row d-flex pb-4">
                     <div class="d-flex justify-content-center w-100">
                         {% if populars|length > 1 %}
-                            <div class="col-1 d-none d-lg-flex align-items-center justify-content-center">
+                            <div class="col-1 d-flex align-items-center justify-content-center">
                                 <a class="carousel-control control-prev control-populars w-100" role="button">
-                                    <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-left mbr-iconfont"></span>
-                                    <span class="sr-only">Anterior</span>
-                                </a>
-                            </div>
-                            <div class="col-1 d-flex d-lg-none m-0 p-0 align-items-center justify-content-center">
-                                <a class="d-flex align-items-center carousel-control control-prev carousel-control-shorter control-populars" role="button">
                                     <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-left mbr-iconfont"></span>
                                     <span class="sr-only">Anterior</span>
                                 </a>
                             </div>
                         {% endif %}
                         <div class="col-10 pl-0">
-                            <div class="carousel slide" data-ride="carousel" id="carousel-populars" data-interval="10000">
+                            <div class="carousel" data-ride="carousel" id="carousel-populars-short" data-interval="10000">
                                 <div class="carousel-inner">
                                     {% for popular in populars %}
                                         <div class="container-fluid carousel-item {% if loop.first %}active{% endif %}">
@@ -242,14 +234,8 @@
                             </div>
                         </div>
                         {% if populars|length > 1 %}
-                            <div class="col-1 d-none d-lg-flex align-items-center justify-content-center pl-0">
+                            <div class="col-1 d-flex align-items-center justify-content-center pl-0">
                                 <a class="carousel-control control-next control-populars w-100" role="button">
-                                    <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-right mbr-iconfont"></span>
-                                    <span class="sr-only">Siguiente</span>
-                                </a>
-                            </div>
-                            <div class="col-1 d-flex d-lg-none m-0 p-0 align-items-center justify-content-center">
-                                <a class="d-flex align-items-center carousel-control control-next carousel-control-shorter control-populars" role="button">
                                     <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-right mbr-iconfont"></span>
                                     <span class="sr-only">Siguiente</span>
                                 </a>
@@ -263,10 +249,8 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col align-center pl-1 pr-1">
-                        <h2 class="align-center rob-header d-none d-lg-block">{{page.data.populars.title|raw}}</h2>
-                        <h2 class="align-center rob-header rob-header-short d-lg-none">{{page.data.populars.title|raw}}</h2>
-                        <h3 class="align-center rob-subtitle d-none d-lg-block">{{page.data.populars.subtitle|raw}}</h3>
-                        <h3 class="align-center rob-subtitle rob-subtitle-short d-lg-none">{{page.data.populars.subtitle|raw}}</h3>
+                        <h2 class="align-center rob-header rob-header-short">{{page.data.populars.title|raw}}</h2>
+                        <h3 class="align-center rob-subtitle rob-subtitle-short">{{page.data.populars.subtitle|raw}}</h3>
                         <div class="d-flex justify-content-center">
                             <a href="{{ path('products', {populars: true, page: 1}) }}" class="square-button">Ver Todos</a>
                         </div>
@@ -274,14 +258,8 @@
                 </div>
                 <div class="row d-flex pb-4">
                     <div class="d-flex justify-content-center w-100">
-                        {% if populars|length > 1 %}
-                            <div class="col-1 d-none d-lg-flex align-items-center justify-content-center">
-                                <a class="carousel-control control-prev control-populars w-100" role="button">
-                                    <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-left mbr-iconfont"></span>
-                                    <span class="sr-only">Anterior</span>
-                                </a>
-                            </div>
-                            <div class="col-1 d-flex d-lg-none m-0 p-0 align-items-center justify-content-center">
+                        {% if popularsForShortScreen|length > 1 %}
+                            <div class="col-1 d-flex m-0 p-0 align-items-center justify-content-center">
                                 <a class="d-flex align-items-center carousel-control control-prev carousel-control-shorter control-populars" role="button">
                                     <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-left mbr-iconfont"></span>
                                     <span class="sr-only">Anterior</span>
@@ -289,7 +267,7 @@
                             </div>
                         {% endif %}
                         <div class="col-10 pl-0">
-                            <div class="carousel slide" data-ride="carousel" id="carousel-populars" data-interval="10000">
+                            <div class="carousel" data-ride="carousel" id="carousel-populars" data-interval="10000">
                                 <div class="carousel-inner">
                                     {% for popular in popularsForShortScreen %}
                                         <div class="container-fluid carousel-item {% if loop.first %}active{% endif %}">
@@ -307,14 +285,8 @@
                                 </div>
                             </div>
                         </div>
-                        {% if populars|length > 1 %}
-                            <div class="col-1 d-none d-lg-flex align-items-center justify-content-center pl-0">
-                                <a class="carousel-control control-next control-populars w-100" role="button">
-                                    <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-right mbr-iconfont"></span>
-                                    <span class="sr-only">Siguiente</span>
-                                </a>
-                            </div>
-                            <div class="col-1 d-flex d-lg-none m-0 p-0 align-items-center justify-content-center">
+                        {% if popularsForShortScreen|length > 1 %}
+                            <div class="col-1 d-flex m-0 p-0 align-items-center justify-content-center">
                                 <a class="d-flex align-items-center carousel-control control-next carousel-control-shorter control-populars" role="button">
                                     <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-right mbr-iconfont"></span>
                                     <span class="sr-only">Siguiente</span>
