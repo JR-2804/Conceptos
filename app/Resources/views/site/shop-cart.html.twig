@@ -15,9 +15,9 @@
                     <h2 class="rob-header rob-header-short d-lg-none">Carrito</h2>
                     <div class="d-flex align-items-center">
                         <span class="rob-subtitle">
-                            {{ products | length }} {% if products | length == 1 %}producto{% else %}productos{% endif %}
+                            {{ count }} {% if count == 1 %}producto{% else %}productos{% endif %}
                         </span>
-                        {% if products | length > 0 %}
+                        {% if count > 0 %}
                             <a href="{{ path('empty_shop_car') }}" class="btn btn-empty">
                                 <i class="empty-all-cart-icon mbri-trash"></i>
                             </a>
