@@ -1421,6 +1421,11 @@ a.header-text.active {
   width: 50px;
 }
 
+.popular-image-short {
+  height: auto;
+  width: 100%;
+}
+
 .control-brands {
   position: relative;
   font-size: 23px;

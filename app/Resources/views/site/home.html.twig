@@ -274,8 +274,8 @@
                                             <div class="d-flex justify-content-center w-100">
                                                 {% for cat in popular %}
                                                     <div class="col-4 pl-0 m-1">
-                                                        <a class="d-flex justify-content-center" href="{{ path('product_details', {id: cat.id}) }}">
-                                                            <img class="w-100" src="{{ vich_uploader_asset(cat.mainImage, 'imageFile') }}">
+                                                        <a class="d-flex justify-content-center align-items-center" href="{{ path('product_details', {id: cat.id}) }}">
+                                                            <img class="popular-image-short" src="{{ vich_uploader_asset(cat.mainImage, 'imageFile') }}">
                                                         </a>
                                                     </div>
                                                 {% endfor %}
