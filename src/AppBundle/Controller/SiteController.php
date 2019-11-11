@@ -87,7 +87,6 @@ class SiteController extends Controller
           ->createQueryBuilder('product')
           ->where('product.popular = true')
           ->orderBy('product.priority', 'DESC')
-          ->setMaxResults(50)
           ->getQuery()
           ->getResult();
         $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findAll();
