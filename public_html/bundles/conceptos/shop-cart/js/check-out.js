@@ -48,6 +48,10 @@ $(document).ready(function() {
       alert("Rellene todos los campos");
       e.preventDefault();
     } else {
+      $("#memberNumber").val(memberNumber);
+      $("#transportCost").val(transportCost);
+      $("#products").val(JSON.stringify(products));
+
       $("#check_out_type").val($("#type-select").val());
       $("#check_out_ignoreTransport").val($("#ignoreTransport").val());
 

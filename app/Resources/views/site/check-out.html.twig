@@ -84,6 +84,9 @@
                 <div class="col-12 col-lg-7 order-md-1">
                     <h4 class="mb-3">Datos de contacto</h4>
                     {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'true'}}) }}
+                    <input type="hidden" name="memberNumber" id="memberNumber">
+                    <input type="hidden" name="transportCost" id="transportCost">
+                    <input type="hidden" name="products" id="products">
                     <div class="mb-3 pr-3 pr-lg-0">
                         {{ form_label(form.name, 'Nombre y Apellidos') }}
                         {{ form_widget(form.name, {'attr': {'class': 'form-control', 'required': 'true'}}) }}
@@ -190,6 +193,63 @@
         {% else %}
             memberNumber = undefined;
         {% endif %}
+        transportCost = {{transportCost}};
+        products = [];
+        {% for product in products %}
+        products.push({
+            {% if product.weight is defined %}
+                weight: {{product.weight}},
+            {% else %}
+                weight: 0,
+            {% endif %}
+            {% if product.ikeaPrice is defined %}
+                ikeaPrice: {{product.ikeaPrice}},
+            {% else %}
+                ikeaPrice: 0,
+            {% endif %}
+            {% if product.isFurniture is defined and product.isFurniture %}
+                isFurniture: true,
+            {% else %}
+                isFurniture: false,
+            {% endif %}
+            {% if product.isMattress is defined and product.isMattress %}
+                isMattress: true,
+            {% else %}
+                isMattress: false,
+            {% endif %}
+            {% if product.isAriplaneForniture is defined and product.isAriplaneForniture %}
+                isAriplaneForniture: true,
+            {% else %}
+                isAriplaneForniture: false,
+            {% endif %}
+            {% if product.isAriplaneMattress is defined and product.isAriplaneMattress %}
+                isAriplaneMattress: true,
+            {% else %}
+                isAriplaneMattress: false,
+            {% endif %}
+            {% if product.categories is defined %}
+                categories: {{product.categories}},
+            {% else %}
+                categories: false,
+            {% endif %}
+            {% if product.type is defined %}
+                id: '{{ product.id }}',
+                type: 'target',
+                count: {{ product.count }},
+                amount: {{ product.amount }},
+            {% endif %}
+            {% if product.product is defined %}
+                id: '{{ product.product.id }}',
+                name: '{{ product.product.name }}',
+                count: {{ product.count }},
+            {% endif %}
+            {% if 'offer' in product | keys and product.offer %}
+                offer: {{ product.offer.id }},
+            {% else %}
+                offer: false
+            {% endif %}
+        });
+        {% endfor %}
     </script>
     <script src="{{ asset('bundles/conceptos/shop-cart/js/jquery-3.2.1.slim.min.js') }}"></script>
     <script src="{{ asset('bundles/conceptos/shop-cart/js/holder.min.js') }}"></script>

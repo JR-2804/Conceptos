@@ -299,7 +299,7 @@
             {% if products|length > 0 %}
                 <div class="row">
                     <div class="col-12">
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
                             <div class="d-flex align-items-center" id="shop-cart-member">
                                 <div class="d-flex ac-custom ac-checkmark">
                                     <ul>
@@ -322,9 +322,9 @@
                                         </li>
                                         <li>
                                             <div class="d-flex">
-                                                <button id="shop-cart-membership-number-check" class="btn navigation-button ml-0" style="display: none;">
+                                                <a id="shop-cart-membership-number-check" class="btn navigation-button ml-0" style="display: none;" href="#">
                                                     Comprobar
-                                                </button>
+                                                </a>
                                             </div>
                                         </li>
                                         <div id="home-collect" style="display: none;">
@@ -341,15 +341,22 @@
                                 </div>
                             </div>
                             <div class="d-flex">
-                                <a class="btn navigation-button btn-send-request d-none d-lg-block" data-path="{{ path('check_out') }}">
-                                    Comprar
-                                </a>
+                                <form name="checkout-form" method="POST" action="{{path('check_out')}}">
+                                    <input type="hidden" name="memberNumber" id="memberNumber">
+                                    <input type="hidden" name="transportCost" id="transportCost">
+                                    <input type="hidden" name="products" id="products">
+                                    <div class="d-flex">
+                                        <button class="btn navigation-button btn-send-request d-none d-lg-block" type="submit">
+                                            Comprar
+                                        </button>
+                                    </div>
+                                    <div class="d-flex justify-content-start">
+                                        <button class="btn navigation-button btn-send-request d-lg-none ml-0" type="submit">
+                                            Comprar
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                        </div>
-                        <div class="d-flex justify-content-start">
-                            <a class="btn navigation-button btn-send-request d-lg-none ml-0" data-path="{{ path('check_out') }}">
-                                Comprar
-                            </a>
                         </div>
                     </div>
                 </div>

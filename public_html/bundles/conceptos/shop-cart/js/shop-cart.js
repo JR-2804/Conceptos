@@ -39,17 +39,6 @@ $(document).ready(function() {
     recalculateAllPrices();
   });
 
-  $(".btn-send-request").click(function() {
-    window.location =
-      $(this).data("path") +
-      "?memberNumber=" +
-      JSON.stringify(memberNumber) +
-      "&transportCost=" +
-      JSON.stringify(transportCost) +
-      "&products=" +
-      JSON.stringify(products);
-  });
-
   $("#modal-confirm").on("show.bs.modal", function() {
     $(".modal-title").removeClass("hidden animated");
     $('.close[data-dismiss="modal"]').removeClass("hidden animated");
@@ -214,6 +203,12 @@ $(document).ready(function() {
       memberNumber = undefined;
       recalculateAllPrices();
     }
+  });
+
+  $('form[name="checkout-form"]').submit(function(e) {
+    $("#memberNumber").val(memberNumber);
+    $("#transportCost").val(transportCost);
+    $("#products").val(JSON.stringify(products));
   });
 
   recalculateAllPrices();

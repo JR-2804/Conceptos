@@ -969,9 +969,9 @@ class SiteController extends Controller
      */
     public function handleCheckOutAction(Request $request)
     {
-        $memberNumber = json_decode($request->query->get('memberNumber', false), true);
-        $transportCost = json_decode($request->query->get('transportCost', false), true);
-        $productsCount = $request->query->get('products', []);
+        $memberNumber = json_decode($request->request->get('memberNumber', false), true);
+        $transportCost = json_decode($request->request->get('transportCost', false), true);
+        $productsCount = $request->request->get('products', []);
         $numberOfProducts = 0;
         if (!is_array($productsCount)) {
             $productsCount = json_decode($productsCount, true);
