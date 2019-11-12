@@ -279,13 +279,16 @@ function recalculateAllPrices() {
     ).text("$" + subtotal.toFixed(2));
 
     products.forEach(function(product) {
-      if (product.id == productId && product.count != count) {
-        product.count = count;
+      if (product.id == productId) {
+        product.price = price;
+        if (product.count != count) {
+          product.count = count;
 
-        var uuid = $(
-          '.cart-quantity-up[data-product="' + product.id + '"]'
-        ).data("uuid");
-        persistProductCount(uuid, count);
+          var uuid = $(
+            '.cart-quantity-up[data-product="' + product.id + '"]'
+          ).data("uuid");
+          persistProductCount(uuid, count);
+        }
       }
     });
   });

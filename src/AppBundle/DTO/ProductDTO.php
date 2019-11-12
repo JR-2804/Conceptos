@@ -36,6 +36,13 @@ class ProductDTO
     private $isOversize;
     private $isTableware;
     private $isLamp;
+    private $isFaucet;
+    private $isGrill;
+    private $isShelf;
+    private $isDesk;
+    private $isBookcase;
+    private $isComoda;
+    private $isRepisa;
     private $numberOfPackages;
 
     public function getId()
@@ -356,6 +363,76 @@ class ProductDTO
     public function getIsLamp()
     {
         return $this->isLamp;
+    }
+
+    public function setIsFaucet($isFaucet)
+    {
+        $this->isFaucet = $isFaucet;
+    }
+
+    public function getIsFaucet()
+    {
+        return $this->isFaucet;
+    }
+
+    public function setIsGrill($isGrill)
+    {
+        $this->isGrill = $isGrill;
+    }
+
+    public function getIsGrill()
+    {
+        return $this->isGrill;
+    }
+
+    public function setIsShelf($isShelf)
+    {
+        $this->isShelf = $isShelf;
+    }
+
+    public function getIsShelf()
+    {
+        return $this->isShelf;
+    }
+
+    public function setIsDesk($isDesk)
+    {
+        $this->isDesk = $isDesk;
+    }
+
+    public function getIsDesk()
+    {
+        return $this->isDesk;
+    }
+
+    public function setIsBookcase($isBookcase)
+    {
+        $this->isBookcase = $isBookcase;
+    }
+
+    public function getIsBookcase()
+    {
+        return $this->isBookcase;
+    }
+
+    public function setIsComoda($isComoda)
+    {
+        $this->isComoda = $isComoda;
+    }
+
+    public function getIsComoda()
+    {
+        return $this->isComoda;
+    }
+
+    public function setIsRepisa($isRepisa)
+    {
+        $this->isRepisa = $isRepisa;
+    }
+
+    public function getIsRepisa()
+    {
+        return $this->isRepisa;
     }
 
     public function setNumberOfPackages($numberOfPackages)

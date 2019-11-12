@@ -1001,15 +1001,14 @@ class SiteController extends Controller
                 }
                 $product['price'] = $productPrice;
 
-                $offerDB = null;
+                $offerDB = -1;
                 if (null != $offer) {
                     if ($memberNumber && $offer->getOnlyForMembers()) {
                         $productPrice = $offer->getPrice();
-                        $offerDB = $offer;
                     } elseif (!$offer->getOnlyForMembers()) {
                         $productPrice = $offer->getPrice();
-                        $offerDB = $offer;
                     }
+                    $offerDB = $offer->getId();
                 } else {
                   foreach ($productDB->getCategories() as $category) {
                     if ($category->getOffers()[0]) {
@@ -1059,7 +1058,7 @@ class SiteController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            if ($data->getIgnoreTransport()) {
+            if ($data->getIgnoreTransport() == "true") {
               $totalPrice -= $transportCost;
               $transportCost = 0;
             }
@@ -1101,7 +1100,6 @@ class SiteController extends Controller
                       $factureProduct->setFacture($facture);
                       $factureProduct->setProduct($productR['product']);
                       $factureProduct->setProductPrice($productR['price']);
-                      $factureProduct->setOffer($productR['offer']);
                       if ($productR['price'] > $productR['product']->getPrice()){
                         $factureProduct->setIsAriplaneForniture(true);
                         $factureProduct->setIsAriplaneMattress(true);
@@ -1132,7 +1130,6 @@ class SiteController extends Controller
                       $preFactureProduct->setPreFacture($prefacture);
                       $preFactureProduct->setProduct($productR['product']);
                       $preFactureProduct->setProductPrice($productR['price']);
-                      $preFactureProduct->setOffer($productR['offer']);
                       if ($productR['price'] > $productR['product']->getPrice()){
                         $preFactureProduct->setIsAriplaneForniture(true);
                         $preFactureProduct->setIsAriplaneMattress(true);
@@ -1164,7 +1161,6 @@ class SiteController extends Controller
                     $requestProd->setRequest($requestDB);
                     $requestProd->setProduct($productR['product']);
                     $requestProd->setProductPrice($productR['price']);
-                    $requestProd->setOffer($productR['offer']);
                     if ($productR['price'] > $productR['product']->getPrice()){
                       $requestProd->setIsAriplaneForniture(true);
                       $requestProd->setIsAriplaneMattress(true);

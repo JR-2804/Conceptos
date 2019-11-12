@@ -205,7 +205,7 @@
                         </div>
                         <div class="col-lg-3 col-12 total-price-product mt-3 mt-lg-0 pl-0"
                             data-price="{{product.product.price}}"
-                            data-offer="{% if product.offer %}{{product.offer.price}}{% endif %}{% if product.categoryOffer is defined %}{{product.categoryOffer}}{% endif %}"
+                            data-offer="{% if product.offer %}{{product.offer.price}}{% elseif product.categoryOffer is defined %}{{product.categoryOffer}}{% endif %}"
                             data-offer-members="{% if product.offer %}{{product.offer.onlyForMembers}}{% endif %}{% if product.categoryOfferForMembers is defined %}{{product.categoryOfferForMembers}}{% endif %}"
                             data-product="{{ product.product.id }}">
                             <div class="d-flex flex-column justify-content-center h-100 mr-0 mr-lg-3">

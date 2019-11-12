@@ -241,7 +241,14 @@ class PreFacture
             $prefactureProduct->getProduct()->getIsLamp(),
             $prefactureProduct->getProduct()->getNumberOfPackages(),
             $prefactureProduct->getProduct()->getIsMattress(),
-            $prefactureProduct->getIsAriplaneMattress()
+            $prefactureProduct->getIsAriplaneMattress(),
+            $prefactureProduct->getProduct()->getIsFaucet(),
+            $prefactureProduct->getProduct()->getIsGrill(),
+            $prefactureProduct->getProduct()->getIsShelf(),
+            $prefactureProduct->getProduct()->getIsDesk(),
+            $prefactureProduct->getProduct()->getIsBookcase(),
+            $prefactureProduct->getProduct()->getIsComoda(),
+            $prefactureProduct->getProduct()->getIsRepisa()
           );
         } else {
           $price = $prefactureProduct->getProduct()->getPrice();

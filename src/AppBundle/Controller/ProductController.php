@@ -141,6 +141,83 @@ class ProductController extends Controller
                 $isLamp = false;
             }
             $product->setIsLamp($isLamp);
+            $isFaucet = $form->get('isFaucet')->getData();
+            if (is_string($isFaucet) && ('1' == $isFaucet || 'true' == $isFaucet)) {
+                $isFaucet = true;
+            } elseif (is_int($isFaucet) && 1 == $isFaucet) {
+                $isFaucet = true;
+            } elseif (is_bool($isFaucet) && $isFaucet) {
+                $isFaucet = true;
+            } else {
+                $isFaucet = false;
+            }
+            $product->setIsFaucet($isFaucet);
+            $isGrill = $form->get('isGrill')->getData();
+            if (is_string($isGrill) && ('1' == $isGrill || 'true' == $isGrill)) {
+                $isGrill = true;
+            } elseif (is_int($isGrill) && 1 == $isGrill) {
+                $isGrill = true;
+            } elseif (is_bool($isGrill) && $isGrill) {
+                $isGrill = true;
+            } else {
+                $isGrill = false;
+            }
+            $product->setIsGrill($isGrill);
+            $isShelf = $form->get('isShelf')->getData();
+            if (is_string($isShelf) && ('1' == $isShelf || 'true' == $isShelf)) {
+                $isShelf = true;
+            } elseif (is_int($isShelf) && 1 == $isShelf) {
+                $isShelf = true;
+            } elseif (is_bool($isShelf) && $isShelf) {
+                $isShelf = true;
+            } else {
+                $isShelf = false;
+            }
+            $product->setIsShelf($isShelf);
+            $isDesk = $form->get('isDesk')->getData();
+            if (is_string($isDesk) && ('1' == $isDesk || 'true' == $isDesk)) {
+                $isDesk = true;
+            } elseif (is_int($isDesk) && 1 == $isDesk) {
+                $isDesk = true;
+            } elseif (is_bool($isDesk) && $isDesk) {
+                $isDesk = true;
+            } else {
+                $isDesk = false;
+            }
+            $product->setIsDesk($isDesk);
+            $isBookcase = $form->get('isBookcase')->getData();
+            if (is_string($isBookcase) && ('1' == $isBookcase || 'true' == $isBookcase)) {
+                $isBookcase = true;
+            } elseif (is_int($isBookcase) && 1 == $isBookcase) {
+                $isBookcase = true;
+            } elseif (is_bool($isBookcase) && $isBookcase) {
+                $isBookcase = true;
+            } else {
+                $isBookcase = false;
+            }
+            $product->setIsBookcase($isBookcase);
+            $isComoda = $form->get('isComoda')->getData();
+            if (is_string($isComoda) && ('1' == $isComoda || 'true' == $isComoda)) {
+                $isComoda = true;
+            } elseif (is_int($isComoda) && 1 == $isComoda) {
+                $isComoda = true;
+            } elseif (is_bool($isComoda) && $isComoda) {
+                $isComoda = true;
+            } else {
+                $isComoda = false;
+            }
+            $product->setIsComoda($isComoda);
+            $isRepisa = $form->get('isRepisa')->getData();
+            if (is_string($isRepisa) && ('1' == $isRepisa || 'true' == $isRepisa)) {
+                $isRepisa = true;
+            } elseif (is_int($isRepisa) && 1 == $isRepisa) {
+                $isRepisa = true;
+            } elseif (is_bool($isRepisa) && $isRepisa) {
+                $isRepisa = true;
+            } else {
+                $isRepisa = false;
+            }
+            $product->setIsRepisa($isRepisa);
 
             $config = $this->getDoctrine()->getRepository('AppBundle:Configuration')->find(1);
             $taxes = $product->getIkeaPrice() * ($config->getTaxTax() / 100);
@@ -278,6 +355,13 @@ class ProductController extends Controller
         $dto->setIsOversize($product->getIsOversize());
         $dto->setIsTableware($product->getIsTableware());
         $dto->setIsLamp($product->getIsLamp());
+        $dto->setIsFaucet($product->getIsFaucet());
+        $dto->setIsGrill($product->getIsGrill());
+        $dto->setIsShelf($product->getIsShelf());
+        $dto->setIsDesk($product->getIsDesk());
+        $dto->setIsBookcase($product->getIsBookcase());
+        $dto->setIsComoda($product->getIsComoda());
+        $dto->setIsRepisa($product->getIsRepisa());
         $dto->setNumberOfPackages($product->getNumberOfPackages());
 
         $categories = [];
@@ -441,6 +525,83 @@ class ProductController extends Controller
                 $isLamp = false;
             }
             $productDB->setIsLamp($isLamp);
+            $isFaucet = $form->get('isFaucet')->getData();
+            if (is_string($isFaucet) && ('1' == $isFaucet || 'true' == $isFaucet)) {
+                $isFaucet = true;
+            } elseif (is_int($isFaucet) && 1 == $isFaucet) {
+                $isFaucet = true;
+            } elseif (is_bool($isFaucet) && $isFaucet) {
+                $isFaucet = true;
+            } else {
+                $isFaucet = false;
+            }
+            $product->setIsFaucet($isFaucet);
+            $isGrill = $form->get('isGrill')->getData();
+            if (is_string($isGrill) && ('1' == $isGrill || 'true' == $isGrill)) {
+                $isGrill = true;
+            } elseif (is_int($isGrill) && 1 == $isGrill) {
+                $isGrill = true;
+            } elseif (is_bool($isGrill) && $isGrill) {
+                $isGrill = true;
+            } else {
+                $isGrill = false;
+            }
+            $product->setIsGrill($isGrill);
+            $isShelf = $form->get('isShelf')->getData();
+            if (is_string($isShelf) && ('1' == $isShelf || 'true' == $isShelf)) {
+                $isShelf = true;
+            } elseif (is_int($isShelf) && 1 == $isShelf) {
+                $isShelf = true;
+            } elseif (is_bool($isShelf) && $isShelf) {
+                $isShelf = true;
+            } else {
+                $isShelf = false;
+            }
+            $product->setIsShelf($isShelf);
+            $isDesk = $form->get('isDesk')->getData();
+            if (is_string($isDesk) && ('1' == $isDesk || 'true' == $isDesk)) {
+                $isDesk = true;
+            } elseif (is_int($isDesk) && 1 == $isDesk) {
+                $isDesk = true;
+            } elseif (is_bool($isDesk) && $isDesk) {
+                $isDesk = true;
+            } else {
+                $isDesk = false;
+            }
+            $product->setIsDesk($isDesk);
+            $isBookcase = $form->get('isBookcase')->getData();
+            if (is_string($isBookcase) && ('1' == $isBookcase || 'true' == $isBookcase)) {
+                $isBookcase = true;
+            } elseif (is_int($isBookcase) && 1 == $isBookcase) {
+                $isBookcase = true;
+            } elseif (is_bool($isBookcase) && $isBookcase) {
+                $isBookcase = true;
+            } else {
+                $isBookcase = false;
+            }
+            $product->setIsBookcase($isBookcase);
+            $isComoda = $form->get('isComoda')->getData();
+            if (is_string($isComoda) && ('1' == $isComoda || 'true' == $isComoda)) {
+                $isComoda = true;
+            } elseif (is_int($isComoda) && 1 == $isComoda) {
+                $isComoda = true;
+            } elseif (is_bool($isComoda) && $isComoda) {
+                $isComoda = true;
+            } else {
+                $isComoda = false;
+            }
+            $product->setIsComoda($isComoda);
+            $isRepisa = $form->get('isRepisa')->getData();
+            if (is_string($isRepisa) && ('1' == $isRepisa || 'true' == $isRepisa)) {
+                $isRepisa = true;
+            } elseif (is_int($isRepisa) && 1 == $isRepisa) {
+                $isRepisa = true;
+            } elseif (is_bool($isRepisa) && $isRepisa) {
+                $isRepisa = true;
+            } else {
+                $isRepisa = false;
+            }
+            $product->setIsRepisa($isRepisa);
 
             $productDB->setWeight($form->get('weight')->getData());
             $productDB->setShippingLimit($form->get('shippingLimit')->getData());
@@ -935,6 +1096,76 @@ class ProductController extends Controller
         } else {
             $isLamp = false;
         }
+        $isFaucet = $request->request->get('isFaucet');
+        if (is_string($isFaucet) && 'true' == $isFaucet) {
+            $isFaucet = true;
+        } elseif (is_int($isFaucet) && 1 == $isFaucet) {
+            $isFaucet = true;
+        } elseif (is_bool($isFaucet) && $isFaucet) {
+            $isFaucet = true;
+        } else {
+            $isFaucet = false;
+        }
+        $isGrill = $request->request->get('isGrill');
+        if (is_string($isGrill) && 'true' == $isGrill) {
+            $isGrill = true;
+        } elseif (is_int($isGrill) && 1 == $isGrill) {
+            $isGrill = true;
+        } elseif (is_bool($isGrill) && $isGrill) {
+            $isGrill = true;
+        } else {
+            $isGrill = false;
+        }
+        $isShelf = $request->request->get('isShelf');
+        if (is_string($isShelf) && 'true' == $isShelf) {
+            $isShelf = true;
+        } elseif (is_int($isShelf) && 1 == $isShelf) {
+            $isShelf = true;
+        } elseif (is_bool($isShelf) && $isShelf) {
+            $isShelf = true;
+        } else {
+            $isShelf = false;
+        }
+        $isDesk = $request->request->get('isDesk');
+        if (is_string($isDesk) && 'true' == $isDesk) {
+            $isDesk = true;
+        } elseif (is_int($isDesk) && 1 == $isDesk) {
+            $isDesk = true;
+        } elseif (is_bool($isDesk) && $isDesk) {
+            $isDesk = true;
+        } else {
+            $isDesk = false;
+        }
+        $isBookcase = $request->request->get('isBookcase');
+        if (is_string($isBookcase) && 'true' == $isBookcase) {
+            $isBookcase = true;
+        } elseif (is_int($isBookcase) && 1 == $isBookcase) {
+            $isBookcase = true;
+        } elseif (is_bool($isBookcase) && $isBookcase) {
+            $isBookcase = true;
+        } else {
+            $isBookcase = false;
+        }
+        $isComoda = $request->request->get('isComoda');
+        if (is_string($isComoda) && 'true' == $isComoda) {
+            $isComoda = true;
+        } elseif (is_int($isComoda) && 1 == $isComoda) {
+            $isComoda = true;
+        } elseif (is_bool($isComoda) && $isComoda) {
+            $isComoda = true;
+        } else {
+            $isComoda = false;
+        }
+        $isRepisa = $request->request->get('isRepisa');
+        if (is_string($isRepisa) && 'true' == $isRepisa) {
+            $isRepisa = true;
+        } elseif (is_int($isRepisa) && 1 == $isRepisa) {
+            $isRepisa = true;
+        } elseif (is_bool($isRepisa) && $isRepisa) {
+            $isRepisa = true;
+        } else {
+            $isRepisa = false;
+        }
 
         $price = $this->get('product_service')->calculateProductPrice(
             $weight,
@@ -947,7 +1178,14 @@ class ProductController extends Controller
             $isLamp,
             $numberOfPackages,
             $isMattress,
-            $isAriplaneMattress
+            $isAriplaneMattress,
+            $isFaucet,
+            $isGrill,
+            $isShelf,
+            $isDesk,
+            $isBookcase,
+            $isComoda,
+            $isRepisa
         );
 
         return new JsonResponse($price);
@@ -978,7 +1216,14 @@ class ProductController extends Controller
                 $product->getIsLamp(),
                 $product->getNumberOfPackages(),
                 $product->getIsMattress(),
-                false
+                false,
+                $product->getIsFaucet(),
+                $product->getIsGrill(),
+                $product->getIsShelf(),
+                $product->getIsDesk(),
+                $product->getIsBookcase(),
+                $product->getIsComoda(),
+                $product->getIsRepisa()
             );
             $product->setPrice($finalPrice);
             $product->setIsFurniture(true);

@@ -202,10 +202,10 @@
             {% else %}
                 weight: 0,
             {% endif %}
-            {% if product.ikeaPrice is defined %}
-                ikeaPrice: {{product.ikeaPrice}},
+            {% if product.price is defined %}
+                price: {{product.price}},
             {% else %}
-                ikeaPrice: 0,
+                price: 0,
             {% endif %}
             {% if product.isFurniture is defined and product.isFurniture %}
                 isFurniture: true,
@@ -233,18 +233,16 @@
                 categories: false,
             {% endif %}
             {% if product.type is defined %}
-                id: '{{ product.id }}',
                 type: 'target',
                 count: {{ product.count }},
                 amount: {{ product.amount }},
             {% endif %}
             {% if product.product is defined %}
                 id: '{{ product.product.id }}',
-                name: '{{ product.product.name }}',
                 count: {{ product.count }},
             {% endif %}
-            {% if 'offer' in product | keys and product.offer %}
-                offer: {{ product.offer.id }},
+            {% if product.offer is defined %}
+                offer: {{ product.offer }},
             {% else %}
                 offer: false
             {% endif %}

@@ -239,7 +239,14 @@ class Facture
             $factureProduct->getProduct()->getIsLamp(),
             $factureProduct->getProduct()->getNumberOfPackages(),
             $factureProduct->getProduct()->getIsMattress(),
-            $factureProduct->getIsAriplaneMattress()
+            $factureProduct->getIsAriplaneMattress(),
+            $factureProduct->getProduct()->getIsFaucet(),
+            $factureProduct->getProduct()->getIsGrill(),
+            $factureProduct->getProduct()->getIsShelf(),
+            $factureProduct->getProduct()->getIsDesk(),
+            $factureProduct->getProduct()->getIsBookcase(),
+            $factureProduct->getProduct()->getIsComoda(),
+            $factureProduct->getProduct()->getIsRepisa()
           );
         } else {
           $price = $factureProduct->getProduct()->getPrice();

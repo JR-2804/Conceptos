@@ -53,7 +53,9 @@ $(document).ready(function() {
       $("#products").val(JSON.stringify(products));
 
       $("#check_out_type").val($("#type-select").val());
-      $("#check_out_ignoreTransport").val($("#ignoreTransport").val());
+      $("#check_out_ignoreTransport").val(
+        $("#ignoreTransport").prop("checked")
+      );
 
       if ($("#type-select").val() === "facture") {
         $("#check_out_prefacture").val($("#prefactures-select").val());

@@ -160,7 +160,14 @@ $(document).ready(function() {
           isOversize: $("#is-oversize").prop("checked"),
           isTableware: $("#is-tableware").prop("checked"),
           isLamp: $("#is-lamp").prop("checked"),
-          numberOfPackages: $("#number-of-packages").val()
+          numberOfPackages: $("#number-of-packages").val(),
+          isFacucet: $("#is-faucet").prop("checked"),
+          isGrill: $("#is-grill").prop("checked"),
+          isShelf: $("#is-shelf").prop("checked"),
+          isDesk: $("#is-desk").prop("checked"),
+          isBookcase: $("#is-bookcase").prop("checked"),
+          isComoda: $("#is-comoda").prop("checked"),
+          isRepisa: $("#is-repisa").prop("checked")
         },
         function(response) {
           var valueResponse = Number(response).toFixed(2);
@@ -198,6 +205,13 @@ $(document).ready(function() {
       $("#product_item").val($("#item").val());
       $("#product_isFurniture").val($("#is-furniture").prop("checked"));
       $("#product_isMattress").val($("#is-mattress").prop("checked"));
+      $("#product_isFaucet").val($("#is-faucet").prop("checked"));
+      $("#product_isGrill").val($("#is-grill").prop("checked"));
+      $("#product_isShelf").val($("#is-shelf").prop("checked"));
+      $("#product_isDesk").val($("#is-desk").prop("checked"));
+      $("#product_isBookcase").val($("#is-bookcase").prop("checked"));
+      $("#product_isComoda").val($("#is-comoda").prop("checked"));
+      $("#product_isRepisa").val($("#is-repisa").prop("checked"));
       $("#product_description").val($("#description").val());
       $("#product_category").val(JSON.stringify($("#category").val()));
       $("#product_image").val(data.image.id);

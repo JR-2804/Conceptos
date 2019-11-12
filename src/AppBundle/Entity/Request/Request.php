@@ -243,7 +243,14 @@ class Request
             $requestProduct->getProduct()->getIsLamp(),
             $requestProduct->getProduct()->getNumberOfPackages(),
             $requestProduct->getProduct()->getIsMattress(),
-            $requestProduct->getIsAriplaneMattress()
+            $requestProduct->getIsAriplaneMattress(),
+            $requestProduct->getProduct()->getIsFaucet(),
+            $requestProduct->getProduct()->getIsGrill(),
+            $requestProduct->getProduct()->getIsShelf(),
+            $requestProduct->getProduct()->getIsDesk(),
+            $requestProduct->getProduct()->getIsBookcase(),
+            $requestProduct->getProduct()->getIsComoda(),
+            $requestProduct->getProduct()->getIsRepisa()
           );
         } else {
           $price = $requestProduct->getProduct()->getPrice();

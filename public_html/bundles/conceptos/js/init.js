@@ -60,11 +60,24 @@ $(document).ready(function() {
   if (highlightImages) {
     data.highlightImages = JSON.parse(highlightImages);
   }
-  $("#is-airplane-furniture").prop("checked", $("#product_isAriplaneForniture").val() == 1);
-  $("#is-airplane-mattress").prop("checked", $("#product_isAriplaneMattress").val() == 1);
+  $("#is-airplane-furniture").prop(
+    "checked",
+    $("#product_isAriplaneForniture").val() == 1
+  );
+  $("#is-airplane-mattress").prop(
+    "checked",
+    $("#product_isAriplaneMattress").val() == 1
+  );
   $("#is-fragile").prop("checked", $("#product_isFragile").val() == 1);
   $("#is-oversize").prop("checked", $("#product_isOversize").val() == 1);
   $("#is-tableware").prop("checked", $("#product_isTableware").val() == 1);
   $("#is-lamp").prop("checked", $("#product_isLamp").val() == 1);
+  $("#is-faucet").prop("checked", $("#product_isFaucet").val() == 1);
+  $("#is-grill").prop("checked", $("#product_isGrill").val() == 1);
+  $("#is-shelf").prop("checked", $("#product_isShelf").val() == 1);
+  $("#is-desk").prop("checked", $("#product_isDesk").val() == 1);
+  $("#is-bookcase").prop("checked", $("#product_isBookcase").val() == 1);
+  $("#is-comoda").prop("checked", $("#product_isComoda").val() == 1);
+  $("#is-repisa").prop("checked", $("#product_isRepisa").val() == 1);
   $("#number-of-packages").val($("#product_numberOfPackages").val());
 });
