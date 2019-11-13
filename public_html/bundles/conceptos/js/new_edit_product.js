@@ -143,7 +143,7 @@ $(document).ready(function() {
   });
 
   $(".btn-calculate-price").click(function() {
-    var weight = $("#weight").val();
+    var weight = getWeight();
     var ikeaPrice = $("#ikea-price").val();
     if (weight && ikeaPrice) {
       ajax(
@@ -187,13 +187,7 @@ $(document).ready(function() {
     if (!validForm()) {
       e.preventDefault();
     } else {
-      var weight = $("#weight").val();
-      var weightUnity = $("#weight-unity").val();
-      if (weightUnity === "oz") {
-        weight = (weight / 35.27).toFixed(2);
-      } else if (weightUnity === "lbs") {
-        weight = (weight / 2.2).toFixed(2);
-      }
+      var weight = getWeight();
 
       if (!$("#priority").val()) {
         $("#priority").val(0);
@@ -255,6 +249,17 @@ $(document).ready(function() {
     }
   });
 });
+
+function getWeight() {
+  var weight = $("#weight").val();
+  var weightUnity = $("#weight-unity").val();
+  if (weightUnity === "oz") {
+    weight = (weight / 35.27).toFixed(2);
+  } else if (weightUnity === "lbs") {
+    weight = (weight / 2.2).toFixed(2);
+  }
+  return weight;
+}
 
 function validForm() {
   var valid = true;
