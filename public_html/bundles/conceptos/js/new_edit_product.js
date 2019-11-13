@@ -161,7 +161,7 @@ $(document).ready(function() {
           isTableware: $("#is-tableware").prop("checked"),
           isLamp: $("#is-lamp").prop("checked"),
           numberOfPackages: $("#number-of-packages").val(),
-          isFacucet: $("#is-faucet").prop("checked"),
+          isFaucet: $("#is-faucet").prop("checked"),
           isGrill: $("#is-grill").prop("checked"),
           isShelf: $("#is-shelf").prop("checked"),
           isDesk: $("#is-desk").prop("checked"),
