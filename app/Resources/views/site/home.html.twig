@@ -339,9 +339,26 @@
                                 <a class="btn btn-custom btn-success btn-add-cart add-to-cart-button"
                                    data-path="{{ path('add_shop_card', {id: inStoreHighlight.id, offer: 'false'}) }}">
                                     <i class="mbri-shopping-cart"></i>
+                                    {% set priceOffer = -1 %}
                                     {% if inStoreHighlight.priceOffer is not null and inStoreHighlight.priceOffer != -1 %}
-                                        {{ inStoreHighlight.priceOffer }} CUC
-                                    {% else %}
+                                        {% set priceOffer = inStoreHighlight.priceOffer %}
+                                    {% endif %}
+                                    {% if priceOffer == -1 %}
+                                        {% for category in inStoreHighlight.categories %}
+                                          {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and inStoreHighlight.inStore)) %}
+                                            {% set priceOffer = (inStoreHighlight.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
+                                          {% else %}
+                                            {% for parentCategory in category.parents %}
+                                              {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and inStoreHighlight.inStore)) %}
+                                                {% set priceOffer = (inStoreHighlight.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
+                                              {% endif %}
+                                            {% endfor %}
+                                          {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% if priceOffer != -1 %}
+                                        {{ priceOffer }} CUC
+                                      {% else %}
                                         {{ inStoreHighlight.price }} CUC
                                     {% endif %}
                                 </a>
@@ -613,9 +630,26 @@
                                 <a class="btn btn-custom btn-success btn-add-cart add-to-cart-button"
                                    data-path="{{ path('add_shop_card', {id: lastedHighlight.id, offer: 'false'}) }}">
                                     <i class="mbri-shopping-cart"></i>
+                                    {% set priceOffer = -1 %}
                                     {% if lastedHighlight.priceOffer is not null and lastedHighlight.priceOffer != -1 %}
-                                        {{ lastedHighlight.priceOffer }} CUC
-                                    {% else %}
+                                        {% set priceOffer = lastedHighlight.priceOffer %}
+                                    {% endif %}
+                                    {% if priceOffer == -1 %}
+                                        {% for category in lastedHighlight.categories %}
+                                          {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and lastedHighlight.inStore)) %}
+                                            {% set priceOffer = (lastedHighlight.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
+                                          {% else %}
+                                            {% for parentCategory in category.parents %}
+                                              {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and lastedHighlight.inStore)) %}
+                                                {% set priceOffer = (lastedHighlight.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
+                                              {% endif %}
+                                            {% endfor %}
+                                          {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% if priceOffer != -1 %}
+                                        {{ priceOffer }} CUC
+                                      {% else %}
                                         {{ lastedHighlight.price }} CUC
                                     {% endif %}
                                 </a>

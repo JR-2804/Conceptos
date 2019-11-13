@@ -69,6 +69,10 @@ class Offer
      * @ORM\Column(type="boolean")
      */
     private $onlyForMembers;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $onlyInStoreProducts;
 
     /**
      * Offer constructor.
@@ -377,5 +381,17 @@ class Offer
     public function getOnlyForMembers()
     {
         return $this->onlyForMembers;
+    }
+
+    public function setOnlyInStoreProducts($onlyInStoreProducts)
+    {
+        $this->onlyInStoreProducts = $onlyInStoreProducts;
+
+        return $this;
+    }
+
+    public function getOnlyInStoreProducts()
+    {
+        return $this->onlyInStoreProducts;
     }
 }

@@ -394,12 +394,12 @@ class SiteController extends Controller
                 foreach ($productDB->getCategories() as $category) {
                   $categories[] = $category->getId();
 
-                  if ($category->getOffers()[0]) {
+                  if (($category->getOffers()[0]) && ((!$category->getOffers()[0]->getOnlyInStoreProducts()) or ($category->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
                     $categoryOffer = ceil($productDB->getPrice()*(1 - $category->getOffers()[0]->getPrice()/100));
                     $categoryOfferForMembers = $category->getOffers()[0]->getOnlyForMembers();
                   } else {
                     foreach ($category->getParents() as $parentCategory) {
-                      if ($parentCategory->getOffers()[0]) {
+                      if (($parentCategory->getOffers()[0]) && ((!$parentCategory->getOffers()[0]->getOnlyInStoreProducts()) or ($parentCategory->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
                         $categoryOffer = ceil($productDB->getPrice()*(1 - $parentCategory->getOffers()[0]->getPrice()/100));
                         $categoryOfferForMembers = $parentCategory->getOffers()[0]->getOnlyForMembers();
                       }
@@ -1011,11 +1011,11 @@ class SiteController extends Controller
                     $offerDB = $offer->getId();
                 } else {
                   foreach ($productDB->getCategories() as $category) {
-                    if ($category->getOffers()[0]) {
+                    if (($category->getOffers()[0]) && ((!$category->getOffers()[0]->getOnlyInStoreProducts()) or ($category->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
                       $productPrice = ceil($productDB->getPrice()*(1 - $category->getOffers()[0]->getPrice()/100));
                     } else {
                       foreach ($category->getParents() as $parentCategory) {
-                        if ($parentCategory->getOffers()[0]) {
+                        if (($parentCategory->getOffers()[0]) && ((!$parentCategory->getOffers()[0]->getOnlyInStoreProducts()) or ($parentCategory->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
                           $productPrice = ceil($productDB->getPrice()*(1 - $parentCategory->getOffers()[0]->getPrice()/100));
                         }
                       }

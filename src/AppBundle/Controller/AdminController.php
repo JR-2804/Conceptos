@@ -72,6 +72,14 @@ class AdminController extends BaseAdmin
     public function prePersistOfferEntity($offer)
     {
         $this->updateDateUpdate();
+
+        if ($offer->getOnlyInStoreProducts()) {
+          $categories = $this->getDoctrine()->getManager()->getRepository('AppBundle:Category')->findAll();
+          foreach ($categories as $category) {
+            $category->addOffer($offer);
+            $offer->addCategory($category);
+          }
+        }
     }
 
     public function preUpdateOfferEntity($offer)

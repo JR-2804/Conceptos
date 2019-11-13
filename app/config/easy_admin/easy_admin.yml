@@ -117,6 +117,7 @@ easy_admin:
                     - {property: 'products', label: 'Productos'}
                     - {property: 'categories', label: 'Categorías'}
                     - {property: 'onlyForMembers', label: 'Solo Para Miembros'}
+                    - {property: 'onlyInStoreProducts', label: 'Para Productos en Almacén'}
         Request:
             class: AppBundle\Entity\Request\Request
             label: Pedidos
