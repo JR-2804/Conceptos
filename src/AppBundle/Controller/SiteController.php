@@ -418,11 +418,22 @@ class SiteController extends Controller
                     'weight' => $productDB->getWeight(),
                     'ikeaPrice' => $productDB->getIkeaPrice(),
                     'isFurniture' => $productDB->getIsFurniture(),
+                    'isFragile' => $productDB->getIsFragile(),
                     'isAriplaneForniture' => $productDB->getIsAriplaneForniture(),
+                    'isOversize' => $productDB->getIsOversize(),
+                    'isTableware' => $productDB->getIsTableware(),
+                    'isLamp' => $productDB->getIsLamp(),
+                    'numberOfPackages' => $productDB->getNumberOfPackages(),
                     'isMattress' => $productDB->getIsMattress(),
                     'isAriplaneMattress' => $productDB->getIsAriplaneMattress(),
+                    'isFaucet' => $productDB->getIsFaucet(),
+                    'isGrill' => $productDB->getIsGrill(),
+                    'isShelf' => $productDB->getIsShelf(),
+                    'isDesk' => $productDB->getIsDesk(),
+                    'isBookcase' => $productDB->getIsBookcase(),
+                    'isComoda' => $productDB->getIsComoda(),
+                    'isRepisa' => $productDB->getIsRepisa(),
                     'categories' => json_encode($categories),
-                    'numberOfPackages' => $productDB->getNumberOfPackages(),
                 ];
             }
         }

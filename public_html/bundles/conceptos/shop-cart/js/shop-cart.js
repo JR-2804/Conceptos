@@ -137,7 +137,14 @@ $(document).ready(function() {
         isOversize: product.isOversize,
         isTableware: product.isTableware,
         isLamp: product.isLamp,
-        numberOfPackages: product.numberOfPackages
+        numberOfPackages: product.numberOfPackages,
+        isFaucet: product.isFaucet,
+        isGrill: product.isGrill,
+        isShelf: product.isShelf,
+        isDesk: product.isDesk,
+        isBookcase: product.isBookcase,
+        isComoda: product.isComoda,
+        isRepisa: product.isRepisa
       },
       function(response) {
         var calculatedPrice = Number(response);

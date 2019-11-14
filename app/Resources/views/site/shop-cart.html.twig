@@ -178,7 +178,7 @@
                         <div class="col-lg-3 col-12 mt-3 mt-lg-0 pl-0">
                             <div class="cart-quantity-button d-flex flex-column align-items-start justify-content-center h-100">
                                 <div class="delivery-type">
-                                    {% if (product.isFurniture and product.isAriplaneForniture) or (product.isMattress and product.isAriplaneMattress) %}
+                                    {% if ((product.isFurniture and product.isAriplaneForniture) or (product.isMattress and product.isAriplaneMattress)) and (not product.offer) and (not product.categoryOffer) %}
                                         <span class="price-header">Tipo de Entrega</span>
                                         <div>
                                             <select class="form-control" data-product="{{ product.product.id }}"
@@ -398,6 +398,66 @@
                 isAriplaneMattress: true,
             {% else %}
                 isAriplaneMattress: false,
+            {% endif %}
+            {% if product.isFragile is defined and product.isFragile %}
+                isFragile: true,
+            {% else %}
+                isFragile: false,
+            {% endif %}
+            {% if product.isOversize is defined and product.isOversize %}
+                isOversize: true,
+            {% else %}
+                isOversize: false,
+            {% endif %}
+            {% if product.isTableware is defined and product.isTableware %}
+                isTableware: true,
+            {% else %}
+                isTableware: false,
+            {% endif %}
+            {% if product.isLamp is defined and product.isLamp %}
+                isLamp: true,
+            {% else %}
+                isLamp: false,
+            {% endif %}
+            {% if product.numberOfPackages is defined and product.numberOfPackages %}
+                numberOfPackages: {{product.numberOfPackages}},
+            {% else %}
+                numberOfPackages: false,
+            {% endif %}
+            {% if product.isFaucet is defined and product.isFaucet %}
+                isFaucet: true,
+            {% else %}
+                isFaucet: false,
+            {% endif %}
+            {% if product.isGrill is defined and product.isGrill %}
+                isGrill: true,
+            {% else %}
+                isGrill: false,
+            {% endif %}
+            {% if product.isShelf is defined and product.isShelf %}
+                isShelf: true,
+            {% else %}
+                isShelf: false,
+            {% endif %}
+            {% if product.isDesk is defined and product.isDesk %}
+                isDesk: true,
+            {% else %}
+                isDesk: false,
+            {% endif %}
+            {% if product.isBookcase is defined and product.isBookcase %}
+                isBookcase: true,
+            {% else %}
+                isBookcase: false,
+            {% endif %}
+            {% if product.isComoda is defined and product.isComoda %}
+                isComoda: true,
+            {% else %}
+                isComoda: false,
+            {% endif %}
+            {% if product.isRepisa is defined and product.isRepisa %}
+                isRepisa: true,
+            {% else %}
+                isRepisa: false,
             {% endif %}
             {% if product.categories is defined %}
                 categories: {{product.categories}},
