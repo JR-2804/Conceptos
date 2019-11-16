@@ -151,7 +151,44 @@
                                             <div class="card card-category-parent">
                                                 <div id="accordion" role="tablist">
                                                     {% for category in categories %}
-                                                        {% if category.parents is empty %}
+                                                        {% if category.parents is empty and category.name == "MOBILIARIO" %}
+                                                            <div class="card card-category">
+                                                                <div class="card-header card-header-category pt-0 pr-0" role="tab"
+                                                                    id="{{ category.id }}heading">
+                                                                    <h5 class="mb-0">
+                                                                        <a class="d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#{{ category.id }}" href="javascript:void(0);">
+                                                                            {{ category.name }}
+                                                                            <span class="badge text-right badge-plus">
+                                                                                <i class="mbri-arrow-down"></i>
+                                                                            </span>
+                                                                        </a>
+                                                                    </h5>
+                                                                </div>
+                                                                <div id="{{ category.id }}" class="collapse {% if loop.index == 0 %}show{% endif %}" role="tabpanel">
+                                                                    <div class="card-body card-body-subcategory ac-custom ac-checkmark ml-0 pr-0">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <div class="d-flex mb-3">
+                                                                                    <input type="checkbox" data-parent="-1" class="category-checkbox" value="{{ category.id }}">
+                                                                                    <label>Todos</label>
+                                                                                </div>
+                                                                            </li>
+                                                                            {% for child in category.subCategories %}
+                                                                                <li>
+                                                                                    <div class="d-flex mb-3">
+                                                                                        <input type="checkbox" data-parent="{{ category.id }}" class="category-checkbox" value="{{ child.id }}">
+                                                                                        <label>{{child.name}}</label>
+                                                                                    </div>
+                                                                                </li>
+                                                                            {% endfor %}
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    {% for category in categories %}
+                                                        {% if category.parents is empty and category.name != "MOBILIARIO" %}
                                                             <div class="card card-category">
                                                                 <div class="card-header card-header-category pt-0 pr-0" role="tab"
                                                                     id="{{ category.id }}heading">
@@ -261,7 +298,16 @@
                                 <a class="header-button header-button-recent" href="{{ path('products', {recent:true}) }}">Nuevo</a>
                                 <a class="header-button header-button-in-store" href="{{ path('products', {inStore:true}) }}">En Almacén</a>
                                 {% for category in categories %}
-                                    {% if (category.parents | length) == 0 %}
+                                    {% if (category.parents | length) == 0 and category.name == "MOBILIARIO" %}
+                                        {% set subCategories = '' %}
+                                        {% for subCategory in category.subCategories %}
+                                            {% set subCategories = subCategory.id ~ ', '~ subCategories %}
+                                        {% endfor %}
+                                        <a class="header-button header-button-lighted" href="{{ path('products', {categories:subCategories}) }}">{{category.name}}</a>
+                                    {% endif %}
+                                {% endfor %}
+                                {% for category in categories %}
+                                    {% if (category.parents | length) == 0 and category.name != "MOBILIARIO" %}
                                         {% set subCategories = '' %}
                                         {% for subCategory in category.subCategories %}
                                             {% set subCategories = subCategory.id ~ ', '~ subCategories %}
@@ -348,7 +394,40 @@
                                                 <div class="card card-category-parent">
                                                     <div id="accordion" role="tablist">
                                                         {% for category in categories %}
-                                                            {% if category.parents is empty %}
+                                                            {% if category.parents is empty and category.name == "MOBILIARIO" %}
+                                                                <div class="card card-category">
+                                                                    <div class="card-header card-header-category" role="tab"
+                                                                        id="{{ category.id }}heading">
+                                                                        <h5 class="mb-0">
+                                                                            <a class="d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#{{ category.id }}" href="javascript:void(0);">
+                                                                                {{ category.name }}
+                                                                                <span class="badge text-right badge-plus">
+                                                                                    <i class="mbri-arrow-down"></i>
+                                                                                </span>
+                                                                            </a>
+                                                                        </h5>
+                                                                    </div>
+                                                                    <div id="{{ category.id }}" class="collapse {% if loop.index == 0 %}show{% endif %}" role="tabpanel">
+                                                                        <div class="card-body card-body-subcategory ac-custom ac-checkmark">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <input type="checkbox" data-parent="-1" class="category-checkbox" value="{{ category.id }}">
+                                                                                    <label>Todos</label>
+                                                                                </li>
+                                                                                {% for child in category.subCategories %}
+                                                                                    <li>
+                                                                                        <input type="checkbox" data-parent="{{ category.id }}" class="category-checkbox" value="{{ child.id }}">
+                                                                                        <label>{{child.name}}</label>
+                                                                                    </li>
+                                                                                {% endfor %}
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {% for category in categories %}
+                                                            {% if category.parents is empty and category.name != "MOBILIARIO" %}
                                                                 <div class="card card-category">
                                                                     <div class="card-header card-header-category" role="tab"
                                                                         id="{{ category.id }}heading">

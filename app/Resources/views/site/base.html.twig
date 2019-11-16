@@ -179,7 +179,28 @@
                                 <a class="dropdown-item" href="{{ path('products') }}">Todos</a>
                             </li>
                             {% for category in categories %}
-                                {% if (category.parents | length) == 0 %}
+                                {% if (category.parents | length) == 0 and category.name == "MOBILIARIO" %}
+                                    {% set subCategories = '' %}
+                                    {% for subCategory in category.subCategories %}
+                                        {% set subCategories = subCategory.id ~ ', '~ subCategories %}
+                                    {% endfor %}
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="{{ path('products', {categories:subCategories}) }}"
+                                           onclick="onBottomDropdownClick(this)">
+                                            {{category.name}}
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            {% for subCategory in category.subCategories %}
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ path('products', {categories:subCategory.id}) }}">{{subCategory.name}}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            {% for category in categories %}
+                                {% if (category.parents | length) == 0 and category.name != "MOBILIARIO" %}
                                     {% set subCategories = '' %}
                                     {% for subCategory in category.subCategories %}
                                         {% set subCategories = subCategory.id ~ ', '~ subCategories %}
