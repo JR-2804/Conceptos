@@ -111,7 +111,7 @@ class ProductService
           $repisaExtra = $isRepisa ? 20 : 0;
 
           return ceil(
-            ($ikeaPrice*1.1 + $weight*4.4 + $numberOfPackagesExtra + $mattressExtra + $grillExtra + $shelfExtra + $deskExtra + $bookcaseExtra + $comodaExtra + $repisaExtra + 20)*2
+            ($ikeaPrice*1.1 + $weight*4.4 + $numberOfPackagesExtra + $mattressExtra + $grillExtra + $shelfExtra + $deskExtra + $bookcaseExtra + $comodaExtra + $repisaExtra + 20)*2.2
           );
         } else {
           $fragileExtra = $isFragile ? 4 : 0;
@@ -128,7 +128,7 @@ class ProductService
           $repisaExtra = $isRepisa ? 50 : 0;
 
           return ceil(
-            ($ikeaPrice*1.1 + $weight*16 + $fragileExtra + $lampExtra + $oversizeExtra + $mattressExtra + $tablewareExtra + $faucetExtra + $grillExtra + $shelfExtra + $deskExtra + $bookcaseExtra + $comodaExtra + $repisaExtra)*2
+            ($ikeaPrice*1.1 + $weight*16 + $fragileExtra + $lampExtra + $oversizeExtra + $mattressExtra + $tablewareExtra + $faucetExtra + $grillExtra + $shelfExtra + $deskExtra + $bookcaseExtra + $comodaExtra + $repisaExtra)*2.2
           );
         }
     }
