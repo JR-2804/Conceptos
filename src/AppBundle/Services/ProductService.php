@@ -350,8 +350,6 @@ class ProductService
         $products = $qbProduct
             ->orderBy('o.price', 'DESC')
             ->addOrderBy('p.inStore', 'DESC')
-            ->addOrderBy('p.popular', 'DESC')
-            ->addOrderBy('p.recent', 'DESC')
             ->addOrderBy('p.price', 'ASC')
             ->addOrderBy('p.name', 'DESC')
             ->setFirstResult($firstResult)

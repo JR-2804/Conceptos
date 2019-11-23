@@ -1327,6 +1327,50 @@ class SiteController extends Controller
     }
 
     /**
+     * @Route(name="print_request", path="/imprimir-pedido/{id}")
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function printRequestAction(Request $request, $id)
+    {
+        $requestDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->find($id);
+
+        $productsResponse = [];
+        foreach ($requestDB->getRequestProducts() as $product) {
+          $productDB = $product->getProduct();
+
+          $productsResponse[] = [
+              'image' => $productDB->getMainImage(),
+              'code' => $productDB->getCode(),
+              'count' => $product->getCount(),
+              'price' => $product->getProductPrice(),
+              'product' => $productDB,
+          ];
+        }
+
+        foreach ($requestDB->getRequestCards() as $card) {
+          $price = $card->getPrice();
+
+          $productsResponse[] = [
+              'name' => 'Tarjeta de $'.$price,
+              'code' => $price,
+              'count' => $card->getCount(),
+              'price' => $price,
+          ];
+        }
+
+        return $this->render(':site:request-export-pdf.html.twig', [
+            'request' => $requestDB,
+            'products' => $productsResponse,
+            'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
+            'membership' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Membresia']),
+        ]);
+    }
+
+    /**
      * @Route(name="print_prefacture", path="/imprimir-prefactura/{id}")
      *
      * @param Request $request
@@ -1337,7 +1381,6 @@ class SiteController extends Controller
     public function printPreFactureAction(Request $request, $id)
     {
         $prefactureDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->find($id);
-        $client = $prefactureDB->getClient();
 
         $productsResponse = [];
         foreach ($prefactureDB->getPreFactureProducts() as $product) {
@@ -1363,7 +1406,7 @@ class SiteController extends Controller
           ];
         }
 
-        return $this->render(':site:prefacture-pdf.html.twig', [
+        return $this->render(':site:prefacture-export-pdf.html.twig', [
             'prefacture' => $prefactureDB,
             'products' => $productsResponse,
             'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
@@ -1382,7 +1425,6 @@ class SiteController extends Controller
     public function printFactureAction(Request $request, $id)
     {
         $factureDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Facture')->find($id);
-        $client = $factureDB->getClient();
 
         $productsResponse = [];
         foreach ($factureDB->getFactureProducts() as $product) {
@@ -1408,7 +1450,7 @@ class SiteController extends Controller
           ];
         }
 
-        return $this->render(':site:facture-pdf.html.twig', [
+        return $this->render(':site:facture-export-pdf.html.twig', [
             'facture' => $factureDB,
             'products' => $productsResponse,
             'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),

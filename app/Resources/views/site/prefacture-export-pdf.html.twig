@@ -99,9 +99,11 @@
           <div class="col-12 pl-0">
             <span>Miembro Comunidad Conceptos: {% if prefacture.client.memberNumber %}Si{% else %}No{% endif %}</span>
           </div>
-          <div class="col-12 pl-0 pt-1">
-            <span>No. de miembro: {{prefacture.client.memberNumber}}</span>
-          </div>
+          {% if prefacture.client.memberNumber %}
+            <div class="col-12 pl-0 pt-1">
+              <span>No. de miembro: {{prefacture.client.memberNumber}}</span>
+            </div>
+          {% endif %}
         </div>
       </div>
       <div class="row pt-3">
