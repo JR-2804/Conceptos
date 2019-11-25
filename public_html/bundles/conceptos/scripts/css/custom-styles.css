@@ -2272,7 +2272,7 @@ i.share-icon:hover {
 }
 
 .home-badge {
-  top: 77px;
+  top: 63px;
   position: -webkit-sticky;
   position: sticky;
   z-index: 900;
@@ -2335,4 +2335,13 @@ i.share-icon:hover {
 .help-page-header-short {
   width: 100%;
   padding-top: 7px;
+}
+
+.navbar .additional-navbar-button.nav-shop-cart-icon {
+  margin-top: 9px;
+  margin-right: 45px;
+}
+
+.navbar.navbar-short .additional-navbar-button.nav-shop-cart-icon {
+  margin-top: -5px;
 }

@@ -87,15 +87,23 @@
                     <span></span>
                 </div>
             </button>
-            <div class="menu-logo">
-                <div class="navbar-brand">
-                <span class="navbar-logo">
-                    <a href="{{ path('site_home') }}">
-                         <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
-                              title="Conceptos"
-                              style="height: 3.8rem;" class="logo-menu">
-                    </a>
-                </span>
+            <a class="text-white nav-shop-cart-icon navbar-toggler-right additional-navbar-button d-lg-none"
+                href="{{ path('shop-cart') }}">
+                <span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>
+                <span class="badge badge-shop-cart">{{ count }}</span>
+            </a>
+            <div class="menu-logo col-6 col-lg-3 pl-0 pl-lg-3">
+                <div class="navbar-brand ml-0">
+                    <span class="navbar-logo">
+                        <a href="{{ path('site_home') }}">
+                            <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
+                                 title="Conceptos"
+                                 style="height: 3.8rem;" class="logo-menu d-none d-lg-flex">
+                            <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
+                                 title="Conceptos"
+                                 style="width:100%;height: auto !important;" class="logo-menu d-lg-none">
+                        </a>
+                    </span>
                 </div>
             </div>
             <div class="d-flex flex-column align-items-end collapse navbar-collapse" id="navbarSupportedContent">
