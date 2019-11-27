@@ -24,7 +24,7 @@
                 <div class="container">
                     <div class="post-single">
                         <div class="post-thumbnail">
-                            <img src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.title }}" class="img-fluid">
+                            <img src="{{ absolute_url(vich_uploader_asset(post, 'imageFile')) }}" alt="{{ post.title }}" class="img-fluid">
                         </div>
                         <div class="post-details">
                             <div class="post-meta d-flex justify-content-between">
@@ -68,7 +68,7 @@
                                         <div class="comment-header d-flex justify-content-between">
                                             <div class="user d-flex align-items-center">
                                                 <div class="image"><img
-                                                            src="{{ asset('bundles/conceptos/blog/user.svg') }}"
+                                                            src="{{ absolute_url(asset('bundles/conceptos/blog/user.svg')) }}"
                                                             alt="{{ comment.name }}" class="img-fluid rounded-circle">
                                                 </div>
                                                 <div class="title"><strong>{{ comment.name }}</strong><span
@@ -113,7 +113,7 @@
                         {% for last in lasts %}
                             <a href="{{ path('blog_details', {id: last.id, title: last.path }) }}">
                                 <div class="item d-flex align-items-center">
-                                    <div class="image"><img src="{{ vich_uploader_asset(last, 'imageFile') }}"
+                                    <div class="image"><img src="{{ absolute_url(vich_uploader_asset(last, 'imageFile')) }}"
                                                             alt="{{ last.title }}" class="img-fluid"></div>
                                     <div class="title"><strong>{{ last.title }}</strong>
                                         <div class="d-flex align-items-center">
