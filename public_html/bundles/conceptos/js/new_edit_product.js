@@ -326,13 +326,6 @@ function validForm() {
   } else {
     addRemoveErrorClass(shippingLimit, false);
   }
-  var numberOfPackages = $("#number-of-packages");
-  if (!$(numberOfPackages).val()) {
-    addRemoveErrorClass(numberOfPackages, true);
-    valid = false;
-  } else {
-    addRemoveErrorClass(numberOfPackages, false);
-  }
   var calculatePrice = $("#calculate-price");
   if (!$(calculatePrice).val()) {
     addRemoveErrorClass(calculatePrice, true);

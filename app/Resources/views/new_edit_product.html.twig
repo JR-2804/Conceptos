@@ -23,35 +23,35 @@
     {% endif %}
 {% endblock %}
 {% block main %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-4">
+    <div class="container-fluid" style="padding: 0px;">
+        <div class="row flex-wrap">
+            <div class="col-12 col-lg-4">
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
                     <input type="text" class="form-control" id="name">
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-12 col-lg-4">
                 <div class="form-group">
                     <label class="control-label">Código</label>
                     <input type="text" class="form-control" id="code">
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-12 col-lg-4">
                 <div class="form-group">
                     <label class="control-label">Item</label>
                     <input type="text" class="form-control" id="item">
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-6">
+        <div class="row flex-wrap">
+            <div class="col-12 col-lg-6">
                 <div class="form-group">
                     <label class="control-label">Descripción</label>
                     <textarea class="form-control" id="description" rows="4"></textarea>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-12 col-lg-3">
                 <div class="row">
                     <div class="col-12">
                         <div class="checkbox">
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-12 col-lg-3">
                 <div class="row">
                     <div class="col-12">
                         <div class="checkbox">
@@ -104,23 +104,23 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-2">
+        <div class="row flex-wrap">
+            <div class="col-12 col-lg-2">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" id="in-store"> <strong>En almacén</strong>
                     </label>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-12 col-lg-4">
                 <div class="form-group store-count-content" style="display: none;">
                     <label class="control-label">Cantidad en Almacén</label>
                     <input type="number" class="form-control" id="store-count">
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-6">
+        <div class="row flex-wrap">
+            <div class="col-12 col-lg-6">
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group">
@@ -162,13 +162,13 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-12 col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label">Límite por envío</label>
                                     <input type="number" class="form-control" id="shipping-limit" min="1">
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-12 col-lg-6">
                                 <div class="form-group">
                                     <label class="control-label">Número de Paquetes</label>
                                     <input type="number" class="form-control" id="number-of-packages" min="1">
@@ -176,99 +176,98 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-12">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="is-fragile"> <strong>Es Fragil</strong>
+                                        <input type="checkbox" id="is-oversize"> <strong>Bulto Independiente</strong>
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="is-lamp"> <strong>Es Lámpara</strong>
+                                        <input type="checkbox" id="is-desk"><strong>Buró</strong>
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="is-oversize"> <strong>Es Bulto Independiente</strong>
+                                        <input type="checkbox" id="is-mattress"> <strong>Colchón</strong>
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="is-tableware"> <strong>Es Juego de Vajilla</strong>
+                                        <input type="checkbox" id="is-comoda"><strong>Cómoda o Gavetero</strong>
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="is-faucet"> <strong>Es Grifo</strong>
+                                        <input type="checkbox" id="is-airplane-mattress"><strong>Colchón por Avión</strong>
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="is-mattress"> <strong>Es Colchón</strong>
+                                        <input type="checkbox" id="is-shelf"><strong>Estante</strong>
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="is-airplane-mattress"> <strong>Colchón por Avión</strong>
+                                        <input type="checkbox" id="is-fragile"><strong>Frágil</strong>
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="is-furniture"> <strong>Es Mobiliario</strong>
+                                        <input type="checkbox" id="is-faucet"><strong>Grifo</strong>
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="is-airplane-furniture"> <strong>Mobiliario por Avion</strong>
+                                        <input type="checkbox" id="is-grill"><strong>Grill</strong>
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="is-grill"> <strong>Es Grill</strong>
+                                        <input type="checkbox" id="is-tableware"><strong>Juego de Vajilla</strong>
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="is-shelf"> <strong>Es Estante</strong>
+                                        <input type="checkbox" id="is-lamp"><strong>Lámpara</strong>
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="is-desk"> <strong>Es Buró</strong>
+                                        <input type="checkbox" id="is-bookcase"><strong>Librero</strong>
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="is-bookcase"> <strong>Es Librero</strong>
+                                        <input type="checkbox" id="is-furniture"><strong>Mobiliario</strong>
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="is-comoda"> <strong>Es Cómoda o Gavetero</strong>
+                                        <input type="checkbox" id="is-airplane-furniture"><strong>Mobiliario por Avión</strong>
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="is-repisa"> <strong>Es Repisa</strong>
+                                        <input type="checkbox" id="is-repisa"><strong>Repisa</strong>
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-12 col-lg-4">
                                 <button class="btn btn-danger btn-calculate-price"
                                         data-path="{{ path('calculate_product_price') }}" style="margin-top: 20px;">
-                                    Calcular
-                                    Precio
+                                    Calcular Precio
                                 </button>
                             </div>
-                            <div class="col-4">
+                            <div class="col-12 col-lg-4">
                                 <div class="form-group">
                                     <label class="control-label">Precio Calculado</label>
                                     <input type="number" class="form-control" id="calculate-price">
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-12 col-lg-4">
                                 <div class="form-group">
                                     <label class="control-label">Precio</label>
                                     <input type="number" class="form-control" id="price">
@@ -278,7 +277,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-lg-6">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" id="is-highlight"> <strong>Destacado</strong>
