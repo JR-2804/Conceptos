@@ -1,7 +1,4 @@
 <?php
-require "auth.php";
-
-
 	/**
 	 * GIT DEPLOYMENT SCRIPT
 	 *
