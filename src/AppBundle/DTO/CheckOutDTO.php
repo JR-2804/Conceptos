@@ -6,7 +6,6 @@ use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
 
 class CheckOutDTO
 {
-
     private $name;
     private $address;
     private $email;
@@ -14,6 +13,9 @@ class CheckOutDTO
     private $movil;
     private $products;
     private $memberNumber;
+    private $type;
+    private $prefacture;
+    private $ignoreTransport;
 
     /**
      * @Recaptcha\IsTrue
@@ -146,5 +148,35 @@ class CheckOutDTO
     public function setMemberNumber($memberNumber)
     {
         $this->memberNumber = $memberNumber;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    public function getPrefacture()
+    {
+        return $this->prefacture;
+    }
+
+    public function setPrefacture($prefacture)
+    {
+        $this->prefacture = $prefacture;
+    }
+
+    public function getIgnoreTransport()
+    {
+        return $this->ignoreTransport;
+    }
+
+    public function setIgnoreTransport($ignoreTransport)
+    {
+        $this->ignoreTransport = $ignoreTransport;
     }
 }

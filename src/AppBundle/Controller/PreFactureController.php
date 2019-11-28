@@ -81,6 +81,7 @@ class PreFactureController extends Controller
         $factureDB->setPreFacture($preFacture);
       }
 
+      $preFacture->calculatePrice($this->get('product_service'));
       $this->getDoctrine()->getManager()->persist($preFacture);
       $this->getDoctrine()->getManager()->flush();
 
@@ -132,7 +133,8 @@ class PreFactureController extends Controller
         'airplaneMattress' => $preFactureProduct->getIsAriplaneMattress(),
       ];
       if ($preFactureProduct->getOffer()) {
-        $newRequestPnewPreFactureProductroduct["offerPrice"] = $preFactureProduct->getOffer()->getPrice();
+        $newPreFactureProduct["offerId"] = $preFactureProduct->getOffer()->getId();
+        $newPreFactureProduct["offerPrice"] = $preFactureProduct->getOffer()->getPrice();
       }
       $preFactureProducts[] = $newPreFactureProduct;
     }
@@ -189,6 +191,10 @@ class PreFactureController extends Controller
         $preFactureProduct->setCount($product['count']);
         $preFactureProduct->setIsAriplaneForniture($product['airplaneFurniture']);
         $preFactureProduct->setIsAriplaneMattress($product['airplaneMattress']);
+        if (array_key_exists('offerId', $product)) {
+          $preFactureProduct->setOffer($this->getDoctrine()->getRepository('AppBundle:Offer')->find($product['offerId']));
+        }
+
         $this->getDoctrine()->getManager()->persist($preFactureProduct);
         $preFactureDB->addPreFactureProduct($preFactureProduct);
       }
@@ -224,6 +230,7 @@ class PreFactureController extends Controller
         $factureDB->setPreFacture($preFactureDB);
       }
 
+      $preFactureDB->calculatePrice($this->get('product_service'));
       $this->getDoctrine()->getManager()->flush();
 
       return $this->redirectToRoute('easyadmin', [
@@ -233,6 +240,8 @@ class PreFactureController extends Controller
     }
     return $this->render('::new_edit_pre_facture.html.twig', [
       'prefactureId' => $id,
+      'memberNumber' => $preFactureDB->getClient()->getMemberNumber(),
+      'firstClient' => $preFactureDB->getClient()->getRequests()->count() == 1,
       'action' => 'edit',
       'clients' => $this->getDoctrine()->getRepository('AppBundle:Request\Client')->findAll(),
       'products' => $this->getDoctrine()->getRepository('AppBundle:Product')->findAll(),
@@ -407,6 +416,10 @@ class PreFactureController extends Controller
           $preFactureCard->setCount($preFactureCard->getCount() - $newCount);
         }
       }
+    }
+
+    foreach ($factures as $facture) {
+      $facture->calculatePrice($this->get('product_service'));
     }
 
     $this->getDoctrine()->getManager()->flush();

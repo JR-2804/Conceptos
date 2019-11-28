@@ -55,14 +55,16 @@
                                                 </div>
                                             {% endfor %}
                                         </div>
-                                        <a data-app-prevent-settings="" class="carousel-control carousel-control-prev carousel-control-short d-lg-none" role="button"
-                                            data-slide="prev" href="#product-images-carousel">
-                                            <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                                        </a>
-                                        <a data-app-prevent-settings="" class="carousel-control carousel-control-next carousel-control-short d-lg-none" role="button"
-                                            data-slide="next" href="#product-images-carousel">
-                                            <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                                        </a>
+                                        {% if product.images|length > 1 %}
+                                            <a data-app-prevent-settings="" class="carousel-control carousel-control-prev carousel-control-short d-lg-none" role="button"
+                                                data-slide="prev" href="#product-images-carousel">
+                                                <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+                                            </a>
+                                            <a data-app-prevent-settings="" class="carousel-control carousel-control-next carousel-control-short d-lg-none" role="button"
+                                                data-slide="next" href="#product-images-carousel">
+                                                <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+                                            </a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -92,6 +94,19 @@
                                                     {% endif %}
                                                 {% endif %}
                                             {% endfor %}
+                                            {% if priceOffer == -1 %}
+                                              {% for category in product.categories %}
+                                                {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and product.inStore)) %}
+                                                  {% set priceOffer = (product.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
+                                                {% else %}
+                                                  {% for parentCategory in category.parents %}
+                                                    {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and product.inStore)) %}
+                                                      {% set priceOffer = (product.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
+                                                    {% endif %}
+                                                  {% endfor %}
+                                                {% endif %}
+                                              {% endfor %}
+                                            {% endif %}
                                             {% if priceOffer != -1 %}
                                                 <span class="badge-custom badge-offer d-none d-lg-block">O</span>
                                                 <span class="badge-custom badge-custom-short badge-offer d-lg-none">O</span>

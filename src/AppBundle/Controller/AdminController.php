@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdmin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use AppBundle\Entity\BalanceUpdate;
 
 class AdminController extends BaseAdmin
 {
@@ -21,24 +22,24 @@ class AdminController extends BaseAdmin
         if ($request->query->get('entity') == 'Product' && $request->query->get('action') == 'edit' && ($request->query->get('property') != 'popular' && $request->query->get('property') != 'recent' && $request->query->get('property') != 'inStore')) {
             return $this->redirectToRoute('edit_product', array('id' => $request->query->get('id'), 'menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
         }
-        if ($request->query->get('entity') == 'Request' && $request->query->get('action') == 'new') {
-            return $this->redirectToRoute('new_request', array('menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
-        }
-        if ($request->query->get('entity') == 'Request' && $request->query->get('action') == 'edit') {
-          return $this->redirectToRoute('edit_request', array('id' => $request->query->get('id'), 'menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
-        }
-        if ($request->query->get('entity') == 'Facture' && $request->query->get('action') == 'new') {
-          return $this->redirectToRoute('new_facture', array('menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
-        }
-        if ($request->query->get('entity') == 'Facture' && $request->query->get('action') == 'edit') {
-          return $this->redirectToRoute('edit_facture', array('id' => $request->query->get('id'), 'menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
-        }
-        if ($request->query->get('entity') == 'PreFacture' && $request->query->get('action') == 'new') {
-          return $this->redirectToRoute('new_pre_facture', array('menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
-        }
-        if ($request->query->get('entity') == 'PreFacture' && $request->query->get('action') == 'edit') {
-          return $this->redirectToRoute('edit_pre_facture', array('id' => $request->query->get('id'), 'menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
-        }
+        // if ($request->query->get('entity') == 'Request' && $request->query->get('action') == 'new') {
+        //     return $this->redirectToRoute('new_request', array('menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
+        // }
+        // if ($request->query->get('entity') == 'Request' && $request->query->get('action') == 'edit') {
+        //   return $this->redirectToRoute('edit_request', array('id' => $request->query->get('id'), 'menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
+        // }
+        // if ($request->query->get('entity') == 'Facture' && $request->query->get('action') == 'new') {
+        //   return $this->redirectToRoute('new_facture', array('menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
+        // }
+        // if ($request->query->get('entity') == 'Facture' && $request->query->get('action') == 'edit') {
+        //   return $this->redirectToRoute('edit_facture', array('id' => $request->query->get('id'), 'menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
+        // }
+        // if ($request->query->get('entity') == 'PreFacture' && $request->query->get('action') == 'new') {
+        //   return $this->redirectToRoute('new_pre_facture', array('menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
+        // }
+        // if ($request->query->get('entity') == 'PreFacture' && $request->query->get('action') == 'edit') {
+        //   return $this->redirectToRoute('edit_pre_facture', array('id' => $request->query->get('id'), 'menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
+        // }
         if ($request->query->get('entity') == 'Page' && $request->query->get('action') == 'edit') {
             return $this->redirectToRoute('edit_page', array(
                 'id' => $request->query->get('id')
@@ -71,6 +72,14 @@ class AdminController extends BaseAdmin
     public function prePersistOfferEntity($offer)
     {
         $this->updateDateUpdate();
+
+        if ($offer->getOnlyInStoreProducts()) {
+          $categories = $this->getDoctrine()->getManager()->getRepository('AppBundle:Category')->findAll();
+          foreach ($categories as $category) {
+            $category->addOffer($offer);
+            $offer->addCategory($category);
+          }
+        }
     }
 
     public function preUpdateOfferEntity($offer)
@@ -106,6 +115,24 @@ class AdminController extends BaseAdmin
     public function preUpdateClientEntity($client)
     {
         $this->updateClientRequests($client);
+    }
+
+    public function prePersistEntity($member)
+    {
+      $this->createBalanceUpdate($member);
+    }
+
+    public function preUpdateMemberEntity($member)
+    {
+      $this->createBalanceUpdate($member);
+    }
+
+    private function createBalanceUpdate($member) {
+      $balanceUpdate = new BalanceUpdate();
+      $balanceUpdate->setDate(new \DateTime());
+      $balanceUpdate->setMember($member);
+      $balanceUpdate->setBalance($member->getBalance());
+      $this->getDoctrine()->getManager()->persist($balanceUpdate);
     }
 
     private function updateClientRequests($client)

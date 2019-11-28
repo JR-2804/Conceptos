@@ -143,7 +143,7 @@ $(document).ready(function() {
   });
 
   $(".btn-calculate-price").click(function() {
-    var weight = $("#weight").val();
+    var weight = getWeight();
     var ikeaPrice = $("#ikea-price").val();
     if (weight && ikeaPrice) {
       ajax(
@@ -161,6 +161,13 @@ $(document).ready(function() {
           isTableware: $("#is-tableware").prop("checked"),
           isLamp: $("#is-lamp").prop("checked"),
           numberOfPackages: $("#number-of-packages").val(),
+          isFaucet: $("#is-faucet").prop("checked"),
+          isGrill: $("#is-grill").prop("checked"),
+          isShelf: $("#is-shelf").prop("checked"),
+          isDesk: $("#is-desk").prop("checked"),
+          isBookcase: $("#is-bookcase").prop("checked"),
+          isComoda: $("#is-comoda").prop("checked"),
+          isRepisa: $("#is-repisa").prop("checked")
         },
         function(response) {
           var valueResponse = Number(response).toFixed(2);
@@ -180,11 +187,25 @@ $(document).ready(function() {
     if (!validForm()) {
       e.preventDefault();
     } else {
+      var weight = getWeight();
+
+      if (!$("#priority").val()) {
+        $("#priority").val(0);
+      }
+
       $("#product_name").val($("#name").val());
+      $("#product_priority").val($("#priority").val());
       $("#product_code").val($("#code").val());
       $("#product_item").val($("#item").val());
       $("#product_isFurniture").val($("#is-furniture").prop("checked"));
       $("#product_isMattress").val($("#is-mattress").prop("checked"));
+      $("#product_isFaucet").val($("#is-faucet").prop("checked"));
+      $("#product_isGrill").val($("#is-grill").prop("checked"));
+      $("#product_isShelf").val($("#is-shelf").prop("checked"));
+      $("#product_isDesk").val($("#is-desk").prop("checked"));
+      $("#product_isBookcase").val($("#is-bookcase").prop("checked"));
+      $("#product_isComoda").val($("#is-comoda").prop("checked"));
+      $("#product_isRepisa").val($("#is-repisa").prop("checked"));
       $("#product_description").val($("#description").val());
       $("#product_category").val(JSON.stringify($("#category").val()));
       $("#product_image").val(data.image.id);
@@ -200,7 +221,7 @@ $(document).ready(function() {
       $("#product_favoritesCategories").val(
         JSON.stringify($("#category-favorite").val())
       );
-      $("#product_weight").val($("#weight").val());
+      $("#product_weight").val(weight);
       $("#product_shippingLimit").val($("#shipping-limit").val());
       $("#product_ikeaPrice").val($("#ikea-price").val());
       $("#product_calculatePrice").val($("#calculate-price").val());
@@ -229,6 +250,17 @@ $(document).ready(function() {
   });
 });
 
+function getWeight() {
+  var weight = $("#weight").val();
+  var weightUnity = $("#weight-unity").val();
+  if (weightUnity === "oz") {
+    weight = (weight / 35.27).toFixed(2);
+  } else if (weightUnity === "lbs") {
+    weight = (weight / 2.2).toFixed(2);
+  }
+  return weight;
+}
+
 function validForm() {
   var valid = true;
   var name = $("#name");
@@ -251,6 +283,62 @@ function validForm() {
     valid = false;
   } else {
     addRemoveErrorClass(description, false);
+  }
+  var item = $("#item");
+  if (!$(item).val()) {
+    addRemoveErrorClass(item, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(item, false);
+  }
+  var material = $("#material");
+  if (!$(material).val()) {
+    addRemoveErrorClass(material, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(material, false);
+  }
+  var color = $("#color");
+  if (!$(color).val()) {
+    addRemoveErrorClass(color, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(color, false);
+  }
+  var weight = $("#weight");
+  if (!$(weight).val()) {
+    addRemoveErrorClass(weight, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(weight, false);
+  }
+  var ikeaPrice = $("#ikea-price");
+  if (!$(ikeaPrice).val()) {
+    addRemoveErrorClass(ikeaPrice, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(ikeaPrice, false);
+  }
+  var shippingLimit = $("#shipping-limit");
+  if (!$(shippingLimit).val()) {
+    addRemoveErrorClass(shippingLimit, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(shippingLimit, false);
+  }
+  var calculatePrice = $("#calculate-price");
+  if (!$(calculatePrice).val()) {
+    addRemoveErrorClass(calculatePrice, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(calculatePrice, false);
+  }
+  var price = $("#price");
+  if (!$(price).val()) {
+    addRemoveErrorClass(price, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(price, false);
   }
   var category = $("#category");
   if ($(category).val() == null || $(category).val().length == 0) {

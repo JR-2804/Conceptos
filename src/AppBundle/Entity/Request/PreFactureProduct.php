@@ -23,6 +23,10 @@ class PreFactureProduct
      */
     private $product;
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $productPrice;
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Request\PreFacture", inversedBy="preFactureProducts")
      * @ORM\JoinColumn(name="pre_facture_id", referencedColumnName="id")
      */
@@ -72,6 +76,18 @@ class PreFactureProduct
     public function getProduct()
     {
         return $this->product;
+    }
+
+    public function setProductPrice($productPrice = null)
+    {
+        $this->productPrice = $productPrice;
+
+        return $this;
+    }
+
+    public function getProductPrice()
+    {
+        return $this->productPrice;
     }
 
     public function setPreFacture(PreFacture $preFacture = null)

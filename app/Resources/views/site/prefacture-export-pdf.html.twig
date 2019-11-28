@@ -1,0 +1,201 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:v="urn:schemas-microsoft-com:vml">
+
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta content="width=device-width" name="viewport" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <title></title>
+  <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap-grid.min.css') }}">
+
+  <style>
+    .header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      background-color: #333333;
+    }
+    .header img {
+      width: 250px;
+    }
+    .content {
+      padding-top: 80px;
+    }
+    .product-image {
+      height: 50px;
+      width: 50px;
+    }
+    .footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background-color: #333333;
+    }
+    .footer span {
+      color: #FFFFFF;
+      font-size: 15px;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+      background-color: #FFFFFF;
+    }
+    .table-bordered {
+      border: 1px solid #000000;
+    }
+    .table thead th {
+      border-bottom: 1px solid #000000;
+    }
+    .table-bordered td, .table-bordered th {
+      border: 0px;
+      border-bottom: 1px solid #000000;
+    }
+    .table td, .table th {
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  {% set cupConversionRate = 25 %}
+  <div class="container-fluid p-0">
+    <div class="d-flex header">
+      <img class="pl-5 pt-2 pb-2" src="{{ home.data.logo.image.path }}" />
+    </div>
+    <div class="ml-5 mr-5 content">
+      <div class="row justify-content-end">
+        <div class="col-3 pl-0">
+          <div class="d-flex flex-column align-items-end">
+            <strong>PREFACTURA</strong>
+            <span>{{prefacture.id}}-{{prefacture.date|date('Y')}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 pl-0">
+          <span>FECHA: {{prefacture.date|date('d/m/Y')}}</span>
+        </div>
+      </div>
+      <div class="row pt-3">
+        <div class="col-6 pl-0">
+          <span>NOMBRE Y APELLIDOS: {{prefacture.client.name}}</span>
+        </div>
+        <div class="col-6">
+          <span>DIRECCIÓN: {{prefacture.client.address}}</span>
+        </div>
+      </div>
+      <div class="row pt-1">
+        <div class="col-6 pl-0">
+          <span>TELÉFONO: {{prefacture.client.movil ? prefacture.client.movil : prefacture.client.phone}}</span>
+        </div>
+        <div class="col-6">
+          <span>EMAIL: {{prefacture.client.email}}</span>
+        </div>
+      </div>
+      <div class="row pt-3">
+        <div class="col-6 pl-0">
+          <div class="col-12 pl-0">
+            <span>Miembro Comunidad Conceptos: {% if prefacture.client.memberNumber %}Si{% else %}No{% endif %}</span>
+          </div>
+          {% if prefacture.client.memberNumber %}
+            <div class="col-12 pl-0 pt-1">
+              <span>No. de miembro: {{prefacture.client.memberNumber}}</span>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="row pt-3">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th class="pl-2">PRODUCTOS</th>
+            <th class="pl-2">CÓDIGO</th>
+            <th class="pl-2">CANTIDAD</th>
+            <th class="pl-2">PRECIO UNIDAD</th>
+            <th class="pl-2">PRECIO SUBTOTAL</th>
+          </tr>
+          </thead>
+          <tbody class="table-members">
+            {% for product in products %}
+              <tr>
+                <td>
+                  {% if product.image is defined %}
+                    <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.image, 'imageFile')) }}" />
+                  {% else %}
+                    {% if product.price == 15 %}
+                      {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
+                    {% elseif product.price == 25 %}
+                      {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
+                    {% elseif product.price == 50 %}
+                      {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
+                    {% else %}
+                      {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
+                    {% endif %}
+                    <img class="ml-5 mt-2 mb-2 product-image" src="{{imagePath}}" />
+                  {% endif %}
+                </td>
+                <td class="pl-2">{{product.code}}</td>
+                <td class="pl-2">{{product.count}}</td>
+                <td class="pl-2">{{product.price}}</td>
+                <td class="pl-2">{{product.price * product.count}}</td>
+              </tr>
+            {% endfor %}
+            <tr>
+              <td class="pl-2">Total (cuc): ${{prefacture.finalPrice}}.00</td>
+              <td class="pl-2">Total (cup): ${{prefacture.finalPrice * cupConversionRate}}.00</td>
+              <td class="pl-2">
+                <div class="d-flex flex-column">
+                  <span>Descuento por membresía:</span>
+                  <div class="d-flex">
+                    <div>
+                      <span>CUC: ${{prefacture.discount}}.00</span>
+                    </div>
+                    <div class="pl-5">
+                      <span>CUP: ${{prefacture.discount * cupConversionRate}}.00</span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="pl-2">
+                <div class="d-flex flex-column">
+                  <span>Descuento por primera compra:</span>
+                  <div class="d-flex">
+                    <div>
+                      <span>CUC: ${{prefacture.firstClientDiscount}}.00</span>
+                    </div>
+                    <div class="pl-5">
+                      <span>CUP: ${{prefacture.firstClientDiscount * cupConversionRate}}.00</span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="pl-2">
+                <div class="d-flex flex-column">
+                  <span>Entrega a domicilio:</span>
+                  <div class="d-flex">
+                    <div>
+                      <span>CUC: ${{prefacture.transportCost}}.00</span>
+                    </div>
+                    <div class="pl-5">
+                      <span>CUP: ${{prefacture.transportCost * cupConversionRate}}.00</span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end footer">
+      <div class="d-flex flex-column pr-5 align-items-end">
+        <span>www.tiendaconceptos.com</span>
+        <span>comercial@tiendaconceptos.com</span>
+        <span>Teléfono comercial: +5352458380</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

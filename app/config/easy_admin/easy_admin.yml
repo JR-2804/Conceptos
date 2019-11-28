@@ -103,6 +103,7 @@ easy_admin:
                     - {property: 'endDate', label: 'Fecha de fin'}
                     - {property: 'price', label: 'Precio'}
                     - {property: 'products', label: 'Productos'}
+                    - {property: 'categories', label: 'Categorías'}
                     - {property: 'image', label: 'Image', base_path: "%app.path.offer.images%", type: 'image'}
                     - {property: 'onlyForMembers', label: 'Solo Para Miembros'}
             form:
@@ -114,7 +115,9 @@ easy_admin:
                     - {property: 'price', label: 'Precio'}
                     - {property: 'imageFile', type: 'vich_image', label: 'Imágen'}
                     - {property: 'products', label: 'Productos'}
+                    - {property: 'categories', label: 'Categorías'}
                     - {property: 'onlyForMembers', label: 'Solo Para Miembros'}
+                    - {property: 'onlyInStoreProducts', label: 'Para Productos en Almacén'}
         Request:
             class: AppBundle\Entity\Request\Request
             label: Pedidos
@@ -123,11 +126,10 @@ easy_admin:
                 actions:
                     - {name: 'show'}
                     - {name: 'new', label: 'Nuevo Pedido'}
-                    # TODO: Hide export to PDF
-                    # - {name: 'print_request', type: 'route', label: 'Exportar a PDF' }
+                    - {name: 'print_request', type: 'route', label: 'Exportar' }
                 fields:
                     - id
-                    - {property: 'date', label: 'Fecha'}
+                    - {property: 'date', label: 'Fecha', format: 'd/m/Y'}
                     - {property: 'client', label: 'Cliente'}
                     - {property: 'requestProducts', label: 'Productos'}
                     - {property: 'requestCards', label: 'Tarjetas de Regalo'}
@@ -166,9 +168,10 @@ easy_admin:
                 actions:
                     - {name: 'show'}
                     - {name: 'new', label: 'Nueva Prefactura'}
+                    - {name: 'print_prefacture', type: 'route', label: 'Exportar' }
                 fields:
                     - id
-                    - {property: 'date', label: 'Fecha'}
+                    - {property: 'date', label: 'Fecha', format: 'd/m/Y'}
                     - {property: 'client', label: 'Cliente'}
                     - {property: 'preFactureProducts', label: 'Productos'}
                     - {property: 'preFactureCards', label: 'Tarjetas de Regalo'}
@@ -207,9 +210,10 @@ easy_admin:
                 actions:
                     - {name: 'show'}
                     - {name: 'new', label: 'Nueva Factura'}
+                    - {name: 'print_facture', type: 'route', label: 'Exportar' }
                 fields:
                     - id
-                    - {property: 'date', label: 'Fecha'}
+                    - {property: 'date', label: 'Fecha', format: 'd/m/Y'}
                     - {property: 'client', label: 'Cliente'}
                     - {property: 'factureProducts', label: 'Productos'}
                     - {property: 'factureCards', label: 'Tarjetas de Regalo'}
@@ -348,6 +352,7 @@ easy_admin:
                     - {property: 'phone', label: 'Teléfono'}
                     - {property: 'number', label: 'Número de Miembro'}
                     - {property: 'user', label: 'Usuario Asociado'}
+                    - {property: 'balance', label: 'Balance'}
             form:
                 title: 'Nuevo Miembro'
                 fields:
@@ -358,6 +363,7 @@ easy_admin:
                     - {property: 'address', label: 'Dirección'}
                     - {property: 'number', label: 'Número de Miembro'}
                     - {property: 'user', label: 'Usuario Asociado'}
+                    - {property: 'balance', label: 'Balance'}
             edit:
                 title: 'Editar Miembro'
 

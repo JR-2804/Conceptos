@@ -87,15 +87,23 @@
                     <span></span>
                 </div>
             </button>
-            <div class="menu-logo">
-                <div class="navbar-brand">
-                <span class="navbar-logo">
-                    <a href="{{ path('site_home') }}">
-                         <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
-                              title="Conceptos"
-                              style="height: 3.8rem;" class="logo-menu">
-                    </a>
-                </span>
+            <a class="text-white nav-shop-cart-icon navbar-toggler-right additional-navbar-button d-lg-none"
+                href="{{ path('shop-cart') }}">
+                <span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>
+                <span class="badge badge-shop-cart">{{ count }}</span>
+            </a>
+            <div class="menu-logo col-6 col-lg-3 pl-0 pl-lg-3">
+                <div class="navbar-brand ml-0">
+                    <span class="navbar-logo">
+                        <a href="{{ path('site_home') }}">
+                            <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
+                                 title="Conceptos"
+                                 style="height: 3.8rem;" class="logo-menu d-none d-lg-flex">
+                            <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
+                                 title="Conceptos"
+                                 style="width:100%;height: auto !important;" class="logo-menu d-lg-none">
+                        </a>
+                    </span>
                 </div>
             </div>
             <div class="d-flex flex-column align-items-end collapse navbar-collapse" id="navbarSupportedContent">
@@ -179,7 +187,28 @@
                                 <a class="dropdown-item" href="{{ path('products') }}">Todos</a>
                             </li>
                             {% for category in categories %}
-                                {% if (category.parents | length) == 0 %}
+                                {% if (category.parents | length) == 0 and category.name == "MOBILIARIO" %}
+                                    {% set subCategories = '' %}
+                                    {% for subCategory in category.subCategories %}
+                                        {% set subCategories = subCategory.id ~ ', '~ subCategories %}
+                                    {% endfor %}
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="{{ path('products', {categories:subCategories}) }}"
+                                           onclick="onBottomDropdownClick(this)">
+                                            {{category.name}}
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            {% for subCategory in category.subCategories %}
+                                                <li>
+                                                    <a class="dropdown-item" href="{{ path('products', {categories:subCategory.id}) }}">{{subCategory.name}}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            {% for category in categories %}
+                                {% if (category.parents | length) == 0 and category.name != "MOBILIARIO" %}
                                     {% set subCategories = '' %}
                                     {% for subCategory in category.subCategories %}
                                         {% set subCategories = subCategory.id ~ ', '~ subCategories %}
@@ -227,11 +256,13 @@
                             INSPIRACIONES
                         </a>
                     </li>
+                    <!--
                     <li class="nav-item">
                         <a class="nav-link link text-white" href="{{ path('about_us') }}">
                             SOBRE NOSOTROS
                         </a>
                     </li>
+                    -->
                     <li class="nav-item">
                         <a class="nav-link link text-white" href="{{ path('help') }}">
                             AYUDA
@@ -322,9 +353,11 @@
                         <li class="foot-menu-item mbr-fonts-style display-7">
                             <a class="text-white mbr-bold" href="{{ url('blog_home') }}">Inspiraciones</a>
                         </li>
+                        <!--
                         <li class="foot-menu-item mbr-fonts-style display-7">
                             <a class="text-white mbr-bold" href="{{ url('about_us') }}">Sobre Nosotros</a>
                         </li>
+                        -->
                         <li class="foot-menu-item mbr-fonts-style display-7">
                             <a class="text-white mbr-bold" href="{{ url('help') }}">Ayuda</a>
                         </li>

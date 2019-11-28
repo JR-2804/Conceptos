@@ -41,10 +41,7 @@ class RequestController extends Controller
       $request = new RequestEntity();
       $request->setDate($date);
       $request->setClient($client);
-      $request->setFinalPrice($form->get('finalPrice')->getData());
       $request->setTransportCost($form->get('transportCost')->getData());
-      $request->setDiscount($form->get('discount')->getData());
-      $request->setFirstClientDiscount($form->get('firstClientDiscount')->getData());
 
       $requestProducts = json_decode($form->get('requestProducts')->getData(), true);
       if (!is_array($requestProducts)) {
@@ -92,6 +89,7 @@ class RequestController extends Controller
         $factureDB->setRequest($request);
       }
 
+      $request->calculatePrice($this->get('product_service'));
       $this->getDoctrine()->getManager()->persist($request);
       $this->getDoctrine()->getManager()->flush();
 
@@ -144,6 +142,7 @@ class RequestController extends Controller
         'airplaneMattress' => $requestProduct->getIsAriplaneMattress(),
       ];
       if ($requestProduct->getOffer()) {
+        $newRequestProduct["offerId"] = $requestProduct->getOffer()->getId();
         $newRequestProduct["offerPrice"] = $requestProduct->getOffer()->getPrice();
       }
       $requestProducts[] = $newRequestProduct;
@@ -210,6 +209,10 @@ class RequestController extends Controller
         $requestProduct->setCount($product['count']);
         $requestProduct->setIsAriplaneForniture($product['airplaneFurniture']);
         $requestProduct->setIsAriplaneMattress($product['airplaneMattress']);
+        if (array_key_exists('offerId', $product)) {
+          $requestProduct->setOffer($this->getDoctrine()->getRepository('AppBundle:Offer')->find($product['offerId']));
+        }
+
         $this->getDoctrine()->getManager()->persist($requestProduct);
         $requestDB->addRequestProduct($requestProduct);
       }
@@ -258,6 +261,7 @@ class RequestController extends Controller
         $factureDB->setRequest($requestDB);
       }
 
+      $requestDB->calculatePrice($this->get('product_service'));
       $this->getDoctrine()->getManager()->flush();
 
       return $this->redirectToRoute('easyadmin', [
@@ -267,6 +271,8 @@ class RequestController extends Controller
     }
     return $this->render('::new_edit_request.html.twig', [
       'requestId' => $id,
+      'memberNumber' => $requestDB->getClient()->getMemberNumber(),
+      'firstClient' => $requestDB->getClient()->getRequests()->count() == 1,
       'action' => 'edit',
       'clients' => $this->getDoctrine()->getRepository('AppBundle:Request\Client')->findAll(),
       'products' => $this->getDoctrine()->getRepository('AppBundle:Product')->findAll(),
@@ -526,6 +532,14 @@ class RequestController extends Controller
           $requestCard->setCount($requestCard->getCount() - $newCount);
         }
       }
+    }
+
+    foreach ($preFactures as $preFacture) {
+      $preFacture->calculatePrice($this->get('product_service'));
+    }
+
+    foreach ($factures as $facture) {
+      $facture->calculatePrice($this->get('product_service'));
     }
 
     $this->getDoctrine()->getManager()->flush();

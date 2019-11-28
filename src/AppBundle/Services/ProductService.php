@@ -91,53 +91,46 @@ class ProductService
         $isLamp,
         $numberOfPackages,
         $isMattress,
-        $isAriplaneMattress
+        $isAriplaneMattress,
+        $isFaucet,
+        $isGrill,
+        $isShelf,
+        $isDesk,
+        $isBookcase,
+        $isComoda,
+        $isRepisa
     ) {
-        $transportExtra = 0;
         if (($isFurniture && !$isAriplaneForniture) || ($isMattress && !$isAriplaneMattress)) {
-            $transportExtra = $weight * 4.4;
+          $numberOfPackagesExtra = ($numberOfPackages && $numberOfPackages > 1) ? $numberOfPackages * 10 : 10;
+          $mattressExtra = $isMattress ? 20 : 0;
+          $grillExtra = $isGrill ? 20 : 0;
+          $shelfExtra = $isShelf ? 40 : 0;
+          $deskExtra = $isDesk ? 20 : 0;
+          $bookcaseExtra = $isBookcase ? 30 : 0;
+          $comodaExtra = $isComoda ? 70 : 0;
+          $repisaExtra = $isRepisa ? 20 : 0;
+
+          return ceil(
+            ($ikeaPrice*1.1 + $weight*4.4 + $numberOfPackagesExtra + $mattressExtra + $grillExtra + $shelfExtra + $deskExtra + $bookcaseExtra + $comodaExtra + $repisaExtra + 20)*2.2
+          );
         } else {
-            $transportExtra = $weight * 16;
-        }
-        $fragileExtra = 0;
-        if ($isFragile) {
-            $fragileExtra = 4;
-        }
-        $lampExtra = 0;
-        if ($isLamp) {
-            $lampExtra = 20;
-        }
-        $oversizeExtra = 0;
-        if ($isOversize) {
-            $oversizeExtra = 20;
-        }
-        $tablewareExtra = 0;
-        if ($isTableware) {
-            $tablewareExtra = 60;
-        }
-        $numberOfPackagesExtra = 0;
-        if (($isFurniture && !$isAriplaneForniture) || ($isMattress && !$isAriplaneMattress)) {
-            $numberOfPackagesExtra = 10;
-            if ($numberOfPackages && $numberOfPackages > 1) {
-                $numberOfPackagesExtra = $numberOfPackages * 10;
-            }
-        }
-        $shipExtra = 0;
-        if (($isFurniture && !$isAriplaneForniture) || ($isMattress && !$isAriplaneMattress)) {
-            $shipExtra = 21;
-        }
-        $airplaneFornitureExtra = 0;
-        if ($isFurniture && $isAriplaneForniture) {
-            $airplaneFornitureExtra = 50;
-        }
-        $airplaneMattressExtra = 0;
-        if ($isMattress && $isAriplaneMattress) {
-            $airplaneMattressExtra = 70;
-        }
+          $fragileExtra = $isFragile ? 4 : 0;
+          $lampExtra = $isLamp ? 20 : 0;
+          $oversizeExtra = $isOversize ? 20 : 0;
+          $mattressExtra = $isMattress ? 50 : 0;
+          $tablewareExtra = $isTableware ? 60 : 0;
+          $faucetExtra = $isFaucet ? 20 : 0;
+          $grillExtra = $isGrill ? 50 : 0;
+          $shelfExtra = $isShelf ? 70 : 0;
+          $deskExtra = $isDesk ? 50 : 0;
+          $bookcaseExtra = $isBookcase ? 60 : 0;
+          $comodaExtra = $isComoda ? 100 : 0;
+          $repisaExtra = $isRepisa ? 50 : 0;
 
-        $newPrice = ((($ikeaPrice * 1.2) + $transportExtra) * 2) + $fragileExtra + $lampExtra + $airplaneFornitureExtra + $airplaneMattressExtra + $oversizeExtra + $tablewareExtra + $shipExtra + $numberOfPackagesExtra;
-
-        return ceil($newPrice);
+          return ceil(
+            ($ikeaPrice*1.1 + $weight*16 + $fragileExtra + $lampExtra + $oversizeExtra + $mattressExtra + $tablewareExtra + $faucetExtra + $grillExtra + $shelfExtra + $deskExtra + $bookcaseExtra + $comodaExtra + $repisaExtra)*2.2
+          );
+        }
     }
 
     public function recalculatePrices()
@@ -159,7 +152,14 @@ class ProductService
                 $product->getIsLamp(),
                 $product->getNumberOfPackages(),
                 $product->getIsMattress(),
-                $product->getIsAriplaneMattress()
+                false,
+                $product->getIsFaucet(),
+                $product->getIsGrill(),
+                $product->getIsShelf(),
+                $product->getIsDesk(),
+                $product->getIsBookcase(),
+                $product->getIsComoda(),
+                $product->getIsRepisa()
             );
             $product->setPrice($finalPrice);
             if (0 === ($i % $batchSize)) {
@@ -194,6 +194,7 @@ class ProductService
         $qbProduct = $this->productRepository->createQueryBuilder('p');
         $qbProductCount = $this->productRepository->createQueryBuilder('p')->select('count(p.id) as count_products');
 
+        $populars = $request->query->get('populars', -1);
         $inStore = $request->query->get('inStore', -1);
         $category = $request->query->get('categories', -1);
         $priceMin = $request->query->get('priceMin', -1);
@@ -286,6 +287,16 @@ class ProductService
 
             $mainCategory = $this->categoryRepository->find($category[0]);
         }
+        if (-1 != $populars) {
+          if ($hasWhere) {
+              $qbProduct->andWhere('p.popular = true');
+              $qbProductCount->andWhere('p.popular = true');
+          } else {
+              $qbProduct->where('p.popular = true');
+              $qbProductCount->where('p.popular = true');
+              $hasWhere = true;
+          }
+        }
         if (-1 != $recent) {
             if ($hasWhere) {
                 $qbProduct->andWhere('p.recent = true');
@@ -307,14 +318,22 @@ class ProductService
             }
         }
         if (-1 != $inOffer) {
-            $qbProduct->join('p.offers', 'o');
-            $qbProductCount->join('p.offers', 'o');
+            $qbProduct->leftJoin('p.offers', 'o');
+            $qbProduct->leftJoin('p.categories', 'pc');
+            $qbProduct->leftJoin('pc.offers', 'pco');
+            $qbProduct->leftJoin('pc.parents', 'pcp');
+            $qbProduct->leftJoin('pcp.offers', 'pcpo');
+            $qbProductCount->leftJoin('p.offers', 'o');
+            $qbProductCount->leftJoin('p.categories', 'pc');
+            $qbProductCount->leftJoin('pc.offers', 'pco');
+            $qbProductCount->leftJoin('pc.parents', 'pcp');
+            $qbProductCount->leftJoin('pcp.offers', 'pcpo');
             if ($hasWhere) {
-                $qbProduct->andWhere('o.startDate <= :current AND o.endDate >= :current');
-                $qbProductCount->andWhere('o.startDate <= :current AND o.endDate >= :current');
+                $qbProduct->andWhere('(o.startDate <= :current AND o.endDate >= :current) OR (pco.startDate <= :current AND pco.endDate >= :current) OR (pcpo.startDate <= :current AND pcpo.endDate >= :current)');
+                $qbProductCount->andWhere('(o.startDate <= :current AND o.endDate >= :current) OR (pco.startDate <= :current AND pco.endDate >= :current) OR (pcpo.startDate <= :current AND pcpo.endDate >= :current)');
             } else {
-                $qbProduct->where('o.startDate <= :current AND o.endDate >= :current');
-                $qbProductCount->where('o.startDate <= :current AND o.endDate >= :current');
+                $qbProduct->where('(o.startDate <= :current AND o.endDate >= :current) OR (pco.startDate <= :current AND pco.endDate >= :current) OR (pcpo.startDate <= :current AND pcpo.endDate >= :current)');
+                $qbProductCount->where('(o.startDate <= :current AND o.endDate >= :current) OR (pco.startDate <= :current AND pco.endDate >= :current) OR (pcpo.startDate <= :current AND pcpo.endDate >= :current)');
             }
             $qbProduct->setParameter('current', new \DateTime(), Type::DATE);
             $qbProductCount->setParameter('current', new \DateTime(), Type::DATE);
@@ -331,8 +350,6 @@ class ProductService
         $products = $qbProduct
             ->orderBy('o.price', 'DESC')
             ->addOrderBy('p.inStore', 'DESC')
-            ->addOrderBy('p.popular', 'DESC')
-            ->addOrderBy('p.recent', 'DESC')
             ->addOrderBy('p.price', 'ASC')
             ->addOrderBy('p.name', 'DESC')
             ->setFirstResult($firstResult)

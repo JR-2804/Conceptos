@@ -39,22 +39,6 @@ $(document).ready(function() {
     recalculateAllPrices();
   });
 
-  $(".btn-send-request").click(function() {
-    if ($(".total-price").data("total-price") < 56) {
-      alert("La compra mínima es de 56.00 CUC");
-      e.preventDefault();
-    } else {
-      window.location =
-        $(this).data("path") +
-        "?memberNumber=" +
-        JSON.stringify(memberNumber) +
-        "&transportCost=" +
-        JSON.stringify(transportCost) +
-        "&products=" +
-        JSON.stringify(products);
-    }
-  });
-
   $("#modal-confirm").on("show.bs.modal", function() {
     $(".modal-title").removeClass("hidden animated");
     $('.close[data-dismiss="modal"]').removeClass("hidden animated");
@@ -153,7 +137,14 @@ $(document).ready(function() {
         isOversize: product.isOversize,
         isTableware: product.isTableware,
         isLamp: product.isLamp,
-        numberOfPackages: product.numberOfPackages
+        numberOfPackages: product.numberOfPackages,
+        isFaucet: product.isFaucet,
+        isGrill: product.isGrill,
+        isShelf: product.isShelf,
+        isDesk: product.isDesk,
+        isBookcase: product.isBookcase,
+        isComoda: product.isComoda,
+        isRepisa: product.isRepisa
       },
       function(response) {
         var calculatedPrice = Number(response);
@@ -219,6 +210,12 @@ $(document).ready(function() {
       memberNumber = undefined;
       recalculateAllPrices();
     }
+  });
+
+  $('form[name="checkout-form"]').submit(function(e) {
+    $("#memberNumber").val(memberNumber);
+    $("#transportCost").val(transportCost);
+    $("#products").val(JSON.stringify(products));
   });
 
   recalculateAllPrices();
@@ -289,13 +286,16 @@ function recalculateAllPrices() {
     ).text("$" + subtotal.toFixed(2));
 
     products.forEach(function(product) {
-      if (product.id == productId && product.count != count) {
-        product.count = count;
+      if (product.id == productId) {
+        product.price = price;
+        if (product.count != count) {
+          product.count = count;
 
-        var uuid = $(
-          '.cart-quantity-up[data-product="' + product.id + '"]'
-        ).data("uuid");
-        persistProductCount(uuid, count);
+          var uuid = $(
+            '.cart-quantity-up[data-product="' + product.id + '"]'
+          ).data("uuid");
+          persistProductCount(uuid, count);
+        }
       }
     });
   });

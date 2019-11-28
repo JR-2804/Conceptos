@@ -1,5 +1,5 @@
-var facture_product_template = '<tr class="product-row"><td><img src="/uploads/%0" class="img-responsive" width="50" height="50"></td><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td><a class="btn btn-secondary btn-edit-product" data-code="%5"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-product" data-code="%6"><i class="fa fa-remove"></i></a></td></tr>';
-var facture_card_template = '<tr class="card-row"><td>%1$</td><td>%2</td><td><a class="btn btn-secondary btn-edit-card" data-code="%3"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-card" data-code="%4"><i class="fa fa-remove"></i></a></td></tr>';
+var facture_product_template = '<tr class="product-row"><td><img src="/uploads/%0" class="img-responsive" width="50" height="50"></td><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td><a class="btn btn-secondary btn-edit-product" data-code="%5" title="Editar"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-product" data-code="%6" title="Eliminar"><i class="fa fa-remove"></i></a></td></tr>';
+var facture_card_template = '<tr class="card-row"><td>%1$</td><td>%2</td><td><a class="btn btn-secondary btn-edit-card" data-code="%3"><i class="fa fa-edit" title="Editar"></i></a><a class="btn btn-secondary btn-remove-card" data-code="%4" title="Eliminar"><i class="fa fa-remove"></i></a></td></tr>';
 
 var factureProductToEdit;
 var factureCardToEdit;
@@ -150,29 +150,6 @@ $(document).ready(function() {
     $("#cancel-edit-card").hide();
   });
 
-  $("#calculate-price-button").click(function() {
-    var finalPrice = 0;
-    var transportCost = $("#transportCost").val();
-    var membershipDiscount = $("#discount").val();
-    var firstClientDiscount = $("#firstClientDiscount").val();
-
-    factureProducts.forEach(function(factureProduct) {
-      if (factureProduct.offerPrice) {
-        finalPrice += factureProduct.offerPrice * factureProduct.count;
-      } else {
-        finalPrice += factureProduct.price * factureProduct.count;
-      }
-    });
-    factureCards.forEach(function(factureCard) {
-      finalPrice += factureCard.card * factureCard.count;
-    });
-
-    finalPrice += parseFloat(transportCost);
-    finalPrice -= parseFloat(membershipDiscount);
-    finalPrice -= parseFloat(firstClientDiscount);
-    $("#finalPrice").val(finalPrice);
-  });
-
   $('form[name="facture"]').submit(function(e) {
     if (!validForm()) {
       e.preventDefault();
@@ -232,27 +209,6 @@ function validForm() {
     valid = false;
   } else {
     addRemoveErrorClass(transportCost, false);
-  }
-  var discount = $("#discount");
-  if (!$(discount).val()) {
-    addRemoveErrorClass(discount, true);
-    valid = false;
-  } else {
-    addRemoveErrorClass(discount, false);
-  }
-  var firstClientDiscount = $("#firstClientDiscount");
-  if (!$(firstClientDiscount).val()) {
-    addRemoveErrorClass(firstClientDiscount, true);
-    valid = false;
-  } else {
-    addRemoveErrorClass(firstClientDiscount, false);
-  }
-  var finalPrice = $("#finalPrice");
-  if (!$(finalPrice).val()) {
-    addRemoveErrorClass(finalPrice, true);
-    valid = false;
-  } else {
-    addRemoveErrorClass(finalPrice, false);
   }
   return valid;
 }

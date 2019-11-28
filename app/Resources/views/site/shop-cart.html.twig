@@ -15,9 +15,9 @@
                     <h2 class="rob-header rob-header-short d-lg-none">Carrito</h2>
                     <div class="d-flex align-items-center">
                         <span class="rob-subtitle">
-                            {{ products | length }} {% if products | length == 1 %}producto{% else %}productos{% endif %}
+                            {{ count }} {% if count == 1 %}producto{% else %}productos{% endif %}
                         </span>
-                        {% if products | length > 0 %}
+                        {% if count > 0 %}
                             <a href="{{ path('empty_shop_car') }}" class="btn btn-empty">
                                 <i class="empty-all-cart-icon mbri-trash"></i>
                             </a>
@@ -137,6 +137,19 @@
                                                 {% endif %}
                                             {% endif %}
                                         {% endfor %}
+                                        {% if priceOffer == -1 %}
+                                          {% for category in product.categories %}
+                                            {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and product.inStore)) %}
+                                              {% set priceOffer = 1 %}
+                                            {% else %}
+                                              {% for parentCategory in category.parents %}
+                                                {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and product.inStore)) %}
+                                                  {% set priceOffer = 1 %}
+                                                {% endif %}
+                                              {% endfor %}
+                                            {% endif %}
+                                          {% endfor %}
+                                        {% endif %}
                                         {% if priceOffer != -1 %}
                                             <span class="badge-custom badge-offer">O</span>
                                         {% endif %}
@@ -165,7 +178,7 @@
                         <div class="col-lg-3 col-12 mt-3 mt-lg-0 pl-0">
                             <div class="cart-quantity-button d-flex flex-column align-items-start justify-content-center h-100">
                                 <div class="delivery-type">
-                                    {% if (product.isFurniture and product.isAriplaneForniture) or (product.isMattress and product.isAriplaneMattress) %}
+                                    {% if ((product.isFurniture and product.isAriplaneForniture) or (product.isMattress and product.isAriplaneMattress)) and (not product.offer) and (not product.categoryOffer) %}
                                         <span class="price-header">Tipo de Entrega</span>
                                         <div>
                                             <select class="form-control" data-product="{{ product.product.id }}"
@@ -192,8 +205,8 @@
                         </div>
                         <div class="col-lg-3 col-12 total-price-product mt-3 mt-lg-0 pl-0"
                             data-price="{{product.product.price}}"
-                            data-offer="{% if product.offer %}{{product.offer.price}}{% endif %}"
-                            data-offer-members="{% if product.offer %}{{product.offer.onlyForMembers}}{% endif %}"
+                            data-offer="{% if product.offer %}{{product.offer.price}}{% elseif product.categoryOffer is defined %}{{product.categoryOffer}}{% endif %}"
+                            data-offer-members="{% if product.offer %}{{product.offer.onlyForMembers}}{% endif %}{% if product.categoryOfferForMembers is defined %}{{product.categoryOfferForMembers}}{% endif %}"
                             data-product="{{ product.product.id }}">
                             <div class="d-flex flex-column justify-content-center h-100 mr-0 mr-lg-3">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -286,7 +299,7 @@
             {% if products|length > 0 %}
                 <div class="row">
                     <div class="col-12">
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
                             <div class="d-flex align-items-center" id="shop-cart-member">
                                 <div class="d-flex ac-custom ac-checkmark">
                                     <ul>
@@ -309,9 +322,9 @@
                                         </li>
                                         <li>
                                             <div class="d-flex">
-                                                <button id="shop-cart-membership-number-check" class="btn navigation-button ml-0" style="display: none;">
+                                                <a id="shop-cart-membership-number-check" class="btn navigation-button ml-0" style="display: none;" href="#">
                                                     Comprobar
-                                                </button>
+                                                </a>
                                             </div>
                                         </li>
                                         <div id="home-collect" style="display: none;">
@@ -328,15 +341,22 @@
                                 </div>
                             </div>
                             <div class="d-flex">
-                                <a class="btn navigation-button btn-send-request d-none d-lg-block" data-path="{{ path('check_out') }}">
-                                    Comprar
-                                </a>
+                                <form name="checkout-form" method="POST" action="{{path('check_out')}}">
+                                    <input type="hidden" name="memberNumber" id="memberNumber">
+                                    <input type="hidden" name="transportCost" id="transportCost">
+                                    <input type="hidden" name="products" id="products">
+                                    <div class="d-flex">
+                                        <button class="btn navigation-button btn-send-request d-none d-lg-block" type="submit">
+                                            Comprar
+                                        </button>
+                                    </div>
+                                    <div class="d-flex justify-content-start">
+                                        <button class="btn navigation-button btn-send-request d-lg-none ml-0" type="submit">
+                                            Comprar
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                        </div>
-                        <div class="d-flex justify-content-start">
-                            <a class="btn navigation-button btn-send-request d-lg-none ml-0" data-path="{{ path('check_out') }}">
-                                Comprar
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -378,6 +398,66 @@
                 isAriplaneMattress: true,
             {% else %}
                 isAriplaneMattress: false,
+            {% endif %}
+            {% if product.isFragile is defined and product.isFragile %}
+                isFragile: true,
+            {% else %}
+                isFragile: false,
+            {% endif %}
+            {% if product.isOversize is defined and product.isOversize %}
+                isOversize: true,
+            {% else %}
+                isOversize: false,
+            {% endif %}
+            {% if product.isTableware is defined and product.isTableware %}
+                isTableware: true,
+            {% else %}
+                isTableware: false,
+            {% endif %}
+            {% if product.isLamp is defined and product.isLamp %}
+                isLamp: true,
+            {% else %}
+                isLamp: false,
+            {% endif %}
+            {% if product.numberOfPackages is defined and product.numberOfPackages %}
+                numberOfPackages: {{product.numberOfPackages}},
+            {% else %}
+                numberOfPackages: false,
+            {% endif %}
+            {% if product.isFaucet is defined and product.isFaucet %}
+                isFaucet: true,
+            {% else %}
+                isFaucet: false,
+            {% endif %}
+            {% if product.isGrill is defined and product.isGrill %}
+                isGrill: true,
+            {% else %}
+                isGrill: false,
+            {% endif %}
+            {% if product.isShelf is defined and product.isShelf %}
+                isShelf: true,
+            {% else %}
+                isShelf: false,
+            {% endif %}
+            {% if product.isDesk is defined and product.isDesk %}
+                isDesk: true,
+            {% else %}
+                isDesk: false,
+            {% endif %}
+            {% if product.isBookcase is defined and product.isBookcase %}
+                isBookcase: true,
+            {% else %}
+                isBookcase: false,
+            {% endif %}
+            {% if product.isComoda is defined and product.isComoda %}
+                isComoda: true,
+            {% else %}
+                isComoda: false,
+            {% endif %}
+            {% if product.isRepisa is defined and product.isRepisa %}
+                isRepisa: true,
+            {% else %}
+                isRepisa: false,
             {% endif %}
             {% if product.categories is defined %}
                 categories: {{product.categories}},

@@ -1,5 +1,5 @@
-var pre_facture_product_template = '<tr class="product-row"><td><img src="/uploads/%0" class="img-responsive" width="50" height="50"></td><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td><a class="btn btn-secondary btn-facture-product" data-code="%5"><i class="fa fa-euro"></i></a><a class="btn btn-secondary btn-edit-product" data-code="%6"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-product" data-code="%7"><i class="fa fa-remove"></i></a></td></tr>';
-var pre_facture_card_template = '<tr class="card-row"><td>%1$</td><td>%2</td><td><a class="btn btn-secondary btn-facture-card" data-code="%3"><i class="fa fa-euro"></i></a><a class="btn btn-secondary btn-edit-card" data-code="%4"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-card" data-code="%5"><i class="fa fa-remove"></i></a></td></tr>';
+var pre_facture_product_template = '<tr class="product-row"><td><img src="/uploads/%0" class="img-responsive" width="50" height="50"></td><td>%1</td><td>%2</td><td>%3</td><td>%4</td><td><a class="btn btn-secondary btn-facture-product" data-code="%5" title="Facturar"><i class="fa fa-euro"></i></a><a class="btn btn-secondary btn-edit-product" data-code="%6" title="Editar"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-product" data-code="%7" title="Eliminar"><i class="fa fa-remove"></i></a></td></tr>';
+var pre_facture_card_template = '<tr class="card-row"><td>%1$</td><td>%2</td><td><a class="btn btn-secondary btn-facture-card" data-code="%3" title="Facturar"><i class="fa fa-euro"></i></a><a class="btn btn-secondary btn-edit-card" data-code="%4" title="Editar"><i class="fa fa-edit"></i></a><a class="btn btn-secondary btn-remove-card" data-code="%5" title="Eliminar"><i class="fa fa-remove"></i></a></td></tr>';
 var facture_template = '<tr class="facture-row"><td>%1</td><td><a class="btn btn-secondary btn-remove-facture" data-id="%2"><i class="fa fa-remove"></i></a><a class="btn btn-secondary btn-view-facture" href="/admin/?action=show&entity=Facture&id=%3"><i class="fa fa-eye"></i></a></td></tr>';
 var product_destiny_template = '<tr class="product-destiny-row"><td>%1</td><td><input type="number" value="%2"/></td></tr>';
 var card_destiny_template = '<tr class="card-destiny-row"><td>%1</td><td><input type="number" value="%2"/></td></tr>';
@@ -188,6 +188,7 @@ $(document).ready(function() {
         var count = parseInt($("#modal-factures-count").val());
         if (count > productsData[currentFacturingProduct].data.count) {
           alert("La cantidad a facturar no puede ser superior a la cantidad actual del producto");
+          return;
         }
         productsData[currentFacturingProduct].factures[$("#modal-factures").val()[0].replace("--", "-")] += count;
         productsData[currentFacturingProduct].prefacture -= count;
@@ -196,6 +197,7 @@ $(document).ready(function() {
         var count = parseInt($("#modal-factures-count").val());
         if (count > cardsData[currentFacturingCard].data.count) {
           alert("La cantidad a facturar no puede ser superior a la cantidad actual de la tarjeta");
+          return;
         }
         cardsData[currentFacturingCard].factures[$("#modal-factures").val()[0].replace("--", "-")] += count;
         cardsData[currentFacturingCard].prefacture -= count;
@@ -245,29 +247,6 @@ $(document).ready(function() {
     } else {
       alert("Inserte los datos correctamente");
     }
-  });
-
-  $("#calculate-price-button").click(function() {
-    var finalPrice = 0;
-    var transportCost = $("#transportCost").val();
-    var membershipDiscount = $("#discount").val();
-    var firstClientDiscount = $("#firstClientDiscount").val();
-
-    preFactureProducts.forEach(function(preFactureProduct) {
-      if (preFactureProduct.offerPrice) {
-        finalPrice += preFactureProduct.offerPrice * preFactureProduct.count;
-      } else {
-        finalPrice += preFactureProduct.price * preFactureProduct.count;
-      }
-    });
-    preFactureCards.forEach(function(preFactureCard) {
-      finalPrice += preFactureCard.card * preFactureCard.count;
-    });
-
-    finalPrice += parseFloat(transportCost);
-    finalPrice -= parseFloat(membershipDiscount);
-    finalPrice -= parseFloat(firstClientDiscount);
-    $("#finalPrice").val(finalPrice);
   });
 
   $('form[name="pre_facture"]').submit(function(e) {
@@ -332,27 +311,6 @@ function validForm() {
     valid = false;
   } else {
     addRemoveErrorClass(transportCost, false);
-  }
-  var discount = $("#discount");
-  if (!$(discount).val()) {
-    addRemoveErrorClass(discount, true);
-    valid = false;
-  } else {
-    addRemoveErrorClass(discount, false);
-  }
-  var firstClientDiscount = $("#firstClientDiscount");
-  if (!$(firstClientDiscount).val()) {
-    addRemoveErrorClass(firstClientDiscount, true);
-    valid = false;
-  } else {
-    addRemoveErrorClass(firstClientDiscount, false);
-  }
-  var finalPrice = $("#finalPrice");
-  if (!$(finalPrice).val()) {
-    addRemoveErrorClass(finalPrice, true);
-    valid = false;
-  } else {
-    addRemoveErrorClass(finalPrice, false);
   }
   return valid;
 }

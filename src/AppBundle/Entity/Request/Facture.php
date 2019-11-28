@@ -64,6 +64,7 @@ class Facture
     public function __construct()
     {
         $this->factureProducts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->factureCards = new \Doctrine\Common\Collections\ArrayCollection();
         $this->date = new \DateTime();
     }
 
@@ -205,6 +206,71 @@ class Facture
     public function getPreFacture()
     {
         return $this->preFacture;
+    }
+
+    public function calculatePrice($productService) {
+      $membershipDiscount = 0;
+      $firstClientDiscount = 0;
+      $finalPrice = 0;
+
+      $memberNumber = $this->getClient()->getMemberNumber();
+      $numberOfClientRequests = 0;
+      if ($this->getRequest()) {
+        $numberOfClientRequests = $this->getRequest()->getClient()->getRequests()->count();
+      }
+      if ($this->getPreFacture()) {
+        $numberOfClientRequests = $this->getPreFacture()->getClient()->getRequests()->count();
+      }
+
+      foreach ($this->getFactureProducts() as $factureProduct) {
+        $offer = $factureProduct->getOffer();
+        if ($offer && ((!$offer->getOnlyForMembers()) || ($offer->getOnlyForMembers() && $memberNumber))) {
+          $price = $factureProduct->getOffer()->getPrice();
+        }
+        else if ($factureProduct->getIsAriplaneForniture() || $factureProduct->getIsAriplaneMattress()) {
+          $price = $productService->calculateProductPrice(
+            $factureProduct->getProduct()->getWeight(),
+            $factureProduct->getProduct()->getIkeaPrice(),
+            $factureProduct->getProduct()->getIsFurniture(),
+            $factureProduct->getProduct()->getIsFragile(),
+            $factureProduct->getIsAriplaneForniture(),
+            $factureProduct->getProduct()->getIsOversize(),
+            $factureProduct->getProduct()->getIsTableware(),
+            $factureProduct->getProduct()->getIsLamp(),
+            $factureProduct->getProduct()->getNumberOfPackages(),
+            $factureProduct->getProduct()->getIsMattress(),
+            $factureProduct->getIsAriplaneMattress(),
+            $factureProduct->getProduct()->getIsFaucet(),
+            $factureProduct->getProduct()->getIsGrill(),
+            $factureProduct->getProduct()->getIsShelf(),
+            $factureProduct->getProduct()->getIsDesk(),
+            $factureProduct->getProduct()->getIsBookcase(),
+            $factureProduct->getProduct()->getIsComoda(),
+            $factureProduct->getProduct()->getIsRepisa()
+          );
+        } else {
+          $price = $factureProduct->getProduct()->getPrice();
+        }
+        $finalPrice += $price * $factureProduct->getCount();
+      }
+
+      foreach ($this->getFactureCards() as $factureCard) {
+        $finalPrice += $factureCard->getPrice() * $factureCard->getCount();
+      }
+
+      if ($memberNumber) {
+        $membershipDiscount = floor($finalPrice * 0.1);
+      } else if ($numberOfClientRequests == 1) {
+        $firstClientDiscount = floor($finalPrice * 0.05);
+      }
+
+      $finalPrice -= $membershipDiscount;
+      $finalPrice -= $firstClientDiscount;
+      $finalPrice += $this->getTransportCost();
+
+      $this->setDiscount($membershipDiscount);
+      $this->setFirstClientDiscount($firstClientDiscount);
+      $this->setFinalPrice($finalPrice);
     }
 
     function __toString()

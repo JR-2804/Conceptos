@@ -28,6 +28,14 @@ $(document).ready(function() {
     $("#check_out_memberNumber").val(memberNumber);
   }
 
+  $("#type-select").change(function() {
+    if ($(this).val() === "facture") {
+      $("#prefactures-select").show();
+    } else {
+      $("#prefactures-select").hide();
+    }
+  });
+
   $("#send-request-button").click(function(e) {
     if (
       !$("#check_out_name").val() ||
@@ -39,6 +47,19 @@ $(document).ready(function() {
     ) {
       alert("Rellene todos los campos");
       e.preventDefault();
+    } else {
+      $("#memberNumber").val(memberNumber);
+      $("#transportCost").val(transportCost);
+      $("#products").val(JSON.stringify(products));
+
+      $("#check_out_type").val($("#type-select").val());
+      $("#check_out_ignoreTransport").val(
+        $("#ignoreTransport").prop("checked")
+      );
+
+      if ($("#type-select").val() === "facture") {
+        $("#check_out_prefacture").val($("#prefactures-select").val());
+      }
     }
   });
 });

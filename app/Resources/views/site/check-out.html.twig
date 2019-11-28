@@ -84,6 +84,9 @@
                 <div class="col-12 col-lg-7 order-md-1">
                     <h4 class="mb-3">Datos de contacto</h4>
                     {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'true'}}) }}
+                    <input type="hidden" name="memberNumber" id="memberNumber">
+                    <input type="hidden" name="transportCost" id="transportCost">
+                    <input type="hidden" name="products" id="products">
                     <div class="mb-3 pr-3 pr-lg-0">
                         {{ form_label(form.name, 'Nombre y Apellidos') }}
                         {{ form_widget(form.name, {'attr': {'class': 'form-control', 'required': 'true'}}) }}
@@ -153,6 +156,23 @@
                     </div>
                     {{ form_widget(form.recaptcha) }}
                     <hr class="mb-4">
+                    {% if is_granted('ROLE_COMMERCIAL') %}
+                        <select id="type-select" class="form-control mb-2">
+                            <option value="request">Pedido</option>
+                            <option value="prefacture">Prefactura</option>
+                            <option value="facture">Factura</option>
+                        </select>
+                        <select id="prefactures-select" class="form-control mb-2" style="display: none;">
+                            <option value="0">Ninguna</option>
+                            {% for prefacture in prefactures %}
+                                <option value="{{prefacture.id}}">Prefactura: {{prefacture.id}}-{{prefacture.date|date('Y')}}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="mb-2">
+                            <input type="checkbox" id="ignoreTransport">
+                            <span class="terms-label">Ignorar costo de transporte</span>
+                        </div>
+                    {% endif %}
                     <div class="d-flex">
                         <div class="d-flex w-100">
                             <button id="send-request-button" class="btn btn-lg btn-block co-submit p-0 p-lg-4" type="submit">
@@ -173,6 +193,61 @@
         {% else %}
             memberNumber = undefined;
         {% endif %}
+        transportCost = {{transportCost}};
+        products = [];
+        {% for product in products %}
+        products.push({
+            {% if product.weight is defined %}
+                weight: {{product.weight}},
+            {% else %}
+                weight: 0,
+            {% endif %}
+            {% if product.price is defined %}
+                price: {{product.price}},
+            {% else %}
+                price: 0,
+            {% endif %}
+            {% if product.isFurniture is defined and product.isFurniture %}
+                isFurniture: true,
+            {% else %}
+                isFurniture: false,
+            {% endif %}
+            {% if product.isMattress is defined and product.isMattress %}
+                isMattress: true,
+            {% else %}
+                isMattress: false,
+            {% endif %}
+            {% if product.isAriplaneForniture is defined and product.isAriplaneForniture %}
+                isAriplaneForniture: true,
+            {% else %}
+                isAriplaneForniture: false,
+            {% endif %}
+            {% if product.isAriplaneMattress is defined and product.isAriplaneMattress %}
+                isAriplaneMattress: true,
+            {% else %}
+                isAriplaneMattress: false,
+            {% endif %}
+            {% if product.categories is defined %}
+                categories: {{product.categories}},
+            {% else %}
+                categories: false,
+            {% endif %}
+            {% if product.type is defined %}
+                type: 'target',
+                count: {{ product.count }},
+                amount: {{ product.amount }},
+            {% endif %}
+            {% if product.product is defined %}
+                id: '{{ product.product.id }}',
+                count: {{ product.count }},
+            {% endif %}
+            {% if product.offer is defined %}
+                offer: {{ product.offer }},
+            {% else %}
+                offer: false
+            {% endif %}
+        });
+        {% endfor %}
     </script>
     <script src="{{ asset('bundles/conceptos/shop-cart/js/jquery-3.2.1.slim.min.js') }}"></script>
     <script src="{{ asset('bundles/conceptos/shop-cart/js/holder.min.js') }}"></script>

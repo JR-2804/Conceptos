@@ -63,6 +63,10 @@ class Product
      */
     private $popular;
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $priority;
+    /**
      * @ORM\Column(type="boolean")
      */
     private $recent;
@@ -176,6 +180,34 @@ class Product
      * @ORM\Column(type="boolean")
      */
     private $isLamp;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isFaucet;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isGrill;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isShelf;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isDesk;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isBookcase;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isComoda;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isRepisa;
     /**
      * @ORM\Column(type="integer")
      */
@@ -298,6 +330,18 @@ class Product
     public function getPopular()
     {
         return $this->popular;
+    }
+
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+
+        return $this;
+    }
+
+    public function getPriority()
+    {
+        return $this->priority;
     }
 
     public function setRecent($recent)
@@ -679,6 +723,90 @@ class Product
     public function getIsLamp()
     {
         return $this->isLamp;
+    }
+
+    public function setIsFaucet($isFaucet)
+    {
+        $this->isFaucet = $isFaucet;
+
+        return $this;
+    }
+
+    public function getIsFaucet()
+    {
+        return $this->isFaucet;
+    }
+
+    public function setIsGrill($isGrill)
+    {
+        $this->isGrill = $isGrill;
+
+        return $this;
+    }
+
+    public function getIsGrill()
+    {
+        return $this->isGrill;
+    }
+
+    public function setIsShelf($isShelf)
+    {
+        $this->isShelf = $isShelf;
+
+        return $this;
+    }
+
+    public function getIsShelf()
+    {
+        return $this->isShelf;
+    }
+
+    public function setIsDesk($isDesk)
+    {
+        $this->isDesk = $isDesk;
+
+        return $this;
+    }
+
+    public function getIsDesk()
+    {
+        return $this->isDesk;
+    }
+
+    public function setIsBookcase($isBookcase)
+    {
+        $this->isBookcase = $isBookcase;
+
+        return $this;
+    }
+
+    public function getIsBookcase()
+    {
+        return $this->isBookcase;
+    }
+
+    public function setIsComoda($isComoda)
+    {
+        $this->isComoda = $isComoda;
+
+        return $this;
+    }
+
+    public function getIsComoda()
+    {
+        return $this->isComoda;
+    }
+
+    public function setIsRepisa($isRepisa)
+    {
+        $this->isRepisa = $isRepisa;
+
+        return $this;
+    }
+
+    public function getIsRepisa()
+    {
+        return $this->isRepisa;
     }
 
     public function setNumberOfPackages($numberOfPackages)

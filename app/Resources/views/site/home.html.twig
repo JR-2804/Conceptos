@@ -77,6 +77,12 @@
             </ol>
             <div class="carousel-inner" role="listbox">
                 {% for offer in offersImage %}
+                    {% set offerText = "VER OFERTAS" %}
+                    {% set offerPath = path('products', {inOffer:true}) %}
+                    {% if offer.products|length == 1 %}
+                      {% set offerText = "VER OFERTA" %}
+                      {% set offerPath = path('product_details', {id:offer.products[0].id}) %}
+                    {% endif %}
                     <div class="carousel-item slider-fullscreen-image {% if loop.first %}active{% endif %}"
                           data-bg-video-slide="false"
                           style="background-image: url('{{ offer.image }}');">
@@ -93,8 +99,8 @@
                                             <p class="lead mbr-text mbr-fonts-style display-5">{{ offer.description }}</p>
                                         {% endif %}
                                         <div class="d-flex justify-content-center">
-                                            <a class="btn btn-success display-4 d-none d-lg-block" href="{{ path('products', {inOffer:true}) }}">VER OFERTA</a>
-                                            <a class="btn btn-success display-4 short-button d-lg-none" href="{{ path('products', {inOffer:true}) }}">VER OFERTA</a>
+                                            <a class="btn btn-success display-4 d-none d-lg-block" href="{{ offerPath }}">{{offerText}}</a>
+                                            <a class="btn btn-success display-4 short-button d-lg-none" href="{{ offerPath }}">{{offerText}}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -104,12 +110,18 @@
                 {% endfor %}
                 {% for image in page.data.slides %}
                     <div class="carousel-item slider-fullscreen-image {% if loop.first and originalCountImagesOffer == 0 %}active{% endif %}"
-                          data-bg-video-slide="{% if image.video is defined %}{{ image.video }}{% else %}false{% endif %}"
                           style="background-image: url('{{ image.path }}');">
                         <div class="container container-slide">
                             <div class="image_wrapper">
-                                <img class="main-carousel-image d-none d-lg-block" src="{{ image.path }}">
-                                <img class="main-carousel-image-small d-lg-none" src="{{ image.path }}">
+                                {% if image.link is defined %}
+                                    <a href="{{image.link}}">
+                                        <img class="main-carousel-image d-none d-lg-block" src="{{ image.path }}">
+                                        <img class="main-carousel-image-small d-lg-none" src="{{ image.path }}">
+                                    </a>
+                                {% else %}
+                                    <img class="main-carousel-image d-none d-lg-block" src="{{ image.path }}">
+                                    <img class="main-carousel-image-small d-lg-none" src="{{ image.path }}">
+                                {% endif %}
                                 <div class="carousel-caption justify-content-center">
                                     <div class="col-10 align-center">
                                         {% if image.main is defined %}
@@ -180,8 +192,120 @@
         </div>
     </section>
 
+    {% if populars is not empty %}
+        <section class="mbr-section content4 cid-rnLj9BWvac d-none d-lg-flex" id="popular-products-section">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col align-center pl-1 pr-1">
+                        <h2 class="align-center rob-header">{{page.data.populars.title|raw}}</h2>
+                        <h3 class="align-center rob-subtitle">{{page.data.populars.subtitle|raw}}</h3>
+                        <div class="d-flex justify-content-center">
+                            <a href="{{ path('products', {populars: true, page: 1}) }}" class="square-button">Ver Todos</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex pb-4">
+                    <div class="d-flex justify-content-center w-100">
+                        {% if populars|length > 1 %}
+                            <div class="col-1 d-flex align-items-center justify-content-center">
+                                <a class="carousel-control control-prev control-populars w-100" role="button">
+                                    <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-left mbr-iconfont"></span>
+                                    <span class="sr-only">Anterior</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                        <div class="col-10 pl-0">
+                            <div class="carousel" data-ride="carousel" id="carousel-populars-short" data-interval="10000">
+                                <div class="carousel-inner">
+                                    {% for popular in populars %}
+                                        <div class="container-fluid carousel-item {% if loop.first %}active{% endif %}">
+                                            <div class="d-flex justify-content-center w-100">
+                                                {% for cat in popular %}
+                                                    <div class="col-3 pl-0 m-1">
+                                                        <a class="d-flex justify-content-center" href="{{ path('product_details', {id: cat.id}) }}">
+                                                            <img class="brand-image" src="{{ vich_uploader_asset(cat.mainImage, 'imageFile') }}">
+                                                        </a>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% if populars|length > 1 %}
+                            <div class="col-1 d-flex align-items-center justify-content-center pl-0">
+                                <a class="carousel-control control-next control-populars w-100" role="button">
+                                    <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-right mbr-iconfont"></span>
+                                    <span class="sr-only">Siguiente</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mbr-section content4 cid-rnLj9BWvac d-lg-none" id="popular-products-section-short">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col align-center pl-1 pr-1">
+                        <h2 class="align-center rob-header rob-header-short">{{page.data.populars.title|raw}}</h2>
+                        <h3 class="align-center rob-subtitle rob-subtitle-short">{{page.data.populars.subtitle|raw}}</h3>
+                        <div class="d-flex justify-content-center">
+                            <a href="{{ path('products', {populars: true, page: 1}) }}" class="square-button">Ver Todos</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex pb-4">
+                    <div class="d-flex justify-content-center w-100">
+                        {% if popularsForShortScreen|length > 1 %}
+                            <div class="col-1 d-flex m-0 p-0 align-items-center justify-content-center">
+                                <a class="d-flex align-items-center carousel-control control-prev carousel-control-shorter control-populars" role="button">
+                                    <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-left mbr-iconfont"></span>
+                                    <span class="sr-only">Anterior</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                        <div class="col-10 pl-0">
+                            <div class="carousel" data-ride="carousel" id="carousel-populars" data-interval="10000">
+                                <div class="carousel-inner">
+                                    {% for popular in popularsForShortScreen %}
+                                        <div class="container-fluid carousel-item {% if loop.first %}active{% endif %}">
+                                            <div class="d-flex justify-content-center w-100">
+                                                {% for cat in popular %}
+                                                    <div class="col-4 pl-0 m-1">
+                                                        <a class="d-flex justify-content-center align-items-center" href="{{ path('product_details', {id: cat.id}) }}">
+                                                            <img class="popular-image-short" src="{{ vich_uploader_asset(cat.mainImage, 'imageFile') }}">
+                                                        </a>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% if popularsForShortScreen|length > 1 %}
+                            <div class="col-1 d-flex m-0 p-0 align-items-center justify-content-center">
+                                <a class="d-flex align-items-center carousel-control control-next carousel-control-shorter control-populars" role="button">
+                                    <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-right mbr-iconfont"></span>
+                                    <span class="sr-only">Siguiente</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="w-100 cuban-brand-divider d-none d-lg-flex"></div>
+    {% else %}
+        <section class="membership-form-section">
+            <div class="pb-1 pb-lg-3"></div>
+        </section>
+    {% endif %}
+
     {% if inStore is not empty %}
-        <section class="mbr-section content4 cid-qQ6mxM0ThU pb-0 pb-lg-3 pt-1 pt-lg-3" id="content4-8">
+        <section class="mbr-section content4 cid-qQ6mxM0ThU pb-0 pb-lg-3 pt-0" id="content4-8">
             <div class="home-badge in-store-text d-flex align-items-center justify-content-between d-lg-none">
                 <div class="d-flex flex-column align-items-center ml-2">
                     <span class="in-store-text-short ml-0">En Almacén</span>
@@ -215,9 +339,26 @@
                                 <a class="btn btn-custom btn-success btn-add-cart add-to-cart-button"
                                    data-path="{{ path('add_shop_card', {id: inStoreHighlight.id, offer: 'false'}) }}">
                                     <i class="mbri-shopping-cart"></i>
+                                    {% set priceOffer = -1 %}
                                     {% if inStoreHighlight.priceOffer is not null and inStoreHighlight.priceOffer != -1 %}
-                                        {{ inStoreHighlight.priceOffer }} CUC
-                                    {% else %}
+                                        {% set priceOffer = inStoreHighlight.priceOffer %}
+                                    {% endif %}
+                                    {% if priceOffer == -1 %}
+                                        {% for category in inStoreHighlight.categories %}
+                                          {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and inStoreHighlight.inStore)) %}
+                                            {% set priceOffer = (inStoreHighlight.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
+                                          {% else %}
+                                            {% for parentCategory in category.parents %}
+                                              {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and inStoreHighlight.inStore)) %}
+                                                {% set priceOffer = (inStoreHighlight.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
+                                              {% endif %}
+                                            {% endfor %}
+                                          {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% if priceOffer != -1 %}
+                                        {{ priceOffer }} CUC
+                                      {% else %}
                                         {{ inStoreHighlight.price }} CUC
                                     {% endif %}
                                 </a>
@@ -489,9 +630,26 @@
                                 <a class="btn btn-custom btn-success btn-add-cart add-to-cart-button"
                                    data-path="{{ path('add_shop_card', {id: lastedHighlight.id, offer: 'false'}) }}">
                                     <i class="mbri-shopping-cart"></i>
+                                    {% set priceOffer = -1 %}
                                     {% if lastedHighlight.priceOffer is not null and lastedHighlight.priceOffer != -1 %}
-                                        {{ lastedHighlight.priceOffer }} CUC
-                                    {% else %}
+                                        {% set priceOffer = lastedHighlight.priceOffer %}
+                                    {% endif %}
+                                    {% if priceOffer == -1 %}
+                                        {% for category in lastedHighlight.categories %}
+                                          {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and lastedHighlight.inStore)) %}
+                                            {% set priceOffer = (lastedHighlight.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
+                                          {% else %}
+                                            {% for parentCategory in category.parents %}
+                                              {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and lastedHighlight.inStore)) %}
+                                                {% set priceOffer = (lastedHighlight.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
+                                              {% endif %}
+                                            {% endfor %}
+                                          {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% if priceOffer != -1 %}
+                                        {{ priceOffer }} CUC
+                                      {% else %}
                                         {{ lastedHighlight.price }} CUC
                                     {% endif %}
                                 </a>

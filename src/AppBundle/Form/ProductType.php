@@ -21,6 +21,7 @@ class ProductType extends AbstractType
             ->add('image', HiddenType::class)
             ->add('price', HiddenType::class)
             ->add('popular', HiddenType::class)
+            ->add('priority', HiddenType::class)
             ->add('recent', HiddenType::class)
             ->add('imagesToDelete', HiddenType::class)
             ->add('color', HiddenType::class)
@@ -41,6 +42,13 @@ class ProductType extends AbstractType
             ->add('isOversize', HiddenType::class)
             ->add('isTableware', HiddenType::class)
             ->add('isLamp', HiddenType::class)
+            ->add('isFaucet', HiddenType::class)
+            ->add('isGrill', HiddenType::class)
+            ->add('isShelf', HiddenType::class)
+            ->add('isDesk', HiddenType::class)
+            ->add('isBookcase', HiddenType::class)
+            ->add('isComoda', HiddenType::class)
+            ->add('isRepisa', HiddenType::class)
             ->add('numberOfPackages', HiddenType::class)
         ;
         parent::buildForm($builder, $options);

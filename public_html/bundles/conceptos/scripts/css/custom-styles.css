@@ -641,7 +641,7 @@ a.header-text.active {
 }
 
 .rob-header-short {
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .rob-subtitle {
@@ -1305,8 +1305,7 @@ a.header-text.active {
 }
 
 #product-images-carousel .carousel-inner img.img-short {
-  height: 40vh;
-  width: 100%;
+  object-fit: cover;
 }
 
 .dropdown-submenu {
@@ -1420,6 +1419,11 @@ a.header-text.active {
 .brand-image-short {
   height: 50px;
   width: 50px;
+}
+
+.popular-image-short {
+  height: auto;
+  width: 100%;
 }
 
 .control-brands {
@@ -2254,8 +2258,9 @@ i.share-icon:hover {
 }
 
 .short-button {
-  padding: 5px 10px 5px 10px;
+  padding: 0px 5px 0px 5px;
   border-radius: 50px;
+  font-size: 10px !important;
 }
 
 .membership-form-section {
@@ -2267,7 +2272,7 @@ i.share-icon:hover {
 }
 
 .home-badge {
-  top: 77px;
+  top: 63px;
   position: -webkit-sticky;
   position: sticky;
   z-index: 900;
@@ -2330,4 +2335,13 @@ i.share-icon:hover {
 .help-page-header-short {
   width: 100%;
   padding-top: 7px;
+}
+
+.navbar .additional-navbar-button.nav-shop-cart-icon {
+  margin-top: 9px;
+  margin-right: 45px;
+}
+
+.navbar.navbar-short .additional-navbar-button.nav-shop-cart-icon {
+  margin-top: -5px;
 }

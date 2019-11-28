@@ -288,7 +288,10 @@ $(document).ready(function() {
     init: function() {
       dropzoneLoginShort = this;
       if (loginImageShort != undefined) {
-        var mockFile = { name: loginImageShort.name, size: loginImageShort.size };
+        var mockFile = {
+          name: loginImageShort.name,
+          size: loginImageShort.size
+        };
         dropzoneLoginShort.emit("addedfile", mockFile);
         dropzoneLoginShort.emit("thumbnail", mockFile, loginImageShort.path);
         dropzoneLoginShort.emit("complete", mockFile);
@@ -397,8 +400,8 @@ $(document).ready(function() {
 
   $("#btn-add-image-video").click(function() {
     if (headerImage != undefined) {
-      if ($("#video-image").val()) {
-        headerImage.video = $("#video-image").val();
+      if ($("#slide-link").val()) {
+        headerImage.link = $("#slide-link").val();
       }
       headerImage.main = $("#header-main").val();
       headerImage.secondary = $("#header-secondary").val();
@@ -406,7 +409,7 @@ $(document).ready(function() {
       headerImage = undefined;
       var dropzoneHeader = Dropzone.forElement("form#picture-dropzone-header");
       dropzoneHeader.removeAllFiles(true);
-      $("#video-image").val("");
+      $("#slide-link").val("");
       $("#header-main").val("");
       $("#header-secondary").val("");
       populateHeaderImages();
@@ -511,6 +514,10 @@ function init() {
     $("#in-store-subtitle").val(data.subtitles.inStore);
     $("#recent-subtitle").val(data.subtitles.recent);
   }
+  if (data.populars) {
+    $("#populars-title").val(data.populars.title);
+    $("#populars-subtitle").val(data.populars.subtitle);
+  }
   if (data.cubanBrands) {
     $("#cuban-brands-title").val(data.cubanBrands.title);
     $("#cuban-brands-subtitle").val(data.cubanBrands.subtitle);
@@ -534,11 +541,15 @@ function generateData() {
       image1: topImage1,
       image2: topImage2,
       image1Link: $("#top-image-1-link").val(),
-      image2Link: $("#top-image-2-link").val(),
+      image2Link: $("#top-image-2-link").val()
     },
     subtitles: {
       inStore: $("#in-store-subtitle").val(),
       recent: $("#recent-subtitle").val()
+    },
+    populars: {
+      title: $("#populars-title").val(),
+      subtitle: $("#populars-subtitle").val()
     },
     cubanBrands: {
       title: $("#cuban-brands-title").val(),
@@ -566,14 +577,14 @@ function generateData() {
     advertisements: advertisementImages,
     login: {
       image: loginImage,
-      imageShort: loginImageShort,
+      imageShort: loginImageShort
     },
     successMail: {
       image: successMailImage
     },
     logo: {
       image: logoImage
-    },
+    }
   };
   return data;
 }
@@ -583,10 +594,18 @@ function validateSubmitData() {
   if (headerImages.length == 0) {
     valid = false;
   }
-  if (!topImage1 || !$("#top-image-1-link").val() || !topImage2 || !$("#top-image-2-link").val()) {
+  if (
+    !topImage1 ||
+    !$("#top-image-1-link").val() ||
+    !topImage2 ||
+    !$("#top-image-2-link").val()
+  ) {
     valid = false;
   }
   if (!$("#in-store-subtitle").val() || !$("#recent-subtitle").val()) {
+    valid = false;
+  }
+  if (!$("#populars-title").val()) {
     valid = false;
   }
   if (!$("#cuban-brands-title").val() || !$("#cuban-brands-subtitle").val()) {
@@ -627,13 +646,13 @@ function populateHeaderImages() {
         .substring(-1)
         .replace("%1", image.path)
         .replace("%2", image.id);
-      if (image.video) {
-        var video = image.video;
+      if (image.link) {
+        var link = image.link;
       } else {
-        video = "";
+        link = "";
       }
       var index1 = index + 1;
-      tmp_image = tmp_image.substring(-1).replace("%3", video);
+      tmp_image = tmp_image.substring(-1).replace("%3", link);
       if (image.main) {
         tmp_image = tmp_image.replace("%4", image.main);
       } else {
