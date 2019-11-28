@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new \EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
             new AppBundle\AppBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
