@@ -141,26 +141,28 @@
                     </div>
                 {% endfor %}
             </div>
-            <a data-app-prevent-settings="" class="carousel-control carousel-control-prev d-none d-lg-block" role="button"
-                data-slide="prev" href="#slider1-28">
-                <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                <span class="sr-only">Anterior</span>
-            </a>
-            <a data-app-prevent-settings="" class="carousel-control carousel-control-prev carousel-control-short d-lg-none" role="button"
-                data-slide="prev" href="#slider1-28">
-                <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                <span class="sr-only">Anterior</span>
-            </a>
-            <a data-app-prevent-settings="" class="carousel-control carousel-control-next d-none d-lg-block" role="button"
-                data-slide="next" href="#slider1-28">
-                <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                <span class="sr-only">Siguiente</span>
-            </a>
-            <a data-app-prevent-settings="" class="carousel-control carousel-control-next carousel-control-short d-lg-none" role="button"
-                data-slide="next" href="#slider1-28">
-                <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                <span class="sr-only">Siguiente</span>
-            </a>
+            {% if (offersImage|length + page.data.slides|length) > 1 %}
+                <a data-app-prevent-settings="" class="carousel-control carousel-control-prev d-none d-lg-block" role="button"
+                    data-slide="prev" href="#slider1-28">
+                    <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+                    <span class="sr-only">Anterior</span>
+                </a>
+                <a data-app-prevent-settings="" class="carousel-control carousel-control-prev carousel-control-short d-lg-none" role="button"
+                    data-slide="prev" href="#slider1-28">
+                    <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+                    <span class="sr-only">Anterior</span>
+                </a>
+                <a data-app-prevent-settings="" class="carousel-control carousel-control-next d-none d-lg-block" role="button"
+                    data-slide="next" href="#slider1-28">
+                    <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+                    <span class="sr-only">Siguiente</span>
+                </a>
+                <a data-app-prevent-settings="" class="carousel-control carousel-control-next carousel-control-short d-lg-none" role="button"
+                    data-slide="next" href="#slider1-28">
+                    <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+                    <span class="sr-only">Siguiente</span>
+                </a>
+            {% endif %}
         </div>
     </section>
 

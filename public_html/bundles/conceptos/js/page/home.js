@@ -591,9 +591,6 @@ function generateData() {
 
 function validateSubmitData() {
   var valid = true;
-  if (headerImages.length == 0) {
-    valid = false;
-  }
   if (
     !topImage1 ||
     !$("#top-image-1-link").val() ||
