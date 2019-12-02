@@ -27,9 +27,12 @@ $(document).ready(function() {
 });
 
 function ConfigureOfferCountdown() {
-  countDownDate = new Date(
-    document.getElementById("offer-countdown").dataset.endDate
-  ).getTime();
+  offerCountDown = document.getElementById("offer-countdown");
+  if (!offerCountDown) {
+    return;
+  }
+
+  countDownDate = new Date(offerCountDown.dataset.endDate).getTime();
   setInterval(function() {
     var distance = countDownDate - Date.now();
     var days = Math.floor(distance / (1000 * 60 * 60 * 24));

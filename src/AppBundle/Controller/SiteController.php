@@ -57,7 +57,7 @@ class SiteController extends Controller
                     'name' => $offer->getName(),
                     'description' => $offer->getDescription(),
                     'start' => date_format($offer->getStartDate(), 'd/m/Y'),
-                    'end' => date_format($offer->getEndDate(), 'd/m/Y'),
+                    'end' => date_format($offer->getEndDate(), 'm/d/Y'),
                     'products' => $offer->getProducts(),
                 ];
             }
@@ -982,6 +982,8 @@ class SiteController extends Controller
     {
         $memberNumber = json_decode($request->request->get('memberNumber', false), true);
         $transportCost = json_decode($request->request->get('transportCost', false), true);
+        $paymentType = json_decode($request->request->get('paymentType', false), true);
+        $paymentCurrency = json_decode($request->request->get('paymentCurrency', false), true);
         $productsCount = $request->request->get('products', []);
         $numberOfProducts = 0;
         if (!is_array($productsCount)) {
@@ -1001,6 +1003,7 @@ class SiteController extends Controller
 
         $productsResponse = [];
         $totalPrice = 0;
+        $cucExtra = 0;
         foreach ($productsCount as $product) {
             if (!array_key_exists('type', $product)) {
                 $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['id']);
@@ -1033,6 +1036,13 @@ class SiteController extends Controller
                     }
                   }
                 }
+
+                if ($paymentCurrency == 'cuc') {
+                  $productCucExtra = $price * 0.2;
+                  $cucExtra += $productCucExtra;
+                  $price += $productCucExtra;
+                }
+
                 $price = $productPrice * $product['count'];
                 $totalPrice += $price;
 
@@ -1058,6 +1068,14 @@ class SiteController extends Controller
 
             $numberOfProducts += $product['count'];
         }
+
+        if ($paymentType == 'two-steps') {
+          $totalPrice = 10;
+          // $totalPrice += floor($totalPrice * 0.2);
+        } else {
+          $totalPrice = 20;
+        }
+
         $discount = 0;
         if ($memberNumber) {
           $discount = floor($totalPrice * 0.1);
@@ -1249,6 +1267,7 @@ class SiteController extends Controller
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
+            'paymentType' => $paymentType,
         ]);
     }
 
