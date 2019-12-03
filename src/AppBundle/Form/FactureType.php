@@ -21,6 +21,8 @@ class FactureType extends AbstractType
             ->add('firstClientDiscount', HiddenType::class)
             ->add('request', HiddenType::class)
             ->add('preFacture', HiddenType::class)
+            ->add('twoStepExtra', HiddenType::class)
+            ->add('cucExtra', HiddenType::class)
         ;
         parent::buildForm($builder, $options);
     }

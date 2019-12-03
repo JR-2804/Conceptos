@@ -234,6 +234,46 @@
                                     </div>
                                 </div>
                             {% endif %}
+                            {% if request.twoStepExtra > 0 %}
+                              <div class="row two-steps-row">
+                                  <div class="col-12 pl-0">
+                                      <hr />
+                                  </div>
+                              </div>
+                              <div class="row two-steps-row">
+                                  <div class="col-12 pl-0">
+                                      <div class="d-flex align-items-center justify-content-end">
+                                          <div class="col-lg-3 pl-0">
+                                              <div class="d-flex align-items-center justify-content-between">
+                                                  <span class="price-header d-none d-lg-block">Extra 2 plazos</span>
+                                                  <span class="price-header price-header-short d-lg-none">Extra 2 plazos</span>
+                                                  <span id="two-steps" class="product-price mr-0 mr-lg-3">${{request.twoStepExtra}}.00</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                            {% endif %}
+                            {% if request.cucExtra > 0 %}
+                              <div class="row cuc-extra-row">
+                                  <div class="col-12 pl-0">
+                                      <hr />
+                                  </div>
+                              </div>
+                              <div class="row cuc-extra-row">
+                                  <div class="col-12 pl-0">
+                                      <div class="d-flex align-items-center justify-content-end">
+                                          <div class="col-lg-3 pl-0">
+                                              <div class="d-flex align-items-center justify-content-between">
+                                                  <span class="price-header d-none d-lg-block">Extra CUC</span>
+                                                  <span class="price-header price-header-short d-lg-none">Extra CUC</span>
+                                                  <span id="cuc-extra" class="product-price mr-0 mr-lg-3">${{request.cucExtra}}.00</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                            {% endif %}
                             <div class="row">
                                 <div class="col-12 pl-0">
                                     <hr />

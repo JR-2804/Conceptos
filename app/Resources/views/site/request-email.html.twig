@@ -922,6 +922,16 @@
                               <span style="font-size: 18px;">Descuento de Primera Compra<strong>${{request.firstClientDiscount}}</strong></span>
                             </p>
                           {% endif %}
+                          {% if request.twoStepExtra > 0 %}
+                            <p style="font-size: 14px; line-height: 21px; text-align: right; margin: 0;">
+                              <span style="font-size: 18px;">Extra 2 plazos<strong>${{request.twoStepExtra}}</strong></span>
+                            </p>
+                          {% endif %}
+                          {% if request.cucExtra > 0 %}
+                            <p style="font-size: 14px; line-height: 21px; text-align: right; margin: 0;">
+                              <span style="font-size: 18px;">Extra CUC<strong>${{request.cucExtra}}</strong></span>
+                            </p>
+                          {% endif %}
                           <p style="font-size: 14px; line-height: 21px; text-align: right; margin: 0;">
                             <span style="font-size: 18px;">Costo de Transporte <strong>${{request.transportCost}}</strong></span>
                           </p>

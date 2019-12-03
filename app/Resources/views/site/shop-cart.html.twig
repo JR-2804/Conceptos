@@ -28,6 +28,18 @@
             </div>
         </div>
     </section>
+    <section>
+      <div class="d-flex flex-column">
+        <select id="payment-type" class="form-control">
+            <option value="total">Pago total</option>
+            <option value="two-steps">Pago en dos plazos</option>
+        </select>
+        <select id="payment-currency" class="form-control">
+            <option value="usd">USD</option>
+            <option value="cuc">CUC</option>
+        </select>
+      </div>
+    </section>
     <section class="shop-cart">
         <div class="container-fluid pl-4 pr-4 pl-lg-5 pr-lg-5">
             <div class="row cart-table-header d-none d-lg-flex">
@@ -261,6 +273,42 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row two-steps-row" style="display: none;">
+                                <div class="col-12 pl-0">
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="row two-steps-row" style="display: none;">
+                                <div class="col-12 pl-0">
+                                    <div class="d-flex align-items-center justify-content-end">
+                                        <div class="col-lg-3 pl-0">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <span class="price-header d-none d-lg-block">Extra 2 plazos</span>
+                                                <span class="price-header price-header-short d-lg-none">Extra 2 plazos</span>
+                                                <span id="two-steps" class="product-price mr-0 mr-lg-3"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row cuc-extra-row" style="display: none;">
+                                <div class="col-12 pl-0">
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="row cuc-extra-row" style="display: none;">
+                                <div class="col-12 pl-0">
+                                    <div class="d-flex align-items-center justify-content-end">
+                                        <div class="col-lg-3 pl-0">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <span class="price-header d-none d-lg-block">Extra CUC</span>
+                                                <span class="price-header price-header-short d-lg-none">Extra CUC</span>
+                                                <span id="cuc-extra" class="product-price mr-0 mr-lg-3"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-12 pl-0">
                                     <hr />
@@ -344,6 +392,8 @@
                                 <form name="checkout-form" method="POST" action="{{path('check_out')}}">
                                     <input type="hidden" name="memberNumber" id="memberNumber">
                                     <input type="hidden" name="transportCost" id="transportCost">
+                                    <input type="hidden" name="paymentType" id="paymentType">
+                                    <input type="hidden" name="paymentCurrency" id="paymentCurrency">
                                     <input type="hidden" name="products" id="products">
                                     <div class="d-flex">
                                         <button class="btn navigation-button btn-send-request d-none d-lg-block" type="submit">

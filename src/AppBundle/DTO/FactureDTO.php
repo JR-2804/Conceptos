@@ -15,6 +15,8 @@ class FactureDTO
   private $firstClientDiscount;
   private $request;
   private $preFacture;
+  private $twoStepExtra;
+  private $cucExtra;
 
   public function getId()
   {
@@ -124,5 +126,25 @@ class FactureDTO
   public function setPreFacture($preFacture)
   {
       $this->preFacture = $preFacture;
+  }
+
+  public function setTwoStepExtra($twoStepExtra)
+  {
+      $this->twoStepExtra = $twoStepExtra;
+  }
+
+  public function getTwoStepExtra()
+  {
+      return $this->twoStepExtra;
+  }
+
+  public function setCucExtra($cucExtra)
+  {
+      $this->cucExtra = $cucExtra;
+  }
+
+  public function getCucExtra()
+  {
+      return $this->cucExtra;
   }
 }

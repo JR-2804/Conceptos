@@ -58,6 +58,14 @@ class Request
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Request\Facture", mappedBy="request")
      */
     private $factures;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $twoStepExtra;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $cucExtra;
 
     public function __construct()
     {
@@ -275,6 +283,30 @@ class Request
       $this->setDiscount($membershipDiscount);
       $this->setFirstClientDiscount($firstClientDiscount);
       $this->setFinalPrice($finalPrice);
+    }
+
+    public function setTwoStepExtra($twoStepExtra)
+    {
+        $this->twoStepExtra = $twoStepExtra;
+
+        return $this;
+    }
+
+    public function getTwoStepExtra()
+    {
+        return $this->twoStepExtra;
+    }
+
+    public function setCucExtra($cucExtra)
+    {
+        $this->cucExtra = $cucExtra;
+
+        return $this;
+    }
+
+    public function getCucExtra()
+    {
+        return $this->cucExtra;
     }
 
     function __toString()

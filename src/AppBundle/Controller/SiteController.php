@@ -982,8 +982,8 @@ class SiteController extends Controller
     {
         $memberNumber = json_decode($request->request->get('memberNumber', false), true);
         $transportCost = json_decode($request->request->get('transportCost', false), true);
-        $paymentType = json_decode($request->request->get('paymentType', false), true);
-        $paymentCurrency = json_decode($request->request->get('paymentCurrency', false), true);
+        $paymentType = $request->request->get('paymentType', false);
+        $paymentCurrency = $request->request->get('paymentCurrency', false);
         $productsCount = $request->request->get('products', []);
         $numberOfProducts = 0;
         if (!is_array($productsCount)) {
@@ -1038,9 +1038,9 @@ class SiteController extends Controller
                 }
 
                 if ($paymentCurrency == 'cuc') {
-                  $productCucExtra = $price * 0.2;
+                  $productCucExtra = ceil($productPrice * 0.2);
                   $cucExtra += $productCucExtra;
-                  $price += $productCucExtra;
+                  $productPrice += $productCucExtra;
                 }
 
                 $price = $productPrice * $product['count'];
@@ -1069,11 +1069,10 @@ class SiteController extends Controller
             $numberOfProducts += $product['count'];
         }
 
+        $twoStepExtra = 0;
         if ($paymentType == 'two-steps') {
-          $totalPrice = 10;
-          // $totalPrice += floor($totalPrice * 0.2);
-        } else {
-          $totalPrice = 20;
+          $twoStepExtra = ceil($totalPrice * 0.2);
+          $totalPrice += $twoStepExtra;
         }
 
         $discount = 0;
@@ -1213,12 +1212,16 @@ class SiteController extends Controller
             if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
               if ($data->getType() == "facture") {
                 $facture->setDiscount($discount);
+                $facture->setTwoStepExtra($twoStepExtra);
+                $facture->setCucExtra($cucExtra);
                 $facture->setFirstClientDiscount($firstClientDiscount);
                 $facture->setTransportCost($transportCost);
                 $facture->setFinalPrice($totalPrice);
                 $this->getDoctrine()->getManager()->persist($facture);
               } else {
                 $prefacture->setDiscount($discount);
+                $prefacture->setTwoStepExtra($twoStepExtra);
+                $prefacture->setCucExtra($cucExtra);
                 $prefacture->setFirstClientDiscount($firstClientDiscount);
                 $prefacture->setTransportCost($transportCost);
                 $prefacture->setFinalPrice($totalPrice);
@@ -1226,6 +1229,8 @@ class SiteController extends Controller
               }
             } else {
               $requestDB->setDiscount($discount);
+              $requestDB->setTwoStepExtra($twoStepExtra);
+              $requestDB->setCucExtra($cucExtra);
               $requestDB->setFirstClientDiscount($firstClientDiscount);
               $requestDB->setTransportCost($transportCost);
               $requestDB->setFinalPrice($totalPrice);
@@ -1256,6 +1261,10 @@ class SiteController extends Controller
             'prefactures' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->findAll(),
             'memberNumber' => $memberNumber,
             'discount' => $discount,
+            'paymentType' => $paymentType,
+            'paymentCurrency' => $paymentCurrency,
+            'twoStepExtra' => $twoStepExtra,
+            'cucExtra' => $cucExtra,
             'transportCost' => $transportCost,
             'count' => $this->countShopCart($request),
             'numberOfProducts' => $numberOfProducts,
@@ -1267,7 +1276,6 @@ class SiteController extends Controller
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
-            'paymentType' => $paymentType,
         ]);
     }
 

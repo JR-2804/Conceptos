@@ -50,6 +50,8 @@ $(document).ready(function() {
     } else {
       $("#memberNumber").val(memberNumber);
       $("#transportCost").val(transportCost);
+      $("#paymentType").val(paymentType);
+      $("#paymentCurrency").val(paymentCurrency);
       $("#products").val(JSON.stringify(products));
 
       $("#check_out_type").val($("#type-select").val());

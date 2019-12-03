@@ -1,6 +1,8 @@
 var updatingProductId = undefined;
 var memberNumber = undefined;
 var transportCost = 5;
+var paymentType = undefined;
+var paymentCurrency = undefined;
 var homeCollect = false;
 
 $(document).ready(function() {
@@ -162,6 +164,14 @@ $(document).ready(function() {
     );
   });
 
+  $("#payment-type").change(function() {
+    recalculateAllPrices();
+  });
+
+  $("#payment-currency").change(function() {
+    recalculateAllPrices();
+  });
+
   $(".shop-cart-membership-checkbox").change(function() {
     if ($(this).prop("checked")) {
       $("#shop-cart-membership-number").show();
@@ -171,6 +181,8 @@ $(document).ready(function() {
       $("#shop-cart-membership-number").hide();
       $("#shop-cart-membership-number").val("");
       $("#shop-cart-membership-number").trigger("change");
+      memberNumber = undefined;
+      recalculateAllPrices();
     }
   });
 
@@ -202,8 +214,10 @@ $(document).ready(function() {
 
           recalculateAllPrices();
         },
-        function(error) {
-          alert("Ha ocurrido un error calculando el precio del producto");
+        function() {
+          memberNumber = undefined;
+          recalculateAllPrices();
+          alert("Ha ocurrido un error validando el número de miembro");
         }
       );
     } else {
@@ -215,6 +229,8 @@ $(document).ready(function() {
   $('form[name="checkout-form"]').submit(function(e) {
     $("#memberNumber").val(memberNumber);
     $("#transportCost").val(transportCost);
+    $("#paymentType").val(paymentType);
+    $("#paymentCurrency").val(paymentCurrency);
     $("#products").val(JSON.stringify(products));
   });
 
@@ -253,9 +269,13 @@ function CheckIfCanPerformHomeCollect() {
 }
 
 function recalculateAllPrices() {
+  paymentType = $("#payment-type").val();
+  paymentCurrency = $("#payment-currency").val();
+
   CheckIfCanPerformHomeCollect();
 
   var totalPrice = 0;
+  var cucExtra = 0;
   $(".total-price-product").each(function(i, input) {
     var productId = $(input).data("product");
     var price = $(input).data("price");
@@ -272,9 +292,16 @@ function recalculateAllPrices() {
         price = offer;
       }
     }
+
+    if (paymentCurrency == "cuc") {
+      var productCucExtra = Math.ceil(price * 0.2);
+      cucExtra += productCucExtra;
+      price += productCucExtra;
+    }
+
     totalPrice += count * price;
 
-    var subtotal = count * price;
+    var subtotal = Math.ceil(count * price);
     $(
       '.total-price-product[data-product="' + productId + '"] .product-count'
     ).text(count + " X");
@@ -287,7 +314,6 @@ function recalculateAllPrices() {
 
     products.forEach(function(product) {
       if (product.id == productId) {
-        product.price = price;
         if (product.count != count) {
           product.count = count;
 
@@ -299,6 +325,22 @@ function recalculateAllPrices() {
       }
     });
   });
+
+  if (paymentType == "two-steps") {
+    var twoStepExtra = Math.ceil(totalPrice * 0.2);
+    $("#two-steps").text("$" + twoStepExtra.toFixed(2));
+    $(".two-steps-row").show();
+    totalPrice += twoStepExtra;
+  } else {
+    $(".two-steps-row").hide();
+  }
+
+  if (paymentCurrency == "cuc") {
+    $("#cuc-extra").text("$" + cucExtra.toFixed(2));
+    $(".cuc-extra-row").show();
+  } else {
+    $(".cuc-extra-row").hide();
+  }
 
   if (memberNumber) {
     var discount = Math.floor(totalPrice * 0.1).toFixed(2);
