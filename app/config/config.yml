@@ -29,6 +29,7 @@ framework:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        cookie_lifetime: 31536000
     fragments:       ~
     http_method_override: true
     assets: ~
@@ -128,7 +129,7 @@ vich_uploader:
 
 lionware_symfony_session_timeout:
     session:
-        expiration_time: "%lionware_session_expiration_time%"
+        expiration_time: 31536000
 
 fos_user:
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
