@@ -1613,6 +1613,41 @@ class SiteController extends Controller
     }
 
     /**
+     * @Route(name="request_status", path="/estado-pedidos")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function requestStatusAction(Request $request)
+    {
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Home',
+        ]);
+
+        $userMail = $this->getUser()->getEmail();
+        $clientRequests = [];
+        $persistedRequests = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->findAll();
+        foreach ($persistedRequests as $persistedRequest) {
+          if ($persistedRequest->getClient()->getEmail() == $userMail) {
+            $clientRequests[] = $persistedRequest;
+          }
+        }
+
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+        return $this->render(':site:request-status.html.twig', [
+            'home' => $home,
+            'count' => $this->countShopCart($request),
+            'requests' => $clientRequests,
+            'categories' => $this->get('category_service')->getAll(),
+            'terms' => $config->getTermAndConditions(),
+            'privacy' => $config->getPrivacyPolicy(),
+            'currentDate' => new \DateTime(),
+        ]);
+    }
+
+    /**
      * @Route(name="evaluate_product", path="/product/evaluate/{productId}/{evaluationValue}", methods={"POST"})
      *
      * @return JsonResponse
