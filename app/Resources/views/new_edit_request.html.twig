@@ -21,94 +21,6 @@
     {% endif %}
 {% endblock %}
 {% block main %}
-  {% if requestId is defined %}
-      <div id="prefactureModal" class="modal fade" data-path="{{ path('request_facture_data', {id: requestId}) }}">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="d-flex">
-                        <img class="img-responsive modal-header-image" width="100" height="100">
-                        <div class="d-flex align-items-center" style="padding-left: 10px;">
-                            <h4 class="modal-title"></h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label class="control-label">Prefacturas</label>
-                                <select id="modal-prefactures" class="form-control" multiple>
-                                  {% for prefacture in prefactures %}
-                                    {% if prefacture.request and prefacture.request.id == requestId %}
-                                      <option value="{{prefacture.id}}--{{prefacture.date|date('Y')}}">Prefactura: {{ prefacture.id }}-{{prefacture.date|date('Y')}}</option>
-                                    {% endif %}
-                                  {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                              <label class="control-label">Cantidad</label>
-                              <input id="modal-prefactures-count" type="number" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button id="modal-prefactures-accept" class="btn navigation-button"
-                            data-path="{{ path('set_request_facture_data', {id: requestId}) }}">
-                        Aceptar
-                    </button>
-                    <button class="btn navigation-button" data-dismiss="modal">Cancelar</button>
-                </div>
-            </div>
-        </div>
-      </div>
-      <div id="factureModal" class="modal fade" data-action="{{action}}" data-path="{{ path('request_facture_data', {id: requestId}) }}">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="d-flex">
-                        <img class="img-responsive modal-header-image" width="100" height="100">
-                        <div class="d-flex align-items-center" style="padding-left: 10px;">
-                            <h4 class="modal-title"></h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label class="control-label">Facturas</label>
-                                <select id="modal-factures" class="form-control" multiple>
-                                  {% for facture in factures %}
-                                    {% if facture.request and facture.request.id == requestId %}
-                                      <option value="{{facture.id}}--{{facture.date|date('Y')}}">Factura: {{ facture.id }}-{{facture.date|date('Y')}}</option>
-                                    {% endif %}
-                                  {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                              <label class="control-label">Cantidad</label>
-                              <input id="modal-factures-count" type="number" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button id="modal-factures-accept" class="btn navigation-button"
-                            data-path="{{ path('set_request_facture_data', {id: requestId}) }}">
-                        Aceptar
-                    </button>
-                    <button class="btn navigation-button" data-dismiss="modal">Cancelar</button>
-                </div>
-            </div>
-        </div>
-      </div>
-  {% endif %}
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
@@ -176,6 +88,21 @@
                       <input id="product-count" type="number" class="form-control">
                     </div>
                   </div>
+                  <div class="col-6" style="padding-left: 0;">
+                    <div class="form-group">
+                      <label class="control-label">Precio</label>
+                      <input id="product-price" type="number" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="control-label">Estado</label>
+                      <select id="product-state" class="form-control" multiple>
+                        <option value="Estado 1">Estado 1</option>
+                        <option value="Estado 2">Estado 2</option>
+                      </select>
+                    </div>
+                  </div>
                   <div class="col-12" style="padding-left: 0;">
                     <div class="form-group">
                       <div class="checkbox">
@@ -208,6 +135,8 @@
                     <th>Imágen</th>
                     <th>Producto</th>
                     <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Estado</th>
                     <th>Mueble por Avión</th>
                     <th>Colchón por Avión</th>
                     <th>Acciones</th>
@@ -220,7 +149,7 @@
             </div>
           </div>
         </div>
-        <div class="col-12" style="padding-left: 0; padding-right: 0; margin-top: 20px;">
+        <div class="col-12" style="padding-left: 0; padding-right: 0; margin-top: 20px; margin-bottom: 20px;">
           <div class="panel panel-primary" style="height: 100%;">
             <div class="panel-heading">
                 <h3 class="panel-title">Tarjetas</h3>
@@ -262,78 +191,6 @@
                   </tr>
                   </thead>
                   <tbody class="card-rows">
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12" style="margin-top: 20px;">
-          <div class="col-12" style="padding-left: 0; padding-right: 0;">
-          <div class="panel panel-primary" style="height: 100%;">
-            <div class="panel-heading">
-                <h3 class="panel-title">Prefacturas Asociadas</h3>
-            </div>
-            <div class="panel-body">
-              <div class="col-12" style="padding-left: 0;">
-                <div class="form-group">
-                  <label class="control-label">Prefacturas</label>
-                  <select id="prefacture" class="form-control" multiple>
-                    {% for prefacture in prefactures %}
-                      <option value="{{prefacture.id}}--{{prefacture.date|date('Y')}}">Prefactura: {{ prefacture.id }}-{{prefacture.date|date('Y')}}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
-              <div class="d-flex">
-                <button id="add-prefacture" class="btn btn-primary align-self-start" style="margin-top: 10px;margin-bottom: 10px;">Añadir</button>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-condensed">
-                  <thead>
-                  <tr>
-                    <th>Prefactura</th>
-                    <th>Acciones</th>
-                  </tr>
-                  </thead>
-                  <tbody class="prefacture-rows">
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12">
-          <div class="col-12" style="padding-left: 0; padding-right: 0;">
-          <div class="panel panel-primary" style="height: 100%;">
-            <div class="panel-heading">
-                <h3 class="panel-title">Facturas Asociadas</h3>
-            </div>
-            <div class="panel-body">
-              <div class="col-12" style="padding-left: 0;">
-                <div class="form-group">
-                  <label class="control-label">Facturas</label>
-                  <select id="facture" class="form-control" multiple>
-                    {% for facture in factures %}
-                      <option value="{{facture.id}}--{{facture.date|date('Y')}}">Factura: {{ facture.id }}-{{facture.date|date('Y')}}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
-              <div class="d-flex">
-                <button id="add-facture" class="btn btn-primary align-self-start" style="margin-top: 10px;margin-bottom: 10px;">Añadir</button>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-condensed">
-                  <thead>
-                  <tr>
-                    <th>Factura</th>
-                    <th>Acciones</th>
-                  </tr>
-                  </thead>
-                  <tbody class="facture-rows">
                   </tbody>
                 </table>
               </div>

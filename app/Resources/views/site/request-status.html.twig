@@ -23,7 +23,7 @@
                       <div class="d-flex flex-column ml-3">
                         {% for requestProduct in request.requestProducts %}
                           <div class="d-flex">
-                            <span>{{requestProduct.product.name}}--{{requestProduct.state}}</span>
+                            <span>{{requestProduct.product.name}}--{% if requestProduct.state %}{{requestProduct.state}}{% else %}{{"Sin Estado"}}{% endif %}</span>
                           </div>
                         {% endfor %}
                       </div>

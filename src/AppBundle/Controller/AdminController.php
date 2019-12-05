@@ -22,12 +22,12 @@ class AdminController extends BaseAdmin
         if ($request->query->get('entity') == 'Product' && $request->query->get('action') == 'edit' && ($request->query->get('property') != 'popular' && $request->query->get('property') != 'recent' && $request->query->get('property') != 'inStore')) {
             return $this->redirectToRoute('edit_product', array('id' => $request->query->get('id'), 'menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
         }
-        // if ($request->query->get('entity') == 'Request' && $request->query->get('action') == 'new') {
-        //     return $this->redirectToRoute('new_request', array('menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
-        // }
-        // if ($request->query->get('entity') == 'Request' && $request->query->get('action') == 'edit') {
-        //   return $this->redirectToRoute('edit_request', array('id' => $request->query->get('id'), 'menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
-        // }
+        if ($request->query->get('entity') == 'Request' && $request->query->get('action') == 'new') {
+            return $this->redirectToRoute('new_request', array('menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
+        }
+        if ($request->query->get('entity') == 'Request' && $request->query->get('action') == 'edit') {
+          return $this->redirectToRoute('edit_request', array('id' => $request->query->get('id'), 'menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
+        }
         // if ($request->query->get('entity') == 'Facture' && $request->query->get('action') == 'new') {
         //   return $this->redirectToRoute('new_facture', array('menuIndex' => $request->query->get('menuIndex'), 'submenuIndex' => $request->query->get('submenuIndex')));
         // }
