@@ -352,7 +352,7 @@ easy_admin:
                     - {property: 'phone', label: 'Teléfono'}
                     - {property: 'number', label: 'Número de Miembro'}
                     - {property: 'user', label: 'Usuario Asociado'}
-                    - {property: 'balance', label: 'Balance'}
+                    - {property: 'date', label: 'Fecha'}
             form:
                 title: 'Nuevo Miembro'
                 fields:
@@ -363,7 +363,7 @@ easy_admin:
                     - {property: 'address', label: 'Dirección'}
                     - {property: 'number', label: 'Número de Miembro'}
                     - {property: 'user', label: 'Usuario Asociado'}
-                    - {property: 'balance', label: 'Balance'}
+                    - {property: 'date', label: 'Fecha'}
             edit:
                 title: 'Editar Miembro'
 

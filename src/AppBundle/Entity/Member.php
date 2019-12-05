@@ -53,6 +53,10 @@ class Member
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\BalanceUpdate", mappedBy="member")
      */
     private $balanceUpdates;
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $date;
 
     public function __construct()
     {
@@ -173,5 +177,15 @@ class Member
     public function getBalanceUpdates()
     {
         return $this->balanceUpdates;
+    }
+
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
     }
 }
