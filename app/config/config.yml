@@ -150,8 +150,7 @@ ivory_ck_editor:
     default_config: simple_config
     configs:
         simple_config:
-            toolbar: "standard"
-            extraPlugins: "imageuploader,youtube"
+            extraPlugins: "imageuploader,youtube,products"
 
     plugins:
         imageuploader:
@@ -159,6 +158,9 @@ ivory_ck_editor:
             filename: "plugin.js"
         youtube:
             path: "/bundles/ivoryckeditor/plugins/youtube/"
+            filename: "plugin.js"
+        products:
+            path: "/bundles/ivoryckeditor/plugins/products/"
             filename: "plugin.js"
 
 ewz_recaptcha:
