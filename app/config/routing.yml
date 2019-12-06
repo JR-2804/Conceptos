@@ -13,3 +13,5 @@ api:
     resource: "@AppBundle/Api/Controllers"
     prefix: /api
     type: annotation
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
