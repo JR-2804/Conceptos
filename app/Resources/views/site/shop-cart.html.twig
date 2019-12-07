@@ -388,26 +388,110 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="d-flex">
-                                <form name="checkout-form" method="POST" action="{{path('check_out')}}">
-                                    <input type="hidden" name="memberNumber" id="memberNumber">
-                                    <input type="hidden" name="transportCost" id="transportCost">
-                                    <input type="hidden" name="paymentType" id="paymentType">
-                                    <input type="hidden" name="paymentCurrency" id="paymentCurrency">
-                                    <input type="hidden" name="products" id="products">
-                                    <div class="d-flex">
-                                        <button class="btn navigation-button btn-send-request d-none d-lg-block" type="submit">
-                                            Comprar
-                                        </button>
-                                    </div>
-                                    <div class="d-flex justify-content-start">
-                                        <button class="btn navigation-button btn-send-request d-lg-none ml-0" type="submit">
-                                            Comprar
-                                        </button>
-                                    </div>
-                                </form>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <h4 class="mb-3">Datos de contacto</h4>
+                        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'true'}}) }}
+                        <input type="hidden" name="memberNumber" id="memberNumber">
+                        <input type="hidden" name="transportCost" id="transportCost">
+                        <input type="hidden" name="paymentType" id="paymentType">
+                        <input type="hidden" name="paymentCurrency" id="paymentCurrency">
+                        <input type="hidden" name="products" id="products">
+                        <div class="mb-3 pr-3 pr-lg-0">
+                            {{ form_label(form.name, 'Nombre y Apellidos') }}
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control', 'required': 'true'}}) }}
+                            {{ form_errors(form.name) }}
+                            <div class="invalid-feedback">
+                                Por favor introduzca un nombre válido
                             </div>
                         </div>
+                        <div class="mb-3 pr-3 pr-lg-0">
+                            {{ form_label(form.email, 'Correo') }}
+                            {{ form_widget(form.email, {'attr': {'class': 'form-control', 'required': 'true'}}) }}
+                            {{ form_errors(form.email) }}
+                            <div class="invalid-feedback">
+                                Por favor introduzca un correo válido
+                            </div>
+                        </div>
+                        <div class="mb-3 pr-3 pr-lg-0">
+                            {{ form_label(form.address, 'Dirección') }}
+                            {{ form_widget(form.address, {'attr': {'class': 'form-control', 'required': 'true'}}) }}
+                            {{ form_errors(form.address) }}
+                            <div class="invalid-feedback">
+                                Por favor introduzca la dirección de entrega.
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap">
+                            <div class="col-12 col-lg-6 mb-3 pr-3 pr-lg-0 pl-0">
+                                {{ form_label(form.phone, 'Teléfono fijo') }}
+                                {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.phone) }}
+                                <div class="invalid-feedback">
+                                    Por favor introduzca un teléfono válido.
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 mb-3 pr-3 pr-lg-0 pl-lg-2 pl-0">
+                                {{ form_label(form.movil, 'Móvil') }}
+                                {{ form_widget(form.movil, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.movil) }}
+                                <div class="invalid-feedback">
+                                    Por favor introduzca un móvil válido.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="col-md-6 pl-2">
+                                <div class="form-group mb-0">
+                                    {{ form_widget(form.memberNumber, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.memberNumber) }}
+                                    <div class="invalid-feedback">
+                                        Por favor introduzca un número válido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="col-12">
+                                <div class="form-group mb-0">
+                                    <div>
+                                        <input type="checkbox" id="termsAndConditions">
+                                        <span class="terms-label">He leido y acepto los <a data-toggle="modal" data-target="#termsAndConditionsModal" href="">Términos y Condiciones</a></span>
+                                    </div>
+                                    <div class="mt-2">
+                                        <input type="checkbox" id="privacyPolicy">
+                                        <span class="terms-label">He leido y acepto la <a data-toggle="modal" data-target="#privacyPolicyModal" href="">Política de Privacidad</a></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{ form_widget(form.recaptcha) }}
+                        <hr class="mb-4">
+                        {% if is_granted('ROLE_COMMERCIAL') %}
+                            <select id="type-select" class="form-control mb-2">
+                                <option value="request">Pedido</option>
+                                <option value="prefacture">Prefactura</option>
+                                <option value="facture">Factura</option>
+                            </select>
+                            <select id="prefactures-select" class="form-control mb-2" style="display: none;">
+                                <option value="0">Ninguna</option>
+                                {% for prefacture in prefactures %}
+                                    <option value="{{prefacture.id}}">Prefactura: {{prefacture.id}}-{{prefacture.date|date('Y')}}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="mb-2">
+                                <input type="checkbox" id="ignoreTransport">
+                                <span class="terms-label">Ignorar costo de transporte</span>
+                            </div>
+                        {% endif %}
+                        <div class="d-flex">
+                            <div class="d-flex w-100">
+                                <button id="send-request-button" class="btn btn-lg btn-block co-submit p-0 p-lg-4" type="submit">
+                                    <span class="rob-subtitle">Enviar pedido</span>
+                                </button>
+                            </div>
+                        </div>
+                        {{ form_end(form) }}
                     </div>
                 </div>
             {% endif %}
