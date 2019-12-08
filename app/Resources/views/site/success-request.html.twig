@@ -81,34 +81,6 @@
                                         {% set product = product.product %}
                                         <div class="tags-section d-flex align-items-center">
                                             <span class="product-code">{{ product.code }}</span>
-                                            {% set priceOffer = -1 %}
-                                            {% set offerId = 'false' %}
-                                            {% set onlyForMembers = false %}
-                                            {% for offer in product.offers %}
-                                                {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
-                                                    {% set priceOffer = offer.price %}
-                                                    {% set offerId = offer.id %}
-                                                    {% if offer.onlyForMembers %}
-                                                        {% set onlyForMembers = true %}
-                                                    {% endif %}
-                                                {% endif %}
-                                            {% endfor %}
-                                            {% if priceOffer == -1 %}
-                                              {% for category in product.categories %}
-                                                {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and product.inStore)) %}
-                                                  {% set priceOffer = 1 %}
-                                                {% else %}
-                                                  {% for parentCategory in category.parents %}
-                                                    {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and product.inStore)) %}
-                                                      {% set priceOffer = 1 %}
-                                                    {% endif %}
-                                                  {% endfor %}
-                                                {% endif %}
-                                              {% endfor %}
-                                            {% endif %}
-                                            {% if priceOffer != -1 %}
-                                                <span class="badge-custom badge-offer">O</span>
-                                            {% endif %}
                                             {% if product.recent %}
                                                 <span class="badge-custom badge-new">N</span>
                                             {% endif %}
@@ -123,10 +95,6 @@
                                             <span class="product-subtitle-card d-none d-lg-block">{{ product.item }}</span>
                                             <span class="product-subtitle-card product-subtitle-card-short d-lg-none">{{ product.item }}</span>
                                         </div>
-                                        {% if onlyForMembers %}
-                                            <span class="badge-custom badge-new only-for-members d-none d-lg-block">Oferta solo para Miembros</span>
-                                            <span class="badge-custom badge-new only-for-members-short d-lg-none pl-0 pr-0">Oferta solo para Miembros</span>
-                                        {% endif %}
                                         {% set product = oldProduct %}
                                     </div>
                                 </div>

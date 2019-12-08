@@ -522,6 +522,11 @@ function init() {
     $("#cuban-brands-title").val(data.cubanBrands.title);
     $("#cuban-brands-subtitle").val(data.cubanBrands.subtitle);
   }
+  if (data.shopCart) {
+    $("#shop-cart-main-text").val(data.shopCart.mainText);
+    $("#shop-cart-secondary-text").val(data.shopCart.secondaryText);
+  }
+
   $("#app-app").val(data.app.app);
   $("#app-db").val(data.app.db);
 
@@ -573,6 +578,10 @@ function generateData() {
       main: $("#contact-main").val(),
       secondary: $("#contact-secondary").val(),
       image: contactImage
+    },
+    shopCart: {
+      mainText: $("#shop-cart-main-text").val(),
+      secondaryText: $("#shop-cart-secondary-text").val()
     },
     advertisements: advertisementImages,
     login: {

@@ -1,0 +1,142 @@
+body {
+  background-color: #e5e5e5;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e5e5e5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #282827;
+}
+
+input[type="checkbox"] {
+  background-color: #ffffff;
+}
+
+select,
+input[type="text"],
+input[type="email"] {
+  background-color: #e5e5e5;
+  border: none;
+  padding: 5px;
+  font-family: Montserrat;
+  font-style: italic;
+  font-size: 12px;
+  color: #282827;
+  border-radius: 1px;
+}
+
+select,
+input[type="text"]:focus,
+input[type="email"]:focus {
+  outline-color: #c2b930;
+  border: none;
+}
+
+.conceptos-error-input {
+  border: 1px solid #bf1111 !important;
+}
+
+.conceptos-success-input {
+  border: 1px solid #2c702b !important;
+}
+
+.conceptos-add-scroll {
+  overflow-y: auto;
+}
+
+.conceptos-badge {
+  background-color: #282827;
+}
+
+.conceptos-badge-text {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 12px;
+  color: #e5e5e5;
+}
+
+.conceptos-title {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 12px;
+  color: #282827;
+}
+
+.conceptos-subtitle {
+  font-family: Montserrat;
+  font-size: 12px;
+  line-height: 20px;
+  color: #282827;
+}
+
+.conceptos-product-image {
+  background-color: #ffffff;
+}
+
+.conceptos-product-info {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 12px;
+  color: #282827;
+}
+
+.conceptos-icon {
+  width: 23px;
+  height: 23px;
+}
+
+.conceptos-social-network-icon {
+  width: 35px;
+  height: 35px;
+}
+
+.conceptos-contact-image {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  z-index: -1;
+}
+
+.shop-cart-image {
+  width: 100%;
+  height: auto;
+}
+
+.shop-cart-section {
+  background-color: #ffffff;
+}
+
+.shop-cart-product-list-section {
+  background-color: #ffffff;
+  max-height: 60vh;
+}
+
+.shop-cart-product-list-section .conceptos-badge {
+  position: sticky;
+  bottom: 0;
+}
+
+.shop-cart-product {
+  background-color: #e5e5e5;
+}
+
+.shop-cart-trash {
+  width: 15px;
+  height: 20px;
+}
+
+#shop-cart-send-request-button {
+  background-color: transparent;
+  border: 2px solid #c2b930;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 14px;
+  color: #282827;
+  outline: none;
+}
