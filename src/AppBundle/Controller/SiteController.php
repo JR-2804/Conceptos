@@ -355,7 +355,10 @@ class SiteController extends Controller
         $transportCost = json_decode($request->request->get('transportCost', false), true);
         $paymentType = $request->request->get('paymentType', false);
         $paymentCurrency = $request->request->get('paymentCurrency', false);
-        $numberOfProducts = 0;
+        $requestProducts = $request->request->get('products', []);
+        if (!is_array($requestProducts)) {
+          $requestProducts = json_decode($requestProducts, true);
+        }
 
         $session = $request->getSession();
         if ($session->has('products')) {
@@ -396,6 +399,7 @@ class SiteController extends Controller
                 $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['product']);
                 $price = $productDB->getPrice();
 
+                $offerExists = false;
                 $offerDB = null;
                 if ($productDB->getOffers() && $productDB->getOffers()[0]) {
                   $offerDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')->find($productDB->getOffers()[0]);
@@ -403,6 +407,7 @@ class SiteController extends Controller
 
                 if ($offerDB) {
                   $price = $offerDB->getPrice();
+                  $offerExists = true;
                 } else {
                   $categories = [];
                   foreach ($productDB->getCategories() as $category) {
@@ -410,10 +415,12 @@ class SiteController extends Controller
 
                     if (($category->getOffers()[0]) && ((!$category->getOffers()[0]->getOnlyInStoreProducts()) or ($category->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
                       $price = ceil($productDB->getPrice()*(1 - $category->getOffers()[0]->getPrice()/100));
+                      $offerExists = true;
                     } else {
                       foreach ($category->getParents() as $parentCategory) {
                         if (($parentCategory->getOffers()[0]) && ((!$parentCategory->getOffers()[0]->getOnlyInStoreProducts()) or ($parentCategory->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
                           $price = ceil($productDB->getPrice()*(1 - $parentCategory->getOffers()[0]->getPrice()/100));
+                          $offerExists = true;
                         }
                       }
                     }
@@ -424,6 +431,7 @@ class SiteController extends Controller
                     'id' => $productDB->getId(),
                     'uuid' => $product['uuid'],
                     'price' => $price,
+                    'offerExists' => $offerExists,
                     'count' => $product['count'],
                     'storeCount' => $productDB->getStoreCount(),
                     'name' => $productDB->getName(),
@@ -432,13 +440,13 @@ class SiteController extends Controller
                     'ikeaPrice' => $productDB->getIkeaPrice(),
                     'isFurniture' => $productDB->getIsFurniture(),
                     'isFragile' => $productDB->getIsFragile(),
-                    'isAriplaneForniture' => $productDB->getIsAriplaneForniture(),
+                    'isAirplaneFurniture' => $productDB->getIsAriplaneForniture(),
                     'isOversize' => $productDB->getIsOversize(),
                     'isTableware' => $productDB->getIsTableware(),
                     'isLamp' => $productDB->getIsLamp(),
                     'numberOfPackages' => $productDB->getNumberOfPackages(),
                     'isMattress' => $productDB->getIsMattress(),
-                    'isAriplaneMattress' => $productDB->getIsAriplaneMattress(),
+                    'isAirplaneMattress' => $productDB->getIsAriplaneMattress(),
                     'isFaucet' => $productDB->getIsFaucet(),
                     'isGrill' => $productDB->getIsGrill(),
                     'isShelf' => $productDB->getIsShelf(),
@@ -471,7 +479,7 @@ class SiteController extends Controller
             $productsResponse = [];
             $totalPriceBase = 0;
             $cucExtra = 0;
-            foreach ($productsDB as $product) {
+            foreach ($requestProducts as $product) {
                 if (!array_key_exists('type', $product)) {
                     $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['id']);
 
@@ -492,15 +500,13 @@ class SiteController extends Controller
                         'count' => $product['count'],
                     ];
                 }
-
-                $numberOfProducts += $product['count'];
             }
 
             $totalPrice = $totalPriceBase;
 
             $discount = 0;
             if ($memberNumber) {
-              $discount = floor($totalPriceBase * 0.1);
+              $discount = ceil($totalPriceBase * 0.1);
               $totalPrice -= $discount;
             }
 
@@ -532,17 +538,16 @@ class SiteController extends Controller
             }
 
             $firstClientDiscount = 0;
-            if ($newClient && $discount == 0) {
-              $firstClientDiscount = floor($totalPriceBase * 0.05);
-              $totalPrice -= $firstClientDiscount;
-            }
+            // if ($newClient && $discount == 0) {
+            //   $firstClientDiscount = floor($totalPriceBase * 0.05);
+            //   $totalPrice -= $firstClientDiscount;
+            // }
 
             $client->setName($data->getName());
             $client->setEmail($data->getEmail());
             $client->setAddress($data->getAddress());
             $client->setMovil($data->getMovil());
             $client->setPhone($data->getPhone());
-            $client->setMemberNumber($data->getMemberNumber());
             $this->getDoctrine()->getManager()->persist($client);
 
             if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {

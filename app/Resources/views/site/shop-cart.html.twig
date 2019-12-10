@@ -43,7 +43,7 @@
               <div class="d-flex flex-column col-7 pl-2">
                 <div class="d-flex flex-column">
                   <span class="conceptos-product-info">{{productName}}</span>
-                  <span class="conceptos-product-info" data-price="{{productPrice}}">${{productPrice}}</span>
+                  <span class="conceptos-product-info" data-price="{{productPrice}}">${{productPrice}}.00</span>
                 </div>
                 <div class="d-flex flex-column justify-content-center h-100">
                   <div class="d-flex justify-content-between align-items-center">
@@ -52,12 +52,14 @@
                       <img class="conceptos-icon cart-quantity-down ml-1" src="{{ asset('bundles/conceptos/images/cart/minus.png') }}">
                       <span class="conceptos-product-info ml-2" data-quantity="{{product.count}}">x{{product.count}}</span>
                     </div>
-                    <img class="shop-cart-trash" src="{{ asset('bundles/conceptos/images/cart/trash.png') }}">
+                    <img class="shop-cart-trash mr-1" src="{{ asset('bundles/conceptos/images/cart/trash.png') }}">
                   </div>
                   <div class="d-flex align-items-center mt-1">
                     <span class="conceptos-product-info">ENVÍO:</span>
                     <img class="conceptos-icon airplane-delivery ml-2" src="{{ asset('bundles/conceptos/images/cart/airplane.png') }}">
+                    <img class="conceptos-icon airplane-delivery-disabled ml-2" src="{{ asset('bundles/conceptos/images/cart/airplane_disabled.png') }}" style="display: none;">
                     <img class="conceptos-icon ship-delivery ml-1" src="{{ asset('bundles/conceptos/images/cart/ship.png') }}">
+                    <img class="conceptos-icon ship-delivery-disabled ml-1" src="{{ asset('bundles/conceptos/images/cart/ship_disabled.png') }}" style="display: none;">
                   </div>
                 </div>
               </div>
@@ -104,7 +106,7 @@
             </div>
             <div class="d-flex flex-column mt-3">
               <span class="conceptos-title">MEMBRESÍA</span>
-              <input id="shop-cart-member-number mt-2" type="text" placeholder="Código de miembro" />
+              <input id="shop-cart-member-number" type="text" placeholder="Código de miembro" />
             </div>
           </div>
           <div class="d-flex justify-content-between conceptos-badge mt-3">
@@ -224,6 +226,9 @@
     products = [];
     {% for product in products %}
       products.push({
+        {% if product.offerExists is defined and product.offerExists %}
+          offerExists: {{product.offerExists}},
+        {% endif %}
         {% if product.weight is defined %}
           weight: {{product.weight}},
         {% else %}
@@ -244,15 +249,15 @@
         {% else %}
           isMattress: false,
         {% endif %}
-        {% if product.isAriplaneForniture is defined and product.isAriplaneForniture %}
-          isAriplaneForniture: true,
+        {% if product.isAirplaneFurniture is defined and product.isAirplaneFurniture %}
+          isAirplaneFurniture: true,
         {% else %}
-          isAriplaneForniture: false,
+          isAirplaneFurniture: false,
         {% endif %}
-        {% if product.isAriplaneMattress is defined and product.isAriplaneMattress %}
-          isAriplaneMattress: true,
+        {% if product.isAirplaneMattress is defined and product.isAirplaneMattress %}
+          isAirplaneMattress: true,
         {% else %}
-          isAriplaneMattress: false,
+          isAirplaneMattress: false,
         {% endif %}
         {% if product.isFragile is defined and product.isFragile %}
             isFragile: true,

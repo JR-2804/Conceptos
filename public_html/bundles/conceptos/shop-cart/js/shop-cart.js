@@ -85,11 +85,11 @@ $(document).ready(function() {
 
     product.deliveryType = deliveryType;
 
-    var isAriplaneForniture = false;
-    var isAriplaneMattress = false;
+    var isAirplaneFurniture = false;
+    var isAirplaneMattress = false;
     if (deliveryType == 2) {
-      isAriplaneForniture = true;
-      isAriplaneMattress = true;
+      isAirplaneFurniture = true;
+      isAirplaneMattress = true;
     }
 
     ajax(
@@ -101,8 +101,8 @@ $(document).ready(function() {
         isFurniture: product.isFurniture,
         isMattress: product.isMattress,
         isFragile: product.isFragile,
-        isAriplaneForniture: isAriplaneForniture,
-        isAriplaneMattress: isAriplaneMattress,
+        isAriplaneForniture: isAirplaneFurniture,
+        isAriplaneMattress: isAirplaneMattress,
         isOversize: product.isOversize,
         isTableware: product.isTableware,
         isLamp: product.isLamp,
@@ -150,11 +150,37 @@ $(document).ready(function() {
     }
   }
 
-  function persistProductCount(uuid, count) {
-    var path = $("#persist-count-path").val() + "/" + uuid + "/" + count;
-    ajax(path, "POST", {}, function(response) {
-      var count = response.count;
-      $(".badge-shop-cart").text(count);
+  function PersistCountIfNecessary(productId, count) {
+    products.forEach(function(product) {
+      if (product.id == productId) {
+        if (product.count != count) {
+          product.count = count;
+
+          var uuid = getProductUuid(product.id);
+          var path = $("#persist-count-path").val() + "/" + uuid + "/" + count;
+          ajax(path, "POST", {}, function(response) {
+            var count = response.count;
+            $(".badge-shop-cart").text(count);
+          });
+        }
+      }
+    });
+  }
+
+  function DisableDeliveryIcon(selector) {
+    $(selector).hide();
+    $(selector + "-disabled").show();
+  }
+
+  function UpdateDeliveryIconsState() {
+    products.forEach(function(product) {
+      var selector = '.shop-cart-product[data-product="' + product.id + '"]';
+      if (product.offerExists) {
+        DisableDeliveryIcon(selector + " .airplane-delivery");
+        DisableDeliveryIcon(selector + " .ship-delivery");
+      } else if (!product.isAirplaneFurniture && !product.isAirplaneMattress) {
+        DisableDeliveryIcon(selector + " .airplane-delivery");
+      }
     });
   }
 
@@ -171,23 +197,13 @@ $(document).ready(function() {
       var price = getProductPriceByProductId(productId);
 
       totalPriceBase += count * price;
-
-      products.forEach(function(product) {
-        if (product.id == productId) {
-          if (product.count != count) {
-            product.count = count;
-
-            var uuid = getProductUuid(product.id);
-            persistProductCount(uuid, count);
-          }
-        }
-      });
+      PersistCountIfNecessary(productId, count);
     });
 
     var totalPrice = totalPriceBase;
 
     if (memberNumber) {
-      totalPrice -= Math.floor(totalPriceBase * 0.1);
+      totalPrice -= Math.ceil(totalPriceBase * 0.1);
     }
 
     if (paymentType == "two-steps") {
@@ -467,5 +483,6 @@ $(document).ready(function() {
     }
   });
 
+  UpdateDeliveryIconsState();
   recalculateAllPrices();
 });
