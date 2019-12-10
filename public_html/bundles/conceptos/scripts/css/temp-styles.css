@@ -116,13 +116,11 @@ input[type="email"]:focus {
 .conceptos-contact-image {
   position: absolute;
   width: 100%;
-  height: auto;
   z-index: -1;
 }
 
 .conceptos-image {
   width: 100%;
-  height: auto;
 }
 
 .shop-cart-section {
