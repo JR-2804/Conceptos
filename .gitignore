@@ -18,3 +18,4 @@
 /public_html/db
 app/config/parameters.yml
 /.vscode/
+public_html/error_log
