@@ -14,6 +14,7 @@ var headerImages = undefined;
 var headerImage = undefined;
 var topImage1 = undefined;
 var topImage2 = undefined;
+var servicesImage = undefined;
 var appImage = undefined;
 var contactImage = undefined;
 var loginImage = undefined;
@@ -30,6 +31,9 @@ $(document).ready(function() {
   if (data.top) {
     topImage1 = data.top.image1;
     topImage2 = data.top.image2;
+  }
+  if (data.services) {
+    servicesImage = data.services.image;
   }
   if (data.login) {
     loginImage = data.login.image;
@@ -134,6 +138,33 @@ $(document).ready(function() {
     },
     success: function(e, r) {
       topImage2 = r;
+    }
+  });
+  dropzoneServices = new Dropzone("form#services-dropzone", {
+    url: $("#services-dropzone").attr("action"),
+    maxFiles: 1,
+    thumbnailWidth: 100,
+    thumbnailHeight: 100,
+    addRemoveLinks: true,
+    dictCancelUpload: "Cancelar",
+    dictRemoveFile: "Eliminar",
+    previewTemplate: document.querySelector("#preview-template").innerHTML,
+    acceptedFiles: ".jpg,.jpeg,.png,.gif",
+    init: function() {
+      dropzoneServices = this;
+      if (servicesImage != undefined) {
+        var mockFile = { name: servicesImage.name, size: servicesImage.size };
+        dropzoneServices.emit("addedfile", mockFile);
+        dropzoneServices.emit("thumbnail", mockFile, servicesImage.path);
+        dropzoneServices.emit("complete", mockFile);
+      }
+      dropzoneServices.on("removedfile", function() {
+        servicesImage = undefined;
+        dropzoneServices.options.maxFiles = 1;
+      });
+    },
+    success: function(e, r) {
+      servicesImage = r;
     }
   });
   dropzoneApp = new Dropzone("form#picture-dropzone-app", {
@@ -548,6 +579,9 @@ function generateData() {
       image1Link: $("#top-image-1-link").val(),
       image2Link: $("#top-image-2-link").val()
     },
+    services: {
+      image: servicesImage
+    },
     subtitles: {
       inStore: $("#in-store-subtitle").val(),
       recent: $("#recent-subtitle").val()
@@ -606,6 +640,9 @@ function validateSubmitData() {
     !topImage2 ||
     !$("#top-image-2-link").val()
   ) {
+    valid = false;
+  }
+  if (!servicesImage) {
     valid = false;
   }
   if (!$("#in-store-subtitle").val() || !$("#recent-subtitle").val()) {

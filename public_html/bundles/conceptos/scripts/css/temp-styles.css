@@ -75,6 +75,18 @@ input[type="email"]:focus {
   color: #282827;
 }
 
+.conceptos-subtitle-2 {
+  font-family: Montserrat;
+  font-size: 10px;
+  color: #282827;
+}
+
+.conceptos-badge-subtitle {
+  font-family: Montserrat;
+  font-size: 10px;
+  color: #ffffff;
+}
+
 .conceptos-product-image {
   background-color: #ffffff;
 }
@@ -103,7 +115,7 @@ input[type="email"]:focus {
   z-index: -1;
 }
 
-.shop-cart-image {
+.conceptos-image {
   width: 100%;
   height: auto;
 }
@@ -138,5 +150,24 @@ input[type="email"]:focus {
   font-weight: bold;
   font-size: 14px;
   color: #282827;
+  outline: none;
+}
+
+.home-populars-view-all-button {
+  background-color: transparent;
+  border: 1px solid #282827;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 13px;
+  color: #282827;
+  outline: none;
+}
+
+.home-badge-view-all-button {
+  background-color: transparent;
+  border: 1px solid #c2b930;
+  font-family: Montserrat;
+  font-size: 13px;
+  color: #ffffff;
   outline: none;
 }
