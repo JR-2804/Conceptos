@@ -57,7 +57,7 @@ class SiteController extends Controller
                     'name' => $offer->getName(),
                     'description' => $offer->getDescription(),
                     'start' => date_format($offer->getStartDate(), 'd/m/Y'),
-                    'end' => date_format($offer->getEndDate(), 'd/m/Y'),
+                    'end' => date_format($offer->getEndDate(), 'm/d/Y'),
                     'products' => $offer->getProducts(),
                 ];
             }
@@ -153,7 +153,7 @@ class SiteController extends Controller
             'lasts' => $lasts,
             'inStore' => $inStore,
             'inStoreHighlight' => $inStoreHighlight,
-            'populars' => array_chunk($populars, 4),
+            'populars' => $populars,
             'popularsForShortScreen' => array_chunk($populars, 3),
             'count' => $this->countShopCart($request),
             'config' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1),
@@ -350,6 +350,16 @@ class SiteController extends Controller
         $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Membresia',
         ]);
+
+        $memberNumber = json_decode($request->request->get('memberNumber', false), true);
+        $transportCost = json_decode($request->request->get('transportCost', false), true);
+        $paymentType = $request->request->get('paymentType', false);
+        $paymentCurrency = $request->request->get('paymentCurrency', false);
+        $requestProducts = $request->request->get('products', []);
+        if (!is_array($requestProducts)) {
+          $requestProducts = json_decode($requestProducts, true);
+        }
+
         $session = $request->getSession();
         if ($session->has('products')) {
             $products = json_decode($session->get('products'), true);
@@ -362,70 +372,81 @@ class SiteController extends Controller
                 $name = 'Tarjeta de 15 CUC';
                 switch ($product['id']) {
                     case 'target15':
-                        $amount = 15;
+                        $price = 15;
                         break;
                     case 'target25':
                         $name = 'Tarjeta de 25 CUC';
-                        $amount = 25;
+                        $price = 25;
                         break;
                     case 'target50':
                         $name = 'Tarjeta de 50 CUC';
-                        $amount = 50;
+                        $price = 50;
                         break;
                     default:
                         $name = 'Tarjeta de 100 CUC';
-                        $amount = 100;
+                        $price = 100;
                         break;
                 }
                 $productsDB[] = [
+                    'id' => $product['id'],
                     'uuid' => $product['uuid'],
                     'type' => 'target',
-                    'id' => $product['id'],
-                    'amount' => $amount,
-                    'name' => $name,
+                    'price' => $price,
                     'count' => $product['count'],
+                    'name' => $name,
                 ];
             } else {
                 $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['product']);
-                $offerDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')->find($product['offer']);
-                $categoryOffer = 0;
-                $categoryOfferForMembers = false;
-                $categories = [];
-                foreach ($productDB->getCategories() as $category) {
-                  $categories[] = $category->getId();
+                $price = $productDB->getPrice();
 
-                  if (($category->getOffers()[0]) && ((!$category->getOffers()[0]->getOnlyInStoreProducts()) or ($category->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
-                    $categoryOffer = ceil($productDB->getPrice()*(1 - $category->getOffers()[0]->getPrice()/100));
-                    $categoryOfferForMembers = $category->getOffers()[0]->getOnlyForMembers();
-                  } else {
-                    foreach ($category->getParents() as $parentCategory) {
-                      if (($parentCategory->getOffers()[0]) && ((!$parentCategory->getOffers()[0]->getOnlyInStoreProducts()) or ($parentCategory->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
-                        $categoryOffer = ceil($productDB->getPrice()*(1 - $parentCategory->getOffers()[0]->getPrice()/100));
-                        $categoryOfferForMembers = $parentCategory->getOffers()[0]->getOnlyForMembers();
+                $offerExists = false;
+                $offerDB = null;
+                if ($productDB->getOffers() && $productDB->getOffers()[0]) {
+                  $offerDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')->find($productDB->getOffers()[0]);
+                }
+
+                if ($offerDB) {
+                  $price = $offerDB->getPrice();
+                  $offerExists = true;
+                } else {
+                  $categories = [];
+                  foreach ($productDB->getCategories() as $category) {
+                    $categories[] = $category->getId();
+
+                    if (($category->getOffers()[0]) && ((!$category->getOffers()[0]->getOnlyInStoreProducts()) or ($category->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
+                      $price = ceil($productDB->getPrice()*(1 - $category->getOffers()[0]->getPrice()/100));
+                      $offerExists = true;
+                    } else {
+                      foreach ($category->getParents() as $parentCategory) {
+                        if (($parentCategory->getOffers()[0]) && ((!$parentCategory->getOffers()[0]->getOnlyInStoreProducts()) or ($parentCategory->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
+                          $price = ceil($productDB->getPrice()*(1 - $parentCategory->getOffers()[0]->getPrice()/100));
+                          $offerExists = true;
+                        }
                       }
                     }
                   }
                 }
 
                 $productsDB[] = [
+                    'id' => $productDB->getId(),
                     'uuid' => $product['uuid'],
-                    'product' => $productDB,
-                    'offer' => $offerDB,
-                    'categoryOffer' => $categoryOffer,
-                    'categoryOfferForMembers' => $categoryOfferForMembers,
+                    'price' => $price,
+                    'offerExists' => $offerExists,
                     'count' => $product['count'],
                     'storeCount' => $productDB->getStoreCount(),
+                    'name' => $productDB->getName(),
+                    'image' => $productDB->getMainImage(),
                     'weight' => $productDB->getWeight(),
                     'ikeaPrice' => $productDB->getIkeaPrice(),
                     'isFurniture' => $productDB->getIsFurniture(),
                     'isFragile' => $productDB->getIsFragile(),
-                    'isAriplaneForniture' => $productDB->getIsAriplaneForniture(),
+                    'isAirplaneFurniture' => $productDB->getIsAriplaneForniture(),
                     'isOversize' => $productDB->getIsOversize(),
                     'isTableware' => $productDB->getIsTableware(),
                     'isLamp' => $productDB->getIsLamp(),
                     'numberOfPackages' => $productDB->getNumberOfPackages(),
                     'isMattress' => $productDB->getIsMattress(),
-                    'isAriplaneMattress' => $productDB->getIsAriplaneMattress(),
+                    'isAirplaneMattress' => $productDB->getIsAriplaneMattress(),
                     'isFaucet' => $productDB->getIsFaucet(),
                     'isGrill' => $productDB->getIsGrill(),
                     'isShelf' => $productDB->getIsShelf(),
@@ -440,15 +461,242 @@ class SiteController extends Controller
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
+        $dto = new CheckOutDTO();
+        $dto->setProducts(json_encode($productsDB));
+
+        $user = $this->getUser();
+        if ($user) {
+          $dto->setName($user->getFirstName().' '.$user->getLastName());
+          $dto->setEmail($user->getEmail());
+          $dto->setAddress($user->getAddress());
+          $dto->setMovil($user->getMobileNumber());
+          $dto->setPhone($user->getHomeNumber());
+        }
+
+        $form = $this->createForm(CheckOutType::class, $dto);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $productsResponse = [];
+            $totalPriceBase = 0;
+            $cucExtra = 0;
+            foreach ($requestProducts as $product) {
+                if (!array_key_exists('type', $product)) {
+                    $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['id']);
+
+                    $totalPriceBase += $product['price'] * $product['count'];
+
+                    $productsResponse[] = [
+                        'price' => $product['price'],
+                        'product' => $productDB,
+                        'count' => $product['count'],
+                    ];
+                } else {
+                    $totalPriceBase += $product['price'] * $product['count'];
+
+                    $productsResponse[] = [
+                        'price' => $product['price'],
+                        'product' => $product,
+                        'type' => 'target',
+                        'count' => $product['count'],
+                    ];
+                }
+            }
+
+            $totalPrice = $totalPriceBase;
+
+            $discount = 0;
+            if ($memberNumber) {
+              $discount = ceil($totalPriceBase * 0.1);
+              $totalPrice -= $discount;
+            }
+
+            $twoStepExtra = 0;
+            if ($paymentType == 'two-steps') {
+              $twoStepExtra = ceil($totalPriceBase * 0.1);
+              $totalPrice += $twoStepExtra;
+            }
+
+            $cucExtra = 0;
+            if ($paymentCurrency == 'cuc') {
+              $cucExtra = ceil($totalPriceBase * 0.2);
+              $totalPrice += $cucExtra;
+            }
+
+            $totalPrice += $transportCost;
+            $data = $form->getData();
+            if ($data->getIgnoreTransport() == "true") {
+              $totalPrice -= $transportCost;
+              $transportCost = 0;
+            }
+
+            $repoClient = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Client');
+            $newClient = false;
+            $client = $repoClient->findOneBy(['email' => $data->getEmail()]);
+            if (null == $client) {
+                $newClient = true;
+                $client = new Client();
+            }
+
+            $firstClientDiscount = 0;
+            // if ($newClient && $discount == 0) {
+            //   $firstClientDiscount = floor($totalPriceBase * 0.05);
+            //   $totalPrice -= $firstClientDiscount;
+            // }
+
+            $client->setName($data->getName());
+            $client->setEmail($data->getEmail());
+            $client->setAddress($data->getAddress());
+            $client->setMovil($data->getMovil());
+            $client->setPhone($data->getPhone());
+            $this->getDoctrine()->getManager()->persist($client);
+
+            if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              if ($data->getType() == "facture") {
+                $facture = new Facture();
+                $facture->setClient($client);
+                if ($data->getPrefacture() != "0") {
+                  $prefacture = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->find((int) $data->getPrefacture());
+                  $facture->setPreFacture($prefacture);
+                }
+
+                foreach ($productsResponse as $productR) {
+                  if (array_key_exists('type', $productR)) {
+                      $factureCard = new FactureCard();
+                      $factureCard->setCount($productR['count']);
+                      $factureCard->setFacture($facture);
+                      $factureCard->setPrice($productR['price']);
+                      $this->getDoctrine()->getManager()->persist($factureCard);
+                      $facture->addFactureCard($factureCard);
+                  } else {
+                      $factureProduct = new FactureProduct();
+                      $factureProduct->setCount($productR['count']);
+                      $factureProduct->setFacture($facture);
+                      $factureProduct->setProduct($productR['product']);
+                      $factureProduct->setProductPrice($productR['price']);
+                      if ($productR['price'] > $productR['product']->getPrice()){
+                        $factureProduct->setIsAriplaneForniture(true);
+                        $factureProduct->setIsAriplaneMattress(true);
+                      } else {
+                        $factureProduct->setIsAriplaneForniture(false);
+                        $factureProduct->setIsAriplaneMattress(false);
+                      }
+
+                      $this->getDoctrine()->getManager()->persist($factureProduct);
+                      $facture->addFactureProduct($factureProduct);
+                  }
+                }
+              } else {
+                $prefacture = new PreFacture();
+                $prefacture->setClient($client);
+
+                foreach ($productsResponse as $productR) {
+                  if (array_key_exists('type', $productR)) {
+                      $prefactureCard = new PreFactureCard();
+                      $prefactureCard->setCount($productR['count']);
+                      $prefactureCard->setPreFacture($prefacture);
+                      $prefactureCard->setPrice($productR['price']);
+                      $this->getDoctrine()->getManager()->persist($prefactureCard);
+                      $prefacture->addPreFactureCard($prefactureCard);
+                  } else {
+                      $preFactureProduct = new PreFactureProduct();
+                      $preFactureProduct->setCount($productR['count']);
+                      $preFactureProduct->setPreFacture($prefacture);
+                      $preFactureProduct->setProduct($productR['product']);
+                      $preFactureProduct->setProductPrice($productR['price']);
+                      if ($productR['price'] > $productR['product']->getPrice()){
+                        $preFactureProduct->setIsAriplaneForniture(true);
+                        $preFactureProduct->setIsAriplaneMattress(true);
+                      } else {
+                        $preFactureProduct->setIsAriplaneForniture(false);
+                        $preFactureProduct->setIsAriplaneMattress(false);
+                      }
+
+                      $this->getDoctrine()->getManager()->persist($preFactureProduct);
+                      $prefacture->addPreFactureProduct($preFactureProduct);
+                  }
+                }
+              }
+            } else {
+              $requestDB = new ProductRequest();
+              $requestDB->setClient($client);
+
+              foreach ($productsResponse as $productR) {
+                if (array_key_exists('type', $productR)) {
+                    $requestCard = new RequestCard();
+                    $requestCard->setCount($productR['count']);
+                    $requestCard->setRequest($requestDB);
+                    $requestCard->setPrice($productR['price']);
+                    $this->getDoctrine()->getManager()->persist($requestCard);
+                    $requestDB->addRequestCard($requestCard);
+                } else {
+                    $requestProd = new RequestProduct();
+                    $requestProd->setCount($productR['count']);
+                    $requestProd->setRequest($requestDB);
+                    $requestProd->setProduct($productR['product']);
+                    $requestProd->setProductPrice($productR['price']);
+                    if ($productR['price'] > $productR['product']->getPrice()){
+                      $requestProd->setIsAriplaneForniture(true);
+                      $requestProd->setIsAriplaneMattress(true);
+                    } else {
+                      $requestProd->setIsAriplaneForniture(false);
+                      $requestProd->setIsAriplaneMattress(false);
+                    }
+
+                    $this->getDoctrine()->getManager()->persist($requestProd);
+                    $requestDB->addRequestProduct($requestProd);
+                }
+              }
+            }
+
+            if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              if ($data->getType() == "facture") {
+                $facture->setDiscount($discount);
+                $facture->setTwoStepExtra($twoStepExtra);
+                $facture->setCucExtra($cucExtra);
+                $facture->setFirstClientDiscount($firstClientDiscount);
+                $facture->setTransportCost($transportCost);
+                $facture->setFinalPrice($totalPrice);
+                $this->getDoctrine()->getManager()->persist($facture);
+              } else {
+                $prefacture->setDiscount($discount);
+                $prefacture->setTwoStepExtra($twoStepExtra);
+                $prefacture->setCucExtra($cucExtra);
+                $prefacture->setFirstClientDiscount($firstClientDiscount);
+                $prefacture->setTransportCost($transportCost);
+                $prefacture->setFinalPrice($totalPrice);
+                $this->getDoctrine()->getManager()->persist($prefacture);
+              }
+            } else {
+              $requestDB->setDiscount($discount);
+              $requestDB->setTwoStepExtra($twoStepExtra);
+              $requestDB->setCucExtra($cucExtra);
+              $requestDB->setFirstClientDiscount($firstClientDiscount);
+              $requestDB->setTransportCost($transportCost);
+              $requestDB->setFinalPrice($totalPrice);
+              $this->getDoctrine()->getManager()->persist($requestDB);
+            }
+
+            $this->getDoctrine()->getManager()->flush();
+            $request->getSession()->invalidate();
+
+            if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              return $this->redirectToRoute('site_home');
+            } else {
+              return $this->redirectToRoute('success_request', ['id' => $requestDB->getId()]);
+            }
+        }
+
         return $this->render(':site:shop-cart.html.twig', [
-            'products' => $productsDB,
-            'home' => $home,
-            'membership' => $membership,
-            'count' => $this->countShopCart($request),
-            'terms' => $config->getTermAndConditions(),
-            'privacy' => $config->getPrivacyPolicy(),
-            'currentDate' => new \DateTime(),
-            'categories' => $this->get('category_service')->getAll(),
+          'products' => $productsDB,
+          'prefactures' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->findAll(),
+          'form' => $form->createView(),
+          'home' => $home,
+          'membership' => $membership,
+          'count' => $this->countShopCart($request),
+          'terms' => $config->getTermAndConditions(),
+          'privacy' => $config->getPrivacyPolicy(),
+          'currentDate' => new \DateTime(),
+          'categories' => $this->get('category_service')->getAll(),
         ]);
     }
 
@@ -972,287 +1220,6 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="check_out", path="/datos-entrega/")
-     *
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function handleCheckOutAction(Request $request)
-    {
-        $memberNumber = json_decode($request->request->get('memberNumber', false), true);
-        $transportCost = json_decode($request->request->get('transportCost', false), true);
-        $productsCount = $request->request->get('products', []);
-        $numberOfProducts = 0;
-        if (!is_array($productsCount)) {
-            $productsCount = json_decode($productsCount, true);
-        }
-        $dto = new CheckOutDTO();
-        $dto->setProducts(json_encode($productsCount));
-
-        $user = $this->getUser();
-        if ($user) {
-          $dto->setName($user->getFirstName().' '.$user->getLastName());
-          $dto->setEmail($user->getEmail());
-          $dto->setAddress($user->getAddress());
-          $dto->setMovil($user->getMobileNumber());
-          $dto->setPhone($user->getHomeNumber());
-        }
-
-        $productsResponse = [];
-        $totalPrice = 0;
-        foreach ($productsCount as $product) {
-            if (!array_key_exists('type', $product)) {
-                $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['id']);
-                $offer = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')->find($product['offer']);
-
-                $productPrice = $productDB->getPrice();
-                if (array_key_exists('price', $product)) {
-                  $productPrice = $product['price'];
-                }
-                $product['price'] = $productPrice;
-
-                $offerDB = -1;
-                if (null != $offer) {
-                    if ($memberNumber && $offer->getOnlyForMembers()) {
-                        $productPrice = $offer->getPrice();
-                    } elseif (!$offer->getOnlyForMembers()) {
-                        $productPrice = $offer->getPrice();
-                    }
-                    $offerDB = $offer->getId();
-                } else {
-                  foreach ($productDB->getCategories() as $category) {
-                    if (($category->getOffers()[0]) && ((!$category->getOffers()[0]->getOnlyInStoreProducts()) or ($category->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
-                      $productPrice = ceil($productDB->getPrice()*(1 - $category->getOffers()[0]->getPrice()/100));
-                    } else {
-                      foreach ($category->getParents() as $parentCategory) {
-                        if (($parentCategory->getOffers()[0]) && ((!$parentCategory->getOffers()[0]->getOnlyInStoreProducts()) or ($parentCategory->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
-                          $productPrice = ceil($productDB->getPrice()*(1 - $parentCategory->getOffers()[0]->getPrice()/100));
-                        }
-                      }
-                    }
-                  }
-                }
-                $price = $productPrice * $product['count'];
-                $totalPrice += $price;
-
-                $productsResponse[] = [
-                    'price' => $productPrice,
-                    'subtotal' => $price,
-                    'product' => $productDB,
-                    'offer' => $offerDB,
-                    'count' => $product['count'],
-                ];
-            } else {
-                $price = $product['amount'] * $product['count'];
-                $totalPrice += $price;
-
-                $productsResponse[] = [
-                    'subtotal' => $price,
-                    'amount' => $product['amount'],
-                    'product' => $product,
-                    'type' => 'target',
-                    'count' => $product['count'],
-                ];
-            }
-
-            $numberOfProducts += $product['count'];
-        }
-        $discount = 0;
-        if ($memberNumber) {
-          $discount = floor($totalPrice * 0.1);
-          $totalPrice -= $discount;
-        }
-        $totalPrice += $transportCost;
-
-        $form = $this->createForm(CheckOutType::class, $dto);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            if ($data->getIgnoreTransport() == "true") {
-              $totalPrice -= $transportCost;
-              $transportCost = 0;
-            }
-            $repoClient = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Client');
-            $newClient = false;
-            $client = $repoClient->findOneBy(['email' => $data->getEmail()]);
-            if (null == $client) {
-                $newClient = true;
-                $client = new Client();
-            }
-            $client->setName($data->getName());
-            $client->setEmail($data->getEmail());
-            $client->setAddress($data->getAddress());
-            $client->setMovil($data->getMovil());
-            $client->setPhone($data->getPhone());
-            $client->setMemberNumber($data->getMemberNumber());
-            $this->getDoctrine()->getManager()->persist($client);
-
-            if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
-              if ($data->getType() == "facture") {
-                $facture = new Facture();
-                $facture->setClient($client);
-                if ($data->getPrefacture() != "0") {
-                  $prefacture = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->find((int) $data->getPrefacture());
-                  $facture->setPreFacture($prefacture);
-                }
-
-                foreach ($productsResponse as $productR) {
-                  if (array_key_exists('type', $productR)) {
-                      $factureCard = new FactureCard();
-                      $factureCard->setCount($productR['count']);
-                      $factureCard->setFacture($facture);
-                      $factureCard->setPrice($productR['amount']);
-                      $this->getDoctrine()->getManager()->persist($factureCard);
-                      $facture->addFactureCard($factureCard);
-                  } else {
-                      $factureProduct = new FactureProduct();
-                      $factureProduct->setCount($productR['count']);
-                      $factureProduct->setFacture($facture);
-                      $factureProduct->setProduct($productR['product']);
-                      $factureProduct->setProductPrice($productR['price']);
-                      if ($productR['price'] > $productR['product']->getPrice()){
-                        $factureProduct->setIsAriplaneForniture(true);
-                        $factureProduct->setIsAriplaneMattress(true);
-                      } else {
-                        $factureProduct->setIsAriplaneForniture(false);
-                        $factureProduct->setIsAriplaneMattress(false);
-                      }
-
-                      $this->getDoctrine()->getManager()->persist($factureProduct);
-                      $facture->addFactureProduct($factureProduct);
-                  }
-                }
-              } else {
-                $prefacture = new PreFacture();
-                $prefacture->setClient($client);
-
-                foreach ($productsResponse as $productR) {
-                  if (array_key_exists('type', $productR)) {
-                      $prefactureCard = new PreFactureCard();
-                      $prefactureCard->setCount($productR['count']);
-                      $prefactureCard->setPreFacture($prefacture);
-                      $prefactureCard->setPrice($productR['amount']);
-                      $this->getDoctrine()->getManager()->persist($prefactureCard);
-                      $prefacture->addPreFactureCard($prefactureCard);
-                  } else {
-                      $preFactureProduct = new PreFactureProduct();
-                      $preFactureProduct->setCount($productR['count']);
-                      $preFactureProduct->setPreFacture($prefacture);
-                      $preFactureProduct->setProduct($productR['product']);
-                      $preFactureProduct->setProductPrice($productR['price']);
-                      if ($productR['price'] > $productR['product']->getPrice()){
-                        $preFactureProduct->setIsAriplaneForniture(true);
-                        $preFactureProduct->setIsAriplaneMattress(true);
-                      } else {
-                        $preFactureProduct->setIsAriplaneForniture(false);
-                        $preFactureProduct->setIsAriplaneMattress(false);
-                      }
-
-                      $this->getDoctrine()->getManager()->persist($preFactureProduct);
-                      $prefacture->addPreFactureProduct($preFactureProduct);
-                  }
-                }
-              }
-            } else {
-              $requestDB = new ProductRequest();
-              $requestDB->setClient($client);
-
-              foreach ($productsResponse as $productR) {
-                if (array_key_exists('type', $productR)) {
-                    $requestCard = new RequestCard();
-                    $requestCard->setCount($productR['count']);
-                    $requestCard->setRequest($requestDB);
-                    $requestCard->setPrice($productR['amount']);
-                    $this->getDoctrine()->getManager()->persist($requestCard);
-                    $requestDB->addRequestCard($requestCard);
-                } else {
-                    $requestProd = new RequestProduct();
-                    $requestProd->setCount($productR['count']);
-                    $requestProd->setRequest($requestDB);
-                    $requestProd->setProduct($productR['product']);
-                    $requestProd->setProductPrice($productR['price']);
-                    if ($productR['price'] > $productR['product']->getPrice()){
-                      $requestProd->setIsAriplaneForniture(true);
-                      $requestProd->setIsAriplaneMattress(true);
-                    } else {
-                      $requestProd->setIsAriplaneForniture(false);
-                      $requestProd->setIsAriplaneMattress(false);
-                    }
-
-                    $this->getDoctrine()->getManager()->persist($requestProd);
-                    $requestDB->addRequestProduct($requestProd);
-                }
-              }
-            }
-
-            $firstClientDiscount = 0;
-            if ($newClient && $discount == 0) {
-              $firstClientDiscount = floor($totalPrice * 0.05);
-              $totalPrice -= $firstClientDiscount;
-            }
-
-            if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
-              if ($data->getType() == "facture") {
-                $facture->setDiscount($discount);
-                $facture->setFirstClientDiscount($firstClientDiscount);
-                $facture->setTransportCost($transportCost);
-                $facture->setFinalPrice($totalPrice);
-                $this->getDoctrine()->getManager()->persist($facture);
-              } else {
-                $prefacture->setDiscount($discount);
-                $prefacture->setFirstClientDiscount($firstClientDiscount);
-                $prefacture->setTransportCost($transportCost);
-                $prefacture->setFinalPrice($totalPrice);
-                $this->getDoctrine()->getManager()->persist($prefacture);
-              }
-            } else {
-              $requestDB->setDiscount($discount);
-              $requestDB->setFirstClientDiscount($firstClientDiscount);
-              $requestDB->setTransportCost($transportCost);
-              $requestDB->setFinalPrice($totalPrice);
-              $this->getDoctrine()->getManager()->persist($requestDB);
-            }
-
-            $this->getDoctrine()->getManager()->flush();
-            $request->getSession()->invalidate();
-
-            if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
-              return $this->redirectToRoute('site_home');
-            } else {
-              return $this->redirectToRoute('success_request', ['id' => $requestDB->getId()]);
-            }
-        }
-
-        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Home',
-        ]);
-
-        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Membresia',
-        ]);
-
-        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
-
-        return $this->render(':site:check-out.html.twig', [
-            'prefactures' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->findAll(),
-            'memberNumber' => $memberNumber,
-            'discount' => $discount,
-            'transportCost' => $transportCost,
-            'count' => $this->countShopCart($request),
-            'numberOfProducts' => $numberOfProducts,
-            'products' => $productsResponse,
-            'total' => $totalPrice,
-            'membership' => $membership,
-            'home' => $home,
-            'form' => $form->createView(),
-            'categories' => $this->get('category_service')->getAll(),
-            'terms' => $config->getTermAndConditions(),
-            'privacy' => $config->getPrivacyPolicy(),
-        ]);
-    }
-
-    /**
      * @Route(name="success_request", path="/pedido-correcto/{id}")
      *
      * @param Request $request
@@ -1578,6 +1545,41 @@ class SiteController extends Controller
             'home' => $home,
             'count' => $this->countShopCart($request),
             'products' => $products,
+            'categories' => $this->get('category_service')->getAll(),
+            'terms' => $config->getTermAndConditions(),
+            'privacy' => $config->getPrivacyPolicy(),
+            'currentDate' => new \DateTime(),
+        ]);
+    }
+
+    /**
+     * @Route(name="request_status", path="/estado-pedidos")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function requestStatusAction(Request $request)
+    {
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Home',
+        ]);
+
+        $userMail = $this->getUser()->getEmail();
+        $clientRequests = [];
+        $persistedRequests = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->findAll();
+        foreach ($persistedRequests as $persistedRequest) {
+          if ($persistedRequest->getClient()->getEmail() == $userMail) {
+            $clientRequests[] = $persistedRequest;
+          }
+        }
+
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+        return $this->render(':site:request-status.html.twig', [
+            'home' => $home,
+            'count' => $this->countShopCart($request),
+            'requests' => $clientRequests,
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),

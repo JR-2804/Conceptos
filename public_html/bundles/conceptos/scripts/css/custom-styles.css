@@ -2345,3 +2345,9 @@ i.share-icon:hover {
 .navbar.navbar-short .additional-navbar-button.nav-shop-cart-icon {
   margin-top: -5px;
 }
+
+#offer-countdown-container {
+  background: #333333;
+  position: absolute;
+  bottom: 0px;
+}

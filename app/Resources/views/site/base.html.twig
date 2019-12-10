@@ -30,11 +30,11 @@
         <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/gallery/style.css') }}">
         <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/mobirise/css/mbr-additional.css') }}"
               type="text/css">
-        <script src='https://www.google.com/recaptcha/api.js'></script>
         <link rel="stylesheet" href="{{ asset('bundles/conceptos/libs/toast/jquery.toast.min.css') }}">
         <link rel="stylesheet" href="{{ asset('bundles/conceptos/css/component.css') }}">
         <link rel="stylesheet" href="{{ asset('bundles/conceptos/css/base.css') }}" type="text/css">
         <link rel="stylesheet" href="{{ asset('bundles/conceptos/scripts/css/custom-styles.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('bundles/conceptos/scripts/css/temp-styles.css') }}" type="text/css">
     {% endblock %}
     {% block css %}{% endblock %}
 </head>
@@ -251,12 +251,12 @@
                             MEMBRESÍA
                         </a>
                     </li>
+                    <!--
                     <li class="nav-item">
                         <a class="nav-link link text-white" href="{{ path('blog_home') }}">
                             INSPIRACIONES
                         </a>
                     </li>
-                    <!--
                     <li class="nav-item">
                         <a class="nav-link link text-white" href="{{ path('about_us') }}">
                             SOBRE NOSOTROS
@@ -288,6 +288,7 @@
                                     <a class="dropdown-item" href="{{ path('easyadmin') }}">Administrar</a>
                                 {% endif %}
                                 <a class="dropdown-item" href="{{ path('favorite_products') }}">Favoritos</a>
+                                <a class="dropdown-item" href="{{ path('request_status') }}">Estado de mis pedidos</a>
                                 <div class="dropdown-divider" role="separator"></div>
                                 <a class="dropdown-item" href="{{ path('site_profile') }}">Perfil</a>
                                 <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">Cerrar Session</a>
@@ -332,90 +333,7 @@
     <section class="app-separator"></section>
     {{ render(controller('AppBundle:Site:handleEmailNotification')) }}
 {% endblock %}
-{% block footer %}
-    <section once="" class="cid-qQ6pEg97ho mbr-reveal" id="app-footer">
-        <div class="container-fluid">
-            <div class="media-container-row align-center mbr-white">
-                <div class="row row-links">
-                    <ul class="foot-menu">
-                        <li class="foot-menu-item mbr-fonts-style display-7">
-                            <a class="text-white mbr-bold" href="{{ path('products') }}">Productos</a>
-                        </li>
-                        <li class="foot-menu-item mbr-fonts-style display-7">
-                            <a class="text-white mbr-bold" href="{{ url('inward') }}">Interiorismo</a>
-                        </li>
-                        <li class="foot-menu-item mbr-fonts-style display-7">
-                            <a class="text-white mbr-bold" href="{{ url('services') }}">Obras</a>
-                        </li>
-                        <li class="foot-menu-item mbr-fonts-style display-7">
-                            <a class="text-white mbr-bold" href="{{ url('membership') }}">Membresía</a>
-                        </li>
-                        <li class="foot-menu-item mbr-fonts-style display-7">
-                            <a class="text-white mbr-bold" href="{{ url('blog_home') }}">Inspiraciones</a>
-                        </li>
-                        <!--
-                        <li class="foot-menu-item mbr-fonts-style display-7">
-                            <a class="text-white mbr-bold" href="{{ url('about_us') }}">Sobre Nosotros</a>
-                        </li>
-                        -->
-                        <li class="foot-menu-item mbr-fonts-style display-7">
-                            <a class="text-white mbr-bold" href="{{ url('help') }}">Ayuda</a>
-                        </li>
-                        <li class="foot-menu-item mbr-fonts-style display-7">
-                            <a class="text-white mbr-bold" data-toggle="modal" data-target="#termsAndConditionsModal" href="">Términos y Condiciones</a>
-                        </li>
-                        <li class="foot-menu-item mbr-fonts-style display-7">
-                            <a class="text-white mbr-bold" data-toggle="modal" data-target="#privacyPolicyModal" href="">Política de Privacidad</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="row align-self-center m-2">
-                    <div class="col">
-                        {% for network in home.data.social_network.networks %}
-                            {% if network.network == 'facebook' %}
-                                <a href="{{ network.link }}" target="_blank">
-                                    <span class="facebook mx-2" title="Compartir en Facebook">
-                                        <i class="socicon socicon-facebook share-icon"></i>
-                                    </span>
-                                </a>
-                            {% elseif network.network == 'twitter' %}
-                                <a href="{{ network.link }}" target="_blank">
-                                    <span class="twitter mx-2" title="Compartir en Twitter">
-                                        <i class="socicon socicon-twitter share-icon"></i>
-                                    </span>
-                                </a>
-                            {% elseif network.network == 'google' %}
-                                <a href="{{ network.link }}" target="_blank">
-                                    <span class="plusone mx-2" title="Compartir en Google+">
-                                        <i class="socicon socicon-googleplus share-icon"></i>
-                                    </span>
-                                </a>
-                            {% elseif network.network == 'pinterest' %}
-                                <a href="{{ network.link }}" target="_blank">
-                                    <span class="pinterest mx-2" title="Compartir en Pinterest">
-                                        <i class="socicon socicon-pinterest share-icon"></i>
-                                    </span>
-                                </a>
-                            {% elseif network.network == 'instagram' %}
-                                <a href="{{ network.link }}" target="_blank">
-                                    <span class="instagram mx-2" title="Compartir en Instagram">
-                                        <i class="socicon socicon-instagram share-icon"></i>
-                                    </span>
-                                </a>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="row row-copirayt">
-                    <p class="mbr-text mb-0 mbr-fonts-style mbr-white align-center display-7"></p>
-                </div>
-            </div>
-        </div>
-    </section>
-{% endblock %}
 {% block javascript %}
-
- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-132757745-1"></script>
 
  <script>
      window.dataLayer = window.dataLayer || [];
@@ -442,8 +360,6 @@
 <script src="{{ asset('bundles/conceptos/assets/parallax/jarallax.min.js') }}"></script>
 <script src="{{ asset('bundles/conceptos/assets/theme/js/script.js') }}"></script>
 <script src="{{ asset('bundles/conceptos/assets/slidervideo/script.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/gallery/player.min.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/gallery/script.js') }}"></script>
 <script src="{{ asset('bundles/conceptos/libs/toast/jquery.toast.min.js') }}"></script>
 <script src="{{ asset('bundles/conceptos/js/svgcheckbx.js') }}"></script>
 <script src="{{ asset('bundles/conceptos/js/common.js') }}"></script>

@@ -4,178 +4,98 @@
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/home/css/home.css') }}">
 {% endblock %}
 {% block body %}
-    {% set topAdvertisement = null %}
-    {% for advertisement in home.data.advertisements %}
-        {% if advertisement.section == 1 %}
-            {% set topAdvertisement = advertisement %}
-        {% endif %}
-    {% endfor %}
-
-    <div id="social-networks" class="flex-column sn-opacity d-flex>
-        <div class="dropdown">
-            <p class="dropdown-toggle" data-toggle="dropdown" href="">
-                <i class="socicon socicon-sharethis main-share-icon"></i>
-            </p>
-            <div class="dropdown-menu">
-                <div class="d-flex flex-column">
-                    {% for network in home.data.social_network.networks %}
-                        {% if network.network == 'facebook' %}
-                            <a class="dropdown-item" href="{{ network.link }}" target="_blank">
-                                <span title="Compartir en Facebook">
-                                    <i class="socicon socicon-facebook share-icon"></i>
-                                </span>
-                            </a>
-                        {% elseif network.network == 'twitter' %}
-                            <a class="dropdown-item" href="{{ network.link }}" target="_blank">
-                                <span title="Compartir en Twitter">
-                                    <i class="socicon socicon-twitter share-icon"></i>
-                                </span>
-                            </a>
-                        {% elseif network.network == 'google' %}
-                            <a class="dropdown-item" href="{{ network.link }}" target="_blank">
-                                <span title="Compartir en Google+">
-                                    <i class="socicon socicon-googleplus share-icon"></i>
-                                </span>
-                            </a>
-                        {% elseif network.network == 'pinterest' %}
-                            <a class="dropdown-item" href="{{ network.link }}" target="_blank">
-                                <span title="Compartir en Pinterest">
-                                    <i class="socicon socicon-pinterest share-icon"></i>
-                                </span>
-                            </a>
-                        {% elseif network.network == 'instagram' %}
-                            <a class="dropdown-item" href="{{ network.link }}" target="_blank">
-                                <span title="Compartir en Instagram">
-                                    <i class="socicon socicon-instagram share-icon"></i>
-                                </span>
-                            </a>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+    <div class="d-flex">
+      {% if page.data.slides and page.data.slides is not empty %}
+        <img class="conceptos-image" src="{{page.data.slides[0].path}}">
+      {% endif %}
     </div>
 
-    <section class="carousel slide cid-qVkKsY7XS0" data-interval="5000" id="slider1-28">
-        <div class="mbr-slider slide carousel" data-keyboard="false" data-ride="carousel"
-              data-interval="5000">
-            <ol class="carousel-indicators">
-                {% set countImagesOffer = offersImage | length %}
-                {% set originalCountImagesOffer = offersImage | length %}
-                {% for offer in offersImage %}
-                    <li data-app-prevent-settings="" data-target="#slider1-28"
-                        class="{% if loop.first %}active{% endif %}"
-                        data-slide-to="{{ loop.index }}"></li>
-                {% endfor %}
-
-                {% for image in page.data.slides %}
-                    <li data-app-prevent-settings="" data-target="#slider1-28"
-                        class="{% if loop.first and countImagesOffer == 0 %}active{% endif %}"
-                        data-slide-to="{{countImagesOffer}}"></li>
-                    {% set countImagesOffer = countImagesOffer + 1 %}
-                {% endfor %}
-            </ol>
-            <div class="carousel-inner" role="listbox">
-                {% for offer in offersImage %}
-                    {% set offerText = "VER OFERTAS" %}
-                    {% set offerPath = path('products', {inOffer:true}) %}
-                    {% if offer.products|length == 1 %}
-                      {% set offerText = "VER OFERTA" %}
-                      {% set offerPath = path('product_details', {id:offer.products[0].id}) %}
-                    {% endif %}
-                    <div class="carousel-item slider-fullscreen-image {% if loop.first %}active{% endif %}"
-                          data-bg-video-slide="false"
-                          style="background-image: url('{{ offer.image }}');">
-                        <div class="container container-slide">
-                            <div class="image_wrapper">
-                                <img class="main-carousel-image d-none d-lg-block" src="{{ offer.image }}">
-                                <img class="main-carousel-image-small d-lg-none" src="{{ offer.image }}">
-                                <div class="carousel-caption justify-content-center">
-                                    <div class="col-10 align-center pl-0">
-                                        {% if offer.name is not null %}
-                                            <h2 class="mbr-fonts-style display-1 custom-title-offer">{{ offer.name | upper }} </h2>
-                                        {% endif %}
-                                        {% if offer.description is not null %}
-                                            <p class="lead mbr-text mbr-fonts-style display-5">{{ offer.description }}</p>
-                                        {% endif %}
-                                        <div class="d-flex justify-content-center">
-                                            <a class="btn btn-success display-4 d-none d-lg-block" href="{{ offerPath }}">{{offerText}}</a>
-                                            <a class="btn btn-success display-4 short-button d-lg-none" href="{{ offerPath }}">{{offerText}}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-                {% for image in page.data.slides %}
-                    <div class="carousel-item slider-fullscreen-image {% if loop.first and originalCountImagesOffer == 0 %}active{% endif %}"
-                          style="background-image: url('{{ image.path }}');">
-                        <div class="container container-slide">
-                            <div class="image_wrapper">
-                                {% if image.link is defined %}
-                                    <a href="{{image.link}}">
-                                        <img class="main-carousel-image d-none d-lg-block" src="{{ image.path }}">
-                                        <img class="main-carousel-image-small d-lg-none" src="{{ image.path }}">
-                                    </a>
-                                {% else %}
-                                    <img class="main-carousel-image d-none d-lg-block" src="{{ image.path }}">
-                                    <img class="main-carousel-image-small d-lg-none" src="{{ image.path }}">
-                                {% endif %}
-                                <div class="carousel-caption justify-content-center">
-                                    <div class="col-10 align-center">
-                                        {% if image.main is defined %}
-                                            <h2 class="mbr-fonts-style display-1 custom-title-offer">{{ image.main | upper }} </h2>
-                                        {% endif %}
-                                        {% if image.secondary is defined %}
-                                            <p class="lead mbr-text mbr-fonts-style display-5">{{ image.secondary }}</p>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
+    <div class="d-flex flex-column p-3">
+      <span class="pl-2 conceptos-title">{{page.data.populars.title|raw}}</span>
+      <span class="pl-2 conceptos-subtitle-2">{{page.data.populars.subtitle|raw}}</span>
+      <div class="d-flex flex-wrap mt-3">
+        {% for popular in populars %}
+          {% if loop.index < 7 %}
+            <div class="d-flex col-6 p-2">
+              <div class="d-flex conceptos-product-image p-2">
+                <img class="conceptos-image" src="{{ vich_uploader_asset(popular.mainImage, 'imageFile') }}">
+              </div>
             </div>
-            <a data-app-prevent-settings="" class="carousel-control carousel-control-prev d-none d-lg-block" role="button"
-                data-slide="prev" href="#slider1-28">
-                <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                <span class="sr-only">Anterior</span>
-            </a>
-            <a data-app-prevent-settings="" class="carousel-control carousel-control-prev carousel-control-short d-lg-none" role="button"
-                data-slide="prev" href="#slider1-28">
-                <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                <span class="sr-only">Anterior</span>
-            </a>
-            <a data-app-prevent-settings="" class="carousel-control carousel-control-next d-none d-lg-block" role="button"
-                data-slide="next" href="#slider1-28">
-                <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                <span class="sr-only">Siguiente</span>
-            </a>
-            <a data-app-prevent-settings="" class="carousel-control carousel-control-next carousel-control-short d-lg-none" role="button"
-                data-slide="next" href="#slider1-28">
-                <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                <span class="sr-only">Siguiente</span>
-            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="d-flex justify-content-center mt-3">
+        <button class="home-populars-view-all-button">
+          <span class="pl-2 pr-2">VER MÁS</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column">
+      <div class="d-flex justify-content-between conceptos-badge p-2">
+        <div class="d-flex flex-column justify-content-center m-2">
+          <span class="conceptos-badge-text">ALMACÉN</span>
+          <span class="conceptos-badge-subtitle">{{page.data.subtitles.inStore|raw}}</span>
         </div>
-    </section>
-
-    {% if topAdvertisement != null %}
-        <section class="home-advertising-section pb-0">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 pl-0">
-                        <a class="w-100" href="{{topAdvertisement.link}}">
-                            <img class="home-advertising w-100 d-none d-lg-block pl-0 pr-0" src="{{ topAdvertisement.path }}">
-                            <img class="home-advertising home-advertising-short w-100 d-lg-none pl-0 pr-0 pt-1 pb-1 pt-lg-1 pb-lg-1" src="{{ topAdvertisement.path }}">
-                        </a>
-                    </div>
-                </div>
+        <div class="d-flex flex-column m-2 align-self-center">
+          <button class="home-badge-view-all-button">
+            <span class="pl-2 pr-2">VER TODOS</span>
+          </button>
+        </div>
+      </div>
+      <div class="d-flex p-3">
+          {% if inStore and inStore is not empty %}
+            <div class="d-flex conceptos-product-image p-2">
+              <img class="conceptos-image" src="{{ vich_uploader_asset(inStore[0].mainImage, 'imageFile') }}">
             </div>
-        </section>
-    {% endif %}
+          {% endif %}
+      </div>
+    </div>
 
-    <section class="mbr-section content4 home-extra-section pt-0 pt-lg-3" id="content4-8">
+    <div class="d-flex flex-column">
+        <div class="d-flex justify-content-between conceptos-badge p-2">
+          <div class="d-flex align-items-center m-2">
+            <span class="conceptos-badge-text">SERVICIOS</span>
+          </div>
+          <div class="d-flex flex-column m-2 align-self-center">
+            <button class="home-badge-view-all-button">
+              <span class="pl-2 pr-2">VER MÁS</span>
+            </button>
+          </div>
+        </div>
+        <div class="d-flex p-3">
+            {% if page.data.services.image.path %}
+              <div class="d-flex conceptos-product-image p-2">
+                <img class="conceptos-image" src="{{ page.data.services.image.path }}">
+              </div>
+            {% endif %}
+        </div>
+      </div>
+
+      <div class="d-flex flex-column">
+          <div class="d-flex justify-content-between conceptos-badge p-2">
+            <div class="d-flex align-items-center m-2">
+              <span class="conceptos-badge-text">INSPIRACIÓN</span>
+            </div>
+            <div class="d-flex flex-column m-2 align-self-center">
+              <button class="home-badge-view-all-button">
+                <span class="pl-2 pr-2">VER MÁS</span>
+              </button>
+            </div>
+          </div>
+          <div class="d-flex p-3">
+              {% if page.data.services.image.path %}
+                <div class="d-flex conceptos-product-image p-2">
+                  <img class="conceptos-image" src="{{ page.data.services.image.path }}">
+                </div>
+              {% endif %}
+          </div>
+        </div>
+
+
+
+
+    <section class="mbr-section content4 home-extra-section pt-0 pt-lg-3 mt-5" id="content4-8">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-7 home-extra-section-phrase pl-0">
@@ -710,90 +630,6 @@
             </div>
         </section>
     {% endif %}
-
-    <!-- TODO: Hide App
-    <section class="features8 cid-qQ6ueXUNp2 mbr-parallax-background pt-0 pt-lg-4 pb-lg-4" id="features8-s"
-             style="background-image: url('{{page.data.app.image.path}}')">
-        <div class="mbr-overlay" style="opacity: 0.2; background-color: rgb(35, 35, 35);">
-        </div>
-        <div class="container d-none d-lg-block">
-            <div class="media-container-row">
-                <div class="card col-6 pl-0 mb-0">
-                    <div class="card-img pt-1">
-                        <span class="mbr-iconfont mbri-touch"></span>
-                    </div>
-                    <div class="d-flex flex-column justify-content-between card-box align-center">
-                        <div class="d-flex flex-column">
-                            <h4 class="card-title mbr-fonts-style display-7 pl-1 pr-1">
-                                Aplicación Android</h4>
-                            <p class="mbr-text mbr-fonts-style display-7 pl-1 pr-1">
-                                {{page.data.app.app|raw}}
-                            </p>
-                        </div>
-                        <div class="mbr-section-btn text-center">
-                            <a href="{{ asset('download/app/app-lasted.apk') }}" class="btn navigation-button">DESCARGAR</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card col-6 pl-0 mb-0">
-                    <div class="card-img pt-1">
-                        <span class="mbr-iconfont mbri-upload"></span>
-                    </div>
-                    <div class="d-flex flex-column justify-content-between card-box align-center">
-                        <div class="d-flex flex-column">
-                            <h4 class="card-title mbr-fonts-style display-7 pl-1 pr-1">
-                                Base de Datos</h4>
-                            <p class="mbr-text mbr-fonts-style display-7 pl-1 pr-1">
-                                {{page.data.app.db|raw}}
-                            </p>
-                        </div>
-                        <div class="mbr-section-btn text-center">
-                            <a href="{{ '/db/' ~  config.lastDBExported }}" class="btn navigation-button">DESCARGAR</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid d-lg-none pl-0 pr-0">
-            <div class="d-flex">
-                <div class="card col-6 pl-0 mb-0">
-                    <div class="d-flex flex-column justify-content-between card-box align-center h-100 pb-2">
-                        <div class="d-flex flex-column">
-                            <div class="card-img pt-1">
-                                <span class="mbr-iconfont mbri-touch"></span>
-                            </div>
-                            <h4 class="card-title mbr-fonts-style display-7 pt-1 pl-1 pr-1">
-                                Aplicación Android</h4>
-                            <p class="mbr-text mbr-fonts-style display-7 pt-3 pl-1 pr-1">
-                                {{page.data.app.app|raw}}
-                            </p>
-                        </div>
-                        <div class="mbr-section-btn text-center">
-                            <a href="{{ asset('download/app/app-lasted.apk') }}" class="btn navigation-button">Descargar</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card col-6 pl-0 mb-0">
-                    <div class="d-flex flex-column justify-content-between card-box align-center h-100 pb-2">
-                        <div class="d-flex flex-column">
-                            <div class="card-img pt-1">
-                                <span class="mbr-iconfont mbri-upload"></span>
-                            </div>
-                            <h4 class="card-title mbr-fonts-style display-7 pt-1 pl-1 pr-1">
-                                Base de Datos</h4>
-                            <p class="mbr-text mbr-fonts-style display-7 pt-3 pl-1 pr-1">
-                                {{page.data.app.db|raw}}
-                            </p>
-                        </div>
-                        <div class="mbr-section-btn text-center">
-                            <a href="{{ '/db/' ~  config.lastDBExported }}" class="btn navigation-button">Descargar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    -->
 
     {% if lasts|length > 0 %}
         <section class="features18 popup-btn-cards cid-qQ6nHgXHV4" id="features18-9">

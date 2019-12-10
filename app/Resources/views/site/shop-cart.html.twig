@@ -5,484 +5,339 @@
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/shop-cart/shop-cart.css') }}">
 {% endblock %}
 {% block body %}
-    <input type="hidden" value="{{ path('site_home') }}" id="site-path">
-    <input type="hidden" value="{{ path('persist_count_shop_car') }}" id="persist-count">
-    <section class="header-shop-car mt-5 pt-4 pt-lg-5">
-        <div class="container-fluid pl-4 pr-4 pl-lg-5 pr-lg-5">
-            <div class="d-flex align-items-center justify-content-between">
-                <div class="d-flex flex-column">
-                    <h2 class="rob-header d-none d-lg-block">Carrito de Compra</h2>
-                    <h2 class="rob-header rob-header-short d-lg-none">Carrito</h2>
-                    <div class="d-flex align-items-center">
-                        <span class="rob-subtitle">
-                            {{ count }} {% if count == 1 %}producto{% else %}productos{% endif %}
-                        </span>
-                        {% if count > 0 %}
-                            <a href="{{ path('empty_shop_car') }}" class="btn btn-empty">
-                                <i class="empty-all-cart-icon mbri-trash"></i>
-                            </a>
-                        {% endif %}
-                    </div>
-                </div>
-                <img class="d-none d-lg-flex" src="{{ asset('bundles/conceptos/images/cart/cart.png') }}">
-            </div>
-        </div>
-    </section>
-    <section class="shop-cart">
-        <div class="container-fluid pl-4 pr-4 pl-lg-5 pr-lg-5">
-            <div class="row cart-table-header d-none d-lg-flex">
-                <div class="col col-lg-6 col-12">
-                    <div class="d-flex align-items-center h-100">
-                        <span class="rob-table-text">Producto</span>
-                    </div>
-                </div>
-                <div class="col col-lg-3 col-12">
-                    <div class="d-flex align-items-center h-100">
-                        <span class="rob-table-text">Cantidad y Tipo de Envío</span>
-                    </div>
-                </div>
-                <div class="col col-lg-3 col-12">
-                    <div class="d-flex align-items-center h-100">
-                        <span class="rob-table-text">Precio</span>
-                    </div>
-                </div>
-            </div>
-            <div class="row cart-table-header d-lg-none">
-                <div class="col col-lg-6 col-12">
-                    <div class="d-flex align-items-center h-100">
-                        <span class="rob-table-text">Productos</span>
-                    </div>
-                </div>
-            </div>
-            {% for product in products %}
-                {% if 'offer' not in product | keys %}
-                    <div class="row" data-product="{{ product.id }}">
-                        <div class="col-lg-6 col-12 mt-3 mt-lg-0 pl-0">
-                            {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
-                            {% set altImage = 'Tarjeta de 15 CUC' %}
-                            {% if product.amount == 25 %}
-                                {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
-                                {% set altImage = 'Tarjeta de 25 CUC' %}
-                            {% elseif product.amount == 50 %}
-                                {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
-                                {% set altImage = 'Tarjeta de 50 CUC' %}
-                            {% elseif product.amount == 100 %}
-                                {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
-                                {% set altImage = 'Tarjeta de 100 CUC' %}
-                            {% endif %}
-                            <div class="d-flex flex-column flex-lg-row align-items-center">
-                                <img src="{{ imagePath }}" alt="{{ altImage }}" style="max-width: 200px;">
-                                <span class="product-subtitle-card">{{product.name}}</span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-12 mt-3 mt-lg-0 pl-0">
-                            <div class="cart-quantity-button d-flex flex-column align-items-start justify-content-center h-100">
-                                <span class="price-header">Cantidad de Tarjetas</span>
-                                <div class="cart-quantity">
-                                    <a class="cart-quantity-down" data-uuid="{{ product.uuid }}" data-product="{{ product.id }}">-</a>
-                                    <input class="cart-quantity-input" type="text" name="quantity"
-                                           value="{{ product.count }}" autocomplete="off" size="2"
-                                           data-product="{{ product.id }}">
-                                    <a class="cart-quantity-up" data-product="{{ product.id }}" data-uuid="{{ product.uuid }}">+</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-12 total-price-product mt-3 mt-lg-0 pl-0"
-                            data-price="{{ product.amount }}"
-                            data-product="{{ product.id }}">
-                            <div class="d-flex flex-column justify-content-center h-100 mr-0 mr-lg-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="price-header d-none d-lg-block">Costo</span>
-                                    <span class="price-header price-header-short d-lg-none">Costo</span>
-                                    <div class="d-flex align-items-center">
-                                        <span class="product-count"></span>
-                                        <span class="product-price mb-2"></span>
-                                        <a class="cart-quantity-delete mb-1" data-product="{{ product.id }}" data-path="{{ path('remove_from_cart_shop', {id: product.id}) }}">
-                                            <i class="remove-from-cart-icon mbri-trash"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="product-description-divider d-flex justify-content-between align-items-center">
-                                    <span class="price-header d-none d-lg-block">Subtotal</span>
-                                    <span class="price-header price-header-short d-lg-none">Subtotal</span>
-                                    <span class="product-subtotal"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="shop-cart-divider d-lg-none" role="separator"></div>
-                {% else %}
-                    <div class="row" data-product="{{ product.product.id }}">
-                        <div class="col-lg-6 col-12 mt-3 mt-lg-0 pl-0">
-                            <div class="d-flex flex-column flex-lg-row align-items-center">
-                                <div class="product-card-clickable" data-path="{{ path('product_details', {id: product.product.id, name: product.product.name}) }}">
-                                    <img src="{{ vich_uploader_asset(product.product.mainImage, 'imageFile') }}"
-                                          width="200"
-                                          height="200" alt="{{ product.product.description }}">
-                                </div>
-                                <div class="d-flex flex-column justify-content-center">
-                                    {% set oldProduct = product %}
-                                    {% set product = product.product %}
-                                    <div class="tags-section d-flex align-items-center">
-                                        <span class="product-code">{{ product.code }}</span>
-                                        {% set priceOffer = -1 %}
-                                        {% set offerId = 'false' %}
-                                        {% set onlyForMembers = false %}
-                                        {% for offer in product.offers %}
-                                            {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
-                                                {% set priceOffer = offer.price %}
-                                                {% set offerId = offer.id %}
-                                                {% if offer.onlyForMembers %}
-                                                    {% set onlyForMembers = true %}
-                                                {% endif %}
-                                            {% endif %}
-                                        {% endfor %}
-                                        {% if priceOffer == -1 %}
-                                          {% for category in product.categories %}
-                                            {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and product.inStore)) %}
-                                              {% set priceOffer = 1 %}
-                                            {% else %}
-                                              {% for parentCategory in category.parents %}
-                                                {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and product.inStore)) %}
-                                                  {% set priceOffer = 1 %}
-                                                {% endif %}
-                                              {% endfor %}
-                                            {% endif %}
-                                          {% endfor %}
-                                        {% endif %}
-                                        {% if priceOffer != -1 %}
-                                            <span class="badge-custom badge-offer">O</span>
-                                        {% endif %}
-                                        {% if product.recent %}
-                                            <span class="badge-custom badge-new">N</span>
-                                        {% endif %}
-                                        {% if product.inStore %}
-                                            <span class="badge-custom badge-in-store">A</span>
-                                        {% endif %}
-                                    </div>
-                                    <div>
-                                        <span class="product-title">{{ product.name }}</span>
-                                    </div>
-                                    <div>
-                                        <span class="product-subtitle-card d-none d-lg-block">{{ product.item }}</span>
-                                        <span class="product-subtitle-card product-subtitle-card-short d-lg-none">{{ product.item }}</span>
-                                    </div>
-                                    {% if onlyForMembers %}
-                                        <span class="badge-custom badge-new only-for-members d-none d-lg-block">Oferta solo para Miembros</span>
-                                        <span class="badge-custom badge-new only-for-members-short d-lg-none pl-0 pr-0">Oferta solo para Miembros</span>
-                                    {% endif %}
-                                    {% set product = oldProduct %}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-12 mt-3 mt-lg-0 pl-0">
-                            <div class="cart-quantity-button d-flex flex-column align-items-start justify-content-center h-100">
-                                <div class="delivery-type">
-                                    {% if ((product.isFurniture and product.isAriplaneForniture) or (product.isMattress and product.isAriplaneMattress)) and (not product.offer) and (not product.categoryOffer) %}
-                                        <span class="price-header">Tipo de Entrega</span>
-                                        <div>
-                                            <select class="form-control" data-product="{{ product.product.id }}"
-                                                    data-path="{{ path('calculate_product_price') }}">
-                                                <option value="1">Envio Marítimo</option>
-                                                <option value="2">Envio Aereo</option>
-                                            </select>
-                                        </div>
-                                    {% elseif product.isFurniture or product.isMattress %}
-                                        <span class="price-header mb-2">Envio Marítimo</span>
-                                    {% else %}
-                                        <span class="price-header mb-2">Envio Aereo</span>
-                                    {% endif %}
-                                </div>
-                                <span class="price-header">Cantidad de Productos</span>
-                                <div class="cart-quantity">
-                                    <a class="cart-quantity-down" data-uuid="{{ product.uuid }}" data-product="{{ product.product.id }}">-</a>
-                                    <input class="cart-quantity-input" type="text" name="quantity"
-                                           value="{{ product.count }}" autocomplete="off" size="2"
-                                           data-product="{{ product.product.id }}">
-                                    <a class="cart-quantity-up" data-product="{{ product.product.id }}" data-uuid="{{ product.uuid }}">+</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-12 total-price-product mt-3 mt-lg-0 pl-0"
-                            data-price="{{product.product.price}}"
-                            data-offer="{% if product.offer %}{{product.offer.price}}{% elseif product.categoryOffer is defined %}{{product.categoryOffer}}{% endif %}"
-                            data-offer-members="{% if product.offer %}{{product.offer.onlyForMembers}}{% endif %}{% if product.categoryOfferForMembers is defined %}{{product.categoryOfferForMembers}}{% endif %}"
-                            data-product="{{ product.product.id }}">
-                            <div class="d-flex flex-column justify-content-center h-100 mr-0 mr-lg-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="price-header d-none d-lg-block">Costo</span>
-                                    <span class="price-header price-header-short d-lg-none">Costo</span>
-                                    <div class="d-flex align-items-center">
-                                        <span class="product-count"></span>
-                                        <span class="product-price mb-2"></span>
-                                        <a class="cart-quantity-delete mb-1" data-product="{{ product.product.id }}" data-path="{{ path('remove_from_cart_shop', {id: product.product.id}) }}">
-                                            <i class="remove-from-cart-icon mbri-trash"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="product-description-divider d-flex justify-content-between align-items-center">
-                                    <span class="price-header d-none d-lg-block">Subtotal</span>
-                                    <span class="price-header price-header-short d-lg-none">Subtotal</span>
-                                    <span class="product-subtotal"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="shop-cart-divider d-lg-none" role="separator"></div>
+  <input type="hidden" value="{{ path('site_home') }}" id="site-path">
+  <input type="hidden" value="{{ path('persist_count_shop_car') }}" id="persist-count-path">
+
+  {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'true'}}) }}
+    <div class="d-flex flex-column pt-2 pt-lg-5 pl-2 pr-2">
+      <h1 class="conceptos-title pt-2">{{home.data.shopCart.mainText|raw}}</h1>
+      <h2 class="conceptos-subtitle">{{home.data.shopCart.secondaryText|raw}}</h2>
+
+      <div class="shop-cart-product-list-section conceptos-add-scroll">
+        <div class="d-flex flex-column mt-3 ml-3 mr-3">
+          {% for product in products %}
+            <div class="d-flex shop-cart-product p-2 {% if loop.index > 1 %}mt-2{% endif %}"
+                data-product="{{product.id}}"
+                data-uuid="{{ product.uuid }}"
+                data-calculate-price-path="{{ path('calculate_product_price') }}"
+                data-remove-path="{{ path('remove_from_cart_shop', {id: product.id}) }}">
+              {% if product.type is defined %}
+                {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
+                {% set productName = "TARJETA DE REGALO" %}
+                {% set productPrice = product.price %}
+                {% if product.price == 25 %}
+                    {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
+                {% elseif product.price == 50 %}
+                    {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
+                {% elseif product.price == 100 %}
+                    {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
                 {% endif %}
-            {% else %}
-                <div class"row">
-                    <div class="col">
-                        <div class="d-flex justify-content-center">
-                            <span class="price-header m-4">Sin productos en el carrito</span>
-                        </div>
-                    </div>
+              {% else %}
+                {% set imagePath = vich_uploader_asset(product.image, 'imageFile') %}
+                {% set productName = product.name %}
+                {% set productPrice = product.price %}
+              {% endif %}
+              <div class="d-flex col-5 conceptos-product-image p-2">
+                <img class="conceptos-image" src="{{imagePath}}" alt="{{productName}}">
+              </div>
+              <div class="d-flex flex-column col-7 pl-2">
+                <div class="d-flex flex-column">
+                  <span class="conceptos-product-info">{{productName}}</span>
+                  <span class="conceptos-product-info" data-price="{{productPrice}}">${{productPrice}}.00</span>
                 </div>
-            {% endfor %}
-            {% if products|length > 0 %}
-                <div class="row">
-                    <div class="col-12 pl-0">
-                        <div class="container-fluid">
-                            <div class="row membership-discount-row" style="display: none;">
-                                <div class="col-12 pl-0">
-                                    <hr />
-                                </div>
-                            </div>
-                            <div class="row membership-discount-row" style="display: none;">
-                                <div class="col-12 pl-0">
-                                    <div class="d-flex align-items-center justify-content-end">
-                                        <div class="col-lg-3 pl-0">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <span class="price-header d-none d-lg-block">Descuento de Miembro</span>
-                                                <span class="price-header price-header-short d-lg-none">Descuento de Miembro</span>
-                                                <span id="membership-discount" class="product-price mr-0 mr-lg-3"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 pl-0">
-                                    <hr />
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-12 pl-0">
-                                    <div class="d-flex align-items-center justify-content-end">
-                                        <div class="col-lg-3 pl-0">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <span class="price-header d-none d-lg-block">Costo de Transporte</span>
-                                                <span class="price-header price-header-short d-lg-none">Costo de Transporte</span>
-                                                <span id="transport-cost" class="product-price mr-0 mr-lg-3"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="d-flex flex-column justify-content-center h-100">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                      <img class="conceptos-icon cart-quantity-up" src="{{ asset('bundles/conceptos/images/cart/plus.png') }}">
+                      <img class="conceptos-icon cart-quantity-down ml-1" src="{{ asset('bundles/conceptos/images/cart/minus.png') }}">
+                      <span class="conceptos-product-info ml-2" data-quantity="{{product.count}}">x{{product.count}}</span>
                     </div>
+                    <img class="shop-cart-trash mr-1" src="{{ asset('bundles/conceptos/images/cart/trash.png') }}">
+                  </div>
+                  <div class="d-flex align-items-center mt-1">
+                    <span class="conceptos-product-info">ENVÍO:</span>
+                    <img class="conceptos-icon airplane-delivery ml-2" src="{{ asset('bundles/conceptos/images/cart/airplane.png') }}">
+                    <img class="conceptos-icon airplane-delivery-disabled ml-2" src="{{ asset('bundles/conceptos/images/cart/airplane_disabled.png') }}" style="display: none;">
+                    <img class="conceptos-icon ship-delivery ml-1" src="{{ asset('bundles/conceptos/images/cart/ship.png') }}">
+                    <img class="conceptos-icon ship-delivery-disabled ml-1" src="{{ asset('bundles/conceptos/images/cart/ship_disabled.png') }}" style="display: none;">
+                  </div>
                 </div>
-            {% endif %}
-            <div class="row cart-table-header">
+              </div>
+            </div>
+          {% else %}
+            <div class"row">
                 <div class="col">
-                    <div class="d-flex align-items-center justify-content-between h-100">
-                        <span class="rob-table-text">
-                            Total
-                        </span>
-                        {% if products|length > 0 %}
-                            <span class="rob-header total-price mr-4 d-none d-lg-block"></span>
-                            <span class="rob-header total-price total-price-short mr-4 d-lg-none"></span>
-                        {% endif %}
+                    <div class="d-flex justify-content-center">
+                        <span class="conceptos-title m-4">SIN PRODUCTOS EN EL CARRITO</span>
                     </div>
                 </div>
             </div>
-            {% if products|length > 0 %}
-                <div class="row">
-                    <div class="col-12">
-                        <div class="d-flex justify-content-between align-items-center flex-wrap">
-                            <div class="d-flex align-items-center" id="shop-cart-member">
-                                <div class="d-flex ac-custom ac-checkmark">
-                                    <ul>
-                                        <li>
-                                            <div class="d-none d-lg-flex">
-                                                <input class="shop-cart-membership-checkbox" type="checkbox">
-                                                <label class="mb-0">Soy Miembro</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="short-checkbox d-flex d-lg-none mt-3 mb-2">
-                                                <input class="shop-cart-membership-checkbox" type="checkbox">
-                                                <label class="mb-0">Soy Miembro</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex ml-0">
-                                                <input id="shop-cart-membership-number" class="form-control" type="text" placeholder="Número de Miembro" style="display: none;">
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex">
-                                                <a id="shop-cart-membership-number-check" class="btn navigation-button ml-0" style="display: none;" href="#">
-                                                    Comprobar
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <div id="home-collect" style="display: none;">
-                                            <li class="d-none d-lg-flex">
-                                                <input class="home-collect-checkbox" type="checkbox">
-                                                <label class="mb-0">Recojida de Anticipo a Domicilio</label>
-                                            </li>
-                                            <li class="short-checkbox d-flex d-lg-none mt-1">
-                                                <input class="home-collect-checkbox" type="checkbox">
-                                                <label class="mb-0">Recojida de Anticipo a Domicilio</label>
-                                            </li>
-                                        </div>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="d-flex">
-                                <form name="checkout-form" method="POST" action="{{path('check_out')}}">
-                                    <input type="hidden" name="memberNumber" id="memberNumber">
-                                    <input type="hidden" name="transportCost" id="transportCost">
-                                    <input type="hidden" name="products" id="products">
-                                    <div class="d-flex">
-                                        <button class="btn navigation-button btn-send-request d-none d-lg-block" type="submit">
-                                            Comprar
-                                        </button>
-                                    </div>
-                                    <div class="d-flex justify-content-start">
-                                        <button class="btn navigation-button btn-send-request d-lg-none ml-0" type="submit">
-                                            Comprar
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
+          {% endfor %}
         </div>
-    </section>
+        <div class="d-flex justify-content-between conceptos-badge mt-3">
+          <div class="d-flex flex-column m-2">
+            <span class="conceptos-badge-text">CANTIDAD</span>
+            <span class="conceptos-badge-text shop-cart-products-count">{{count}} PRODUCTOS</span>
+          </div>
+          {% if products|length > 0 %}
+            <div class="d-flex flex-column m-2">
+              <span class="conceptos-badge-text">PRECIO</span>
+              <span class="conceptos-badge-text shop-cart-total-price"></span>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      {% if products|length > 0 %}
+        <div class="shop-cart-section mt-3">
+          <div class="d-flex flex-column pt-3 ml-3 mr-3">
+            <div class="d-flex flex-column">
+              <span class="conceptos-title">TIPO DE MONEDA</span>
+              <select id="payment-currency">
+                <option value="usd">USD</option>
+                <option value="cuc">CUC</option>
+              </select>
+            </div>
+            <div class="d-flex flex-column mt-3">
+              <span class="conceptos-title">PLAZOS DE PAGO</span>
+              <select id="payment-type">
+                <option value="total">Pago total</option>
+                <option value="two-steps">Pago en dos plazos</option>
+              </select>
+            </div>
+            <div class="d-flex flex-column mt-3">
+              <span class="conceptos-title">MEMBRESÍA</span>
+              <input id="shop-cart-member-number" type="text" placeholder="Código de miembro" />
+            </div>
+          </div>
+          <div class="d-flex justify-content-between conceptos-badge mt-3">
+            <div class="d-flex flex-column m-2">
+              <span class="conceptos-badge-text">CANTIDAD</span>
+              <span class="conceptos-badge-text shop-cart-products-count">{{count}} PRODUCTOS</span>
+            </div>
+            <div class="d-flex flex-column m-2">
+              <span class="conceptos-badge-text">PRECIO</span>
+              <span class="conceptos-badge-text shop-cart-total-price"></span>
+            </div>
+          </div>
+        </div>
+        <div class="shop-cart-section mt-3 p-3">
+          <div class="d-flex flex-column">
+            <span class="conceptos-title">DATOS DEL CLIENTE</span>
+            <input type="hidden" name="memberNumber" id="memberNumber">
+            <input type="hidden" name="transportCost" id="transportCost">
+            <input type="hidden" name="paymentType" id="paymentType">
+            <input type="hidden" name="paymentCurrency" id="paymentCurrency">
+            <input type="hidden" name="products" id="products">
+            <div class="mt-2">
+              {{ form_widget(form.name, {'attr': {'class': 'w-100', 'placeholder': 'Nombre', 'required': 'true'}}) }}
+            </div>
+            <div class="mt-2">
+              {{ form_widget(form.email, {'attr': {'class': 'w-100', 'placeholder': 'Correo', 'required': 'true'}}) }}
+            </div>
+            <div class="mt-2">
+              {{ form_widget(form.address, {'attr': {'class': 'w-100', 'placeholder': 'Dirección', 'required': 'true'}}) }}
+            </div>
+            <div class="d-flex flex-wrap">
+              <div class="col-12 col-lg-6 mt-2 pl-0">
+                {{ form_widget(form.phone, {'attr': {'class': 'w-100', 'placeholder': 'Teléfono de casa'}}) }}
+              </div>
+              <div class="col-12 col-lg-6 mt-2 pl-0">
+                {{ form_widget(form.movil, {'attr': {'class': 'w-100', 'placeholder': 'Teléfono Movil'}}) }}
+              </div>
+            </div>
+            <div class="d-flex align-items-center">
+              <div class="col-md-6 pl-2">
+                <div class="form-group mb-0">
+                  {{ form_widget(form.memberNumber) }}
+                </div>
+              </div>
+            </div>
+            {{ form_widget(form.recaptcha) }}
+            {% if is_granted('ROLE_COMMERCIAL') %}
+              <select id="type-select" class="mt-3 mb-2">
+                <option value="request">Pedido</option>
+                <option value="prefacture">Prefactura</option>
+                <option value="facture">Factura</option>
+              </select>
+              <select id="prefactures-select" class="mb-2" style="display: none;">
+                <option value="0">Ninguna</option>
+                {% for prefacture in prefactures %}
+                    <option value="{{prefacture.id}}">Prefactura: {{prefacture.id}}-{{prefacture.date|date('Y')}}</option>
+                {% endfor %}
+              </select>
+              <div>
+                <input type="checkbox" id="ignoreTransport">
+                <span class="terms-label">Ignorar costo de transporte</span>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% else %}
+        {{ form_widget(form.name, {'attr': {'class': 'd-none'}}) }}
+        {{ form_widget(form.email, {'attr': {'class': 'd-none'}}) }}
+        {{ form_widget(form.address, {'attr': {'class': 'd-none'}}) }}
+        {{ form_widget(form.phone, {'attr': {'class': 'd-none'}}) }}
+        {{ form_widget(form.movil, {'attr': {'class': 'd-none'}}) }}
+        {{ form_widget(form.memberNumber, {'attr': {'class': 'd-none'}}) }}
+        {{ form_widget(form.recaptcha, {'attr': {'class': 'd-none'}}) }}
+      {% endif %}
+    </div>
+    <div class="d-flex flex-column">
+      <img class="w-100 conceptos-contact-image" src="{{home.data.contact.image.path}}">
+      <div class="d-flex flex-column pl-2 pr-2 mt-3">
+        {% if products|length > 0 %}
+          <div class="d-flex">
+            <input type="checkbox" id="termsAndConditions">
+            <span class="terms-label">He leído y acepto los <a data-toggle="modal" data-target="#termsAndConditionsModal" href="">Términos y Condiciones</a></span>
+          </div>
+          <div class="d-flex mt-2">
+            <input type="checkbox" id="privacyPolicy">
+            <span class="terms-label">He leído y acepto la <a data-toggle="modal" data-target="#privacyPolicyModal" href="">Política de Privacidad</a></span>
+          </div>
+          <div class="d-flex mt-2">
+            <button id="shop-cart-send-request-button" class="pl-3 pr-3 pt-1 pb-1" type="submit">
+              <span>ENVIAR PEDIDO</span>
+            </button>
+          </div>
+        {% endif %}
+        <div class="d-flex justify-content-end mt-3">
+          {% for network in home.data.social_network.networks %}
+            {% if network.network == 'facebook' %}
+              <a href="{{network.link}}" class="mr-2" target="_blank">
+                <img class="conceptos-social-network-icon" src="{{ asset('bundles/conceptos/images/home/facebook.png') }}">
+              </a>
+            {% elseif network.network == 'instagram' %}
+              <a href="{{network.link}}" target="_blank">
+                <img class="conceptos-social-network-icon" src="{{ asset('bundles/conceptos/images/home/instagram.png') }}">
+              </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {{ form_end(form) }}
+{% endblock %}
+{% block contact %}
+{% endblock %}
+{% block footer %}
 {% endblock %}
 {% block js %}
-    <script>
-        products = [];
-        {% for product in products %}
-        products.push({
-            {% if product.weight is defined %}
-                weight: {{product.weight}},
-            {% else %}
-                weight: 0,
-            {% endif %}
-            {% if product.ikeaPrice is defined %}
-                ikeaPrice: {{product.ikeaPrice}},
-            {% else %}
-                ikeaPrice: 0,
-            {% endif %}
-            {% if product.isFurniture is defined and product.isFurniture %}
-                isFurniture: true,
-            {% else %}
-                isFurniture: false,
-            {% endif %}
-            {% if product.isMattress is defined and product.isMattress %}
-                isMattress: true,
-            {% else %}
-                isMattress: false,
-            {% endif %}
-            {% if product.isAriplaneForniture is defined and product.isAriplaneForniture %}
-                isAriplaneForniture: true,
-            {% else %}
-                isAriplaneForniture: false,
-            {% endif %}
-            {% if product.isAriplaneMattress is defined and product.isAriplaneMattress %}
-                isAriplaneMattress: true,
-            {% else %}
-                isAriplaneMattress: false,
-            {% endif %}
-            {% if product.isFragile is defined and product.isFragile %}
-                isFragile: true,
-            {% else %}
-                isFragile: false,
-            {% endif %}
-            {% if product.isOversize is defined and product.isOversize %}
-                isOversize: true,
-            {% else %}
-                isOversize: false,
-            {% endif %}
-            {% if product.isTableware is defined and product.isTableware %}
-                isTableware: true,
-            {% else %}
-                isTableware: false,
-            {% endif %}
-            {% if product.isLamp is defined and product.isLamp %}
-                isLamp: true,
-            {% else %}
-                isLamp: false,
-            {% endif %}
-            {% if product.numberOfPackages is defined and product.numberOfPackages %}
-                numberOfPackages: {{product.numberOfPackages}},
-            {% else %}
-                numberOfPackages: false,
-            {% endif %}
-            {% if product.isFaucet is defined and product.isFaucet %}
-                isFaucet: true,
-            {% else %}
-                isFaucet: false,
-            {% endif %}
-            {% if product.isGrill is defined and product.isGrill %}
-                isGrill: true,
-            {% else %}
-                isGrill: false,
-            {% endif %}
-            {% if product.isShelf is defined and product.isShelf %}
-                isShelf: true,
-            {% else %}
-                isShelf: false,
-            {% endif %}
-            {% if product.isDesk is defined and product.isDesk %}
-                isDesk: true,
-            {% else %}
-                isDesk: false,
-            {% endif %}
-            {% if product.isBookcase is defined and product.isBookcase %}
-                isBookcase: true,
-            {% else %}
-                isBookcase: false,
-            {% endif %}
-            {% if product.isComoda is defined and product.isComoda %}
-                isComoda: true,
-            {% else %}
-                isComoda: false,
-            {% endif %}
-            {% if product.isRepisa is defined and product.isRepisa %}
-                isRepisa: true,
-            {% else %}
-                isRepisa: false,
-            {% endif %}
-            {% if product.categories is defined %}
-                categories: {{product.categories}},
-            {% else %}
-                categories: false,
-            {% endif %}
-            {% if product.type is defined %}
-                id: '{{ product.id }}',
-                type: 'target',
-                count: {{ product.count }},
-                amount: {{ product.amount }},
-            {% endif %}
-            {% if product.product is defined %}
-                id: '{{ product.product.id }}',
-                name: '{{ product.product.name }}',
-                storeCount: '{{ product.storeCount }}',
-                count: {{ product.count }},
-            {% endif %}
-            {% if 'offer' in product | keys and product.offer %}
-                offer: {{ product.offer.id }},
-            {% else %}
-                offer: false
-            {% endif %}
-        });
-        {% endfor %}
-    </script>
-    <script src="{{ asset('bundles/conceptos/shop-cart/js/shop-cart.js') }}"></script>
+  <script>
+    products = [];
+    {% for product in products %}
+      products.push({
+        {% if product.offerExists is defined and product.offerExists %}
+          offerExists: {{product.offerExists}},
+        {% endif %}
+        {% if product.weight is defined %}
+          weight: {{product.weight}},
+        {% else %}
+          weight: 0,
+        {% endif %}
+        {% if product.ikeaPrice is defined %}
+          ikeaPrice: {{product.ikeaPrice}},
+        {% else %}
+          ikeaPrice: 0,
+        {% endif %}
+        {% if product.isFurniture is defined and product.isFurniture %}
+          isFurniture: true,
+        {% else %}
+          isFurniture: false,
+        {% endif %}
+        {% if product.isMattress is defined and product.isMattress %}
+          isMattress: true,
+        {% else %}
+          isMattress: false,
+        {% endif %}
+        {% if product.isAirplaneFurniture is defined and product.isAirplaneFurniture %}
+          isAirplaneFurniture: true,
+        {% else %}
+          isAirplaneFurniture: false,
+        {% endif %}
+        {% if product.isAirplaneMattress is defined and product.isAirplaneMattress %}
+          isAirplaneMattress: true,
+        {% else %}
+          isAirplaneMattress: false,
+        {% endif %}
+        {% if product.isFragile is defined and product.isFragile %}
+            isFragile: true,
+        {% else %}
+          isFragile: false,
+        {% endif %}
+        {% if product.isOversize is defined and product.isOversize %}
+          isOversize: true,
+        {% else %}
+          isOversize: false,
+        {% endif %}
+        {% if product.isTableware is defined and product.isTableware %}
+          isTableware: true,
+        {% else %}
+          isTableware: false,
+        {% endif %}
+        {% if product.isLamp is defined and product.isLamp %}
+          isLamp: true,
+        {% else %}
+          isLamp: false,
+        {% endif %}
+        {% if product.numberOfPackages is defined and product.numberOfPackages %}
+          numberOfPackages: {{product.numberOfPackages}},
+        {% else %}
+          numberOfPackages: false,
+        {% endif %}
+        {% if product.isFaucet is defined and product.isFaucet %}
+          isFaucet: true,
+        {% else %}
+          isFaucet: false,
+        {% endif %}
+        {% if product.isGrill is defined and product.isGrill %}
+          isGrill: true,
+        {% else %}
+          isGrill: false,
+        {% endif %}
+        {% if product.isShelf is defined and product.isShelf %}
+          isShelf: true,
+        {% else %}
+          isShelf: false,
+        {% endif %}
+        {% if product.isDesk is defined and product.isDesk %}
+          isDesk: true,
+        {% else %}
+          isDesk: false,
+        {% endif %}
+        {% if product.isBookcase is defined and product.isBookcase %}
+          isBookcase: true,
+        {% else %}
+          isBookcase: false,
+        {% endif %}
+        {% if product.isComoda is defined and product.isComoda %}
+          isComoda: true,
+        {% else %}
+          isComoda: false,
+        {% endif %}
+        {% if product.isRepisa is defined and product.isRepisa %}
+          isRepisa: true,
+        {% else %}
+          isRepisa: false,
+        {% endif %}
+        {% if product.categories is defined %}
+          categories: {{product.categories}},
+        {% else %}
+          categories: false,
+        {% endif %}
+        {% if product.type is defined %}
+          id: '{{ product.id }}',
+          type: 'target',
+          price: {{ product.price }},
+          count: {{ product.count }},
+        {% else %}
+          id: '{{ product.id }}',
+          price: {{ product.price }},
+          count: {{ product.count }},
+          storeCount: '{{ product.storeCount }}',
+          name: '{{ product.name }}',
+        {% endif %}
+      });
+    {% endfor %}
+  </script>
+  <script src="{{ asset('bundles/conceptos/shop-cart/js/shop-cart.js') }}"></script>
 {% endblock %}

@@ -1,0 +1,38 @@
+{% extends ':site:base.html.twig' %}
+
+{% block title %}Estado de mis pedidos{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/home/css/component.css') }}">
+    <link href="{{ asset('bundles/conceptos/products/css/products.css') }}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/favorite/css/favorite.css') }}">
+{% endblock %}
+
+{% block body %}
+    <section class="products favorite-section pt-3 pt-lg-5 pb-0">
+        <div class="container">
+            <h2 class="mbr-section-title pb-3 mbr-fonts-style display-2 align-content-center">
+                Estado de mis pedidos
+            </h2>
+            <div class="d-flex flex-wrap">
+                {% for request in requests %}
+                    <section class="d-flex flex-column col-12 mb-2">
+                      <div class="d-flex">
+                        <span>Pedido: {{request.id}}</span>
+                      </div>
+                      <div class="d-flex flex-column ml-3">
+                        {% for requestProduct in request.requestProducts %}
+                          <div class="d-flex">
+                            <span>{{requestProduct.product.name}}--{% if requestProduct.state %}{{requestProduct.state}}{% else %}{{"Sin Estado"}}{% endif %}</span>
+                          </div>
+                        {% endfor %}
+                      </div>
+                    </section>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

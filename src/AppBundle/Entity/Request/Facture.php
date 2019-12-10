@@ -60,6 +60,14 @@ class Facture
      * @ORM\JoinColumn(name="pre_facture_id", referencedColumnName="id")
      */
     private $preFacture;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $twoStepExtra;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $cucExtra;
 
     public function __construct()
     {
@@ -271,6 +279,30 @@ class Facture
       $this->setDiscount($membershipDiscount);
       $this->setFirstClientDiscount($firstClientDiscount);
       $this->setFinalPrice($finalPrice);
+    }
+
+    public function setTwoStepExtra($twoStepExtra)
+    {
+        $this->twoStepExtra = $twoStepExtra;
+
+        return $this;
+    }
+
+    public function getTwoStepExtra()
+    {
+        return $this->twoStepExtra;
+    }
+
+    public function setCucExtra($cucExtra)
+    {
+        $this->cucExtra = $cucExtra;
+
+        return $this;
+    }
+
+    public function getCucExtra()
+    {
+        return $this->cucExtra;
     }
 
     function __toString()

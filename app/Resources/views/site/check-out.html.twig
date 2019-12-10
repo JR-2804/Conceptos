@@ -63,6 +63,22 @@
                                 <span class="text-muted">${{discount}}.00</span>
                             </li>
                         {% endif %}
+                        {% if twoStepExtra %}
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">Extra 2 plazos</h6>
+                                </div>
+                                <span class="text-muted">${{twoStepExtra}}.00</span>
+                            </li>
+                        {% endif %}
+                        {% if cucExtra %}
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">Extra CUC</h6>
+                                </div>
+                                <span class="text-muted">${{cucExtra}}.00</span>
+                            </li>
+                        {% endif %}
                         <li class="list-group-item d-flex justify-content-between lh-condensed">
                             <div>
                                 <h6 class="my-0">Costo de Transporte</h6>
@@ -86,6 +102,8 @@
                     {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'true'}}) }}
                     <input type="hidden" name="memberNumber" id="memberNumber">
                     <input type="hidden" name="transportCost" id="transportCost">
+                    <input type="hidden" name="paymentType" id="paymentType">
+                    <input type="hidden" name="paymentCurrency" id="paymentCurrency">
                     <input type="hidden" name="products" id="products">
                     <div class="mb-3 pr-3 pr-lg-0">
                         {{ form_label(form.name, 'Nombre y Apellidos') }}
@@ -194,6 +212,8 @@
             memberNumber = undefined;
         {% endif %}
         transportCost = {{transportCost}};
+        paymentType = '{{paymentType}}';
+        paymentCurrency = '{{paymentCurrency}}';
         products = [];
         {% for product in products %}
         products.push({
