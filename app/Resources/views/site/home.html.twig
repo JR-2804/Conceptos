@@ -4,679 +4,93 @@
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/home/css/home.css') }}">
 {% endblock %}
 {% block body %}
-    <div class="d-flex">
-      {% if page.data.slides and page.data.slides is not empty %}
-        <img class="conceptos-image" src="{{page.data.slides[0].path}}">
-      {% endif %}
-    </div>
+  <div class="d-flex align-items-center">
+    {% if page.data.slides and page.data.slides is not empty %}
+      <img class="conceptos-image" src="{{page.data.slides[0].path}}">
+    {% endif %}
+  </div>
 
-    <div class="d-flex flex-column p-3">
-      <span class="pl-2 conceptos-title">{{page.data.populars.title|raw}}</span>
-      <span class="pl-2 conceptos-subtitle-2">{{page.data.populars.subtitle|raw}}</span>
-      <div class="d-flex flex-wrap mt-3">
-        {% for popular in populars %}
-          {% if loop.index < 7 %}
-            <div class="d-flex col-6 p-2">
-              <div class="d-flex conceptos-product-image p-2">
-                <img class="conceptos-image" src="{{ vich_uploader_asset(popular.mainImage, 'imageFile') }}">
-              </div>
+  <div class="d-flex flex-column p-3">
+    <span class="pl-2 conceptos-title">{{page.data.populars.title|raw}}</span>
+    <span class="pl-2 conceptos-subtitle-2">{{page.data.populars.subtitle|raw}}</span>
+    <div class="d-flex flex-wrap mt-3">
+      {% for popular in populars %}
+        {% if loop.index < 7 %}
+          <div class="d-flex col-6 p-2">
+            <div class="d-flex align-items-center conceptos-product-image p-2">
+              <img class="conceptos-image" src="{{ vich_uploader_asset(popular.mainImage, 'imageFile') }}">
             </div>
-          {% endif %}
-        {% endfor %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="d-flex justify-content-center mt-3">
+      <button class="home-populars-view-all-button">
+        <span class="pl-2 pr-2">VER MÁS</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column">
+    <div class="d-flex justify-content-between conceptos-badge p-2">
+      <div class="d-flex flex-column justify-content-center m-2">
+        <span class="conceptos-badge-text">ALMACÉN</span>
+        <span class="conceptos-badge-subtitle">{{page.data.subtitles.inStore|raw}}</span>
       </div>
-      <div class="d-flex justify-content-center mt-3">
-        <button class="home-populars-view-all-button">
+      <div class="d-flex flex-column m-2 align-self-center">
+        <button class="home-badge-view-all-button">
+          <span class="pl-2 pr-2">VER TODOS</span>
+        </button>
+      </div>
+    </div>
+    <div class="d-flex p-3">
+        {% if inStore and inStore is not empty %}
+          <div class="d-flex align-items-center conceptos-product-image p-2">
+            <img class="conceptos-image" src="{{ vich_uploader_asset(inStore[0].mainImage, 'imageFile') }}">
+          </div>
+        {% endif %}
+    </div>
+  </div>
+
+  <div class="d-flex flex-column">
+    <div class="d-flex justify-content-between conceptos-badge p-2">
+      <div class="d-flex align-items-center m-2">
+        <span class="conceptos-badge-text">SERVICIOS</span>
+      </div>
+      <div class="d-flex flex-column m-2 align-self-center">
+        <button class="home-badge-view-all-button">
           <span class="pl-2 pr-2">VER MÁS</span>
         </button>
       </div>
     </div>
+    <div class="d-flex p-3">
+        {% if page.data.services.image.path %}
+          <div class="d-flex align-items-center conceptos-product-image p-2">
+            <img class="conceptos-image" src="{{ page.data.services.image.path }}">
+          </div>
+        {% endif %}
+    </div>
+  </div>
 
-    <div class="d-flex flex-column">
-      <div class="d-flex justify-content-between conceptos-badge p-2">
-        <div class="d-flex flex-column justify-content-center m-2">
-          <span class="conceptos-badge-text">ALMACÉN</span>
-          <span class="conceptos-badge-subtitle">{{page.data.subtitles.inStore|raw}}</span>
-        </div>
-        <div class="d-flex flex-column m-2 align-self-center">
-          <button class="home-badge-view-all-button">
-            <span class="pl-2 pr-2">VER TODOS</span>
-          </button>
-        </div>
+  <div class="d-flex flex-column">
+    <div class="d-flex justify-content-between conceptos-badge p-2">
+      <div class="d-flex align-items-center m-2">
+        <span class="conceptos-badge-text">INSPIRACIÓN</span>
       </div>
-      <div class="d-flex p-3">
-          {% if inStore and inStore is not empty %}
-            <div class="d-flex conceptos-product-image p-2">
-              <img class="conceptos-image" src="{{ vich_uploader_asset(inStore[0].mainImage, 'imageFile') }}">
-            </div>
-          {% endif %}
+      <div class="d-flex flex-column m-2 align-self-center">
+        <button class="home-badge-view-all-button">
+          <span class="pl-2 pr-2">VER MÁS</span>
+        </button>
       </div>
     </div>
-
-    <div class="d-flex flex-column">
-        <div class="d-flex justify-content-between conceptos-badge p-2">
-          <div class="d-flex align-items-center m-2">
-            <span class="conceptos-badge-text">SERVICIOS</span>
+    <div class="d-flex p-3">
+        {% if page.data.services.image.path %}
+          <div class="d-flex align-items-center conceptos-product-image p-2">
+            <img class="conceptos-image" src="{{ page.data.services.image.path }}">
           </div>
-          <div class="d-flex flex-column m-2 align-self-center">
-            <button class="home-badge-view-all-button">
-              <span class="pl-2 pr-2">VER MÁS</span>
-            </button>
-          </div>
-        </div>
-        <div class="d-flex p-3">
-            {% if page.data.services.image.path %}
-              <div class="d-flex conceptos-product-image p-2">
-                <img class="conceptos-image" src="{{ page.data.services.image.path }}">
-              </div>
-            {% endif %}
-        </div>
-      </div>
-
-      <div class="d-flex flex-column">
-          <div class="d-flex justify-content-between conceptos-badge p-2">
-            <div class="d-flex align-items-center m-2">
-              <span class="conceptos-badge-text">INSPIRACIÓN</span>
-            </div>
-            <div class="d-flex flex-column m-2 align-self-center">
-              <button class="home-badge-view-all-button">
-                <span class="pl-2 pr-2">VER MÁS</span>
-              </button>
-            </div>
-          </div>
-          <div class="d-flex p-3">
-              {% if page.data.services.image.path %}
-                <div class="d-flex conceptos-product-image p-2">
-                  <img class="conceptos-image" src="{{ page.data.services.image.path }}">
-                </div>
-              {% endif %}
-          </div>
-        </div>
-
-
-
-
-    <section class="mbr-section content4 home-extra-section pt-0 pt-lg-3 mt-5" id="content4-8">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-7 home-extra-section-phrase pl-0">
-                    <a href="{{page.data.top.image1Link}}">
-                        <img class="in-store-image" src="{{ page.data.top.image1.path }}">
-                    </a>
-                </div>
-                <div class="col-5 pl-1 pl-lg-3">
-                    <a href="{{page.data.top.image2Link}}">
-                        <img class="in-store-image" src="{{ page.data.top.image2.path }}">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    {% if populars is not empty %}
-        <section class="mbr-section content4 cid-rnLj9BWvac d-none d-lg-flex" id="popular-products-section">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col align-center pl-1 pr-1">
-                        <h2 class="align-center rob-header">{{page.data.populars.title|raw}}</h2>
-                        <h3 class="align-center rob-subtitle">{{page.data.populars.subtitle|raw}}</h3>
-                        <div class="d-flex justify-content-center">
-                            <a href="{{ path('products', {populars: true, page: 1}) }}" class="square-button">Ver Todos</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row d-flex pb-4">
-                    <div class="d-flex justify-content-center w-100">
-                        {% if populars|length > 1 %}
-                            <div class="col-1 d-flex align-items-center justify-content-center">
-                                <a class="carousel-control control-prev control-populars w-100" role="button">
-                                    <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-left mbr-iconfont"></span>
-                                    <span class="sr-only">Anterior</span>
-                                </a>
-                            </div>
-                        {% endif %}
-                        <div class="col-10 pl-0">
-                            <div class="carousel" data-ride="carousel" id="carousel-populars-short" data-interval="10000">
-                                <div class="carousel-inner">
-                                    {% for popular in populars %}
-                                        <div class="container-fluid carousel-item {% if loop.first %}active{% endif %}">
-                                            <div class="d-flex justify-content-center w-100">
-                                                {% for cat in popular %}
-                                                    <div class="col-3 pl-0 m-1">
-                                                        <a class="d-flex justify-content-center" href="{{ path('product_details', {id: cat.id}) }}">
-                                                            <img class="brand-image" src="{{ vich_uploader_asset(cat.mainImage, 'imageFile') }}">
-                                                        </a>
-                                                    </div>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                        {% if populars|length > 1 %}
-                            <div class="col-1 d-flex align-items-center justify-content-center pl-0">
-                                <a class="carousel-control control-next control-populars w-100" role="button">
-                                    <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-right mbr-iconfont"></span>
-                                    <span class="sr-only">Siguiente</span>
-                                </a>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="mbr-section content4 cid-rnLj9BWvac d-lg-none" id="popular-products-section-short">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col align-center pl-1 pr-1">
-                        <h2 class="align-center rob-header rob-header-short">{{page.data.populars.title|raw}}</h2>
-                        <h3 class="align-center rob-subtitle rob-subtitle-short">{{page.data.populars.subtitle|raw}}</h3>
-                        <div class="d-flex justify-content-center">
-                            <a href="{{ path('products', {populars: true, page: 1}) }}" class="square-button">Ver Todos</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row d-flex pb-4">
-                    <div class="d-flex justify-content-center w-100">
-                        {% if popularsForShortScreen|length > 1 %}
-                            <div class="col-1 d-flex m-0 p-0 align-items-center justify-content-center">
-                                <a class="d-flex align-items-center carousel-control control-prev carousel-control-shorter control-populars" role="button">
-                                    <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-left mbr-iconfont"></span>
-                                    <span class="sr-only">Anterior</span>
-                                </a>
-                            </div>
-                        {% endif %}
-                        <div class="col-10 pl-0">
-                            <div class="carousel" data-ride="carousel" id="carousel-populars" data-interval="10000">
-                                <div class="carousel-inner">
-                                    {% for popular in popularsForShortScreen %}
-                                        <div class="container-fluid carousel-item {% if loop.first %}active{% endif %}">
-                                            <div class="d-flex justify-content-center w-100">
-                                                {% for cat in popular %}
-                                                    <div class="col-4 pl-0 m-1">
-                                                        <a class="d-flex justify-content-center align-items-center" href="{{ path('product_details', {id: cat.id}) }}">
-                                                            <img class="popular-image-short" src="{{ vich_uploader_asset(cat.mainImage, 'imageFile') }}">
-                                                        </a>
-                                                    </div>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                        {% if popularsForShortScreen|length > 1 %}
-                            <div class="col-1 d-flex m-0 p-0 align-items-center justify-content-center">
-                                <a class="d-flex align-items-center carousel-control control-next carousel-control-shorter control-populars" role="button">
-                                    <span aria-hidden="true" class="w-100 d-flex justify-content-center mbri-right mbr-iconfont"></span>
-                                    <span class="sr-only">Siguiente</span>
-                                </a>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </section>
-        <div class="w-100 cuban-brand-divider d-none d-lg-flex"></div>
-    {% else %}
-        <section class="membership-form-section">
-            <div class="pb-1 pb-lg-3"></div>
-        </section>
-    {% endif %}
-
-    {% if inStore is not empty %}
-        <section class="mbr-section content4 cid-qQ6mxM0ThU pb-0 pb-lg-3 pt-0" id="content4-8">
-            <div class="home-badge in-store-text d-flex align-items-center justify-content-between d-lg-none">
-                <div class="d-flex flex-column align-items-center ml-2">
-                    <span class="in-store-text-short ml-0">En Almacén</span>
-                    <span class="section-subtitle ml-0">{{page.data.subtitles.inStore|raw}}</span>
-                </div>
-                <a href="{{ path('products', {inStore:true}) }}" class="btn btn-success btn-custom view-all-text-short mr-2">Ver Todos</a>
-            </div>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-4 col-12 pl-0 order-2 order-lg-1">
-                        <div class="d-flex flex-column justify-content-end product-card-clickable h-100"
-                             data-path="{{ path('product_details', {id: inStoreHighlight.id}) }}">
-                            <div class="d-flex">
-                                {% if app.user|default %}
-                                    <a data-path-add="{{ path('add_to_favorite', {id: inStoreHighlight.id}) }}"
-                                       data-path-remove="{{ path('remove_from_favorite', {id: inStoreHighlight.id}) }}"
-                                       class="favorite-product mt-2 {% if inStoreHighlight.favorite %}favorite{% endif %}">
-                                        <span class="fa fa-heart"></span>
-                                    </a>
-                                {% endif %}
-                                <img class="h-100 w-100 d-none d-lg-block"
-                                     src="{{ vich_uploader_asset(inStoreHighlight.mainImage, 'imageFile') }}"
-                                     alt="{{ inStoreHighlight.item }}">
-                                <img class="h-100 w-100 d-lg-none"
-                                     src="{{ vich_uploader_asset(inStoreHighlight.mainImage, 'imageFile') }}"
-                                     alt="{{ inStoreHighlight.item }}">
-                            </div>
-                            <div class="d-flex flex-column align-items-start carouse-in-store-text-content">
-                                <h6>{{ inStoreHighlight.name }}</h6>
-                                <p>{{ inStoreHighlight.item }}</p>
-                                <a class="btn btn-custom btn-success btn-add-cart add-to-cart-button"
-                                   data-path="{{ path('add_shop_card', {id: inStoreHighlight.id, offer: 'false'}) }}">
-                                    <i class="mbri-shopping-cart"></i>
-                                    {% set priceOffer = -1 %}
-                                    {% if inStoreHighlight.priceOffer is not null and inStoreHighlight.priceOffer != -1 %}
-                                        {% set priceOffer = inStoreHighlight.priceOffer %}
-                                    {% endif %}
-                                    {% if priceOffer == -1 %}
-                                        {% for category in inStoreHighlight.categories %}
-                                          {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and inStoreHighlight.inStore)) %}
-                                            {% set priceOffer = (inStoreHighlight.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
-                                          {% else %}
-                                            {% for parentCategory in category.parents %}
-                                              {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and inStoreHighlight.inStore)) %}
-                                                {% set priceOffer = (inStoreHighlight.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
-                                              {% endif %}
-                                            {% endfor %}
-                                          {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-                                    {% if priceOffer != -1 %}
-                                        {{ priceOffer }} CUC
-                                      {% else %}
-                                        {{ inStoreHighlight.price }} CUC
-                                    {% endif %}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 col-12 pl-0 pl-lg-3 order-1 order-lg-2">
-                        <div class="all-in-store-content d-flex flex-column justify-content-end h-100">
-                            <div class="in-store-text align-items-center justify-content-between d-none d-lg-flex">
-                                <div class="d-flex flex-column align-items-center">
-                                    <span class="d-lg-block">En Almacén</span>
-                                    <span class="section-subtitle">{{page.data.subtitles.inStore|raw}}</span>
-                                </div>
-                                <a href="{{ path('products', {inStore:true}) }}" class="btn btn-success btn-custom d-lg-block">Ver Todos</a>
-                            </div>
-                            <div class="d-flex mbr-slider slide carousel h-100" id="in-store-carousel"
-                                 data-keyboard="false" data-ride="carousel" data-interval="5000">
-                                <div class="carousel-inner" role="listbox">
-                                    {% if inStoreHighlight.highlightImages | length == 0 %}
-                                      <div class="carousel-item slider-fullscreen-image active">
-                                          <img class="highlight-image" src="{{ asset('bundles/conceptos/images/home/home_002.jpg') }}">
-                                      </div>
-                                    {% endif %}
-                                    {% for image in inStoreHighlight.highlightImages %}
-                                        <div class="carousel-item slider-fullscreen-image {% if loop.first %}active{% endif %}">
-                                            <img class="highlight-image" src="{{ vich_uploader_asset(image, 'imageFile') }}">
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                                {% if inStoreHighlight.highlightImages | length > 1 %}
-                                    <a data-app-prevent-settings="" class="carousel-control carousel-control-prev d-none d-lg-block" role="button"
-                                        data-slide="prev" href="#in-store-carousel">
-                                        <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                                        <span class="sr-only">Anterior</span>
-                                    </a>
-                                    <a data-app-prevent-settings="" class="carousel-control carousel-control-prev carousel-control-short d-lg-none" role="button"
-                                        data-slide="prev" href="#in-store-carousel">
-                                        <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                                        <span class="sr-only">Anterior</span>
-                                    </a>
-                                    <a data-app-prevent-settings="" class="carousel-control carousel-control-next d-none d-lg-block" role="button"
-                                        data-slide="next" href="#in-store-carousel">
-                                        <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                                        <span class="sr-only">Siguiente</span>
-                                    </a>
-                                    <a data-app-prevent-settings="" class="carousel-control carousel-control-next carousel-control-short d-lg-none" role="button"
-                                        data-slide="next" href="#in-store-carousel">
-                                        <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                                        <span class="sr-only">Siguiente</span>
-                                    </a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="mbr-gallery mbr-slider-carousel cid-qQ6jEgdY1g pt-3 pb-0" id="in-store-section" data-count="{{inStore | length}}">
-            <div id="in-store-large" class="container-fluid d-none d-lg-block">
-                <div class="row">
-                    {% set countStore = 0 %}
-                    {% for product in inStore %}
-                        <div data-index="{{ countStore }}"
-                             class="col-6 col-lg-2 col-custom-padding store-product pl-0 pr-0 {% if countStore > 5 %}hidden-offer{% else %}no-hidden-offer{% endif %}">
-                            {{include('site/components/product-summary.html.twig')}}
-                        </div>
-                        {% set countStore = countStore + 1 %}
-                    {% endfor %}
-                </div>
-                {% if inStore | length > 6 %}
-                    <div class="row justify-content-center align-items-center pb-3">
-                        <button class="btn navigation-button btn-previous-store" data-products-limit="6">
-                            <i class="mbri-left"></i>
-                            Anterior
-                        </button>
-                        <button class="btn navigation-button btn-next-store" data-products-limit="6">
-                            Siguiente
-                            <i class="mbri-right"></i>
-                        </button>
-                    </div>
-                {% endif %}
-            </div>
-            <div id="in-store-short" class="container-fluid d-lg-none">
-                <div class="row">
-                    {% set countStore = 0 %}
-                    {% for product in inStore %}
-                        <div data-index="{{ countStore }}"
-                             class="col-6 col-lg-2 col-custom-padding store-product pl-0 pr-0 {% if countStore > 1 %}hidden-offer{% else %}no-hidden-offer{% endif %}">
-                            {{include('site/components/product-summary.html.twig')}}
-                        </div>
-                        {% set countStore = countStore + 1 %}
-                    {% endfor %}
-                </div>
-                {% if inStore | length > 2 %}
-                    <div class="row justify-content-center align-items-center pb-3">
-                        <button class="col-5 btn navigation-button btn-previous-store mr-1" data-products-limit="2">
-                            <i class="mbri-left"></i>
-                            Anterior
-                        </button>
-                        <button class="col-5 btn navigation-button btn-next-store ml-1" data-products-limit="2">
-                            Siguiente
-                            <i class="mbri-right"></i>
-                        </button>
-                    </div>
-                {% endif %}
-            </div>
-        </section>
-    {% endif %}
-
-    {% if brands is not empty %}
-        <section class="mbr-section content4 cid-rnLj9BWvac" id="content4-2v">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col align-center pl-1 pr-1">
-                        <h2 class="align-center rob-header d-none d-lg-block">{{page.data.cubanBrands.title|raw}}</h2>
-                        <h2 class="align-center rob-header rob-header-short d-lg-none">{{page.data.cubanBrands.title|raw}}</h2>
-                        <h3 class="align-center rob-subtitle d-none d-lg-block">{{page.data.cubanBrands.subtitle|raw}}</h3>
-                        <h3 class="align-center rob-subtitle rob-subtitle-short d-lg-none">{{page.data.cubanBrands.subtitle|raw}}</h3>
-                        <div class="d-flex justify-content-center">
-                            {% set allIds = brands[0][0].parents.first.id %}
-                            {% for group in brands %}
-                                {% for brand in group %}
-                                    {% set allIds = allIds ~ ',' ~ brand.id %}
-                                {% endfor %}
-                            {% endfor %}
-                            <a href="{{ path('products', {categories: allIds, page: 1}) }}" class="square-button">Ver Todos</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row d-flex pb-4">
-                    <div class="d-flex justify-content-center w-100">
-                        {% if brands|length > 1 %}
-                            <div class="col-1 d-none d-lg-flex align-items-center justify-content-center">
-                                <a class="carousel-control carousel-control-prev control-brands" role="button">
-                                    <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                                    <span class="sr-only">Anterior</span>
-                                </a>
-                            </div>
-                            <div class="col-1 d-flex d-lg-none m-0 p-0 align-items-center justify-content-center">
-                                <a class="carousel-control carousel-control-prev carousel-control-shorter control-brands" role="button">
-                                    <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                                    <span class="sr-only">Anterior</span>
-                                </a>
-                            </div>
-                        {% endif %}
-                        <div class="col-10 pl-0">
-                            <div class="carousel slide" data-ride="carousel" id="carousel-brands" data-interval="10000">
-                                <div class="carousel-inner">
-                                    {% for brand in brands %}
-                                        <div class="container-fluid carousel-item {% if loop.first %}active{% endif %}">
-                                            <div class="d-flex justify-content-center w-100">
-                                                {% for cat in brand %}
-                                                    <div class="col-3 pl-0 m-1">
-                                                        {% set categoriesIds = cat.parents.first.id ~ ',' ~ cat.id %}
-                                                        <a href="{{ path('products', {categories: categoriesIds, page: 1}) }}">
-                                                            <div class="brand-image w-100 d-none d-lg-block" style="background-image: url('{{ vich_uploader_asset(cat, 'imageFile') }}')"></div>
-                                                            <div class="brand-image brand-image-short w-100 d-lg-none" style="background-image: url('{{ vich_uploader_asset(cat, 'imageFile') }}')"></div>
-                                                        </a>
-                                                    </div>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                        {% if brands|length > 1 %}
-                            <div class="col-1 d-none d-lg-flex align-items-center justify-content-center">
-                                <a class="carousel-control carousel-control-prev control-brands" role="button">
-                                    <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                                    <span class="sr-only">Siguiente</span>
-                                </a>
-                            </div>
-                            <div class="col-1 d-flex d-lg-none m-0 p-0 align-items-center justify-content-center">
-                                <a class="carousel-control carousel-control-prev carousel-control-shorter control-brands" role="button">
-                                    <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                                    <span class="sr-only">Siguiente</span>
-                                </a>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </section>
-    {% endif %}
-
-    <div class="w-100 cuban-brand-divider"></div>
-
-    {% if lasted is not empty %}
-        <section class="mbr-section content4 cid-qQ6mxM0ThU pt-0 pb-0 pb-lg-3" id="content4-8">
-            <div class="home-badge in-store-text d-flex align-items-center justify-content-between d-lg-none">
-                <div class="d-flex flex-column align-items-center ml-2">
-                    <span class="in-store-text-short ml-0">Novedades</span>
-                    <span class="section-subtitle ml-0">{{page.data.subtitles.recent|raw}}</span>
-                </div>
-                <a href="{{ path('products', {recent:true}) }}" class="btn btn-success btn-custom view-all-text-short mr-2">Ver Todos</a>
-            </div>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-8 col-12 pl-0 order-1 order-lg-2">
-                        <div class="all-in-store-content d-flex flex-column justify-content-end h-100">
-                            <div class="in-store-text align-items-center justify-content-between d-none d-lg-flex">
-                                <div class="d-flex flex-column align-items-center">
-                                    <span class="d-lg-block">Novedades</span>
-                                    <span class="section-subtitle">{{page.data.subtitles.recent|raw}}</span>
-                                </div>
-                                <a href="{{ path('products', {recent:true}) }}" class="btn btn-success btn-custom d-lg-block">Ver Todos</a>
-                            </div>
-                            <div class="d-flex mbr-slider slide carousel h-100" id="lasted-carousel"
-                                 data-keyboard="false" data-ride="carousel" data-interval="5000">
-                                <div class="carousel-inner" role="listbox">
-                                    {% if lastedHighlight.highlightImages | length == 0 %}
-                                      <div class="carousel-item slider-fullscreen-image active">
-                                          <img class="highlight-image" src="{{ asset('bundles/conceptos/images/home/home_002.jpg') }}">
-                                      </div>
-                                    {% endif %}
-                                    {% for image in lastedHighlight.highlightImages %}
-                                        <div class="carousel-item slider-fullscreen-image {% if loop.first %}active{% endif %}">
-                                            <img class="highlight-image" src="{{ vich_uploader_asset(image, 'imageFile') }}">
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                                {% if lastedHighlight.highlightImages | length > 1 %}
-                                    <a data-app-prevent-settings="" class="carousel-control carousel-control-prev d-none d-lg-block" role="button"
-                                        data-slide="prev" href="#lasted-carousel">
-                                        <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                                        <span class="sr-only">Anterior</span>
-                                    </a>
-                                    <a data-app-prevent-settings="" class="carousel-control carousel-control-prev carousel-control-short d-lg-none" role="button"
-                                        data-slide="prev" href="#lasted-carousel">
-                                        <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                                        <span class="sr-only">Anterior</span>
-                                    </a>
-                                    <a data-app-prevent-settings="" class="carousel-control carousel-control-next d-none d-lg-block" role="button"
-                                        data-slide="next" href="#lasted-carousel">
-                                        <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                                        <span class="sr-only">Siguiente</span>
-                                    </a>
-                                    <a data-app-prevent-settings="" class="carousel-control carousel-control-next carousel-control-short d-lg-none" role="button"
-                                        data-slide="next" href="#lasted-carousel">
-                                        <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                                        <span class="sr-only">Siguiente</span>
-                                    </a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-12 pl-0 pl-lg-3 order-2 order-lg-1">
-                        <div class="d-flex flex-column justify-content-end product-card-clickable h-100"
-                             data-path="{{ path('product_details', {id: lastedHighlight.id}) }}">
-                            <div class="d-flex">
-                                {% if app.user|default %}
-                                    <a data-path-add="{{ path('add_to_favorite', {id: lastedHighlight.id}) }}"
-                                       data-path-remove="{{ path('remove_from_favorite', {id: lastedHighlight.id}) }}"
-                                       class="favorite-product mt-2 {% if lastedHighlight.favorite %}favorite{% endif %}">
-                                        <span class="fa fa-heart"></span>
-                                    </a>
-                                {% endif %}
-                                <img class="h-100 w-100 d-none d-lg-block"
-                                     src="{{ vich_uploader_asset(lastedHighlight.mainImage, 'imageFile') }}"
-                                     alt="{{ lastedHighlight.item }}">
-                                <img class="h-100 w-100 d-lg-none"
-                                     src="{{ vich_uploader_asset(lastedHighlight.mainImage, 'imageFile') }}"
-                                     alt="{{ lastedHighlight.item }}">
-                            </div>
-                            <div class="d-flex flex-column align-items-start carouse-in-store-text-content">
-                                <h6>{{ lastedHighlight.name }}</h6>
-                                <p>{{ lastedHighlight.item }}</p>
-                                <a class="btn btn-custom btn-success btn-add-cart add-to-cart-button"
-                                   data-path="{{ path('add_shop_card', {id: lastedHighlight.id, offer: 'false'}) }}">
-                                    <i class="mbri-shopping-cart"></i>
-                                    {% set priceOffer = -1 %}
-                                    {% if lastedHighlight.priceOffer is not null and lastedHighlight.priceOffer != -1 %}
-                                        {% set priceOffer = lastedHighlight.priceOffer %}
-                                    {% endif %}
-                                    {% if priceOffer == -1 %}
-                                        {% for category in lastedHighlight.categories %}
-                                          {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and lastedHighlight.inStore)) %}
-                                            {% set priceOffer = (lastedHighlight.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
-                                          {% else %}
-                                            {% for parentCategory in category.parents %}
-                                              {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and lastedHighlight.inStore)) %}
-                                                {% set priceOffer = (lastedHighlight.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
-                                              {% endif %}
-                                            {% endfor %}
-                                          {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-                                    {% if priceOffer != -1 %}
-                                        {{ priceOffer }} CUC
-                                      {% else %}
-                                        {{ lastedHighlight.price }} CUC
-                                    {% endif %}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="mbr-gallery mbr-slider-carousel cid-qQ6jEgdY1g pt-3 pb-0" id="lasted-section" data-count="{{lasted | length}}">
-            <div id="lasted-large" class="container-fluid d-none d-lg-block">
-                <div class="row justify-content-center">
-                    {% set countProductsLasted = 0 %}
-                    {% for product in lasted %}
-                        <div data-index="{{ countProductsLasted }}"
-                             class="col-6 col-lg-2 lasted-product col-custom-padding pl-0 pr-0 {% if countProductsLasted > 5 %}hidden-offer{% else %}no-hidden-offer{% endif %}">
-                            {{include('site/components/product-summary.html.twig')}}
-                        </div>
-                        {% set countProductsLasted = countProductsLasted + 1 %}
-                    {% endfor %}
-                </div>
-                {% if countProductsLasted > 6 %}
-                    <div class="row justify-content-center align-items-center pb-3">
-                        <button class="btn navigation-button btn-previous-last" data-products-limit="6">
-                            <i class="mbri-left"></i>
-                            Anterior
-                        </button>
-                        <a class="btn navigation-button btn-next-last" data-products-limit="6">
-                            Siguiente
-                            <i class="mbri-right"></i>
-                        </a>
-                    </div>
-                {% endif %}
-            </div>
-            <div id="lasted-short" class="container-fluid d-lg-none">
-                <div class="row justify-content-center">
-                    {% set countProductsLasted = 0 %}
-                    {% for product in lasted %}
-                        <div data-index="{{ countProductsLasted }}"
-                             class="col-6 col-lg-2 lasted-product col-custom-padding pl-0 pr-0 {% if countProductsLasted > 1 %}hidden-offer{% else %}no-hidden-offer{% endif %}">
-                            {{include('site/components/product-summary.html.twig')}}
-                        </div>
-                        {% set countProductsLasted = countProductsLasted + 1 %}
-                    {% endfor %}
-                </div>
-                {% if countProductsLasted > 2 %}
-                    <div class="row justify-content-center align-items-center pb-3">
-                        <button class="col-5 btn navigation-button btn-previous-last mr-1" data-products-limit="2">
-                            <i class="mbri-left"></i>
-                            Anterior
-                        </button>
-                        <a class="col-5 btn navigation-button btn-next-last ml-1" data-products-limit="2">
-                            Siguiente
-                            <i class="mbri-right"></i>
-                        </a>
-                    </div>
-                {% endif %}
-            </div>
-        </section>
-    {% endif %}
-
-    {% if lasts|length > 0 %}
-        <section class="features18 popup-btn-cards cid-qQ6nHgXHV4" id="features18-9">
-            <div class="container">
-                <div class="row">
-                    <div class="col align-center pl-1 pr-1">
-                        <h2 class="rob-header d-none d-lg-block">{{page.data.blog.main|raw}}</h2>
-                        <h2 class="rob-header rob-header-short d-lg-none">{{page.data.blog.main|raw}}</h2>
-                        <h3 class="rob-subtitle d-none d-lg-block">{{page.data.blog.secondary|raw}}</h3>
-                        <h3 class="rob-subtitle rob-subtitle-short d-lg-none">{{page.data.blog.secondary|raw}}</h3>
-                        <div class="d-flex justify-content-center">
-                            <a class="square-button" href="{{ path('blog_home') }}">Ver Todos</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    {% for post in lasts %}
-                        <div class="col-lg-4 col-12 blog-card pl-0">
-                            <div class="card-wrapper car-blog">
-                                <div class="blog-summary ml-2 mr-2">
-                                    <div class="card-img">
-                                        <div class="mbr-overlay"></div>
-                                        <div class="mbr-section-btn text-center">
-                                            <a href="{{ path('blog_details', {id: post.id, title: post.path}) }}"
-                                              class="btn btn-success display-4 view-more">Ver más</a>
-                                        </div>
-                                        <img src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.title }}">
-                                    </div>
-                                    <div class="d-flex flex-row justify-content-between">
-                                        <div class="bs-date">
-                                            <span>{{post.createdDate | date('d M | Y')}}</span>
-                                        </div>
-                                        <div class="bs-category">
-                                            <span>{{post.category.name}}</span>
-                                        </div>
-                                    </div>
-                                    <div class="bs-title">
-                                        <span class="card-title mbr-fonts-style display-7">{{post.title}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </section>
-    {% endif %}
+        {% endif %}
+    </div>
+  </div>
 {% endblock %}
 {% block js %}
     <script src="{{ asset('bundles/conceptos/home/js/home.js') }}"></script>

@@ -368,7 +368,7 @@ class SiteController extends Controller
         }
         $productsDB = [];
         foreach ($products as $product) {
-            if (!array_key_exists('offer', $product) && ('target15' == $product['id'] || 'target25' == $product['id'] || 'target50' == $product['id'] || 'target100' == $product['id'])) {
+            if (array_key_exists('id', $product) && ('target15' == $product['id'] || 'target25' == $product['id'] || 'target50' == $product['id'] || 'target100' == $product['id'])) {
                 $name = 'Tarjeta de 15 CUC';
                 switch ($product['id']) {
                     case 'target15':
@@ -1194,7 +1194,7 @@ class SiteController extends Controller
             $products = json_decode($session->get('products'), true);
             $newProducts = [];
             foreach ($products as $product) {
-                if (!array_key_exists('offer', $product)) {
+                if (array_key_exists('id', $product)) {
                     if ($product['id'] != $id) {
                         $newProducts[] = $product;
                     }

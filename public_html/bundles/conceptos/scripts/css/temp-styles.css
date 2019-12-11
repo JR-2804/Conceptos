@@ -43,6 +43,63 @@ input[type="email"]:focus {
   border: none;
 }
 
+.checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #ffffff;
+}
+
+.checkmark-gray {
+  background-color: #e5e5e5;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #282827;
+}
+
+.checkmark:after {
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid #ffffff;
+  border-width: 0 3px 0 3px;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
 .conceptos-error-input {
   border: 1px solid #bf1111 !important;
 }
@@ -133,6 +190,10 @@ input[type="email"]:focus {
 .conceptos-social-network-icon {
   width: 35px;
   height: 35px;
+}
+
+.conceptos-contact-section {
+  position: relative;
 }
 
 .conceptos-contact-image {
