@@ -37,7 +37,7 @@ $(document).ready(function() {
     });
   };
 
-  $(".add-to-cart-button").click(function(e) {
+  $(".conceptos-add-to-cart-icon").click(function(e) {
     e.preventDefault();
     e.stopPropagation();
     var url = $(this).data("path");

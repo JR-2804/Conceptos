@@ -1127,11 +1127,10 @@ class SiteController extends Controller
      *
      * @param Request $request
      * @param $id
-     * @param $offer
      *
      * @return JsonResponse
      */
-    public function addShopCartAction(Request $request, $id, $offer)
+    public function addShopCartAction(Request $request, $id)
     {
         $session = $request->getSession();
 
@@ -1161,7 +1160,6 @@ class SiteController extends Controller
                 ];
             } else {
                 $products[] = [
-                    'offer' => $offer,
                     'product' => $id,
                     'uuid' => uniqid(),
                     'count' => 1,
