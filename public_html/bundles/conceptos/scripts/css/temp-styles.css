@@ -99,6 +99,22 @@ input[type="email"]:focus {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+/* -------------------------------------------------------- */
+
+.conceptos-navbar {
+  background-color: #282827;
+  position: absolute;
+  top: 0;
+  height: 50px;
+  width: 100%;
+}
+
+.conceptos-navbar-logo {
+  width: 100px;
+  height: 30px;
+}
+
+/* -------------------------------------------------------- */
 
 .conceptos-error-input {
   border: 1px solid #bf1111 !important;
@@ -206,6 +222,29 @@ input[type="email"]:focus {
   width: 100%;
 }
 
+/* -------------------------------------------------------- */
+
+.home-populars-view-all-button {
+  background-color: transparent;
+  border: 1px solid #282827;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 13px;
+  color: #282827;
+  outline: none;
+}
+
+.home-badge-view-all-button {
+  background-color: transparent;
+  border: 1px solid #c2b930;
+  font-family: Montserrat;
+  font-size: 13px;
+  color: #ffffff;
+  outline: none;
+}
+
+/* -------------------------------------------------------- */
+
 .shop-cart-section {
   background-color: #ffffff;
 }
@@ -239,21 +278,4 @@ input[type="email"]:focus {
   outline: none;
 }
 
-.home-populars-view-all-button {
-  background-color: transparent;
-  border: 1px solid #282827;
-  font-family: Montserrat;
-  font-weight: bold;
-  font-size: 13px;
-  color: #282827;
-  outline: none;
-}
-
-.home-badge-view-all-button {
-  background-color: transparent;
-  border: 1px solid #c2b930;
-  font-family: Montserrat;
-  font-size: 13px;
-  color: #ffffff;
-  outline: none;
-}
+/* -------------------------------------------------------- */
