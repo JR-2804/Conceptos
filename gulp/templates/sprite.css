@@ -1,0 +1,12 @@
+.icon{
+  background-image: url('/temp/sprite/css/{{{sprite}}}');
+  display: block;
+}
+
+{{#shapes}}
+  .icon--{{base}} {
+    width: {{width.outer}}px;
+    height: {{height.outer}}px;
+    background-position: {{position.relative.xy}};
+  }
+{{/shapes}}
