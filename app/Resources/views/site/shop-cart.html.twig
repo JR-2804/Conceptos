@@ -5,9 +5,6 @@
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/shop-cart/shop-cart.css') }}">
 {% endblock %}
 {% block body %}
-  <input type="hidden" value="{{ path('site_home') }}" id="site-path">
-  <input type="hidden" value="{{ path('persist_count_shop_car') }}" id="persist-count-path">
-
   {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'true'}}) }}
     <div class="d-flex flex-column pt-2 pt-lg-5 pl-2 pr-2">
       <h1 class="conceptos-title pt-2">{{home.data.shopCart.mainText|raw}}</h1>
@@ -15,7 +12,7 @@
 
       <div class="shop-cart-product-list-section conceptos-add-scroll">
         <div class="d-flex flex-column mt-3 ml-3 mr-3">
-          {% for product in products %}
+          {% for product in shopCartProducts %}
             <div class="d-flex shop-cart-product p-2 {% if loop.index > 1 %}mt-2{% endif %}"
                 data-product="{{product.id}}"
                 data-uuid="{{ product.uuid }}"
@@ -70,7 +67,7 @@
             </div>
           {% endfor %}
         </div>
-        <div class="d-flex justify-content-between conceptos-badge mt-3">
+        <div class="d-flex justify-content-between align-items-center conceptos-badge mt-3">
           <div class="d-flex flex-column m-2">
             <span class="conceptos-badge-text">CANTIDAD</span>
             <span class="conceptos-badge-text shop-cart-products-count">{{count}} {% if count == 1 %}PRODUCTO{% else %}PRODUCTOS{% endif %}</span>
@@ -81,7 +78,7 @@
           </div>
         </div>
       </div>
-      {% if products|length > 0 %}
+      {% if shopCartProducts|length > 0 %}
         <div class="shop-cart-section mt-3">
           <div class="d-flex flex-column pt-3 ml-3 mr-3">
             <div class="d-flex flex-column">
@@ -103,7 +100,7 @@
               <input id="shop-cart-member-number" type="text" placeholder="Código de miembro" />
             </div>
           </div>
-          <div class="d-flex justify-content-between conceptos-badge mt-3">
+          <div class="d-flex justify-content-between align-items-center conceptos-badge mt-3">
             <div class="d-flex flex-column m-2">
               <span class="conceptos-badge-text">CANTIDAD</span>
               <span class="conceptos-badge-text shop-cart-products-count">{{count}} {% if count == 1 %}PRODUCTO{% else %}PRODUCTOS{% endif %}</span>
@@ -175,10 +172,10 @@
         {{ form_widget(form.recaptcha, {'attr': {'class': 'd-none'}}) }}
       {% endif %}
     </div>
-    <div class="d-flex flex-column justify-content-center conceptos-contact-section">
-      <img class="conceptos-contact-image" src="{{home.data.contact.image.path}}">
-      <div class="d-flex flex-column pl-2 pr-2 mt-3">
-        {% if products|length > 0 %}
+    <div id="shop-cart-contact-form" class="d-flex flex-column">
+      <img class="conceptos-image" src="{{home.data.contact.image.path}}">
+      <div id="shop-cart-buy-section" class="d-flex flex-column pl-2 pr-2 mt-3">
+        {% if shopCartProducts|length > 0 %}
           <div class="d-flex">
             <label class="d-flex checkbox-container align-self-start">
               <span class="conceptos-subtitle">He leído y acepto los <a class="conceptos-title" data-toggle="modal" data-target="#termsAndConditionsModal" href="#">Términos y Condiciones</a></span>
@@ -194,7 +191,7 @@
             </label>
           </div>
           <div class="d-flex mt-2">
-            <button id="shop-cart-send-request-button" class="pl-3 pr-3 pt-1 pb-1" type="submit">
+            <button id="shop-cart-send-request-button" class="conceptos-primary-button pl-3 pr-3 pt-1 pb-1" type="submit">
               <span>ENVIAR PEDIDO</span>
             </button>
           </div>
@@ -221,122 +218,5 @@
 {% block footer %}
 {% endblock %}
 {% block js %}
-  <script>
-    products = [];
-    {% for product in products %}
-      products.push({
-        {% if product.offerExists is defined and product.offerExists %}
-          offerExists: {{product.offerExists}},
-        {% endif %}
-        {% if product.weight is defined %}
-          weight: {{product.weight}},
-        {% else %}
-          weight: 0,
-        {% endif %}
-        {% if product.ikeaPrice is defined %}
-          ikeaPrice: {{product.ikeaPrice}},
-        {% else %}
-          ikeaPrice: 0,
-        {% endif %}
-        {% if product.isFurniture is defined and product.isFurniture %}
-          isFurniture: true,
-        {% else %}
-          isFurniture: false,
-        {% endif %}
-        {% if product.isMattress is defined and product.isMattress %}
-          isMattress: true,
-        {% else %}
-          isMattress: false,
-        {% endif %}
-        {% if product.isAirplaneFurniture is defined and product.isAirplaneFurniture %}
-          isAirplaneFurniture: true,
-        {% else %}
-          isAirplaneFurniture: false,
-        {% endif %}
-        {% if product.isAirplaneMattress is defined and product.isAirplaneMattress %}
-          isAirplaneMattress: true,
-        {% else %}
-          isAirplaneMattress: false,
-        {% endif %}
-        {% if product.isFragile is defined and product.isFragile %}
-            isFragile: true,
-        {% else %}
-          isFragile: false,
-        {% endif %}
-        {% if product.isOversize is defined and product.isOversize %}
-          isOversize: true,
-        {% else %}
-          isOversize: false,
-        {% endif %}
-        {% if product.isTableware is defined and product.isTableware %}
-          isTableware: true,
-        {% else %}
-          isTableware: false,
-        {% endif %}
-        {% if product.isLamp is defined and product.isLamp %}
-          isLamp: true,
-        {% else %}
-          isLamp: false,
-        {% endif %}
-        {% if product.numberOfPackages is defined and product.numberOfPackages %}
-          numberOfPackages: {{product.numberOfPackages}},
-        {% else %}
-          numberOfPackages: false,
-        {% endif %}
-        {% if product.isFaucet is defined and product.isFaucet %}
-          isFaucet: true,
-        {% else %}
-          isFaucet: false,
-        {% endif %}
-        {% if product.isGrill is defined and product.isGrill %}
-          isGrill: true,
-        {% else %}
-          isGrill: false,
-        {% endif %}
-        {% if product.isShelf is defined and product.isShelf %}
-          isShelf: true,
-        {% else %}
-          isShelf: false,
-        {% endif %}
-        {% if product.isDesk is defined and product.isDesk %}
-          isDesk: true,
-        {% else %}
-          isDesk: false,
-        {% endif %}
-        {% if product.isBookcase is defined and product.isBookcase %}
-          isBookcase: true,
-        {% else %}
-          isBookcase: false,
-        {% endif %}
-        {% if product.isComoda is defined and product.isComoda %}
-          isComoda: true,
-        {% else %}
-          isComoda: false,
-        {% endif %}
-        {% if product.isRepisa is defined and product.isRepisa %}
-          isRepisa: true,
-        {% else %}
-          isRepisa: false,
-        {% endif %}
-        {% if product.categories is defined %}
-          categories: {{product.categories}},
-        {% else %}
-          categories: false,
-        {% endif %}
-        {% if product.type is defined %}
-          id: '{{ product.id }}',
-          type: 'target',
-          price: {{ product.price }},
-          count: {{ product.count }},
-        {% else %}
-          id: '{{ product.id }}',
-          price: {{ product.price }},
-          count: {{ product.count }},
-          storeCount: '{{ product.storeCount }}',
-          name: '{{ product.name }}',
-        {% endif %}
-      });
-    {% endfor %}
-  </script>
   <script src="{{ asset('bundles/conceptos/shop-cart/js/shop-cart.js') }}"></script>
 {% endblock %}

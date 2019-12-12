@@ -61,6 +61,7 @@ $(document).ready(function() {
   $("#send-mail-button").click(function(e) {
     if (
       !$("#email_name").val() ||
+      !$("#email_lastName").val() ||
       !$("#email_email").val() ||
       !$("#email_phone").val() ||
       !$("#email_text").val()
@@ -76,18 +77,6 @@ $(document).ready(function() {
       !$("#membership_request_lastName").val() ||
       !$("#membership_request_email").val() ||
       !$("#membership_request_phone").val()
-    ) {
-      alert("Rellene todos los campos");
-      e.preventDefault();
-    }
-  });
-
-  $("#send-mail-button").click(function(e) {
-    if (
-      !$("#email_name").val() ||
-      !$("#email_email").val() ||
-      !$("#email_phone").val() ||
-      !$("#email_text").val()
     ) {
       alert("Rellene todos los campos");
       e.preventDefault();

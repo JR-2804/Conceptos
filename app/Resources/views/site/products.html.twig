@@ -8,105 +8,127 @@
     <link href="{{ asset('bundles/conceptos/products/css/products.css') }}" type="text/css" rel="stylesheet">
 {% endblock %}
 {% block body %}
-    <div id="giftCardsModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">{{membership.data.giftCardSection.modalText}}</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex flex-wrap">
-                        <div class="col-6 pl-0">
-                            <div class="d-flex justify-content-center">
-                                <a class="gift-cart-button" data-path="{{path('add_shop_card', {id: "target15"})}}">
-                                    <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard15Image.path}}">
-                                    <img class="gift-card-img-short d-lg-none pr-1" src="{{membership.data.giftCardSection.giftCard15Image.path}}">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-6 pl-0">
-                            <div class="d-flex justify-content-center">
-                                <a class="gift-cart-button" data-path="{{path('add_shop_card', {id: "target25"})}}">
-                                    <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard25Image.path}}">
-                                    <img class="gift-card-img-short d-lg-none pl-1" src="{{membership.data.giftCardSection.giftCard25Image.path}}">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-6 pt-3 pl-0">
-                            <div class="d-flex justify-content-center">
-                                <a class="gift-cart-button" data-path="{{path('add_shop_card', {id: "target50"})}}">
-                                    <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard50Image.path}}">
-                                    <img class="gift-card-img-short d-lg-none  pr-1" src="{{membership.data.giftCardSection.giftCard50Image.path}}">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-6 pt-3 pl-0">
-                            <div class="d-flex justify-content-center">
-                                <a class="gift-cart-button" data-path="{{path('add_shop_card', {id: "target100"})}}">
-                                    <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard100Image.path}}">
-                                    <img class="gift-card-img-short d-lg-none pl-1" src="{{membership.data.giftCardSection.giftCard100Image.path}}">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn navigation-button" data-dismiss="modal">Aceptar</button>
-                </div>
-            </div>
+  <div id="giftCardsModal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{membership.data.giftCardSection.modalText}}</h4>
         </div>
-    </div>
-
-    {% if inOfferHeader %}
-        {% set image = page.data.inOfferImage.path %}
-    {% elseif inStoreHeader %}
-        {% set image = page.data.inStoreImage.path %}
-    {% elseif recentHeader %}
-        {% set image = page.data.newImage.path %}
-    {% elseif generalHeader %}
-        {% set image = page.data.generalImage.path %}
-    {% else %}
-        {% set image = vich_uploader_asset(mainCategory, 'imageSiteFile') %}
-    {% endif%}
-    <div class="d-none d-lg-block">
-        <img class="conceptos-image" src="{{ image }}">
-    </div>
-    <div class="d-lg-none">
-        <img class="help-page-header-short pt-0" src="{{ image }}">
-    </div>
-
-    <div class="d-flex flex-column m-3">
-      {% if mainCategory %}
-        <span class="conceptos-title ml-2">{{mainCategory.name}}</span>
-      {% else %}
-        <span class="conceptos-title ml-2">TODOS</span>
-      {% endif %}
-      <div class="d-flex flex-wrap">
-        {% for product in products %}
-          <div class="d-flex flex-wrap col-6 p-2">
-            <div class="d-flex align-items-center conceptos-product-image p-2">
-              <img class="conceptos-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+        <div class="modal-body">
+          <div class="d-flex flex-wrap">
+            <div class="col-6 pl-0">
+              <div class="d-flex justify-content-center">
+                <a class="gift-cart-button" data-path="{{path('add_shop_card', {id: "target15"})}}">
+                  <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard15Image.path}}">
+                  <img class="gift-card-img-short d-lg-none pr-1" src="{{membership.data.giftCardSection.giftCard15Image.path}}">
+                </a>
+              </div>
             </div>
-            <div class="d-flex flex-column conceptos-product-info-section pl-2 pr-2 pb-2 w-100">
-              <span class="conceptos-product-info">{{product.name}}</span>
-              <span class="conceptos-product-info-description">{{product.description}}</span>
-              <span class="conceptos-product-info">${{product.price}}</span>
-              <div class="d-flex justify-content-end">
-                <img class="conceptos-add-to-cart-icon"
-                     src="{{ asset('bundles/conceptos/images/home/cart.png') }}"
-                     data-path="{{ path('add_shop_card', {id: product.id}) }}">
+            <div class="col-6 pl-0">
+              <div class="d-flex justify-content-center">
+                <a class="gift-cart-button" data-path="{{path('add_shop_card', {id: "target25"})}}">
+                  <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard25Image.path}}">
+                  <img class="gift-card-img-short d-lg-none pl-1" src="{{membership.data.giftCardSection.giftCard25Image.path}}">
+                </a>
+              </div>
+            </div>
+            <div class="col-6 pt-3 pl-0">
+              <div class="d-flex justify-content-center">
+                <a class="gift-cart-button" data-path="{{path('add_shop_card', {id: "target50"})}}">
+                  <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard50Image.path}}">
+                  <img class="gift-card-img-short d-lg-none  pr-1" src="{{membership.data.giftCardSection.giftCard50Image.path}}">
+                </a>
+              </div>
+            </div>
+            <div class="col-6 pt-3 pl-0">
+              <div class="d-flex justify-content-center">
+                <a class="gift-cart-button" data-path="{{path('add_shop_card', {id: "target100"})}}">
+                  <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard100Image.path}}">
+                  <img class="gift-card-img-short d-lg-none pl-1" src="{{membership.data.giftCardSection.giftCard100Image.path}}">
+                </a>
               </div>
             </div>
           </div>
-        {% endfor %}
+        </div>
+        <div class="modal-footer">
+          <button class="btn navigation-button" data-dismiss="modal">Aceptar</button>
+        </div>
       </div>
     </div>
+  </div>
+
+  {% if inOfferHeader %}
+    {% set image = page.data.inOfferImage.path %}
+  {% elseif inStoreHeader %}
+    {% set image = page.data.inStoreImage.path %}
+  {% elseif recentHeader %}
+    {% set image = page.data.newImage.path %}
+  {% elseif generalHeader %}
+    {% set image = page.data.generalImage.path %}
+  {% else %}
+    {% set image = vich_uploader_asset(mainCategory, 'imageSiteFile') %}
+  {% endif%}
+  <div>
+    <img class="conceptos-image" src="{{ image }}">
+  </div>
+
+  <div class="d-flex flex-column m-2">
+    {% if mainCategory %}
+      <span class="conceptos-title ml-2">{{mainCategory.name}}</span>
+    {% else %}
+      <span class="conceptos-title ml-2">TODOS</span>
+    {% endif %}
+    <div class="d-flex flex-wrap">
+      {% for product in products %}
+        <a class="d-flex flex-wrap conceptos-product-card col-6 p-2" href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+          <div class="d-flex align-items-center conceptos-product-image p-2">
+            <img class="conceptos-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+          </div>
+          <div class="d-flex flex-column conceptos-product-info-section pl-2 pr-2 pb-2 w-100">
+            <span class="conceptos-product-info">{{product.name}}</span>
+            <span class="conceptos-product-info-description">{{product.description}}</span>
+            <span class="conceptos-product-info">${{product.price}}</span>
+            <div class="d-flex justify-content-between align-items-center mt-1">
+              <div class="d-flex flex-column">
+                {% if product.inStore %}
+                  <span class="conceptos-in-store-product-badge">ALMACÉN</span>
+                {% endif %}
+                {% if product.recent %}
+                  <span class="conceptos-new-product-badge">NUEVO</span>
+                {% endif %}
+              </div>
+              <button class="conceptos-add-to-cart-icon" data-path="{{ path('add_shop_card', {id: product.id}) }}">
+                <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
+              </button>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if products is not empty and countProducts > 50 %}
+    <form action="{{ path('products') }}" method="get">
+      <input type="hidden" value="{{ app.request.query.get('page', 1) }}" id="page" name="page">
+      <div class="product-paginator">
+        {% set pageP = app.request.query.get('page') %}
+        <div class="d-flex justify-content-center align-items-center">
+          <button class="conceptos-primary-button pagination-prev mr-3" type="submit" {% if pageP == 1 %}disabled{% endif %}>
+            Anterior
+          </button>
+          <button class="conceptos-primary-button pagination-next ml-3" type="submit" {% if products | length < 48 %}disabled{% endif %}>
+            Siguiente
+          </button>
+        </div>
+      </div>
+    </form>
+  {% endif %}
 {% endblock %}
 {% block js %}
-    <script src="{{ asset('bundles/conceptos/products/js/price-range.js') }}"></script>
-    <script src="{{ asset('bundles/easyadmin/javascript/select2.full.min.js') }}"></script>
-    <script src="{{ asset('bundles/conceptos/libs/select2/js/i18n/es.js') }}"></script>
-    <script src="{{ asset('bundles/conceptos/libs/slimscroll/jquery.slimscroll.min.js') }}"></script>
-    <script src="{{ asset('bundles/conceptos/home/js/classie.js') }}"></script>
-    <script src="{{ asset('bundles/conceptos/products/js/products.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/products/js/price-range.js') }}"></script>
+  <script src="{{ asset('bundles/easyadmin/javascript/select2.full.min.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/libs/select2/js/i18n/es.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/libs/slimscroll/jquery.slimscroll.min.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/home/js/classie.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/products/js/products.js') }}"></script>
 {% endblock %}

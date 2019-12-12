@@ -24,6 +24,7 @@ input[type="checkbox"] {
 }
 
 select,
+textarea,
 input[type="text"],
 input[type="email"] {
   background-color: #e5e5e5;
@@ -37,6 +38,7 @@ input[type="email"] {
 }
 
 select,
+textarea,
 input[type="text"]:focus,
 input[type="email"]:focus {
   outline-color: #c2b930;
@@ -99,22 +101,107 @@ input[type="email"]:focus {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+/* -------------------------------------------------------- */
+
+.navbar .navbar-toggler {
+  top: 27px !important;
+}
+
+#cartPreviewModal .modal-body {
+  padding: 0;
+}
+
 /* -------------------------------------------------------- */
 
 .conceptos-navbar {
-  background-color: #282827;
-  position: absolute;
-  top: 0;
-  height: 50px;
-  width: 100%;
+  background-color: #282827 !important;
 }
 
-.conceptos-navbar-logo {
-  width: 100px;
-  height: 30px;
+.conceptos-navbar #navbarSupportedContent {
+  position: absolute;
+  background-color: #282827;
+  right: 0px;
+}
+
+.conceptos-navbar-dropdown {
+  margin-left: 15px !important;
+  margin-right: 15px !important;
+  margin-bottom: 20px !important;
+}
+
+.conceptos-navbar-dropdown li {
+  text-align: left;
+  margin-left: 12px;
+  margin-right: 12px;
+  margin-top: 8px;
+}
+
+.conceptos-navbar-item {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 13px;
+  color: #ffffff;
+}
+
+.conceptos-navbar-divider {
+  border-top: 1px solid #c2b930;
+}
+
+.conceptos-navbar-username {
+  font-family: Montserrat;
+  font-weight: lighter;
+  font-size: 10px;
+  color: #ffffff;
 }
 
 /* -------------------------------------------------------- */
+
+#openCategoriesMenu {
+  position: fixed;
+  top: 50%;
+  z-index: 50;
+}
+
+#openCategoriesMenu {
+  border: none;
+  background-color: #ffffff;
+  width: 45px;
+  outline: none;
+}
+
+#closeCategoriesMenu {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+}
+
+#categoriesMenu {
+  position: fixed;
+  background-color: #e5e5e5;
+  bottom: 0;
+  left: -100%;
+  right: 100%;
+  z-index: 100;
+  transition: all 0.3s ease-in-out;
+}
+
+#categoriesMenu .dropdown-item {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 12px;
+  color: #282827;
+}
+
+/* -------------------------------------------------------- */
+
+.conceptos-contact-input {
+  background-color: #ffffff !important;
+}
 
 .conceptos-error-input {
   border: 1px solid #bf1111 !important;
@@ -180,6 +267,18 @@ input[type="email"]:focus {
   color: #282827;
 }
 
+.conceptos-in-store-product-badge {
+  font-family: Montserrat;
+  font-size: 11px;
+  color: #2c702b;
+}
+
+.conceptos-new-product-badge {
+  font-family: Montserrat;
+  font-size: 11px;
+  color: #bf1111;
+}
+
 .conceptos-product-info-description {
   font-family: Montserrat;
   font-size: 12px;
@@ -199,8 +298,36 @@ input[type="email"]:focus {
 }
 
 .conceptos-add-to-cart-icon {
+  border: none;
+  background: none;
+  outline: none !important;
+}
+
+.conceptos-add-to-cart-icon img {
   width: 30px;
   height: 23px;
+}
+
+.conceptos-shop-cart-icon {
+  position: absolute;
+  top: 24px;
+  right: 50px;
+  border: none;
+  background: none;
+  outline: none !important;
+}
+
+.conceptos-shop-cart-icon img {
+  width: 35px !important;
+  height: 25px !important;
+  margin-right: -6px;
+}
+
+.conceptos-shop-cart-icon span {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 12px;
+  color: #ffffff;
 }
 
 .conceptos-social-network-icon {
@@ -208,21 +335,32 @@ input[type="email"]:focus {
   height: 35px;
 }
 
-.conceptos-contact-section {
-  position: relative;
-}
-
-.conceptos-contact-image {
-  position: absolute;
-  width: 100%;
-  z-index: -1;
+.conceptos-go-to-cart-icon {
+  width: 45px;
+  height: 45px;
 }
 
 .conceptos-image {
   width: 100%;
 }
 
+.conceptos-primary-button {
+  background-color: transparent;
+  border: 2px solid #c2b930;
+  border-radius: 0 !important;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 14px;
+  color: #282827;
+  outline: none;
+  min-width: 100px;
+}
+
 /* -------------------------------------------------------- */
+
+#home-header img {
+  position: absolute;
+}
 
 .home-populars-view-all-button {
   background-color: transparent;
@@ -241,6 +379,16 @@ input[type="email"]:focus {
   font-size: 13px;
   color: #ffffff;
   outline: none;
+}
+
+/* -------------------------------------------------------- */
+
+#conceptos-contact-form .conceptos-image {
+  position: absolute;
+}
+
+#conceptos-contact-form form {
+  z-index: 10;
 }
 
 /* -------------------------------------------------------- */
@@ -268,14 +416,18 @@ input[type="email"]:focus {
   height: 20px;
 }
 
-#shop-cart-send-request-button {
-  background-color: transparent;
-  border: 2px solid #c2b930;
-  font-family: Montserrat;
-  font-weight: bold;
-  font-size: 14px;
-  color: #282827;
-  outline: none;
+#shop-cart-contact-form .conceptos-image {
+  position: absolute;
+}
+
+#shop-cart-buy-section {
+  z-index: 10;
+}
+
+/* -------------------------------------------------------- */
+
+.membership-section {
+  background-color: #ffffff;
 }
 
 /* -------------------------------------------------------- */

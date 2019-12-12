@@ -1,50 +1,28 @@
-<div class="container-fluid h-100 membership-form">
-    <div class="row h-100">
-        <div class="col-12 pl-0 h-100">
-            <div class="d-flex align-items-end h-100">
-                <div class="d-flex flex-column w-100">
-                    <div class="d-flex membership-badge align-self-start">
-                        <span class="main-text ml-3 ml-lg-5">{{page.data.header.mainText|raw}}</span>
-                    </div>
-                    <div class="d-flex">
-                        <span class="bottom-text ml-3 ml-lg-5">{{page.data.header.bottomText|raw}}</span>
-                    </div>
-                    <div class="d-flex ml-3 ml-lg-5 mr-3">
-                        {{ form_start(form, {'attr': {'class': 'mbr-form col-12 col-lg-2 pl-0', 'action': path('request_membership')}}) }}
-                            <div class="col-12 pl-0">
-                                <div class="form-group">
-                                    {{ form_widget(form.firstName, {'attr': {'class': 'form-control membership-field', 'placeholder': 'NOMBRE'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-12 pl-0">
-                                <div class="form-group">
-                                    {{ form_widget(form.lastName, {'attr': {'class': 'form-control membership-field', 'placeholder': 'APELLIDOS'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-12 pl-0">
-                                <div class="form-group">
-                                    {{ form_widget(form.email, {'attr': {'class': 'form-control membership-field', 'placeholder': 'CORREO'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-12 pl-0">
-                                <div class="form-group">
-                                    {{ form_widget(form.phone, {'attr': {'class': 'form-control membership-field', 'placeholder': 'TELÉFONO'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-12 pl-0">
-                                <div class="form-group">
-                                    {{ form_widget(form.address, {'attr': {'class': 'form-control membership-field', 'placeholder': 'DIRECCIÓN'}}) }}
-                                </div>
-                            </div>
-                            <div class="d-flex">
-                                <button href="" type="submit" class="btn btn-success btn-form membership-field w-100 mb-3 mb-5-lg" id="request-membership-button">
-                                    Solicitar
-                                </button>
-                            </div>
-                        {{ form_end(form) }}
-                    </div>
-                </div>
-            </div>
-        </div>
+<span class="conceptos-title mt-2 mb-3">MEMBRESÍA</span>
+<div class="d-flex flex-column w-100">
+  {{ form_start(form, {'attr': {'class': 'd-flex flex-column', 'action': path('request_membership')}}) }}
+    <div class="d-flex">
+      {{ form_widget(form.firstName, {'attr': {'class': 'form-control membership-field', 'placeholder': 'Nombre'}}) }}
     </div>
+    <div class="d-flex">
+      {{ form_widget(form.lastName, {'attr': {'class': 'form-control membership-field mt-2', 'placeholder': 'Apellidos'}}) }}
+    </div>
+    <div class="d-flex">
+      {{ form_widget(form.email, {'attr': {'class': 'form-control membership-field mt-2', 'placeholder': 'Correo'}}) }}
+    </div>
+    <div class="d-flex">
+      {{ form_widget(form.phone, {'attr': {'class': 'form-control membership-field mt-2', 'placeholder': 'Teléfono'}}) }}
+    </div>
+    <div class="d-flex">
+      {{ form_widget(form.address, {'attr': {'class': 'form-control membership-field mt-2', 'placeholder': 'Dirección'}}) }}
+    </div>
+    <span class="conceptos-title mt-3">HEUNKHOS GEOR FFFIPEP</span>
+    <span class="conceptos-subtitle">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</span>
+    <img class="conceptos-image mt-2" src="{{ home.data.services.image.path }}">
+    <div class="d-flex justify-content-start">
+      <button id="request-membership-button" type="submit" class="conceptos-primary-button mt-2 pl-4 pr-4" href="">
+        <span>SOLICITAR</span>
+      </button>
+    </div>
+  {{ form_end(form) }}
 </div>

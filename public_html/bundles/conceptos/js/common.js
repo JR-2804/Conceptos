@@ -69,6 +69,20 @@ $(document).ready(function() {
       }
     );
   });
+
+  $("#openCategoriesMenu").click(function() {
+    var categoriesMenu = $("#categoriesMenu");
+    categoriesMenu.css("right", "25%");
+    categoriesMenu.css("left", "0");
+    $("#closeCategoriesMenu").show();
+  });
+
+  $("#closeCategoriesMenu").click(function() {
+    var categoriesMenu = $("#categoriesMenu");
+    categoriesMenu.css("right", "100%");
+    categoriesMenu.css("left", "-100%");
+    $("#closeCategoriesMenu").hide();
+  });
 });
 
 function ajax(path, type, parameters, success, error, async) {

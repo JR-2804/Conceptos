@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/home/css/home.css') }}">
 {% endblock %}
 {% block body %}
-  <div class="d-flex align-items-center">
+  <div id="home-header" class="d-flex" style="height: 100vh;">
     {% if page.data.slides and page.data.slides is not empty %}
       <img class="conceptos-image" src="{{page.data.slides[0].path}}">
     {% endif %}
@@ -25,9 +25,9 @@
       {% endfor %}
     </div>
     <div class="d-flex justify-content-center mt-3">
-      <button class="home-populars-view-all-button">
-        <span class="pl-2 pr-2">VER MÁS</span>
-      </button>
+      <a class="home-populars-view-all-button" href="{{ path('products', {populars: true, page: 1}) }}" style="width: 100px;text-align: center;">
+        <span class="pl-2 pr-2 w-100">VER MÁS</span>
+      </a>
     </div>
   </div>
 
@@ -37,10 +37,10 @@
         <span class="conceptos-badge-text">ALMACÉN</span>
         <span class="conceptos-badge-subtitle">{{page.data.subtitles.inStore|raw}}</span>
       </div>
-      <div class="d-flex flex-column m-2 align-self-center">
-        <button class="home-badge-view-all-button">
+      <div class="d-flex flex-column align-items-center justify-content-center p-0 m-0">
+        <a href="{{ path('products', {inStore:true}) }}" class="home-badge-view-all-button">
           <span class="pl-2 pr-2">VER TODOS</span>
-        </button>
+        </a>
       </div>
     </div>
     <div class="d-flex p-3">
@@ -58,9 +58,9 @@
         <span class="conceptos-badge-text">SERVICIOS</span>
       </div>
       <div class="d-flex flex-column m-2 align-self-center">
-        <button class="home-badge-view-all-button">
+        <a href="{{ path('inward') }}" class="home-badge-view-all-button">
           <span class="pl-2 pr-2">VER MÁS</span>
-        </button>
+        </a>
       </div>
     </div>
     <div class="d-flex p-3">
@@ -78,9 +78,9 @@
         <span class="conceptos-badge-text">INSPIRACIÓN</span>
       </div>
       <div class="d-flex flex-column m-2 align-self-center">
-        <button class="home-badge-view-all-button">
+        <a href="{{ path('blog_home') }}" class="home-badge-view-all-button">
           <span class="pl-2 pr-2">VER MÁS</span>
-        </button>
+        </a>
       </div>
     </div>
     <div class="d-flex p-3">
