@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/home/css/home.css') }}">
 {% endblock %}
 {% block body %}
-  <div id="home-header" class="d-flex" style="height: 100vh;">
+  <div id="home-header" class="d-flex">
     {% if page.data.slides and page.data.slides is not empty %}
       <img class="conceptos-image" src="{{page.data.slides[0].path}}">
     {% endif %}
