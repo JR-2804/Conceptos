@@ -47,6 +47,14 @@ class Category
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $icon;
+    /**
+     * @Vich\UploadableField(mapping="category_pictures", fileNameProperty="image")
+     */
+    private $iconFile;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $image;
     /**
      * @Vich\UploadableField(mapping="category_pictures", fileNameProperty="image")
@@ -237,6 +245,19 @@ class Category
         return $this->updatedAt;
     }
 
+    public function getIconFile()
+    {
+        return $this->iconFile;
+    }
+
+    public function setIconFile(File $iconFile = null)
+    {
+        $this->iconFile = $iconFile;
+        if ($iconFile) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
     /**
      * @return mixed
      */
@@ -344,6 +365,18 @@ class Category
     public function getFavoritesProducts()
     {
         return $this->favoritesProducts;
+    }
+
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    public function getIcon()
+    {
+        return $this->icon;
     }
 
     /**

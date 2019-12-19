@@ -73,6 +73,7 @@ easy_admin:
                 fields:
                     - {property: 'name', label: 'Nombre'}
                     - {property: 'parents', label: 'Categorías padre'}
+                    - {property: 'icon', type: 'vich_image', label: 'Icono'}
                     - {property: 'imageFile', type: 'vich_image', label: 'Imágen'}
                     - {property: 'imageSiteFile', type: 'vich_image', label: 'Imágen Sitio'}
                     - {property: 'subCategories', label: 'Categorías Hijas'}
