@@ -233,6 +233,13 @@ input[type="email"]:focus {
   color: #282827;
 }
 
+.conceptos-title-strong {
+  font-family: Montserrat;
+  font-weight: bolder;
+  font-size: 14px;
+  color: #282827;
+}
+
 .conceptos-subtitle {
   font-family: Montserrat;
   font-size: 12px;
@@ -385,6 +392,14 @@ input[type="email"]:focus {
 .conceptos-divider {
   background-color: #c2b930;
   height: 2px;
+}
+
+.conceptos-gift-card-section {
+  background-color: #c2b930;
+}
+
+.conceptos-gift-card-section span {
+  text-align: center;
 }
 
 /* -------------------------------------------------------- */
