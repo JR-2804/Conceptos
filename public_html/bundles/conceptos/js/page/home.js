@@ -557,6 +557,10 @@ function init() {
     $("#shop-cart-main-text").val(data.shopCart.mainText);
     $("#shop-cart-secondary-text").val(data.shopCart.secondaryText);
   }
+  if (data.services) {
+    $("#services-title").val(data.services.title);
+    $("#services-subtitle").val(data.services.subtitle);
+  }
 
   $("#app-app").val(data.app.app);
   $("#app-db").val(data.app.db);
@@ -580,7 +584,9 @@ function generateData() {
       image2Link: $("#top-image-2-link").val()
     },
     services: {
-      image: servicesImage
+      image: servicesImage,
+      title: $("#services-title").val(),
+      subtitle: $("#services-subtitle").val()
     },
     subtitles: {
       inStore: $("#in-store-subtitle").val(),

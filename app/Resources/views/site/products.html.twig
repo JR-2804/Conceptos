@@ -81,7 +81,7 @@
     <div class="d-flex flex-wrap">
       {% for product in products %}
         <a class="d-flex flex-wrap conceptos-product-card col-6 p-2" href="{{ path('product_details', {id: product.id, name: product.name}) }}">
-          <div class="d-flex align-items-center conceptos-product-image p-2">
+          <div class="d-flex align-items-center conceptos-white-background p-2">
             <img class="conceptos-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
           </div>
           <div class="d-flex flex-column conceptos-product-info-section pl-2 pr-2 pb-2 w-100">

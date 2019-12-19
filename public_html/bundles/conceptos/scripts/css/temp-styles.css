@@ -252,7 +252,7 @@ input[type="email"]:focus {
   color: #ffffff;
 }
 
-.conceptos-product-image {
+.conceptos-white-background {
   background-color: #ffffff;
 }
 
@@ -369,7 +369,22 @@ input[type="email"]:focus {
   font-size: 14px;
   color: #282827;
   outline: none;
-  min-width: 100px;
+}
+
+.conceptos-primary-button-gray {
+  background-color: transparent;
+  border: 1px solid #282827;
+  border-radius: 0 !important;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 14px;
+  color: #282827;
+  outline: none;
+}
+
+.conceptos-divider {
+  background-color: #c2b930;
+  height: 2px;
 }
 
 /* -------------------------------------------------------- */
@@ -378,29 +393,18 @@ input[type="email"]:focus {
   position: absolute;
 }
 
-.home-populars-view-all-button {
-  background-color: transparent;
-  border: 1px solid #282827;
-  font-family: Montserrat;
-  font-weight: bold;
-  font-size: 13px;
+.home-view-more-link {
   color: #282827;
-  outline: none;
-}
-
-.home-badge-view-all-button {
-  background-color: transparent;
-  border: 1px solid #c2b930;
   font-family: Montserrat;
-  font-size: 13px;
-  color: #ffffff;
-  outline: none;
+  font-size: 12px;
+  font-style: italic;
 }
 
 /* -------------------------------------------------------- */
 
 #conceptos-contact-form .conceptos-image {
   position: absolute;
+  top: 55vh;
 }
 
 #conceptos-contact-form form {
