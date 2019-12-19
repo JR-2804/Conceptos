@@ -18,7 +18,9 @@
         {% if loop.index < 7 %}
           <div class="d-flex col-6 p-2">
             <div class="d-flex align-items-center conceptos-product-image p-2">
-              <img class="conceptos-image" src="{{ vich_uploader_asset(popular.mainImage, 'imageFile') }}">
+              <a href="{{ path('product_details', {id: popular.id, name: popular.name}) }}">
+                <img class="conceptos-image" src="{{ vich_uploader_asset(popular.mainImage, 'imageFile') }}">
+              </a>
             </div>
           </div>
         {% endif %}
