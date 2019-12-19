@@ -364,6 +364,53 @@ $(document).ready(function() {
     );
   });
 
+  $(".conceptos-add-gift-card-to-cart-button").click(function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    $("#gift-card-modal-toggle").click();
+
+    ajax(
+      $(this).data("path"),
+      "POST",
+      {},
+      function(response) {
+        var title = "Tarjeta añadida al carrito correctamente";
+        if (response.exist) {
+          title = "La tarjeta seleccionada ya está en su carrito de compras";
+        }
+        $("#conceptos-shop-cart-count").text(response.count);
+        $.toast({
+          text: title,
+          showHideTransition: "fade",
+          bgColor: "#f7ed4a",
+          textColor: "#3f3c03",
+          allowToastClose: true,
+          hideAfter: 3000,
+          stack: 5,
+          textAlign: "center",
+          position: "mid-center",
+          icon: "success",
+          heading: "Correcto"
+        });
+      },
+      function() {
+        $.toast({
+          text: "Ha ocurrido un error añadiendo la tarjeta al carrito",
+          showHideTransition: "fade",
+          bgColor: "#f7ed4a",
+          textColor: "#3f3c03",
+          allowToastClose: true,
+          hideAfter: 3000,
+          stack: 5,
+          textAlign: "center",
+          position: "mid-center",
+          icon: "error",
+          heading: "Error"
+        });
+      }
+    );
+  });
+
   $(".cart-quantity-up").click(function() {
     var quantity = getProductQuantityByElement(this);
     quantity++;
