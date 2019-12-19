@@ -226,6 +226,13 @@ input[type="email"]:focus {
   color: #e5e5e5;
 }
 
+.conceptos-badge-text-strong {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 14px;
+  color: #c2b930;
+}
+
 .conceptos-title {
   font-family: Montserrat;
   font-weight: bold;

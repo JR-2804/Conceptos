@@ -206,16 +206,44 @@ $(document).ready(function() {
 
     var totalPrice = totalPriceBase;
 
+    var membershipDiscountSection = $(".shop-cart-membership-discount");
     if (memberNumber) {
-      totalPrice -= Math.ceil(totalPriceBase * 0.1);
+      var membershipDiscount = Math.ceil(totalPriceBase * 0.1);
+      totalPrice -= membershipDiscount;
+      membershipDiscountSection.parent().removeClass("d-none");
+      membershipDiscountSection.parent().addClass("d-flex");
+      membershipDiscountSection.text(membershipDiscount.toFixed(2));
+    } else {
+      membershipDiscountSection.parent().removeClass("d-flex");
+      membershipDiscountSection.parent().addClass("d-none");
     }
 
+    var paymentTypeExtraSection = $(".shop-cart-payment-type-extra");
     if (paymentType == "two-steps") {
-      totalPrice += Math.ceil(totalPriceBase * 0.1);
+      var paymentTypeExtra = Math.ceil(totalPriceBase * 0.1);
+      totalPrice += paymentTypeExtra;
+      $(".shop-cart-payment-type").text("2 PLAZOS");
+      paymentTypeExtraSection.parent().removeClass("d-none");
+      paymentTypeExtraSection.parent().addClass("d-flex");
+      paymentTypeExtraSection.text(paymentTypeExtra.toFixed(2));
+    } else {
+      $(".shop-cart-payment-type").text("1 PLAZO");
+      paymentTypeExtraSection.parent().removeClass("d-flex");
+      paymentTypeExtraSection.parent().addClass("d-none");
     }
 
+    var currencyExtraSection = $(".shop-cart-currency-extra");
     if (paymentCurrency == "cuc") {
-      totalPrice += Math.ceil(totalPriceBase * 0.2);
+      var currencyExtra = Math.ceil(totalPriceBase * 0.2);
+      totalPrice += currencyExtra;
+      $(".shop-cart-currency").text("CUC");
+      currencyExtraSection.parent().removeClass("d-none");
+      currencyExtraSection.parent().addClass("d-flex");
+      currencyExtraSection.text(currencyExtra.toFixed(2));
+    } else {
+      $(".shop-cart-currency").text("USD");
+      currencyExtraSection.parent().removeClass("d-flex");
+      currencyExtraSection.parent().addClass("d-none");
     }
 
     if (homeCollect) {
@@ -224,7 +252,7 @@ $(document).ready(function() {
       transportCost = 5;
     }
 
-    $("#transport-cost").text("$" + transportCost.toFixed(2));
+    $(".shop-cart-transport-cost").text("$" + transportCost.toFixed(2));
     totalPrice += transportCost;
 
     totalPrice = Number(totalPrice).toFixed(2);
