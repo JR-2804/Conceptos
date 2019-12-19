@@ -23,6 +23,9 @@ class BlogController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $page = $request->query->get('page', 0);
         $firstResult = $page * 10;
         $posts = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')
@@ -41,6 +44,7 @@ class BlogController extends Controller
 
         return $this->render('site/blog/index.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'posts' => $posts,
@@ -70,6 +74,9 @@ class BlogController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $post = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($id);
         $lasts = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->createQueryBuilder('p')
             ->where('p.id <> :id')
@@ -83,6 +90,7 @@ class BlogController extends Controller
 
         return $this->render(':site/blog:details.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'post' => $post,
@@ -109,6 +117,9 @@ class BlogController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $page = $request->query->get('page', 0);
         $firstResult = $page * 10;
         $posts = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')
@@ -130,6 +141,7 @@ class BlogController extends Controller
 
         return $this->render('site/blog/index.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'posts' => $posts,
@@ -159,6 +171,9 @@ class BlogController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $page = $request->query->get('page', 0);
         $firstResult = $page * 10;
         $posts = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')
@@ -180,6 +195,7 @@ class BlogController extends Controller
 
         return $this->render('site/blog/index.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'posts' => $posts,
@@ -207,6 +223,9 @@ class BlogController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $term = $request->query->get('term', false);
         if ($term) {
             $posts = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')
@@ -231,6 +250,7 @@ class BlogController extends Controller
 
         return $this->render(':site/blog:index.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'posts' => $posts,

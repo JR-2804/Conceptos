@@ -4,34 +4,54 @@
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/home/css/home.css') }}">
 {% endblock %}
 {% block body %}
-  <div id="home-header" class="d-flex">
+  <div id="home-header" class="d-flex justify-content-center align-items-start">
     {% if page.data.slides and page.data.slides is not empty %}
       <img class="conceptos-image" src="{{page.data.slides[0].path}}">
+      <form id="home-search-form" class="d-flex" action="{{ path('products') }}" method="get">
+        <input type="text" name="term" placeholder="Buscar productos">
+      </form>
     {% endif %}
   </div>
 
-  <div class="d-flex flex-column p-3">
-    <span class="pl-2 conceptos-title">{{page.data.populars.title|raw}}</span>
-    <span class="pl-2 conceptos-subtitle-2">{{page.data.populars.subtitle|raw}}</span>
-    <div class="d-flex flex-wrap mt-3">
-      {% for popular in populars %}
-        {% if loop.index < 7 %}
-          <div class="d-flex col-6 p-2">
-            <div class="d-flex align-items-center conceptos-white-background p-2">
-              <a href="{{ path('product_details', {id: popular.id, name: popular.name}) }}">
-                <img class="conceptos-image" src="{{ vich_uploader_asset(popular.mainImage, 'imageFile') }}">
-              </a>
-            </div>
+  {% if popularChunks is not empty %}
+    <div class="d-flex flex-column p-3">
+      <span class="pl-2 conceptos-title">{{page.data.populars.title|raw}}</span>
+      <span class="pl-2 conceptos-subtitle-2">{{page.data.populars.subtitle|raw}}</span>
+      <div class="d-flex flex-wrap mt-3">
+        <div class="carousel" data-ride="carousel" id="carousel-populars-short" data-interval="10000">
+          <ol class="carousel-indicators">
+            {% for chunk in popularChunks %}
+                <li data-app-prevent-settings="" data-target="#slider1-28"
+                    class="{% if loop.first %}active{% endif %}"
+                    data-slide-to="{{ loop.index }}"></li>
+            {% endfor %}
+          </ol>
+          <div class="carousel-inner">
+              {% for chunk in popularChunks %}
+                <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
+                  <div class="d-flex flex-wrap">
+                      {% for popular in chunk %}
+                        <div class="d-flex col-6 p-2">
+                          <div class="d-flex align-items-center conceptos-white-background p-2">
+                            <a href="{{ path('product_details', {id: popular.id, name: popular.name}) }}">
+                              <img class="conceptos-image" src="{{ vich_uploader_asset(popular.mainImage, 'imageFile') }}">
+                            </a>
+                          </div>
+                        </div>
+                      {% endfor %}
+                  </div>
+                </div>
+              {% endfor %}
           </div>
-        {% endif %}
-      {% endfor %}
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mt-3">
+        <a class="conceptos-primary-button-gray" href="{{ path('products', {populars: true, page: 1}) }}">
+          <span class="pl-2 pr-2 w-100">VER MÁS</span>
+        </a>
+      </div>
     </div>
-    <div class="d-flex justify-content-center mt-3">
-      <a class="conceptos-primary-button-gray" href="{{ path('products', {populars: true, page: 1}) }}" style="width: 100px;text-align: center;">
-        <span class="pl-2 pr-2 w-100">VER MÁS</span>
-      </a>
-    </div>
-  </div>
+  {% endif %}
 
   <div class="d-flex flex-column">
     <div class="d-flex conceptos-badge p-2">
@@ -41,14 +61,16 @@
       </div>
     </div>
     <div class="d-flex flex-column align-items-center p-3">
-        {% if inStore and inStore is not empty %}
-          <div class="d-flex align-items-center conceptos-white-background p-2">
+      {% if inStore and inStore is not empty %}
+        <div class="d-flex align-items-center conceptos-white-background p-2">
+          <a href="{{ path('product_details', {id: inStore[0].id, name: inStore[0].name}) }}">
             <img class="conceptos-image" src="{{ vich_uploader_asset(inStore[0].mainImage, 'imageFile') }}">
-          </div>
-        {% endif %}
-        <a href="{{ path('products', {inStore:true}) }}" class="conceptos-primary-button-gray mt-3">
-          <span class="pl-2 pr-2">VER MÁS</span>
-        </a>
+          </a>
+        </div>
+      {% endif %}
+      <a href="{{ path('products', {inStore:true}) }}" class="conceptos-primary-button-gray mt-3">
+        <span class="pl-2 pr-2">VER MÁS</span>
+      </a>
     </div>
   </div>
 
@@ -91,8 +113,9 @@
         <div class="d-flex flex-column conceptos-white-background p-3">
           <span class="conceptos-title">{{post.title}}</span>
           <span class="conceptos-subtitle mt-2">{{post.summary}}</span>
-          <a href="{{ path('blog_details', {id: post.id, title: post.path}) }}" class="align-self-end home-view-more-link mt-2">
+          <a href="{{ path('blog_details', {id: post.id, title: post.path}) }}" class="d-flex align-items-center align-self-end home-view-more-link mt-2">
             LEER MÁS
+            <img class="conceptos-icon ml-2" src="{{ asset('bundles/conceptos/images/home/forward.png') }}">
           </a>
         </div>
       </div>

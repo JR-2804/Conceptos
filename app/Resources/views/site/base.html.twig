@@ -75,7 +75,7 @@
 </div>
 
 <div id="cartPreviewModal" class="modal fade">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-lg mt-5">
     <div class="modal-content">
       <div class="modal-body">
         <div class="shop-cart-product-list-section conceptos-add-scroll">
@@ -156,8 +156,8 @@
   </div>
 </div>
 
-<button id="openCategoriesMenu">
-  <span>></span>
+<button id="openCategoriesMenu" class="d-flex justify-content-end p-2">
+  <img class="conceptos-icon" src="{{ asset('bundles/conceptos/images/home/forward.png') }}">
 </button>
 
 <div id="categoriesMenu" class="d-flex flex-column p-3">
@@ -188,12 +188,19 @@
               <span></span>
           </div>
       </button>
-      <button class="conceptos-shop-cart-icon" data-toggle="modal" data-target="#cartPreviewModal">
+      <button class="conceptos-navbar-icon" data-toggle="modal" data-target="#cartPreviewModal">
         <div class="d-flex align-items-center">
           <img src="{{ asset('bundles/conceptos/images/home/nav-cart.png') }}">
           <span id="conceptos-shop-cart-count">{{count}}</span>
         </div>
       </button>
+      {% if app.user|default %}
+      <a class="conceptos-navbar-icon conceptos-user-icon" href="{{ path('site_profile') }}">
+        <div class="d-flex align-items-center">
+          <img src="{{ asset('bundles/conceptos/images/home/user.png') }}">
+        </div>
+      </a>
+      {% endif %}
       <div class="menu-logo col-6 col-lg-3 pl-0 pl-lg-3">
           <div class="navbar-brand ml-0">
               <span class="navbar-logo">
@@ -217,15 +224,9 @@
             <li><a class="conceptos-navbar-item" href="{{ path('help') }}">AYUDA</a></li>
             <li><div class="conceptos-navbar-divider" role="separator"></div></li>
             {% if app.user|default %}
-                {% if is_granted('ROLE_ADMIN') %}
-                  <li><a class="conceptos-navbar-item" href="{{ path('easyadmin') }}">ADMINISTRAR</a></li>
-                {% endif %}
-                <li>
-                  <a class="d-flex flex-column conceptos-navbar-item" href="{{ path('site_profile') }}">
-                    <span>PERFIL</span>
-                    <span class="conceptos-navbar-username">{{app.user.username}}</span>
-                  </a>
-                </li>
+              {% if is_granted('ROLE_ADMIN') %}
+                <li><a class="conceptos-navbar-item" href="{{ path('easyadmin') }}">ADMINISTRAR</a></li>
+              {% endif %}
             {% else %}
               <li><a class="conceptos-navbar-item" data-toggle="modal" data-target="#loginModal" href="">ACCEDER</a></li>
             {% endif %}

@@ -74,6 +74,9 @@ class SiteController extends Controller
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $lasts = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->createQueryBuilder('p')
             ->orderBy('p.createdDate', 'DESC')
             ->setMaxResults(3)->getQuery()->getResult();
@@ -149,11 +152,12 @@ class SiteController extends Controller
             'lasted' => $lasted,
             'lastedHighlight' => $lastedHighlight,
             'page' => $page,
+            'membership' => $membership,
             'home' => $page,
             'lasts' => $lasts,
             'inStore' => $inStore,
             'inStoreHighlight' => $inStoreHighlight,
-            'populars' => $populars,
+            'popularChunks' => array_chunk($populars, 6),
             'popularsForShortScreen' => array_chunk($populars, 3),
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
@@ -178,6 +182,9 @@ class SiteController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Sobre Nosotros',
         ]);
@@ -186,6 +193,7 @@ class SiteController extends Controller
 
         return $this->render(':site:about_us.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'page' => $page,
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
@@ -207,6 +215,9 @@ class SiteController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'APP',
         ]);
@@ -215,6 +226,7 @@ class SiteController extends Controller
 
         return $this->render(':site:app.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'page' => $page,
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
@@ -278,6 +290,9 @@ class SiteController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $product = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($id);
         if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
@@ -330,6 +345,7 @@ class SiteController extends Controller
             'imageSets' => array_chunk($product->getImages()->toArray(), 3),
             'offer' => $offer,
             'home' => $home,
+            'membership' => $membership,
             'currentDate' => new \DateTime(),
             'related' => $related,
             'count' => $this->countShopCart($request),
@@ -679,6 +695,9 @@ class SiteController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Obras',
         ]);
@@ -691,6 +710,7 @@ class SiteController extends Controller
         return $this->render(':site:services.html.twig', [
             'home' => $home,
             'page' => $page,
+            'membership' => $membership,
             'services' => $services,
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
@@ -712,6 +732,9 @@ class SiteController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Interiorismo',
         ]);
@@ -720,6 +743,7 @@ class SiteController extends Controller
 
         return $this->render(':site:inward.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'page' => $page,
@@ -761,6 +785,7 @@ class SiteController extends Controller
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'page' => $page,
+            'membership' => $page,
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
             'categories' => $this->get('category_service')->getAll(),
@@ -781,6 +806,9 @@ class SiteController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Ayuda',
         ]);
@@ -789,6 +817,7 @@ class SiteController extends Controller
 
         return $this->render(':site:help.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'page' => $page,
@@ -810,6 +839,9 @@ class SiteController extends Controller
     {
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
         ]);
         $inwardPage = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Interiorismo',
@@ -854,6 +886,7 @@ class SiteController extends Controller
 
         return $this->render(':site:project-details.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'project' => $project,
@@ -878,6 +911,9 @@ class SiteController extends Controller
     {
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
         ]);
 
         $page = null;
@@ -918,6 +954,7 @@ class SiteController extends Controller
 
         return $this->render(':site:service-details.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'service' => $service,

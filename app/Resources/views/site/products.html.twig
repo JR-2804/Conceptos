@@ -77,11 +77,10 @@
       <span class="conceptos-title">TARJETAS DE REGALO</span>
     </div>
     <div class="d-flex align-items-center ml-2 mt-3">
-      <span class="conceptos-title-strong">PRODUCTOS</span>
       {% if mainCategory %}
-        <span class="conceptos-title ml-1">/ {{mainCategory.name}}</span>
+        <span class="conceptos-title"><span class="conceptos-title-strong">PRODUCTOS</span> / {{mainCategory.name}}</span>
       {% else %}
-        <span class="conceptos-title ml-1">/ TODOS</span>
+        <span class="conceptos-title"><span class="conceptos-title-strong">PRODUCTOS</span> / TODOS</span>
       {% endif %}
     </div>
     <div class="d-flex flex-wrap">
@@ -116,7 +115,7 @@
   {% if products is not empty and countProducts > 50 %}
     <form action="{{ path('products') }}" method="get">
       <input type="hidden" value="{{ app.request.query.get('page', 1) }}" id="page" name="page">
-      <div class="product-paginator">
+      <div class="product-paginator mt-3">
         {% set pageP = app.request.query.get('page') %}
         <div class="d-flex justify-content-center align-items-center">
           <button class="conceptos-primary-button pagination-prev mr-3" type="submit" {% if pageP == 1 %}disabled{% endif %}>

@@ -5,6 +5,7 @@
 
 body {
   background-color: #e5e5e5;
+  padding-top: 77px;
 }
 
 ::-webkit-scrollbar {
@@ -112,6 +113,23 @@ input[type="email"]:focus {
   padding: 0;
 }
 
+.carousel-indicators {
+  bottom: -5px;
+  margin-bottom: 0;
+}
+
+.carousel-indicators li {
+  background-color: #e5e5e5;
+  border: 1px solid #282827;
+  border-radius: 50%;
+  height: 8px;
+  width: 9px;
+}
+
+.carousel-indicators li.active {
+  background-color: #c2b930;
+}
+
 /* -------------------------------------------------------- */
 
 .conceptos-navbar {
@@ -122,6 +140,7 @@ input[type="email"]:focus {
   position: absolute;
   background-color: #282827;
   right: 0px;
+  top: 77px;
 }
 
 .conceptos-navbar-dropdown {
@@ -161,13 +180,15 @@ input[type="email"]:focus {
   position: fixed;
   top: 50%;
   z-index: 50;
-}
-
-#openCategoriesMenu {
   border: none;
   background-color: #ffffff;
   width: 45px;
   outline: none;
+}
+
+#openCategoriesMenu img {
+  width: 8px;
+  height: 10px;
 }
 
 #closeCategoriesMenu {
@@ -322,7 +343,7 @@ input[type="email"]:focus {
   height: 23px;
 }
 
-.conceptos-shop-cart-icon {
+.conceptos-navbar-icon {
   position: absolute;
   top: 24px;
   right: 50px;
@@ -331,22 +352,31 @@ input[type="email"]:focus {
   outline: none !important;
 }
 
-.conceptos-shop-cart-icon > div {
+.conceptos-navbar-icon > div {
   position: relative;
   left: 10px;
 }
 
-.conceptos-shop-cart-icon img {
+.conceptos-navbar-icon img {
   width: 35px !important;
   height: 25px !important;
   margin-right: -6px;
 }
 
-.conceptos-shop-cart-icon span {
+.conceptos-navbar-icon span {
   font-family: Montserrat;
   font-weight: bold;
   font-size: 12px;
   color: #ffffff;
+}
+
+.conceptos-user-icon {
+  right: 115px !important;
+}
+
+.conceptos-user-icon img {
+  width: 35px !important;
+  height: 30px !important;
 }
 
 #conceptos-shop-cart-count {
@@ -356,8 +386,7 @@ input[type="email"]:focus {
   color: #282827;
   background-color: #c2b930;
   border-radius: 50%;
-  padding-left: 5px;
-  padding-right: 5px;
+  width: 18px;
 }
 
 .conceptos-social-network-icon {
@@ -383,6 +412,7 @@ input[type="email"]:focus {
   font-size: 14px;
   color: #282827;
   outline: none;
+  min-width: 100px;
 }
 
 .conceptos-primary-button-gray {
@@ -411,6 +441,10 @@ input[type="email"]:focus {
 
 /* -------------------------------------------------------- */
 
+#home-header {
+  height: 469px;
+}
+
 #home-header img {
   position: absolute;
 }
@@ -420,6 +454,22 @@ input[type="email"]:focus {
   font-family: Montserrat;
   font-size: 12px;
   font-style: italic;
+}
+
+.home-view-more-link img {
+  width: 8px;
+  height: 10px;
+}
+
+#home-search-form {
+  z-index: 10;
+  position: relative;
+  top: 150px;
+}
+
+#home-search-form input {
+  opacity: 90%;
+  background-color: #ffffff;
 }
 
 /* -------------------------------------------------------- */
