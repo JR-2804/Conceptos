@@ -190,7 +190,7 @@ input[type="email"]:focus {
   transition: all 0.3s ease-in-out;
 }
 
-#categoriesMenu .dropdown-item {
+#categoriesMenu a {
   font-family: Montserrat;
   font-weight: bold;
   font-size: 12px;

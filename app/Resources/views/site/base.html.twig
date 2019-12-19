@@ -160,24 +160,14 @@
   <span>></span>
 </button>
 
-<div id="categoriesMenu">
+<div id="categoriesMenu" class="d-flex flex-column p-3">
   {% for category in categories %}
     {% if category.parents | length == 0 %}
       {% set subCategories = '' %}
       {% for subCategory in category.subCategories %}
         {% set subCategories = subCategory.id ~ ', '~ subCategories %}
       {% endfor %}
-      <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#"
-          onclick="onBottomDropdownClick(this)">
-          {{category.name}}
-      </a>
-      <ul class="dropdown-menu">
-        {% for subCategory in category.subCategories %}
-          <li>
-            <a class="dropdown-item" href="{{ path('products', {categories:subCategory.id}) }}">{{subCategory.name}}</a>
-          </li>
-        {% endfor %}
-      </ul>
+      <a class="mt-2" href="{{ path('products', {categories:subCategories}) }}">{{category.name}}</a>
     {% endif %}
   {% endfor %}
 </div>

@@ -285,7 +285,7 @@ class ProductService
             $qbProduct->setParameter('categories', $category);
             $qbProductCount->setParameter('categories', $category);
 
-            $mainCategory = $this->categoryRepository->find($category[0]);
+            $mainCategory = $this->categoryRepository->find($category[0])->getParents()[0];
         }
         if (-1 != $populars) {
           if ($hasWhere) {

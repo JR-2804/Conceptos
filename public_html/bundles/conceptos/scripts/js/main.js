@@ -4,10 +4,6 @@ function onTopDropdownClick(obj) {
   }
 }
 
-function onBottomDropdownClick(obj) {
-  location.href = $(obj).attr("href");
-}
-
 function onDropdownMouseEnter(obj) {
   $(obj).data("clicked", "true");
 }
