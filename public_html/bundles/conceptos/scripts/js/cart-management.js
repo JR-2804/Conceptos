@@ -73,11 +73,10 @@ $(document).ready(function() {
     );
   }
 
-  function updateProductQuantity(element, quantity) {
+  function updateProductQuantity(element, quantity, productCount) {
     var quantityElement = GetQuantityElement(element);
     quantityElement.text("x" + quantity);
 
-    var productCount = Number($("#conceptos-shop-cart-count").text()) + 1;
     $("#conceptos-shop-cart-count").text(productCount);
     $(".shop-cart-products-count").text(productCount);
   }
@@ -322,6 +321,71 @@ $(document).ready(function() {
     return result;
   }
 
+  function CreateCartSummaryActions() {
+    $(".cart-quantity-up").click(function() {
+      var quantity = getProductQuantityByElement(this);
+      quantity++;
+      var productCount = Number($("#conceptos-shop-cart-count").text()) + 1;
+      updateProductQuantity(this, quantity, productCount);
+      recalculateAllPrices();
+    });
+
+    $(".cart-quantity-down").click(function() {
+      var quantity = getProductQuantityByElement(this);
+      if (quantity >= 2) {
+        quantity--;
+        var productCount = Number($("#conceptos-shop-cart-count").text()) - 1;
+        updateProductQuantity(this, quantity, productCount);
+        recalculateAllPrices();
+      }
+    });
+
+    $(".shop-cart-trash").click(function() {
+      var path = getRemovePathByElement(this);
+      var product = getProductIdByElement(this);
+      ajax(
+        path,
+        "POST",
+        {},
+        function(response) {
+          $("#conceptos-shop-cart-count").text(response.count);
+          $(".shop-cart-products-count").text(response.count);
+          products = JSON.parse(response.products);
+          $('.shop-cart-product[data-product="' + product + '"]').remove();
+          recalculateAllPrices();
+          $.toast({
+            text: "Producto eliminado del carrito correctamente",
+            showHideTransition: "fade",
+            bgColor: "#f7ed4a",
+            textColor: "#3f3c03",
+            allowToastClose: true,
+            hideAfter: 3000,
+            stack: 5,
+            textAlign: "center",
+            position: "mid-center",
+            icon: "success",
+            heading: "Correcto"
+          });
+        },
+        function() {
+          $.toast({
+            text: "Ha ocurrido un error eliminando el producto del carrito",
+            showHideTransition: "fade",
+            bgColor: "#f7ed4a",
+            textColor: "#3f3c03",
+            allowToastClose: true,
+            hideAfter: 3000,
+            stack: 5,
+            textAlign: "center",
+            position: "mid-center",
+            icon: "error",
+            heading: "Error"
+          });
+        }
+      );
+    });
+  }
+
   $(".conceptos-add-to-cart-icon").click(function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -332,6 +396,14 @@ $(document).ready(function() {
       {},
       function(response) {
         $("#conceptos-shop-cart-count").text(response.count);
+        $(".shop-cart-products-count").text(response.count);
+        products = JSON.parse(response.products);
+        $("#products-summary")
+          .children()
+          .remove();
+        $("#products-summary").append(response.html);
+        CreateCartSummaryActions();
+        recalculateAllPrices();
         $.toast({
           text: "Producto añadido al carrito correctamente",
           showHideTransition: "fade",
@@ -396,79 +468,6 @@ $(document).ready(function() {
       function() {
         $.toast({
           text: "Ha ocurrido un error añadiendo la tarjeta al carrito",
-          showHideTransition: "fade",
-          bgColor: "#f7ed4a",
-          textColor: "#3f3c03",
-          allowToastClose: true,
-          hideAfter: 3000,
-          stack: 5,
-          textAlign: "center",
-          position: "mid-center",
-          icon: "error",
-          heading: "Error"
-        });
-      }
-    );
-  });
-
-  $(".cart-quantity-up").click(function() {
-    var quantity = getProductQuantityByElement(this);
-    quantity++;
-    updateProductQuantity(this, quantity);
-    recalculateAllPrices();
-  });
-
-  $(".cart-quantity-down").click(function() {
-    var quantity = getProductQuantityByElement(this);
-    if (quantity >= 2) {
-      quantity--;
-      updateProductQuantity(this, quantity);
-      recalculateAllPrices();
-    }
-  });
-
-  $(".shop-cart-trash").click(function() {
-    var path = getRemovePathByElement(this);
-    var product = getProductIdByElement(this);
-    ajax(
-      path,
-      "POST",
-      {},
-      function(response) {
-        var count = response.count;
-        if (count == 0) {
-          window.location = $("#site-path").val();
-        }
-        $("#conceptos-shop-cart-count").text(count);
-        $(".shop-cart-products-count").text(count);
-        $('.shop-cart-product[data-product="' + product + '"]').remove();
-
-        tempProducts = [];
-        products.forEach(p => {
-          if (p.id != product) {
-            tempProducts.push(p);
-          }
-        });
-        products = tempProducts;
-
-        recalculateAllPrices();
-        $.toast({
-          text: "Producto eliminado del carrito correctamente",
-          showHideTransition: "fade",
-          bgColor: "#f7ed4a",
-          textColor: "#3f3c03",
-          allowToastClose: true,
-          hideAfter: 3000,
-          stack: 5,
-          textAlign: "center",
-          position: "mid-center",
-          icon: "success",
-          heading: "Correcto"
-        });
-      },
-      function() {
-        $.toast({
-          text: "Ha ocurrido un error eliminando el producto del carrito",
           showHideTransition: "fade",
           bgColor: "#f7ed4a",
           textColor: "#3f3c03",
@@ -606,5 +605,6 @@ $(document).ready(function() {
   });
 
   UpdateDeliveryIconsState();
+  CreateCartSummaryActions();
   recalculateAllPrices();
 });

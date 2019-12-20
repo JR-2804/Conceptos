@@ -1133,9 +1133,28 @@ class SiteController extends Controller
           $count += $product['count'];
         }
 
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Membresia',
+        ]);
+
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
         return new JsonResponse([
             'count' => $count,
             'exist' => $exist,
+            'products' => json_encode($this->getShopCartProducts(json_decode($request->getSession()->get('products'), true))),
+            'html' => $this->renderView(':site:products-summary.html.twig', [
+              'home' => $home,
+              'membership' => $membership,
+              'count' => $this->countShopCart($request),
+              'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+              'categories' => $this->get('category_service')->getAll(),
+              'terms' => $config->getTermAndConditions(),
+              'privacy' => $config->getPrivacyPolicy(),
+            ])
         ]);
     }
 
@@ -1172,8 +1191,27 @@ class SiteController extends Controller
           $count += $product['count'];
         }
 
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Membresia',
+        ]);
+
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
         return new JsonResponse([
             'count' => $count,
+            'products' => json_encode($this->getShopCartProducts(json_decode($request->getSession()->get('products'), true))),
+            'html' => $this->renderView(':site:products-summary.html.twig', [
+              'home' => $home,
+              'membership' => $membership,
+              'count' => $this->countShopCart($request),
+              'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+              'categories' => $this->get('category_service')->getAll(),
+              'terms' => $config->getTermAndConditions(),
+              'privacy' => $config->getPrivacyPolicy(),
+            ])
         ]);
     }
 
@@ -1573,6 +1611,35 @@ class SiteController extends Controller
         $this->getDoctrine()->getManager()->flush();
 
         return new JsonResponse();
+    }
+
+    /**
+     * @Route(name="products_summary", path="/resumen-productos")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function productsSummaryAction(Request $request)
+    {
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Membresia',
+        ]);
+
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+        return $this->render(':site:products-summary.html.twig', [
+            'home' => $home,
+            'membership' => $membership,
+            'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'categories' => $this->get('category_service')->getAll(),
+            'terms' => $config->getTermAndConditions(),
+            'privacy' => $config->getPrivacyPolicy(),
+        ]);
     }
 
     private function getShopCartProducts($products)
