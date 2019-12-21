@@ -31,18 +31,16 @@
       <div class="d-flex flex-column justify-content-center h-100">
         <div class="d-flex justify-content-between align-items-center">
           <div class="d-flex align-items-center">
-            <img class="conceptos-icon cart-quantity-up" src="{{ asset('bundles/conceptos/images/cart/plus.png') }}">
-            <img class="conceptos-icon cart-quantity-down ml-1" src="{{ asset('bundles/conceptos/images/cart/minus.png') }}">
-            <span class="conceptos-product-info ml-2" data-quantity="{{product.count}}">x{{product.count}}</span>
+            <button type="button" class="cart-quantity-up" src="{{ asset('bundles/conceptos/images/cart/plus.png') }}"></button>
+            <button type="button" class="cart-quantity-down ml-1" src="{{ asset('bundles/conceptos/images/cart/minus.png') }}"></button>
+            <input type="number" class="conceptos-product-info cart-quantity-input ml-2" data-quantity="{{product.count}}" value="{{product.count}}">
           </div>
-          <img class="shop-cart-trash mr-1" src="{{ asset('bundles/conceptos/images/cart/trash-icon.png') }}">
+          <button type="button" class="shop-cart-trash mr-1"></button>
         </div>
         <div class="d-flex align-items-center mt-1">
           <span class="conceptos-product-info">ENVÍO:</span>
-          <img class="conceptos-icon airplane-delivery ml-2" src="{{ asset('bundles/conceptos/images/cart/airplane.png') }}">
-          <img class="conceptos-icon airplane-delivery-disabled ml-2" src="{{ asset('bundles/conceptos/images/cart/airplane_disabled.png') }}" style="display: none;">
-          <img class="conceptos-icon ship-delivery ml-1" src="{{ asset('bundles/conceptos/images/cart/ship.png') }}">
-          <img class="conceptos-icon ship-delivery-disabled ml-1" src="{{ asset('bundles/conceptos/images/cart/ship_disabled.png') }}" style="display: none;">
+          <button type="button" class="conceptos-icon airplane-delivery ml-2" src="{{ asset('bundles/conceptos/images/cart/airplane.png') }}"></button>
+          <button type="button" class="conceptos-icon ship-delivery ml-1" src="{{ asset('bundles/conceptos/images/cart/ship.png') }}">
         </div>
       </div>
     </div>

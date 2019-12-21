@@ -561,6 +561,14 @@ function init() {
     $("#services-title").val(data.services.title);
     $("#services-subtitle").val(data.services.subtitle);
   }
+  if (data.testimonies) {
+    $("#testimony-text-1").val(data.testimonies.text1);
+    $("#testimony-author-1").val(data.testimonies.author1);
+    $("#testimony-text-2").val(data.testimonies.text2);
+    $("#testimony-author-2").val(data.testimonies.author2);
+    $("#testimony-text-3").val(data.testimonies.text3);
+    $("#testimony-author-3").val(data.testimonies.author3);
+  }
 
   $("#app-app").val(data.app.app);
   $("#app-db").val(data.app.db);
@@ -622,6 +630,14 @@ function generateData() {
     shopCart: {
       mainText: $("#shop-cart-main-text").val(),
       secondaryText: $("#shop-cart-secondary-text").val()
+    },
+    testimonies: {
+      text1: $("#testimony-text-1").val(),
+      author1: $("#testimony-author-1").val(),
+      text2: $("#testimony-text-2").val(),
+      author2: $("#testimony-author-2").val(),
+      text3: $("#testimony-text-3").val(),
+      author3: $("#testimony-author-3").val()
     },
     advertisements: advertisementImages,
     login: {

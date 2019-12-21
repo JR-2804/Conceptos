@@ -66,7 +66,7 @@ $(document).ready(function() {
         $.toast({
           text: "Producto evaluado correctamente",
           showHideTransition: "fade",
-          bgColor: "#f7ed4a",
+          bgColor: "#c2b930",
           textColor: "#3f3c03",
           allowToastClose: true,
           hideAfter: 3000,
@@ -81,7 +81,7 @@ $(document).ready(function() {
         $.toast({
           text: "Ha ocurrido un error realizando la operación. Intente más tarde",
           showHideTransition: "fade",
-          bgColor: "#f7ed4a",
+          bgColor: "#c2b930",
           textColor: "#3f3c03",
           allowToastClose: true,
           hideAfter: 3000,

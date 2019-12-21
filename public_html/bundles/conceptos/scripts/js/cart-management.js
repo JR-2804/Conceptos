@@ -31,13 +31,12 @@ $(document).ready(function() {
     return $(
       '.shop-cart-product[data-product="' +
         productId +
-        '"] .conceptos-product-info[data-quantity]'
+        '"] .cart-quantity-input'
     );
   }
 
   function getProductQuantityByElement(element) {
-    var quantityElement = GetQuantityElement(element);
-    return parseInt(quantityElement.text().substring(1));
+    return GetQuantityElement(element).data("quantity");
   }
 
   function getProductPriceByProductId(productId) {
@@ -59,12 +58,11 @@ $(document).ready(function() {
   }
 
   function getProductQuantityByProductId(productId) {
-    var quantityElement = $(
+    return $(
       '.shop-cart-product[data-product="' +
         productId +
-        '"] .conceptos-product-info[data-quantity]'
-    );
-    return parseInt(quantityElement.text().substring(1));
+        '"] .cart-quantity-input'
+    ).data("quantity");
   }
 
   function getProductUuid(productId) {
@@ -73,11 +71,17 @@ $(document).ready(function() {
     );
   }
 
-  function updateProductQuantity(element, quantity, productCount) {
+  function UpdateProductQuantity(element, quantity, productCount) {
     var quantityElement = GetQuantityElement(element);
-    quantityElement.text("x" + quantity);
+    quantityElement.data("quantity", quantity);
+    quantityElement.val(quantity);
 
-    $("#conceptos-shop-cart-count").text(productCount);
+    if (productCount > 99) {
+      $("#conceptos-shop-cart-count").text("+99");
+    } else {
+      $("#conceptos-shop-cart-count").text(productCount);
+    }
+    $("#conceptos-shop-cart-count").data("count", productCount);
     $(".shop-cart-products-count").text(productCount);
   }
 
@@ -171,8 +175,7 @@ $(document).ready(function() {
   }
 
   function DisableDeliveryIcon(selector) {
-    $(selector).hide();
-    $(selector + "-disabled").show();
+    $(selector).attr("disabled", true);
   }
 
   function UpdateDeliveryIconsState() {
@@ -258,6 +261,24 @@ $(document).ready(function() {
     $(".shop-cart-total-price").text("$" + totalPrice);
   }
 
+  function DisplayMembershipSuccess() {
+    $(".conceptos-request-success-icon").show();
+    $(".conceptos-request-error-icon").hide();
+    $(".conceptos-request-loading-icon").hide();
+  }
+
+  function DisplayMembershipError() {
+    $(".conceptos-request-success-icon").hide();
+    $(".conceptos-request-error-icon").show();
+    $(".conceptos-request-loading-icon").hide();
+  }
+
+  function DisplayMembershipLoading() {
+    $(".conceptos-request-success-icon").hide();
+    $(".conceptos-request-error-icon").hide();
+    $(".conceptos-request-loading-icon").show();
+  }
+
   function ValidateContactInfo() {
     var result = true;
     if (!$("#check_out_name").val()) {
@@ -325,8 +346,9 @@ $(document).ready(function() {
     $(".cart-quantity-up").click(function() {
       var quantity = getProductQuantityByElement(this);
       quantity++;
-      var productCount = Number($("#conceptos-shop-cart-count").text()) + 1;
-      updateProductQuantity(this, quantity, productCount);
+      var productCount =
+        Number($("#conceptos-shop-cart-count").data("count")) + 1;
+      UpdateProductQuantity(this, quantity, productCount);
       recalculateAllPrices();
     });
 
@@ -334,10 +356,21 @@ $(document).ready(function() {
       var quantity = getProductQuantityByElement(this);
       if (quantity >= 2) {
         quantity--;
-        var productCount = Number($("#conceptos-shop-cart-count").text()) - 1;
-        updateProductQuantity(this, quantity, productCount);
+        var productCount =
+          Number($("#conceptos-shop-cart-count").data("count")) - 1;
+        UpdateProductQuantity(this, quantity, productCount);
         recalculateAllPrices();
       }
+    });
+
+    $(".cart-quantity-input").change(function() {
+      var oldQuantity = $(this).data("quantity");
+      var newQuantity = $(this).val();
+      var productCount =
+        Number($("#conceptos-shop-cart-count").data("count")) +
+        (newQuantity - oldQuantity);
+      UpdateProductQuantity(this, newQuantity, productCount);
+      recalculateAllPrices();
     });
 
     $(".shop-cart-trash").click(function() {
@@ -348,7 +381,12 @@ $(document).ready(function() {
         "POST",
         {},
         function(response) {
-          $("#conceptos-shop-cart-count").text(response.count);
+          if (response.count > 99) {
+            $("#conceptos-shop-cart-count").text("+99");
+          } else {
+            $("#conceptos-shop-cart-count").text(response.count);
+          }
+          $("#conceptos-shop-cart-count").data("count", response.count);
           $(".shop-cart-products-count").text(response.count);
           products = JSON.parse(response.products);
           $('.shop-cart-product[data-product="' + product + '"]').remove();
@@ -356,7 +394,7 @@ $(document).ready(function() {
           $.toast({
             text: "Producto eliminado del carrito correctamente",
             showHideTransition: "fade",
-            bgColor: "#f7ed4a",
+            bgColor: "#c2b930",
             textColor: "#3f3c03",
             allowToastClose: true,
             hideAfter: 3000,
@@ -371,7 +409,7 @@ $(document).ready(function() {
           $.toast({
             text: "Ha ocurrido un error eliminando el producto del carrito",
             showHideTransition: "fade",
-            bgColor: "#f7ed4a",
+            bgColor: "#c2b930",
             textColor: "#3f3c03",
             allowToastClose: true,
             hideAfter: 3000,
@@ -395,7 +433,12 @@ $(document).ready(function() {
       "POST",
       {},
       function(response) {
-        $("#conceptos-shop-cart-count").text(response.count);
+        if (response.count > 99) {
+          $("#conceptos-shop-cart-count").text("+99");
+        } else {
+          $("#conceptos-shop-cart-count").text(response.count);
+        }
+        $("#conceptos-shop-cart-count").data("count", response.count);
         $(".shop-cart-products-count").text(response.count);
         products = JSON.parse(response.products);
         $("#products-summary")
@@ -407,7 +450,7 @@ $(document).ready(function() {
         $.toast({
           text: "Producto añadido al carrito correctamente",
           showHideTransition: "fade",
-          bgColor: "#f7ed4a",
+          bgColor: "#c2b930",
           textColor: "#3f3c03",
           allowToastClose: true,
           hideAfter: 3000,
@@ -422,7 +465,7 @@ $(document).ready(function() {
         $.toast({
           text: "Ha ocurrido un error añadiendo el producto al carrito",
           showHideTransition: "fade",
-          bgColor: "#f7ed4a",
+          bgColor: "#c2b930",
           textColor: "#3f3c03",
           allowToastClose: true,
           hideAfter: 3000,
@@ -450,11 +493,16 @@ $(document).ready(function() {
         if (response.exist) {
           title = "La tarjeta seleccionada ya está en su carrito de compras";
         }
-        $("#conceptos-shop-cart-count").text(response.count);
+        if (response.count > 99) {
+          $("#conceptos-shop-cart-count").text("+99");
+        } else {
+          $("#conceptos-shop-cart-count").text(response.count);
+        }
+        $("#conceptos-shop-cart-count").data("count", response.count);
         $.toast({
           text: title,
           showHideTransition: "fade",
-          bgColor: "#f7ed4a",
+          bgColor: "#c2b930",
           textColor: "#3f3c03",
           allowToastClose: true,
           hideAfter: 3000,
@@ -469,7 +517,7 @@ $(document).ready(function() {
         $.toast({
           text: "Ha ocurrido un error añadiendo la tarjeta al carrito",
           showHideTransition: "fade",
-          bgColor: "#f7ed4a",
+          bgColor: "#c2b930",
           textColor: "#3f3c03",
           allowToastClose: true,
           hideAfter: 3000,
@@ -511,25 +559,22 @@ $(document).ready(function() {
         function(response) {
           var isValid = Boolean(response);
           if (isValid) {
-            $("#shop-cart-member-number").removeClass("conceptos-error-input");
-            $("#shop-cart-member-number").addClass("conceptos-success-input");
+            DisplayMembershipSuccess();
           } else {
             memberNumber = undefined;
-            $("#shop-cart-member-number").removeClass(
-              "conceptos-success-input"
-            );
-            $("#shop-cart-member-number").addClass("conceptos-error-input");
+            DisplayMembershipError();
           }
-
           recalculateAllPrices();
         },
         function() {
+          DisplayMembershipError();
           memberNumber = undefined;
           recalculateAllPrices();
           alert("Ha ocurrido un error validando el número de miembro");
         }
       );
     } else {
+      DisplayMembershipError();
       memberNumber = undefined;
       recalculateAllPrices();
     }
@@ -540,41 +585,6 @@ $(document).ready(function() {
     recalculateAllPrices();
   });
 
-  $("#shop-cart-membership-number-check").click(function() {
-    var membershipNumber = $("#shop-cart-membership-number").val();
-    if (membershipNumber) {
-      ajax(
-        "/app_dev.php/validate-membership-number/" + membershipNumber,
-        "POST",
-        {},
-        function(response) {
-          var isValid = Boolean(response);
-          if (isValid) {
-            $("#shop-cart-membership-number").removeClass("error-form-control");
-            $("#shop-cart-membership-number").addClass("success-form-control");
-            memberNumber = membershipNumber;
-          } else {
-            $("#shop-cart-membership-number").removeClass(
-              "success-form-control"
-            );
-            $("#shop-cart-membership-number").addClass("error-form-control");
-            memberNumber = undefined;
-          }
-
-          recalculateAllPrices();
-        },
-        function() {
-          memberNumber = undefined;
-          recalculateAllPrices();
-          alert("Ha ocurrido un error validando el número de miembro");
-        }
-      );
-    } else {
-      memberNumber = undefined;
-      recalculateAllPrices();
-    }
-  });
-
   $("#type-select").change(function() {
     if ($(this).val() === "facture") {
       $("#prefactures-select").show();
@@ -583,7 +593,7 @@ $(document).ready(function() {
     }
   });
 
-  $("#shop-cart-send-request-button").click(function(e) {
+  $("form[name='check_out']").submit(function(e) {
     if (ValidateContactInfo()) {
       $("#memberNumber").val(memberNumber);
       $("#transportCost").val(transportCost);

@@ -90,6 +90,7 @@ class SiteController extends Controller
           ->createQueryBuilder('product')
           ->where('product.popular = true')
           ->orderBy('product.priority', 'DESC')
+          ->setMaxResults(48)
           ->getQuery()
           ->getResult();
         $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findAll();
@@ -467,12 +468,6 @@ class SiteController extends Controller
                 $client = new Client();
             }
 
-            $firstClientDiscount = 0;
-            // if ($newClient && $discount == 0) {
-            //   $firstClientDiscount = floor($totalPriceBase * 0.05);
-            //   $totalPrice -= $firstClientDiscount;
-            // }
-
             $client->setName($data->getName());
             $client->setEmail($data->getEmail());
             $client->setAddress($data->getAddress());
@@ -583,7 +578,7 @@ class SiteController extends Controller
                 $facture->setDiscount($discount);
                 $facture->setTwoStepExtra($twoStepExtra);
                 $facture->setCucExtra($cucExtra);
-                $facture->setFirstClientDiscount($firstClientDiscount);
+                $facture->setFirstClientDiscount(0);
                 $facture->setTransportCost($transportCost);
                 $facture->setFinalPrice($totalPrice);
                 $this->getDoctrine()->getManager()->persist($facture);
@@ -591,7 +586,7 @@ class SiteController extends Controller
                 $prefacture->setDiscount($discount);
                 $prefacture->setTwoStepExtra($twoStepExtra);
                 $prefacture->setCucExtra($cucExtra);
-                $prefacture->setFirstClientDiscount($firstClientDiscount);
+                $prefacture->setFirstClientDiscount(0);
                 $prefacture->setTransportCost($transportCost);
                 $prefacture->setFinalPrice($totalPrice);
                 $this->getDoctrine()->getManager()->persist($prefacture);
@@ -600,7 +595,7 @@ class SiteController extends Controller
               $requestDB->setDiscount($discount);
               $requestDB->setTwoStepExtra($twoStepExtra);
               $requestDB->setCucExtra($cucExtra);
-              $requestDB->setFirstClientDiscount($firstClientDiscount);
+              $requestDB->setFirstClientDiscount(0);
               $requestDB->setTransportCost($transportCost);
               $requestDB->setFinalPrice($totalPrice);
               $this->getDoctrine()->getManager()->persist($requestDB);
@@ -1746,14 +1741,14 @@ class SiteController extends Controller
     private function countShopCart(Request $request)
     {
       $total = 0;
-        $session = $request->getSession();
-        if ($session->has('products')) {
-            $products = json_decode($session->get('products'), true);
-            foreach ($products as $product) {
-              $total += $product['count'];
-            }
+      $session = $request->getSession();
+      if ($session->has('products')) {
+        $products = json_decode($session->get('products'), true);
+        foreach ($products as $product) {
+          $total += $product['count'];
         }
+      }
 
-        return $total;
+      return $total;
     }
 }

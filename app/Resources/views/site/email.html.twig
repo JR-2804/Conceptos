@@ -1,3 +1,18 @@
+{% if home.data.testimonies.text1 is defined %}
+  <div class="d-flex flex-column pt-3 pl-3 pr-3">
+    <div class="d-flex conceptos-divider"></div>
+    <span class="conceptos-testimony-text mt-3">"{{home.data.testimonies.text1}}"</span>
+    <span class="conceptos-testimony-author">{{home.data.testimonies.author1}}</span>
+    {% if home.data.testimonies.text2 is defined %}
+      <span class="conceptos-testimony-text mt-3">"{{home.data.testimonies.text2}}"</span>
+      <span class="conceptos-testimony-author">{{home.data.testimonies.author2}}</span>
+    {% endif %}
+    {% if home.data.testimonies.text3 is defined %}
+      <span class="conceptos-testimony-text mt-3">"{{home.data.testimonies.text3}}"</span>
+      <span class="conceptos-testimony-author">{{home.data.testimonies.author3}}</span>
+    {% endif %}
+  </div>
+{% endif %}
 <section id="conceptos-contact-form" class="d-flex flex-column">
   <img class="conceptos-image" src="{{home.data.contact.image.path}}">
   {{ form_start(form, {'attr': {'data-form-title': 'Conceptos Formulario de Contacto', 'action': path('email_notification')}}) }}
@@ -5,20 +20,25 @@
       <div class="d-flex conceptos-divider"></div>
       <div class="d-flex conceptos-divider mt-2"></div>
       <span class="conceptos-title mt-3 mb-3">CONTÁCTANOS</span>
-      <div class="d-flex" data-for="email_name">
-        {{ form_widget(form.name, {'attr': {'class': 'conceptos-contact-input w-100', 'data-form-field': 'Nombre', 'placeholder': 'Nombre'}}) }}
+      <div class="d-flex flex-column" data-for="email_name">
+        <span class="conceptos-subtitle">Nombre</span>
+        {{ form_widget(form.name, {'attr': {'class': 'conceptos-contact-input w-100', 'data-form-field': 'Nombre'}}) }}
       </div>
-      <div class="d-flex mt-2" data-for="email_lastName">
-        {{ form_widget(form.lastName, {'attr': {'class': 'conceptos-contact-input w-100', 'data-form-field': 'Nombre', 'placeholder': 'Apellidos'}}) }}
+      <div class="d-flex flex-column mt-2" data-for="email_lastName">
+        <span class="conceptos-subtitle">Apellidos</span>
+        {{ form_widget(form.lastName, {'attr': {'class': 'conceptos-contact-input w-100', 'data-form-field': 'Nombre'}}) }}
       </div>
-      <div class="d-flex mt-2" data-for="email_email">
-        {{ form_widget(form.email, {'attr': {'class': 'conceptos-contact-input w-100', 'data-form-field':'Correo', 'placeholder': 'Correo'}}) }}
+      <div class="d-flex flex-column mt-2" data-for="email_email">
+        <span class="conceptos-subtitle">Correo</span>
+        {{ form_widget(form.email, {'attr': {'class': 'conceptos-contact-input w-100', 'data-form-field':'Correo'}}) }}
       </div>
-      <div class="d-flex mt-2" data-for="email_phone">
-        {{ form_widget(form.phone, {'attr': {'class': 'conceptos-contact-input w-100', 'data-form-field': 'Teléfono', 'placeholder': 'Teléfono'}}) }}
+      <div class="d-flex flex-column mt-2" data-for="email_phone">
+        <span class="conceptos-subtitle">Teléfono</span>
+        {{ form_widget(form.phone, {'attr': {'class': 'conceptos-contact-input w-100', 'data-form-field': 'Teléfono'}}) }}
       </div>
-      <div class="d-flex mt-2" data-for="email_message">
-        {{ form_widget(form.text, {'attr': {'class': 'conceptos-contact-input w-100', 'data-form-field': 'Mensaje', 'rows':'7', 'placeholder': 'Mensaje'}}) }}
+      <div class="d-flex flex-column mt-2" data-for="email_message">
+        <span class="conceptos-subtitle">Mensaje</span>
+        {{ form_widget(form.text, {'attr': {'class': 'conceptos-contact-input w-100', 'data-form-field': 'Mensaje', 'rows':'7'}}) }}
       </div>
       <div class="d-flex align-items-start mt-2">
         <button id="send-mail-button" class="conceptos-primary-button pl-3 pr-3 pt-0 pb-0" type="submit" href="">ENVIAR</button>

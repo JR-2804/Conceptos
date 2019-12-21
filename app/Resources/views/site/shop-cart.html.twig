@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/shop-cart/shop-cart.css') }}">
 {% endblock %}
 {% block body %}
-  {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'true'}}) }}
+  {{ form_start(form) }}
     <div class="d-flex flex-column pt-2 pt-lg-5 pl-2 pr-2">
       <h1 class="conceptos-title pt-2">{{home.data.shopCart.mainText|raw}}</h1>
       <h2 class="conceptos-subtitle">{{home.data.shopCart.secondaryText|raw}}</h2>
@@ -44,7 +44,12 @@
             </div>
             <div class="d-flex flex-column mt-3">
               <span class="conceptos-title">MEMBRESÍA</span>
-              <input id="shop-cart-member-number" type="text" placeholder="Código de miembro" />
+              <div class="d-flex conceptos-relative">
+                <input id="shop-cart-member-number" class="w-100" type="text" placeholder="Código de miembro" />
+                <img class="conceptos-icon conceptos-request-success-icon" src="{{ asset('bundles/conceptos/images/home/request-success.png') }}">
+                <img class="conceptos-icon conceptos-request-error-icon" src="{{ asset('bundles/conceptos/images/home/request-error.png') }}">
+                <img class="conceptos-icon conceptos-request-loading-icon" src="{{ asset('bundles/conceptos/images/home/request-loading.png') }}">
+              </div>
             </div>
           </div>
           <div class="d-flex flex-column conceptos-badge mt-3 p-2">
@@ -90,31 +95,37 @@
             <input type="hidden" name="paymentType" id="paymentType">
             <input type="hidden" name="paymentCurrency" id="paymentCurrency">
             <input type="hidden" name="products" id="products">
-            <div class="mt-2">
-              {{ form_widget(form.name, {'attr': {'class': 'w-100', 'placeholder': 'Nombre', 'required': 'true'}}) }}
+            <div class="d-flex flex-column mt-2">
+              <span class="conceptos-subtitle">Nombre</span>
+              {{ form_widget(form.name, {'attr': {'class': 'w-100', 'required': 'true'}}) }}
             </div>
-            <div class="mt-2">
-              {{ form_widget(form.email, {'attr': {'class': 'w-100', 'placeholder': 'Correo', 'required': 'true'}}) }}
+            <div class="d-flex flex-column mt-2">
+              <span class="conceptos-subtitle">Correo</span>
+              {{ form_widget(form.email, {'attr': {'class': 'w-100', 'required': 'true'}}) }}
             </div>
-            <div class="mt-2">
-              {{ form_widget(form.address, {'attr': {'class': 'w-100', 'placeholder': 'Dirección', 'required': 'true'}}) }}
+            <div class="d-flex flex-column mt-2">
+              <span class="conceptos-subtitle">Dirección</span>
+              {{ form_widget(form.address, {'attr': {'class': 'w-100', 'required': 'true'}}) }}
             </div>
-            <div class="mt-2">
-              {{ form_widget(form.phone, {'attr': {'class': 'w-100', 'placeholder': 'Teléfono de casa'}}) }}
+            <div class="d-flex flex-column mt-2">
+              <span class="conceptos-subtitle">Teléfono de casa</span>
+              {{ form_widget(form.phone, {'attr': {'class': 'w-100'}}) }}
             </div>
-            <div class="mt-2">
-              {{ form_widget(form.movil, {'attr': {'class': 'w-100', 'placeholder': 'Teléfono Movil'}}) }}
+            <div class="d-flex flex-column mt-2">
+              <span class="conceptos-subtitle">Teléfono Movil</span>
+              {{ form_widget(form.movil, {'attr': {'class': 'w-100'}}) }}
             </div>
             <div class="d-flex align-items-center">
               <div class="col-md-6 pl-2">
-                <div class="form-group mb-0">
+                <div class="d-flex flex-column mb-0">
                   {{ form_widget(form.memberNumber) }}
                 </div>
               </div>
             </div>
             {{ form_widget(form.recaptcha) }}
             {% if is_granted('ROLE_COMMERCIAL') %}
-              <select id="type-select" class="mt-3 mb-2">
+              <div class="conceptos-divider mt-3 mb-3"></div>
+              <select id="type-select" class="mb-2">
                 <option value="request">Pedido</option>
                 <option value="prefacture">Prefactura</option>
                 <option value="facture">Factura</option>
@@ -149,22 +160,20 @@
         {% if shopCartProducts|length > 0 %}
           <div class="d-flex">
             <label class="d-flex checkbox-container align-self-start">
-              <span class="conceptos-subtitle">He leído y acepto los <a class="conceptos-title" data-toggle="modal" data-target="#termsAndConditionsModal" href="#">Términos y Condiciones</a></span>
+              <span class="conceptos-subtitle">He leído y acepto los <a class="conceptos-title conceptos-title-italic" data-toggle="modal" data-target="#termsAndConditionsModal" href="#">Términos y condiciones</a></span>
               <input id="termsAndConditions" type="checkbox">
               <span class="checkmark"></span>
             </label>
           </div>
           <div class="d-flex mt-2">
             <label class="d-flex checkbox-container align-self-start">
-              <span class="conceptos-subtitle">He leído y acepto la <a class="conceptos-title" data-toggle="modal" data-target="#privacyPolicyModal" href="#">Política de Privacidad</a></span>
+              <span class="conceptos-subtitle">He leído y acepto la <a class="conceptos-title conceptos-title-italic" data-toggle="modal" data-target="#privacyPolicyModal" href="#">Política de privacidad</a></span>
               <input id="privacyPolicy" type="checkbox">
               <span class="checkmark"></span>
             </label>
           </div>
           <div class="d-flex mt-2">
-            <button id="shop-cart-send-request-button" class="conceptos-primary-button pl-3 pr-3 pt-1 pb-1" type="submit">
-              <span>ENVIAR PEDIDO</span>
-            </button>
+            <button type="submit" class="conceptos-primary-button pl-3 pr-3 pt-1 pb-1">ENVIAR PEDIDO</button>
           </div>
         {% endif %}
         <div class="d-flex justify-content-end mt-3">

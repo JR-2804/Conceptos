@@ -49,7 +49,7 @@ class Category
      */
     private $icon;
     /**
-     * @Vich\UploadableField(mapping="category_pictures", fileNameProperty="image")
+     * @Vich\UploadableField(mapping="category_icon_pictures", fileNameProperty="icon")
      */
     private $iconFile;
     /**
@@ -87,9 +87,6 @@ class Category
      */
     private $brandDescription;
 
-    /**
-     * Category constructor.
-     */
     public function __construct()
     {
         $this->subCategories = new ArrayCollection();
@@ -99,24 +96,11 @@ class Category
         $this->offers = new ArrayCollection();
     }
 
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Category
-     */
     public function setName($name)
     {
         $this->name = $name;
@@ -124,23 +108,11 @@ class Category
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * Set parent
-     *
-     * @param \AppBundle\Entity\Category $parent
-     *
-     * @return Category
-     */
     public function setParent(\AppBundle\Entity\Category $parent = null)
     {
         $this->parent = $parent;
@@ -148,23 +120,11 @@ class Category
         return $this;
     }
 
-    /**
-     * Get parent
-     *
-     * @return \AppBundle\Entity\Category
-     */
     public function getParent()
     {
         return $this->parent;
     }
 
-    /**
-     * Add subCategory
-     *
-     * @param \AppBundle\Entity\Category $subCategory
-     *
-     * @return Category
-     */
     public function addSubCategory(\AppBundle\Entity\Category $subCategory)
     {
         $this->subCategories[] = $subCategory;
@@ -172,21 +132,11 @@ class Category
         return $this;
     }
 
-    /**
-     * Remove subCategory
-     *
-     * @param \AppBundle\Entity\Category $subCategory
-     */
     public function removeSubCategory(\AppBundle\Entity\Category $subCategory)
     {
         $this->subCategories->removeElement($subCategory);
     }
 
-    /**
-     * Get subCategories
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
     public function getSubCategories()
     {
         return $this->subCategories;
@@ -197,13 +147,6 @@ class Category
         return $this->name;
     }
 
-    /**
-     * Set image
-     *
-     * @param string $image
-     *
-     * @return Category
-     */
     public function setImage($image)
     {
         $this->image = $image;
@@ -211,23 +154,11 @@ class Category
         return $this;
     }
 
-    /**
-     * Get image
-     *
-     * @return string
-     */
     public function getImage()
     {
         return $this->image;
     }
 
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return Category
-     */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
@@ -235,11 +166,6 @@ class Category
         return $this;
     }
 
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
@@ -258,17 +184,11 @@ class Category
         }
     }
 
-    /**
-     * @return mixed
-     */
     public function getImageFile()
     {
         return $this->imageFile;
     }
 
-    /**
-     * @param mixed $imageFile
-     */
     public function setImageFile(File $imageFile = null)
     {
         $this->imageFile = $imageFile;
@@ -279,17 +199,11 @@ class Category
         }
     }
 
-    /**
-     * @return mixed
-     */
     public function getImageSiteFile()
     {
         return $this->imageSiteFile;
     }
 
-    /**
-     * @param mixed $imageSiteFile
-     */
     public function setImageSiteFile(File $imageSiteFile = null)
     {
         $this->imageSiteFile = $imageSiteFile;
@@ -299,13 +213,6 @@ class Category
     }
 
 
-    /**
-     * Add parent
-     *
-     * @param \AppBundle\Entity\Category $parent
-     *
-     * @return Category
-     */
     public function addParent(\AppBundle\Entity\Category $parent)
     {
         $this->parents[] = $parent;
@@ -313,33 +220,16 @@ class Category
         return $this;
     }
 
-    /**
-     * Remove parent
-     *
-     * @param \AppBundle\Entity\Category $parent
-     */
     public function removeParent(\AppBundle\Entity\Category $parent)
     {
         $this->parents->removeElement($parent);
     }
 
-    /**
-     * Get parents
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
     public function getParents()
     {
         return $this->parents;
     }
 
-    /**
-     * Add favoritesProduct
-     *
-     * @param \AppBundle\Entity\Product $favoritesProduct
-     *
-     * @return Category
-     */
     public function addFavoritesProduct(\AppBundle\Entity\Product $favoritesProduct)
     {
         $this->favoritesProducts[] = $favoritesProduct;
@@ -347,21 +237,11 @@ class Category
         return $this;
     }
 
-    /**
-     * Remove favoritesProduct
-     *
-     * @param \AppBundle\Entity\Product $favoritesProduct
-     */
     public function removeFavoritesProduct(\AppBundle\Entity\Product $favoritesProduct)
     {
         $this->favoritesProducts->removeElement($favoritesProduct);
     }
 
-    /**
-     * Get favoritesProducts
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
     public function getFavoritesProducts()
     {
         return $this->favoritesProducts;
@@ -379,13 +259,6 @@ class Category
         return $this->icon;
     }
 
-    /**
-     * Set imageSite
-     *
-     * @param string $imageSite
-     *
-     * @return Category
-     */
     public function setImageSite($imageSite)
     {
         $this->imageSite = $imageSite;
@@ -393,23 +266,11 @@ class Category
         return $this;
     }
 
-    /**
-     * Get imageSite
-     *
-     * @return string
-     */
     public function getImageSite()
     {
         return $this->imageSite;
     }
 
-    /**
-     * Add product
-     *
-     * @param \AppBundle\Entity\Product $product
-     *
-     * @return Category
-     */
     public function addProduct(\AppBundle\Entity\Product $product)
     {
         $this->products[] = $product;
@@ -417,21 +278,11 @@ class Category
         return $this;
     }
 
-    /**
-     * Remove product
-     *
-     * @param \AppBundle\Entity\Product $product
-     */
     public function removeProduct(\AppBundle\Entity\Product $product)
     {
         $this->products->removeElement($product);
     }
 
-    /**
-     * Get products
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
     public function getProducts()
     {
         return $this->products;
@@ -454,13 +305,6 @@ class Category
         return $this->offers;
     }
 
-    /**
-     * Set isBrand
-     *
-     * @param boolean $isBrand
-     *
-     * @return Category
-     */
     public function setIsBrand($isBrand)
     {
         $this->isBrand = $isBrand;
@@ -468,23 +312,11 @@ class Category
         return $this;
     }
 
-    /**
-     * Get isBrand
-     *
-     * @return boolean
-     */
     public function getIsBrand()
     {
         return $this->isBrand;
     }
 
-    /**
-     * Set brandDescription
-     *
-     * @param string $brandDescription
-     *
-     * @return Category
-     */
     public function setBrandDescription($brandDescription)
     {
         $this->brandDescription = $brandDescription;
@@ -492,11 +324,6 @@ class Category
         return $this;
     }
 
-    /**
-     * Get brandDescription
-     *
-     * @return string
-     */
     public function getBrandDescription()
     {
         return $this->brandDescription;

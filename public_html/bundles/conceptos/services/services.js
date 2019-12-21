@@ -60,7 +60,7 @@ $(document).ready(function() {
         $.toast({
           text: "Tarjeta añadida al carrito correctamente",
           showHideTransition: "fade",
-          bgColor: "#f7ed4a",
+          bgColor: "#c2b930",
           textColor: "#3f3c03",
           allowToastClose: true,
           hideAfter: 3000,
@@ -76,7 +76,7 @@ $(document).ready(function() {
           text:
             "Ha ocurrido un error añadiendo el la tarjeta al carrito de compras",
           showHideTransition: "fade",
-          bgColor: "#f7ed4a",
+          bgColor: "#c2b930",
           textColor: "#3f3c03",
           allowToastClose: true,
           hideAfter: 3000,
@@ -106,7 +106,7 @@ $(document).ready(function() {
           $.toast({
             text: "Tarjeta añadida al carrito correctamente",
             showHideTransition: "fade",
-            bgColor: "#f7ed4a",
+            bgColor: "#c2b930",
             textColor: "#3f3c03",
             allowToastClose: true,
             hideAfter: 3000,
@@ -122,7 +122,7 @@ $(document).ready(function() {
             text:
               "Ha ocurrido un error añadiendo el la tarjeta al carrito de compras",
             showHideTransition: "fade",
-            bgColor: "#f7ed4a",
+            bgColor: "#c2b930",
             textColor: "#3f3c03",
             allowToastClose: true,
             hideAfter: 3000,
@@ -138,7 +138,7 @@ $(document).ready(function() {
       $.toast({
         text: "Debe introducir el nombre de la persona",
         showHideTransition: "fade",
-        bgColor: "#f7ed4a",
+        bgColor: "#c2b930",
         textColor: "#3f3c03",
         allowToastClose: true,
         hideAfter: 1000,

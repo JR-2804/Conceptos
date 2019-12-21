@@ -104,13 +104,45 @@
     </div>
     <div class="d-flex flex-column align-items-center p-3">
       {% if inStore and inStore is not empty %}
-        <div class="d-flex align-items-center conceptos-white-background p-2">
-          <a href="{{ path('product_details', {id: inStore[0].id, name: inStore[0].name}) }}">
-            <img class="conceptos-image" src="{{ vich_uploader_asset(inStore[0].mainImage, 'imageFile') }}">
-          </a>
+        <div class="d-flex d-lg-none align-items-center conceptos-white-background p-2">
+          <div class="carousel" data-ride="carousel" id="carousel-in-store" data-interval="5000">
+            <div class="carousel-inner">
+              {% for product in inStore %}
+                <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
+                  <a href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+                    <img class="conceptos-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+            <div class="d-flex">
+              <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" href="#carousel-in-store">
+                <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+              </a>
+              <a class="carousel-control carousel-control-next" role="button" data-slide="next" href="#carousel-in-store">
+                <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="d-none d-lg-flex col-12 justify-content-center align-items-center p-2">
+          <div class="d-flex col-5 justify-content-center pl-0">
+            <a href="{{ path('product_details', {id: inStore[0].id, name: inStore[0].name}) }}">
+              <img class="conceptos-image" src="{{ vich_uploader_asset(inStore[0].mainImage, 'imageFile') }}">
+            </a>
+          </div>
+          <div class="d-flex conceptos-divider-vertical"></div>
+          <div class="d-flex col-5 justify-content-center pl-0">
+            <a href="{{ path('product_details', {id: inStore[1].id, name: inStore[1].name}) }}">
+              <img class="conceptos-image" src="{{ vich_uploader_asset(inStore[1].mainImage, 'imageFile') }}">
+            </a>
+          </div>
         </div>
       {% endif %}
-      <a href="{{ path('products', {inStore:true}) }}" class="conceptos-primary-button-gray conceptos-primary-button-gray-desktop mt-3">
+      <a href="{{ path('products', {inStore:true}) }}" class="d-flex d-lg-none conceptos-primary-button-gray mt-3">
+        <span class="pl-2 pr-2">VER MÁS</span>
+      </a>
+      <a href="{{ path('products', {inStore:true}) }}" class="d-none d-lg-flex conceptos-primary-button-gray conceptos-primary-button-gray-desktop mt-3">
         <span class="pl-2 pr-2">VER MÁS</span>
       </a>
     </div>
@@ -123,26 +155,51 @@
         <span class="d-none d-lg-flex conceptos-badge-text conceptos-badge-text-desktop">SERVICIOS</span>
       </div>
     </div>
-    <div class="d-flex flex-column align-items-center p-3">
+    <div class="d-flex d-lg-none flex-column align-items-center p-3">
+      {% if page.data.services.image is defined %}
+        <div class="d-flex align-items-center conceptos-white-background p-2">
+          <img class="conceptos-image" src="{{ page.data.services.image.path }}">
+        </div>
+      {% endif %}
+      {% if page.data.services.title is defined %}
+        <span class="conceptos-title align-self-start mt-3">{{page.data.services.title}}</span>
+      {% endif %}
+      {% if page.data.services.subtitle is defined %}
+        <span class="conceptos-subtitle align-self-start mt-2">{{page.data.services.subtitle}}</span>
+      {% endif %}
+      <a href="{{ path('inward') }}" class="d-flex d-lg-none conceptos-primary-button-gray mt-3">
+        <span class="pl-2 pr-2">VER MÁS</span>
+      </a>
+      <a href="{{ path('inward') }}" class="d-none d-lg-flex conceptos-primary-button-gray conceptos-primary-button-gray-desktop mt-3">
+        <span class="pl-2 pr-2">VER MÁS</span>
+      </a>
+    </div>
+    <div class="d-none d-lg-flex flex-column align-items-center p-3">
+      <div class="d-flex col-7">
         {% if page.data.services.image is defined %}
           <div class="d-flex align-items-center conceptos-white-background p-2">
             <img class="conceptos-image" src="{{ page.data.services.image.path }}">
           </div>
         {% endif %}
-        {% if page.data.services.title is defined %}
-          <span class="conceptos-title align-self-start mt-3">{{page.data.services.title}}</span>
-        {% endif %}
-        {% if page.data.services.subtitle is defined %}
-          <span class="conceptos-subtitle align-self-start mt-2">{{page.data.services.subtitle}}</span>
-        {% endif %}
-        <a href="{{ path('inward') }}" class="conceptos-primary-button-gray conceptos-primary-button-gray-desktop mt-3">
-          <span class="pl-2 pr-2">VER MÁS</span>
-        </a>
+        <div class="d-flex flex-column ml-3 justify-content-center">
+          {% if page.data.services.title is defined %}
+            <span class="conceptos-title align-self-start">{{page.data.services.title}}</span>
+          {% endif %}
+          {% if page.data.services.subtitle is defined %}
+            <span class="conceptos-subtitle align-self-start mt-2">{{page.data.services.subtitle}}</span>
+          {% endif %}
+        </div>
+      </div>
+      <a href="{{ path('inward') }}" class="d-flex d-lg-none conceptos-primary-button-gray mt-3">
+        <span class="pl-2 pr-2">VER MÁS</span>
+      </a>
+      <a href="{{ path('inward') }}" class="d-none d-lg-flex conceptos-primary-button-gray conceptos-primary-button-gray-desktop mt-3">
+        <span class="pl-2 pr-2">VER MÁS</span>
+      </a>
     </div>
   </div>
 
   {% if lasts is not empty %}
-   {% set post = lasts[0] %}
     <div class="d-flex flex-column">
       <div class="d-flex conceptos-badge p-2">
         <div class="d-flex align-items-center m-2">
@@ -150,18 +207,24 @@
           <span class="d-none d-lg-flex conceptos-badge-text conceptos-badge-text-desktop">INSPIRACIÓN</span>
         </div>
       </div>
-      <div class="d-flex flex-column p-3">
-        <div class="d-flex align-items-center">
-          <img class="conceptos-image" src="{{ vich_uploader_asset(post, 'imageFile') }}">
-        </div>
-        <div class="d-flex flex-column conceptos-white-background p-3">
-          <span class="conceptos-title">{{post.title}}</span>
-          <span class="conceptos-subtitle mt-2">{{post.summary}}</span>
-          <a href="{{ path('blog_details', {id: post.id, title: post.path}) }}" class="d-flex align-items-center align-self-end home-view-more-link mt-2">
-            LEER MÁS
-            <img class="conceptos-icon ml-2" src="{{ asset('bundles/conceptos/images/home/forward.png') }}">
-          </a>
-        </div>
+      <div class="d-flex">
+        {% for post in lasts %}
+          {% if loop.index <= 2 %}
+            <div class="d-flex flex-column col-12 col-lg-6 align-self-center pt-3 pl-3 pr-3 pb-0">
+              <div class="d-flex align-items-center">
+                <img class="conceptos-image conceptos-blog-image" src="{{ vich_uploader_asset(post, 'imageFile') }}">
+              </div>
+              <div class="d-flex flex-column conceptos-white-background p-3">
+                <span class="conceptos-title">{{post.title}}</span>
+                <span class="conceptos-subtitle conceptos-blog-summary mt-2">{{post.summary}}</span>
+                <a href="{{ path('blog_details', {id: post.id, title: post.path}) }}" class="d-flex align-items-center align-self-end home-view-more-link mt-2">
+                  LEER MÁS
+                  <img class="conceptos-icon ml-2" src="{{ asset('bundles/conceptos/images/home/forward.png') }}">
+                </a>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
       </div>
     </div>
   {% endif %}

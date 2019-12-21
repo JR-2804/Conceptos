@@ -75,7 +75,7 @@
 </div>
 
 <div id="cartPreviewModal" class="modal fade">
-  <div class="modal-dialog modal-lg mt-5">
+  <div class="modal-dialog modal-lg mt-0">
     <div class="modal-content">
       <div class="modal-body">
         <div class="shop-cart-product-list-section conceptos-add-scroll">
@@ -93,7 +93,6 @@
             </div>
             <div class="d-flex flex-column justify-content-center align-items-center m-2">
               <a class="conceptos-go-to-cart-icon" href="{{ path('shop-cart') }}">
-                <img class="conceptos-image" src="{{ asset('bundles/conceptos/images/home/go-to-cart.png') }}">
               </a>
             </div>
           </div>
@@ -103,23 +102,69 @@
   </div>
 </div>
 
-<button id="openCategoriesMenu" class="d-flex justify-content-end p-2">
+<button id="open-categories-menu" class="d-flex justify-content-end p-2">
   <img class="conceptos-icon" src="{{ asset('bundles/conceptos/images/home/forward.png') }}">
 </button>
 
-<div id="categoriesMenu" class="d-flex flex-column p-3">
-  {% for category in categories %}
-    {% if category.parents | length == 0 %}
-      {% set subCategories = '' %}
-      {% for subCategory in category.subCategories %}
-        {% set subCategories = subCategory.id ~ ', '~ subCategories %}
-      {% endfor %}
-      <a class="mt-2" href="{{ path('products', {categories:subCategories}) }}">{{category.name}}</a>
-    {% endif %}
-  {% endfor %}
+<div id="categories-menu" class="conceptos-add-scroll">
+  <div class="d-flex flex-column p-3" role="tablist" aria-multiselectable="false" multiple="false">
+    <div class="d-flex align-items-center">
+      <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-all.png') }}">
+      <a class="conceptos-title" href="{{ path('products') }}">TODOS</a>
+    </div>
+    <div class="d-flex align-items-center mt-2">
+      <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-offers.png') }}">
+      <a class="conceptos-title" href="{{ path('products') }}">OFERTAS</a>
+    </div>
+    {% for category in categories %}
+      {% if category.parents | length == 0 %}
+        {% set subCategories = '' %}
+        {% for subCategory in category.subCategories %}
+          {% set subCategories = subCategory.id ~ ', '~ subCategories %}
+        {% endfor %}
+        {% if category.name == "DECORACIÓN" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-decoration.png') %}
+        {% elseif category.name == "INFANTIL" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-child.png') %}
+        {% elseif category.name == "COCINA" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-kitchen.png') %}
+        {% elseif category.name == "LUMINARIAS" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-lights.png') %}
+        {% elseif category.name == "BAÑO" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-bathroom.png') %}
+        {% elseif category.name == "TEXTILES" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-cloth.png') %}
+        {% elseif category.name == "ORDEN Y ALMACENAMIENTO" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-offers.png') %}
+        {% elseif category.name == "COMEDOR" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-dining-room.png') %}
+        {% elseif category.name == "MOBILIARIO" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-furniture.png') %}
+        {% elseif category.name == "MASCOTAS" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-pets.png') %}
+        {% else %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-all.png') %}
+        {% endif %}
+        <div class="d-flex flex-column conceptos-parent-category mt-2" role="tab">
+          <div class="d-flex align-items-center conceptos-category-header collapsed" data-toggle="collapse" data-target="#subcategories-{{loop.index}}">
+            <img class="conceptos-category-icon mr-2" src="{{categoryIcon}}">
+            <span class="conceptos-title">{{category.name}}</span>
+          </div>
+          <div id="subcategories-{{loop.index}}" class="conceptos-subcategories-panel collapse" role="tabpanel">
+            <div class="d-flex flex-column">
+              {% for subCategory in category.subCategories %}
+                <a class="conceptos-subtitle ml-3 {% if loop.index == 1 %}mt-2{% else %}mt-1{% endif %}" href="{{ path('products', {categories:subCategory.id}) }}">{{subCategory.name}}</a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
 </div>
 
-<div id="closeCategoriesMenu">
+<div id="close-categories-menu">
+    <img class="close-categories-menu-icon mr-2" src="{{ asset('bundles/conceptos/images/home/close-categories-menu.png') }}">
 </div>
 
 {% block header %}
@@ -138,7 +183,7 @@
       <button class="conceptos-navbar-icon" data-toggle="modal" data-target="#cartPreviewModal">
         <div class="d-flex align-items-center">
           <img src="{{ asset('bundles/conceptos/images/home/nav-cart.png') }}">
-          <span id="conceptos-shop-cart-count">{{count}}</span>
+          <span id="conceptos-shop-cart-count" data-count="{{count}}">{% if count > 99 %}+99{% else %}{{count}}{% endif %}</span>
         </div>
       </button>
       {% if app.user|default %}
@@ -158,6 +203,7 @@
           {% if is_granted('ROLE_ADMIN') %}
             <li><a class="conceptos-navbar-item" href="{{ path('easyadmin') }}">ADMINISTRAR</a></li>
           {% endif %}
+          <li><a class="conceptos-navbar-item" href="{{ path('fos_user_security_logout') }}">CERRAR SESIÓN</a></li>
         {% else %}
           <li><a class="conceptos-navbar-item" data-toggle="modal" data-target="#loginModal" href="">ACCEDER</a></li>
         {% endif %}
@@ -188,6 +234,7 @@
               {% if is_granted('ROLE_ADMIN') %}
                 <li><a class="conceptos-navbar-item" href="{{ path('easyadmin') }}">ADMINISTRAR</a></li>
               {% endif %}
+              <li><a class="conceptos-navbar-item" href="{{ path('fos_user_security_logout') }}">CERRAR SESIÓN</a></li>
             {% else %}
               <li><a class="conceptos-navbar-item" data-toggle="modal" data-target="#loginModal" href="">ACCEDER</a></li>
             {% endif %}
@@ -240,7 +287,9 @@
     var marginTop = $(".navbar.navbar-dropdown").css("height");
     $("body").css("padding-top", marginTop);
     $(".conceptos-navbar #navbarSupportedContent").css("top", marginTop);
-    $("#categoriesMenu").css("top", marginTop);
+    $("#categories-menu").css("top", marginTop);
+    $("#cartPreviewModal .modal-dialog").css("top", marginTop);
+    $("#filterProductsModal .modal-dialog").css("top", marginTop);
   });
 </script>
 <script>
