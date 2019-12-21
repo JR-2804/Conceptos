@@ -14,7 +14,7 @@
   </div>
 
   {% if popularChunks is not empty %}
-    <div class="d-flex flex-column p-3">
+    <div class="d-flex d-lg-none flex-column p-3">
       <span class="pl-2 conceptos-title">{{page.data.populars.title|raw}}</span>
       <span class="pl-2 conceptos-subtitle-2">{{page.data.populars.subtitle|raw}}</span>
       <div class="d-flex flex-wrap mt-3">
@@ -31,7 +31,7 @@
                 <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
                   <div class="d-flex flex-wrap">
                       {% for popular in chunk %}
-                        <div class="d-flex col-6 p-2">
+                        <div class="d-flex col-6 justify-content-center p-2">
                           <div class="d-flex align-items-center conceptos-white-background p-2">
                             <a href="{{ path('product_details', {id: popular.id, name: popular.name}) }}">
                               <img class="conceptos-image" src="{{ vich_uploader_asset(popular.mainImage, 'imageFile') }}">
@@ -53,11 +53,53 @@
     </div>
   {% endif %}
 
+  {% if popularChunksDesktop is not empty %}
+    <div class="d-none d-lg-flex flex-column p-3 ml-5 mr-5">
+      <span class="pl-2 conceptos-title conceptos-title-desktop">{{page.data.populars.title|raw}}</span>
+      <span class="pl-2 conceptos-subtitle conceptos-subtitle-desktop">{{page.data.populars.subtitle|raw}}</span>
+      <div class="d-flex flex-wrap mt-3 mb-3">
+        <div class="carousel pb-3" data-ride="carousel" id="carousel-populars-short" data-interval="10000">
+          <ol class="carousel-indicators carousel-indicators-desktop">
+            {% for chunk in popularChunksDesktop %}
+                <li data-app-prevent-settings="" data-target="#slider1-28"
+                    class="{% if loop.first %}active{% endif %}"
+                    data-slide-to="{{ loop.index }}"></li>
+            {% endfor %}
+          </ol>
+          <div class="carousel-inner">
+              {% for chunk in popularChunksDesktop %}
+                <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
+                  <div class="d-flex flex-wrap">
+                      {% for popular in chunk %}
+                        <div class="d-flex col-3 justify-content-center p-3">
+                          <div class="d-flex align-items-center conceptos-white-background p-2">
+                            <a href="{{ path('product_details', {id: popular.id, name: popular.name}) }}">
+                              <img class="conceptos-image" src="{{ vich_uploader_asset(popular.mainImage, 'imageFile') }}">
+                            </a>
+                          </div>
+                        </div>
+                      {% endfor %}
+                  </div>
+                </div>
+              {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mt-3">
+        <a class="conceptos-primary-button-gray conceptos-primary-button-gray-desktop" href="{{ path('products', {populars: true, page: 1}) }}">
+          <span class="pl-2 pr-2 w-100">VER MÁS</span>
+        </a>
+      </div>
+    </div>
+  {% endif %}
+
   <div class="d-flex flex-column">
     <div class="d-flex conceptos-badge p-2">
       <div class="d-flex flex-column justify-content-center m-2">
-        <span class="conceptos-badge-text">ALMACÉN</span>
-        <span class="conceptos-badge-subtitle">{{page.data.subtitles.inStore|raw}}</span>
+        <span class="d-flex d-lg-none conceptos-badge-text">ALMACÉN</span>
+        <span class="d-none d-lg-flex conceptos-badge-text conceptos-badge-text-desktop">ALMACÉN</span>
+        <span class="d-flex d-lg-none conceptos-badge-subtitle">{{page.data.subtitles.inStore|raw}}</span>
+        <span class="d-none d-lg-flex conceptos-badge-subtitle conceptos-badge-subtitle-desktop">{{page.data.subtitles.inStore|raw}}</span>
       </div>
     </div>
     <div class="d-flex flex-column align-items-center p-3">
@@ -68,7 +110,7 @@
           </a>
         </div>
       {% endif %}
-      <a href="{{ path('products', {inStore:true}) }}" class="conceptos-primary-button-gray mt-3">
+      <a href="{{ path('products', {inStore:true}) }}" class="conceptos-primary-button-gray conceptos-primary-button-gray-desktop mt-3">
         <span class="pl-2 pr-2">VER MÁS</span>
       </a>
     </div>
@@ -77,22 +119,23 @@
   <div class="d-flex flex-column">
       <div class="d-flex conceptos-badge p-2">
       <div class="d-flex align-items-center m-2">
-        <span class="conceptos-badge-text">SERVICIOS</span>
+        <span class="d-flex d-lg-none conceptos-badge-text">SERVICIOS</span>
+        <span class="d-none d-lg-flex conceptos-badge-text conceptos-badge-text-desktop">SERVICIOS</span>
       </div>
     </div>
     <div class="d-flex flex-column align-items-center p-3">
-        {% if page.data.services.image.path %}
+        {% if page.data.services.image is defined %}
           <div class="d-flex align-items-center conceptos-white-background p-2">
             <img class="conceptos-image" src="{{ page.data.services.image.path }}">
           </div>
         {% endif %}
-        {% if page.data.services.title %}
+        {% if page.data.services.title is defined %}
           <span class="conceptos-title align-self-start mt-3">{{page.data.services.title}}</span>
         {% endif %}
-        {% if page.data.services.subtitle %}
+        {% if page.data.services.subtitle is defined %}
           <span class="conceptos-subtitle align-self-start mt-2">{{page.data.services.subtitle}}</span>
         {% endif %}
-        <a href="{{ path('inward') }}" class="conceptos-primary-button-gray mt-3">
+        <a href="{{ path('inward') }}" class="conceptos-primary-button-gray conceptos-primary-button-gray-desktop mt-3">
           <span class="pl-2 pr-2">VER MÁS</span>
         </a>
     </div>
@@ -103,7 +146,8 @@
     <div class="d-flex flex-column">
       <div class="d-flex conceptos-badge p-2">
         <div class="d-flex align-items-center m-2">
-          <span class="conceptos-badge-text">INSPIRACIÓN</span>
+          <span class="d-flex d-lg-none conceptos-badge-text">INSPIRACIÓN</span>
+          <span class="d-none d-lg-flex conceptos-badge-text conceptos-badge-text-desktop">INSPIRACIÓN</span>
         </div>
       </div>
       <div class="d-flex flex-column p-3">

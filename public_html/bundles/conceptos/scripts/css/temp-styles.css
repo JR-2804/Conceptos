@@ -125,6 +125,10 @@ input[type="email"]:focus {
   height: 8px;
   width: 9px;
 }
+.carousel-indicators-desktop li {
+  height: 13px;
+  width: 14px;
+}
 
 .carousel-indicators li.active {
   background-color: #c2b930;
@@ -172,6 +176,11 @@ input[type="email"]:focus {
   font-weight: lighter;
   font-size: 10px;
   color: #ffffff;
+}
+
+#conceptos-navbar-links {
+  position: absolute;
+  right: 140px;
 }
 
 /* -------------------------------------------------------- */
@@ -243,8 +252,12 @@ input[type="email"]:focus {
 .conceptos-badge-text {
   font-family: Montserrat;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   color: #e5e5e5;
+}
+
+.conceptos-badge-text-desktop {
+  font-size: 20px;
 }
 
 .conceptos-badge-text-strong {
@@ -261,6 +274,10 @@ input[type="email"]:focus {
   color: #282827;
 }
 
+.conceptos-title-desktop {
+  font-size: 20px;
+}
+
 .conceptos-title-strong {
   font-family: Montserrat;
   font-weight: bolder;
@@ -275,6 +292,10 @@ input[type="email"]:focus {
   color: #282827;
 }
 
+.conceptos-subtitle-desktop {
+  font-size: 16px;
+}
+
 .conceptos-subtitle-2 {
   font-family: Montserrat;
   font-size: 10px;
@@ -285,6 +306,10 @@ input[type="email"]:focus {
   font-family: Montserrat;
   font-size: 10px;
   color: #ffffff;
+}
+
+.conceptos-badge-subtitle-desktop {
+  font-size: 14px;
 }
 
 .conceptos-white-background {
@@ -426,6 +451,10 @@ input[type="email"]:focus {
   outline: none;
 }
 
+.conceptos-primary-button-gray-desktop {
+  font-size: 20px;
+}
+
 .conceptos-divider {
   background-color: #c2b930;
   height: 2px;
@@ -442,11 +471,12 @@ input[type="email"]:focus {
 /* -------------------------------------------------------- */
 
 #home-header {
-  height: 469px;
+  height: 75vh;
 }
 
 #home-header img {
   position: absolute;
+  height: 75vh;
 }
 
 .home-view-more-link {

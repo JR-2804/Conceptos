@@ -158,7 +158,7 @@ class SiteController extends Controller
             'inStore' => $inStore,
             'inStoreHighlight' => $inStoreHighlight,
             'popularChunks' => array_chunk($populars, 6),
-            'popularsForShortScreen' => array_chunk($populars, 3),
+            'popularChunksDesktop' => array_chunk($populars, 8),
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'config' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1),
