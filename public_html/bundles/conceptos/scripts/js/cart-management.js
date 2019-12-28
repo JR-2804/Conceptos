@@ -262,18 +262,27 @@ $(document).ready(function() {
   }
 
   function DisplayMembershipSuccess() {
+    $("#shop-cart-member-number").addClass("conceptos-success-input");
+    $("#shop-cart-member-number").removeClass("conceptos-error-input");
+
     $(".conceptos-request-success-icon").show();
     $(".conceptos-request-error-icon").hide();
     $(".conceptos-request-loading-icon").hide();
   }
 
   function DisplayMembershipError() {
+    $("#shop-cart-member-number").addClass("conceptos-error-input");
+    $("#shop-cart-member-number").removeClass("conceptos-success-input");
+
     $(".conceptos-request-success-icon").hide();
     $(".conceptos-request-error-icon").show();
     $(".conceptos-request-loading-icon").hide();
   }
 
   function DisplayMembershipLoading() {
+    $("#shop-cart-member-number").removeClass("conceptos-error-input");
+    $("#shop-cart-member-number").removeClass("conceptos-success-input");
+
     $(".conceptos-request-success-icon").hide();
     $(".conceptos-request-error-icon").hide();
     $(".conceptos-request-loading-icon").show();

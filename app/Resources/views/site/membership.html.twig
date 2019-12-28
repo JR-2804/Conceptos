@@ -1,7 +1,7 @@
 {% extends ':site:base.html.twig' %}
 {% block title %}Membresía{% endblock %}
 {% block body %}
-  <div class="d-flex flex-column membership-section m-2 p-2">
+  <div class="d-flex flex-column membership-section m-2 m-lg-5 p-2 p-lg-5">
     {{ render(controller('AppBundle:Site:requestMembership')) }}
   </div>
 {% endblock %}

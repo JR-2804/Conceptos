@@ -3,6 +3,16 @@
   src: url("../../fonts/Montserrat/Montserrat-Regular.ttf");
 }
 
+@font-face {
+  font-family: "Montserrat-ExtraBold";
+  src: url("../../fonts/Montserrat/Montserrat-ExtraBold.ttf");
+}
+
+@font-face {
+  font-family: "Montserrat-SemiBold";
+  src: url("../../fonts/Montserrat/Montserrat-SemiBold.ttf");
+}
+
 body {
   background-color: #e5e5e5;
   padding-top: 77px;
@@ -49,6 +59,10 @@ input[type="number"]:focus,
 input[type="email"]:focus {
   outline-color: #c2b930;
   border: none;
+}
+
+.conceptos-white-select {
+  background-color: #ffffff;
 }
 
 textarea {
@@ -138,10 +152,6 @@ textarea {
   height: 8px;
   width: 9px;
 }
-.carousel-indicators-desktop li {
-  height: 13px;
-  width: 14px;
-}
 
 .carousel-indicators li.active {
   background-color: #c2b930;
@@ -153,7 +163,7 @@ textarea {
   height: 40px;
   width: 40px;
   border-radius: 50%;
-  top: 80%;
+  top: 50%;
 }
 
 .carousel-control:focus {
@@ -255,11 +265,11 @@ textarea {
   text-transform: uppercase;
 }
 
-#categories-menu .conceptos-category-header {
+#categories-menu .conceptos-category-header > div {
   border-bottom: 2px solid #c2b930;
 }
 
-#categories-menu .conceptos-category-header.collapsed {
+#categories-menu .conceptos-category-header.collapsed > div {
   border-bottom: none;
 }
 
@@ -271,10 +281,12 @@ textarea {
 
 .conceptos-error-input {
   border: 1px solid #bf1111 !important;
+  outline-color: #bf1111 !important;
 }
 
 .conceptos-success-input {
   border: 1px solid #2c702b !important;
+  outline-color: #2c702b !important;
 }
 
 .conceptos-add-scroll {
@@ -285,6 +297,11 @@ textarea {
   background-color: #282827;
 }
 
+#conceptos-services-badge {
+  position: sticky;
+  top: 77px;
+}
+
 .conceptos-badge-text {
   font-family: Montserrat;
   font-weight: bold;
@@ -292,12 +309,8 @@ textarea {
   color: #e5e5e5;
 }
 
-.conceptos-badge-text-desktop {
-  font-size: 20px;
-}
-
 .conceptos-badge-text-strong {
-  font-family: Montserrat;
+  font-family: Montserrat-ExtraBold;
   font-weight: bold;
   font-size: 14px;
   color: #c2b930;
@@ -317,15 +330,12 @@ a.conceptos-title:focus {
   outline: none;
 }
 
-.conceptos-title-desktop {
-  font-size: 20px;
-}
-
 .conceptos-title-strong {
-  font-family: Montserrat;
+  font-family: Montserrat-ExtraBold;
   font-weight: bolder;
   font-size: 13px;
   color: #282827;
+  text-transform: uppercase;
 }
 
 .conceptos-title-italic {
@@ -341,14 +351,14 @@ a.conceptos-title:focus {
   color: #282827;
 }
 
+.conceptos-text-align-center {
+  text-align: center;
+}
+
 a.conceptos-subtitle:hover,
 a.conceptos-subtitle:focus {
   color: #c2b930;
   outline: none;
-}
-
-.conceptos-subtitle-desktop {
-  font-size: 16px;
 }
 
 .conceptos-subtitle-2 {
@@ -375,10 +385,6 @@ a.conceptos-subtitle:focus {
   font-family: Montserrat;
   font-size: 10px;
   color: #ffffff;
-}
-
-.conceptos-badge-subtitle-desktop {
-  font-size: 14px;
 }
 
 .conceptos-relative {
@@ -454,8 +460,39 @@ a.conceptos-subtitle:focus {
 }
 
 .conceptos-category-icon {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
+}
+
+.conceptos-category-divider-icon {
+  width: 10px;
+  height: 10px;
+}
+
+.conceptos-category-title {
+  font-family: Montserrat-ExtraBold;
+  font-size: 12px;
+  color: #282827;
+  text-transform: uppercase;
+}
+
+a.conceptos-category-title:hover,
+a.conceptos-category-title:focus {
+  color: #c2b930;
+  outline: none;
+}
+
+.conceptos-category-subtitle {
+  font-family: Montserrat-SemiBold;
+  font-size: 12px;
+  line-height: 15px;
+  color: #282827;
+}
+
+a.conceptos-category-subtitle:hover,
+a.conceptos-category-subtitle:focus {
+  color: #c2b930;
+  outline: none;
 }
 
 .close-categories-menu-icon {
@@ -565,11 +602,37 @@ a.conceptos-subtitle:focus {
 }
 
 .conceptos-header-image {
-  height: 75vh;
+  height: 50vh;
+  object-fit: cover;
+}
+
+.conceptos-popular-product-image {
+  object-fit: cover;
+}
+
+.conceptos-in-store-image {
+  max-height: 300px;
+  object-fit: cover;
 }
 
 .conceptos-blog-image {
-  max-height: 500px;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.conceptos-section-image {
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.conceptos-product-image {
+  object-fit: cover;
+}
+
+.conceptos-product-summary-image {
+  max-height: 100px;
+  max-width: 100px;
+  object-fit: cover;
 }
 
 .conceptos-primary-button {
@@ -608,8 +671,24 @@ a.conceptos-subtitle:focus {
   outline: none;
 }
 
-.conceptos-primary-button-gray-desktop {
-  font-size: 20px;
+.conceptos-primary-button-badge {
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  border-radius: 0 !important;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 14px;
+  color: #ffffff;
+  outline: none;
+}
+
+.conceptos-primary-button-badge-focused,
+.conceptos-primary-button-badge:focus,
+.conceptos-primary-button-badge:hover {
+  background-color: #c2b930;
+  border-color: #c2b930;
+  color: #282827;
+  outline: none;
 }
 
 .conceptos-divider {
@@ -815,9 +894,61 @@ a.conceptos-subtitle:focus {
   background-color: #ffffff;
 }
 
-.membership-header-image {
-  height: 50vh;
-  object-fit: cover;
-}
-
 /* -------------------------------------------------------- */
+
+@media (min-width: 992px) {
+  .carousel-indicators li {
+    height: 13px;
+    width: 14px;
+  }
+
+  .conceptos-title {
+    font-size: 20px;
+  }
+
+  .conceptos-subtitle {
+    font-size: 16px;
+  }
+
+  .conceptos-badge-text {
+    font-size: 20px;
+  }
+
+  .conceptos-badge-subtitle {
+    font-size: 14px;
+  }
+
+  .conceptos-product-info {
+    font-size: 15px;
+  }
+
+  .conceptos-product-info-description {
+    font-size: 15px;
+  }
+
+  .conceptos-in-store-product-badge {
+    font-size: 15px;
+  }
+
+  .conceptos-new-product-badge {
+    font-family: Montserrat;
+    font-size: 15px;
+  }
+
+  .conceptos-testimony-text {
+    font-size: 16px;
+  }
+
+  .conceptos-testimony-author {
+    font-size: 14px;
+  }
+
+  .conceptos-primary-button-gray {
+    font-size: 20px;
+  }
+
+  .conceptos-in-store-image {
+    width: 300px;
+    height: 300px;
+  }
+}

@@ -1,4 +1,4 @@
-<img class="conceptos-image membership-header-image mt-2" src="{{ page.data.header.image.path }}">
+<img class="conceptos-image conceptos-header-image mt-2" src="{{ page.data.header.image.path }}">
 <span class="conceptos-title mt-3 mb-3">MEMBRESÍA</span>
 <div class="d-flex flex-column w-100">
   {{ form_start(form, {'attr': {'class': 'd-flex flex-column', 'action': path('request_membership')}}) }}
@@ -24,11 +24,11 @@
     </div>
     <span class="conceptos-title mt-3">{{ page.data.header.mainText }}</span>
     <span class="conceptos-subtitle">{{ page.data.header.bottomText }}</span>
-    <img class="conceptos-image membership-header-image mt-2" src="{{ page.data.header.advertisementImage.path }}">
     <div class="d-flex justify-content-start">
       <button id="request-membership-button" type="submit" class="conceptos-primary-button mt-2 pl-4 pr-4" href="">
         <span>SOLICITAR</span>
       </button>
     </div>
+    <img class="conceptos-image conceptos-section-image mt-2" src="{{ page.data.header.advertisementImage.path }}">
   {{ form_end(form) }}
 </div>

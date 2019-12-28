@@ -157,6 +157,7 @@ class SiteController extends Controller
             'home' => $page,
             'lasts' => $lasts,
             'inStore' => $inStore,
+            'inStoreDesktop' => array_chunk($inStore, 4),
             'inStoreHighlight' => $inStoreHighlight,
             'popularChunks' => array_chunk($populars, 6),
             'popularChunksDesktop' => array_chunk($populars, 8),
@@ -679,7 +680,7 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="services", path="/obras")
+     * @Route(name="services", path="/servicios")
      *
      * @param Request $request
      *
@@ -693,20 +694,20 @@ class SiteController extends Controller
         $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Membresia',
         ]);
-        $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Obras',
-        ]);
         $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Obras',
+        ]);
+        $inward = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Interiorismo',
         ]);
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
         return $this->render(':site:services.html.twig', [
             'home' => $home,
-            'page' => $page,
             'membership' => $membership,
             'services' => $services,
+            'inward' => $inward,
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'categories' => $this->get('category_service')->getAll(),
@@ -985,11 +986,11 @@ class SiteController extends Controller
         if ($form->isValid() && $form->isSubmitted()) {
             $email = $form->getData();
             $body = $this->renderView(':site:email-body.html.twig', [
-                'name' => $email->getName(),
+                'firstName' => $email->getName(),
+                'lastName' => $email->getLastName(),
                 'email' => $email->getEmail(),
                 'phone' => $email->getPhone(),
                 'description' => $email->getText(),
-                'member' => $email->getMemberNumber(),
             ]);
             $this->get('email_service')->send($email->getEmail(), $email->getName(), $config->getEmail(), 'Solicitud de Servicio', $body);
         }

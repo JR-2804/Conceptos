@@ -2,51 +2,20 @@
 {% block title %}Ayuda{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 pl-0">
-                <img class="help-page-header d-none d-lg-block" src="{{ page.data.header.image.path }}">
-                <img class="help-page-header-short d-lg-none" src="{{ page.data.header.image.path }}">
-            </div>
+  <div class="d-flex flex-column p-2">
+    <span class="conceptos-title-strong mt-2 mb-2">AYUDA</span>
+    <div class="d-flex flex-column conceptos-white-background p-2">
+      <img class="conceptos-image conceptos-header-image mt-2" src="{{ page.data.header.image.path }}">
+      {% for faq in page.data.faqs %}
+        <div class="d-flex flex-column mt-2" role="tab">
+          <div id="{{loop.index}}heading">
+            <a class="conceptos-title" data-toggle="collapse" data-target="#{{loop.index}}" href="javascript:void(0);">{{faq.question|raw}}</a>
+          </div>
+          <div id="{{loop.index}}" class="collapse {% if loop.index == 0 %}show{% endif %}" role="tabpanel">
+            <span class="conceptos-subtitle ml-2">{{faq.answer|raw}}</span>
+          </div>
         </div>
+      {% endfor %}
     </div>
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-12 mt-3">
-                    <span class="decoration-design-description d-none d-lg-block">{{page.data.introduction.text}}</span>
-                    <span class="decoration-design-description-short d-lg-none">{{page.data.introduction.text}}</span>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div id="help-accordion" class="mt-2 mt-lg-3" role="tablist" aria-multiselectable="true">
-                        {% for faq in page.data.faqs %}
-                            <div class="card card-category" role="tab">
-                                <div class="card-header card-header-category" id="{{loop.index}}heading">
-                                    <h5 class="mb-0">
-                                        <a data-toggle="collapse" data-target="#{{loop.index}}" href="javascript:void(0);">
-                                            <span class="badge text-right badge-plus">
-                                                <i class="mbri-plus"></i>
-                                            </span>
-                                            <span>{{faq.question|raw}}</span>
-                                        </a>
-                                    </h5>
-                                </div>
-                                <div id="{{loop.index}}" class="collapse {% if loop.index == 0 %}show{% endif %}" role="tabpanel">
-                                    <div class="card-body card-body-subcategory ac-custom ac-checkmark ml-0">
-                                        <span>{{faq.answer|raw}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  </div>
 {% endblock %}

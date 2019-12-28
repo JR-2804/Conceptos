@@ -110,11 +110,11 @@
   <div class="d-flex flex-column p-3" role="tablist" aria-multiselectable="false" multiple="false">
     <div class="d-flex align-items-center">
       <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-all.png') }}">
-      <a class="conceptos-title" href="{{ path('products') }}">TODOS</a>
+      <a class="conceptos-category-title" href="{{ path('products') }}">TODOS</a>
     </div>
-    <div class="d-flex align-items-center mt-2">
+    <div class="d-flex align-items-center mt-3">
       <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-offers.png') }}">
-      <a class="conceptos-title" href="{{ path('products') }}">OFERTAS</a>
+      <a class="conceptos-category-title" href="{{ path('products') }}">OFERTAS</a>
     </div>
     {% for category in categories %}
       {% if category.parents | length == 0 %}
@@ -135,7 +135,7 @@
         {% elseif category.name == "TEXTILES" %}
           {% set categoryIcon = asset('bundles/conceptos/images/home/category-cloth.png') %}
         {% elseif category.name == "ORDEN Y ALMACENAMIENTO" %}
-          {% set categoryIcon = asset('bundles/conceptos/images/home/category-offers.png') %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-store.png') %}
         {% elseif category.name == "COMEDOR" %}
           {% set categoryIcon = asset('bundles/conceptos/images/home/category-dining-room.png') %}
         {% elseif category.name == "MOBILIARIO" %}
@@ -145,15 +145,20 @@
         {% else %}
           {% set categoryIcon = asset('bundles/conceptos/images/home/category-all.png') %}
         {% endif %}
-        <div class="d-flex flex-column conceptos-parent-category mt-2" role="tab">
+        <div class="d-flex flex-column conceptos-parent-category mt-3" role="tab">
           <div class="d-flex align-items-center conceptos-category-header collapsed" data-toggle="collapse" data-target="#subcategories-{{loop.index}}">
             <img class="conceptos-category-icon mr-2" src="{{categoryIcon}}">
-            <span class="conceptos-title">{{category.name}}</span>
+            <div class="d-flex w-100">
+              <span class="conceptos-category-title">{{category.name}}</span>
+            </div>
           </div>
           <div id="subcategories-{{loop.index}}" class="conceptos-subcategories-panel collapse" role="tabpanel">
             <div class="d-flex flex-column">
               {% for subCategory in category.subCategories %}
-                <a class="conceptos-subtitle ml-3 {% if loop.index == 1 %}mt-2{% else %}mt-1{% endif %}" href="{{ path('products', {categories:subCategory.id}) }}">{{subCategory.name}}</a>
+                <div class="d-flex align-items-center mt-3">
+                  <img class="conceptos-category-divider-icon ml-3 mr-1" src="{{asset('bundles/conceptos/images/home/category.png')}}">
+                  <a class="conceptos-category-subtitle" href="{{ path('products', {categories:subCategory.id}) }}">{{subCategory.name}}</a>
+                </div>
               {% endfor %}
             </div>
           </div>
@@ -164,7 +169,7 @@
 </div>
 
 <div id="close-categories-menu">
-    <img class="close-categories-menu-icon mr-2" src="{{ asset('bundles/conceptos/images/home/close-categories-menu.png') }}">
+  <img class="close-categories-menu-icon mr-2 d-flex d-lg-none" src="{{ asset('bundles/conceptos/images/home/close-categories-menu.png') }}">
 </div>
 
 {% block header %}
@@ -195,8 +200,7 @@
       {% endif %}
       <ul id="conceptos-navbar-links" class="navbar-nav nav-dropdown conceptos-navbar-dropdown d-none d-lg-flex" data-app-modern-menu="true">
         <li><a class="conceptos-navbar-item" href="{{ path('products') }}">PRODUCTOS</a></li>
-        <li><a class="conceptos-navbar-item" href="{{ path('inward') }}">INTERIORISMO</a></li>
-        <li><a class="conceptos-navbar-item" href="{{ path('services') }}">OBRAS</a></li>
+        <li><a class="conceptos-navbar-item" href="{{ path('services') }}">SERVICIOS</a></li>
         <li><a class="conceptos-navbar-item" href="{{ path('membership') }}">MEMBRESÍA</a></li>
         <li><a class="conceptos-navbar-item" href="{{ path('help') }}">AYUDA</a></li>
         {% if app.user|default %}
@@ -214,7 +218,7 @@
                   <a href="{{ path('site_home') }}">
                       <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
                             title="Conceptos"
-                            style="height: 3.8rem;" class="logo-menu d-none d-lg-flex">
+                            style="height: 2.8rem;" class="logo-menu d-none d-lg-flex">
                       <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
                             title="Conceptos"
                             style="width:100%;height: auto !important;" class="logo-menu d-lg-none">
@@ -225,8 +229,7 @@
       <div class="d-flex flex-column collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav nav-dropdown conceptos-navbar-dropdown d-flex d-lg-none" data-app-modern-menu="true">
             <li><a class="conceptos-navbar-item" href="{{ path('products') }}">PRODUCTOS</a></li>
-            <li><a class="conceptos-navbar-item" href="{{ path('inward') }}">INTERIORISMO</a></li>
-            <li><a class="conceptos-navbar-item" href="{{ path('services') }}">OBRAS</a></li>
+            <li><a class="conceptos-navbar-item" href="{{ path('services') }}">SERVICIOS</a></li>
             <li><a class="conceptos-navbar-item" href="{{ path('membership') }}">MEMBRESÍA</a></li>
             <li><a class="conceptos-navbar-item" href="{{ path('help') }}">AYUDA</a></li>
             <li><div class="conceptos-navbar-divider" role="separator"></div></li>
@@ -290,6 +293,7 @@
     $("#categories-menu").css("top", marginTop);
     $("#cartPreviewModal .modal-dialog").css("top", marginTop);
     $("#filterProductsModal .modal-dialog").css("top", marginTop);
+    $("#conceptos-services-badge").css("top", marginTop);
   });
 </script>
 <script>
