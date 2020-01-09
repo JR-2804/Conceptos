@@ -338,6 +338,12 @@ a.conceptos-title:focus {
   text-transform: uppercase;
 }
 
+a.conceptos-title-strong:hover,
+a.conceptos-title-strong:focus {
+  color: #c2b930;
+  outline: none;
+}
+
 .conceptos-title-italic {
   font-style: italic;
   text-decoration: underline;
@@ -888,10 +894,29 @@ a.conceptos-category-subtitle:focus {
   font-style: normal !important;
 }
 
-/* -------------------------------------------------------- */
+#dropzone-profile-image {
+  min-height: 100px;
+  min-width: 100px;
+  width: 100px;
+  height: 100px;
+}
 
-.membership-section {
-  background-color: #ffffff;
+.edit-profile-button {
+  border: none;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  background-image: url("../../images/home/edit-profile.png");
+  background-size: cover;
+}
+
+.edit-profile-button:focus,
+.edit-profile-button:hover {
+  outline: none;
+}
+
+.conceptos-product-badges {
+  height: 30px;
 }
 
 /* -------------------------------------------------------- */

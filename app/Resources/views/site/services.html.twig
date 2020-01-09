@@ -24,8 +24,12 @@
         <span class="conceptos-title">{{inward.data.services.designersTeam.title}}</span>
         <span class="conceptos-subtitle">{{inward.data.services.designersTeam.description}}</span>
         <select id="service-select" class="conceptos-white-select mt-2">
+          <option value="none">Seleccione un servicio para ver detalles</option>
           {% for service in inward.data.services.designersTeam.services %}
-            <option value="{{service.title}}">{{service.title}}</option>
+            <option value="{{service.title}}"
+                    data-path="{{ path('service_details', {serviceTitle: service.title, pageName: 'inward'}) }}">
+              {{service.title}}
+            </option>
           {% endfor %}
         </select>
       </div>
@@ -34,10 +38,10 @@
       </div>
       <div class="d-flex flex-column pl-3 pr-3 pb-3">
         {% for image in inward.data.services.projects.projects %}
-        <div class="d-flex flex-column">
+        <a class="d-flex flex-column" href="{{ path('project_details', {projectTitle: image.title}) }}">
           <span class="conceptos-title-strong mt-3">{{image.title}}</span>
           <img class="conceptos-image mt-2" src="{{image.path}}">
-        </div>
+        </a>
         {% endfor %}
       </div>
     </div>
@@ -45,9 +49,13 @@
       <div class="d-flex flex-column p-3">
         <span class="conceptos-title">{{services.data.services.designersTeam.title}}</span>
         <span class="conceptos-subtitle">{{services.data.services.designersTeam.description}}</span>
-        <select id="service-select" class="conceptos-white-select mt-2">
+        <select id="obras-select" class="conceptos-white-select mt-2">
+          <option value="none">Seleccione un servicio para ver detalles</option>
           {% for service in services.data.services.designersTeam.services %}
-            <option value="{{service.title}}">{{service.title}}</option>
+            <option value="{{service.title}}"
+                    data-path="{{ path('service_details', {serviceTitle: service.title, pageName: 'services'}) }}">
+              {{service.title}}
+            </option>
           {% endfor %}
         </select>
       </div>
@@ -56,10 +64,10 @@
       </div>
       <div class="d-flex flex-column pl-3 pr-3 pb-3">
         {% for image in services.data.services.projects.projects %}
-        <div class="d-flex flex-column">
+        <a class="d-flex flex-column" href="{{ path('project_details', {projectTitle: image.title}) }}">
           <span class="conceptos-title-strong mt-3">{{image.title}}</span>
           <img class="conceptos-image mt-2" src="{{image.path}}">
-        </div>
+        </a>
         {% endfor %}
       </div>
     </div>

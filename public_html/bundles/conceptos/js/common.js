@@ -75,6 +75,10 @@ $(document).ready(function() {
     categoriesMenu.css("right", "20%");
     categoriesMenu.css("left", "0");
     $("#close-categories-menu").show();
+
+    var position = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${position}px`;
   });
 
   $("#close-categories-menu").click(function() {
@@ -82,6 +86,11 @@ $(document).ready(function() {
     categoriesMenu.css("right", "100%");
     categoriesMenu.css("left", "-100%");
     $("#close-categories-menu").hide();
+
+    const scrollY = document.body.style.top;
+    document.body.style.position = "";
+    document.body.style.top = "";
+    window.scrollTo(0, parseInt(scrollY || "0") * -1);
   });
 
   $(".conceptos-parent-category").click(function() {

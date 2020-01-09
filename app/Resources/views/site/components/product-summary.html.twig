@@ -1,18 +1,55 @@
-<div class="product-card product-card-clickable d-flex flex-column mt-0 pl-1 pr-1 ml-1 mr-1 pl-lg-2 pr-lg-2 ml-lg-2 mr-lg-2" data-path="{{ path('product_details', {id: product.id, name: product.name}) }}">
-    <div class="d-flex flex-column align-items-center justify-content-center">
-        {% if app.user|default %}
-            <a data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"
-               data-path-remove="{{ path('remove_from_favorite', {id: product.id}) }}"
-               class="favorite-product mt-2 {% if product.favorite %}favorite{% endif %}">
-                <span class="fa fa-heart"></span>
-            </a>
+{% set priceOffer = -1 %}
+{% set offerId = 'false' %}
+{% set onlyForMembers = false %}
+{% for offer in product.offers %}
+  {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
+    {% set priceOffer = offer.price %}
+    {% set offerId = offer.id %}
+    {% if offer.onlyForMembers %}
+      {% set onlyForMembers = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+{% if priceOffer == -1 %}
+  {% for category in product.categories %}
+    {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and product.inStore)) %}
+      {% set priceOffer = (product.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
+    {% else %}
+      {% for parentCategory in category.parents %}
+        {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and product.inStore)) %}
+          {% set priceOffer = (product.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
         {% endif %}
-        <img class="w-100"
-              src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}"
-              alt="{{ product.item }}">
-        {{include('site/components/display-product-evaluation.html.twig')}}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+<a class="d-flex flex-column conceptos-product-card col-6 col-lg-3 p-2 p-lg-3" href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+  <div class="d-flex align-items-center conceptos-white-background p-2">
+    <img class="conceptos-image conceptos-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+  </div>
+  <div class="d-flex flex-column conceptos-white-background pl-2 pr-2 pb-2 w-100">
+    <span class="conceptos-product-info">{{product.name}}</span>
+    <span class="conceptos-product-info-description">{{product.description}}</span>
+    <div class="d-flex align-items-center">
+      {% if priceOffer != -1 %}
+        <span class="conceptos-product-info conceptos-product-price mr-2">${{priceOffer}}</span>
+        <span class="conceptos-product-info conceptos-offer-price">${{product.price}}</span>
+      {% else %}
+        <span class="conceptos-product-info conceptos-product-price">${{product.price}}</span>
+      {% endif %}
     </div>
-    <div class="d-flex flex-column">
-        {{include('site/components/product-summary-data.html.twig')}}
+    <div class="d-flex justify-content-between align-items-center mt-1">
+      <div class="d-flex flex-column conceptos-product-badges">
+        {% if product.inStore %}
+          <span class="conceptos-in-store-product-badge">ALMACÉN</span>
+        {% endif %}
+        {% if product.recent %}
+          <span class="conceptos-new-product-badge">NUEVO</span>
+        {% endif %}
+      </div>
+      <button class="conceptos-add-to-cart-icon" data-path="{{ path('add_shop_card', {id: product.id}) }}">
+        <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
+      </button>
     </div>
-</div>
+  </div>
+</a>

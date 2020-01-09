@@ -255,10 +255,12 @@ $(document).ready(function() {
     }
 
     $(".shop-cart-transport-cost").text("$" + transportCost.toFixed(2));
-    totalPrice += transportCost;
 
-    totalPrice = Number(totalPrice).toFixed(2);
-    $(".shop-cart-total-price").text("$" + totalPrice);
+    $(".shop-cart-total-price").text("$" + Number(totalPrice).toFixed(2));
+    totalPrice += transportCost;
+    $(".shop-cart-total-price-with-transport").text(
+      "$" + Number(totalPrice).toFixed(2)
+    );
   }
 
   function DisplayMembershipSuccess() {
