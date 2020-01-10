@@ -57,7 +57,7 @@
                             {% endif %}
                           {% endfor %}
                         {% endif %}
-                        <div class="d-flex col-6 justify-content-center p-2 popular_product">
+                        <div class="d-flex col-6 justify-content-center p-2 {% if priceOffer != -1 %}popular_product{% endif %}">
                           <div class="d-flex align-items-center conceptos-white-background p-2">
                             <a href="{{ path('product_details', {id: popular.id, name: popular.name}) }}">
                               <div class="d-flex flex-column">
@@ -134,7 +134,7 @@
                             {% endif %}
                           {% endfor %}
                         {% endif %}
-                        <div class="d-flex col-3 justify-content-center p-3">
+                        <div class="d-flex col-3 justify-content-center p-3 {% if priceOffer != -1 %}popular_product{% endif %}">
                           <div class="d-flex align-items-center conceptos-white-background p-2">
                             <a href="{{ path('product_details', {id: popular.id, name: popular.name}) }}">
                               <div class="d-flex flex-column">

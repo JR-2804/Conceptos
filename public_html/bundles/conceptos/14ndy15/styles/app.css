@@ -1,7 +1,7 @@
-.popular_product > div {
+.popular_product > div:first-child {
   position: relative;
   overflow: hidden; }
-  .popular_product > div:before {
+  .popular_product > div:first-child:before {
     position: absolute;
     background-color: #c2b930;
     content: 'OFERTA';
