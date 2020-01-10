@@ -19,3 +19,4 @@
 app/config/parameters.yml
 /.vscode/
 public_html/error_log
+/node_modules/
