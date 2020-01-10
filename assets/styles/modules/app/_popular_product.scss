@@ -1,6 +1,6 @@
 .popular_product{
 
-    & > div{
+    & > div:first-child{
         position: relative;
         overflow: hidden;
         &:before{
