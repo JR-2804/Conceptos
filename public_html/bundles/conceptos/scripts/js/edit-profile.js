@@ -9,8 +9,8 @@ $(document).ready(function() {
     data.image = JSON.parse($("#fos_user_profile_form_jsonImage").val());
   }
 
-  dropzone = new Dropzone("#picture-dropzone-profile", {
-    url: $("#picture-dropzone-profile").attr("action"),
+  dropzone = new Dropzone("#dropzone-profile-image", {
+    url: $("#dropzone-profile-image").attr("action"),
     maxFiles: 1,
     thumbnailWidth: 100,
     thumbnailHeight: 100,
@@ -42,6 +42,10 @@ $(document).ready(function() {
     success: function(e, r) {
       data.image = r;
     }
+  });
+
+  $("#edit-profile-button").click(function() {
+    $("#edit-profile-section").show();
   });
 
   $(".update-profile-button").click(function(e) {

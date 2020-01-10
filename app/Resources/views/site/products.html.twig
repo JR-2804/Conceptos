@@ -147,9 +147,15 @@
       <div class="d-flex justify-content-between align-items-center ml-2 mr-2 mt-3 mb-3">
         <div class="d-flex flex-column ml-lg-5">
           {% if mainCategory %}
-            <span class="conceptos-title"><span class="conceptos-title-strong">PRODUCTOS</span> / {{mainCategory.name}}</span>
+            <span>
+              <span><a class="conceptos-title-strong" href="{{ path('products') }}">PRODUCTOS</a></span>
+              <a class="conceptos-title">/ {{mainCategory.name}}</a>
+            </span>
           {% else %}
-            <span class="conceptos-title"><span class="conceptos-title-strong">PRODUCTOS</span> / TODOS</span>
+            <span>
+              <span><a class="conceptos-title-strong" href="{{ path('products') }}">PRODUCTOS</a></span>
+              <a class="conceptos-title" href="{{ path('products') }}">/ TODOS</a>
+            </spa>
           {% endif %}
           {% if mainSubcategory %}
             <span class="conceptos-title mt-1">{{mainSubcategory.name}}</span>
@@ -161,61 +167,7 @@
       </div>
       <div class="d-flex flex-wrap pl-lg-5 pr-lg-5">
         {% for product in products %}
-          {% set priceOffer = -1 %}
-          {% set offerId = 'false' %}
-          {% set onlyForMembers = false %}
-          {% for offer in product.offers %}
-            {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
-              {% set priceOffer = offer.price %}
-              {% set offerId = offer.id %}
-              {% if offer.onlyForMembers %}
-                {% set onlyForMembers = true %}
-              {% endif %}
-            {% endif %}
-          {% endfor %}
-          {% if priceOffer == -1 %}
-            {% for category in product.categories %}
-              {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and product.inStore)) %}
-                {% set priceOffer = (product.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
-              {% else %}
-                {% for parentCategory in category.parents %}
-                  {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and product.inStore)) %}
-                    {% set priceOffer = (product.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
-                  {% endif %}
-                {% endfor %}
-              {% endif %}
-            {% endfor %}
-          {% endif %}
-          <a class="d-flex flex-column conceptos-product-card col-6 col-lg-3 p-2 p-lg-3" href="{{ path('product_details', {id: product.id, name: product.name}) }}">
-            <div class="d-flex align-items-center conceptos-white-background p-2">
-              <img class="conceptos-image conceptos-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
-            </div>
-            <div class="d-flex flex-column conceptos-white-background pl-2 pr-2 pb-2 w-100">
-              <span class="conceptos-product-info">{{product.name}}</span>
-              <span class="conceptos-product-info-description">{{product.description}}</span>
-              <div class="d-flex align-items-center">
-                {% if priceOffer != -1 %}
-                  <span class="conceptos-product-info conceptos-product-price mr-2">${{priceOffer}}</span>
-                  <span class="conceptos-product-info conceptos-offer-price">${{product.price}}</span>
-                {% else %}
-                  <span class="conceptos-product-info conceptos-product-price">${{product.price}}</span>
-                {% endif %}
-              </div>
-              <div class="d-flex justify-content-between align-items-center mt-1">
-                <div class="d-flex flex-column">
-                  {% if product.inStore %}
-                    <span class="conceptos-in-store-product-badge">ALMACÉN</span>
-                  {% endif %}
-                  {% if product.recent %}
-                    <span class="conceptos-new-product-badge">NUEVO</span>
-                  {% endif %}
-                </div>
-                <button class="conceptos-add-to-cart-icon" data-path="{{ path('add_shop_card', {id: product.id}) }}">
-                  <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
-                </button>
-              </div>
-            </div>
-          </a>
+          {{include('site/components/product-summary.html.twig')}}
         {% else %}
           <span class="conceptos-title-strong conceptos-text-align-center">NO EXISTEN PRODUCTOS CON LOS PARÁMETROS SELECCIONADOS</span>
         {% endfor %}
