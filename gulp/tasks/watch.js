@@ -21,7 +21,7 @@ gulp.task('watch', function(){
     //     gulp.start('cssInject');
     // });
 
-    watch('./assets/css/**/*.scss', function(){
+    watch('./assets/styles/**/*.scss', function(){
         gulp.start('styles');
     });
 

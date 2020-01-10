@@ -1,0 +1,16 @@
+.popular_product > div {
+  position: relative;
+  overflow: hidden; }
+  .popular_product > div:before {
+    position: absolute;
+    background-color: #c2b930;
+    content: 'OFERTA';
+    top: 0;
+    color: #282827;
+    font-weight: 700;
+    padding: .1em 2em;
+    -webkit-transform: translate(-35%, 50%) rotate(-45deg);
+            transform: translate(-35%, 50%) rotate(-45deg);
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    font-size: .8em; }

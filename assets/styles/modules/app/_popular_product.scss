@@ -1,0 +1,20 @@
+.popular_product{
+
+    & > div{
+        position: relative;
+        overflow: hidden;
+        &:before{
+            position: absolute;
+            background-color: $mainYellow;
+            content: 'OFERTA';
+            top: 0;
+            color: $mainDark;
+            font-weight: 700;
+            padding: .1em 2em;
+            transform: translate(-35%, 50%) rotate(-45deg);
+            -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+            font-size: .8em;
+        }
+    }
+}
