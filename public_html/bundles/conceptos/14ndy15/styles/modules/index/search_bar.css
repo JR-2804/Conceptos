@@ -1,0 +1,25 @@
+.search_bar {
+  position: absolute;
+  z-index: 3;
+  width: 100%; }
+  .search_bar form {
+    width: 100%;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+            align-items: center;
+    flex-wrap: nowrap; }
+  .search_bar form input[type='text'] {
+      width: 100%;
+      padding: 1em .75em;
+      opacity: 90%;
+      background-color: #ffffff;
+      margin: 0;
+      height: auto; }
+  .search_bar form input[type='submit'] {
+      border: 1px transparent solid;
+      background-color: transparent;
+      width: 3em;
+      height: 3em; }

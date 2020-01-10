@@ -173,6 +173,7 @@
   <img class="close-categories-menu-icon mr-2 d-flex d-lg-none" src="{{ asset('bundles/conceptos/images/home/close-categories-menu.png') }}">
 </div>
 
+
 {% block header %}
   <section class="menu cid-qQ6pVr9Hx2" once="menu">
     <nav class="navbar navbar-dropdown navbar-fixed-top navbar-toggleable conceptos-navbar">
@@ -247,6 +248,9 @@
     </nav>
   </section>
 {% endblock %}
+
+
+
 {% block body %}{% endblock %}
 {% block login %}
   {{ render(controller('AppBundle:Security:login')) }}

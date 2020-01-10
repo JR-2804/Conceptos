@@ -753,16 +753,6 @@ a.conceptos-category-subtitle:focus {
   height: 10px;
 }
 
-#home-search-form {
-  z-index: 10;
-  position: relative;
-  top: 150px;
-}
-
-#home-search-form input {
-  opacity: 90%;
-  background-color: #ffffff;
-}
 
 /* -------------------------------------------------------- */
 
