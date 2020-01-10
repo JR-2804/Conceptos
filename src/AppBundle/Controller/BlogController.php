@@ -23,6 +23,9 @@ class BlogController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $page = $request->query->get('page', 0);
         $firstResult = $page * 10;
         $posts = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')
@@ -41,7 +44,9 @@ class BlogController extends Controller
 
         return $this->render('site/blog/index.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'posts' => $posts,
             'lasts' => $lasts,
             'blogCategories' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Category')->findAll(),
@@ -69,6 +74,9 @@ class BlogController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $post = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($id);
         $lasts = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->createQueryBuilder('p')
             ->where('p.id <> :id')
@@ -82,7 +90,9 @@ class BlogController extends Controller
 
         return $this->render(':site/blog:details.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'post' => $post,
             'lasts' => $lasts,
             'blogCategories' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Category')->findAll(),
@@ -107,6 +117,9 @@ class BlogController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $page = $request->query->get('page', 0);
         $firstResult = $page * 10;
         $posts = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')
@@ -128,7 +141,9 @@ class BlogController extends Controller
 
         return $this->render('site/blog/index.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'posts' => $posts,
             'lasts' => $lasts,
             'blogCategories' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Category')->findAll(),
@@ -156,6 +171,9 @@ class BlogController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $page = $request->query->get('page', 0);
         $firstResult = $page * 10;
         $posts = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')
@@ -177,7 +195,9 @@ class BlogController extends Controller
 
         return $this->render('site/blog/index.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'posts' => $posts,
             'lasts' => $lasts,
             'blogCategories' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Category')->findAll(),
@@ -203,6 +223,9 @@ class BlogController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $term = $request->query->get('term', false);
         if ($term) {
             $posts = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')
@@ -227,7 +250,9 @@ class BlogController extends Controller
 
         return $this->render(':site/blog:index.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'posts' => $posts,
             'lasts' => $lasts,
             'blogCategories' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Category')->findAll(),
@@ -278,6 +303,107 @@ class BlogController extends Controller
         return $this->render(':site/blog:add-comment.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    private function getShopCartProducts($products)
+    {
+      if ($products == null) {
+        $products = [];
+      }
+
+      $productsDB = [];
+      foreach ($products as $product) {
+          if (array_key_exists('id', $product) && ('target15' == $product['id'] || 'target25' == $product['id'] || 'target50' == $product['id'] || 'target100' == $product['id'])) {
+              $name = 'Tarjeta de 15 CUC';
+              switch ($product['id']) {
+                  case 'target15':
+                      $price = 15;
+                      break;
+                  case 'target25':
+                      $name = 'Tarjeta de 25 CUC';
+                      $price = 25;
+                      break;
+                  case 'target50':
+                      $name = 'Tarjeta de 50 CUC';
+                      $price = 50;
+                      break;
+                  default:
+                      $name = 'Tarjeta de 100 CUC';
+                      $price = 100;
+                      break;
+              }
+              $productsDB[] = [
+                  'id' => $product['id'],
+                  'uuid' => $product['uuid'],
+                  'type' => 'target',
+                  'price' => $price,
+                  'count' => $product['count'],
+                  'name' => $name,
+              ];
+          } else {
+              $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['product']);
+              $price = $productDB->getPrice();
+
+              $offerExists = false;
+              $offerDB = null;
+              if ($productDB->getOffers() && $productDB->getOffers()[0]) {
+                $offerDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')->find($productDB->getOffers()[0]);
+              }
+
+              if ($offerDB) {
+                $price = $offerDB->getPrice();
+                $offerExists = true;
+              } else {
+                $categories = [];
+                foreach ($productDB->getCategories() as $category) {
+                  $categories[] = $category->getId();
+
+                  if (($category->getOffers()[0]) && ((!$category->getOffers()[0]->getOnlyInStoreProducts()) or ($category->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
+                    $price = ceil($productDB->getPrice()*(1 - $category->getOffers()[0]->getPrice()/100));
+                    $offerExists = true;
+                  } else {
+                    foreach ($category->getParents() as $parentCategory) {
+                      if (($parentCategory->getOffers()[0]) && ((!$parentCategory->getOffers()[0]->getOnlyInStoreProducts()) or ($parentCategory->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
+                        $price = ceil($productDB->getPrice()*(1 - $parentCategory->getOffers()[0]->getPrice()/100));
+                        $offerExists = true;
+                      }
+                    }
+                  }
+                }
+              }
+
+              $productsDB[] = [
+                  'id' => $productDB->getId(),
+                  'uuid' => $product['uuid'],
+                  'price' => $price,
+                  'offerExists' => $offerExists,
+                  'count' => $product['count'],
+                  'storeCount' => $productDB->getStoreCount(),
+                  'name' => $productDB->getName(),
+                  'image' => $productDB->getMainImage(),
+                  'weight' => $productDB->getWeight(),
+                  'ikeaPrice' => $productDB->getIkeaPrice(),
+                  'isFurniture' => $productDB->getIsFurniture(),
+                  'isFragile' => $productDB->getIsFragile(),
+                  'isAirplaneFurniture' => $productDB->getIsAriplaneForniture(),
+                  'isOversize' => $productDB->getIsOversize(),
+                  'isTableware' => $productDB->getIsTableware(),
+                  'isLamp' => $productDB->getIsLamp(),
+                  'numberOfPackages' => $productDB->getNumberOfPackages(),
+                  'isMattress' => $productDB->getIsMattress(),
+                  'isAirplaneMattress' => $productDB->getIsAriplaneMattress(),
+                  'isFaucet' => $productDB->getIsFaucet(),
+                  'isGrill' => $productDB->getIsGrill(),
+                  'isShelf' => $productDB->getIsShelf(),
+                  'isDesk' => $productDB->getIsDesk(),
+                  'isBookcase' => $productDB->getIsBookcase(),
+                  'isComoda' => $productDB->getIsComoda(),
+                  'isRepisa' => $productDB->getIsRepisa(),
+                  'categories' => json_encode($categories),
+              ];
+          }
+      }
+      return $productsDB;
     }
 
     private function countShopCart(Request $request)

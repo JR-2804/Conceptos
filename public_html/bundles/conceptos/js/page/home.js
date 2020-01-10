@@ -557,6 +557,18 @@ function init() {
     $("#shop-cart-main-text").val(data.shopCart.mainText);
     $("#shop-cart-secondary-text").val(data.shopCart.secondaryText);
   }
+  if (data.services) {
+    $("#services-title").val(data.services.title);
+    $("#services-subtitle").val(data.services.subtitle);
+  }
+  if (data.testimonies) {
+    $("#testimony-text-1").val(data.testimonies.text1);
+    $("#testimony-author-1").val(data.testimonies.author1);
+    $("#testimony-text-2").val(data.testimonies.text2);
+    $("#testimony-author-2").val(data.testimonies.author2);
+    $("#testimony-text-3").val(data.testimonies.text3);
+    $("#testimony-author-3").val(data.testimonies.author3);
+  }
 
   $("#app-app").val(data.app.app);
   $("#app-db").val(data.app.db);
@@ -580,7 +592,9 @@ function generateData() {
       image2Link: $("#top-image-2-link").val()
     },
     services: {
-      image: servicesImage
+      image: servicesImage,
+      title: $("#services-title").val(),
+      subtitle: $("#services-subtitle").val()
     },
     subtitles: {
       inStore: $("#in-store-subtitle").val(),
@@ -616,6 +630,14 @@ function generateData() {
     shopCart: {
       mainText: $("#shop-cart-main-text").val(),
       secondaryText: $("#shop-cart-secondary-text").val()
+    },
+    testimonies: {
+      text1: $("#testimony-text-1").val(),
+      author1: $("#testimony-author-1").val(),
+      text2: $("#testimony-text-2").val(),
+      author2: $("#testimony-author-2").val(),
+      text3: $("#testimony-text-3").val(),
+      author3: $("#testimony-author-3").val()
     },
     advertisements: advertisementImages,
     login: {

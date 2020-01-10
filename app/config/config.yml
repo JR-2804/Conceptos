@@ -102,6 +102,14 @@ vich_uploader:
             inject_on_load:     false
             delete_on_update:   true
             delete_on_remove:   true
+        category_icon_pictures:
+            uri_prefix: "/categories/icon"
+            upload_destination: "%kernel.root_dir%/../public_html/categories/icon"
+            namer: vich_uploader.namer_uniqid
+
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
         blog_images:
             uri_prefix: "%app.path.blog.images%"
             upload_destination: "%kernel.root_dir%/../public_html/uploads/images/blog"

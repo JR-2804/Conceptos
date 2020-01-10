@@ -33,10 +33,6 @@ section {
   padding-left: 65px;
 }
 
-img:not(.logo-menu) {
-  width: 100%;
-}
-
 .sharetastic {
   margin-left: 10px;
 }

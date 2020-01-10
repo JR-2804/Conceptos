@@ -189,6 +189,7 @@ class ProductService
     public function filterProducts($request, $user)
     {
         $products = null;
+        $mainSubcategory = null;
         $mainCategory = null;
 
         $qbProduct = $this->productRepository->createQueryBuilder('p');
@@ -285,7 +286,8 @@ class ProductService
             $qbProduct->setParameter('categories', $category);
             $qbProductCount->setParameter('categories', $category);
 
-            $mainCategory = $this->categoryRepository->find($category[0]);
+            $mainSubcategory = $this->categoryRepository->find($category[0]);
+            $mainCategory = $mainSubcategory->getParents()[0];
         }
         if (-1 != $populars) {
           if ($hasWhere) {
@@ -370,24 +372,25 @@ class ProductService
         $recentHeader = false;
         $generalHeader = false;
         if (null == $mainCategory) {
-            if (-1 != $inOffer) {
-                $inOfferHeader = true;
-            }
-            elseif (-1 != $inStore) {
-                $inStoreHeader = true;
-            }
-            elseif (-1 != $recent) {
-                $recentHeader = true;
-            }
-            else {
-                $generalHeader = true;
-            }
+          if (-1 != $inOffer) {
+            $inOfferHeader = true;
+          }
+          elseif (-1 != $inStore) {
+            $inStoreHeader = true;
+          }
+          elseif (-1 != $recent) {
+            $recentHeader = true;
+          }
+          else {
+            $generalHeader = true;
+          }
         }
 
         return [
             'products' => $products,
             'countProducts' => $countProducts,
             'mainCategory' => $mainCategory,
+            'mainSubcategory' => $mainSubcategory,
             'inOfferHeader' => $inOfferHeader,
             'inStoreHeader' => $inStoreHeader,
             'recentHeader' => $recentHeader,

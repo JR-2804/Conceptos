@@ -74,6 +74,9 @@ class SiteController extends Controller
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $lasts = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->createQueryBuilder('p')
             ->orderBy('p.createdDate', 'DESC')
             ->setMaxResults(3)->getQuery()->getResult();
@@ -87,6 +90,7 @@ class SiteController extends Controller
           ->createQueryBuilder('product')
           ->where('product.popular = true')
           ->orderBy('product.priority', 'DESC')
+          ->setMaxResults(48)
           ->getQuery()
           ->getResult();
         $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findAll();
@@ -149,13 +153,16 @@ class SiteController extends Controller
             'lasted' => $lasted,
             'lastedHighlight' => $lastedHighlight,
             'page' => $page,
+            'membership' => $membership,
             'home' => $page,
             'lasts' => $lasts,
             'inStore' => $inStore,
+            'inStoreDesktop' => array_chunk($inStore, 4),
             'inStoreHighlight' => $inStoreHighlight,
-            'populars' => $populars,
-            'popularsForShortScreen' => array_chunk($populars, 3),
+            'popularChunks' => array_chunk($populars, 6),
+            'popularChunksDesktop' => array_chunk($populars, 8),
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'config' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1),
             'brands' => array_chunk($brands, 4),
             'currentDate' => new \DateTime(),
@@ -177,6 +184,9 @@ class SiteController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Sobre Nosotros',
         ]);
@@ -185,8 +195,10 @@ class SiteController extends Controller
 
         return $this->render(':site:about_us.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'page' => $page,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -205,6 +217,9 @@ class SiteController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'APP',
         ]);
@@ -213,8 +228,10 @@ class SiteController extends Controller
 
         return $this->render(':site:app.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'page' => $page,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'config' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -255,6 +272,7 @@ class SiteController extends Controller
         $result += ['page' => $page];
         $result += ['membership' => $membership];
         $result += ['count' => $this->countShopCart($request)];
+        $result += ['shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true))];
 
         return $this->render(':site:products.html.twig', $result);
     }
@@ -273,6 +291,9 @@ class SiteController extends Controller
     {
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
         ]);
         $product = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($id);
         if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -326,9 +347,11 @@ class SiteController extends Controller
             'imageSets' => array_chunk($product->getImages()->toArray(), 3),
             'offer' => $offer,
             'home' => $home,
+            'membership' => $membership,
             'currentDate' => new \DateTime(),
             'related' => $related,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -366,98 +389,7 @@ class SiteController extends Controller
         } else {
             $products = [];
         }
-        $productsDB = [];
-        foreach ($products as $product) {
-            if (!array_key_exists('offer', $product) && ('target15' == $product['id'] || 'target25' == $product['id'] || 'target50' == $product['id'] || 'target100' == $product['id'])) {
-                $name = 'Tarjeta de 15 CUC';
-                switch ($product['id']) {
-                    case 'target15':
-                        $price = 15;
-                        break;
-                    case 'target25':
-                        $name = 'Tarjeta de 25 CUC';
-                        $price = 25;
-                        break;
-                    case 'target50':
-                        $name = 'Tarjeta de 50 CUC';
-                        $price = 50;
-                        break;
-                    default:
-                        $name = 'Tarjeta de 100 CUC';
-                        $price = 100;
-                        break;
-                }
-                $productsDB[] = [
-                    'id' => $product['id'],
-                    'uuid' => $product['uuid'],
-                    'type' => 'target',
-                    'price' => $price,
-                    'count' => $product['count'],
-                    'name' => $name,
-                ];
-            } else {
-                $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['product']);
-                $price = $productDB->getPrice();
-
-                $offerExists = false;
-                $offerDB = null;
-                if ($productDB->getOffers() && $productDB->getOffers()[0]) {
-                  $offerDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')->find($productDB->getOffers()[0]);
-                }
-
-                if ($offerDB) {
-                  $price = $offerDB->getPrice();
-                  $offerExists = true;
-                } else {
-                  $categories = [];
-                  foreach ($productDB->getCategories() as $category) {
-                    $categories[] = $category->getId();
-
-                    if (($category->getOffers()[0]) && ((!$category->getOffers()[0]->getOnlyInStoreProducts()) or ($category->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
-                      $price = ceil($productDB->getPrice()*(1 - $category->getOffers()[0]->getPrice()/100));
-                      $offerExists = true;
-                    } else {
-                      foreach ($category->getParents() as $parentCategory) {
-                        if (($parentCategory->getOffers()[0]) && ((!$parentCategory->getOffers()[0]->getOnlyInStoreProducts()) or ($parentCategory->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
-                          $price = ceil($productDB->getPrice()*(1 - $parentCategory->getOffers()[0]->getPrice()/100));
-                          $offerExists = true;
-                        }
-                      }
-                    }
-                  }
-                }
-
-                $productsDB[] = [
-                    'id' => $productDB->getId(),
-                    'uuid' => $product['uuid'],
-                    'price' => $price,
-                    'offerExists' => $offerExists,
-                    'count' => $product['count'],
-                    'storeCount' => $productDB->getStoreCount(),
-                    'name' => $productDB->getName(),
-                    'image' => $productDB->getMainImage(),
-                    'weight' => $productDB->getWeight(),
-                    'ikeaPrice' => $productDB->getIkeaPrice(),
-                    'isFurniture' => $productDB->getIsFurniture(),
-                    'isFragile' => $productDB->getIsFragile(),
-                    'isAirplaneFurniture' => $productDB->getIsAriplaneForniture(),
-                    'isOversize' => $productDB->getIsOversize(),
-                    'isTableware' => $productDB->getIsTableware(),
-                    'isLamp' => $productDB->getIsLamp(),
-                    'numberOfPackages' => $productDB->getNumberOfPackages(),
-                    'isMattress' => $productDB->getIsMattress(),
-                    'isAirplaneMattress' => $productDB->getIsAriplaneMattress(),
-                    'isFaucet' => $productDB->getIsFaucet(),
-                    'isGrill' => $productDB->getIsGrill(),
-                    'isShelf' => $productDB->getIsShelf(),
-                    'isDesk' => $productDB->getIsDesk(),
-                    'isBookcase' => $productDB->getIsBookcase(),
-                    'isComoda' => $productDB->getIsComoda(),
-                    'isRepisa' => $productDB->getIsRepisa(),
-                    'categories' => json_encode($categories),
-                ];
-            }
-        }
+        $productsDB = $this->getShopCartProducts($products);
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
@@ -536,12 +468,6 @@ class SiteController extends Controller
                 $newClient = true;
                 $client = new Client();
             }
-
-            $firstClientDiscount = 0;
-            // if ($newClient && $discount == 0) {
-            //   $firstClientDiscount = floor($totalPriceBase * 0.05);
-            //   $totalPrice -= $firstClientDiscount;
-            // }
 
             $client->setName($data->getName());
             $client->setEmail($data->getEmail());
@@ -653,7 +579,7 @@ class SiteController extends Controller
                 $facture->setDiscount($discount);
                 $facture->setTwoStepExtra($twoStepExtra);
                 $facture->setCucExtra($cucExtra);
-                $facture->setFirstClientDiscount($firstClientDiscount);
+                $facture->setFirstClientDiscount(0);
                 $facture->setTransportCost($transportCost);
                 $facture->setFinalPrice($totalPrice);
                 $this->getDoctrine()->getManager()->persist($facture);
@@ -661,7 +587,7 @@ class SiteController extends Controller
                 $prefacture->setDiscount($discount);
                 $prefacture->setTwoStepExtra($twoStepExtra);
                 $prefacture->setCucExtra($cucExtra);
-                $prefacture->setFirstClientDiscount($firstClientDiscount);
+                $prefacture->setFirstClientDiscount(0);
                 $prefacture->setTransportCost($transportCost);
                 $prefacture->setFinalPrice($totalPrice);
                 $this->getDoctrine()->getManager()->persist($prefacture);
@@ -670,7 +596,7 @@ class SiteController extends Controller
               $requestDB->setDiscount($discount);
               $requestDB->setTwoStepExtra($twoStepExtra);
               $requestDB->setCucExtra($cucExtra);
-              $requestDB->setFirstClientDiscount($firstClientDiscount);
+              $requestDB->setFirstClientDiscount(0);
               $requestDB->setTransportCost($transportCost);
               $requestDB->setFinalPrice($totalPrice);
               $this->getDoctrine()->getManager()->persist($requestDB);
@@ -687,12 +613,12 @@ class SiteController extends Controller
         }
 
         return $this->render(':site:shop-cart.html.twig', [
-          'products' => $productsDB,
           'prefactures' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->findAll(),
           'form' => $form->createView(),
           'home' => $home,
           'membership' => $membership,
           'count' => $this->countShopCart($request),
+          'shopCartProducts' => $productsDB,
           'terms' => $config->getTermAndConditions(),
           'privacy' => $config->getPrivacyPolicy(),
           'currentDate' => new \DateTime(),
@@ -754,7 +680,7 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="services", path="/obras")
+     * @Route(name="services", path="/servicios")
      *
      * @param Request $request
      *
@@ -765,20 +691,25 @@ class SiteController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
-        $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Obras',
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
         ]);
         $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Obras',
+        ]);
+        $inward = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Interiorismo',
         ]);
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
         return $this->render(':site:services.html.twig', [
             'home' => $home,
-            'page' => $page,
+            'membership' => $membership,
             'services' => $services,
+            'inward' => $inward,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -797,6 +728,9 @@ class SiteController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Interiorismo',
         ]);
@@ -805,7 +739,9 @@ class SiteController extends Controller
 
         return $this->render(':site:inward.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'page' => $page,
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -843,7 +779,9 @@ class SiteController extends Controller
         return $this->render(':site:membership.html.twig', [
             'home' => $home,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'page' => $page,
+            'membership' => $page,
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
             'categories' => $this->get('category_service')->getAll(),
@@ -864,6 +802,9 @@ class SiteController extends Controller
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Ayuda',
         ]);
@@ -872,7 +813,9 @@ class SiteController extends Controller
 
         return $this->render(':site:help.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'page' => $page,
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -892,6 +835,9 @@ class SiteController extends Controller
     {
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
         ]);
         $inwardPage = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Interiorismo',
@@ -936,7 +882,9 @@ class SiteController extends Controller
 
         return $this->render(':site:project-details.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'project' => $project,
             'imageSets' => array_chunk($project['images'], 3),
             'products' => $products,
@@ -959,6 +907,9 @@ class SiteController extends Controller
     {
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
         ]);
 
         $page = null;
@@ -999,7 +950,9 @@ class SiteController extends Controller
 
         return $this->render(':site:service-details.html.twig', [
             'home' => $home,
+            'membership' => $membership,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'service' => $service,
             'imageSets' => array_chunk($service['images'], 3),
             'products' => $products,
@@ -1033,11 +986,11 @@ class SiteController extends Controller
         if ($form->isValid() && $form->isSubmitted()) {
             $email = $form->getData();
             $body = $this->renderView(':site:email-body.html.twig', [
-                'name' => $email->getName(),
+                'firstName' => $email->getName(),
+                'lastName' => $email->getLastName(),
                 'email' => $email->getEmail(),
                 'phone' => $email->getPhone(),
                 'description' => $email->getText(),
-                'member' => $email->getMemberNumber(),
             ]);
             $this->get('email_service')->send($email->getEmail(), $email->getName(), $config->getEmail(), 'Solicitud de Servicio', $body);
         }
@@ -1046,6 +999,7 @@ class SiteController extends Controller
             'home' => $home,
             'form' => $form->createView(),
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -1100,6 +1054,7 @@ class SiteController extends Controller
               'showSuccesToast' => true,
               'home' => $home,
               'count' => $this->countShopCart($request),
+              'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
               'page' => $membership,
               'terms' => $config->getTermAndConditions(),
               'privacy' => $config->getPrivacyPolicy(),
@@ -1116,6 +1071,7 @@ class SiteController extends Controller
             'page' => $membership,
             'form' => $form->createView(),
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -1127,11 +1083,10 @@ class SiteController extends Controller
      *
      * @param Request $request
      * @param $id
-     * @param $offer
      *
      * @return JsonResponse
      */
-    public function addShopCartAction(Request $request, $id, $offer)
+    public function addShopCartAction(Request $request, $id)
     {
         $session = $request->getSession();
 
@@ -1161,7 +1116,6 @@ class SiteController extends Controller
                 ];
             } else {
                 $products[] = [
-                    'offer' => $offer,
                     'product' => $id,
                     'uuid' => uniqid(),
                     'count' => 1,
@@ -1175,9 +1129,28 @@ class SiteController extends Controller
           $count += $product['count'];
         }
 
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Membresia',
+        ]);
+
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
         return new JsonResponse([
             'count' => $count,
             'exist' => $exist,
+            'products' => json_encode($this->getShopCartProducts(json_decode($request->getSession()->get('products'), true))),
+            'html' => $this->renderView(':site:products-summary.html.twig', [
+              'home' => $home,
+              'membership' => $membership,
+              'count' => $this->countShopCart($request),
+              'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+              'categories' => $this->get('category_service')->getAll(),
+              'terms' => $config->getTermAndConditions(),
+              'privacy' => $config->getPrivacyPolicy(),
+            ])
         ]);
     }
 
@@ -1196,7 +1169,7 @@ class SiteController extends Controller
             $products = json_decode($session->get('products'), true);
             $newProducts = [];
             foreach ($products as $product) {
-                if (!array_key_exists('offer', $product)) {
+                if (array_key_exists('id', $product)) {
                     if ($product['id'] != $id) {
                         $newProducts[] = $product;
                     }
@@ -1214,8 +1187,27 @@ class SiteController extends Controller
           $count += $product['count'];
         }
 
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Membresia',
+        ]);
+
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
         return new JsonResponse([
             'count' => $count,
+            'products' => json_encode($this->getShopCartProducts(json_decode($request->getSession()->get('products'), true))),
+            'html' => $this->renderView(':site:products-summary.html.twig', [
+              'home' => $home,
+              'membership' => $membership,
+              'count' => $this->countShopCart($request),
+              'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+              'categories' => $this->get('category_service')->getAll(),
+              'terms' => $config->getTermAndConditions(),
+              'privacy' => $config->getPrivacyPolicy(),
+            ])
         ]);
     }
 
@@ -1283,6 +1275,7 @@ class SiteController extends Controller
             'products' => $productsResponse,
             'client' => $client,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'page' => $page,
             'membership' => $membership,
             'home' => $home,
@@ -1443,10 +1436,10 @@ class SiteController extends Controller
             $email = $form->getData();
             $body = $this->renderView(':site:email-body.html.twig', [
                 'name' => $email->getName(),
+                'lastName' => $email->getLastName(),
                 'email' => $email->getEmail(),
                 'phone' => $email->getPhone(),
                 'description' => $email->getText(),
-                'member' => $email->getMemberNumber(),
             ]);
             $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
             $this->get('email_service')->send($email->getEmail(), $email->getName(), $config->getEmail(), 'Contacto de sitio WEB', $body);
@@ -1544,6 +1537,7 @@ class SiteController extends Controller
         return $this->render(':site:favorite-products.html.twig', [
             'home' => $home,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'products' => $products,
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -1579,6 +1573,7 @@ class SiteController extends Controller
         return $this->render(':site:request-status.html.twig', [
             'home' => $home,
             'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'requests' => $clientRequests,
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -1614,17 +1609,147 @@ class SiteController extends Controller
         return new JsonResponse();
     }
 
+    /**
+     * @Route(name="products_summary", path="/resumen-productos")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function productsSummaryAction(Request $request)
+    {
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Membresia',
+        ]);
+
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+        return $this->render(':site:products-summary.html.twig', [
+            'home' => $home,
+            'membership' => $membership,
+            'count' => $this->countShopCart($request),
+            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'categories' => $this->get('category_service')->getAll(),
+            'terms' => $config->getTermAndConditions(),
+            'privacy' => $config->getPrivacyPolicy(),
+        ]);
+    }
+
+    private function getShopCartProducts($products)
+    {
+      if ($products == null) {
+        $products = [];
+      }
+
+      $productsDB = [];
+      foreach ($products as $product) {
+          if (array_key_exists('id', $product) && ('target15' == $product['id'] || 'target25' == $product['id'] || 'target50' == $product['id'] || 'target100' == $product['id'])) {
+              $name = 'Tarjeta de 15 CUC';
+              switch ($product['id']) {
+                  case 'target15':
+                      $price = 15;
+                      break;
+                  case 'target25':
+                      $name = 'Tarjeta de 25 CUC';
+                      $price = 25;
+                      break;
+                  case 'target50':
+                      $name = 'Tarjeta de 50 CUC';
+                      $price = 50;
+                      break;
+                  default:
+                      $name = 'Tarjeta de 100 CUC';
+                      $price = 100;
+                      break;
+              }
+              $productsDB[] = [
+                  'id' => $product['id'],
+                  'uuid' => $product['uuid'],
+                  'type' => 'target',
+                  'price' => $price,
+                  'count' => $product['count'],
+                  'name' => $name,
+              ];
+          } else {
+              $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['product']);
+              $price = $productDB->getPrice();
+
+              $offerExists = false;
+              $offerDB = null;
+              if ($productDB->getOffers() && $productDB->getOffers()[0]) {
+                $offerDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')->find($productDB->getOffers()[0]);
+              }
+
+              if ($offerDB) {
+                $price = $offerDB->getPrice();
+                $offerExists = true;
+              } else {
+                $categories = [];
+                foreach ($productDB->getCategories() as $category) {
+                  $categories[] = $category->getId();
+
+                  if (($category->getOffers()[0]) && ((!$category->getOffers()[0]->getOnlyInStoreProducts()) or ($category->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
+                    $price = ceil($productDB->getPrice()*(1 - $category->getOffers()[0]->getPrice()/100));
+                    $offerExists = true;
+                  } else {
+                    foreach ($category->getParents() as $parentCategory) {
+                      if (($parentCategory->getOffers()[0]) && ((!$parentCategory->getOffers()[0]->getOnlyInStoreProducts()) or ($parentCategory->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
+                        $price = ceil($productDB->getPrice()*(1 - $parentCategory->getOffers()[0]->getPrice()/100));
+                        $offerExists = true;
+                      }
+                    }
+                  }
+                }
+              }
+
+              $productsDB[] = [
+                  'id' => $productDB->getId(),
+                  'uuid' => $product['uuid'],
+                  'price' => $price,
+                  'offerExists' => $offerExists,
+                  'count' => $product['count'],
+                  'storeCount' => $productDB->getStoreCount(),
+                  'name' => $productDB->getName(),
+                  'image' => $productDB->getMainImage(),
+                  'weight' => $productDB->getWeight(),
+                  'ikeaPrice' => $productDB->getIkeaPrice(),
+                  'isFurniture' => $productDB->getIsFurniture(),
+                  'isFragile' => $productDB->getIsFragile(),
+                  'isAirplaneFurniture' => $productDB->getIsAriplaneForniture(),
+                  'isOversize' => $productDB->getIsOversize(),
+                  'isTableware' => $productDB->getIsTableware(),
+                  'isLamp' => $productDB->getIsLamp(),
+                  'numberOfPackages' => $productDB->getNumberOfPackages(),
+                  'isMattress' => $productDB->getIsMattress(),
+                  'isAirplaneMattress' => $productDB->getIsAriplaneMattress(),
+                  'isFaucet' => $productDB->getIsFaucet(),
+                  'isGrill' => $productDB->getIsGrill(),
+                  'isShelf' => $productDB->getIsShelf(),
+                  'isDesk' => $productDB->getIsDesk(),
+                  'isBookcase' => $productDB->getIsBookcase(),
+                  'isComoda' => $productDB->getIsComoda(),
+                  'isRepisa' => $productDB->getIsRepisa(),
+                  'categories' => json_encode($categories),
+              ];
+          }
+      }
+      return $productsDB;
+    }
+
     private function countShopCart(Request $request)
     {
       $total = 0;
-        $session = $request->getSession();
-        if ($session->has('products')) {
-            $products = json_decode($session->get('products'), true);
-            foreach ($products as $product) {
-              $total += $product['count'];
-            }
+      $session = $request->getSession();
+      if ($session->has('products')) {
+        $products = json_decode($session->get('products'), true);
+        foreach ($products as $product) {
+          $total += $product['count'];
         }
+      }
 
-        return $total;
+      return $total;
     }
 }

@@ -1751,19 +1751,6 @@ body {
   z-index: 1000;
 }
 
-.cid-qQ6pVr9Hx2 .navbar.navbar-short {
-  min-height: 60px;
-  transition: all 0.2s;
-}
-
-.cid-qQ6pVr9Hx2 .navbar.navbar-short .navbar-toggler-right {
-  top: 20px;
-}
-
-.cid-qQ6pVr9Hx2 .navbar.navbar-short .navbar-brand {
-  min-height: 3rem;
-}
-
 .cid-qQ6pVr9Hx2 button.navbar-toggler {
   width: 31px;
   height: 18px;
@@ -2902,19 +2889,6 @@ body {
   z-index: 1000;
 }
 
-.cid-qQ6pVr9Hx2 .navbar.navbar-short {
-  min-height: 60px;
-  transition: all 0.2s;
-}
-
-.cid-qQ6pVr9Hx2 .navbar.navbar-short .navbar-toggler-right {
-  top: 20px;
-}
-
-.cid-qQ6pVr9Hx2 .navbar.navbar-short .navbar-brand {
-  min-height: 3rem;
-}
-
 .cid-qQ6pVr9Hx2 button.navbar-toggler {
   width: 31px;
   height: 18px;
@@ -3476,19 +3450,6 @@ body {
   z-index: 1000;
 }
 
-.cid-qQ6pVr9Hx2 .navbar.navbar-short {
-  min-height: 60px;
-  transition: all 0.2s;
-}
-
-.cid-qQ6pVr9Hx2 .navbar.navbar-short .navbar-toggler-right {
-  top: 20px;
-}
-
-.cid-qQ6pVr9Hx2 .navbar.navbar-short .navbar-brand {
-  min-height: 3rem;
-}
-
 .cid-qQ6pVr9Hx2 button.navbar-toggler {
   width: 31px;
   height: 18px;
@@ -3931,19 +3892,6 @@ body {
   transform: translateY(100%);
   -webkit-transform: translateY(100%);
   z-index: 1000;
-}
-
-.cid-qQ6pVr9Hx2 .navbar.navbar-short {
-  min-height: 60px;
-  transition: all 0.2s;
-}
-
-.cid-qQ6pVr9Hx2 .navbar.navbar-short .navbar-toggler-right {
-  top: 20px;
-}
-
-.cid-qQ6pVr9Hx2 .navbar.navbar-short .navbar-brand {
-  min-height: 3rem;
 }
 
 .cid-qQ6pVr9Hx2 button.navbar-toggler {
@@ -4683,31 +4631,6 @@ body {
       z-index: 1000;
     }
   }
-  .navbar.navbar-short {
-    min-height: 60px;
-    transition: all 0.2s;
-
-    & .navbar-toggler-right {
-      top: 20px;
-    }
-
-    & .navbar-logo a {
-      font-size: 2.5rem !important;
-      line-height: 2.5rem;
-      transition: font-size 0.25s;
-
-      & .mbr-iconfont {
-        font-size: 2.5rem !important;
-      }
-
-      & img {
-        height: 3rem !important;
-      }
-    }
-    & .navbar-brand {
-      min-height: 3rem;
-    }
-  }
   button.navbar-toggler {
     width: 31px;
     height: 18px;
@@ -5334,19 +5257,6 @@ body {
   transform: translateY(100%);
   -webkit-transform: translateY(100%);
   z-index: 1000;
-}
-
-.cid-qQ6pVr9Hx2 .navbar.navbar-short {
-  min-height: 60px;
-  transition: all 0.2s;
-}
-
-.cid-qQ6pVr9Hx2 .navbar.navbar-short .navbar-toggler-right {
-  top: 20px;
-}
-
-.cid-qQ6pVr9Hx2 .navbar.navbar-short .navbar-brand {
-  min-height: 3rem;
 }
 
 .cid-qQ6pVr9Hx2 button.navbar-toggler {

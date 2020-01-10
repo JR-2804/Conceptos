@@ -4,10 +4,6 @@ function onTopDropdownClick(obj) {
   }
 }
 
-function onBottomDropdownClick(obj) {
-  location.href = $(obj).attr("href");
-}
-
 function onDropdownMouseEnter(obj) {
   $(obj).data("clicked", "true");
 }
@@ -61,6 +57,7 @@ $(document).ready(function() {
   $("#send-mail-button").click(function(e) {
     if (
       !$("#email_name").val() ||
+      !$("#email_lastName").val() ||
       !$("#email_email").val() ||
       !$("#email_phone").val() ||
       !$("#email_text").val()
@@ -80,66 +77,6 @@ $(document).ready(function() {
       alert("Rellene todos los campos");
       e.preventDefault();
     }
-  });
-
-  $("#send-mail-button").click(function(e) {
-    if (
-      !$("#email_name").val() ||
-      !$("#email_email").val() ||
-      !$("#email_phone").val() ||
-      !$("#email_text").val()
-    ) {
-      alert("Rellene todos los campos");
-      e.preventDefault();
-    }
-  });
-
-  $(".gift-cart-button").click(function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    $("#gift-card-modal-toggle").click();
-
-    ajax(
-      $(this).data("path"),
-      "POST",
-      {},
-      function(response) {
-        var count = response.count;
-        var title = "Tarjeta añadida al carrito correctamente";
-        if (response.exist) {
-          title = "La tarjeta seleccionada ya está en su carrito de compras";
-        }
-        $(".badge-shop-cart").text(count);
-        $.toast({
-          text: title,
-          showHideTransition: "fade",
-          bgColor: "#f7ed4a",
-          textColor: "#3f3c03",
-          allowToastClose: true,
-          hideAfter: 3000,
-          stack: 5,
-          textAlign: "center",
-          position: "mid-center",
-          icon: "success",
-          heading: "Correcto"
-        });
-      },
-      function() {
-        $.toast({
-          text: "Ha ocurrido un error añadiendo la tarjeta al carrito",
-          showHideTransition: "fade",
-          bgColor: "#f7ed4a",
-          textColor: "#3f3c03",
-          allowToastClose: true,
-          hideAfter: 3000,
-          stack: 5,
-          textAlign: "center",
-          position: "mid-center",
-          icon: "error",
-          heading: "Error"
-        });
-      }
-    );
   });
 
   $("#loginModal label").addClass("collapse");

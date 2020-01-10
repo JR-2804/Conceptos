@@ -66,6 +66,7 @@ easy_admin:
                     - id
                     - {property: 'name', label: 'Nombre'}
                     - {property: 'parents', label: 'Categorías padre'}
+                    - {property: 'icon', label: 'Icono', type: 'image', base_path: '/categories/icon'}
                     - {property: 'image', label: 'Image', type: 'image', base_path: '/categories'}
                     - {property: 'imageSite', label: 'Image Sitio', type: 'image', base_path: '/categories/site'}
                     - {property: 'subCategories', label: 'Categorías Hijas'}
@@ -73,6 +74,7 @@ easy_admin:
                 fields:
                     - {property: 'name', label: 'Nombre'}
                     - {property: 'parents', label: 'Categorías padre'}
+                    - {property: 'iconFile', type: 'vich_image', label: 'Icono'}
                     - {property: 'imageFile', type: 'vich_image', label: 'Imágen'}
                     - {property: 'imageSiteFile', type: 'vich_image', label: 'Imágen Sitio'}
                     - {property: 'subCategories', label: 'Categorías Hijas'}

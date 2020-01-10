@@ -8,569 +8,241 @@
     <link href="{{ asset('bundles/conceptos/products/css/products.css') }}" type="text/css" rel="stylesheet">
 {% endblock %}
 {% block body %}
+  <form action="{{ path('products') }}" method="get">
+    <input type="hidden" value="{{ app.request.query.get('term') }}" id="term">
+    <input type="hidden" value="{{ app.request.query.get('inOffer') }}" id="inOffer">
+    <input type="hidden" value="{{ app.request.query.get('recent') }}" id="recent">
+    <input type="hidden" value="{{ app.request.query.get('inStore') }}" id="inStore">
+    <input type="hidden" value="{{ app.request.query.get('categories') }}" id="categories" name="categories">
+    <input type="hidden" value="{{ app.request.query.get('color') }}" id="color">
+    <input type="hidden" value="{{ app.request.query.get('material') }}" id="material">
+
     <div id="giftCardsModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">{{membership.data.giftCardSection.modalText}}</h4>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">{{membership.data.giftCardSection.modalText}}</h4>
+          </div>
+          <div class="modal-body">
+            <div class="d-flex flex-wrap">
+              <div class="col-6 pl-0">
+                <div class="d-flex justify-content-center">
+                  <a class="conceptos-add-gift-card-to-cart-button" data-path="{{path('add_shop_card', {id: "target15"})}}">
+                    <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard15Image.path}}">
+                    <img class="gift-card-img-short d-lg-none pr-1" src="{{membership.data.giftCardSection.giftCard15Image.path}}">
+                  </a>
                 </div>
-                <div class="modal-body">
-                    <div class="d-flex flex-wrap">
-                        <div class="col-6 pl-0">
-                            <div class="d-flex justify-content-center">
-                                <a class="gift-cart-button" data-path="{{path('add_shop_card', {id: "target15"})}}">
-                                    <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard15Image.path}}">
-                                    <img class="gift-card-img-short d-lg-none pr-1" src="{{membership.data.giftCardSection.giftCard15Image.path}}">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-6 pl-0">
-                            <div class="d-flex justify-content-center">
-                                <a class="gift-cart-button" data-path="{{path('add_shop_card', {id: "target25"})}}">
-                                    <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard25Image.path}}">
-                                    <img class="gift-card-img-short d-lg-none pl-1" src="{{membership.data.giftCardSection.giftCard25Image.path}}">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-6 pt-3 pl-0">
-                            <div class="d-flex justify-content-center">
-                                <a class="gift-cart-button" data-path="{{path('add_shop_card', {id: "target50"})}}">
-                                    <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard50Image.path}}">
-                                    <img class="gift-card-img-short d-lg-none  pr-1" src="{{membership.data.giftCardSection.giftCard50Image.path}}">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-6 pt-3 pl-0">
-                            <div class="d-flex justify-content-center">
-                                <a class="gift-cart-button" data-path="{{path('add_shop_card', {id: "target100"})}}">
-                                    <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard100Image.path}}">
-                                    <img class="gift-card-img-short d-lg-none pl-1" src="{{membership.data.giftCardSection.giftCard100Image.path}}">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+              </div>
+              <div class="col-6 pl-0">
+                <div class="d-flex justify-content-center">
+                  <a class="conceptos-add-gift-card-to-cart-button" data-path="{{path('add_shop_card', {id: "target25"})}}">
+                    <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard25Image.path}}">
+                    <img class="gift-card-img-short d-lg-none pl-1" src="{{membership.data.giftCardSection.giftCard25Image.path}}">
+                  </a>
                 </div>
-                <div class="modal-footer">
-                    <button class="btn navigation-button" data-dismiss="modal">Aceptar</button>
+              </div>
+              <div class="col-6 pt-3 pl-0">
+                <div class="d-flex justify-content-center">
+                  <a class="conceptos-add-gift-card-to-cart-button" data-path="{{path('add_shop_card', {id: "target50"})}}">
+                    <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard50Image.path}}">
+                    <img class="gift-card-img-short d-lg-none  pr-1" src="{{membership.data.giftCardSection.giftCard50Image.path}}">
+                  </a>
                 </div>
+              </div>
+              <div class="col-6 pt-3 pl-0">
+                <div class="d-flex justify-content-center">
+                  <a class="conceptos-add-gift-card-to-cart-button" data-path="{{path('add_shop_card', {id: "target100"})}}">
+                    <img class="gift-card-img d-none d-lg-block" src="{{membership.data.giftCardSection.giftCard100Image.path}}">
+                    <img class="gift-card-img-short d-lg-none pl-1" src="{{membership.data.giftCardSection.giftCard100Image.path}}">
+                  </a>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn navigation-button" data-dismiss="modal">Aceptar</button>
+          </div>
         </div>
+      </div>
     </div>
 
-    <div id="products-search" class="flex-column d-lg-none">
-        <a class="text-white mbr-bold" data-toggle="modal" data-target="#filterProductsModal" href="">
-            <i class="mbri-search main-share-icon"></i>
-        </a>
+    <div id="filterProductsModal" class="modal fade">
+      <div class="modal-dialog modal-lg mt-0">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="d-flex flex-column p-2">
+              <span class="conceptos-title-strong mb-2">FILTROS</span>
+              <div class="d-flex flex-column conceptos-white-background p-2">
+                <span class="conceptos-title-strong">PRECIO</span>
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <label class="conceptos-subtitle m-0 mr-2" for="priceMin">MIN</label>
+                    <input type="number" min="0" name="priceMin"
+                           {% if app.request.query.get('priceMin') is not null %}value="{{ app.request.query.get('priceMin') }}"{% endif %}>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <label class="conceptos-subtitle m-0 mr-2" for="priceMax">MAX</label>
+                    <input type="number" min="0" name="priceMax"
+                           {% if app.request.query.get('priceMax') is not null %}value="{{ app.request.query.get('priceMax') }}" {% endif %}>
+                  </div>
+                </div>
+                <div class="d-flex flex-column mt-2">
+                  <label class="conceptos-title-strong m-0 mr-2" for="color">COLOR</label>
+                  <select name="color">
+                    <option value="-1">Todos</option>
+                    {% for color in colors %}
+                      {% set selectedColor = app.request.query.get('color', -1) %}
+                      <option value="{{color.id}}"
+                              {% if selectedColor != -1 and selectedColor == color.id %}selected{% endif %}>
+                        {{color.name}}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="d-flex flex-column mt-2">
+                  <label class="conceptos-title-strong m-0 mr-2" for="material">MATERIAL</label>
+                  <select name="material">
+                    <option value="-1">Todos</option>
+                    {% for material in materials %}
+                      {% set selectedMaterial = app.request.query.get('material', -1) %}
+                      <option value="{{material.id}}"
+                              {% if selectedMaterial != -1 and selectedMaterial == material.id %}selected{% endif %}>
+                        {{material.name}}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <button id="filter-products-button" class="conceptos-primary-button mt-2" type="submit">
+                <span>BUSCAR</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     {% if inOfferHeader %}
-        {% set image = page.data.inOfferImage.path %}
+      {% set image = page.data.inOfferImage.path %}
     {% elseif inStoreHeader %}
-        {% set image = page.data.inStoreImage.path %}
+      {% set image = page.data.inStoreImage.path %}
     {% elseif recentHeader %}
-        {% set image = page.data.newImage.path %}
+      {% set image = page.data.newImage.path %}
     {% elseif generalHeader %}
-        {% set image = page.data.generalImage.path %}
+      {% set image = page.data.generalImage.path %}
     {% else %}
-        {% set image = vich_uploader_asset(mainCategory, 'imageSiteFile') %}
+      {% set image = vich_uploader_asset(mainCategory, 'imageSiteFile') %}
     {% endif%}
-    <div class="d-none d-lg-block">
-        <img class="help-page-header" src="{{ image }}">
+    <div>
+      <img class="conceptos-image conceptos-header-image" src="{{ image }}">
     </div>
-    <div class="d-lg-none">
-        <img class="help-page-header-short pt-0" src="{{ image }}">
-    </div>
-    <div class="gift-card-container d-flex justify-content-center d-lg-none">
-        <a id="gift-card-modal-toggle" class="d-flex" data-toggle="modal" data-target="#giftCardsModal" href="">
-            <img class="gift-card-section-img" src="{{membership.data.giftCardSection.generalImage.path}}">
-        </a>
-    </div>
-    <div class="st-container st-effect-1 products-section" id="st-container">
-        <form action="{{ path('products') }}" method="get">
-            <input type="hidden" value="{{ path('products') }}" id="filter-products">
-            <input type="hidden" value="{{ app.request.query.get('term') }}" id="term">
-            <input type="hidden" value="{{ app.request.query.get('inOffer') }}" id="inOffer">
-            <input type="hidden" value="{{ app.request.query.get('recent') }}" id="recent">
-            <input type="hidden" value="{{ app.request.query.get('inStore') }}" id="inStore">
-            <input type="hidden" value="{{ app.request.query.get('categories') }}" id="categories" name="categories">
-            <input type="hidden" value="{{ app.request.query.get('color') }}" id="color">
-            <input type="hidden" value="{{ app.request.query.get('material') }}" id="material">
-            <input type="hidden" value="{{ app.request.query.get('page', 1) }}" id="page" name="page">
 
-            <div id="filterProductsModal" class="modal fade d-lg-none">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="filter-form d-flex flex-column d-lg-none">
-                                <div class="filter-section pb-3">
-                                    <div class="row pl-3">
-                                        <div class="col-11">
-                                            <div class="search-products-input">
-                                                <div class="d-flex">
-                                                    <div class="d-flex pl-0 w-100">
-                                                        <input class="form-control" name="term" type="text"
-                                                              {% if app.request.query.get('term') is not null %}value="{{ app.request.query.get('term') }}"{% endif %}
-                                                              placeholder="Buscar..." aria-label="Search">
-                                                        <button class="btn navigation-button top-search-button" type="submit">
-                                                            <i class="mbri-search"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row pl-3">
-                                        <div class="col-11">
-                                            <div class="ac-custom ac-checkmark">
-                                                <ul>
-                                                    <li>
-                                                        <div class="d-flex mb-3">
-                                                            <input type="checkbox" id="in-offer-checkbox" name="inOffer">
-                                                            <label>Oferta</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="d-flex mb-3">
-                                                            <input type="checkbox" id="recent-checkbox" name="recent">
-                                                            <label>Nuevo</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="d-flex mb-3">
-                                                            <input type="checkbox" id="in-store-checkbox" name="inStore">
-                                                            <label>En Almacén</label>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row pl-3">
-                                        <div class="col-11">
-                                            <h3 class="categories-header mt-0">Categorías</h3>
-                                            <div class="card card-category-parent">
-                                                <div id="accordion" role="tablist">
-                                                    {% for category in categories %}
-                                                        {% if category.parents is empty and category.name == "MOBILIARIO" %}
-                                                            <div class="card card-category">
-                                                                <div class="card-header card-header-category pt-0 pr-0" role="tab"
-                                                                    id="{{ category.id }}heading">
-                                                                    <h5 class="mb-0">
-                                                                        <a class="d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#{{ category.id }}" href="javascript:void(0);">
-                                                                            {{ category.name }}
-                                                                            <span class="badge text-right badge-plus">
-                                                                                <i class="mbri-arrow-down"></i>
-                                                                            </span>
-                                                                        </a>
-                                                                    </h5>
-                                                                </div>
-                                                                <div id="{{ category.id }}" class="collapse {% if loop.index == 0 %}show{% endif %}" role="tabpanel">
-                                                                    <div class="card-body card-body-subcategory ac-custom ac-checkmark ml-0 pr-0">
-                                                                        <ul>
-                                                                            <li>
-                                                                                <div class="d-flex mb-3">
-                                                                                    <input type="checkbox" data-parent="-1" class="category-checkbox" value="{{ category.id }}">
-                                                                                    <label>Todos</label>
-                                                                                </div>
-                                                                            </li>
-                                                                            {% for child in category.subCategories %}
-                                                                                <li>
-                                                                                    <div class="d-flex mb-3">
-                                                                                        <input type="checkbox" data-parent="{{ category.id }}" class="category-checkbox" value="{{ child.id }}">
-                                                                                        <label>{{child.name}}</label>
-                                                                                    </div>
-                                                                                </li>
-                                                                            {% endfor %}
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                    {% for category in categories %}
-                                                        {% if category.parents is empty and category.name != "MOBILIARIO" %}
-                                                            <div class="card card-category">
-                                                                <div class="card-header card-header-category pt-0 pr-0" role="tab"
-                                                                    id="{{ category.id }}heading">
-                                                                    <h5 class="mb-0">
-                                                                        <a class="d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#{{ category.id }}" href="javascript:void(0);">
-                                                                            {{ category.name }}
-                                                                            <span class="badge text-right badge-plus">
-                                                                                <i class="mbri-arrow-down"></i>
-                                                                            </span>
-                                                                        </a>
-                                                                    </h5>
-                                                                </div>
-                                                                <div id="{{ category.id }}" class="collapse {% if loop.index == 0 %}show{% endif %}" role="tabpanel">
-                                                                    <div class="card-body card-body-subcategory ac-custom ac-checkmark ml-0 pr-0">
-                                                                        <ul>
-                                                                            <li>
-                                                                                <div class="d-flex mb-3">
-                                                                                    <input type="checkbox" data-parent="-1" class="category-checkbox" value="{{ category.id }}">
-                                                                                    <label>Todos</label>
-                                                                                </div>
-                                                                            </li>
-                                                                            {% for child in category.subCategories %}
-                                                                                <li>
-                                                                                    <div class="d-flex mb-3">
-                                                                                        <input type="checkbox" data-parent="{{ category.id }}" class="category-checkbox" value="{{ child.id }}">
-                                                                                        <label>{{child.name}}</label>
-                                                                                    </div>
-                                                                                </li>
-                                                                            {% endfor %}
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row pl-3">
-                                        <div class="col-11">
-                                            <h3 class="categories-header mt-0 pt-2">Precios</h3>
-                                            <div class="card card-category-parent">
-                                                <div class="d-flex">
-                                                    <input type="number" min="0" name="priceMin" placeholder="Min"
-                                                          {% if app.request.query.get('priceMin') is not null %}value="{{ app.request.query.get('priceMin') }}"{% endif %}
-                                                          class="form-control mb-2">
-                                                    <input type="number" min="0" name="priceMax" placeholder="Max"
-                                                          {% if app.request.query.get('priceMax') is not null %}value="{{ app.request.query.get('priceMax') }}" {% endif %}
-                                                          class="form-control mb-2 ml-2">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row pl-3">
-                                        <div class="col-11">
-                                            <h3 class="categories-header mt-0">Color</h3>
-                                            <div class="card card-category-parent">
-                                                <select class="form-control mb-2" name="color">
-                                                    <option value="-1">Todos</option>
-                                                    {% set selectedSerie = app.request.query.get('color', -1) %}
-                                                    {% for color in colors %}
-                                                        <option value="{{ color.id }}"
-                                                                {% if selectedSerie != -1 and selectedSerie == color.id %}selected{% endif %}>{{ color.name }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row pl-3">
-                                        <div class="col-11">
-                                            <h3 class="categories-header mt-0">Materiales</h3>
-                                            <div class="card card-category-parent">
-                                                <select class="form-control" name="material">
-                                                    <option value="-1">Todos</option>
-                                                    {% set selectedSerie = app.request.query.get('material', -1) %}
-                                                    {% for material in materials %}
-                                                        <option value="{{ material.id }}"
-                                                                {% if selectedSerie != -1 and selectedSerie == material.id %}selected{% endif %}>{{ material.name }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="filter-buttons">
-                                    <div class="col-12 pl-0">
-                                        <div class="d-flex justify-content-center">
-                                            <button class="col-4 btn navigation-button reset-button mt-3 mb-3 mr-0 ml-0 p-0">Limpiar</button>
-                                            <button class="col-3 btn navigation-button search-button mt-3 mb-3 mr-1 ml-1 p-0" type="submit">Buscar</button>
-                                            <button class="col-4 btn navigation-button mt-3 mb-3 mr-0 ml-0 p-0" data-dismiss="modal">Cancelar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="d-flex flex-column">
+      <div class="d-flex align-self-end conceptos-gift-card-section p-1 mr-2" data-toggle="modal" data-target="#giftCardsModal">
+        <div class="d-flex align-items-center">
+          <span class="conceptos-title pt-1 pb-1 ml-2">TARJETAS DE REGALO</span>
+          <img class="conceptos-icon ml-2 mr-2" src="{{ asset('bundles/conceptos/images/home/forward.png') }}">
+        </div>
+      </div>
+      <div class="d-flex justify-content-between align-items-center ml-2 mr-2 mt-3 mb-3">
+        <div class="d-flex flex-column ml-lg-5">
+          {% if mainCategory %}
+            <span class="conceptos-title"><span class="conceptos-title-strong">PRODUCTOS</span> / {{mainCategory.name}}</span>
+          {% else %}
+            <span class="conceptos-title"><span class="conceptos-title-strong">PRODUCTOS</span> / TODOS</span>
+          {% endif %}
+          {% if mainSubcategory %}
+            <span class="conceptos-title mt-1">{{mainSubcategory.name}}</span>
+          {% endif %}
+        </div>
+        <div class="d-flex" data-toggle="modal" data-target="#filterProductsModal">
+          <img class="conceptos-icon" src="{{ asset('bundles/conceptos/images/products/filter.png') }}">
+        </div>
+      </div>
+      <div class="d-flex flex-wrap pl-lg-5 pr-lg-5">
+        {% for product in products %}
+          {% set priceOffer = -1 %}
+          {% set offerId = 'false' %}
+          {% set onlyForMembers = false %}
+          {% for offer in product.offers %}
+            {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
+              {% set priceOffer = offer.price %}
+              {% set offerId = offer.id %}
+              {% if offer.onlyForMembers %}
+                {% set onlyForMembers = true %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          {% if priceOffer == -1 %}
+            {% for category in product.categories %}
+              {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and product.inStore)) %}
+                {% set priceOffer = (product.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
+              {% else %}
+                {% for parentCategory in category.parents %}
+                  {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and product.inStore)) %}
+                    {% set priceOffer = (product.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          <a class="d-flex flex-column conceptos-product-card col-6 col-lg-3 p-2 p-lg-3" href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+            <div class="d-flex align-items-center conceptos-white-background p-2">
+              <img class="conceptos-image conceptos-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
             </div>
-
-            <section class="products-filter-header d-none d-lg-flex">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-12 col-lg-8 col-no-padding-left d-flex flex-column justify-content-between">
-                            <div class="filter-header-buttons d-flex flex-wrap">
-                                <a class="header-button header-button-offer" href="{{ path('products', {inOffer:true}) }}">Oferta</a>
-                                <a class="header-button header-button-recent" href="{{ path('products', {recent:true}) }}">Nuevo</a>
-                                <a class="header-button header-button-in-store" href="{{ path('products', {inStore:true}) }}">En Almacén</a>
-                                {% for category in categories %}
-                                    {% if (category.parents | length) == 0 and category.name == "MOBILIARIO" %}
-                                        {% set subCategories = '' %}
-                                        {% for subCategory in category.subCategories %}
-                                            {% set subCategories = subCategory.id ~ ', '~ subCategories %}
-                                        {% endfor %}
-                                        <a class="header-button header-button-lighted" href="{{ path('products', {categories:subCategories}) }}">{{category.name}}</a>
-                                    {% endif %}
-                                {% endfor %}
-                                {% for category in categories %}
-                                    {% if (category.parents | length) == 0 and category.name != "MOBILIARIO" %}
-                                        {% set subCategories = '' %}
-                                        {% for subCategory in category.subCategories %}
-                                            {% set subCategories = subCategory.id ~ ', '~ subCategories %}
-                                        {% endfor %}
-                                        <a class="header-button header-button-lighted" href="{{ path('products', {categories:subCategories}) }}">{{category.name}}</a>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                            <div class="filter-header-propaganda">
-                                <span class="products-propaganda-top-text d-none d-lg-block">{{page.data.header.mainText|raw}}</span>
-                                <a class="products-propaganda-band d-flex align-items-center justify-content-between"
-                                   href="{{ url('membership') }}">
-                                    <div>
-                                        <span class="default-text">{{page.data.header.bottomText1|raw}} <span class="resalted-text">{{page.data.header.bottomTextHighlighted|raw}}</span></span>
-                                        <span class="default-text">{{page.data.header.bottomText2|raw}}</span>
-                                    </div>
-                                    <img src="{{ asset('bundles/conceptos/images/products/prop-icon.png') }}">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-4 justify-content-end">
-                            <img class="generic-image" src="{{page.data.genericImage.path}}">
-                        </div>
-                    </div>
+            <div class="d-flex flex-column conceptos-white-background pl-2 pr-2 pb-2 w-100">
+              <span class="conceptos-product-info">{{product.name}}</span>
+              <span class="conceptos-product-info-description">{{product.description}}</span>
+              <div class="d-flex align-items-center">
+                {% if priceOffer != -1 %}
+                  <span class="conceptos-product-info conceptos-product-price mr-2">${{priceOffer}}</span>
+                  <span class="conceptos-product-info conceptos-offer-price">${{product.price}}</span>
+                {% else %}
+                  <span class="conceptos-product-info conceptos-product-price">${{product.price}}</span>
+                {% endif %}
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-1">
+                <div class="d-flex flex-column">
+                  {% if product.inStore %}
+                    <span class="conceptos-in-store-product-badge">ALMACÉN</span>
+                  {% endif %}
+                  {% if product.recent %}
+                    <span class="conceptos-new-product-badge">NUEVO</span>
+                  {% endif %}
                 </div>
-            </section>
-            <section class="products">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div id="filter-section" class="filter-form col-lg-3 col-12 col-no-padding-left flex-column d-none d-lg-flex">
-                            <div class="d-flex flex-column">
-                                <div class="d-flex gift-card-section">
-                                    <div class="dropright w-100">
-                                        <a id="gift-card-modal-toggle" class="d-flex" data-toggle="modal" data-target="#giftCardsModal" href="">
-                                            <img class="gift-card-section-img gift-card-section-img-long" src="{{membership.data.giftCardSection.generalImage.path}}">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="filter-section pb-3">
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="search-products-input">
-                                                    <div class="d-flex">
-                                                        <div class="d-flex w-100">
-                                                            <input class="form-control mr-2" name="term" type="text"
-                                                                  {% if app.request.query.get('term') is not null %}value="{{ app.request.query.get('term') }}"{% endif %}
-                                                                  placeholder="Buscar..." aria-label="Search">
-                                                            <button class="btn navigation-button top-search-button" type="submit">
-                                                                <i class="mbri-search"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="ac-custom ac-checkmark">
-                                                    <ul>
-                                                        <li>
-                                                            <input type="checkbox" id="in-offer-checkbox" name="inOffer">
-                                                            <label>Oferta</label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="checkbox" id="recent-checkbox" name="recent">
-                                                            <label>Nuevo</label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="checkbox" id="in-store-checkbox" name="inStore">
-                                                            <label>En Almacén</label>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h3 class="categories-header">Categorías</h3>
-                                                <div class="card card-category-parent">
-                                                    <div id="accordion" role="tablist">
-                                                        {% for category in categories %}
-                                                            {% if category.parents is empty and category.name == "MOBILIARIO" %}
-                                                                <div class="card card-category">
-                                                                    <div class="card-header card-header-category" role="tab"
-                                                                        id="{{ category.id }}heading">
-                                                                        <h5 class="mb-0">
-                                                                            <a class="d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#{{ category.id }}" href="javascript:void(0);">
-                                                                                {{ category.name }}
-                                                                                <span class="badge text-right badge-plus">
-                                                                                    <i class="mbri-arrow-down"></i>
-                                                                                </span>
-                                                                            </a>
-                                                                        </h5>
-                                                                    </div>
-                                                                    <div id="{{ category.id }}" class="collapse {% if loop.index == 0 %}show{% endif %}" role="tabpanel">
-                                                                        <div class="card-body card-body-subcategory ac-custom ac-checkmark">
-                                                                            <ul>
-                                                                                <li>
-                                                                                    <input type="checkbox" data-parent="-1" class="category-checkbox" value="{{ category.id }}">
-                                                                                    <label>Todos</label>
-                                                                                </li>
-                                                                                {% for child in category.subCategories %}
-                                                                                    <li>
-                                                                                        <input type="checkbox" data-parent="{{ category.id }}" class="category-checkbox" value="{{ child.id }}">
-                                                                                        <label>{{child.name}}</label>
-                                                                                    </li>
-                                                                                {% endfor %}
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                        {% for category in categories %}
-                                                            {% if category.parents is empty and category.name != "MOBILIARIO" %}
-                                                                <div class="card card-category">
-                                                                    <div class="card-header card-header-category" role="tab"
-                                                                        id="{{ category.id }}heading">
-                                                                        <h5 class="mb-0">
-                                                                            <a class="d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#{{ category.id }}" href="javascript:void(0);">
-                                                                                {{ category.name }}
-                                                                                <span class="badge text-right badge-plus">
-                                                                                    <i class="mbri-arrow-down"></i>
-                                                                                </span>
-                                                                            </a>
-                                                                        </h5>
-                                                                    </div>
-                                                                    <div id="{{ category.id }}" class="collapse {% if loop.index == 0 %}show{% endif %}" role="tabpanel">
-                                                                        <div class="card-body card-body-subcategory ac-custom ac-checkmark">
-                                                                            <ul>
-                                                                                <li>
-                                                                                    <input type="checkbox" data-parent="-1" class="category-checkbox" value="{{ category.id }}">
-                                                                                    <label>Todos</label>
-                                                                                </li>
-                                                                                {% for child in category.subCategories %}
-                                                                                    <li>
-                                                                                        <input type="checkbox" data-parent="{{ category.id }}" class="category-checkbox" value="{{ child.id }}">
-                                                                                        <label>{{child.name}}</label>
-                                                                                    </li>
-                                                                                {% endfor %}
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h3 class="categories-header">Precios</h3>
-                                                <div class="card card-category-parent">
-                                                    <div class="d-flex">
-                                                        <input type="number" min="0" name="priceMin" placeholder="Min"
-                                                              {% if app.request.query.get('priceMin') is not null %}value="{{ app.request.query.get('priceMin') }}"{% endif %}
-                                                              class="form-control">
-                                                        <input type="number" min="0" name="priceMax" placeholder="Max"
-                                                              {% if app.request.query.get('priceMax') is not null %}value="{{ app.request.query.get('priceMax') }}" {% endif %}
-                                                              class="form-control ml-2">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h3 class="categories-header">Color</h3>
-                                                <div class="card card-category-parent">
-                                                    <select class="form-control" name="color">
-                                                        <option value="-1">Todos</option>
-                                                        {% set selectedSerie = app.request.query.get('color', -1) %}
-                                                        {% for color in colors %}
-                                                            <option value="{{ color.id }}"
-                                                                    {% if selectedSerie != -1 and selectedSerie == color.id %}selected{% endif %}>{{ color.name }}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h3 class="categories-header">Materiales</h3>
-                                                <div class="card card-category-parent">
-                                                    <select class="form-control" name="material">
-                                                        <option value="-1">Todos</option>
-                                                        {% set selectedSerie = app.request.query.get('material', -1) %}
-                                                        {% for material in materials %}
-                                                            <option value="{{ material.id }}"
-                                                                    {% if selectedSerie != -1 and selectedSerie == material.id %}selected{% endif %}>{{ material.name }}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="filter-buttons">
-                                    <div class="col-12 pl-0">
-                                        <div class="d-flex justify-content-center">
-                                            <button class="col-5 btn navigation-button reset-button mt-3 mb-3 mr-3 clean-button">Limpiar</button>
-                                            <button class="col-5 btn navigation-button search-button mt-3 mb-3 mr-3" type="submit">BUSCAR</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 col-12 products-section">
-                            {% if products is empty %}
-                                <div class="d-flex flex-wrap justify-content-center text-align-center mt-2 mt-lg-5">
-                                    <h2>No existen productos con los parámetros establecidos</h2>
-                                </div>
-                            {% else %}
-                                <div class="d-flex justify-content-start mt-2 mt-lg-5 flex-wrap">
-                                    {% for product in products %}
-                                        <div class="col-6 col-lg-3 col-custom-padding">
-                                            {{include('site/components/product-summary.html.twig')}}
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                            {% if products is not empty and countProducts > 50 %}
-                                <div class="product-paginator">
-                                    {% set pageP = app.request.query.get('page') %}
-                                    <div class="row justify-content-center align-items-center">
-                                        <button class="btn navigation-button btn-pagination-prev"
-                                                {% if pageP == 1 %}disabled{% endif %}
-                                                type="submit">
-                                            <i class="mbri-left"></i>
-                                            Anterior
-                                        </button>
-                                        <button class="btn navigation-button btn-pagination-next"
-                                                {% if products | length < 48 %}disabled{% endif %}
-                                                type="submit">
-                                            Siquiente
-                                            <i class="mbri-right"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </form>
+                <button class="conceptos-add-to-cart-icon" data-path="{{ path('add_shop_card', {id: product.id}) }}">
+                  <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
+                </button>
+              </div>
+            </div>
+          </a>
+        {% else %}
+          <span class="conceptos-title-strong conceptos-text-align-center">NO EXISTEN PRODUCTOS CON LOS PARÁMETROS SELECCIONADOS</span>
+        {% endfor %}
+      </div>
     </div>
+
+    {% if products is not empty and countProducts > 50 %}
+      <input type="hidden" value="{{ app.request.query.get('page', 1) }}" id="page" name="page">
+      <div class="product-paginator mt-3">
+        {% set pageP = app.request.query.get('page') %}
+        <div class="d-flex justify-content-center align-items-center">
+          <button class="conceptos-primary-button pagination-prev mr-3" type="submit" {% if pageP == 1 %}disabled{% endif %}>
+            Anterior
+          </button>
+          <button class="conceptos-primary-button pagination-next ml-3" type="submit" {% if products | length < 48 %}disabled{% endif %}>
+            Siguiente
+          </button>
+        </div>
+      </div>
+    {% endif %}
+  </form>
 {% endblock %}
 {% block js %}
-    <script src="{{ asset('bundles/conceptos/products/js/price-range.js') }}"></script>
-    <script src="{{ asset('bundles/easyadmin/javascript/select2.full.min.js') }}"></script>
-    <script src="{{ asset('bundles/conceptos/libs/select2/js/i18n/es.js') }}"></script>
-    <script src="{{ asset('bundles/conceptos/libs/slimscroll/jquery.slimscroll.min.js') }}"></script>
-    <script src="{{ asset('bundles/conceptos/home/js/classie.js') }}"></script>
-    <script src="{{ asset('bundles/conceptos/products/js/products.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/products/js/price-range.js') }}"></script>
+  <script src="{{ asset('bundles/easyadmin/javascript/select2.full.min.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/libs/select2/js/i18n/es.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/libs/slimscroll/jquery.slimscroll.min.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/home/js/classie.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/products/js/products.js') }}"></script>
 {% endblock %}

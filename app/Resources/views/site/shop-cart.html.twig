@@ -5,89 +5,27 @@
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/shop-cart/shop-cart.css') }}">
 {% endblock %}
 {% block body %}
-  <input type="hidden" value="{{ path('site_home') }}" id="site-path">
-  <input type="hidden" value="{{ path('persist_count_shop_car') }}" id="persist-count-path">
-
-  {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'true'}}) }}
+  {{ form_start(form) }}
     <div class="d-flex flex-column pt-2 pt-lg-5 pl-2 pr-2">
       <h1 class="conceptos-title pt-2">{{home.data.shopCart.mainText|raw}}</h1>
       <h2 class="conceptos-subtitle">{{home.data.shopCart.secondaryText|raw}}</h2>
 
       <div class="shop-cart-product-list-section conceptos-add-scroll">
         <div class="d-flex flex-column mt-3 ml-3 mr-3">
-          {% for product in products %}
-            <div class="d-flex shop-cart-product p-2 {% if loop.index > 1 %}mt-2{% endif %}"
-                data-product="{{product.id}}"
-                data-uuid="{{ product.uuid }}"
-                data-calculate-price-path="{{ path('calculate_product_price') }}"
-                data-remove-path="{{ path('remove_from_cart_shop', {id: product.id}) }}">
-              {% if product.type is defined %}
-                {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
-                {% set productName = "TARJETA DE REGALO" %}
-                {% set productPrice = product.price %}
-                {% if product.price == 25 %}
-                    {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
-                {% elseif product.price == 50 %}
-                    {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
-                {% elseif product.price == 100 %}
-                    {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
-                {% endif %}
-              {% else %}
-                {% set imagePath = vich_uploader_asset(product.image, 'imageFile') %}
-                {% set productName = product.name %}
-                {% set productPrice = product.price %}
-              {% endif %}
-              <div class="d-flex col-5 conceptos-product-image p-2">
-                <img class="conceptos-image" src="{{imagePath}}" alt="{{productName}}">
-              </div>
-              <div class="d-flex flex-column col-7 pl-2">
-                <div class="d-flex flex-column">
-                  <span class="conceptos-product-info">{{productName}}</span>
-                  <span class="conceptos-product-info" data-price="{{productPrice}}">${{productPrice}}.00</span>
-                </div>
-                <div class="d-flex flex-column justify-content-center h-100">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                      <img class="conceptos-icon cart-quantity-up" src="{{ asset('bundles/conceptos/images/cart/plus.png') }}">
-                      <img class="conceptos-icon cart-quantity-down ml-1" src="{{ asset('bundles/conceptos/images/cart/minus.png') }}">
-                      <span class="conceptos-product-info ml-2" data-quantity="{{product.count}}">x{{product.count}}</span>
-                    </div>
-                    <img class="shop-cart-trash mr-1" src="{{ asset('bundles/conceptos/images/cart/trash-icon.png') }}">
-                  </div>
-                  <div class="d-flex align-items-center mt-1">
-                    <span class="conceptos-product-info">ENVÍO:</span>
-                    <img class="conceptos-icon airplane-delivery ml-2" src="{{ asset('bundles/conceptos/images/cart/airplane.png') }}">
-                    <img class="conceptos-icon airplane-delivery-disabled ml-2" src="{{ asset('bundles/conceptos/images/cart/airplane_disabled.png') }}" style="display: none;">
-                    <img class="conceptos-icon ship-delivery ml-1" src="{{ asset('bundles/conceptos/images/cart/ship.png') }}">
-                    <img class="conceptos-icon ship-delivery-disabled ml-1" src="{{ asset('bundles/conceptos/images/cart/ship_disabled.png') }}" style="display: none;">
-                  </div>
-                </div>
-              </div>
-            </div>
-          {% else %}
-            <div class"row">
-                <div class="col">
-                    <div class="d-flex justify-content-center">
-                        <span class="conceptos-title m-4">SIN PRODUCTOS EN EL CARRITO</span>
-                    </div>
-                </div>
-            </div>
-          {% endfor %}
+            {{ render(controller('AppBundle:Site:productsSummary')) }}
         </div>
-        <div class="d-flex justify-content-between conceptos-badge mt-3">
+        <div class="d-flex justify-content-between align-items-center conceptos-badge mt-3">
           <div class="d-flex flex-column m-2">
             <span class="conceptos-badge-text">CANTIDAD</span>
-            <span class="conceptos-badge-text shop-cart-products-count">{{count}} PRODUCTOS</span>
+            <span class="conceptos-badge-text shop-cart-products-count">{{count}} {% if count == 1 %}PRODUCTO{% else %}PRODUCTOS{% endif %}</span>
           </div>
-          {% if products|length > 0 %}
-            <div class="d-flex flex-column m-2">
-              <span class="conceptos-badge-text">PRECIO</span>
-              <span class="conceptos-badge-text shop-cart-total-price"></span>
-            </div>
-          {% endif %}
+          <div class="d-flex flex-column m-2">
+            <span class="conceptos-badge-text">PRECIO</span>
+            <span class="conceptos-badge-text shop-cart-total-price"></span>
+          </div>
         </div>
       </div>
-      {% if products|length > 0 %}
+      {% if shopCartProducts|length > 0 %}
         <div class="shop-cart-section mt-3">
           <div class="d-flex flex-column pt-3 ml-3 mr-3">
             <div class="d-flex flex-column">
@@ -106,17 +44,46 @@
             </div>
             <div class="d-flex flex-column mt-3">
               <span class="conceptos-title">MEMBRESÍA</span>
-              <input id="shop-cart-member-number" type="text" placeholder="Código de miembro" />
+              <div class="d-flex conceptos-relative">
+                <input id="shop-cart-member-number" class="w-100" type="text" placeholder="Código de miembro" />
+                <img class="conceptos-icon conceptos-request-success-icon" src="{{ asset('bundles/conceptos/images/home/request-success.png') }}">
+                <img class="conceptos-icon conceptos-request-error-icon" src="{{ asset('bundles/conceptos/images/home/request-error.png') }}">
+                <img class="conceptos-icon conceptos-request-loading-icon" src="{{ asset('bundles/conceptos/images/home/request-loading.png') }}">
+              </div>
             </div>
           </div>
-          <div class="d-flex justify-content-between conceptos-badge mt-3">
-            <div class="d-flex flex-column m-2">
+          <div class="d-flex flex-column conceptos-badge mt-3 p-2">
+            <div class="d-flex justify-content-between align-items-center">
               <span class="conceptos-badge-text">CANTIDAD</span>
-              <span class="conceptos-badge-text shop-cart-products-count">{{count}} PRODUCTOS</span>
+              <span class="conceptos-badge-text shop-cart-products-count">{{count}}</span>
             </div>
-            <div class="d-flex flex-column m-2">
-              <span class="conceptos-badge-text">PRECIO</span>
-              <span class="conceptos-badge-text shop-cart-total-price"></span>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="conceptos-badge-text">TIPO DE MONEDA</span>
+              <span class="conceptos-badge-text shop-cart-currency"></span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="conceptos-badge-text">TIPO DE PAGO</span>
+              <span class="conceptos-badge-text shop-cart-payment-type"></span>
+            </div>
+            <div class="d-none justify-content-between align-items-center">
+              <span class="conceptos-badge-text">DESCUENTO DE MIEMBRO</span>
+              <span class="conceptos-badge-text shop-cart-membership-discount"></span>
+            </div>
+            <div class="d-none justify-content-between align-items-center">
+              <span class="conceptos-badge-text">EXTRA CUC</span>
+              <span class="conceptos-badge-text shop-cart-currency-extra"></span>
+            </div>
+            <div class="d-none justify-content-between align-items-center">
+              <span class="conceptos-badge-text">EXTRA 2 PLAZOS</span>
+              <span class="conceptos-badge-text shop-cart-payment-type-extra"></span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="conceptos-badge-text">COSTO DE TRANSPORTE</span>
+              <span class="conceptos-badge-text shop-cart-transport-cost"></span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <span class="conceptos-badge-text-strong">TOTAL A PAGAR</span>
+              <span class="conceptos-badge-text-strong shop-cart-total-price"></span>
             </div>
           </div>
         </div>
@@ -128,33 +95,37 @@
             <input type="hidden" name="paymentType" id="paymentType">
             <input type="hidden" name="paymentCurrency" id="paymentCurrency">
             <input type="hidden" name="products" id="products">
-            <div class="mt-2">
-              {{ form_widget(form.name, {'attr': {'class': 'w-100', 'placeholder': 'Nombre', 'required': 'true'}}) }}
+            <div class="d-flex flex-column mt-2">
+              <span class="conceptos-subtitle">Nombre</span>
+              {{ form_widget(form.name, {'attr': {'class': 'w-100', 'required': 'true'}}) }}
             </div>
-            <div class="mt-2">
-              {{ form_widget(form.email, {'attr': {'class': 'w-100', 'placeholder': 'Correo', 'required': 'true'}}) }}
+            <div class="d-flex flex-column mt-2">
+              <span class="conceptos-subtitle">Correo</span>
+              {{ form_widget(form.email, {'attr': {'class': 'w-100', 'required': 'true'}}) }}
             </div>
-            <div class="mt-2">
-              {{ form_widget(form.address, {'attr': {'class': 'w-100', 'placeholder': 'Dirección', 'required': 'true'}}) }}
+            <div class="d-flex flex-column mt-2">
+              <span class="conceptos-subtitle">Dirección</span>
+              {{ form_widget(form.address, {'attr': {'class': 'w-100', 'required': 'true'}}) }}
             </div>
-            <div class="d-flex flex-wrap">
-              <div class="col-12 col-lg-6 mt-2 pl-0">
-                {{ form_widget(form.phone, {'attr': {'class': 'w-100', 'placeholder': 'Teléfono de casa'}}) }}
-              </div>
-              <div class="col-12 col-lg-6 mt-2 pl-0">
-                {{ form_widget(form.movil, {'attr': {'class': 'w-100', 'placeholder': 'Teléfono Movil'}}) }}
-              </div>
+            <div class="d-flex flex-column mt-2">
+              <span class="conceptos-subtitle">Teléfono de casa</span>
+              {{ form_widget(form.phone, {'attr': {'class': 'w-100'}}) }}
+            </div>
+            <div class="d-flex flex-column mt-2">
+              <span class="conceptos-subtitle">Teléfono Movil</span>
+              {{ form_widget(form.movil, {'attr': {'class': 'w-100'}}) }}
             </div>
             <div class="d-flex align-items-center">
               <div class="col-md-6 pl-2">
-                <div class="form-group mb-0">
+                <div class="d-flex flex-column mb-0">
                   {{ form_widget(form.memberNumber) }}
                 </div>
               </div>
             </div>
             {{ form_widget(form.recaptcha) }}
             {% if is_granted('ROLE_COMMERCIAL') %}
-              <select id="type-select" class="mt-3 mb-2">
+              <div class="conceptos-divider mt-3 mb-3"></div>
+              <select id="type-select" class="mb-2">
                 <option value="request">Pedido</option>
                 <option value="prefacture">Prefactura</option>
                 <option value="facture">Factura</option>
@@ -165,10 +136,11 @@
                     <option value="{{prefacture.id}}">Prefactura: {{prefacture.id}}-{{prefacture.date|date('Y')}}</option>
                 {% endfor %}
               </select>
-              <div>
-                <input type="checkbox" id="ignoreTransport">
-                <span class="terms-label">Ignorar costo de transporte</span>
-              </div>
+              <label class="d-flex checkbox-container align-self-start">
+                <span class="conceptos-subtitle">Ignorar costo de transporte</span>
+                <input id="ignoreTransport" type="checkbox">
+                <span class="checkmark checkmark-gray"></span>
+              </label>
             {% endif %}
           </div>
         </div>
@@ -182,22 +154,26 @@
         {{ form_widget(form.recaptcha, {'attr': {'class': 'd-none'}}) }}
       {% endif %}
     </div>
-    <div class="d-flex flex-column">
-      <img class="w-100 conceptos-contact-image" src="{{home.data.contact.image.path}}">
-      <div class="d-flex flex-column pl-2 pr-2 mt-3">
-        {% if products|length > 0 %}
+    <div id="shop-cart-contact-form" class="d-flex flex-column">
+      <img class="conceptos-image" src="{{home.data.contact.image.path}}">
+      <div id="shop-cart-buy-section" class="d-flex flex-column pl-2 pr-2 mt-3">
+        {% if shopCartProducts|length > 0 %}
           <div class="d-flex">
-            <input type="checkbox" id="termsAndConditions">
-            <span class="terms-label">He leído y acepto los <a data-toggle="modal" data-target="#termsAndConditionsModal" href="">Términos y Condiciones</a></span>
+            <label class="d-flex checkbox-container align-self-start">
+              <span class="conceptos-subtitle">He leído y acepto los <a class="conceptos-title conceptos-title-italic" data-toggle="modal" data-target="#termsAndConditionsModal" href="#">Términos y condiciones</a></span>
+              <input id="termsAndConditions" type="checkbox">
+              <span class="checkmark"></span>
+            </label>
           </div>
           <div class="d-flex mt-2">
-            <input type="checkbox" id="privacyPolicy">
-            <span class="terms-label">He leído y acepto la <a data-toggle="modal" data-target="#privacyPolicyModal" href="">Política de Privacidad</a></span>
+            <label class="d-flex checkbox-container align-self-start">
+              <span class="conceptos-subtitle">He leído y acepto la <a class="conceptos-title conceptos-title-italic" data-toggle="modal" data-target="#privacyPolicyModal" href="#">Política de privacidad</a></span>
+              <input id="privacyPolicy" type="checkbox">
+              <span class="checkmark"></span>
+            </label>
           </div>
           <div class="d-flex mt-2">
-            <button id="shop-cart-send-request-button" class="pl-3 pr-3 pt-1 pb-1" type="submit">
-              <span>ENVIAR PEDIDO</span>
-            </button>
+            <button type="submit" class="conceptos-primary-button pl-3 pr-3 pt-1 pb-1">ENVIAR PEDIDO</button>
           </div>
         {% endif %}
         <div class="d-flex justify-content-end mt-3">
@@ -222,122 +198,5 @@
 {% block footer %}
 {% endblock %}
 {% block js %}
-  <script>
-    products = [];
-    {% for product in products %}
-      products.push({
-        {% if product.offerExists is defined and product.offerExists %}
-          offerExists: {{product.offerExists}},
-        {% endif %}
-        {% if product.weight is defined %}
-          weight: {{product.weight}},
-        {% else %}
-          weight: 0,
-        {% endif %}
-        {% if product.ikeaPrice is defined %}
-          ikeaPrice: {{product.ikeaPrice}},
-        {% else %}
-          ikeaPrice: 0,
-        {% endif %}
-        {% if product.isFurniture is defined and product.isFurniture %}
-          isFurniture: true,
-        {% else %}
-          isFurniture: false,
-        {% endif %}
-        {% if product.isMattress is defined and product.isMattress %}
-          isMattress: true,
-        {% else %}
-          isMattress: false,
-        {% endif %}
-        {% if product.isAirplaneFurniture is defined and product.isAirplaneFurniture %}
-          isAirplaneFurniture: true,
-        {% else %}
-          isAirplaneFurniture: false,
-        {% endif %}
-        {% if product.isAirplaneMattress is defined and product.isAirplaneMattress %}
-          isAirplaneMattress: true,
-        {% else %}
-          isAirplaneMattress: false,
-        {% endif %}
-        {% if product.isFragile is defined and product.isFragile %}
-            isFragile: true,
-        {% else %}
-          isFragile: false,
-        {% endif %}
-        {% if product.isOversize is defined and product.isOversize %}
-          isOversize: true,
-        {% else %}
-          isOversize: false,
-        {% endif %}
-        {% if product.isTableware is defined and product.isTableware %}
-          isTableware: true,
-        {% else %}
-          isTableware: false,
-        {% endif %}
-        {% if product.isLamp is defined and product.isLamp %}
-          isLamp: true,
-        {% else %}
-          isLamp: false,
-        {% endif %}
-        {% if product.numberOfPackages is defined and product.numberOfPackages %}
-          numberOfPackages: {{product.numberOfPackages}},
-        {% else %}
-          numberOfPackages: false,
-        {% endif %}
-        {% if product.isFaucet is defined and product.isFaucet %}
-          isFaucet: true,
-        {% else %}
-          isFaucet: false,
-        {% endif %}
-        {% if product.isGrill is defined and product.isGrill %}
-          isGrill: true,
-        {% else %}
-          isGrill: false,
-        {% endif %}
-        {% if product.isShelf is defined and product.isShelf %}
-          isShelf: true,
-        {% else %}
-          isShelf: false,
-        {% endif %}
-        {% if product.isDesk is defined and product.isDesk %}
-          isDesk: true,
-        {% else %}
-          isDesk: false,
-        {% endif %}
-        {% if product.isBookcase is defined and product.isBookcase %}
-          isBookcase: true,
-        {% else %}
-          isBookcase: false,
-        {% endif %}
-        {% if product.isComoda is defined and product.isComoda %}
-          isComoda: true,
-        {% else %}
-          isComoda: false,
-        {% endif %}
-        {% if product.isRepisa is defined and product.isRepisa %}
-          isRepisa: true,
-        {% else %}
-          isRepisa: false,
-        {% endif %}
-        {% if product.categories is defined %}
-          categories: {{product.categories}},
-        {% else %}
-          categories: false,
-        {% endif %}
-        {% if product.type is defined %}
-          id: '{{ product.id }}',
-          type: 'target',
-          price: {{ product.price }},
-          count: {{ product.count }},
-        {% else %}
-          id: '{{ product.id }}',
-          price: {{ product.price }},
-          count: {{ product.count }},
-          storeCount: '{{ product.storeCount }}',
-          name: '{{ product.name }}',
-        {% endif %}
-      });
-    {% endfor %}
-  </script>
   <script src="{{ asset('bundles/conceptos/shop-cart/js/shop-cart.js') }}"></script>
 {% endblock %}

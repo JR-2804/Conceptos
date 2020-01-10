@@ -40,7 +40,7 @@ $(document).ready(function() {
         $.toast({
           text: title,
           showHideTransition: "fade",
-          bgColor: "#f7ed4a",
+          bgColor: "#c2b930",
           textColor: "#3f3c03",
           allowToastClose: true,
           hideAfter: 3000,
@@ -56,7 +56,7 @@ $(document).ready(function() {
           text:
             "Ha ocurrido un error realizando la operación. Intente más tarde",
           showHideTransition: "fade",
-          bgColor: "#f7ed4a",
+          bgColor: "#c2b930",
           textColor: "#3f3c03",
           allowToastClose: true,
           hideAfter: 3000,
@@ -68,6 +68,42 @@ $(document).ready(function() {
         });
       }
     );
+  });
+
+  $("#open-categories-menu").click(function() {
+    var categoriesMenu = $("#categories-menu");
+    categoriesMenu.css("right", "20%");
+    categoriesMenu.css("left", "0");
+    $("#close-categories-menu").show();
+  });
+
+  $("#close-categories-menu").click(function() {
+    var categoriesMenu = $("#categories-menu");
+    categoriesMenu.css("right", "100%");
+    categoriesMenu.css("left", "-100%");
+    $("#close-categories-menu").hide();
+  });
+
+  $(".conceptos-parent-category").click(function() {
+    var isCollapsed = false;
+    if (
+      $(this)
+        .children(0)
+        .hasClass("collapsed")
+    ) {
+      isCollapsed = true;
+    }
+    $(".conceptos-category-header").addClass("collapsed");
+    $(".conceptos-subcategories-panel").removeClass("show");
+
+    if (!isCollapsed) {
+      $(this)
+        .children(0)
+        .removeClass("collapsed");
+      $(this)
+        .children(1)
+        .addClass("show");
+    }
   });
 });
 

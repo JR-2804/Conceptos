@@ -2334,16 +2334,11 @@ i.share-icon:hover {
 
 .help-page-header-short {
   width: 100%;
-  padding-top: 7px;
 }
 
 .navbar .additional-navbar-button.nav-shop-cart-icon {
   margin-top: 9px;
   margin-right: 45px;
-}
-
-.navbar.navbar-short .additional-navbar-button.nav-shop-cart-icon {
-  margin-top: -5px;
 }
 
 #offer-countdown-container {

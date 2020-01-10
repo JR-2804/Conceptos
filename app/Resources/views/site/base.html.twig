@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-    {% block open_graph %}
-        <meta property="og:image" content="{{ absolute_url(asset('bundles/conceptos/images/logo.png')) }}">
-        <meta property="og:title" content="TIENDA CONCEPTOS"/>
-        <meta property="og:url" content="http://tiendaconceptos.com"/>
-        <meta property="og:type" content="website"/>
-        <meta property="og:locale" content="es_ES"/>
-    {% endblock %}
-    <meta name="description" content="{% block meta_description %}{% endblock %}">
-    <link rel="shortcut icon" href="{{ asset('bundles/conceptos/images/logo.png') }}">
-    <title>Conceptos - {% block title %}{% endblock %}</title>
-    {% block stylesheet %}
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/normalize.css/normalize.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/fonts/FontAwesome/css/font-awesome.min.css') }}">
-        <link rel="stylesheet"
-              href="{{ asset('bundles/conceptos/assets/web/assets/mobirise-icons/mobirise-icons.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/tether/tether.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap-grid.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap-reboot.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/dropdown/css/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/animatecss/animate.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/socicon/css/styles.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/theme/css/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/gallery/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/mobirise/css/mbr-additional.css') }}"
-              type="text/css">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/libs/toast/jquery.toast.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/css/component.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/css/base.css') }}" type="text/css">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/scripts/css/custom-styles.css') }}" type="text/css">
-        <link rel="stylesheet" href="{{ asset('bundles/conceptos/scripts/css/temp-styles.css') }}" type="text/css">
-    {% endblock %}
-    {% block css %}{% endblock %}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  {% block open_graph %}
+    <meta property="og:image" content="{{ absolute_url(asset('bundles/conceptos/images/logo.png')) }}">
+    <meta property="og:title" content="TIENDA CONCEPTOS"/>
+    <meta property="og:url" content="http://tiendaconceptos.com"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:locale" content="es_ES"/>
+  {% endblock %}
+  <meta name="description" content="{% block meta_description %}{% endblock %}">
+  <link rel="shortcut icon" href="{{ asset('bundles/conceptos/images/logo.png') }}">
+  <title>Conceptos - {% block title %}{% endblock %}</title>
+  {% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/normalize.css/normalize.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/fonts/FontAwesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/web/assets/mobirise-icons/mobirise-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/tether/tether.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap-grid.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap-reboot.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/dropdown/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/animatecss/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/socicon/css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/theme/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/mobirise/css/mbr-additional.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/libs/toast/jquery.toast.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/css/component.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/css/base.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/scripts/css/custom-styles.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/scripts/css/temp-styles.css') }}" type="text/css">
+  {% endblock %}
+  {% block css %}{% endblock %}
 </head>
 <body>
+<input type="hidden" value="{{ path('site_home') }}" id="site-path">
+<input type="hidden" value="{{ path('persist_count_shop_car') }}" id="persist-count-path">
+
 <div class="la-anim-10 d-none d-lg-block"></div>
 <div class="la-anim-10 small-anim d-lg-none"></div>
 
@@ -74,303 +74,347 @@
     </div>
 </div>
 
+<div id="cartPreviewModal" class="modal fade">
+  <div class="modal-dialog modal-lg mt-0">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="shop-cart-product-list-section conceptos-add-scroll">
+          <div id="products-summary" class="d-flex flex-column mt-3 ml-3 mr-3">
+            {{ render(controller('AppBundle:Site:productsSummary')) }}
+          </div>
+          <div class="d-flex justify-content-between align-items-center conceptos-badge mt-3">
+            <div class="d-flex flex-column m-2">
+              <span class="conceptos-badge-text">CANTIDAD</span>
+              <span class="conceptos-badge-text shop-cart-products-count">{{count}} {% if count == 1 %}PRODUCTO{% else %}PRODUCTOS{% endif %}</span>
+            </div>
+            <div class="d-flex flex-column m-2">
+              <span class="conceptos-badge-text">PRECIO</span>
+              <span class="conceptos-badge-text shop-cart-total-price"></span>
+            </div>
+            <div class="d-flex flex-column justify-content-center align-items-center m-2">
+              <a class="conceptos-go-to-cart-icon" href="{{ path('shop-cart') }}">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button id="open-categories-menu" class="d-flex justify-content-end p-2">
+  <img class="conceptos-icon" src="{{ asset('bundles/conceptos/images/home/forward.png') }}">
+</button>
+
+<div id="categories-menu" class="conceptos-add-scroll">
+  <div class="d-flex flex-column p-3" role="tablist" aria-multiselectable="false" multiple="false">
+    <div class="d-flex align-items-center">
+      <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-all.png') }}">
+      <a class="conceptos-category-title" href="{{ path('products') }}">TODOS</a>
+    </div>
+    <div class="d-flex align-items-center mt-3">
+      <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-offers.png') }}">
+      <a class="conceptos-category-title" href="{{ path('products') }}">OFERTAS</a>
+    </div>
+    {% for category in categories %}
+      {% if category.parents | length == 0 %}
+        {% set subCategories = '' %}
+        {% for subCategory in category.subCategories %}
+          {% set subCategories = subCategory.id ~ ', '~ subCategories %}
+        {% endfor %}
+        {% if category.name == "DECORACIÓN" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-decoration.png') %}
+        {% elseif category.name == "INFANTIL" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-child.png') %}
+        {% elseif category.name == "COCINA" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-kitchen.png') %}
+        {% elseif category.name == "LUMINARIAS" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-lights.png') %}
+        {% elseif category.name == "BAÑO" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-bathroom.png') %}
+        {% elseif category.name == "TEXTILES" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-cloth.png') %}
+        {% elseif category.name == "ORDEN Y ALMACENAMIENTO" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-store.png') %}
+        {% elseif category.name == "COMEDOR" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-dining-room.png') %}
+        {% elseif category.name == "MOBILIARIO" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-furniture.png') %}
+        {% elseif category.name == "MASCOTAS" %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-pets.png') %}
+        {% else %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-all.png') %}
+        {% endif %}
+        <div class="d-flex flex-column conceptos-parent-category mt-3" role="tab">
+          <div class="d-flex align-items-center conceptos-category-header collapsed" data-toggle="collapse" data-target="#subcategories-{{loop.index}}">
+            <img class="conceptos-category-icon mr-2" src="{{categoryIcon}}">
+            <div class="d-flex w-100">
+              <span class="conceptos-category-title">{{category.name}}</span>
+            </div>
+          </div>
+          <div id="subcategories-{{loop.index}}" class="conceptos-subcategories-panel collapse" role="tabpanel">
+            <div class="d-flex flex-column">
+              {% for subCategory in category.subCategories %}
+                <div class="d-flex align-items-center mt-3">
+                  <img class="conceptos-category-divider-icon ml-3 mr-1" src="{{asset('bundles/conceptos/images/home/category.png')}}">
+                  <a class="conceptos-category-subtitle" href="{{ path('products', {categories:subCategory.id}) }}">{{subCategory.name}}</a>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<div id="close-categories-menu">
+  <img class="close-categories-menu-icon mr-2 d-flex d-lg-none" src="{{ asset('bundles/conceptos/images/home/close-categories-menu.png') }}">
+</div>
+
 {% block header %}
-    <section class="menu cid-qQ6pVr9Hx2" once="menu" id="menu1-e">
-        <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable">
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </button>
-            <!--<a class="text-white nav-shop-cart-icon navbar-toggler-right additional-navbar-button d-lg-none"
-                href="{{ path('shop-cart') }}">
-                <span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>
-                <span class="badge badge-shop-cart">{{ count }}</span>
-            </a>-->
-            <div class="menu-logo col-6 col-lg-3 pl-0 pl-lg-3">
-                <div class="navbar-brand ml-0">
-                    <span class="navbar-logo">
-                        <a href="{{ path('site_home') }}">
-                            <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
-                                 title="Conceptos"
-                                 style="height: 3.8rem;" class="logo-menu d-none d-lg-flex">
-                            <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
-                                 title="Conceptos"
-                                 style="width:100%;height: auto !important;" class="logo-menu d-lg-none">
-                        </a>
-                    </span>
-                </div>
-            </div>
-            <div class="d-flex flex-column align-items-end collapse navbar-collapse" id="navbarSupportedContent">
-                <div class="d-none d-lg-block">
-                    <div class="d-flex">
-                        <div class="d-flex align-items-center mbr-section-btn">
-                            <form class="d-flex" action="{{ path('products') }}" method="get">
-                                <input class="form-control global-search" type="text" name="term">
-                                <button class="btn navigation-button global-search-button">
-                                    <i class="mbri-search"></i>
-                                </button>
-                            </form>
-                        </div>
-                        <div class="navbar-buttons mbr-section-btn">
-                            <a class="btn btn-success btn-success-inverse" href="{{ home.data.cataloge.path }}">
-                                <span class="mbri-save mbr-iconfont mbr-iconfont-btn "></span>
-                                CATÁLOGO
-                            </a>
-                        </div>
-                        <!-- TODO: Hide App
-                        <div class="navbar-buttons mbr-section-btn">
-                            <a class="btn btn-success" href="{{ path('download_app') }}">
-                                <span class="mbri-save mbr-iconfont mbr-iconfont-btn "></span>
-                                APP
-                            </a>
-                        </div>
-                        -->
-                    </div>
-                </div>
-                <div class="d-flex d-lg-none justify-content-center">
-                    <div class="navbar-buttons mbr-section-btn">
-                        <a class="btn btn btn-success btn-success-inverse" href="{{ home.data.cataloge.path }}">
-                            <span class="mbri-save mbr-iconfont mbr-iconfont-btn "></span>
-                            CATÁLOGO
-                        </a>
-                    </div>
-                    <!-- TODO: Hide App
-                    <div class="navbar-buttons mbr-section-btn">
-                        <a class="btn btn-success" href="{{ path('download_app') }}">
-                            <span class="mbri-save mbr-iconfont mbr-iconfont-btn "></span>
-                            APP
-                        </a>
-                    </div>
-                    -->
-                </div>
-                <div class="d-flex justify-content-center d-lg-none">
-                    <div class="d-flex align-items-center mbr-section-btn">
-                        <form class="d-flex" action="{{ path('products') }}" method="get">
-                            <input class="form-control global-search" type="text" name="term">
-                            <button class="btn navigation-button global-search-button">
-                                <i class="mbri-search"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
-                    <li class="nav-item dropdown d-none d-lg-block">
-                        <a class="nav-link dropdown-toggle text-white" href="{{ path('products') }}"
-                           data-toggle="dropdown" data-mouse-inside="false"
-                           onclick="onTopDropdownClick(this)" onmouseenter="onDropdownMouseEnter(this)" onmouseleave="onDropdownMouseLeave(this)">
-                            PRODUCTOS
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item " href="{{ path('products', {inOffer:true}) }}">
-                                    <span class="badge-custom badge-offer">OFERTA</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item " href="{{ path('products', {recent:true}) }}">
-                                    <span class="badge-custom badge-new">NUEVO</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item " href="{{ path('products', {inStore:true}) }}">
-                                    <span class="badge-custom badge-in-store">ALMACÉN</span>
-                                </a>
-                            </li>
-                            <div class="dropdown-divider" role="separator"></div>
-                            <li>
-                                <a class="dropdown-item" href="{{ path('products') }}">Todos</a>
-                            </li>
-                            {% for category in categories %}
-                                {% if (category.parents | length) == 0 and category.name == "MOBILIARIO" %}
-                                    {% set subCategories = '' %}
-                                    {% for subCategory in category.subCategories %}
-                                        {% set subCategories = subCategory.id ~ ', '~ subCategories %}
-                                    {% endfor %}
-                                    <li class="dropdown-submenu">
-                                        <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="{{ path('products', {categories:subCategories}) }}"
-                                           onclick="onBottomDropdownClick(this)">
-                                            {{category.name}}
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            {% for subCategory in category.subCategories %}
-                                                <li>
-                                                    <a class="dropdown-item" href="{{ path('products', {categories:subCategory.id}) }}">{{subCategory.name}}</a>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                            {% for category in categories %}
-                                {% if (category.parents | length) == 0 and category.name != "MOBILIARIO" %}
-                                    {% set subCategories = '' %}
-                                    {% for subCategory in category.subCategories %}
-                                        {% set subCategories = subCategory.id ~ ', '~ subCategories %}
-                                    {% endfor %}
-                                    <li class="dropdown-submenu">
-                                        <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="{{ path('products', {categories:subCategories}) }}"
-                                           onclick="onBottomDropdownClick(this)">
-                                            {{category.name}}
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            {% for subCategory in category.subCategories %}
-                                                <li>
-                                                    <a class="dropdown-item" href="{{ path('products', {categories:subCategory.id}) }}">{{subCategory.name}}</a>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                            <div class="dropdown-divider" role="separator"></div>
-                        </ul>
-                    </li>
-                    <li class="nav-item d-lg-none">
-                        <a class="nav-link link text-white" href="{{ path('products') }}">
-                            PRODUCTOS
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link link text-white" href="{{ path('inward') }}">
-                            INTERIORISMO
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link link text-white" href="{{ path('services') }}">
-                            OBRAS
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link link text-white" href="{{ path('membership') }}">
-                            MEMBRESÍA
-                        </a>
-                    </li>
-                    <!--
-                    <li class="nav-item">
-                        <a class="nav-link link text-white" href="{{ path('blog_home') }}">
-                            INSPIRACIONES
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link link text-white" href="{{ path('about_us') }}">
-                            SOBRE NOSOTROS
-                        </a>
-                    </li>
-                    -->
-                    <li class="nav-item">
-                        <a class="nav-link link text-white" href="{{ path('help') }}">
-                            AYUDA
-                        </a>
-                    </li>
-                    <li class="nav-item d-none d-lg-block">
-                        <a class="nav-link link text-white nav-shop-cart-icon"
-                           href="{{ path('shop-cart') }}">
-                            <span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>
-                            <span class="badge badge-shop-cart">{{ count }}</span>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown d-none d-lg-block">
-                        {% if app.user|default and app.user.image %}
-                            <img class="user-image-thumbnail" src="{{ vich_uploader_asset(app.user.image, 'imageFile') }}">
-                        {% endif %}
-                        <a class="nav-link dropdown-toggle btn {% if app.user|default %}btn-success{% else %}login-button{% endif %} btn-user" href="#" data-toggle="dropdown">
-                            <span class="mbri-user mbr-iconfont mbr-iconfont-btn"></span>
-                        </a>
-                        {% if app.user|default %}
-                            <div class="dropdown-menu dropdown-menu-right">
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <a class="dropdown-item" href="{{ path('easyadmin') }}">Administrar</a>
-                                {% endif %}
-                                <a class="dropdown-item" href="{{ path('favorite_products') }}">Favoritos</a>
-                                <a class="dropdown-item" href="{{ path('request_status') }}">Estado de mis pedidos</a>
-                                <div class="dropdown-divider" role="separator"></div>
-                                <a class="dropdown-item" href="{{ path('site_profile') }}">Perfil</a>
-                                <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">Cerrar Session</a>
-                            </div>
-                        {% else %}
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <div class="dropdown-divider" role="separator"></div>
-                                <a class="dropdown-item" data-toggle="modal" data-target="#loginModal" href="">Acceder</a>
-                            </div>
-                        {% endif %}
-                    </li>
-                    <li class="nav-item d-lg-none">
-                        <div class="dropdown-divider" role="separator"></div>
-                        {% if app.user|default %}
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a class="dropdown-item" href="{{ path('easyadmin') }}">Administrar</a>
-                            {% endif %}
-                            <a class="dropdown-item" href="{{ path('favorite_products') }}">Favoritos</a>
-                            <a class="dropdown-item" href="{{ path('site_profile') }}">Perfil</a>
-                            <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">Cerrar Session</a>
-                        {% else %}
-                            <a class="dropdown-item" data-toggle="modal" data-target="#loginModal" href="">Acceder</a>
-                        {% endif %}
-                    </li>
-                    <li class="nav-item d-lg-none">
-                        <a class="nav-link link text-white nav-shop-cart-icon"
-                           href="{{ path('shop-cart') }}">
-                            <span class="mbri-shopping-cart mbr-iconfont mbr-iconfont-btn"></span>
-                            <span class="badge badge-shop-cart">{{ count }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </section>
+  <section class="menu cid-qQ6pVr9Hx2" once="menu">
+    <nav class="navbar navbar-dropdown navbar-fixed-top navbar-toggleable conceptos-navbar">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+              data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+              aria-label="Toggle navigation">
+          <div class="hamburger">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+          </div>
+      </button>
+      <button class="conceptos-navbar-icon" data-toggle="modal" data-target="#cartPreviewModal">
+        <div class="d-flex align-items-center">
+          <img src="{{ asset('bundles/conceptos/images/home/nav-cart.png') }}">
+          <span id="conceptos-shop-cart-count" data-count="{{count}}">{% if count > 99 %}+99{% else %}{{count}}{% endif %}</span>
+        </div>
+      </button>
+      {% if app.user|default %}
+      <a class="conceptos-navbar-icon conceptos-user-icon" href="{{ path('site_profile') }}">
+        <div class="d-flex align-items-center">
+          <img src="{{ asset('bundles/conceptos/images/home/user.png') }}">
+        </div>
+      </a>
+      {% endif %}
+      <ul id="conceptos-navbar-links" class="navbar-nav nav-dropdown conceptos-navbar-dropdown d-none d-lg-flex" data-app-modern-menu="true">
+        <li><a class="conceptos-navbar-item" href="{{ path('products') }}">PRODUCTOS</a></li>
+        <li><a class="conceptos-navbar-item" href="{{ path('services') }}">SERVICIOS</a></li>
+        <li><a class="conceptos-navbar-item" href="{{ path('membership') }}">MEMBRESÍA</a></li>
+        <li><a class="conceptos-navbar-item" href="{{ path('help') }}">AYUDA</a></li>
+        {% if app.user|default %}
+          {% if is_granted('ROLE_ADMIN') %}
+            <li><a class="conceptos-navbar-item" href="{{ path('easyadmin') }}">ADMINISTRAR</a></li>
+          {% endif %}
+          <li><a class="conceptos-navbar-item" href="{{ path('fos_user_security_logout') }}">CERRAR SESIÓN</a></li>
+        {% else %}
+          <li><a class="conceptos-navbar-item" data-toggle="modal" data-target="#loginModal" href="">ACCEDER</a></li>
+        {% endif %}
+      </ul>
+      <div class="menu-logo col-6 col-lg-3 pl-0 pl-lg-3">
+          <div class="navbar-brand ml-0">
+              <span class="navbar-logo">
+                  <a href="{{ path('site_home') }}">
+                      <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
+                            title="Conceptos"
+                            style="height: 2.8rem;" class="logo-menu d-none d-lg-flex">
+                      <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
+                            title="Conceptos"
+                            style="width:100%;height: auto !important;" class="logo-menu d-lg-none">
+                  </a>
+              </span>
+          </div>
+      </div>
+      <div class="d-flex flex-column collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav nav-dropdown conceptos-navbar-dropdown d-flex d-lg-none" data-app-modern-menu="true">
+            <li><a class="conceptos-navbar-item" href="{{ path('products') }}">PRODUCTOS</a></li>
+            <li><a class="conceptos-navbar-item" href="{{ path('services') }}">SERVICIOS</a></li>
+            <li><a class="conceptos-navbar-item" href="{{ path('membership') }}">MEMBRESÍA</a></li>
+            <li><a class="conceptos-navbar-item" href="{{ path('help') }}">AYUDA</a></li>
+            <li><div class="conceptos-navbar-divider" role="separator"></div></li>
+            {% if app.user|default %}
+              {% if is_granted('ROLE_ADMIN') %}
+                <li><a class="conceptos-navbar-item" href="{{ path('easyadmin') }}">ADMINISTRAR</a></li>
+              {% endif %}
+              <li><a class="conceptos-navbar-item" href="{{ path('fos_user_security_logout') }}">CERRAR SESIÓN</a></li>
+            {% else %}
+              <li><a class="conceptos-navbar-item" data-toggle="modal" data-target="#loginModal" href="">ACCEDER</a></li>
+            {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </section>
 {% endblock %}
 {% block body %}{% endblock %}
 {% block login %}
-    {{ render(controller('AppBundle:Security:login')) }}
+  {{ render(controller('AppBundle:Security:login')) }}
 {% endblock %}
 {% block contact %}
-    <section class="app-separator"></section>
-    {{ render(controller('AppBundle:Site:handleEmailNotification')) }}
+  {{ render(controller('AppBundle:Site:handleEmailNotification')) }}
 {% endblock %}
 {% block javascript %}
-
- <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-
-     gtag('config', 'UA-132757745-1');
- </script>
-
-<script src="{{ asset('bundles/conceptos/assets/web/assets/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/popper/popper.min.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/tether/tether.min.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/bootstrap/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/smoothscroll/smooth-scroll.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/dropdown/js/script.min.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/touchswipe/jquery.touch-swipe.min.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/viewportchecker/jquery.viewportchecker.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/masonry/masonry.pkgd.min.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/bootstrapcarouselswipe/bootstrap-carousel-swipe.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/mbr-popup-btns/mbr-popup-btns.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/vimeoplayer/jquery.mb.vimeo_player.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/sociallikes/social-likes.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/parallax/jarallax.min.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/theme/js/script.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/slidervideo/script.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/libs/toast/jquery.toast.min.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/js/svgcheckbx.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/js/common.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/scripts/js/main.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/scripts/js/cart-management.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/scripts/js/products-navigation.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/scripts/js/website-navigation.js') }}"></script>
-<input name="animation" type="hidden">
+  <script src="{{ asset('bundles/conceptos/assets/web/assets/jquery/jquery.min.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/popper/popper.min.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/tether/tether.min.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/bootstrap/js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/smoothscroll/smooth-scroll.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/dropdown/js/script.min.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/touchswipe/jquery.touch-swipe.min.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/viewportchecker/jquery.viewportchecker.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/masonry/masonry.pkgd.min.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/bootstrapcarouselswipe/bootstrap-carousel-swipe.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/mbr-popup-btns/mbr-popup-btns.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/vimeoplayer/jquery.mb.vimeo_player.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/sociallikes/social-likes.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/parallax/jarallax.min.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/theme/js/script.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/assets/slidervideo/script.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/libs/toast/jquery.toast.min.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/js/svgcheckbx.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/js/common.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/scripts/js/main.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/scripts/js/cart-management.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/scripts/js/products-navigation.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/scripts/js/website-navigation.js') }}"></script>
+  <input name="animation" type="hidden">
 {% endblock %}
 {% block js %}
 {% endblock %}
+<script>
+  $(document).ready(function() {
+    $("#conceptos-contact-form").height($("#conceptos-contact-form .conceptos-image").height());
+    $("#shop-cart-contact-form").height($("#shop-cart-contact-form .conceptos-image").height());
+
+    var marginTop = $(".navbar.navbar-dropdown").css("height");
+    $("body").css("padding-top", marginTop);
+    $(".conceptos-navbar #navbarSupportedContent").css("top", marginTop);
+    $("#categories-menu").css("top", marginTop);
+    $("#cartPreviewModal .modal-dialog").css("top", marginTop);
+    $("#filterProductsModal .modal-dialog").css("top", marginTop);
+    $("#conceptos-services-badge").css("top", marginTop);
+  });
+</script>
+<script>
+  products = [];
+  {% if shopCartProducts is defined %}
+    {% for product in shopCartProducts %}
+      products.push({
+        {% if product.offerExists is defined and product.offerExists %}
+          offerExists: {{product.offerExists}},
+        {% endif %}
+        {% if product.weight is defined %}
+          weight: {{product.weight}},
+        {% else %}
+          weight: 0,
+        {% endif %}
+        {% if product.ikeaPrice is defined %}
+          ikeaPrice: {{product.ikeaPrice}},
+        {% else %}
+          ikeaPrice: 0,
+        {% endif %}
+        {% if product.isFurniture is defined and product.isFurniture %}
+          isFurniture: true,
+        {% else %}
+          isFurniture: false,
+        {% endif %}
+        {% if product.isMattress is defined and product.isMattress %}
+          isMattress: true,
+        {% else %}
+          isMattress: false,
+        {% endif %}
+        {% if product.isAirplaneFurniture is defined and product.isAirplaneFurniture %}
+          isAirplaneFurniture: true,
+        {% else %}
+          isAirplaneFurniture: false,
+        {% endif %}
+        {% if product.isAirplaneMattress is defined and product.isAirplaneMattress %}
+          isAirplaneMattress: true,
+        {% else %}
+          isAirplaneMattress: false,
+        {% endif %}
+        {% if product.isFragile is defined and product.isFragile %}
+            isFragile: true,
+        {% else %}
+          isFragile: false,
+        {% endif %}
+        {% if product.isOversize is defined and product.isOversize %}
+          isOversize: true,
+        {% else %}
+          isOversize: false,
+        {% endif %}
+        {% if product.isTableware is defined and product.isTableware %}
+          isTableware: true,
+        {% else %}
+          isTableware: false,
+        {% endif %}
+        {% if product.isLamp is defined and product.isLamp %}
+          isLamp: true,
+        {% else %}
+          isLamp: false,
+        {% endif %}
+        {% if product.numberOfPackages is defined and product.numberOfPackages %}
+          numberOfPackages: {{product.numberOfPackages}},
+        {% else %}
+          numberOfPackages: false,
+        {% endif %}
+        {% if product.isFaucet is defined and product.isFaucet %}
+          isFaucet: true,
+        {% else %}
+          isFaucet: false,
+        {% endif %}
+        {% if product.isGrill is defined and product.isGrill %}
+          isGrill: true,
+        {% else %}
+          isGrill: false,
+        {% endif %}
+        {% if product.isShelf is defined and product.isShelf %}
+          isShelf: true,
+        {% else %}
+          isShelf: false,
+        {% endif %}
+        {% if product.isDesk is defined and product.isDesk %}
+          isDesk: true,
+        {% else %}
+          isDesk: false,
+        {% endif %}
+        {% if product.isBookcase is defined and product.isBookcase %}
+          isBookcase: true,
+        {% else %}
+          isBookcase: false,
+        {% endif %}
+        {% if product.isComoda is defined and product.isComoda %}
+          isComoda: true,
+        {% else %}
+          isComoda: false,
+        {% endif %}
+        {% if product.isRepisa is defined and product.isRepisa %}
+          isRepisa: true,
+        {% else %}
+          isRepisa: false,
+        {% endif %}
+        {% if product.categories is defined %}
+          categories: {{product.categories}},
+        {% else %}
+          categories: false,
+        {% endif %}
+        {% if product.type is defined %}
+          id: '{{ product.id }}',
+          type: 'target',
+          price: {{ product.price }},
+          count: {{ product.count }},
+        {% else %}
+          id: '{{ product.id }}',
+          price: {{ product.price }},
+          count: {{ product.count }},
+          storeCount: '{{ product.storeCount }}',
+          name: '{{ product.name }}',
+        {% endif %}
+      });
+    {% endfor %}
+  {% endif %}
+</script>
 <script>
   $(document).ready(function() {
     if (window.screen.width > 1000) {

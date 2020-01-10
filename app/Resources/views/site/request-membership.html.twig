@@ -1,50 +1,34 @@
-<div class="container-fluid h-100 membership-form">
-    <div class="row h-100">
-        <div class="col-12 pl-0 h-100">
-            <div class="d-flex align-items-end h-100">
-                <div class="d-flex flex-column w-100">
-                    <div class="d-flex membership-badge align-self-start">
-                        <span class="main-text ml-3 ml-lg-5">{{page.data.header.mainText|raw}}</span>
-                    </div>
-                    <div class="d-flex">
-                        <span class="bottom-text ml-3 ml-lg-5">{{page.data.header.bottomText|raw}}</span>
-                    </div>
-                    <div class="d-flex ml-3 ml-lg-5 mr-3">
-                        {{ form_start(form, {'attr': {'class': 'mbr-form col-12 col-lg-2 pl-0', 'action': path('request_membership')}}) }}
-                            <div class="col-12 pl-0">
-                                <div class="form-group">
-                                    {{ form_widget(form.firstName, {'attr': {'class': 'form-control membership-field', 'placeholder': 'NOMBRE'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-12 pl-0">
-                                <div class="form-group">
-                                    {{ form_widget(form.lastName, {'attr': {'class': 'form-control membership-field', 'placeholder': 'APELLIDOS'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-12 pl-0">
-                                <div class="form-group">
-                                    {{ form_widget(form.email, {'attr': {'class': 'form-control membership-field', 'placeholder': 'CORREO'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-12 pl-0">
-                                <div class="form-group">
-                                    {{ form_widget(form.phone, {'attr': {'class': 'form-control membership-field', 'placeholder': 'TELÉFONO'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-12 pl-0">
-                                <div class="form-group">
-                                    {{ form_widget(form.address, {'attr': {'class': 'form-control membership-field', 'placeholder': 'DIRECCIÓN'}}) }}
-                                </div>
-                            </div>
-                            <div class="d-flex">
-                                <button href="" type="submit" class="btn btn-success btn-form membership-field w-100 mb-3 mb-5-lg" id="request-membership-button">
-                                    Solicitar
-                                </button>
-                            </div>
-                        {{ form_end(form) }}
-                    </div>
-                </div>
-            </div>
-        </div>
+<img class="conceptos-image conceptos-header-image mt-2" src="{{ page.data.header.image.path }}">
+<span class="conceptos-title mt-3 mb-3">MEMBRESÍA</span>
+<div class="d-flex flex-column w-100">
+  {{ form_start(form, {'attr': {'class': 'd-flex flex-column', 'action': path('request_membership')}}) }}
+    <div class="d-flex flex-column">
+      <span class="conceptos-subtitle">Nombre</span>
+      {{ form_widget(form.firstName, {'attr': {'class': 'membership-field'}}) }}
     </div>
+    <div class="d-flex flex-column">
+      <span class="conceptos-subtitle mt-2">Apellidos</span>
+      {{ form_widget(form.lastName, {'attr': {'class': 'membership-field'}}) }}
+    </div>
+    <div class="d-flex flex-column">
+      <span class="conceptos-subtitle mt-2">Correo</span>
+      {{ form_widget(form.email, {'attr': {'class': 'membership-field'}}) }}
+    </div>
+    <div class="d-flex flex-column">
+      <span class="conceptos-subtitle mt-2">Teléfono</span>
+      {{ form_widget(form.phone, {'attr': {'class': 'membership-field'}}) }}
+    </div>
+    <div class="d-flex flex-column">
+      <span class="conceptos-subtitle mt-2">Dirección</span>
+      {{ form_widget(form.address, {'attr': {'class': 'membership-field'}}) }}
+    </div>
+    <span class="conceptos-title mt-3">{{ page.data.header.mainText }}</span>
+    <span class="conceptos-subtitle">{{ page.data.header.bottomText }}</span>
+    <div class="d-flex justify-content-start">
+      <button id="request-membership-button" type="submit" class="conceptos-primary-button mt-2 pl-4 pr-4" href="">
+        <span>SOLICITAR</span>
+      </button>
+    </div>
+    <img class="conceptos-image conceptos-section-image mt-2" src="{{ page.data.header.advertisementImage.path }}">
+  {{ form_end(form) }}
 </div>

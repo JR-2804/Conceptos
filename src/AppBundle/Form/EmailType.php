@@ -17,14 +17,11 @@ class EmailType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class)
+            ->add('lastName', TextType::class)
             ->add('email', EmailForm::class)
             ->add('phone', TextType::class)
             ->add('path', HiddenType::class)
-            ->add('text', TextareaType::class)
-            ->add('memberNumber', TextType::class, array(
-                'required' => false
-            ))
-            ->add('recaptcha', EWZRecaptchaType::class, array('language' => 'es'));
+            ->add('text', TextareaType::class);
         parent::buildForm($builder, $options);
     }
 
