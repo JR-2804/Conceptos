@@ -81,15 +81,15 @@ $(document).ready(function() {
 
   $("#loginModal label").addClass("collapse");
 
-  $(".register-checkbox input").change(function() {
+  $(".register-checkbox").change(function() {
     if ($(this).prop("checked")) {
-      $("#login-form").addClass("collapse");
-      $("#register-form").removeClass("collapse");
+      $("#login-form").hide("collapse");
+      $("#register-form").show("collapse");
 
       FlagRegisterFieldsAsNonRequired();
     } else {
-      $("#login-form").removeClass("collapse");
-      $("#register-form").addClass("collapse");
+      $("#login-form").show("collapse");
+      $("#register-form").hide("collapse");
 
       FlagRegisterFieldsAsNonRequired();
     }

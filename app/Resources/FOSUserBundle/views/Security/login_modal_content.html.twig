@@ -1,83 +1,22 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="d-flex flex-column ml-3">
-    <div id ="login-form">
-        <form class="container pl-0 pr-0" role="form" method="POST" action="{{ path('fos_user_security_check') }}">
-            {% if csrf_token %}
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
-            {% endif %}
-            {# <div class="d-flex mb-2">
-                <span class="bottom-text">Acceder con mis redes sociales</span>
-            </div>
-            <div class="d-flex">
-                <a href="">
-                    <span class="facebook mx-2">
-                        <i class="socicon socicon-facebook share-icon"></i>
-                    </span>
-                </a>
-                <a href="">
-                    <span class="plusone mx-2">
-                        <i class="socicon socicon-googleplus share-icon"></i>
-                    </span>
-                </a>
-                <a href="">
-                    <span class="twitter mx-2">
-                        <i class="socicon socicon-twitter share-icon"></i>
-                    </span>
-                </a>
-            </div> #}
-            <div class="d-flex mt-2">
-                <span class="bottom-text">Acceder al sitio</span>
-            </div>
-            <div class="col-12 pl-0 mb-2">
-                <div class="form-group">
-                    <input type="text" name="_username" class="form-control" id="username" placeholder="Usuario" required autofocus>
-                </div>
-            </div>
-            <div class="col-12 pl-0 mb-0">
-                <div class="form-group">
-                    <input type="password" name="_password" class="form-control" id="password" placeholder="Password" required>
-                </div>
-            </div>
-            <div class="d-flex justify-content-end">
-                <button href="" type="submit" class="btn btn-success btn-form mb-3 mr-0">
-                    <span>></span>
-                </button>
-            </div>
-        </form>
+<div id ="login-form" class="d-flex">
+  <form class="d-flex flex-column w-100" role="form" method="POST" action="{{ path('fos_user_security_check') }}">
+    {% if csrf_token %}
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+    {% endif %}
+    <input type="text" name="_username" id="username" placeholder="Usuario" required autofocus>
+    <input type="password" name="_password" id="password" class="mt-2" placeholder="Password" required>
+    <div class="d-flex mt-2">
+      <label class="d-flex checkbox-container align-self-start">
+        <span class="conceptos-subtitle">Registrarme</span>
+        <input id="register-checkbox" type="checkbox">
+        <span class="checkmark checkmark-gray"></span>
+      </label>
     </div>
-    <div id="register-form" class="collapse">
-        {# <div class="d-flex mb-2">
-            <span class="bottom-text">Registrarme con mis redes sociales</span>
-        </div>
-        <div class="d-flex">
-            <a href="">
-                <span class="facebook mx-2">
-                    <i class="socicon socicon-facebook share-icon"></i>
-                </span>
-            </a>
-            <a href="">
-                <span class="plusone mx-2">
-                    <i class="socicon socicon-googleplus share-icon"></i>
-                </span>
-            </a>
-            <a href="">
-                <span class="twitter mx-2">
-                    <i class="socicon socicon-twitter share-icon"></i>
-                </span>
-            </a>
-        </div> #}
-        <div class="d-flex mt-2">
-            <span class="bottom-text">Crear un perfil en el sitio</span>
-        </div>
-        {{ render(controller('AppBundle:Security:register')) }}
-    </div>
-    <div class="ac-custom ac-checkmark register-checkbox">
-        <ul>
-            <li>
-                <input type="checkbox" name="register">
-                <label class="mb-0">Registrarme</label>
-            </li>
-        </ul>
-    </div>
+    <button type="submit" class="conceptos-primary-button align-self-start mt-2">ACCEDER</button>
+  </form>
+</div>
+<div id="register-form" class="d-none">
+  {{ render(controller('AppBundle:Security:register')) }}
 </div>

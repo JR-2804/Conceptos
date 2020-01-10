@@ -9,3 +9,7 @@
     color: #c2b930; }
   .profile-product .delivered-product {
     color: #2c702b; }
+  @media (min-width: 992px) {
+    .profile-product .profile-image {
+      width: 150px;
+      height: 150px; } }

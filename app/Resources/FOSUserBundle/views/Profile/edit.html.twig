@@ -8,6 +8,9 @@
 {% block fos_user_content %}
     {{ include('FOSUserBundle:Profile:edit_content.html.twig') }}
 {% endblock fos_user_content %}
+{% block contact %}
+  {{ render(controller('AppBundle:Site:handleEmailNotification')) }}
+{% endblock %}
 {% block js %}
     <script src="{{ asset('bundles/conceptos/libs/dropzone/dropzone.js') }}"></script>
     <script src="{{ asset('bundles/conceptos/scripts/js/edit-profile.js') }}"></script>

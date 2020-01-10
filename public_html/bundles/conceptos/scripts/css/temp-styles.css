@@ -140,8 +140,6 @@ textarea {
   width: 60px;
 }
 
-
-
 /* -------------------------------------------------------- */
 
 .conceptos-navbar {
@@ -367,6 +365,10 @@ a.conceptos-subtitle:focus {
 
 .conceptos-relative {
   position: relative;
+}
+
+.conceptos-gray-background {
+  background-color: #e5e5e5;
 }
 
 .conceptos-white-background {
@@ -694,8 +696,6 @@ a.conceptos-category-subtitle:focus {
 
 /* -------------------------------------------------------- */
 
-
-
 .home-view-more-link {
   color: #282827;
   font-family: Montserrat;
@@ -712,7 +712,6 @@ a.conceptos-category-subtitle:focus {
   width: 8px;
   height: 10px;
 }
-
 
 /* -------------------------------------------------------- */
 
@@ -845,6 +844,7 @@ a.conceptos-category-subtitle:focus {
 }
 
 #dropzone-profile-image {
+  position: relative;
   min-height: 100px;
   min-width: 100px;
   width: 100px;
@@ -869,12 +869,65 @@ a.conceptos-category-subtitle:focus {
   height: 30px;
 }
 
+.view-profile-product-details {
+  border: none;
+  width: 22px;
+  height: 40px;
+  background-color: transparent;
+  background-image: url("../../images/home/view-profile-product-details.png");
+  background-size: cover;
+}
+
+.view-profile-product-details:focus,
+.view-profile-product-details:hover {
+  outline: none;
+}
+
+#edit-profile .dz-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  width: 112px;
+  height: 112px;
+}
+
+#edit-profile .dz-preview .dz-image {
+  width: 112px;
+  height: 112px;
+}
+
+#edit-profile .dz-preview .dz-image > div {
+  width: 112px;
+  height: 112px;
+  margin: 0;
+}
+
+#edit-profile .dz-preview .dz-image > div > div {
+  padding: 0;
+}
+
+#edit-profile .dz-preview .dz-remove {
+  background-color: black;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  z-index: 100;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 /* -------------------------------------------------------- */
 
 @media (min-width: 992px) {
   .carousel-indicators li {
     height: 13px;
     width: 14px;
+  }
+
+  .conceptos-title-strong {
+    font-size: 20px;
   }
 
   .conceptos-title {

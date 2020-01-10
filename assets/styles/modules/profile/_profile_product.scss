@@ -17,4 +17,11 @@
   & .delivered-product {
     color: $mainGreen;
   }
+
+  @media (min-width: 992px) {
+    & .profile-image {
+      width: 150px;
+      height: 150px;
+    }
+  }
 }

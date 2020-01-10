@@ -1,153 +1,279 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="d-flex flex-column conceptos-white-background m-2 m-lg-5 p-2 p-lg-5">
-  <div class="d-flex">
-    <form class="dropzone" id="dropzone-profile-image" action="{{ path('upload') }}">
-      <div class="dz-message needsclick colp"></div>
-    </form>
-    <div class="d-flex flex-column p-3">
-      <span class="conceptos-title-strong">{{user.firstName}}</span>
-      <span class="conceptos-subtitle">MIEMBRO: 123123</span>
-      {% if user.memberNumber is defined %}
-        <span class="conceptos-subtitle">MIEMBRO: {{user.memberNumber}}</span>
-      {% endif %}
-    </div>
-  </div>
-  <div class="d-flex align-items-center mt-2">
-    <span class="conceptos-title mr-2">DATOS</span>
-    <button id="edit-profile-button" class="edit-profile-button" role="button"></button>
-  </div>
-  <div id="edit-profile-section" class="flex-column" style="display: none;">
-    {{ form_start(form, {'method': 'post', 'action': path('site_profile'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-      <div class="d-flex flex-column">
-        {{ form_label(form.username) }}
-        {{ form_errors(form.username) }}
-        {{ form_widget(form.username) }}
-      </div>
-      <div class="d-flex flex-column">
-        {{ form_label(form.email) }}
-        {{ form_errors(form.email) }}
-        {{ form_widget(form.email) }}
-      </div>
-      <div class="d-flex flex-column">
-        {{ form_errors(form.plainPassword) }}
-        {{ form_widget(form.plainPassword) }}
-      </div>
-      <div class="d-flex flex-column">
-        {{ form_label(form.first_name) }}
-        {{ form_errors(form.first_name) }}
-        {{ form_widget(form.first_name) }}
-      </div>
-      <div class="d-flex flex-column">
-        {{ form_label(form.last_name) }}
-        {{ form_errors(form.last_name) }}
-        {{ form_widget(form.last_name) }}
-      </div>
-      <div class="d-flex flex-column">
-        {{ form_label(form.mobile_number) }}
-        {{ form_errors(form.mobile_number) }}
-        {{ form_widget(form.mobile_number) }}
-      </div>
-      <div class="d-flex flex-column">
-        {{ form_label(form.home_number) }}
-        {{ form_errors(form.home_number) }}
-        {{ form_widget(form.home_number) }}
-      </div>
-      <div class="d-flex flex-column">
-        {{ form_label(form.address) }}
-        {{ form_errors(form.address) }}
-        {{ form_widget(form.address) }}
-      </div>
-      <div class="d-flex flex-column">
-        {{ form_label(form.birth_date) }}
-        {{ form_errors(form.birth_date) }}
-        {{ form_widget(form.birth_date) }}
-      </div>
-    {{ form_end(form) }}
-    <div class="d-flex justify-content-end">
-      <input type="submit" class="conceptos-primary-button mt-3 pl-3 pr-3" value="Actualizar" />
-    </div>
-  </div>
-  <span class="conceptos-title mt-3">HISTORIAL DE COMPRAS</span>
-  <div class="d-flex flex-column">
-    {% set totalCount = 0 %}
-    {% set totalInProcess = 0 %}
-    {% set totalRequested = 0 %}
-    {% set totalDelivered = 0 %}
-    {% for prefacture in prefactures %}
-      {% for product in prefacture.preFactureProducts %}
-        {% if product.product %}
-        {% set totalCount = totalCount + 1 %}
-          <div class="d-flex profile-product p-2 mt-2">
-            <img class="conceptos-image profile-image" src="{{ vich_uploader_asset(product.product.mainImage, 'imageFile') }}">
-            <div class="d-flex flex-column justify-content-between ml-3">
-              <div class="d-flex flex-column">
-                <span class="conceptos-title-strong">{{product.product.name}}</span>
-                <span class="conceptos-title mt-1">${{product.productPrice}}</span>
-              </div>
-              <div class="d-flex mb-2">
-                {% if product.state == "" or product.state == "InProcess" %}
-                  <span class="conceptos-title-strong in-process-product">EN PROCESO</span>
-                {% elseif product.state == "Requested" %}
-                  <span class="conceptos-title-strong requested-product">PEDIDO</span>
-                {% else %}
-                  <span class="conceptos-title-strong delivered-product">ENTREGADO</span>
-                {% endif %}
-              </div>
-            </div>
-          </div>
+<div id="edit-profile" class="d-flex flex-column conceptos-white-background m-2 m-lg-5">
+  <div class="d-flex flex-column p-2 p-lg-5">
+    <div class="d-flex">
+      <form class="dropzone" id="dropzone-profile-image" action="{{ path('upload') }}">
+        <div class="dz-message needsclick colp"></div>
+      </form>
+      <div class="d-flex flex-column p-3">
+        <span class="conceptos-title-strong">{{user.firstName}}</span>
+        <span class="conceptos-subtitle">MIEMBRO: 123123</span>
+        {% if user.memberNumber is defined %}
+          <span class="conceptos-subtitle">MIEMBRO: {{user.memberNumber}}</span>
         {% endif %}
-      {% endfor %}
-      {% for card in prefacture.preFactureCards %}
-        {% set totalCount = totalCount + 1 %}
-        <div class="d-flex profile-product p-2 mt-2">
-          {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
-          {% set cardName = 'Tarjeta de 15 CUC' %}
-          {% if card.price == 25 %}
-              {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
-              {% set cardName = 'Tarjeta de 25 CUC' %}
-          {% elseif card.price == 50 %}
-              {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
-              {% set cardName = 'Tarjeta de 50 CUC' %}
-          {% elseif card.price == 100 %}
-              {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
-              {% set cardName = 'Tarjeta de 100 CUC' %}
-          {% endif %}
-          <img class="conceptos-image profile-image" src="{{ imagePath }}">
-          <div class="d-flex flex-column justify-content-between ml-3">
-            <div class="d-flex flex-column">
-              <span class="conceptos-title-strong">{{cardName}}</span>
-              <span class="conceptos-title mt-1">${{card.price}}</span>
+      </div>
+    </div>
+    <div class="d-flex align-items-center mt-3">
+      <span class="conceptos-title mr-2">DATOS</span>
+      <button id="edit-profile-button" class="edit-profile-button" role="button"></button>
+    </div>
+    <div id="edit-profile-section" class="flex-column" style="display: none;" data-hidden="true">
+      {{ form_start(form, {'method': 'post', 'action': path('site_profile'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+        <div class="d-flex flex-column">
+          {{ form_label(form.username) }}
+          {{ form_errors(form.username) }}
+          {{ form_widget(form.username) }}
+        </div>
+        <div class="d-flex flex-column">
+          {{ form_label(form.email) }}
+          {{ form_errors(form.email) }}
+          {{ form_widget(form.email) }}
+        </div>
+        <div class="d-flex flex-column">
+          {{ form_errors(form.plainPassword) }}
+          {{ form_widget(form.plainPassword) }}
+        </div>
+        <div class="d-flex flex-column">
+          {{ form_label(form.first_name) }}
+          {{ form_errors(form.first_name) }}
+          {{ form_widget(form.first_name) }}
+        </div>
+        <div class="d-flex flex-column">
+          {{ form_label(form.last_name) }}
+          {{ form_errors(form.last_name) }}
+          {{ form_widget(form.last_name) }}
+        </div>
+        <div class="d-flex flex-column">
+          {{ form_label(form.mobile_number) }}
+          {{ form_errors(form.mobile_number) }}
+          {{ form_widget(form.mobile_number) }}
+        </div>
+        <div class="d-flex flex-column">
+          {{ form_label(form.home_number) }}
+          {{ form_errors(form.home_number) }}
+          {{ form_widget(form.home_number) }}
+        </div>
+        <div class="d-flex flex-column">
+          {{ form_label(form.address) }}
+          {{ form_errors(form.address) }}
+          {{ form_widget(form.address) }}
+        </div>
+        <div class="d-flex flex-column">
+          {{ form_label(form.birth_date) }}
+          {{ form_errors(form.birth_date) }}
+          {{ form_widget(form.birth_date) }}
+        </div>
+        <div class="d-flex justify-content-end">
+          <input type="submit" class="conceptos-primary-button mt-3 pl-3 pr-3" value="Actualizar" />
+        </div>
+      {{ form_end(form) }}
+    </div>
+    <span class="conceptos-title mt-3">HISTORIAL DE COMPRAS</span>
+    <div class="d-flex flex-column">
+      {% set totalCount = 0 %}
+      {% set totalPrice = 0 %}
+      {% set totalInProcess = 0 %}
+      {% set totalRequested = 0 %}
+      {% set totalDelivered = 0 %}
+      {% for prefacture in prefactures %}
+        {% for product in prefacture.preFactureProducts %}
+          {% if product.product %}
+            {% set totalCount = totalCount + product.count %}
+            {% set totalPrice = totalPrice + product.productPrice * product.count %}
+            <div class="d-flex profile-product justify-content-between align-items-center p-2 mt-2"
+                 data-toggle="modal" data-target="#profile-product-details-modal-{{totalCount}}">
+              <div class="d-flex">
+                <img class="conceptos-image profile-image" src="{{ vich_uploader_asset(product.product.mainImage, 'imageFile') }}">
+                <div class="d-flex flex-column justify-content-between ml-3">
+                  <div class="d-flex flex-column">
+                    <span class="conceptos-title-strong">{{product.product.name}}</span>
+                    <span class="conceptos-title">${{product.productPrice}}</span>
+                    <span class="conceptos-title">CANTIDAD: {{product.count}}</span>
+                  </div>
+                  <div class="d-flex mb-2">
+                    {% if product.state == "" or product.state == "InProcess" %}
+                      {% set totalInProcess = totalInProcess + 1 %}
+                      <span class="conceptos-title-strong in-process-product">EN PROCESO</span>
+                    {% elseif product.state == "Requested" %}
+                      {% set totalRequested = totalRequested + 1 %}
+                      <span class="conceptos-title-strong requested-product">PEDIDO</span>
+                    {% else %}
+                      {% set totalDelivered = totalDelivered + 1 %}
+                      <span class="conceptos-title-strong delivered-product">ENTREGADO</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <button class="view-profile-product-details"></button>
+              <div id="profile-product-details-modal-{{totalCount}}" class="modal fade">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-body conceptos-gray-background">
+                      <div class="d-flex flex-column">
+                        <div class="d-flex">
+                          <img class="conceptos-image profile-image mr-2" src="{{ vich_uploader_asset(product.product.mainImage, 'imageFile') }}">
+                          <div class="d-flex flex-column justify-content-between">
+                            <div class="d-flex flex-column">
+                              <span class="conceptos-title-strong">{{product.product.name}}</span>
+                              <span class="conceptos-title">${{product.productPrice}}</span>
+                              <span class="conceptos-title">CANTIDAD: {{product.count}}</span>
+                            </div>
+                            <div class="d-flex flex-column">
+                              <span class="conceptos-title-strong">ESTADO ACTUAL</span>
+                              {% if product.state == "" or product.state == "InProcess" %}
+                                {% set totalInProcess = totalInProcess + 1 %}
+                                <span class="conceptos-title-strong in-process-product">EN PROCESO</span>
+                              {% elseif product.state == "Requested" %}
+                                {% set totalRequested = totalRequested + 1 %}
+                                <span class="conceptos-title-strong requested-product">PEDIDO</span>
+                              {% else %}
+                                {% set totalDelivered = totalDelivered + 1 %}
+                                <span class="conceptos-title-strong delivered-product">ENTREGADO</span>
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-column mt-3">
+                          {% if prefacture.request %}
+                            <span class="conceptos-title-strong">FECHA DEL PEDIDO</span>
+                            <span class="conceptos-subtitle">{{prefacture.request.date|date('d\m\Y')}}</span>
+                            <span class="conceptos-title-strong">NÚMERO DEL PEDIDO</span>
+                            <span class="conceptos-subtitle">PEDIDO {{prefacture.request.id}}-{{prefacture.request.date|date('Y')}}</span>
+                          {% endif %}
+                          <span class="conceptos-title-strong">FECHA DE LA PREFACTURA</span>
+                          <span class="conceptos-subtitle">{{prefacture.date|date('d\m\Y')}}</span>
+                          <span class="conceptos-title-strong">NÚMERO DE LA PREFACTURA</span>
+                          <span class="conceptos-subtitle">PREFACTURA {{prefacture.id}}-{{prefacture.date|date('Y')}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="d-flex mb-2">
-              {% if card.state == "" or card.state == "InProcess" %}
-                <span class="conceptos-title-strong in-process-product">EN PROCESO</span>
-              {% elseif card.state == "Requested" %}
-                <span class="conceptos-title-strong requested-product">PEDIDO</span>
-              {% else %}
-                <span class="conceptos-title-strong delivered-product">ENTREGADO</span>
-              {% endif %}
+          {% endif %}
+        {% endfor %}
+        {% for card in prefacture.preFactureCards %}
+          {% set totalCount = totalCount + card.count %}
+          {% set totalPrice = totalPrice + card.price * card.count %}
+          <div class="d-flex profile-product justify-content-between align-items-center p-2 mt-2"
+               data-toggle="modal" data-target="#profile-card-details-modal-{{totalCount}}">
+            {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
+            {% set cardName = 'Tarjeta de 15 CUC' %}
+            {% if card.price == 25 %}
+                {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
+                {% set cardName = 'Tarjeta de 25 CUC' %}
+            {% elseif card.price == 50 %}
+                {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
+                {% set cardName = 'Tarjeta de 50 CUC' %}
+            {% elseif card.price == 100 %}
+                {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
+                {% set cardName = 'Tarjeta de 100 CUC' %}
+            {% endif %}
+            <div class="d-flex">
+              <img class="conceptos-image profile-image" src="{{ imagePath }}">
+              <div class="d-flex flex-column justify-content-between ml-3">
+                <div class="d-flex flex-column">
+                  <span class="conceptos-title-strong">{{cardName}}</span>
+                  <span class="conceptos-title">${{card.price}}</span>
+                  <span class="conceptos-title">CANTIDAD: {{card.count}}</span>
+                </div>
+                <div class="d-flex mb-2">
+                  {% if card.state == "" or card.state == "InProcess" %}
+                    {% set totalInProcess = totalInProcess + 1 %}
+                    <span class="conceptos-title-strong in-process-product">EN PROCESO</span>
+                  {% elseif card.state == "Requested" %}
+                    {% set totalRequested = totalRequested + 1 %}
+                    <span class="conceptos-title-strong requested-product">PEDIDO</span>
+                  {% else %}
+                    {% set totalDelivered = totalDelivered + 1 %}
+                    <span class="conceptos-title-strong delivered-product">ENTREGADO</span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <button class="view-profile-product-details"></button>
+            <div id="profile-card-details-modal-{{totalCount}}" class="modal fade">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-body conceptos-gray-background">
+                    <div class="d-flex flex-column">
+                      <div class="d-flex">
+                        <img class="conceptos-image profile-image mr-2" src="{{imagePath}}">
+                        <div class="d-flex flex-column justify-content-between">
+                          <div class="d-flex flex-column">
+                            <span class="conceptos-title-strong">{{cardName}}</span>
+                            <span class="conceptos-title">${{card.price}}</span>
+                            <span class="conceptos-title">CANTIDAD: {{card.count}}</span>
+                          </div>
+                          <div class="d-flex flex-column">
+                            <span class="conceptos-title-strong">ESTADO ACTUAL</span>
+                            {% if card.state == "" or card.state == "InProcess" %}
+                              {% set totalInProcess = totalInProcess + 1 %}
+                              <span class="conceptos-title-strong in-process-product">EN PROCESO</span>
+                            {% elseif card.state == "Requested" %}
+                              {% set totalRequested = totalRequested + 1 %}
+                              <span class="conceptos-title-strong requested-product">PEDIDO</span>
+                            {% else %}
+                              {% set totalDelivered = totalDelivered + 1 %}
+                              <span class="conceptos-title-strong delivered-product">ENTREGADO</span>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-flex flex-column mt-3">
+                        {% if prefacture.request %}
+                          <span class="conceptos-title-strong">FECHA DEL PEDIDO</span>
+                          <span class="conceptos-subtitle">{{prefacture.request.date|date('d\m\Y')}}</span>
+                          <span class="conceptos-title-strong">NÚMERO DEL PEDIDO</span>
+                          <span class="conceptos-subtitle">PEDIDO {{prefacture.request.id}}-{{prefacture.request.date|date('Y')}}</span>
+                        {% endif %}
+                        <span class="conceptos-title-strong">FECHA DE LA PREFACTURA</span>
+                        <span class="conceptos-subtitle">{{prefacture.date|date('d\m\Y')}}</span>
+                        <span class="conceptos-title-strong">NÚMERO DE LA PREFACTURA</span>
+                        <span class="conceptos-subtitle">PREFACTURA {{prefacture.id}}-{{prefacture.date|date('Y')}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        {% endfor %}
       {% endfor %}
-    {% endfor %}
+    </div>
+    <button class="conceptos-primary-button-gray align-self-center pl-3 pr-3 mt-2">DESCARGAR EN PDF</button>
   </div>
-  <button class="conceptos-primary-button-gray mt-2">DESCARGAR EN PDF</button>
   <div class="d-flex flex-column conceptos-badge p-2 mt-2">
     <span class="conceptos-badge-text">RESUMEN</span>
     <div class="d-flex justify-content-between">
       <span class="conceptos-badge-text">COMPRAS</span>
       <span class="conceptos-badge-text">{{totalCount}}</span>
     </div>
-    <span class="conceptos-badge-text-strong">VALOR TOTAL DE LAS COMPRAS</span>
+    <div class="d-flex justify-content-between">
+      <span class="conceptos-badge-text">PRODUCTOS EN PROCESO</span>
+      <span class="conceptos-badge-text">{{totalInProcess}}</span>
+    </div>
+    <div class="d-flex justify-content-between">
+      <span class="conceptos-badge-text">PRODUCTOS PEDIDOS</span>
+      <span class="conceptos-badge-text">{{totalRequested}}</span>
+    </div>
+    <div class="d-flex justify-content-between">
+      <span class="conceptos-badge-text">PRODUCTOS ENVIADOS</span>
+      <span class="conceptos-badge-text">{{totalDelivered}}</span>
+    </div>
+    <div class="d-flex justify-content-between">
+      <span class="conceptos-badge-text-strong">TOTAL DE LAS COMPRAS</span>
+      <span class="conceptos-badge-text-strong">${{totalPrice}}</span>
+    </div>
   </div>
-</div>
+</div >
 
 <div id="preview-template" style="display: none;">
     <div class="dz-preview dz-file-preview">
         <div class="dz-image custom-img">
-            <div class="row">
+            <div class="row h-100">
                 <div class="col-12">
                     <img data-dz-thumbnail="" class="img-responsive center-block"/>
                 </div>
