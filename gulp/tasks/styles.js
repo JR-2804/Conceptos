@@ -7,7 +7,7 @@ hexrgba =require('postcss-hexrgba');
 
 
 gulp.task('styles', function(){
-    return gulp.src('./assets/css/**/*.scss')
+    return gulp.src('./assets/styles/**/*.scss')
         .pipe(sass())
         .on('error', sass.logError)
         .pipe(postcss([cssImport, autoprefixer, hexrgba]))
@@ -15,5 +15,5 @@ gulp.task('styles', function(){
             console.log(errorInfo.toString());
             this.emit('end');
          })
-        .pipe(gulp.dest('./public_html/static/css/'));
+        .pipe(gulp.dest('./public_html/bundles/conceptos/14ndy15/styles'));
 });

@@ -25,7 +25,7 @@ gulp.task('watch', function(){
         gulp.start('styles');
     });
 
-    watch('./assets/js/**/*.js', function(){
+    watch('./assets/scripts/**/*.js', function(){
         gulp.start('scripts');
     });
 
