@@ -243,8 +243,19 @@ class SecurityController extends Controller
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
+        $userMail = $this->getUser()->getEmail();
+        $clientPrefactures = [];
+        $persistedPrefactures = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->findAll();
+        foreach ($persistedPrefactures as $persistedPrefacture) {
+          if ($persistedPrefacture->getClient()->getEmail() == $userMail) {
+            $clientPrefactures[] = $persistedPrefacture;
+          }
+        }
+
         return $this->render('@FOSUser/Profile/edit.html.twig', [
             'form' => $form->createView(),
+            'user' => $user,
+            'prefactures' => $clientPrefactures,
             'home' => $home,
             'membership' => $membership,
             'categories' => $this->get('category_service')->getAll(),

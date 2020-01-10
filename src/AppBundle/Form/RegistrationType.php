@@ -26,8 +26,8 @@ class RegistrationType extends AbstractType
         $builder->add('plainPassword', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\RepeatedType'), [
             'type' => LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\PasswordType'),
             'options' => ['translation_domain' => 'FOSUserBundle'],
-            'first_options' => ['label' => 'form.password', 'attr' => ['class' => 'd-flex', 'placeholder' => 'Contraseña']],
-            'second_options' => ['label' => 'form.password_confirmation', 'attr' => ['class' => 'd-flex', 'placeholder' => 'Confirme la contraseña']],
+            'first_options' => ['label' => 'form.password', 'attr' => ['class' => 'd-flex w-100', 'placeholder' => 'Contraseña']],
+            'second_options' => ['label' => 'form.password_confirmation', 'attr' => ['class' => 'd-flex w-100', 'placeholder' => 'Confirme la contraseña']],
             'invalid_message' => 'fos_user.password.mismatch',
         ]);
         $builder->add('first_name', TextType::class, ['label' => 'Nombre']);

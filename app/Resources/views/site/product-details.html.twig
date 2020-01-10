@@ -2,221 +2,103 @@
 {% block title %}Detalles del producto - {{ product.item }}{% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/product-details.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/products.css') }}">
+  <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/product-details.css') }}">
+  <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/products.css') }}">
 {% endblock %}
 {% block body %}
-    <section class="product-details-section">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12 col-lg-10 pl-0">
-                    <div class="container-fluid">
-                        <div class="row product-details pt-0 pt-lg-5">
-                            <div class="col-lg-7 col-12 pl-0 product-image">
-                                <div class="d-flex">
-                                    <div class="carousel flex-column align-items-center justify-content-center d-none d-lg-flex pl-3 pl-lg-5" id="product-images-nav-carousel" data-interval="0">
-                                        {% if imageSets|length > 1 %}
-                                            <a class="carousel-control carousel-control-prev control-brands prev-button mb-3" role="button">
-                                                <span aria-hidden="true" class="mbri-up mbr-iconfont"></span>
-                                            </a>
-                                        {% endif %}
-                                        <div class="carousel-inner d-flex flex-column justify-content-start align-items-center">
-                                              {% set index = 0 %}
-                                              {% for imageSet in imageSets %}
-                                                  <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                                      <div class="d-flex flex-column">
-                                                          {% for image in imageSet %}
-                                                              <span data-app-prevent-settings="" data-target="#product-images-carousel" data-slide-to="{{ index }}">
-                                                                  <img class="product-image-thumbnail {% if not loop.first %}mt-3{% endif %}" src="{{ vich_uploader_asset(image, 'imageFile') }}">
-                                                              </span>
-                                                              {% set index = index + 1 %}
-                                                          {% endfor %}
-                                                      </div>
-                                                  </div>
-                                              {% endfor %}
-                                        </div>
-                                        {% if imageSets|length > 1 %}
-                                            <a class="carousel-control carousel-control-prev control-brands next-button mt-3" role="button">
-                                                <span aria-hidden="true" class="mbri-down mbr-iconfont"></span>
-                                            </a>
-                                        {% endif %}
-                                    </div>
-                                    <div class="carousel mbr-slider w-100 d-flex" id="product-images-carousel" data-interval="5000">
-                                        <div class="carousel-inner" role="listbox">
-                                            {% for image in product.images %}
-                                                <div class="carousel-item slider-fullscreen-image {% if loop.first %}active{% endif %}" data-bg-video-slide="false">
-                                                    <div class="container container-slide">
-                                                        <div class="row">
-                                                            <div class="d-flex col-12 justify-content-end pl-0 pl-lg-3">
-                                                                <img class="mt-0" src="{{ vich_uploader_asset(image, 'imageFile') }}">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-                                        {% if product.images|length > 1 %}
-                                            <a data-app-prevent-settings="" class="carousel-control carousel-control-prev carousel-control-short d-lg-none" role="button"
-                                                data-slide="prev" href="#product-images-carousel">
-                                                <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                                            </a>
-                                            <a data-app-prevent-settings="" class="carousel-control carousel-control-next carousel-control-short d-lg-none" role="button"
-                                                data-slide="next" href="#product-images-carousel">
-                                                <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                                            </a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-5 col-12 product-data pl-0">
-                                <div class="product-card d-flex flex-column">
-                                    <div class="d-flex flex-column">
-                                        {% if app.user|default %}
-                                            <a data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"
-                                               data-path-remove="{{ path('remove_from_favorite', {id: product.id}) }}"
-                                               class="favorite-product mt-2 {% if product.favorite %}favorite{% endif %} ml-0">
-                                                <span class="fa fa-heart"></span>
-                                            </a>
-                                            <hr class="d-none d-lg-block" />
-                                        {% endif %}
-                                        <div class="tags-section d-flex align-items-center pt-1">
-                                            <span class="product-code d-none d-lg-block">{{ product.code }}</span>
-                                            <span class="product-code product-code-short d-lg-none">{{ product.code }}</span>
-                                            {% set priceOffer = -1 %}
-                                            {% set offerId = 'false' %}
-                                            {% set onlyForMembers = false %}
-                                            {% for offer in product.offers %}
-                                                {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
-                                                    {% set priceOffer = offer.price %}
-                                                    {% set offerId = offer.id %}
-                                                    {% if offer.onlyForMembers %}
-                                                        {% set onlyForMembers = true %}
-                                                    {% endif %}
-                                                {% endif %}
-                                            {% endfor %}
-                                            {% if priceOffer == -1 %}
-                                              {% for category in product.categories %}
-                                                {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and product.inStore)) %}
-                                                  {% set priceOffer = (product.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
-                                                {% else %}
-                                                  {% for parentCategory in category.parents %}
-                                                    {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and product.inStore)) %}
-                                                      {% set priceOffer = (product.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
-                                                    {% endif %}
-                                                  {% endfor %}
-                                                {% endif %}
-                                              {% endfor %}
-                                            {% endif %}
-                                            {% if priceOffer != -1 %}
-                                                <span class="badge-custom badge-offer d-none d-lg-block">O</span>
-                                                <span class="badge-custom badge-custom-short badge-offer d-lg-none">O</span>
-                                            {% endif %}
-                                            {% if product.recent %}
-                                                <span class="badge-custom badge-new d-none d-lg-block">N</span>
-                                                <span class="badge-custom badge-custom-short badge-new d-lg-none">N</span>
-                                            {% endif %}
-                                            {% if product.inStore %}
-                                                <span class="badge-custom badge-in-store d-none d-lg-block">A</span>
-                                                <span class="badge-custom badge-custom-short badge-in-store d-lg-none">A</span>
-                                            {% endif %}
-                                        </div>
-                                        <span class="product-title d-none d-lg-block">{{ product.name }}</span>
-                                        <span class="product-title product-title-short d-lg-none pt-0">{{ product.name }}</span>
-                                        <div class="prices-product d-flex">
-                                            {% if priceOffer != -1 %}
-                                                <span class="price-product d-none d-lg-block">{{ priceOffer }} CUC</span>
-                                                <span class="price-product price-product-short d-lg-none">{{ priceOffer }} CUC</span>
-                                                <span class="price-offer d-none d-lg-block">{{ product.price }} CUC</span>
-                                                <span class="price-offer price-offer-short d-lg-none">{{ product.price }} CUC</span>
-                                            {% else %}
-                                                <span class="price-product d-none d-lg-block">{{ product.price }} CUC</span>
-                                                <span class="price-product price-product-short d-lg-none">{{ product.price }} CUC</span>
-                                            {% endif %}
-                                        </div>
-                                        <span class="product-subtitle d-none d-lg-block">{{ product.item }}</span>
-                                        <span class="product-subtitle product-subtitle-short d-lg-none">{{ product.item }}</span>
-                                        {{include('site/components/change-product-evaluation.html.twig')}}
-                                        <div class="d-flex justify-content-center add-to-cart-button-container mt-1 mt-lg-0 pt-2">
-                                            <a class="d-flex justify-content-center header-button add-to-cart-button m-0" data-path="{{ path('add_shop_card', {id: product.id, offer: offerId}) }}">
-                                                <span class="d-none d-lg-block">Añadir al carrito</span>
-                                                <img class="add-to-cart-icon" src="{{ asset('bundles/conceptos/images/products/cart.png') }}">
-                                            </a>
-                                        </div>
-                                        {% if onlyForMembers %}
-                                            <span class="badge-custom badge-new only-for-members mt-2 ml-0 d-none d-lg-block">Oferta solo para Miembros</span>
-                                            <span class="badge-custom badge-new only-for-members-short mt-2 ml-0 pl-0 pr-0 d-lg-none">Oferta solo para Miembros</span>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row pl-1 pl-lg-5">
-                            <div class="col-12 pl-0 d-flex flex-column align-items-start">
-                                <span class="product-description-header pt-3 pt-lg-4">Detalles de Producto</span>
-                                <div class="w-100 pl-0">
-                                    <div class="product-description-divider"></div>
-                                </div>
-                                <span class="product-description">
-                                    Disponibles en almacén:
-                                    {% if product.storeCount %}
-                                        {{product.storeCount}}
-                                    {% else %}
-                                        0
-                                    {% endif %}
-                                </span>
-                                <span class="product-description">Color: {{product.color}}</span>
-                                <span class="product-description">Material: {{product.material}}</span>
-                                <span class="product-description">Descripción: {{product.description}}</span>
-                                {% set offerId = 'false' %}
-                                {% for offer in product.offers %}
-                                    {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
-                                        {% set offerId = offer.id %}
-                                    {% endif %}
-                                {% endfor %}
-                                <a class="header-button add-to-cart-button product-description mb-0 d-none d-lg-block" data-path="{{ path('add_shop_card', {id: product.id, offer: offerId}) }}">
-                                    Añadir al carrito
-                                    <img class="add-to-cart-icon" src="{{ asset('bundles/conceptos/images/products/cart.png') }}">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 pl-0 d-flex flex-column align-items-start">
-                                <span class="product-description-header pl-1 pl-lg-5 pt-3 pt-lg-4">También te pudiera interesar</span>
-                                <div class="w-100 pl-1 pl-lg-5">
-                                    <div class="product-description-divider"></div>
-                                </div>
-                                <div class="related-products w-100">
-                                    <div class="d-flex flex-wrap">
-                                        {% for product in related %}
-                                            <div class="col-6 col-lg-3 pl-0">
-                                                {{include('site/components/product-summary.html.twig')}}
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-2">
-                    <div class="container-fluid advertisement-section">
-                        {% for advertisement in home.data.advertisements %}
-                            {% if advertisement.section == 2 %}
-                            <div class="row">
-                                <div class="col-12">
-                                    <a href="{{advertisement.link}}">
-                                        <img src="{{ advertisement.path }}">
-                                    </a>
-                                </div>
-                            </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
+  <div class="d-flex flex-column m-2 m-lg-5 p-2 p-lg-5">
+    <div class="d-flex flex-column conceptos-white-background">
+      <div class="carousel" data-ride="carousel" id="carousel-product-details" data-interval="5000">
+        <div class="carousel-inner">
+          {% set count = 0 %}
+          {% for imageSet in imageSets %}
+            {% for image in imageSet %}
+              <div class="carousel-item {% if count == 0 %}active{% endif %}">
+                <img class="conceptos-image" src="{{ vich_uploader_asset(image, 'imageFile') }}">
+              </div>
+              {% set count = count + 1 %}
+            {% endfor %}
+          {% endfor %}
         </div>
-    </section>
+        <div class="d-flex">
+          <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" href="#carousel-product-details">
+            <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+          </a>
+          <a class="carousel-control carousel-control-next" role="button" data-slide="next" href="#carousel-product-details">
+            <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+          </a>
+        </div>
+      </div>
+      <div class="d-flex flex-column p-2">
+        {% set priceOffer = -1 %}
+        {% set offerId = 'false' %}
+        {% set onlyForMembers = false %}
+        {% for offer in product.offers %}
+          {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
+            {% set priceOffer = offer.price %}
+            {% set offerId = offer.id %}
+            {% if offer.onlyForMembers %}
+              {% set onlyForMembers = true %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        {% if priceOffer == -1 %}
+          {% for category in product.categories %}
+            {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and product.inStore)) %}
+              {% set priceOffer = (product.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
+            {% else %}
+              {% for parentCategory in category.parents %}
+                {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and product.inStore)) %}
+                  {% set priceOffer = (product.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        <span class="conceptos-title-strong">{{product.name}}</span>
+        <span class="conceptos-subtitle">{{product.description}}</span>
+        <div class="d-flex align-items-center">
+          {% if priceOffer != -1 %}
+            <span class="conceptos-product-info conceptos-product-price mr-2">${{priceOffer}}</span>
+            <span class="conceptos-product-info conceptos-offer-price">${{product.price}}</span>
+          {% else %}
+            <span class="conceptos-product-info conceptos-product-price">${{product.price}}</span>
+          {% endif %}
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-1">
+          <div class="d-flex flex-column">
+            {% if product.inStore %}
+              <span class="conceptos-in-store-product-badge">ALMACÉN</span>
+            {% endif %}
+            {% if product.recent %}
+              <span class="conceptos-new-product-badge">NUEVO</span>
+            {% endif %}
+          </div>
+          <button class="conceptos-add-to-cart-icon" data-path="{{ path('add_shop_card', {id: product.id}) }}">
+            <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
+          </button>
+        </div>
+      </div>
+      <div class="d-flex flex-column p-2">
+        <span class="conceptos-title">DETALLES DEL PRODUCTO</span>
+        <span class="conceptos-subtitle">
+          Disponibles en almacén: {% if product.storeCount %}{{product.storeCount}}{% else %}0{% endif %}
+        </span>
+      <span class="conceptos-subtitle">Color: {{product.color}}</span>
+      <span class="conceptos-subtitle">Material: {{product.material}}</span>
+      <span class="conceptos-subtitle">Descripción: {{product.description}}</span>
+      </div>
+    </div>
+    <div class="d-flex flex-column mt-2">
+      <span class="conceptos-title">PRODUCTOS RELACIONADOS</span>
+      <div class="d-flex flex-wrap">
+        {% for product in related %}
+          {{include('site/components/product-summary.html.twig')}}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
 {% endblock %}
 {% block js %}
-    <script src="{{ asset('bundles/conceptos/products/js/product-details.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/products/js/product-details.js') }}"></script>
 {% endblock %}

@@ -1,63 +1,89 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="container">
-  <div class="registration-header">
-    <h2>Inserte los datos</h2>
-    <hr>
+<div class="d-flex flex-column conceptos-white-background m-2 m-lg-5 p-2 p-lg-5">
+  <div class="d-flex">
+    <form class="dropzone" id="dropzone-profile-image" action="{{ path('upload') }}">
+      <div class="dz-message needsclick colp"></div>
+    </form>
+    <div class="d-flex flex-column p-3">
+      <span class="conceptos-title-strong">{{user.firstName}}</span>
+      <span class="conceptos-subtitle">MIEMBRO: 123123</span>
+      {% if user.memberNumber is defined %}
+        <span class="conceptos-subtitle">MIEMBRO: {{user.memberNumber}}</span>
+      {% endif %}
+    </div>
   </div>
-  <form class="dropzone register-image-dropzone" id="picture-dropzone-profile" action="{{ path('upload') }}">
-    <div class="dz-message needsclick colp" style="font-size: 25px;">
-      Foto de Perfil
+  <div class="d-flex align-items-center mt-2">
+    <span class="conceptos-title mr-2">DATOS</span>
+    <button id="edit-profile-button" class="edit-profile-button" role="button"></button>
+  </div>
+  <div id="edit-profile-section" class="flex-column" style="display: none;">
+    {{ form_start(form, {'method': 'post', 'action': path('site_profile'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+      <div class="d-flex flex-column">
+        {{ form_label(form.username) }}
+        {{ form_errors(form.username) }}
+        {{ form_widget(form.username) }}
+      </div>
+      <div class="d-flex flex-column">
+        {{ form_label(form.email) }}
+        {{ form_errors(form.email) }}
+        {{ form_widget(form.email) }}
+      </div>
+      <div class="d-flex flex-column">
+        {{ form_errors(form.plainPassword) }}
+        {{ form_widget(form.plainPassword) }}
+      </div>
+      <div class="d-flex flex-column">
+        {{ form_label(form.first_name) }}
+        {{ form_errors(form.first_name) }}
+        {{ form_widget(form.first_name) }}
+      </div>
+      <div class="d-flex flex-column">
+        {{ form_label(form.last_name) }}
+        {{ form_errors(form.last_name) }}
+        {{ form_widget(form.last_name) }}
+      </div>
+      <div class="d-flex flex-column">
+        {{ form_label(form.mobile_number) }}
+        {{ form_errors(form.mobile_number) }}
+        {{ form_widget(form.mobile_number) }}
+      </div>
+      <div class="d-flex flex-column">
+        {{ form_label(form.home_number) }}
+        {{ form_errors(form.home_number) }}
+        {{ form_widget(form.home_number) }}
+      </div>
+      <div class="d-flex flex-column">
+        {{ form_label(form.address) }}
+        {{ form_errors(form.address) }}
+        {{ form_widget(form.address) }}
+      </div>
+      <div class="d-flex flex-column">
+        {{ form_label(form.birth_date) }}
+        {{ form_errors(form.birth_date) }}
+        {{ form_widget(form.birth_date) }}
+      </div>
+    {{ form_end(form) }}
+    <div class="d-flex justify-content-end">
+      <input type="submit" class="conceptos-primary-button mt-3 pl-3 pr-3" value="Actualizar" />
     </div>
-  </form>
-  {{ form_start(form, {'method': 'post', 'action': path('site_profile'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-    <div class="d-flex flex-column">
-      {{ form_label(form.username) }}
-      {{ form_errors(form.username) }}
-      {{ form_widget(form.username) }}
-    </div>
-    <div class="d-flex flex-column">
-      {{ form_label(form.email) }}
-      {{ form_errors(form.email) }}
-      {{ form_widget(form.email) }}
-    </div>
-    <div class="d-flex flex-column">
-      {{ form_errors(form.plainPassword) }}
-      {{ form_widget(form.plainPassword) }}
-    </div>
-    <div class="d-flex flex-column">
-      {{ form_label(form.first_name) }}
-      {{ form_errors(form.first_name) }}
-      {{ form_widget(form.first_name) }}
-    </div>
-    <div class="d-flex flex-column">
-      {{ form_label(form.last_name) }}
-      {{ form_errors(form.last_name) }}
-      {{ form_widget(form.last_name) }}
-    </div>
-    <div class="d-flex flex-column">
-      {{ form_label(form.mobile_number) }}
-      {{ form_errors(form.mobile_number) }}
-      {{ form_widget(form.mobile_number) }}
-    </div>
-    <div class="d-flex flex-column">
-      {{ form_label(form.home_number) }}
-      {{ form_errors(form.home_number) }}
-      {{ form_widget(form.home_number) }}
-    </div>
-    <div class="d-flex flex-column">
-      {{ form_label(form.address) }}
-      {{ form_errors(form.address) }}
-      {{ form_widget(form.address) }}
-    </div>
-    <div class="d-flex flex-column">
-      {{ form_label(form.birth_date) }}
-      {{ form_errors(form.birth_date) }}
-      {{ form_widget(form.birth_date) }}
-    </div>
-  {{ form_end(form) }}
-  <div class="d-flex justify-content-end">
-      <input type="submit" class="btn navigation-button float-md-right update-profile-button" value="Actualizar" />
+  </div>
+  <span class="conceptos-title mt-3">HISTORIAL DE COMPRAS</span>
+  <div class="d-flex flex column">
+    {% for prefacture in prefactures %}
+      {% for product in prefacture.preFactureProducts %}
+      <div class="d-flex">
+      </div>
+      {% endfor %}
+      {% for car in prefacture.preFactureCards %}
+      <div class="d-flex">
+      </div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+  <button class="conceptos-primary-button-gray">DESCARGAR EN PDF</button>
+  <div class="d-flex">
+    <span>RESUMEN</span>
   </div>
 </div>
 
