@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block body %}
-  <div id="home-header" class="d-flex justify-content-center align-items-start">
+  <div id="home-header" class="d-flex justify-content-center home__hero align-items-start">
     {% if page.data.slides and page.data.slides is not empty %}
       <img class="conceptos-image" src="{{page.data.slides[0].path}}">
     {% endif %}

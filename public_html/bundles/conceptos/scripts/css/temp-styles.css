@@ -140,35 +140,7 @@ textarea {
   width: 60px;
 }
 
-.carousel-indicators {
-  bottom: -5px;
-  margin-bottom: 0;
-}
 
-.carousel-indicators li {
-  background-color: #e5e5e5;
-  border: 1px solid #282827;
-  border-radius: 50%;
-  height: 8px;
-  width: 9px;
-}
-
-.carousel-indicators li.active {
-  background-color: #c2b930;
-}
-
-.carousel-control {
-  background-color: #282827;
-  color: #c2b930;
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  top: 50%;
-}
-
-.carousel-control:focus {
-  color: #c2b930;
-}
 
 /* -------------------------------------------------------- */
 
@@ -727,14 +699,7 @@ a.conceptos-category-subtitle:focus {
 
 /* -------------------------------------------------------- */
 
-#home-header {
-  height: 75vh;
-}
 
-#home-header img {
-  position: absolute;
-  height: 75vh;
-}
 
 .home-view-more-link {
   color: #282827;
