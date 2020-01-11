@@ -1,7 +1,12 @@
+.conceptos-category-icon {
+  width: 1.5em;
+  height: auto; }
+
 .popular_product > div:first-child {
   position: relative;
   overflow: hidden; }
-  .popular_product > div:first-child:before {
+
+.popular_product > div:first-child:before {
     position: absolute;
     background-color: #c2b930;
     content: 'OFERTA';
@@ -14,23 +19,28 @@
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
     font-size: .8em; }
-  .carousel-indicators {
+
+.carousel-indicators {
   bottom: -5px;
   margin-bottom: 0; }
-  .carousel-indicators li {
+
+.carousel-indicators li {
     background-color: #e5e5e5;
     border: 1px solid #282827;
     border-radius: 50%;
     height: .75em;
     width: .75em; }
-  .carousel-indicators li.active {
+
+.carousel-indicators li.active {
       background-color: #c2b930; }
-  .carousel-control {
+
+.carousel-control {
   background-color: #282827;
   color: #c2b930;
   height: 40px;
   width: 40px;
   border-radius: 50%;
   top: 50%; }
-  .carousel-control:focus {
+
+.carousel-control:focus {
     color: #c2b930; }

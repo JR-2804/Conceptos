@@ -83,16 +83,26 @@ class SiteController extends Controller
         $lasted = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findBy([
             'recent' => true,
         ], null, 50);
+
         $inStore = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findBy([
             'inStore' => true,
-        ], null, 50);
+        ], null, 150);
+
+        #TODO: poner el random del doctrine
+        shuffle($inStore);
+        $inStore = array_slice($inStore,  0,50);
+
         $populars = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')
           ->createQueryBuilder('product')
           ->where('product.popular = true')
           ->orderBy('product.priority', 'DESC')
-          ->setMaxResults(48)
+          ->setMaxResults(150)
           ->getQuery()
           ->getResult();
+
+        var_dump($populars);
+        exit();
+
         $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findAll();
 
         $inStoreHighlight = null;
