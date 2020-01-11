@@ -100,9 +100,6 @@ class SiteController extends Controller
           ->getQuery()
           ->getResult();
 
-        var_dump($populars);
-        exit();
-
         $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findAll();
 
         $inStoreHighlight = null;
