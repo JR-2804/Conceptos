@@ -69,21 +69,78 @@
     </div>
   </div>
   <span class="conceptos-title mt-3">HISTORIAL DE COMPRAS</span>
-  <div class="d-flex flex column">
+  <div class="d-flex flex-column">
+    {% set totalCount = 0 %}
+    {% set totalInProcess = 0 %}
+    {% set totalRequested = 0 %}
+    {% set totalDelivered = 0 %}
     {% for prefacture in prefactures %}
       {% for product in prefacture.preFactureProducts %}
-      <div class="d-flex">
-      </div>
+        {% if product.product %}
+        {% set totalCount = totalCount + 1 %}
+          <div class="d-flex profile-product p-2 mt-2">
+            <img class="conceptos-image profile-image" src="{{ vich_uploader_asset(product.product.mainImage, 'imageFile') }}">
+            <div class="d-flex flex-column justify-content-between ml-3">
+              <div class="d-flex flex-column">
+                <span class="conceptos-title-strong">{{product.product.name}}</span>
+                <span class="conceptos-title mt-1">${{product.productPrice}}</span>
+              </div>
+              <div class="d-flex mb-2">
+                {% if product.state == "" or product.state == "InProcess" %}
+                  <span class="conceptos-title-strong in-process-product">EN PROCESO</span>
+                {% elseif product.state == "Requested" %}
+                  <span class="conceptos-title-strong requested-product">PEDIDO</span>
+                {% else %}
+                  <span class="conceptos-title-strong delivered-product">ENTREGADO</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
       {% endfor %}
-      {% for car in prefacture.preFactureCards %}
-      <div class="d-flex">
-      </div>
+      {% for card in prefacture.preFactureCards %}
+        {% set totalCount = totalCount + 1 %}
+        <div class="d-flex profile-product p-2 mt-2">
+          {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
+          {% set cardName = 'Tarjeta de 15 CUC' %}
+          {% if card.price == 25 %}
+              {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
+              {% set cardName = 'Tarjeta de 25 CUC' %}
+          {% elseif card.price == 50 %}
+              {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
+              {% set cardName = 'Tarjeta de 50 CUC' %}
+          {% elseif card.price == 100 %}
+              {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
+              {% set cardName = 'Tarjeta de 100 CUC' %}
+          {% endif %}
+          <img class="conceptos-image profile-image" src="{{ imagePath }}">
+          <div class="d-flex flex-column justify-content-between ml-3">
+            <div class="d-flex flex-column">
+              <span class="conceptos-title-strong">{{cardName}}</span>
+              <span class="conceptos-title mt-1">${{card.price}}</span>
+            </div>
+            <div class="d-flex mb-2">
+              {% if card.state == "" or card.state == "InProcess" %}
+                <span class="conceptos-title-strong in-process-product">EN PROCESO</span>
+              {% elseif card.state == "Requested" %}
+                <span class="conceptos-title-strong requested-product">PEDIDO</span>
+              {% else %}
+                <span class="conceptos-title-strong delivered-product">ENTREGADO</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
       {% endfor %}
     {% endfor %}
   </div>
-  <button class="conceptos-primary-button-gray">DESCARGAR EN PDF</button>
-  <div class="d-flex">
-    <span>RESUMEN</span>
+  <button class="conceptos-primary-button-gray mt-2">DESCARGAR EN PDF</button>
+  <div class="d-flex flex-column conceptos-badge p-2 mt-2">
+    <span class="conceptos-badge-text">RESUMEN</span>
+    <div class="d-flex justify-content-between">
+      <span class="conceptos-badge-text">COMPRAS</span>
+      <span class="conceptos-badge-text">{{totalCount}}</span>
+    </div>
+    <span class="conceptos-badge-text-strong">VALOR TOTAL DE LAS COMPRAS</span>
   </div>
 </div>
 

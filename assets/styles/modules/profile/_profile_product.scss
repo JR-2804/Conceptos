@@ -1,0 +1,20 @@
+.profile-product {
+  background-color: $mainGray;
+
+  & .profile-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  & .in-process-product {
+    color: $mainRed;
+  }
+
+  & .requested-product {
+    color: $mainYellow;
+  }
+
+  & .delivered-product {
+    color: $mainGreen;
+  }
+}

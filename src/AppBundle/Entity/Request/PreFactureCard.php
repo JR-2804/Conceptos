@@ -33,6 +33,10 @@ class PreFactureCard
      * @ORM\Column(type="integer")
      */
     private $price;
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $state;
 
     public function getId()
     {
@@ -73,6 +77,18 @@ class PreFactureCard
     public function getPrice()
     {
         return $this->price;
+    }
+
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    public function getState()
+    {
+        return $this->state;
     }
 
     function __toString()

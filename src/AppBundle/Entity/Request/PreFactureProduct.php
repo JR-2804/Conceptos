@@ -48,6 +48,10 @@ class PreFactureProduct
      * @ORM\Column(type="boolean")
      */
     private $isAriplaneMattress;
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $state;
 
     public function getId()
     {
@@ -136,6 +140,18 @@ class PreFactureProduct
     public function getIsAriplaneMattress()
     {
         return $this->isAriplaneMattress;
+    }
+
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    public function getState()
+    {
+        return $this->state;
     }
 
     function __toString()
