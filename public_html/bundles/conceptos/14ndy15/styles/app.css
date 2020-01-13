@@ -1,12 +1,27 @@
-.conceptos-category-icon {
+.login_modal__container {
+  background-color: #e5e5e5; }
+  .login_modal__container form input {
+    background: white; }
+  .login_modal__container form button[type='submit'] {
+    background: #e5e5e5;
+    border: #c2b930 1px solid;
+    text-transform: uppercase;
+    padding: .5em .75em;
+    font-weight: 700; }
+  .login_modal__container form label.collapse {
+    display: block !important; }
+  .login_modal__container__remember {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: justify;
+            justify-content: space-between; }
+  .conceptos-category-icon {
   width: 1.5em;
   height: auto; }
-
-.popular_product > div:first-child {
+  .popular_product > div:first-child {
   position: relative;
   overflow: hidden; }
-
-.popular_product > div:first-child:before {
+  .popular_product > div:first-child:before {
     position: absolute;
     background-color: #c2b930;
     content: 'OFERTA';
@@ -19,28 +34,23 @@
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
     font-size: .8em; }
-
-.carousel-indicators {
+  .carousel-indicators {
   bottom: -5px;
   margin-bottom: 0; }
-
-.carousel-indicators li {
+  .carousel-indicators li {
     background-color: #e5e5e5;
     border: 1px solid #282827;
     border-radius: 50%;
     height: .75em;
     width: .75em; }
-
-.carousel-indicators li.active {
+  .carousel-indicators li.active {
       background-color: #c2b930; }
-
-.carousel-control {
+  .carousel-control {
   background-color: #282827;
   color: #c2b930;
   height: 40px;
   width: 40px;
   border-radius: 50%;
   top: 50%; }
-
-.carousel-control:focus {
+  .carousel-control:focus {
     color: #c2b930; }
