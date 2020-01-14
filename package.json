@@ -37,6 +37,7 @@
     "webpack-cli": "^3.1"
   },
   "dependencies": {
+    "headroom.js": "^0.10.4",
     "lazysizes": "^5.1",
     "normalize.css": "^8.0",
     "npm": "^6",
