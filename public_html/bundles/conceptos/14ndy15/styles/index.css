@@ -13,11 +13,12 @@
     flex-wrap: nowrap; }
   .search_bar form input[type='text'] {
       width: 100%;
-      padding: 1em .75em;
+      padding: .75em;
       opacity: 90%;
       background-color: #ffffff;
       margin: 0;
-      height: auto; }
+      height: auto;
+      font-size: 1em; }
   .search_bar form button[type='submit'] {
       border: 1px transparent solid;
       background-color: transparent;

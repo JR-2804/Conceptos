@@ -201,8 +201,16 @@ $(document).ready(function() {
   }
 
   function recalculateAllPrices() {
-    paymentType = $("#payment-type").val();
-    paymentCurrency = $("#payment-currency").val();
+    if ($("#cuc").prop("checked")) {
+      paymentCurrency = "cuc";
+    } else {
+      paymentCurrency = "usd";
+    }
+    if ($("#two-steps").prop("checked")) {
+      paymentType = "two-steps";
+    } else {
+      paymentType = "total";
+    }
 
     CheckIfCanPerformHomeCollect();
     UpdateDeliveryIconsState();

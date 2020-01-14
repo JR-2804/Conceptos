@@ -12,11 +12,12 @@
 
         & input[type='text'] {
             width: 100%;
-            padding: 1em .75em;
+            padding: .75em;
             opacity: 90%;
             background-color: #ffffff;
             margin: 0;
             height: auto;
+            font-size: 1em;
         }
 
         & button[type='submit']{

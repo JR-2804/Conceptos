@@ -1,0 +1,29 @@
+.login_modal{
+
+    &__container{
+        background-color: $mainGrey;
+
+        & form{
+            & input{
+                background: white;
+            }
+
+            & button[type='submit']{
+                background: $mainGrey;
+                border: $mainYellow 1px solid;
+                text-transform: uppercase;
+                padding: .5em .75em;
+                font-weight: 700;
+            }
+
+            & label.collapse{
+                display: block !important;
+            }
+        }
+        &__remember{
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+}

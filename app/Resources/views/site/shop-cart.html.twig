@@ -3,8 +3,11 @@
 {% block title %}Carrito de compras{% endblock %}
 {% block css %}
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/shop-cart/shop-cart.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/styles/shop_cart.css') }}">
 {% endblock %}
 {% block body %}
+
+
   {{ form_start(form) }}
     <div class="d-flex flex-column pt-2 pt-lg-5 pl-2 pr-2">
       <h1 class="conceptos-title pt-2">{{home.data.shopCart.mainText|raw}}</h1>
@@ -28,25 +31,31 @@
       {% if shopCartProducts|length > 0 %}
         <div class="shop-cart-section mt-3">
           <div class="d-flex flex-column pt-3 ml-3 mr-3">
-            <div class="d-flex align-items-center">
-              <div class="d-flex flex-column col-6 pl-0 mr-2">
-                <span class="conceptos-title">TIPO DE MONEDA</span>
-                <select id="payment-currency">
-                  <option value="usd">USD</option>
-                  <option value="cuc">CUC</option>
-                </select>
+            <div class="d-flex flex-column">
+              <span class="conceptos-title">TIPO DE MONEDA</span>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="switch m-0" id="payment-currency">
+                  <input type="radio" class="switch-input" name="currency" value="usd" id="usd" checked>
+                  <label for="usd" class="switch-label switch-label-off">USD</label>
+                  <input type="radio" class="switch-input" name="currency" value="cuc" id="cuc">
+                  <label for="cuc" class="switch-label switch-label-on">CUC</label>
+                  <span class="switch-selection"></span>
+                </div>
+                {# <span class="conceptos-subtitle">{{home.data.shopCart.currencyTypeText|raw}}</span> #}
               </div>
-              <span class="conceptos-subtitle">{{home.data.shopCart.currencyTypeText|raw}}</span>
             </div>
-            <div class="d-flex align-items-center mt-3">
-              <div class="d-flex flex-column col-6 pl-0 mr-2">
-                <span class="conceptos-title">PLAZOS DE PAGO</span>
-                <select id="payment-type">
-                  <option value="total">Pago total</option>
-                  <option value="two-steps">Pago en dos plazos</option>
-                </select>
+            <div class="d-flex flex-column mt-3">
+              <span class="conceptos-title">PLAZOS DE PAGO</span>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="switch m-0" id="payment-type">
+                  <input type="radio" class="switch-input" name="payment" value="total" id="total" checked>
+                  <label for="total" class="switch-label switch-label-off">TOTAL</label>
+                  <input type="radio" class="switch-input" name="payment" value="two-steps" id="two-steps">
+                  <label for="two-steps" class="switch-label switch-label-on">DOS PLAZOS</label>
+                  <span class="switch-selection"></span>
+                </div>
+                {# <span class="conceptos-subtitle">{{home.data.shopCart.paymentTypeText|raw}}</span> #}
               </div>
-              <span class="conceptos-subtitle">{{home.data.shopCart.paymentTypeText|raw}}</span>
             </div>
             <div class="d-flex flex-column mt-3">
               <span class="conceptos-title">MEMBRESÍA</span>

@@ -86,7 +86,7 @@ class SiteController extends Controller
 
         $inStore = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findBy([
             'inStore' => true,
-        ], null, 150);
+        ], null, 50);
 
         #TODO: poner el random del doctrine
         shuffle($inStore);
