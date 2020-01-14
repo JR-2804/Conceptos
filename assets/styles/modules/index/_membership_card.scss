@@ -1,0 +1,83 @@
+@keyframes show {
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+
+@keyframes hide {
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+
+.membership_card{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    right: 0;
+    width: 60%;
+    height: 20vh;
+    animation: show 2s ease-in-out 1;
+    background: $mainDark;
+    transition: transform 1s ease-in;
+
+    &__close{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1;
+        width: 2.5em;
+        height: 2.5em;
+        background: $mainDark;
+        cursor: pointer;
+
+        &:before, &:after{
+            content: '';
+            position: absolute;
+            width: 55%;
+            height: 2px;
+            background: $mainGrey;
+        }
+
+        &:before{
+            transform: rotate(45deg) ;
+        }
+
+        &:after{
+            transform: rotate(-45deg);
+        }
+    }
+
+    &__container{
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        height: 90%;
+        width: 95%;
+        border: 2px $mainYellow solid;
+
+        &__content{
+            position: relative;
+            height: 90%;
+            width: 95%;
+            border: 2px $mainYellow solid;
+        }
+    }
+
+    &--hide{
+        transform: translateX(100%);
+    }
+}

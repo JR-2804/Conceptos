@@ -3,7 +3,6 @@ import Headroom  from 'headroom.js';
 class SearchBar{
     constructor(){
         this.searchBar = document.querySelector(".search_bar");
-        console.log(this.searchBar);
         this.init();
     }
 
