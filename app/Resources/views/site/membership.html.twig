@@ -6,4 +6,21 @@
   </div>
 {% endblock %}
 {% block js %}
+<script>
+  {% if showSuccessToast is defined %}
+    $.toast({
+      text: 'Membresía creada correctamente',
+      showHideTransition: "fade",
+      bgColor: "#c2b930",
+      textColor: "#3f3c03",
+      allowToastClose: true,
+      hideAfter: 3000,
+      stack: 5,
+      textAlign: "center",
+      position: "mid-center",
+      icon: "success",
+      heading: "Correcto"
+    });
+  {% endif %}
+</script>
 {% endblock %}

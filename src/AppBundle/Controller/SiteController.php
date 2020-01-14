@@ -1058,7 +1058,7 @@ class SiteController extends Controller
             ;
 
             return $this->render(':site:membership.html.twig', [
-              'showSuccesToast' => true,
+              'showSuccessToast' => true,
               'home' => $home,
               'count' => $this->countShopCart($request),
               'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
