@@ -1,7 +1,8 @@
 .search_bar {
-    position: absolute;
+    position: fixed;
     z-index: 3;
     width: 100%;
+    border: 1px $mainDark solid;
 
     & form{
         width: 100%;
@@ -28,6 +29,7 @@
             position: absolute;
             z-index: 4;
             right: 1em;
+            transform: scale(.75);
 
             &:before{
                 position: absolute;
@@ -54,4 +56,19 @@
         }
 
     }
+}
+
+/**
+ * Note: I have omitted any vendor-prefixes for clarity.
+ * Adding them is left as an exercise for the reader.
+ */
+.headroom {
+    will-change: transform;
+    transition: transform 200ms linear;
+}
+.headroom--pinned {
+    transform: translateY(0%);
+}
+.headroom--unpinned {
+    transform: translateY(-100%);
 }

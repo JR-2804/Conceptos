@@ -249,6 +249,14 @@
       </div>
     </nav>
   </section>
+
+    <aside class="search_bar">
+        <form id="home-search-form" action="{{ path('products') }}" method="get">
+            <label class="sr-only" for="search_bar_products">Buscar producto</label>
+            <input type="text" name="term" id="search_bar_products" placeholder="Buscar productos">
+            <button type="submit" value="buscar"></button>
+        </form>
+    </aside>
 {% endblock %}
 
 
@@ -261,6 +269,7 @@
   {{ render(controller('AppBundle:Site:handleEmailNotification')) }}
 {% endblock %}
 {% block javascript %}
+  <script src="{{ asset('bundles/conceptos/14ndy15/scripts/app.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/assets/web/assets/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/assets/popper/popper.min.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/assets/tether/tether.min.js') }}"></script>
