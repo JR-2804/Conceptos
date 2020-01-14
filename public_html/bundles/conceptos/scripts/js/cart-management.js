@@ -530,6 +530,13 @@ $(document).ready(function() {
           $("#conceptos-shop-cart-count").text(response.count);
         }
         $("#conceptos-shop-cart-count").data("count", response.count);
+        products = JSON.parse(response.products);
+        $("#products-summary")
+          .children()
+          .remove();
+        $("#products-summary").append(response.html);
+        CreateCartSummaryActions();
+        recalculateAllPrices();
         $.toast({
           text: title,
           showHideTransition: "fade",
