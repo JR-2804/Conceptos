@@ -164,12 +164,6 @@ a.header-text.active {
   font-size: 20px !important;
 }
 
-.login-button {
-  color: #eadd0a;
-  margin: 0px;
-  margin-right: 5px;
-}
-
 .btn-custom {
   box-shadow: none !important;
 }
@@ -1922,26 +1916,6 @@ i.share-icon:hover {
   border-radius: 5px;
   padding: 0px;
   margin: 5px 0px 0px 0px;
-}
-
-#loginModal .modal-body {
-  height: 60vh;
-  padding: 0px;
-}
-
-
-.register-checkbox {
-  margin-left: 0px;
-  margin-top: -48px;
-}
-
-.register-checkbox label {
-  color: #333333;
-  font-size: 17px;
-}
-
-.register-checkbox.ac-custom input[type="checkbox"]:checked + label {
-  color: #333333;
 }
 
 .generic-image {

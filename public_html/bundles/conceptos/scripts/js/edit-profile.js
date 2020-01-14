@@ -45,7 +45,14 @@ $(document).ready(function() {
   });
 
   $("#edit-profile-button").click(function() {
-    $("#edit-profile-section").show();
+    if ($("#edit-profile-section").data("hidden") === true) {
+      $("#edit-profile-section").show();
+      $("#edit-profile-section").data("hidden", false);
+      $("#edit-profile label").hide();
+    } else {
+      $("#edit-profile-section").hide();
+      $("#edit-profile-section").data("hidden", true);
+    }
   });
 
   $(".update-profile-button").click(function(e) {

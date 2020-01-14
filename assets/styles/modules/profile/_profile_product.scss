@@ -1,0 +1,27 @@
+.profile-product {
+  background-color: $mainGrey;
+
+  & .profile-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  & .in-process-product {
+    color: $mainRed;
+  }
+
+  & .requested-product {
+    color: $mainYellow;
+  }
+
+  & .delivered-product {
+    color: $mainGreen;
+  }
+
+  @media (min-width: 992px) {
+    & .profile-image {
+      width: 150px;
+      height: 150px;
+    }
+  }
+}

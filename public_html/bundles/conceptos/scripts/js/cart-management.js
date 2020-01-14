@@ -174,27 +174,46 @@ $(document).ready(function() {
     });
   }
 
-  function DisableDeliveryIcon(selector) {
-    $(selector).attr("disabled", true);
+  function HideBothIcons(selector) {
+    $(selector + " .delivery-text").hide();
+    $(selector + " .airplane-delivery").hide();
+    $(selector + " .ship-delivery").hide();
+  }
+
+  function DisplayOnlyShipDelivery(selector) {
+    $(selector + " .airplane-delivery").hide();
+    $(selector + " .ship-delivery").addClass("ship-delivery-focused");
   }
 
   function UpdateDeliveryIconsState() {
     products.forEach(function(product) {
       var selector = '.shop-cart-product[data-product="' + product.id + '"]';
       if (product.offerExists) {
-        DisableDeliveryIcon(selector + " .airplane-delivery");
-        DisableDeliveryIcon(selector + " .ship-delivery");
+        HideBothIcons(selector);
+        $(selector + " .conceptos-offer-product-badge").show();
+      } else if (product.storeCount) {
+        HideBothIcons(selector);
+        $(selector + " .conceptos-in-store-product-badge").show();
       } else if (!product.isAirplaneFurniture && !product.isAirplaneMattress) {
-        DisableDeliveryIcon(selector + " .airplane-delivery");
+        DisplayOnlyShipDelivery(selector);
       }
     });
   }
 
   function recalculateAllPrices() {
-    paymentType = $("#payment-type").val();
-    paymentCurrency = $("#payment-currency").val();
+    if ($("#cuc").prop("checked")) {
+      paymentCurrency = "cuc";
+    } else {
+      paymentCurrency = "usd";
+    }
+    if ($("#two-steps").prop("checked")) {
+      paymentType = "two-steps";
+    } else {
+      paymentType = "total";
+    }
 
     CheckIfCanPerformHomeCollect();
+    UpdateDeliveryIconsState();
 
     var totalPriceBase = 0;
     products.forEach(function(product) {
@@ -221,15 +240,25 @@ $(document).ready(function() {
     }
 
     var paymentTypeExtraSection = $(".shop-cart-payment-type-extra");
+    var firstPaymentSection = $(".first-payment");
     if (paymentType == "two-steps") {
       var paymentTypeExtra = Math.ceil(totalPriceBase * 0.1);
       totalPrice += paymentTypeExtra;
       $(".shop-cart-payment-type").text("2 PLAZOS");
+
+      firstPaymentSection.parent().removeClass("d-none");
+      firstPaymentSection.parent().addClass("d-flex");
+      firstPaymentSection.text(Math.ceil(totalPriceBase * 0.8).toFixed(2));
+
       paymentTypeExtraSection.parent().removeClass("d-none");
       paymentTypeExtraSection.parent().addClass("d-flex");
       paymentTypeExtraSection.text(paymentTypeExtra.toFixed(2));
     } else {
       $(".shop-cart-payment-type").text("1 PLAZO");
+
+      firstPaymentSection.parent().removeClass("d-flex");
+      firstPaymentSection.parent().addClass("d-none");
+
       paymentTypeExtraSection.parent().removeClass("d-flex");
       paymentTypeExtraSection.parent().addClass("d-none");
     }
@@ -279,15 +308,6 @@ $(document).ready(function() {
     $(".conceptos-request-success-icon").hide();
     $(".conceptos-request-error-icon").show();
     $(".conceptos-request-loading-icon").hide();
-  }
-
-  function DisplayMembershipLoading() {
-    $("#shop-cart-member-number").removeClass("conceptos-error-input");
-    $("#shop-cart-member-number").removeClass("conceptos-success-input");
-
-    $(".conceptos-request-success-icon").hide();
-    $(".conceptos-request-error-icon").hide();
-    $(".conceptos-request-loading-icon").show();
   }
 
   function ValidateContactInfo() {
@@ -543,13 +563,31 @@ $(document).ready(function() {
   });
 
   $(".ship-delivery").click(function() {
+    if ($(this).hasClass("ship-delivery-focused")) {
+      return;
+    }
+
     var productId = getProductIdByElement(this);
     UpdateProductDeliveryType(productId, 1);
+
+    $(this).addClass("ship-delivery-focused");
+    $(
+      '.shop-cart-product[data-product="' + productId + '"] .airplane-delivery'
+    ).removeClass("airplane-delivery-focused");
   });
 
   $(".airplane-delivery").click(function() {
+    if ($(this).hasClass("airplane-delivery-focused")) {
+      return;
+    }
+
     var productId = getProductIdByElement(this);
     UpdateProductDeliveryType(productId, 2);
+
+    $(this).addClass("airplane-delivery-focused");
+    $(
+      '.shop-cart-product[data-product="' + productId + '"] .ship-delivery'
+    ).removeClass("ship-delivery-focused");
   });
 
   $("#payment-type").change(function() {
@@ -625,7 +663,6 @@ $(document).ready(function() {
     }
   });
 
-  UpdateDeliveryIconsState();
   CreateCartSummaryActions();
   recalculateAllPrices();
 });

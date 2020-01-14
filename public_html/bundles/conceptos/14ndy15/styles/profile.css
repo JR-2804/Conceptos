@@ -1,0 +1,15 @@
+.profile-product {
+  background-color: #e5e5e5; }
+  .profile-product .profile-image {
+    width: 100px;
+    height: 100px; }
+  .profile-product .in-process-product {
+    color: #bf1111; }
+  .profile-product .requested-product {
+    color: #c2b930; }
+  .profile-product .delivered-product {
+    color: #2c702b; }
+  @media (min-width: 992px) {
+    .profile-product .profile-image {
+      width: 150px;
+      height: 150px; } }

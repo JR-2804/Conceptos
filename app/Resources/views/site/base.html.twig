@@ -199,6 +199,12 @@
           <img src="{{ asset('bundles/conceptos/images/home/user.png') }}">
         </div>
       </a>
+      {% else %}
+      <a class="conceptos-navbar-icon conceptos-user-icon" href="" data-toggle="modal" data-target="#loginModal">
+        <div class="d-flex align-items-center">
+          <img src="{{ asset('bundles/conceptos/images/home/user.png') }}">
+        </div>
+      </a>
       {% endif %}
       <ul id="conceptos-navbar-links" class="navbar-nav nav-dropdown conceptos-navbar-dropdown d-none d-lg-flex" data-app-modern-menu="true">
         <li><a class="conceptos-navbar-item" href="{{ path('products') }}">PRODUCTOS</a></li>
@@ -210,8 +216,6 @@
             <li><a class="conceptos-navbar-item" href="{{ path('easyadmin') }}">ADMINISTRAR</a></li>
           {% endif %}
           <li><a class="conceptos-navbar-item" href="{{ path('fos_user_security_logout') }}">CERRAR SESIÓN</a></li>
-        {% else %}
-          <li><a class="conceptos-navbar-item" data-toggle="modal" data-target="#loginModal" href="">ACCEDER</a></li>
         {% endif %}
       </ul>
       <div class="menu-logo col-6 col-lg-3 pl-0 pl-lg-3">
@@ -240,8 +244,6 @@
                 <li><a class="conceptos-navbar-item" href="{{ path('easyadmin') }}">ADMINISTRAR</a></li>
               {% endif %}
               <li><a class="conceptos-navbar-item" href="{{ path('fos_user_security_logout') }}">CERRAR SESIÓN</a></li>
-            {% else %}
-              <li><a class="conceptos-navbar-item" data-toggle="modal" data-target="#loginModal" href="">ACCEDER</a></li>
             {% endif %}
         </ul>
       </div>
@@ -428,15 +430,6 @@
       });
     {% endfor %}
   {% endif %}
-</script>
-<script>
-  $(document).ready(function() {
-    if (window.screen.width > 1000) {
-      $("#login-modal-short").remove();
-    } else {
-      $("#login-modal").remove();
-    }
-  });
 </script>
 </body>
 </html>
