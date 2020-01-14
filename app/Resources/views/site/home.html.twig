@@ -5,19 +5,6 @@
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/styles/index.css') }}" type="text/css">
 {% endblock %}
 
-{% block header %}
-    {{ parent() }}
-
-    <aside class="search_bar">
-        <form id="home-search-form" action="{{ path('products') }}" method="get">
-            <label class="sr-only" for="search_bar_products">Buscar producto</label>
-            <input type="text" name="term" id="search_bar_products" placeholder="Buscar productos">
-            <button type="submit" value="buscar"></button>
-        </form>
-    </aside>
-
-{% endblock %}
-
 {% block body %}
   <div id="home-header" class="d-flex justify-content-center home__hero align-items-start">
     {% if page.data.slides and page.data.slides is not empty %}
