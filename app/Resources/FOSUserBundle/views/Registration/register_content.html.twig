@@ -1,53 +1,50 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {{ form_start(form, {'method': 'post', 'action': path('site_register')}) }}
-    <div class="form-group">
-        {{ form_label(form.username) }}
-        {{ form_errors(form.username) }}
-        {{ form_widget(form.username) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.email) }}
-        {{ form_errors(form.email) }}
-        {{ form_widget(form.email) }}
-    </div>
-    <div class="form-group">
-        {{ form_errors(form.plainPassword) }}
-        {{ form_widget(form.plainPassword) }}
-    </div>
-    <div class="form-group collapse">
-        {{ form_label(form.first_name) }}
-        {{ form_errors(form.first_name) }}
-        {{ form_widget(form.first_name) }}
-    </div>
-    <div class="form-group collapse">
-        {{ form_label(form.last_name) }}
-        {{ form_errors(form.last_name) }}
-        {{ form_widget(form.last_name) }}
-    </div>
-    <div class="form-group collapse">
-        {{ form_label(form.mobile_number) }}
-        {{ form_errors(form.mobile_number) }}
-        {{ form_widget(form.mobile_number) }}
-    </div>
-    <div class="form-group collapse">
-        {{ form_label(form.home_number) }}
-        {{ form_errors(form.home_number) }}
-        {{ form_widget(form.home_number) }}
-    </div>
-    <div class="form-group collapse">
-        {{ form_label(form.birth_date) }}
-        {{ form_errors(form.birth_date) }}
-        {{ form_widget(form.birth_date) }}
-    </div>
-    <div class="form-group collapse">
-        {{ form_label(form.address) }}
-        {{ form_errors(form.address) }}
-        {{ form_widget(form.address) }}
-    </div>
-    <div class="d-flex justify-content-end">
-        <button href="" type="submit" class="btn btn-success btn-form mb-3 mr-0">
-            <span>></span>
-        </button>
-    </div>
+  <div class="d-flex flex-column">
+    <span class="conceptos-subtitle">USUARIO</span>
+    {{ form_errors(form.username) }}
+    {{ form_widget(form.username) }}
+  </div>
+  <div class="d-flex flex-column mt-2">
+    <span class="conceptos-subtitle">CORREO</span>
+    {{ form_errors(form.email) }}
+    {{ form_widget(form.email) }}
+  </div>
+  <div class="d-flex flex-column mt-2">
+    <span class="conceptos-subtitle">CONTRASEÑA</span>
+    {{ form_errors(form.plainPassword) }}
+    {{ form_widget(form.plainPassword) }}
+  </div>
+  <div class="d-flex flex-column mt-2">
+    <span class="conceptos-subtitle">NOMBRE</span>
+    {{ form_errors(form.first_name) }}
+    {{ form_widget(form.first_name) }}
+  </div>
+  <div class="d-flex flex-column mt-2">
+    <span class="conceptos-subtitle">APELLIDOS</span>
+    {{ form_errors(form.last_name) }}
+    {{ form_widget(form.last_name) }}
+  </div>
+  <div class="d-flex flex-column mt-2">
+    <span class="conceptos-subtitle">TELÉFONO DE CASA</span>
+    {{ form_errors(form.mobile_number) }}
+    {{ form_widget(form.mobile_number) }}
+  </div>
+  <div class="d-flex flex-column mt-2">
+    <span class="conceptos-subtitle">TELÉFONO MOVIL</span>
+    {{ form_errors(form.home_number) }}
+    {{ form_widget(form.home_number) }}
+  </div>
+  <div class="d-flex flex-column mt-2">
+    <span class="conceptos-subtitle">DIRECCIÓN</span>
+    {{ form_errors(form.address) }}
+    {{ form_widget(form.address) }}
+  </div>
+  <div class="d-flex flex-column mt-2">
+    <span class="conceptos-subtitle">FECHA DE NACIMIENTO</span>
+    {{ form_errors(form.birth_date) }}
+    {{ form_widget(form.birth_date) }}
+  </div>
+  <button type="submit" class="conceptos-primary-button align-self-start mt-2">REGISTRARSE</button>
 {{ form_end(form) }}

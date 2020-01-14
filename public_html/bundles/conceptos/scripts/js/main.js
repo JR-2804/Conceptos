@@ -81,18 +81,20 @@ $(document).ready(function() {
 
   $("#loginModal label").addClass("collapse");
 
-  $(".register-checkbox input").change(function() {
-    if ($(this).prop("checked")) {
-      $("#login-form").addClass("collapse");
-      $("#register-form").removeClass("collapse");
+  $(".conceptos-navbar-icon.conceptos-user-icon").click(function() {
+    $(".register-checkbox").click(function() {
+      if ($(this).prop("checked")) {
+        $("#login-form").hide();
+        $("#register-form").show();
 
-      FlagRegisterFieldsAsNonRequired();
-    } else {
-      $("#login-form").removeClass("collapse");
-      $("#register-form").addClass("collapse");
+        FlagRegisterFieldsAsNonRequired();
+      } else {
+        $("#login-form").show();
+        $("#register-form").hide();
 
-      FlagRegisterFieldsAsNonRequired();
-    }
+        FlagRegisterFieldsAsNonRequired();
+      }
+    });
   });
 
   function hideBadges(element) {

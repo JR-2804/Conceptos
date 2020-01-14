@@ -81,11 +81,12 @@
       </div>
       <div class="d-flex flex-column p-2">
         <span class="conceptos-title">DETALLES DEL PRODUCTO</span>
+        <span class="conceptos-subtitle">CÓDIGO: {{product.code}}</span>
         <span class="conceptos-subtitle">
           Disponibles en almacén: {% if product.storeCount %}{{product.storeCount}}{% else %}0{% endif %}
         </span>
-      <span class="conceptos-subtitle">Color: {{product.color}}</span>
-      <span class="conceptos-subtitle">Material: {{product.material}}</span>
+      <span class="conceptos-subtitle">COLOR: {{product.color}}</span>
+      <span class="conceptos-subtitle">MATERIAL: {{product.material}}</span>
       </div>
     </div>
     <div class="d-flex flex-column mt-3">
