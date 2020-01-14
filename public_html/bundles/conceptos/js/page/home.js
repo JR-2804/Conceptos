@@ -556,6 +556,13 @@ function init() {
   if (data.shopCart) {
     $("#shop-cart-main-text").val(data.shopCart.mainText);
     $("#shop-cart-secondary-text").val(data.shopCart.secondaryText);
+
+    if (data.shopCart.currencyTypeText) {
+      $("#currency-type-text").val(data.shopCart.currencyTypeText);
+    }
+    if (data.shopCart.paymentTypeText) {
+      $("#payment-type-text").val(data.shopCart.paymentTypeText);
+    }
   }
   if (data.services) {
     $("#services-title").val(data.services.title);
@@ -629,7 +636,9 @@ function generateData() {
     },
     shopCart: {
       mainText: $("#shop-cart-main-text").val(),
-      secondaryText: $("#shop-cart-secondary-text").val()
+      secondaryText: $("#shop-cart-secondary-text").val(),
+      currencyTypeText: $("#currency-type-text").val(),
+      paymentTypeText: $("#payment-type-text").val()
     },
     testimonies: {
       text1: $("#testimony-text-1").val(),

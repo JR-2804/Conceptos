@@ -70,8 +70,8 @@
                         {% endif %}
                         <div class="d-flex col-6 justify-content-center p-2 {% if priceOffer != -1 %}popular_product{% endif %}">
                           <div class="d-flex align-items-center conceptos-white-background p-2">
-                            <a href="{{ path('product_details', {id: popular.id, name: popular.name}) }}">
-                              <div class="d-flex flex-column">
+                            <a class="h-100" href="{{ path('product_details', {id: popular.id, name: popular.name}) }}">
+                              <div class="d-flex flex-column justify-content-between h-100">
                                 <img class="conceptos-image conceptos-popular-product-image" src="{{ vich_uploader_asset(popular.mainImage, 'imageFile') }}">
                                 <div class="d-flex justify-content-between align-items-center">
                                   {% if priceOffer != -1 %}
@@ -147,8 +147,8 @@
                         {% endif %}
                         <div class="d-flex col-3 justify-content-center p-3 {% if priceOffer != -1 %}popular_product{% endif %}">
                           <div class="d-flex align-items-center conceptos-white-background p-2">
-                            <a href="{{ path('product_details', {id: popular.id, name: popular.name}) }}">
-                              <div class="d-flex flex-column">
+                            <a class="h-100" href="{{ path('product_details', {id: popular.id, name: popular.name}) }}">
+                              <div class="d-flex flex-column justify-content-between h-100">
                                 <img class="conceptos-image conceptos-popular-product-image" src="{{ vich_uploader_asset(popular.mainImage, 'imageFile') }}">
                                 <div class="d-flex justify-content-between align-items-center">
                                   {% if priceOffer != -1 %}

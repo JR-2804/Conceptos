@@ -28,19 +28,25 @@
       {% if shopCartProducts|length > 0 %}
         <div class="shop-cart-section mt-3">
           <div class="d-flex flex-column pt-3 ml-3 mr-3">
-            <div class="d-flex flex-column">
-              <span class="conceptos-title">TIPO DE MONEDA</span>
-              <select id="payment-currency">
-                <option value="usd">USD</option>
-                <option value="cuc">CUC</option>
-              </select>
+            <div class="d-flex align-items-center">
+              <div class="d-flex flex-column col-6 pl-0 mr-2">
+                <span class="conceptos-title">TIPO DE MONEDA</span>
+                <select id="payment-currency">
+                  <option value="usd">USD</option>
+                  <option value="cuc">CUC</option>
+                </select>
+              </div>
+              <span class="conceptos-subtitle">{{home.data.shopCart.currencyTypeText|raw}}</span>
             </div>
-            <div class="d-flex flex-column mt-3">
-              <span class="conceptos-title">PLAZOS DE PAGO</span>
-              <select id="payment-type">
-                <option value="total">Pago total</option>
-                <option value="two-steps">Pago en dos plazos</option>
-              </select>
+            <div class="d-flex align-items-center mt-3">
+              <div class="d-flex flex-column col-6 pl-0 mr-2">
+                <span class="conceptos-title">PLAZOS DE PAGO</span>
+                <select id="payment-type">
+                  <option value="total">Pago total</option>
+                  <option value="two-steps">Pago en dos plazos</option>
+                </select>
+              </div>
+              <span class="conceptos-subtitle">{{home.data.shopCart.paymentTypeText|raw}}</span>
             </div>
             <div class="d-flex flex-column mt-3">
               <span class="conceptos-title">MEMBRESÍA</span>
@@ -76,6 +82,10 @@
             <div class="d-none justify-content-between align-items-center">
               <span class="conceptos-badge-text">EXTRA 2 PLAZOS</span>
               <span class="conceptos-badge-text shop-cart-payment-type-extra"></span>
+            </div>
+            <div class="d-none justify-content-between align-items-center">
+              <span class="conceptos-badge-text">PAGO PRIMER PLAZO</span>
+              <span class="conceptos-badge-text first-payment"></span>
             </div>
             <div class="d-flex justify-content-between align-items-center">
               <span class="conceptos-badge-text">COSTO DE TRANSPORTE</span>

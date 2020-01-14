@@ -48,6 +48,7 @@ $(document).ready(function() {
     if ($("#edit-profile-section").data("hidden") === true) {
       $("#edit-profile-section").show();
       $("#edit-profile-section").data("hidden", false);
+      $("#edit-profile label").hide();
     } else {
       $("#edit-profile-section").hide();
       $("#edit-profile-section").data("hidden", true);

@@ -1,22 +1,24 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div id ="login-form" class="d-flex">
+<div id ="login-form">
   <form class="d-flex flex-column w-100" role="form" method="POST" action="{{ path('fos_user_security_check') }}">
     {% if csrf_token %}
       <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
     {% endif %}
-    <input type="text" name="_username" id="username" placeholder="Usuario" required autofocus>
-    <input type="password" name="_password" id="password" class="mt-2" placeholder="Password" required>
-    <div class="d-flex mt-2">
-      <label class="d-flex checkbox-container align-self-start">
-        <span class="conceptos-subtitle">Registrarme</span>
-        <input id="register-checkbox" type="checkbox">
-        <span class="checkmark checkmark-gray"></span>
-      </label>
-    </div>
+    <span class="conceptos-subtitle mt-2">USUARIO</span>
+    <input type="text" name="_username" id="username" required autofocus>
+    <span class="conceptos-subtitle mt-2">CONTRASEÑA</span>
+    <input type="password" name="_password" id="password" required>
     <button type="submit" class="conceptos-primary-button align-self-start mt-2">ACCEDER</button>
   </form>
 </div>
-<div id="register-form" class="d-none">
+<div id="register-form" style="display: none;">
   {{ render(controller('AppBundle:Security:register')) }}
+</div>
+<div class="d-flex mt-2">
+  <label class="d-flex checkbox-container align-self-start">
+    <span class="conceptos-subtitle">Registrarme</span>
+    <input type="checkbox" class="register-checkbox">
+    <span class="checkmark checkmark-gray"></span>
+  </label>
 </div>

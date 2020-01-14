@@ -21,46 +21,47 @@
     <div id="edit-profile-section" class="flex-column" style="display: none;" data-hidden="true">
       {{ form_start(form, {'method': 'post', 'action': path('site_profile'), 'attr': {'class': 'fos_user_registration_register'}}) }}
         <div class="d-flex flex-column">
-          {{ form_label(form.username) }}
+          <span class="conceptos-subtitle mt-2">USUARIO</span>
           {{ form_errors(form.username) }}
           {{ form_widget(form.username) }}
         </div>
         <div class="d-flex flex-column">
-          {{ form_label(form.email) }}
+          <span class="conceptos-subtitle mt-2">CORREO</span>
           {{ form_errors(form.email) }}
           {{ form_widget(form.email) }}
         </div>
         <div class="d-flex flex-column">
+          <span class="conceptos-subtitle mt-2">CONTRASEÑA</span>
           {{ form_errors(form.plainPassword) }}
           {{ form_widget(form.plainPassword) }}
         </div>
         <div class="d-flex flex-column">
-          {{ form_label(form.first_name) }}
+          <span class="conceptos-subtitle mt-2">NOMBRE</span>
           {{ form_errors(form.first_name) }}
           {{ form_widget(form.first_name) }}
         </div>
         <div class="d-flex flex-column">
-          {{ form_label(form.last_name) }}
+          <span class="conceptos-subtitle mt-2">APELLIDOS</span>
           {{ form_errors(form.last_name) }}
           {{ form_widget(form.last_name) }}
         </div>
         <div class="d-flex flex-column">
-          {{ form_label(form.mobile_number) }}
-          {{ form_errors(form.mobile_number) }}
-          {{ form_widget(form.mobile_number) }}
-        </div>
-        <div class="d-flex flex-column">
-          {{ form_label(form.home_number) }}
+          <span class="conceptos-subtitle mt-2">TELÉFONO DE CASA</span>
           {{ form_errors(form.home_number) }}
           {{ form_widget(form.home_number) }}
         </div>
         <div class="d-flex flex-column">
-          {{ form_label(form.address) }}
+          <span class="conceptos-subtitle mt-2">TELÉFONO MOVIL</span>
+          {{ form_errors(form.mobile_number) }}
+          {{ form_widget(form.mobile_number) }}
+        </div>
+        <div class="d-flex flex-column">
+          <span class="conceptos-subtitle mt-2">DIRECCIÓN</span>
           {{ form_errors(form.address) }}
           {{ form_widget(form.address) }}
         </div>
         <div class="d-flex flex-column">
-          {{ form_label(form.birth_date) }}
+          <span class="conceptos-subtitle mt-2">FECHA DE NACIMIENTO</span>
           {{ form_errors(form.birth_date) }}
           {{ form_widget(form.birth_date) }}
         </div>
@@ -243,7 +244,11 @@
         {% endfor %}
       {% endfor %}
     </div>
-    <button class="conceptos-primary-button-gray align-self-center pl-3 pr-3 mt-2">DESCARGAR EN PDF</button>
+    {% if totalCount == 0 %}
+      <span class="conceptos-subtitle align-self-center mt-2">NO HA REALIZADO COMPRAS</span>
+    {% else %}
+      <button class="conceptos-primary-button-gray align-self-center pl-3 pr-3 mt-2">DESCARGAR EN PDF</button>
+    {% endif %}
   </div>
   <div class="d-flex flex-column conceptos-badge p-2 mt-2">
     <span class="conceptos-badge-text">RESUMEN</span>

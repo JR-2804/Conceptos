@@ -391,6 +391,13 @@ a.conceptos-subtitle:focus {
   font-size: 12px;
 }
 
+.conceptos-offer-product-badge {
+  font-family: Montserrat;
+  font-size: 11px;
+  font-weight: bold;
+  color: #c2b930;
+}
+
 .conceptos-in-store-product-badge {
   font-family: Montserrat;
   font-size: 11px;
@@ -755,7 +762,8 @@ a.conceptos-category-subtitle:focus {
 }
 
 .airplane-delivery:focus,
-.airplane-delivery:hover {
+.airplane-delivery:hover,
+.airplane-delivery-focused {
   background-image: url("../../images/cart/airplane-active.png");
   outline: none;
 }
@@ -774,7 +782,8 @@ a.conceptos-category-subtitle:focus {
 }
 
 .ship-delivery:focus,
-.ship-delivery:hover {
+.ship-delivery:hover,
+.ship-delivery-focused {
   background-image: url("../../images/cart/ship-active.png");
   outline: none;
 }
@@ -951,6 +960,10 @@ a.conceptos-category-subtitle:focus {
   }
 
   .conceptos-product-info-description {
+    font-size: 15px;
+  }
+
+  .conceptos-offer-product-badge {
     font-size: 15px;
   }
 
