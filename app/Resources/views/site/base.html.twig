@@ -175,7 +175,7 @@
 
 
 {% block header %}
-  <section class="menu cid-qQ6pVr9Hx2" once="menu">
+  <section class="menu cid-qQ6pVr9Hx2 navbar__container " once="menu">
     <nav class="navbar navbar-dropdown navbar-fixed-top navbar-toggleable conceptos-navbar">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
               data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -248,15 +248,16 @@
         </ul>
       </div>
     </nav>
-  </section>
 
-    <aside class="search_bar">
-        <form id="home-search-form" action="{{ path('products') }}" method="get">
-            <label class="sr-only" for="search_bar_products">Buscar producto</label>
-            <input type="text" name="term" id="search_bar_products" placeholder="Buscar productos">
-            <button type="submit" value="buscar"></button>
-        </form>
-    </aside>
+      <aside class="search_bar">
+          <form id="home-search-form" action="{{ path('products') }}" method="get">
+              <label class="sr-only" for="search_bar_products">Buscar producto</label>
+              <input type="text" name="term" id="search_bar_products" placeholder="Buscar productos">
+              <button type="submit" value="buscar"></button>
+          </form>
+      </aside>
+
+  </section>
 {% endblock %}
 
 
@@ -301,15 +302,19 @@
 <script>
   $(document).ready(function() {
     $("#conceptos-contact-form").height($("#conceptos-contact-form .conceptos-image").height());
+
     $("#shop-cart-contact-form").height($("#shop-cart-contact-form .conceptos-image").height());
 
-    var marginTop = $(".navbar.navbar-dropdown").css("height");
-    $("body").css("padding-top", marginTop);
-    $(".conceptos-navbar #navbarSupportedContent").css("top", marginTop);
-    $("#categories-menu").css("top", marginTop);
-    $("#cartPreviewModal .modal-dialog").css("top", marginTop);
-    $("#filterProductsModal .modal-dialog").css("top", marginTop);
-    $("#conceptos-services-badge").css("top", marginTop);
+    // var marginTop = $(".navbar.navbar-dropdown").css("height");
+    var marginTop = 117;
+    // $("body").css("padding-top", marginTop);
+    //
+    //
+    // $(".conceptos-navbar #navbarSupportedContent").css("top", marginTop);
+    // $("#categories-menu").css("top", marginTop);
+    // $("#cartPreviewModal .modal-dialog").css("top", marginTop);
+    // $("#filterProductsModal .modal-dialog").css("top", marginTop);
+    // $("#conceptos-services-badge").css("top", marginTop);
   });
 </script>
 <script>
