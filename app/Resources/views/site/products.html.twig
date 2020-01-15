@@ -9,7 +9,7 @@
 {% endblock %}
 {% block body %}
   <form action="{{ path('products') }}" method="get">
-    <input type="hidden" value="{{ app.request.query.get('term') }}" id="term">
+    <input type="hidden" value="{{ app.request.query.get('term') }}" id="term" name="term">
     <input type="hidden" value="{{ app.request.query.get('inOffer') }}" id="inOffer">
     <input type="hidden" value="{{ app.request.query.get('recent') }}" id="recent">
     <input type="hidden" value="{{ app.request.query.get('inStore') }}" id="inStore">
@@ -144,9 +144,13 @@
       <div class="d-flex justify-content-between align-items-center ml-2 mr-2 mt-3 mb-3">
         <div class="d-flex flex-column ml-lg-5">
           {% if mainCategory %}
+            {% set subCategories = '' %}
+            {% for subCategory in mainCategory.subCategories %}
+                {% set subCategories = subCategory.id ~ ', '~ subCategories %}
+            {% endfor %}
             <span>
               <span><a class="conceptos-title-strong" href="{{ path('products') }}">PRODUCTOS</a></span>
-              <a class="conceptos-title">/ {{mainCategory.name}}</a>
+              <a class="conceptos-title" href="{{ path('products', {categories:subCategories}) }}">/ {{mainCategory.name}}</a>
             </span>
           {% else %}
             <span>

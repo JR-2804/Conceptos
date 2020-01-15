@@ -1,5 +1,5 @@
 {% for product in shopCartProducts %}
-  <div class="d-flex shop-cart-product p-2 {% if loop.index > 1 %}mt-2{% endif %}"
+  <div class="d-flex shop-cart-product p-2 {% if loop.index > 1 %}mt-2{% endif %} {% if product.offerExists %}popular_product{% endif %}"
       data-product="{{product.id}}"
       data-uuid="{{ product.uuid }}"
       data-calculate-price-path="{{ path('calculate_product_price') }}"
@@ -33,16 +33,15 @@
           <div class="d-flex align-items-center">
             <button type="button" class="cart-quantity-up" src="{{ asset('bundles/conceptos/images/cart/plus.png') }}"></button>
             <button type="button" class="cart-quantity-down ml-1" src="{{ asset('bundles/conceptos/images/cart/minus.png') }}"></button>
-            <input type="number" class="conceptos-product-info cart-quantity-input ml-2" data-quantity="{{product.count}}" value="{{product.count}}">
+            <input type="number" class="conceptos-product-info cart-quantity-input ml-2" data-quantity="{{product.count}}" data-store-count="{{product.storeCount}}" value="{{product.count}}">
           </div>
           <button type="button" class="shop-cart-trash mr-1"></button>
         </div>
-        <div class="d-flex align-items-center mt-1">
+        <div class="d-flex align-items-center product-delivery mt-1">
           <span class="conceptos-product-info delivery-text">ENVÍO:</span>
           <button type="button" class="conceptos-icon airplane-delivery ml-2"></button>
           <button type="button" class="conceptos-icon ship-delivery ml-1"></button>
           <span class="conceptos-in-store-product-badge" style="display: none;">ALMACÉN</span>
-          <span class="conceptos-offer-product-badge" style="display: none;">OFERTA</span>
         </div>
       </div>
     </div>
