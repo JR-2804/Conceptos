@@ -311,7 +311,7 @@ class SiteController extends Controller
             ->setParameter('name', $product->getName())
             ->setParameter('current', $product->getId())
             ->orderBy('p.name', 'ASC')
-            ->setMaxResults(21)
+            ->setMaxResults(12)
             ->getQuery()->getResult();
 
         if (count($related) < 21) {
@@ -325,7 +325,7 @@ class SiteController extends Controller
                 ->setParameter('category', $categories)
                 ->setParameter('current', $product->getId())
                 ->orderBy('p.name', 'ASC')
-                ->setMaxResults(21 - count($related))
+                ->setMaxResults(12 - count($related))
                 ->getQuery()->getResult();
 
             $related = array_merge($related, $otherRelated);

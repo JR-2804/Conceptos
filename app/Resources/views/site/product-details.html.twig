@@ -56,13 +56,13 @@
           {% endfor %}
         {% endif %}
         <span class="conceptos-title-strong">{{product.name}}</span>
-        <span class="conceptos-subtitle">{{product.description}}</span>
+        <span class="conceptos-subtitle">{{product.item}}</span>
         <div class="d-flex align-items-center">
           {% if priceOffer != -1 %}
             <span class="conceptos-product-info conceptos-product-price mr-2">${{priceOffer}}</span>
-            <span class="conceptos-product-info conceptos-offer-price">${{product.price}}</span>
+            <span class="conceptos-product-info conceptos-offer-price">$&nbsp;{{product.price}}</span>
           {% else %}
-            <span class="conceptos-product-info conceptos-product-price">${{product.price}}</span>
+            <span class="conceptos-product-info conceptos-product-price">$&nbsp;{{product.price}}</span>
           {% endif %}
         </div>
         <div class="d-flex justify-content-between align-items-center mt-1">
@@ -87,6 +87,8 @@
         </span>
       <span class="conceptos-subtitle">COLOR: {{product.color}}</span>
       <span class="conceptos-subtitle">MATERIAL: {{product.material}}</span>
+      <span class="conceptos-subtitle">{{product.description}}</span>
+
       </div>
     </div>
     <div class="d-flex flex-column mt-3">

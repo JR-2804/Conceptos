@@ -138,12 +138,12 @@
                         <div class="d-flex flex-column mt-3">
                           {% if prefacture.request %}
                             <span class="conceptos-title-strong">FECHA DEL PEDIDO</span>
-                            <span class="conceptos-subtitle">{{prefacture.request.date|date('d\m\Y')}}</span>
+                            <span class="conceptos-subtitle">{{prefacture.request.date|date('d/m/Y')}}</span>
                             <span class="conceptos-title-strong">NÚMERO DEL PEDIDO</span>
                             <span class="conceptos-subtitle">PEDIDO {{prefacture.request.id}}-{{prefacture.request.date|date('Y')}}</span>
                           {% endif %}
                           <span class="conceptos-title-strong">FECHA DE LA PREFACTURA</span>
-                          <span class="conceptos-subtitle">{{prefacture.date|date('d\m\Y')}}</span>
+                          <span class="conceptos-subtitle">{{prefacture.date | date('d/m/Y')}}</span>
                           <span class="conceptos-title-strong">NÚMERO DE LA PREFACTURA</span>
                           <span class="conceptos-subtitle">PREFACTURA {{prefacture.id}}-{{prefacture.date|date('Y')}}</span>
                         </div>
@@ -226,12 +226,12 @@
                       <div class="d-flex flex-column mt-3">
                         {% if prefacture.request %}
                           <span class="conceptos-title-strong">FECHA DEL PEDIDO</span>
-                          <span class="conceptos-subtitle">{{prefacture.request.date|date('d\m\Y')}}</span>
+                          <span class="conceptos-subtitle">{{prefacture.request.date|date('d/m/Y')}}</span>
                           <span class="conceptos-title-strong">NÚMERO DEL PEDIDO</span>
                           <span class="conceptos-subtitle">PEDIDO {{prefacture.request.id}}-{{prefacture.request.date|date('Y')}}</span>
                         {% endif %}
                         <span class="conceptos-title-strong">FECHA DE LA PREFACTURA</span>
-                        <span class="conceptos-subtitle">{{prefacture.date|date('d\m\Y')}}</span>
+                        <span class="conceptos-subtitle">{{prefacture.date|date('d/m/Y')}}</span>
                         <span class="conceptos-title-strong">NÚMERO DE LA PREFACTURA</span>
                         <span class="conceptos-subtitle">PREFACTURA {{prefacture.id}}-{{prefacture.date|date('Y')}}</span>
                       </div>

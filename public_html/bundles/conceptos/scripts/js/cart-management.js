@@ -248,7 +248,7 @@ $(document).ready(function() {
 
       firstPaymentSection.parent().removeClass("d-none");
       firstPaymentSection.parent().addClass("d-flex");
-      firstPaymentSection.text(Math.ceil(totalPriceBase * 0.8).toFixed(2));
+      firstPaymentSection.text(Math.ceil(totalPriceBase / 1.8).toFixed(2));
 
       paymentTypeExtraSection.parent().removeClass("d-none");
       paymentTypeExtraSection.parent().addClass("d-flex");

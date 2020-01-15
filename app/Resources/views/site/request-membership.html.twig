@@ -1,6 +1,10 @@
 <img class="conceptos-image conceptos-header-image mt-2" src="{{ page.data.header.image.path }}">
-<span class="conceptos-title-strong mt-3 mb-3">MEMBRESÍA</span>
-<div class="d-flex flex-column w-100">
+<span class="conceptos-title-strong mt-3">MEMBRESÍA</span>
+<span class="conceptos-subtitle">{{ page.data.header.bottomText }}</span>
+<div class="d-flex flex-column w-100 mt-3">
+{#    <span class="conceptos-title mt-3">{{ page.data.header.mainText }}</span>#}
+
+
   {{ form_start(form, {'attr': {'class': 'd-flex flex-column', 'action': path('request_membership')}}) }}
     <div class="d-flex flex-column">
       <span class="conceptos-subtitle">Nombre</span>
@@ -22,8 +26,7 @@
       <span class="conceptos-subtitle mt-2">Dirección</span>
       {{ form_widget(form.address, {'attr': {'class': 'membership-field'}}) }}
     </div>
-    <span class="conceptos-title mt-3">{{ page.data.header.mainText }}</span>
-    <span class="conceptos-subtitle">{{ page.data.header.bottomText }}</span>
+
     <div class="d-flex justify-content-start">
       <button id="request-membership-button" type="submit" class="conceptos-primary-button mt-2 pl-4 pr-4" href="">
         <span>SOLICITAR</span>

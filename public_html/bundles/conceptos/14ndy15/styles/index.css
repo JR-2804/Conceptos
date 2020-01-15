@@ -41,10 +41,12 @@
           align-items: center;
   bottom: 0;
   right: 0;
-  width: 60%;
+  width: 50%;
   height: 20vh;
   -webkit-animation: show 2s ease-in-out 1;
           animation: show 2s ease-in-out 1;
+  -webkit-animation-delay: 3s;
+          animation-delay: 3s;
   background: #282827;
   -webkit-transition: -webkit-transform 1s ease-in;
   transition: -webkit-transform 1s ease-in;
