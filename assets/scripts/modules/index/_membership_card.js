@@ -6,7 +6,7 @@ class MembershipCard {
         this.event();
     }
     event(){
-        // setTimeout(this.hideCard.bind(this), 20000);
+        setTimeout(this.hideCard.bind(this), 20000);
         this.memebershipCardClose.addEventListener('click', this.hideCard.bind(this));
     }
 
