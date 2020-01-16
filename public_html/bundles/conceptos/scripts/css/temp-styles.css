@@ -714,11 +714,6 @@ a.conceptos-category-subtitle:focus {
 
 /* -------------------------------------------------------- */
 
-#conceptos-contact-form .conceptos-image {
-  position: absolute;
-  top: 55vh;
-  height: 75vh;
-}
 
 #conceptos-contact-form form {
   z-index: 10;
