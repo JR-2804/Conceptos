@@ -106,4 +106,8 @@
     &--hide{
         transform: translateX(100%);
     }
+
+    &--no-display{
+        display: none;
+    }
 }

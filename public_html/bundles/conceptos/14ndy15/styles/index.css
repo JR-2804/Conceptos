@@ -8,7 +8,9 @@
     height: 100%;
     background: rgba(255, 255, 255, 0.3); }
   .home__hero img {
-    height: auto; }
+    height: 75vh;
+    -o-object-fit: cover;
+       object-fit: cover; }
   .home__hero__content {
     position: absolute;
     top: 2em;
@@ -140,3 +142,5 @@
   .membership_card--hide {
     -webkit-transform: translateX(100%);
             transform: translateX(100%); }
+  .membership_card--no-display {
+    display: none; }

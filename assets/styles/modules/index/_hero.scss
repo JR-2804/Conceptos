@@ -11,7 +11,8 @@
     }
 
     & img{
-        height: auto;
+        height: 75vh;
+        object-fit: cover;
     }
 
     &__content{
