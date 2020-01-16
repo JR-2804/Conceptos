@@ -14,17 +14,11 @@
       <div class="home__hero__content">
           {% set offer = offers | last %}
           {% if offer %}
-              {% set offerPath = path('products', {inOffer:true}) %}
-              {% set offerText = "VER OFERTAS" %}
-              {% if offer.products|length == 1 %}
-                  {% set offerText = "VER OFERTA" %}
-                  {% set offerPath = path('product_details', {id:offer.products[0].id}) %}
-              {% endif %}
               <div class="home__hero__content__title">
                   <h1>{{ offer.name }}</h1>
               </div>
               <div class="home__hero__content__btn">
-                  <a href="{{offerPath}}">{{offerText}}</a>
+                  <a href="{{path('products', {inOffer:true})}}">VER OFERTAS</a>
               </div>
           {% else %}
               <div class="home__hero__content__title">
