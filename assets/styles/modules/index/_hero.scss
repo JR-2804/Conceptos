@@ -2,7 +2,42 @@
     height: 75vh;
     position: relative;
 
+    &:before{
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba(white, .3);
+    }
+
     & img{
         height: auto;
+    }
+
+    &__content{
+        position: absolute;
+        top: 2em;
+        left: 2em;
+        width: 75%;
+
+        &__title{
+            & h1{
+                color: $mainDark;
+                text-transform: uppercase;
+                font-size: 1.75em;
+                font-weight: 700;
+            }
+        }
+
+        &__btn{
+            margin-top: 1.5em;
+            & a{
+                padding: .1em .5em;
+                border: 2px $mainYellow solid;
+                text-transform: uppercase;
+                color: $mainDark;
+                background-color: rgba(white, .75);
+            }
+        }
     }
 }

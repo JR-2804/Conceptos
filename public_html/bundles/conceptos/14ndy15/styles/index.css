@@ -1,8 +1,32 @@
 .home__hero {
   height: 75vh;
   position: relative; }
+  .home__hero:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3); }
   .home__hero img {
     height: auto; }
+  .home__hero__content {
+    position: absolute;
+    top: 2em;
+    left: 2em;
+    width: 75%; }
+  .home__hero__content__title h1 {
+      color: #282827;
+      text-transform: uppercase;
+      font-size: 1.75em;
+      font-weight: 700; }
+  .home__hero__content__btn {
+      margin-top: 1.5em; }
+  .home__hero__content__btn a {
+        padding: .1em .5em;
+        border: 2px #c2b930 solid;
+        text-transform: uppercase;
+        color: #282827;
+        background-color: rgba(255, 255, 255, 0.75); }
   @-webkit-keyframes show {
   0% {
     -webkit-transform: translateX(100%);
