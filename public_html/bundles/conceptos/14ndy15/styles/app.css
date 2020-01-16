@@ -226,9 +226,6 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     -o-object-fit: cover;
        object-fit: cover; }
 
-#conceptos-contact-form img {
-    z-index: -1; }
-
 #conceptos-contact-form:after {
     content: '';
     position: absolute;
