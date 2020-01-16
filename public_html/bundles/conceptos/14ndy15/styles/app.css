@@ -31,13 +31,6 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
   -o-object-fit: cover;
      object-fit: cover; }
 
-#conceptos-contact-form .conceptos-image {
-  position: absolute;
-  top: 55vh;
-  height: 75vh;
-  -o-object-fit: cover;
-     object-fit: cover; }
-
 .search_bar {
   position: fixed;
   z-index: 3;
@@ -223,11 +216,21 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
         -o-object-fit: cover;
            object-fit: cover; }
 
+#conceptos-contact-form {
+  background: #e5e5e5; }
+
+#conceptos-contact-form .conceptos-image {
+    position: absolute;
+    top: 60vh;
+    height: 75vh;
+    -o-object-fit: cover;
+       object-fit: cover; }
+
 #conceptos-contact-form:after {
-  content: '';
-  position: absolute;
-  height: 48%;
-  width: 100%;
-  background: -webkit-gradient(linear, left bottom, left top, from(transparent), to(#e5e5e5));
-  background: linear-gradient(to top, transparent, #e5e5e5);
-  top: 55vh; }
+    content: '';
+    position: absolute;
+    height: 48%;
+    width: 100%;
+    background: -webkit-gradient(linear, left bottom, left top, from(transparent), to(#e5e5e5));
+    background: linear-gradient(to top, transparent, #e5e5e5);
+    top: 60vh; }
