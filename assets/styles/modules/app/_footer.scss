@@ -1,0 +1,10 @@
+#conceptos-contact-form{
+    &:after{
+        content: '';
+        position: absolute;
+        height: 48%;
+        width: 100%;
+        background: linear-gradient(to top, transparent, #e5e5e5);
+        top: 55vh;
+    }
+}
