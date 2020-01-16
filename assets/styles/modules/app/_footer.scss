@@ -7,10 +7,7 @@
         height: 75vh;
         object-fit: cover;
     }
-
-    & img{
-        z-index: -1;
-    }
+    
 
     &:after{
         content: '';
