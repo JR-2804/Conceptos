@@ -219,7 +219,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 #conceptos-contact-form {
   background: #e5e5e5; }
 
-#conceptos-contact-form #conceptos-contact-form .conceptos-image {
+#conceptos-contact-form .conceptos-image {
     position: absolute;
     top: 60vh;
     height: 75vh;
