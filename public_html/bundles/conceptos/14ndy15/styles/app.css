@@ -1,26 +1,51 @@
+body {
+  overflow-x: hidden; }
+
+h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
+  font-family: 'Montserrat', sans-serif !important; }
+
 .login_modal__container {
   background-color: #e5e5e5; }
-  .login_modal__container form input {
+
+.login_modal__container form input {
     background: white; }
-  .login_modal__container form button[type='submit'] {
+
+.login_modal__container form button[type='submit'] {
     background: #e5e5e5;
     border: #c2b930 1px solid;
     text-transform: uppercase;
     padding: .5em .75em;
     font-weight: 700; }
-  .login_modal__container form label.collapse {
+
+.login_modal__container form label.collapse {
     display: block !important; }
-  .login_modal__container__remember {
+
+.login_modal__container__remember {
     display: -webkit-box;
     display: flex;
     -webkit-box-pack: justify;
             justify-content: space-between; }
-  .search_bar {
+
+.conceptos-header-image {
+  height: auto;
+  -o-object-fit: cover;
+     object-fit: cover; }
+
+#conceptos-contact-form .conceptos-image {
+  position: absolute;
+  top: 55vh;
+  height: 75vh;
+  -o-object-fit: cover;
+     object-fit: cover; }
+
+.search_bar {
   position: fixed;
   z-index: 3;
   width: 100%;
-  border: 1px #282827 solid; }
-  .search_bar form {
+  border: 1px #282827 solid;
+  padding: 0; }
+
+.search_bar form {
     width: 100%;
     display: -webkit-box;
     display: flex;
@@ -29,7 +54,8 @@
     -webkit-box-align: center;
             align-items: center;
     flex-wrap: nowrap; }
-  .search_bar form input[type='text'] {
+
+.search_bar form input[type='text'] {
       width: 100%;
       padding: .75em;
       opacity: 90%;
@@ -37,7 +63,8 @@
       margin: 0;
       height: auto;
       font-size: 1em; }
-  .search_bar form button[type='submit'] {
+
+.search_bar form button[type='submit'] {
       border: 1px transparent solid;
       background-color: transparent;
       width: 3em;
@@ -47,7 +74,8 @@
       right: 1em;
       -webkit-transform: scale(0.75);
               transform: scale(0.75); }
-  .search_bar form button[type='submit']:before {
+
+.search_bar form button[type='submit']:before {
         position: absolute;
         top: 0;
         left: 0;
@@ -58,7 +86,8 @@
         border: 2px #282827 solid;
         -webkit-transform: translateY(50%);
                 transform: translateY(50%); }
-  .search_bar form button[type='submit']:after {
+
+.search_bar form button[type='submit']:after {
         position: absolute;
         content: '';
         width: 1.05em;
@@ -69,29 +98,77 @@
         -webkit-transform-origin: 0 50%;
                 transform-origin: 0 50%;
         bottom: 25%; }
-  /**
+
+/**
  * Note: I have omitted any vendor-prefixes for clarity.
  * Adding them is left as an exercise for the reader.
  */
-  .headroom {
+
+.headroom {
   will-change: transform;
   -webkit-transition: -webkit-transform 200ms linear;
   transition: -webkit-transform 200ms linear;
   transition: transform 200ms linear;
   transition: transform 200ms linear, -webkit-transform 200ms linear; }
-  .headroom--pinned {
+
+.headroom--pinned {
   -webkit-transform: translateY(0%);
           transform: translateY(0%); }
-  .headroom--unpinned {
+
+.headroom--unpinned {
   -webkit-transform: translateY(-100%);
           transform: translateY(-100%); }
-  .conceptos-category-icon {
+
+.conceptos-category-icon {
   width: 1.5em;
   height: auto; }
-  .popular_product > div:first-child {
+
+@-webkit-keyframes zoomIn {
+  0% {
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1); }
+  50% {
+    -webkit-transform: scaleX(1.5);
+            transform: scaleX(1.5); }
+  100% {
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1); } }
+
+@keyframes zoomIn {
+  0% {
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1); }
+  50% {
+    -webkit-transform: scaleX(1.5);
+            transform: scaleX(1.5); }
+  100% {
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1); } }
+
+#open-categories-menu {
+  -webkit-animation: zoomIn 2.5s ease-in 10;
+          animation: zoomIn 2.5s ease-in 10; }
+
+.conceptos-offer-price {
+  position: relative;
+  font-size: 12px; }
+
+.conceptos-offer-price:before {
+    content: '';
+    position: absolute;
+    width: 75%;
+    top: 40%;
+    left: 25%;
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+    height: 2px;
+    background: #282827; }
+
+.popular_product > div:first-child {
   position: relative;
   overflow: hidden; }
-  .popular_product > div:first-child:before {
+
+.popular_product > div:first-child:before {
     position: absolute;
     background-color: #c2b930;
     content: 'OFERTA';
@@ -104,23 +181,53 @@
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
     font-size: .8em; }
-  .carousel-indicators {
+
+.carousel-indicators {
   bottom: -5px;
   margin-bottom: 0; }
-  .carousel-indicators li {
+
+.carousel-indicators li {
     background-color: #e5e5e5;
     border: 1px solid #282827;
     border-radius: 50%;
     height: .75em;
     width: .75em; }
-  .carousel-indicators li.active {
+
+.carousel-indicators li.active {
       background-color: #c2b930; }
-  .carousel-control {
+
+.carousel-control {
   background-color: #282827;
   color: #c2b930;
   height: 40px;
   width: 40px;
   border-radius: 50%;
   top: 50%; }
-  .carousel-control:focus {
+
+.carousel-control:focus {
     color: #c2b930; }
+
+#carousel-product-details {
+  position: relative;
+  height: 45vh; }
+
+#carousel-product-details .carousel-inner {
+    height: 100%; }
+
+#carousel-product-details .carousel-inner .carousel-item {
+      height: 100%; }
+
+#carousel-product-details .carousel-inner .carousel-item img {
+        width: 100%;
+        height: 100%;
+        -o-object-fit: cover;
+           object-fit: cover; }
+
+#conceptos-contact-form:after {
+  content: '';
+  position: absolute;
+  height: 48%;
+  width: 100%;
+  background: -webkit-gradient(linear, left bottom, left top, from(transparent), to(#e5e5e5));
+  background: linear-gradient(to top, transparent, #e5e5e5);
+  top: 55vh; }

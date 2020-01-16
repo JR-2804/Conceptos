@@ -98,6 +98,18 @@ eval("\n\nvar _membership_card = __webpack_require__(/*! ./modules/index/_member
 
 /***/ }),
 
+/***/ "./assets/scripts/modules/app/_utils.js":
+/*!**********************************************!*\
+  !*** ./assets/scripts/modules/app/_utils.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.setCookie = setCookie;\nexports.getCookie = getCookie;\nfunction setCookie(value) {\n    var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'products_cart';\n    var days = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;\n\n    var date = new Date();\n    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);\n    var expires = \"; expires=\" + date.toGMTString();\n    document.cookie = name + \"=\" + value + expires + \"; path=/\";\n}\n\nfunction getCookie(name) {\n    return document.cookie.includes(name);\n}\n\n//# sourceURL=webpack:///./assets/scripts/modules/app/_utils.js?");
+
+/***/ }),
+
 /***/ "./assets/scripts/modules/index/_membership_card.js":
 /*!**********************************************************!*\
   !*** ./assets/scripts/modules/index/_membership_card.js ***!
@@ -106,7 +118,7 @@ eval("\n\nvar _membership_card = __webpack_require__(/*! ./modules/index/_member
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar MembershipCard = function () {\n    function MembershipCard() {\n        _classCallCheck(this, MembershipCard);\n\n        this.memebershipCard = document.querySelector('.membership_card');\n        this.memebershipCardClose = document.querySelector('.membership_card__close');\n\n        this.event();\n    }\n\n    _createClass(MembershipCard, [{\n        key: 'event',\n        value: function event() {\n            // setTimeout(this.hideCard.bind(this), 20000);\n            this.memebershipCardClose.addEventListener('click', this.hideCard.bind(this));\n        }\n    }, {\n        key: 'hideCard',\n        value: function hideCard() {\n            this.memebershipCard.classList.add('membership_card--hide');\n        }\n    }]);\n\n    return MembershipCard;\n}();\n\nexports.default = MembershipCard;\n\n//# sourceURL=webpack:///./assets/scripts/modules/index/_membership_card.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _utils = __webpack_require__(/*! ../app/_utils */ \"./assets/scripts/modules/app/_utils.js\");\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar MembershipCard = function () {\n    function MembershipCard() {\n        _classCallCheck(this, MembershipCard);\n\n        this.memebershipCard = document.querySelector('.membership_card');\n        this.memebershipCardClose = document.querySelector('.membership_card__close');\n\n        this.showOrNot();\n    }\n\n    _createClass(MembershipCard, [{\n        key: 'showOrNot',\n        value: function showOrNot() {\n            if ((0, _utils.getCookie)('membershipCard')) this.memebershipCard.classList.add('membership_card--no-display');else {\n                (0, _utils.setCookie)('membershipCard', '1');\n                this.memebershipCard.classList.remove('membership_card--no-display');\n                this.event();\n            }\n        }\n    }, {\n        key: 'event',\n        value: function event() {\n            setTimeout(this.hideCard.bind(this), 20000);\n            this.memebershipCardClose.addEventListener('click', this.hideCard.bind(this));\n        }\n    }, {\n        key: 'hideCard',\n        value: function hideCard() {\n            this.memebershipCard.classList.add('membership_card--hide');\n        }\n    }]);\n\n    return MembershipCard;\n}();\n\nexports.default = MembershipCard;\n\n//# sourceURL=webpack:///./assets/scripts/modules/index/_membership_card.js?");
 
 /***/ })
 

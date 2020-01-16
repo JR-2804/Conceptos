@@ -11,12 +11,29 @@
       <img class="conceptos-image" src="{{page.data.slides[0].path}}">
     {% endif %}
 
-      <div class="membership_card d-none">
-          <div class="membership_card__close"></div>
-          <div class="membership_card__container">
-              <div class="membership_card__container__content">
-              </div>
+      <div class="home__hero__content">
+
+{#          {% set offer = offers | last %}#}
+          <div class="home__hero__content__title">
+{#              <h1>{{ offer.name }}</h1>#}
+              <h1>Bienvenidos a Conceptos 2020</h1>
           </div>
+          <div class="home__hero__content__btn">
+{#              TODO: poner link#}
+              <a href="#">Ver Oferta</a>
+          </div>
+
+      </div>
+
+      <div class="membership_card membership_card--no-display">
+          <div class="membership_card__close"></div>
+          <a href="{{ path('membership') }}">
+              <div class="membership_card__content">
+                <h2>Ahorre</h2>
+                <h3>Hasta un 20%</h3>
+                <h4>con nuestra membresia</h4>
+              </div>
+          </a>
       </div>
   </div>
 

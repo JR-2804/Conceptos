@@ -2,3 +2,19 @@
     width: 1.5em;
     height: auto;
 }
+
+@keyframes zoomIn {
+    0%{
+        transform: scaleX(1);
+    }
+    50%{
+        transform: scaleX(1.5);
+    }
+    100%{
+        transform: scaleX(1);
+    }
+}
+
+#open-categories-menu{
+    animation: zoomIn 2.5s ease-in 10;
+}

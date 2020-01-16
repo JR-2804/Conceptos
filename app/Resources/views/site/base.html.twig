@@ -14,7 +14,8 @@
   <meta name="description" content="{% block meta_description %}{% endblock %}">
   <link rel="shortcut icon" href="{{ asset('bundles/conceptos/images/logo.png') }}">
   <title>Conceptos - {% block title %}{% endblock %}</title>
-  {% block stylesheet %}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    {% block stylesheet %}
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/normalize.css/normalize.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/fonts/FontAwesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/web/assets/mobirise-icons/mobirise-icons.css') }}">
@@ -35,6 +36,9 @@
       <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/styles/app.css') }}" type="text/css">
   {% endblock %}
   {% block css %}{% endblock %}
+
+    <meta name="google-site-verification" content="iiDlD6FxMHYfI_zUCyIwIuGqz5fZBvGUtkrryNiAnjA" />
+
 </head>
 <body>
 <input type="hidden" value="{{ path('site_home') }}" id="site-path">

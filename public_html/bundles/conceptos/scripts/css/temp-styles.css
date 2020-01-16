@@ -385,10 +385,6 @@ a.conceptos-subtitle:focus {
   font-size: 14px;
 }
 
-.conceptos-offer-price {
-  text-decoration: line-through;
-  font-size: 12px;
-}
 
 .conceptos-offer-product-badge {
   font-family: Montserrat;
@@ -582,10 +578,7 @@ a.conceptos-category-subtitle:focus {
   width: 100%;
 }
 
-.conceptos-header-image {
-  height: 50vh;
-  object-fit: cover;
-}
+
 
 .conceptos-popular-product-image {
   object-fit: cover;
@@ -721,11 +714,6 @@ a.conceptos-category-subtitle:focus {
 
 /* -------------------------------------------------------- */
 
-#conceptos-contact-form .conceptos-image {
-  position: absolute;
-  top: 55vh;
-  height: 75vh;
-}
 
 #conceptos-contact-form form {
   z-index: 10;
