@@ -1,0 +1,15 @@
+.conceptos-offer-price{
+    position: relative;
+    &:before{
+        content: '';
+        position: absolute;
+        width: 120%;
+        top: 40%;
+        left: -10%;
+        transform: rotate(45deg);
+        height: 2px;
+        background: rgba($mainDark, 75);
+    }
+
+    font-size: 12px;
+}

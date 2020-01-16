@@ -385,10 +385,6 @@ a.conceptos-subtitle:focus {
   font-size: 14px;
 }
 
-.conceptos-offer-price {
-  text-decoration: line-through;
-  font-size: 12px;
-}
 
 .conceptos-offer-product-badge {
   font-family: Montserrat;
@@ -582,10 +578,7 @@ a.conceptos-category-subtitle:focus {
   width: 100%;
 }
 
-.conceptos-header-image {
-  height: 50vh;
-  object-fit: cover;
-}
+
 
 .conceptos-popular-product-image {
   object-fit: cover;
