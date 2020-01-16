@@ -106,7 +106,7 @@ eval("\n\nvar _membership_card = __webpack_require__(/*! ./modules/index/_member
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.setCookie = setCookie;\nexports.getCookie = getCookie;\nfunction setCookie(value) {\n    var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'products_cart';\n    var days = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 3;\n\n    var date = new Date();\n    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);\n    var expires = \"; expires=\" + date.toGMTString();\n    document.cookie = name + \"=\" + value + expires + \"; path=/\";\n}\n\nfunction getCookie(name) {\n    return document.cookie.includes(name);\n}\n\n//# sourceURL=webpack:///./assets/scripts/modules/app/_utils.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.setCookie = setCookie;\nexports.getCookie = getCookie;\nfunction setCookie(value) {\n    var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'products_cart';\n    var days = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;\n\n    var date = new Date();\n    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);\n    var expires = \"; expires=\" + date.toGMTString();\n    document.cookie = name + \"=\" + value + expires + \"; path=/\";\n}\n\nfunction getCookie(name) {\n    return document.cookie.includes(name);\n}\n\n//# sourceURL=webpack:///./assets/scripts/modules/app/_utils.js?");
 
 /***/ }),
 
