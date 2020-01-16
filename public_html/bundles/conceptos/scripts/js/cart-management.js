@@ -194,6 +194,9 @@ $(document).ready(function() {
       var selector = '.shop-cart-product[data-product="' + product.id + '"]';
       if (product.offerExists) {
         HideBothIcons(selector);
+        if (product.storeCount) {
+          $(selector + " .conceptos-in-store-product-badge").show();
+        }
       } else if (product.storeCount) {
         HideBothIcons(selector);
         $(selector + " .conceptos-in-store-product-badge").show();
@@ -251,9 +254,6 @@ $(document).ready(function() {
 
       firstPaymentSection.parent().removeClass("d-none");
       firstPaymentSection.parent().addClass("d-flex");
-      firstPaymentSection.text(
-        "$" + Math.ceil(totalPriceBase / 1.8).toFixed(2)
-      );
 
       paymentTypeExtraSection.parent().removeClass("d-none");
       paymentTypeExtraSection.parent().addClass("d-flex");
@@ -294,6 +294,7 @@ $(document).ready(function() {
     $(".shop-cart-total-price-with-extra").text(
       "$" + Number(totalPrice).toFixed(2)
     );
+    firstPaymentSection.text("$" + Math.ceil(totalPrice / 1.8).toFixed(2));
   }
 
   function DisplayMembershipSuccess() {
