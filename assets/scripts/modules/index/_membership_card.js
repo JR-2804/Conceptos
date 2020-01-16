@@ -13,6 +13,7 @@ class MembershipCard {
             this.memebershipCard.classList.add('membership_card--no-display');
         else {
             setCookie('membershipCard', '1');
+            this.memebershipCard.classList.remove('membership_card--no-display');
             this.event();
         }
     }

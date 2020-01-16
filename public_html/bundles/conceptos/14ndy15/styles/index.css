@@ -83,7 +83,8 @@
   -webkit-transition: -webkit-transform 1s ease-in;
   transition: -webkit-transform 1s ease-in;
   transition: transform 1s ease-in;
-  transition: transform 1s ease-in, -webkit-transform 1s ease-in; }
+  transition: transform 1s ease-in, -webkit-transform 1s ease-in;
+  z-index: 1; }
   .membership_card__close {
     display: -webkit-box;
     display: flex;

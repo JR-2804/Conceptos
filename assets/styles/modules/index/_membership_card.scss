@@ -28,6 +28,7 @@
     animation: show 2s ease-in-out 1;
     background: $mainDark;
     transition: transform 1s ease-in;
+    z-index: 1;
 
     &__close{
         display: flex;
@@ -101,7 +102,6 @@
             font-size: .7em;
         }
     }
-
 
     &--hide{
         transform: translateX(100%);
