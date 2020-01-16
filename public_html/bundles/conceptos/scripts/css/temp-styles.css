@@ -385,7 +385,6 @@ a.conceptos-subtitle:focus {
   font-size: 14px;
 }
 
-
 .conceptos-offer-product-badge {
   font-family: Montserrat;
   font-size: 11px;
@@ -447,7 +446,7 @@ a.conceptos-subtitle:focus {
 }
 
 .conceptos-category-title {
-  font-family: Montserrat-ExtraBold;
+  font-family: Montserrat-ExtraBold !important;
   font-size: 12px;
   color: #282827;
   text-transform: uppercase;
@@ -577,8 +576,6 @@ a.conceptos-category-subtitle:focus {
 .conceptos-image {
   width: 100%;
 }
-
-
 
 .conceptos-popular-product-image {
   object-fit: cover;
@@ -714,7 +711,6 @@ a.conceptos-category-subtitle:focus {
 
 /* -------------------------------------------------------- */
 
-
 #conceptos-contact-form form {
   z-index: 10;
 }
@@ -824,8 +820,25 @@ a.conceptos-category-subtitle:focus {
   outline: none;
 }
 
+#shop-cart-contact-form {
+  background: #e5e5e5;
+  position: relative;
+}
+
 #shop-cart-contact-form .conceptos-image {
   position: absolute;
+  top: 30vh;
+  height: 75vh;
+  object-fit: cover;
+}
+
+#shop-cart-contact-form:after {
+  content: "";
+  position: absolute;
+  height: 48%;
+  width: 100%;
+  background: linear-gradient(to top, transparent, #e5e5e5);
+  top: 30vh;
 }
 
 #shop-cart-buy-section {
