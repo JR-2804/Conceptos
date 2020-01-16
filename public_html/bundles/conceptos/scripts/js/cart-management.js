@@ -39,6 +39,10 @@ $(document).ready(function() {
     return GetQuantityElement(element).data("quantity");
   }
 
+  function getStoreCountByElement(element) {
+    return GetQuantityElement(element).data("store-count");
+  }
+
   function getProductPriceByProductId(productId) {
     return $(
       '.shop-cart-product[data-product="' +
@@ -190,7 +194,6 @@ $(document).ready(function() {
       var selector = '.shop-cart-product[data-product="' + product.id + '"]';
       if (product.offerExists) {
         HideBothIcons(selector);
-        $(selector + " .conceptos-offer-product-badge").show();
       } else if (product.storeCount) {
         HideBothIcons(selector);
         $(selector + " .conceptos-in-store-product-badge").show();
@@ -233,7 +236,7 @@ $(document).ready(function() {
       totalPrice -= membershipDiscount;
       membershipDiscountSection.parent().removeClass("d-none");
       membershipDiscountSection.parent().addClass("d-flex");
-      membershipDiscountSection.text(membershipDiscount.toFixed(2));
+      membershipDiscountSection.text("$" + membershipDiscount.toFixed(2));
     } else {
       membershipDiscountSection.parent().removeClass("d-flex");
       membershipDiscountSection.parent().addClass("d-none");
@@ -248,11 +251,13 @@ $(document).ready(function() {
 
       firstPaymentSection.parent().removeClass("d-none");
       firstPaymentSection.parent().addClass("d-flex");
-      firstPaymentSection.text(Math.ceil(totalPriceBase / 1.8).toFixed(2));
+      firstPaymentSection.text(
+        "$" + Math.ceil(totalPriceBase / 1.8).toFixed(2)
+      );
 
       paymentTypeExtraSection.parent().removeClass("d-none");
       paymentTypeExtraSection.parent().addClass("d-flex");
-      paymentTypeExtraSection.text(paymentTypeExtra.toFixed(2));
+      paymentTypeExtraSection.text("$" + paymentTypeExtra.toFixed(2));
     } else {
       $(".shop-cart-payment-type").text("1 PLAZO");
 
@@ -270,7 +275,7 @@ $(document).ready(function() {
       $(".shop-cart-currency").text("CUC");
       currencyExtraSection.parent().removeClass("d-none");
       currencyExtraSection.parent().addClass("d-flex");
-      currencyExtraSection.text(currencyExtra.toFixed(2));
+      currencyExtraSection.text("$" + currencyExtra.toFixed(2));
     } else {
       $(".shop-cart-currency").text("USD");
       currencyExtraSection.parent().removeClass("d-flex");
@@ -283,11 +288,10 @@ $(document).ready(function() {
       transportCost = 5;
     }
 
+    $(".shop-cart-total-price").text("$" + Number(totalPriceBase).toFixed(2));
     $(".shop-cart-transport-cost").text("$" + transportCost.toFixed(2));
-
-    $(".shop-cart-total-price").text("$" + Number(totalPrice).toFixed(2));
     totalPrice += transportCost;
-    $(".shop-cart-total-price-with-transport").text(
+    $(".shop-cart-total-price-with-extra").text(
       "$" + Number(totalPrice).toFixed(2)
     );
   }
@@ -376,11 +380,14 @@ $(document).ready(function() {
   function CreateCartSummaryActions() {
     $(".cart-quantity-up").click(function() {
       var quantity = getProductQuantityByElement(this);
-      quantity++;
-      var productCount =
-        Number($("#conceptos-shop-cart-count").data("count")) + 1;
-      UpdateProductQuantity(this, quantity, productCount);
-      recalculateAllPrices();
+      var storeCount = getStoreCountByElement(this);
+      if (!storeCount || quantity < storeCount) {
+        quantity++;
+        var productCount =
+          Number($("#conceptos-shop-cart-count").data("count")) + 1;
+        UpdateProductQuantity(this, quantity, productCount);
+        recalculateAllPrices();
+      }
     });
 
     $(".cart-quantity-down").click(function() {

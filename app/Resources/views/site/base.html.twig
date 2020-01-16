@@ -115,7 +115,7 @@
     </div>
     <div class="d-flex align-items-center mt-3">
       <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-offers.png') }}">
-      <a class="conceptos-category-title" href="{{ path('products') }}">OFERTAS</a>
+      <a class="conceptos-category-title" href="{{ path('products', {inOffer:true}) }}">OFERTAS</a>
     </div>
     {% for category in categories %}
       {% if category.parents | length == 0 %}
@@ -155,6 +155,14 @@
           </div>
           <div id="subcategories-{{loop.index}}" class="conceptos-subcategories-panel collapse" role="tabpanel">
             <div class="d-flex flex-column">
+              {% set subCategories = '' %}
+              {% for subCategory in category.subCategories %}
+                  {% set subCategories = subCategory.id ~ ', '~ subCategories %}
+              {% endfor %}
+              <div class="d-flex align-items-center mt-3">
+                <img class="conceptos-category-divider-icon ml-3 mr-1" src="{{asset('bundles/conceptos/images/home/category.png')}}">
+                <a class="conceptos-category-subtitle" href="{{ path('products', {categories:subCategories}) }}">TODOS</a>
+              </div>
               {% for subCategory in category.subCategories %}
                 <div class="d-flex align-items-center mt-3">
                   <img class="conceptos-category-divider-icon ml-3 mr-1" src="{{asset('bundles/conceptos/images/home/category.png')}}">
@@ -172,7 +180,6 @@
 <div id="close-categories-menu">
   <img class="close-categories-menu-icon mr-2 d-flex d-lg-none" src="{{ asset('bundles/conceptos/images/home/close-categories-menu.png') }}">
 </div>
-
 
 {% block header %}
   <section class="menu cid-qQ6pVr9Hx2 navbar__container " once="menu">
@@ -259,8 +266,6 @@
 
   </section>
 {% endblock %}
-
-
 
 {% block body %}{% endblock %}
 {% block login %}

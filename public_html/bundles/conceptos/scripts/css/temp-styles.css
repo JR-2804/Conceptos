@@ -985,3 +985,7 @@ a.conceptos-category-subtitle:focus {
     height: 300px;
   }
 }
+
+#cartPreviewModal .product-delivery {
+  display: none !important;
+}

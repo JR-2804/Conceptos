@@ -1274,15 +1274,14 @@ class SiteController extends Controller
             'forClient' => true,
         ]);
 
-
         //TODO: pasar la variable del los productos de oferta
-        return $this->render(':site:request-email.html.twig', [
-            'request' => $requestDB,
-            'home' => $home,
-            'products' => $productsResponse,
-            'membership' => $membership,
-            'forClient' => true,
-        ]);
+        // return $this->render(':site:request-email.html.twig', [
+        //     'request' => $requestDB,
+        //     'home' => $home,
+        //     'products' => $productsResponse,
+        //     'membership' => $membership,
+        //     'forClient' => true,
+        // ]);
 
         $this->get('email_service')->send($client->getEmail(), $client->getName(), $config->getEmail(), 'Pedido realizardo a través de la WEB', $body);
         $this->get('email_service')->send($config->getEmail(), 'Equipo comercial Conceptos', $client->getEmail(), 'Pedido realizado a través de la WEB', $bodyClient);
