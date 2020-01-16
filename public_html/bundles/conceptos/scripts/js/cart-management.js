@@ -184,6 +184,11 @@ $(document).ready(function() {
     $(selector + " .ship-delivery").hide();
   }
 
+  function DisplayOnlyAirplaneDelivery(selector) {
+    $(selector + " .ship-delivery").hide();
+    $(selector + " .airplane-delivery").addClass("airplane-delivery-focused");
+  }
+
   function DisplayOnlyShipDelivery(selector) {
     $(selector + " .airplane-delivery").hide();
     $(selector + " .ship-delivery").addClass("ship-delivery-focused");
@@ -200,8 +205,15 @@ $(document).ready(function() {
       } else if (product.storeCount) {
         HideBothIcons(selector);
         $(selector + " .conceptos-in-store-product-badge").show();
-      } else if (!product.isAirplaneFurniture && !product.isAirplaneMattress) {
+      } else if (!product.isFurniture && !product.isMattress) {
+        DisplayOnlyAirplaneDelivery(selector);
+      } else if (
+        (product.isFurniture && !product.isAirplaneFurniture) ||
+        (product.isMattress && !product.isAirplaneMattress)
+      ) {
         DisplayOnlyShipDelivery(selector);
+      } else {
+        $(selector + " .ship-delivery").addClass("ship-delivery-focused");
       }
     });
   }
@@ -219,7 +231,6 @@ $(document).ready(function() {
     }
 
     CheckIfCanPerformHomeCollect();
-    UpdateDeliveryIconsState();
 
     var totalPriceBase = 0;
     products.forEach(function(product) {
@@ -583,12 +594,12 @@ $(document).ready(function() {
     }
 
     var productId = getProductIdByElement(this);
-    UpdateProductDeliveryType(productId, 1);
-
     $(this).addClass("ship-delivery-focused");
     $(
       '.shop-cart-product[data-product="' + productId + '"] .airplane-delivery'
     ).removeClass("airplane-delivery-focused");
+
+    UpdateProductDeliveryType(productId, 1);
   });
 
   $(".airplane-delivery").click(function() {
@@ -597,12 +608,12 @@ $(document).ready(function() {
     }
 
     var productId = getProductIdByElement(this);
-    UpdateProductDeliveryType(productId, 2);
-
     $(this).addClass("airplane-delivery-focused");
     $(
       '.shop-cart-product[data-product="' + productId + '"] .ship-delivery'
     ).removeClass("ship-delivery-focused");
+
+    UpdateProductDeliveryType(productId, 2);
   });
 
   $("#payment-type").change(function() {
@@ -679,5 +690,6 @@ $(document).ready(function() {
   });
 
   CreateCartSummaryActions();
+  UpdateDeliveryIconsState();
   recalculateAllPrices();
 });
