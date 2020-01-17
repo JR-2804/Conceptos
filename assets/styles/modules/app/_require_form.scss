@@ -1,0 +1,14 @@
+.required{
+    position: relative;
+
+    &:before{
+        position: absolute;
+        content: '*';
+        top: 0;
+        left: 0;
+        width: .25em;
+        height: .25em;
+        font-size: 1.25em;
+        color: red;
+    }
+}

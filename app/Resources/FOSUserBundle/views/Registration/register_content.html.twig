@@ -2,47 +2,47 @@
 
 {{ form_start(form, {'method': 'post', 'action': path('site_register')}) }}
   <div class="d-flex flex-column">
-    <span class="conceptos-subtitle">USUARIO</span>
+    <span class="conceptos-subtitle required pl-2">USUARIO</span>
     {{ form_errors(form.username) }}
     {{ form_widget(form.username) }}
   </div>
   <div class="d-flex flex-column mt-2">
-    <span class="conceptos-subtitle">CORREO</span>
+    <span class="conceptos-subtitle pl-2 required">CORREO</span>
     {{ form_errors(form.email) }}
     {{ form_widget(form.email) }}
   </div>
   <div class="d-flex flex-column mt-2">
-    <span class="conceptos-subtitle">CONTRASEÑA</span>
+    <span class="conceptos-subtitle pl-2 required">CONTRASEÑA</span>
     {{ form_errors(form.plainPassword) }}
     {{ form_widget(form.plainPassword) }}
   </div>
   <div class="d-flex flex-column mt-2">
-    <span class="conceptos-subtitle">NOMBRE</span>
+    <span class="conceptos-subtitle pl-2required ">NOMBRE</span>
     {{ form_errors(form.first_name) }}
     {{ form_widget(form.first_name) }}
   </div>
   <div class="d-flex flex-column mt-2">
-    <span class="conceptos-subtitle">APELLIDOS</span>
+    <span class="conceptos-subtitle pl-2">APELLIDOS</span>
     {{ form_errors(form.last_name) }}
     {{ form_widget(form.last_name) }}
   </div>
   <div class="d-flex flex-column mt-2">
-    <span class="conceptos-subtitle">TELÉFONO DE CASA</span>
+    <span class="conceptos-subtitle pl-2">TELÉFONO DE CASA</span>
     {{ form_errors(form.mobile_number) }}
     {{ form_widget(form.mobile_number) }}
   </div>
   <div class="d-flex flex-column mt-2">
-    <span class="conceptos-subtitle">TELÉFONO MOVIL</span>
+    <span class="conceptos-subtitle pl-2">TELÉFONO MOVIL</span>
     {{ form_errors(form.home_number) }}
     {{ form_widget(form.home_number) }}
   </div>
   <div class="d-flex flex-column mt-2">
-    <span class="conceptos-subtitle">DIRECCIÓN</span>
+    <span class="conceptos-subtitle pl-2">DIRECCIÓN</span>
     {{ form_errors(form.address) }}
     {{ form_widget(form.address) }}
   </div>
   <div class="d-flex flex-column mt-2">
-    <span class="conceptos-subtitle">FECHA DE NACIMIENTO</span>
+    <span class="conceptos-subtitle pl-2 required">FECHA DE NACIMIENTO</span>
     {{ form_errors(form.birth_date) }}
     {{ form_widget(form.birth_date) }}
   </div>
