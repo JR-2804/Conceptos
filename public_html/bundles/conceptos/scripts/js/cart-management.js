@@ -197,7 +197,9 @@ $(document).ready(function() {
   function UpdateDeliveryIconsState() {
     products.forEach(function(product) {
       var selector = '.shop-cart-product[data-product="' + product.id + '"]';
-      if (product.offerExists) {
+      if (product.type) {
+        HideBothIcons(selector);
+      } else if (product.offerExists) {
         HideBothIcons(selector);
         if (product.storeCount) {
           $(selector + " .conceptos-in-store-product-badge").show();

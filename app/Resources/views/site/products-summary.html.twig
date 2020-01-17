@@ -1,5 +1,5 @@
 {% for product in shopCartProducts %}
-  <div class="d-flex shop-cart-product p-2 {% if loop.index > 1 %}mt-2{% endif %} {% if product.offerExists %}popular_product{% endif %}"
+  <div class="d-flex shop-cart-product p-2 {% if loop.index > 1 %}mt-2{% endif %} {% if product.offerExists is defined and product.offerExists %}popular_product{% endif %}"
       data-product="{{product.id}}"
       data-uuid="{{ product.uuid }}"
       data-calculate-price-path="{{ path('calculate_product_price') }}"
@@ -33,7 +33,7 @@
           <div class="d-flex align-items-center">
             <button type="button" class="cart-quantity-up" src="{{ asset('bundles/conceptos/images/cart/plus.png') }}"></button>
             <button type="button" class="cart-quantity-down ml-1" src="{{ asset('bundles/conceptos/images/cart/minus.png') }}"></button>
-            <input type="number" class="conceptos-product-info cart-quantity-input ml-2" data-quantity="{{product.count}}" data-store-count="{{product.storeCount}}" value="{{product.count}}">
+            <input type="number" class="conceptos-product-info cart-quantity-input ml-2" data-quantity="{{product.count}}" value="{{product.count}}">
           </div>
           <button type="button" class="shop-cart-trash mr-1"></button>
         </div>
