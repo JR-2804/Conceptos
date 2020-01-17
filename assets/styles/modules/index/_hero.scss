@@ -33,10 +33,15 @@
         &__title{
             & h1{
                 color: $mainDark;
-                text-transform: uppercase;
                 font-size: 1.75em;
                 font-weight: 700;
             }
+
+            & h2{
+              color: $mainDark;
+              font-size: 1em;
+              font-weight: 700;
+          }
         }
 
         &__btn{
