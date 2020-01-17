@@ -121,6 +121,14 @@
       <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-offers.png') }}">
       <a class="conceptos-category-title" href="{{ path('products', {inOffer:true}) }}">OFERTAS</a>
     </div>
+    <div class="d-flex align-items-center mt-3">
+      <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-offers.png') }}">
+      <a class="conceptos-category-title" href="{{ path('products', {inStore:true}) }}">ALMACÉN</a>
+    </div>
+    <div class="d-flex align-items-center mt-3">
+      <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-offers.png') }}">
+      <a class="conceptos-category-title" href="{{ path('products', {recent:true}) }}">NOVEDADES</a>
+    </div>
     {% for category in categories %}
       {% if category.parents | length == 0 %}
         {% set subCategories = '' %}

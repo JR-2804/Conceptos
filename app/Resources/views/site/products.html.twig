@@ -10,9 +10,9 @@
 {% block body %}
   <form action="{{ path('products') }}" method="get">
     <input type="hidden" value="{{ app.request.query.get('term') }}" id="term" name="term">
-    <input type="hidden" value="{{ app.request.query.get('inOffer') }}" id="inOffer">
-    <input type="hidden" value="{{ app.request.query.get('recent') }}" id="recent">
-    <input type="hidden" value="{{ app.request.query.get('inStore') }}" id="inStore">
+    <input type="hidden" value="{{ app.request.query.get('inOffer', -1) }}" id="inOffer" name="inOffer">
+    <input type="hidden" value="{{ app.request.query.get('recent', -1) }}" id="recent" name="recent">
+    <input type="hidden" value="{{ app.request.query.get('inStore', -1) }}" id="inStore" name="inStore">
     <input type="hidden" value="{{ app.request.query.get('categories') }}" id="categories" name="categories">
     <input type="hidden" value="{{ app.request.query.get('color') }}" id="color">
     <input type="hidden" value="{{ app.request.query.get('material') }}" id="material">
