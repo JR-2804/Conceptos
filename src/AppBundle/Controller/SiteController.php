@@ -672,7 +672,7 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="empty_shop_car", path="/carrito-compras/vaciar")
+     * @Route(name="empty_shop_cart", path="/carrito-compras/vaciar")
      *
      * @param Request $request
      *

@@ -26,6 +26,9 @@
             <span class="conceptos-badge-text">PRECIO</span>
             <span class="conceptos-badge-text shop-cart-total-price"></span>
           </div>
+          <div class="d-flex flex-column justify-content-center align-items-center m-2">
+            <a class="conceptos-remove-all-icon" href="{{ path('empty_shop_cart') }}"></a>
+          </div>
         </div>
       </div>
       {% if shopCartProducts|length > 0 %}

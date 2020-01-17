@@ -96,9 +96,11 @@
               <span class="conceptos-badge-text">PRECIO</span>
               <span class="conceptos-badge-text shop-cart-total-price"></span>
             </div>
-            <div class="d-flex flex-column justify-content-center align-items-center m-2">
-              <a class="conceptos-go-to-cart-icon" href="{{ path('shop-cart') }}">
-              </a>
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <a class="conceptos-remove-all-icon" href="{{ path('empty_shop_cart') }}"></a>
+            </div>
+            <div class="d-flex flex-column justify-content-center align-items-center mr-2">
+              <a class="conceptos-go-to-cart-icon" href="{{ path('shop-cart') }}"></a>
             </div>
           </div>
         </div>
