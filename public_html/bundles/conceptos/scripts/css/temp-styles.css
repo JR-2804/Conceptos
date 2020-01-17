@@ -128,7 +128,7 @@ textarea {
 /* -------------------------------------------------------- */
 
 .navbar .navbar-toggler {
-  top: 27px !important;
+  top: 24px !important;
 }
 
 #cartPreviewModal .modal-body {
@@ -143,6 +143,7 @@ textarea {
 
 .conceptos-navbar {
   background-color: #282827 !important;
+  min-height: 65px !important;
 }
 
 .conceptos-navbar #navbarSupportedContent {
@@ -510,7 +511,7 @@ a.conceptos-category-subtitle:focus {
 
 .conceptos-navbar-icon {
   position: absolute;
-  top: 24px;
+  top: 19px;
   right: 50px;
   border: none;
   background: none;
