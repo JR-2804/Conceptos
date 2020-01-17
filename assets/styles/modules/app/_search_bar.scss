@@ -2,9 +2,9 @@
     position: fixed;
     z-index: 3;
     width: 100%;
-    border: 1px $mainDark solid;
+    border: none;
     padding: 0;
-
+    z-index: 100;
 
     & form{
         width: 100%;
@@ -16,7 +16,6 @@
         & input[type='text'] {
             width: 100%;
             padding: .75em;
-            opacity: 90%;
             background-color: #ffffff;
             margin: 0;
             height: auto;
