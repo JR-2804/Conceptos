@@ -624,6 +624,16 @@ a.conceptos-category-subtitle:focus {
   outline: none;
 }
 
+.conceptos-primary-button[disabled="disabled"] {
+  border: 1px solid #282827;
+}
+
+.conceptos-primary-button[disabled="disabled"]:focus,
+.conceptos-primary-button[disabled="disabled"]:hover {
+  background-color: transparent;
+  outline: none;
+}
+
 .conceptos-primary-button-gray {
   background-color: transparent;
   border: 1px solid #282827;
