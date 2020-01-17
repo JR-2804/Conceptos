@@ -127,8 +127,10 @@
       {% set image = page.data.newImage.path %}
     {% elseif generalHeader %}
       {% set image = page.data.generalImage.path %}
-    {% else %}
+    {% elseif not mainSubcategory %}
       {% set image = vich_uploader_asset(mainCategory, 'imageSiteFile') %}
+    {% else %}
+      {% set image = vich_uploader_asset(mainSubcategory, 'imageSiteFile') %}
     {% endif%}
     <div>
       <img class="conceptos-image conceptos-header-image" src="{{ image }}">

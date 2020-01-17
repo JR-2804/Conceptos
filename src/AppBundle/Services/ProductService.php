@@ -286,8 +286,17 @@ class ProductService
             $qbProduct->setParameter('categories', $category);
             $qbProductCount->setParameter('categories', $category);
 
-            $mainSubcategory = $this->categoryRepository->find($category[0]);
-            $mainCategory = $mainSubcategory->getParents()[0];
+            $count = 0;
+            foreach ($category as $c) {
+              $count = $count + 1;
+            }
+
+            if ($count > 1) {
+              $mainCategory = $this->categoryRepository->find($category[0])->getParents()[0];
+            } else {
+              $mainSubcategory = $this->categoryRepository->find($category[0]);
+              $mainCategory = $mainSubcategory->getParents()[0];
+            }
         }
         if (-1 != $populars) {
           if ($hasWhere) {
