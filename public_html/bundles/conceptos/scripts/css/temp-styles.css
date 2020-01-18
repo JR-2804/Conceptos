@@ -425,6 +425,7 @@ a.conceptos-subtitle:focus {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  min-height: 30px;
 }
 
 .conceptos-blog-summary {
