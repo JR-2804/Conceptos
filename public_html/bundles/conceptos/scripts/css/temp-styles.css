@@ -300,6 +300,10 @@ a.conceptos-title:focus {
   outline: none;
 }
 
+.conceptos-title i {
+  font-size: 18px;
+}
+
 .conceptos-title-strong {
   font-family: Montserrat-ExtraBold;
   font-weight: bolder;
