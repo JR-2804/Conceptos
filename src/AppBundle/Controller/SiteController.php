@@ -1259,15 +1259,21 @@ class SiteController extends Controller
           ];
         }
 
+        $inStore = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findBy([
+            'inStore' => true,
+        ], null, 3);
+
         $body = $this->renderView(':site:request-email.html.twig', [
             'request' => $requestDB,
             'home' => $home,
+            'inStore' => $inStore,
             'products' => $productsResponse,
             'membership' => $membership,
             'forClient' => false,
         ]);
         $bodyClient = $this->renderView(':site:request-email.html.twig', [
             'request' => $requestDB,
+            'inStore' => $inStore,
             'home' => $home,
             'products' => $productsResponse,
             'membership' => $membership,
@@ -1277,6 +1283,7 @@ class SiteController extends Controller
 //        TODO: pasar la variable del los productos de oferta
 //         return $this->render(':site:request-email.html.twig', [
 //             'request' => $requestDB,
+//             'inStore' => $inStore,
 //             'home' => $home,
 //             'products' => $productsResponse,
 //             'membership' => $membership,
