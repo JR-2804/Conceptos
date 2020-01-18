@@ -330,21 +330,13 @@ class ProductService
         }
         if (-1 != $inOffer) {
             $qbProduct->leftJoin('p.offers', 'o');
-            $qbProduct->leftJoin('p.categories', 'pc');
-            $qbProduct->leftJoin('pc.offers', 'pco');
-            $qbProduct->leftJoin('pc.parents', 'pcp');
-            $qbProduct->leftJoin('pcp.offers', 'pcpo');
             $qbProductCount->leftJoin('p.offers', 'o');
-            $qbProductCount->leftJoin('p.categories', 'pc');
-            $qbProductCount->leftJoin('pc.offers', 'pco');
-            $qbProductCount->leftJoin('pc.parents', 'pcp');
-            $qbProductCount->leftJoin('pcp.offers', 'pcpo');
             if ($hasWhere) {
-                $qbProduct->andWhere('(o.startDate <= :current AND o.endDate >= :current) OR (pco.startDate <= :current AND pco.endDate >= :current) OR (pcpo.startDate <= :current AND pcpo.endDate >= :current)');
-                $qbProductCount->andWhere('(o.startDate <= :current AND o.endDate >= :current) OR (pco.startDate <= :current AND pco.endDate >= :current) OR (pcpo.startDate <= :current AND pcpo.endDate >= :current)');
+                $qbProduct->andWhere('(o.startDate <= :current AND o.endDate >= :current)');
+                $qbProductCount->andWhere('(o.startDate <= :current AND o.endDate >= :current)');
             } else {
-                $qbProduct->where('(o.startDate <= :current AND o.endDate >= :current) OR (pco.startDate <= :current AND pco.endDate >= :current) OR (pcpo.startDate <= :current AND pcpo.endDate >= :current)');
-                $qbProductCount->where('(o.startDate <= :current AND o.endDate >= :current) OR (pco.startDate <= :current AND pco.endDate >= :current) OR (pcpo.startDate <= :current AND pcpo.endDate >= :current)');
+                $qbProduct->where('(o.startDate <= :current AND o.endDate >= :current)');
+                $qbProductCount->where('(o.startDate <= :current AND o.endDate >= :current)');
             }
             $qbProduct->setParameter('current', new \DateTime(), Type::DATE);
             $qbProductCount->setParameter('current', new \DateTime(), Type::DATE);
