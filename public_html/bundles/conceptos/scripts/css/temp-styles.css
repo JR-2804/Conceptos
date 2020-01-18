@@ -128,7 +128,7 @@ textarea {
 /* -------------------------------------------------------- */
 
 .navbar .navbar-toggler {
-  top: 27px !important;
+  top: 24px !important;
 }
 
 #cartPreviewModal .modal-body {
@@ -143,6 +143,7 @@ textarea {
 
 .conceptos-navbar {
   background-color: #282827 !important;
+  min-height: 65px !important;
 }
 
 .conceptos-navbar #navbarSupportedContent {
@@ -299,6 +300,10 @@ a.conceptos-title:focus {
   outline: none;
 }
 
+.conceptos-title i {
+  font-size: 18px;
+}
+
 .conceptos-title-strong {
   font-family: Montserrat-ExtraBold;
   font-weight: bolder;
@@ -385,6 +390,10 @@ a.conceptos-subtitle:focus {
   font-size: 14px;
 }
 
+.conceptos-product-price-big {
+  font-size: 20px;
+}
+
 .conceptos-offer-product-badge {
   font-family: Montserrat;
   font-size: 11px;
@@ -416,6 +425,7 @@ a.conceptos-subtitle:focus {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  min-height: 30px;
 }
 
 .conceptos-blog-summary {
@@ -508,9 +518,14 @@ a.conceptos-category-subtitle:focus {
   height: 23px;
 }
 
+.conceptos-add-to-cart-icon-big img {
+  width: 40px;
+  height: 33px;
+}
+
 .conceptos-navbar-icon {
   position: absolute;
-  top: 24px;
+  top: 19px;
   right: 50px;
   border: none;
   background: none;
@@ -575,8 +590,8 @@ a.conceptos-category-subtitle:focus {
 
 .conceptos-remove-all-icon {
   border: none;
-  width: 47px;
-  height: 45px;
+  width: 37px;
+  height: 35px;
   background-color: transparent;
   background-image: url("../../images/home/remove-all-icon.png");
   background-size: cover;

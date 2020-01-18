@@ -249,11 +249,11 @@
                     <img class="conceptos-image conceptos-in-store-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
                     <div class="d-flex justify-content-between align-items-center">
                       {% if priceOffer != -1 %}
-                        <span class="conceptos-product-info conceptos-product-price mt-1">$&nbsp;{{priceOffer}}</span>
+                        <span class="conceptos-product-info conceptos-product-price-big mt-1">$&nbsp;{{priceOffer}}</span>
                       {% else %}
-                        <span class="conceptos-product-info conceptos-product-price mt-1">$&nbsp;{{product.price}}</span>
+                        <span class="conceptos-product-info conceptos-product-price-big mt-1">$&nbsp;{{product.price}}</span>
                       {% endif %}
-                      <button class="conceptos-add-to-cart-icon pr-0" data-path="{{ path('add_shop_card', {id: product.id}) }}">
+                      <button class="conceptos-add-to-cart-icon conceptos-add-to-cart-icon-big pr-0" data-path="{{ path('add_shop_card', {id: product.id}) }}">
                         <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
                       </button>
                     </div>
@@ -307,11 +307,11 @@
                         <img class="conceptos-image conceptos-in-store-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
                         <div class="d-flex justify-content-between align-items-center conceptos-white-background p-2" style="width: 300px;">
                           {% if priceOffer != -1 %}
-                            <span class="conceptos-product-info conceptos-product-price mt-1">$&nbsp;{{priceOffer}}</span>
+                            <span class="conceptos-product-info conceptos-product-price-big mt-1">$&nbsp;{{priceOffer}}</span>
                           {% else %}
-                            <span class="conceptos-product-info conceptos-product-price mt-1">$&nbsp;{{product.price}}</span>
+                            <span class="conceptos-product-info conceptos-product-price-big mt-1">$&nbsp;{{product.price}}</span>
                           {% endif %}
-                          <button class="conceptos-add-to-cart-icon pr-0" data-path="{{ path('add_shop_card', {id: product.id}) }}">
+                          <button class="conceptos-add-to-cart-icon conceptos-add-to-cart-icon-big pr-0" data-path="{{ path('add_shop_card', {id: product.id}) }}">
                             <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
                           </button>
                         </div>
@@ -347,7 +347,9 @@
     <div class="d-flex d-lg-none flex-column align-items-center m-3">
       {% if page.data.services.image is defined %}
         <div class="d-flex align-items-center conceptos-white-background p-2">
-          <img class="conceptos-image" src="{{ page.data.services.image.path }}">
+          <a href="{{ path('services') }}">
+            <img class="conceptos-image" src="{{ page.data.services.image.path }}">
+          </a>
         </div>
       {% endif %}
       {% if page.data.services.title is defined %}

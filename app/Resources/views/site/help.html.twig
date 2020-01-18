@@ -7,9 +7,14 @@
     <div class="d-flex flex-column conceptos-white-background p-2">
       <img class="conceptos-image conceptos-header-image mt-2" src="{{ page.data.header.image.path }}">
       {% for faq in page.data.faqs %}
-        <div class="d-flex flex-column mt-2" role="tab">
-          <div id="{{loop.index}}heading">
-            <a class="conceptos-title" data-toggle="collapse" data-target="#{{loop.index}}" href="javascript:void(0);">{{faq.question|raw}}</a>
+        <div class="d-flex flex-column mt-3" role="tab">
+          <div id="{{loop.index}}heading" class="d-flex justify-content-between align-items-center">
+            <a class="conceptos-title mr-2 w-100" data-toggle="collapse" data-target="#{{loop.index}}" href="javascript:void(0);">
+              <div class="d-flex justify-content-between align-items-center">
+                {{faq.question|raw}}
+                <i class="fa fa-angle-down ml-2"></i>
+              </div>
+            </a>
           </div>
           <div id="{{loop.index}}" class="collapse {% if loop.index == 0 %}show{% endif %}" role="tabpanel">
             <span class="conceptos-subtitle ml-2">{{faq.answer|raw}}</span>
