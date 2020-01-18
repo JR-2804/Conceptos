@@ -86,7 +86,7 @@
       <div class="d-flex flex-column p-2">
         <span class="conceptos-title">DETALLES DEL PRODUCTO</span>
         <span class="conceptos-subtitle">CÓDIGO: {{product.code}}</span>
-        {% if product.storeCount %}
+        {% if product.storeCount and product.storeCount > 0 %}
           <span class="conceptos-subtitle">
             Disponibles en almacén: {{product.storeCount}}
           </span>

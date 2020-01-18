@@ -201,10 +201,10 @@ $(document).ready(function() {
         HideBothIcons(selector);
       } else if (product.offerExists) {
         HideBothIcons(selector);
-        if (product.storeCount) {
+        if (product.storeCount && product.storeCount > 0) {
           $(selector + " .conceptos-in-store-product-badge").show();
         }
-      } else if (product.storeCount) {
+      } else if (product.storeCount && product.storeCount > 0) {
         HideBothIcons(selector);
         $(selector + " .conceptos-in-store-product-badge").show();
       } else if (!product.isFurniture && !product.isMattress) {
