@@ -180,9 +180,9 @@
     {% if products is not empty and countProducts > 50 %}
       <input type="hidden" value="{{ app.request.query.get('page', 1) }}" id="page" name="page">
       <div class="product-paginator mt-3">
-        {% set pageP = app.request.query.get('page') %}
+        {% set pageP = app.request.query.get('page', -1) %}
         <div class="d-flex justify-content-center align-items-center">
-          <button class="conceptos-primary-button pagination-prev mr-3" type="submit" {% if pageP == 1 %}disabled="disabled"{% endif %}>
+          <button class="conceptos-primary-button pagination-prev mr-3" type="submit" {% if pageP <= 1 %}disabled="disabled"{% endif %}>
             Anterior
           </button>
           <button class="conceptos-primary-button pagination-next ml-3" type="submit" {% if products | length < 48 %}disabled="disabled"{% endif %}>
