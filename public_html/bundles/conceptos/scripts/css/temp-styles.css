@@ -386,6 +386,10 @@ a.conceptos-subtitle:focus {
   font-size: 14px;
 }
 
+.conceptos-product-price-big {
+  font-size: 20px;
+}
+
 .conceptos-offer-product-badge {
   font-family: Montserrat;
   font-size: 11px;
@@ -507,6 +511,17 @@ a.conceptos-category-subtitle:focus {
 .conceptos-add-to-cart-icon img {
   width: 30px;
   height: 23px;
+}
+
+.conceptos-add-to-cart-icon-big {
+  border: none;
+  background: none;
+  outline: none !important;
+}
+
+.conceptos-add-to-cart-icon-big img {
+  width: 40px;
+  height: 33px;
 }
 
 .conceptos-navbar-icon {

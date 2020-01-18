@@ -20,14 +20,16 @@
             {% endfor %}
           {% endfor %}
         </div>
-        <div class="d-flex">
-          <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" href="#carousel-product-details">
-            <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-          </a>
-          <a class="carousel-control carousel-control-next" role="button" data-slide="next" href="#carousel-product-details">
-            <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-          </a>
-        </div>
+        {% if count > 1 %}
+          <div class="d-flex">
+            <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" href="#carousel-product-details">
+              <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+            </a>
+            <a class="carousel-control carousel-control-next" role="button" data-slide="next" href="#carousel-product-details">
+              <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+            </a>
+          </div>
+        {% endif %}
       </div>
       <div class="d-flex flex-column p-2">
         {% set priceOffer = -1 %}
@@ -57,15 +59,20 @@
         {% endif %}
         <span class="conceptos-title-strong">{{product.name}}</span>
         <span class="conceptos-subtitle">{{product.item}}</span>
-        <div class="d-flex align-items-center">
-          {% if priceOffer != -1 %}
-            <span class="conceptos-product-info conceptos-product-price mr-2">${{priceOffer}}</span>
-            <span class="conceptos-product-info conceptos-offer-price">$&nbsp;{{product.price}}</span>
-          {% else %}
-            <span class="conceptos-product-info conceptos-product-price">$&nbsp;{{product.price}}</span>
-          {% endif %}
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex">
+            {% if priceOffer != -1 %}
+              <span class="conceptos-product-info conceptos-product-price-big mr-2">${{priceOffer}}</span>
+              <span class="conceptos-product-info conceptos-offer-price">$&nbsp;{{product.price}}</span>
+            {% else %}
+              <span class="conceptos-product-info conceptos-product-price-big">$&nbsp;{{product.price}}</span>
+            {% endif %}
+          </div>
+          <button class="conceptos-add-to-cart-icon-big" data-path="{{ path('add_shop_card', {id: product.id}) }}">
+            <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
+          </button>
         </div>
-        <div class="d-flex justify-content-between align-items-center mt-1">
+        <div class="d-flex justify-content-start align-items-center mt-1">
           <div class="d-flex flex-column">
             {% if product.inStore %}
               <span class="conceptos-in-store-product-badge">ALMACÉN</span>
@@ -74,9 +81,6 @@
               <span class="conceptos-new-product-badge">NUEVO</span>
             {% endif %}
           </div>
-          <button class="conceptos-add-to-cart-icon" data-path="{{ path('add_shop_card', {id: product.id}) }}">
-            <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
-          </button>
         </div>
       </div>
       <div class="d-flex flex-column p-2">
