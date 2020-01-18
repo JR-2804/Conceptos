@@ -125,7 +125,7 @@ class SiteController extends Controller
         if (!$inStoreHighlight) {
           $inStoreHighlight = $inStore[count($inStore) - 1];
         }
-        if (!$lastedHighlight) {
+        if (!$lastedHighlight and count($lasted) > 0) {
           $lastedHighlight = $lasted[count($lasted) - 1];
         }
 
