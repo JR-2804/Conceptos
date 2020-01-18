@@ -5,9 +5,9 @@
     {% if csrf_token %}
       <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
     {% endif %}
-    <span class="conceptos-subtitle mt-2">USUARIO</span>
+    <span class="conceptos-subtitle mt-2 required pl-2">USUARIO</span>
     <input type="text" name="_username" id="username" required autofocus>
-    <span class="conceptos-subtitle mt-2">CONTRASEÑA</span>
+    <span class="conceptos-subtitle mt-2 required pl-2">CONTRASEÑA</span>
     <input type="password" name="_password" id="password" required>
     <button type="submit" class="conceptos-primary-button align-self-start mt-2">ACCEDER</button>
   </form>

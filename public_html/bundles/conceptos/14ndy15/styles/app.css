@@ -142,6 +142,19 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
   -webkit-animation: zoomIn 2.5s ease-in 10;
           animation: zoomIn 2.5s ease-in 10; }
 
+.required {
+  position: relative; }
+
+.required:before {
+    position: absolute;
+    content: '*';
+    top: 0;
+    left: 0;
+    width: .25em;
+    height: .25em;
+    font-size: 1.25em;
+    color: red; }
+
 .conceptos-offer-price {
   position: relative;
   font-size: 12px; }
