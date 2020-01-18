@@ -65,10 +65,13 @@
             <div class="d-flex flex-column mt-3">
               <span class="conceptos-title">MEMBRESÍA</span>
               <div class="d-flex conceptos-relative">
+                <div style="position: relative; width: 100%">
                 <input id="shop-cart-member-number" class="w-100" type="text" placeholder="Código de miembro" />
                 <img class="conceptos-icon conceptos-request-success-icon" src="{{ asset('bundles/conceptos/images/home/request-success.png') }}">
                 <img class="conceptos-icon conceptos-request-error-icon" src="{{ asset('bundles/conceptos/images/home/request-error.png') }}">
                 <img class="conceptos-icon conceptos-request-loading-icon" src="{{ asset('bundles/conceptos/images/home/request-loading.png') }}">
+                </div>
+                <button class="custom_btn">Check</button>
               </div>
             </div>
           </div>
@@ -120,23 +123,23 @@
             <input type="hidden" name="paymentCurrency" id="paymentCurrency">
             <input type="hidden" name="products" id="products">
             <div class="d-flex flex-column mt-2">
-              <span class="conceptos-subtitle">Nombre</span>
+              <span class="conceptos-subtitle pl-2 required">Nombre</span>
               {{ form_widget(form.name, {'attr': {'class': 'w-100', 'required': 'true'}}) }}
             </div>
             <div class="d-flex flex-column mt-2">
-              <span class="conceptos-subtitle">Correo</span>
+              <span class="conceptos-subtitle  pl-2 required">Correo</span>
               {{ form_widget(form.email, {'attr': {'class': 'w-100', 'required': 'true'}}) }}
             </div>
             <div class="d-flex flex-column mt-2">
-              <span class="conceptos-subtitle">Dirección</span>
+              <span class="conceptos-subtitle  pl-2 required">Dirección</span>
               {{ form_widget(form.address, {'attr': {'class': 'w-100', 'required': 'true'}}) }}
             </div>
             <div class="d-flex flex-column mt-2">
-              <span class="conceptos-subtitle">Teléfono de casa</span>
+              <span class="conceptos-subtitle pl-2 required">Teléfono de casa</span>
               {{ form_widget(form.phone, {'attr': {'class': 'w-100'}}) }}
             </div>
             <div class="d-flex flex-column mt-2">
-              <span class="conceptos-subtitle">Teléfono Movil</span>
+              <span class="conceptos-subtitle pl-2 required">Teléfono Movil</span>
               {{ form_widget(form.movil, {'attr': {'class': 'w-100'}}) }}
             </div>
             <div class="d-flex align-items-center">
