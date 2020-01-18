@@ -68,7 +68,7 @@
               <span class="conceptos-product-info conceptos-product-price-big">$&nbsp;{{product.price}}</span>
             {% endif %}
           </div>
-          <button class="conceptos-add-to-cart-icon-big" data-path="{{ path('add_shop_card', {id: product.id}) }}">
+          <button class="conceptos-add-to-cart-icon conceptos-add-to-cart-icon-big" data-path="{{ path('add_shop_card', {id: product.id}) }}">
             <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
           </button>
         </div>
