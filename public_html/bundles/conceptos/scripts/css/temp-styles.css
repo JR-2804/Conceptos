@@ -300,8 +300,22 @@ a.conceptos-title:focus {
   outline: none;
 }
 
-.conceptos-title i {
+a.conceptos-title i,
+a.conceptos-title i {
+  outline: none;
+  transform: rotate(180deg);
+}
+
+a.conceptos-title.collapsed i {
   font-size: 18px;
+  transition: all 300ms linear;
+  transform: rotate(0);
+}
+
+a.conceptos-title:hover i,
+a.conceptos-title:focus i {
+  color: #c2b930;
+  outline: none;
 }
 
 .conceptos-title-strong {
