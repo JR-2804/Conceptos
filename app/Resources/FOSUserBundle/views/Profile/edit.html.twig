@@ -14,4 +14,21 @@
 {% block js %}
     <script src="{{ asset('bundles/conceptos/libs/dropzone/dropzone.js') }}"></script>
     <script src="{{ asset('bundles/conceptos/scripts/js/edit-profile.js') }}"></script>
+    <script>
+      {% if showSuccessToast is defined and showSuccessToast == true %}
+        $.toast({
+          text: 'Perfil edidado correctamente',
+          showHideTransition: "fade",
+          bgColor: "#c2b930",
+          textColor: "#3f3c03",
+          allowToastClose: true,
+          hideAfter: 3000,
+          stack: 5,
+          textAlign: "center",
+          position: "mid-center",
+          icon: "success",
+          heading: "Correcto"
+        });
+      {% endif %}
+    </script>
 {% endblock %}
