@@ -29,7 +29,8 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 .conceptos-header-image {
   height: auto;
   -o-object-fit: cover;
-     object-fit: cover; }
+     object-fit: cover;
+  max-height: 75vh; }
 
 .search_bar {
   position: fixed;

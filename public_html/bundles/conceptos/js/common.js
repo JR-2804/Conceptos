@@ -71,25 +71,30 @@ $(document).ready(function() {
   });
 
   $("#open-categories-menu").click(function() {
-    var categoriesMenu = $("#categories-menu");
-    categoriesMenu.css("right", "20%");
-    categoriesMenu.css("left", "0");
+    $("#categories-menu").addClass("categories-menu-open");
+    $("#categories-menu").removeClass("categories-menu-closed");
     $("#close-categories-menu").show();
 
     var position = window.scrollY;
     document.body.style.position = "fixed";
-    document.body.style.top = `-${position}px`;
+    document.body.style.top =
+      document.querySelector(".navbar").clientHeight +
+      document.querySelector(".search_bar").clientHeight -
+      position +
+      "px";
   });
 
   $("#close-categories-menu").click(function() {
-    var categoriesMenu = $("#categories-menu");
-    categoriesMenu.css("right", "100%");
-    categoriesMenu.css("left", "-100%");
+    $("#categories-menu").addClass("categories-menu-closed");
+    $("#categories-menu").removeClass("categories-menu-open");
     $("#close-categories-menu").hide();
 
     const scrollY = document.body.style.top;
     document.body.style.position = "";
-    document.body.style.top = "";
+    document.body.style.top =
+      document.querySelector(".navbar").clientHeight +
+      document.querySelector(".search_bar").clientHeight +
+      "px";
     window.scrollTo(0, parseInt(scrollY || "0") * -1);
   });
 

@@ -1711,11 +1711,11 @@ class SiteController extends Controller
                 $offerDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')->find($productDB->getOffers()[0]);
               }
 
+              $categories = [];
               if ($offerDB) {
                 $price = $offerDB->getPrice();
                 $offerExists = true;
               } else {
-                $categories = [];
                 foreach ($productDB->getCategories() as $category) {
                   $categories[] = $category->getId();
 

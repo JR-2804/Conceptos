@@ -128,7 +128,6 @@ easy_admin:
                 actions:
                     - {name: 'show'}
                     - {name: 'new', label: 'Nuevo Pedido'}
-                    - {name: 'print_request', type: 'route', label: 'Exportar' }
                 fields:
                     - id
                     - {property: 'date', label: 'Fecha', format: 'd/m/Y'}
@@ -212,7 +211,6 @@ easy_admin:
                 actions:
                     - {name: 'show'}
                     - {name: 'new', label: 'Nueva Factura'}
-                    - {name: 'print_facture', type: 'route', label: 'Exportar' }
                 fields:
                     - id
                     - {property: 'date', label: 'Fecha', format: 'd/m/Y'}

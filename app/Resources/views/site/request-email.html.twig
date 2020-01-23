@@ -842,6 +842,7 @@
                                   </tr>
                                   {% for product in products %}
                                   <tr>
+                                    {% if product.product is defined %}
                                     <td>
 
                                       <img align="center" alt="Image" border="0" class="center landy fixedwidth"
@@ -864,7 +865,7 @@
                                         <strong>$&nbsp;{{product.price}}</strong>
                                       {% endif %}
                                     </td>
-
+                                    {% endif %}
                                   </tr>
                                   {% endfor %}
                                   </tbody>
