@@ -318,19 +318,11 @@
 <script>
   $(document).ready(function() {
     $("#conceptos-contact-form").height($("#conceptos-contact-form .conceptos-image").height());
-
     $("#shop-cart-contact-form").height($("#shop-cart-contact-form .conceptos-image").height());
 
-    // var marginTop = $(".navbar.navbar-dropdown").css("height");
-    var marginTop = 117;
-    // $("body").css("padding-top", marginTop);
-    //
-    //
-    // $(".conceptos-navbar #navbarSupportedContent").css("top", marginTop);
-    // $("#categories-menu").css("top", marginTop);
-    // $("#cartPreviewModal .modal-dialog").css("top", marginTop);
-    // $("#filterProductsModal .modal-dialog").css("top", marginTop);
-    // $("#conceptos-services-badge").css("top", marginTop);
+    {% if displayLoginError %}
+      $("#loginModal").modal();
+    {% endif %}
   });
 </script>
 <script>

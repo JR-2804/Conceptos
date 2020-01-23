@@ -43,6 +43,8 @@ class SiteController extends Controller
     {
         $currentDate = new \DateTime();
 
+        $displayLoginError = $request->query->get('displayLoginError', false);
+
         $offers = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')
             ->createQueryBuilder('o')
             ->where('o.startDate <= :date AND o.endDate >= :date')
@@ -155,6 +157,7 @@ class SiteController extends Controller
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
         return $this->render(':site:home.html.twig', [
+            'displayLoginError' => $displayLoginError,
             'offers' => $offers,
             'offersImage' => $offersImage,
             'lasted' => $lasted,

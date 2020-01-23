@@ -981,6 +981,14 @@ a.conceptos-category-subtitle:focus {
   padding-right: 10px;
 }
 
+.invalid-credentials {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 10px;
+  color: #bf1111;
+  text-transform: uppercase;
+}
+
 /* -------------------------------------------------------- */
 
 @media (min-width: 992px) {

@@ -50,6 +50,10 @@ class SecurityController extends Controller
             $error = null; // The value does not come from the security component.
         }
 
+        if ($error != null) {
+          return new RedirectResponse($this->generateUrl('site_home', ['displayLoginError' => true]));
+        }
+
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get($lastUsernameKey);
 
