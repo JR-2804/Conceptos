@@ -60,7 +60,7 @@
 </head>
 <body>
   {% set cupConversionRate = 25 %}
-  <div class="container-fluid p-0">
+  <div class="d-flex flex-column">
     <div class="d-flex header">
       <img class="pl-5 pt-2 pb-2" src="{{ home.data.logo.image.path }}" />
     </div>
@@ -73,38 +73,17 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-12 pl-0">
-          <span>FECHA: {{prefacture.date|date('d/m/Y')}}</span>
-        </div>
+      <div class="d-flex">
+        <span>{{prefacture.date|date('d/m/Y')}}</span>
       </div>
-      <div class="row pt-3">
-        <div class="col-6 pl-0">
-          <span>NOMBRE Y APELLIDOS: {{prefacture.client.name}}</span>
-        </div>
-        <div class="col-6">
-          <span>DIRECCIÓN: {{prefacture.client.address}}</span>
-        </div>
-      </div>
-      <div class="row pt-1">
-        <div class="col-6 pl-0">
-          <span>TELÉFONO: {{prefacture.client.movil ? prefacture.client.movil : prefacture.client.phone}}</span>
-        </div>
-        <div class="col-6">
-          <span>EMAIL: {{prefacture.client.email}}</span>
-        </div>
-      </div>
-      <div class="row pt-3">
-        <div class="col-6 pl-0">
-          <div class="col-12 pl-0">
-            <span>Miembro Comunidad Conceptos: {% if prefacture.client.memberNumber %}Si{% else %}No{% endif %}</span>
-          </div>
-          {% if prefacture.client.memberNumber %}
-            <div class="col-12 pl-0 pt-1">
-              <span>No. de miembro: {{prefacture.client.memberNumber}}</span>
-            </div>
-          {% endif %}
-        </div>
+      <div class="d-flex flex-column">
+        <span>NOMBRE: {{prefacture.client.name}}</span>
+        <span>EMAIL: {{prefacture.client.email}}</span>
+        <span>DIRECCIÓN: {{prefacture.client.address}}</span>
+        <span>TELÉFONO: {{prefacture.client.movil ? prefacture.client.movil : prefacture.client.phone}}</span>
+        {% if prefacture.client.memberNumber %}
+          <span>NÚMERO DE MIEMBRO: {{prefacture.client.memberNumber}}</span>
+        {% endif %}
       </div>
       <div class="row pt-3">
         <table class="table table-bordered">
@@ -192,8 +171,6 @@
     <div class="d-flex justify-content-end footer">
       <div class="d-flex flex-column pr-5 align-items-end">
         <span>www.tiendaconceptos.com</span>
-        <span>comercial@tiendaconceptos.com</span>
-        <span>Teléfono comercial: +5352458380</span>
       </div>
     </div>
   </div>

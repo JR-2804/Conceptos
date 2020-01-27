@@ -267,7 +267,7 @@
       </div>
     </nav>
 
-      <aside class="search_bar">
+      <aside class="search_bar d-flex d-lg-none">
           <form id="home-search-form" action="{{ path('products') }}" method="get">
               <label class="sr-only" for="search_bar_products">Buscar producto</label>
               <input type="text" name="term" id="search_bar_products" placeholder="Buscar productos">
@@ -318,19 +318,14 @@
 <script>
   $(document).ready(function() {
     $("#conceptos-contact-form").height($("#conceptos-contact-form .conceptos-image").height());
-
     $("#shop-cart-contact-form").height($("#shop-cart-contact-form .conceptos-image").height());
 
-    // var marginTop = $(".navbar.navbar-dropdown").css("height");
-    var marginTop = 117;
-    // $("body").css("padding-top", marginTop);
-    //
-    //
-    // $(".conceptos-navbar #navbarSupportedContent").css("top", marginTop);
-    // $("#categories-menu").css("top", marginTop);
-    // $("#cartPreviewModal .modal-dialog").css("top", marginTop);
-    // $("#filterProductsModal .modal-dialog").css("top", marginTop);
-    // $("#conceptos-services-badge").css("top", marginTop);
+    var marginTop = $(".navbar.navbar-dropdown").css("height");
+    $("#conceptos-services-badge").css("top", marginTop);
+
+    {% if displayLoginError is defined and displayLoginError %}
+      $("#loginModal").modal();
+    {% endif %}
   });
 </script>
 <script>

@@ -43,6 +43,8 @@ class SiteController extends Controller
     {
         $currentDate = new \DateTime();
 
+        $displayLoginError = $request->query->get('displayLoginError', false);
+
         $offers = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')
             ->createQueryBuilder('o')
             ->where('o.startDate <= :date AND o.endDate >= :date')
@@ -155,6 +157,7 @@ class SiteController extends Controller
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
         return $this->render(':site:home.html.twig', [
+            'displayLoginError' => $displayLoginError,
             'offers' => $offers,
             'offersImage' => $offersImage,
             'lasted' => $lasted,
@@ -1281,15 +1284,6 @@ class SiteController extends Controller
             'forClient' => true,
         ]);
 
-        return $this->render(':site:request-email.html.twig', [
-            'request' => $requestDB,
-            'inStore' => $inStore,
-            'home' => $home,
-            'products' => $productsResponse,
-            'membership' => $membership,
-            'forClient' => true,
-        ]);
-
 //        TODO: pasar la variable del los productos de oferta
 //         return $this->render(':site:request-email.html.twig', [
 //             'request' => $requestDB,
@@ -1718,11 +1712,11 @@ class SiteController extends Controller
                 $offerDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')->find($productDB->getOffers()[0]);
               }
 
+              $categories = [];
               if ($offerDB) {
                 $price = $offerDB->getPrice();
                 $offerExists = true;
               } else {
-                $categories = [];
                 foreach ($productDB->getCategories() as $category) {
                   $categories[] = $category->getId();
 
