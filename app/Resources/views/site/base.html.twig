@@ -134,30 +134,44 @@
         {% for subCategory in category.subCategories %}
           {% set subCategories = subCategory.id ~ ', '~ subCategories %}
         {% endfor %}
-        {% if category.name == "DECORACIÓN" %}
+        {% if category.name == "PARA ENAMORADOS" %}
+          {% set order = 'order-1' %}
+          {% set categoryIcon = asset('bundles/conceptos/images/home/category-all.png') %}
+        {% elseif category.name == "DECORACIÓN" %}
+          {% set order = 'order-5' %}
           {% set categoryIcon = asset('bundles/conceptos/images/home/category-decoration.png') %}
         {% elseif category.name == "INFANTIL" %}
+          {% set order = 'order-5' %}
           {% set categoryIcon = asset('bundles/conceptos/images/home/category-child.png') %}
         {% elseif category.name == "COCINA" %}
+          {% set order = 'order-5' %}
           {% set categoryIcon = asset('bundles/conceptos/images/home/category-kitchen.png') %}
         {% elseif category.name == "LUMINARIAS" %}
+          {% set order = 'order-5' %}
           {% set categoryIcon = asset('bundles/conceptos/images/home/category-lights.png') %}
         {% elseif category.name == "BAÑO" %}
+          {% set order = 'order-5' %}
           {% set categoryIcon = asset('bundles/conceptos/images/home/category-bathroom.png') %}
         {% elseif category.name == "TEXTILES" %}
+          {% set order = 'order-5' %}
           {% set categoryIcon = asset('bundles/conceptos/images/home/category-cloth.png') %}
         {% elseif category.name == "ORDEN Y ALMACENAMIENTO" %}
+          {% set order = 'order-5' %}
           {% set categoryIcon = asset('bundles/conceptos/images/home/category-store.png') %}
         {% elseif category.name == "COMEDOR" %}
+          {% set order = 'order-5' %}
           {% set categoryIcon = asset('bundles/conceptos/images/home/category-dining-room.png') %}
         {% elseif category.name == "MOBILIARIO" %}
+          {% set order = 'order-2' %}
           {% set categoryIcon = asset('bundles/conceptos/images/home/category-furniture.png') %}
         {% elseif category.name == "MASCOTAS" %}
+          {% set order = 'order-5' %}
           {% set categoryIcon = asset('bundles/conceptos/images/home/category-pets.png') %}
         {% else %}
+          {% set order = 'order-5' %}
           {% set categoryIcon = asset('bundles/conceptos/images/home/category-all.png') %}
         {% endif %}
-        <div class="d-flex flex-column conceptos-parent-category mt-3" role="tab">
+        <div class="d-flex flex-column conceptos-parent-category mt-3 {{order}}" role="tab">
           <div class="d-flex align-items-center conceptos-category-header collapsed" data-toggle="collapse" data-target="#subcategories-{{loop.index}}">
             <img class="conceptos-category-icon mr-2" src="{{categoryIcon}}">
             <div class="d-flex w-100">
