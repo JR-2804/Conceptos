@@ -1274,6 +1274,7 @@ class SiteController extends Controller
             'membership' => $membership,
             'forClient' => false,
         ]);
+
         $bodyClient = $this->renderView(':site:request-email.html.twig', [
             'request' => $requestDB,
             'inStore' => $inStore,
