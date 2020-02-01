@@ -6,15 +6,15 @@
   <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/products.css') }}">
 {% endblock %}
 {% block body %}
-  <div class="d-flex flex-column m-2 m-lg-5 p-2 p-lg-5">
+  <div class="d-flex flex-column m-2 p-2 p-lg-5">
     <div class="d-flex flex-column conceptos-white-background">
-      <div class="carousel" data-ride="carousel" id="carousel-product-details" data-interval="5000">
-        <div class="carousel-inner">
+      <div class="carousel p-lg-5" data-ride="carousel" id="carousel-product-details" data-interval="5000">
+        <div class="carousel-inner pl-5 pr-5">
           {% set count = 0 %}
           {% for imageSet in imageSets %}
             {% for image in imageSet %}
               <div class="carousel-item {% if count == 0 %}active{% endif %}">
-                <img class="conceptos-image" src="{{ vich_uploader_asset(image, 'imageFile') }}">
+                <img src="{{ vich_uploader_asset(image, 'imageFile') }}">
               </div>
               {% set count = count + 1 %}
             {% endfor %}
@@ -22,16 +22,16 @@
         </div>
         {% if count > 1 %}
           <div class="d-flex">
-            <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" href="#carousel-product-details">
+            <a class="carousel-control carousel-control-prev ml-lg-5" role="button" data-slide="prev" href="#carousel-product-details">
               <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
             </a>
-            <a class="carousel-control carousel-control-next" role="button" data-slide="next" href="#carousel-product-details">
+            <a class="carousel-control carousel-control-next mr-lg-5" role="button" data-slide="next" href="#carousel-product-details">
               <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
             </a>
           </div>
         {% endif %}
       </div>
-      <div class="d-flex flex-column p-2">
+      <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5">
         {% set priceOffer = -1 %}
         {% set offerId = 'false' %}
         {% set onlyForMembers = false %}
@@ -83,7 +83,7 @@
           </div>
         </div>
       </div>
-      <div class="d-flex flex-column p-2">
+      <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3">
         <span class="conceptos-title">DETALLES DEL PRODUCTO</span>
         <span class="conceptos-subtitle">CÓDIGO: {{product.code}}</span>
         {% if product.storeCount and product.storeCount > 0 %}
@@ -101,7 +101,9 @@
       <span class="conceptos-title">PRODUCTOS RELACIONADOS</span>
       <div class="d-flex flex-wrap">
         {% for product in related %}
-          {{include('site/components/product-summary.html.twig')}}
+          <div class="d-flex col-6 col-lg-2 pl-0">
+            {{include('site/product-summary-short.html.twig')}}
+          </div>
         {% endfor %}
       </div>
     </div>

@@ -170,7 +170,7 @@ class SiteController extends Controller
             'inStoreDesktop' => array_chunk($inStore, 4),
             'inStoreHighlight' => $inStoreHighlight,
             'popularChunks' => array_chunk($populars, 6),
-            'popularChunksDesktop' => array_chunk($populars, 8),
+            'popularChunksDesktop' => array_chunk($populars, 12),
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'config' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1),

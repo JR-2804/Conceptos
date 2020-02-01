@@ -69,50 +69,9 @@
               {% for chunk in popularChunks %}
                 <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
                   <div class="d-flex flex-wrap">
-                      {% for popular in chunk %}
-                        {% set priceOffer = -1 %}
-                        {% set offerId = 'false' %}
-                        {% set onlyForMembers = false %}
-                        {% for offer in popular.offers %}
-                          {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
-                            {% set priceOffer = offer.price %}
-                            {% set offerId = offer.id %}
-                            {% if offer.onlyForMembers %}
-                              {% set onlyForMembers = true %}
-                            {% endif %}
-                          {% endif %}
-                        {% endfor %}
-                        {% if priceOffer == -1 %}
-                          {% for category in popular.categories %}
-                            {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and popular.inStore)) %}
-                              {% set priceOffer = (popular.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
-                            {% else %}
-                              {% for parentCategory in category.parents %}
-                                {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and popular.inStore)) %}
-                                  {% set priceOffer = (popular.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
-                                {% endif %}
-                              {% endfor %}
-                            {% endif %}
-                          {% endfor %}
-                        {% endif %}
-                        <div class="d-flex col-6 justify-content-center p-2 {% if priceOffer != -1 %}popular_product{% endif %}">
-                          <div class="d-flex align-items-center conceptos-white-background p-2">
-                            <a class="h-100" href="{{ path('product_details', {id: popular.id, name: popular.name}) }}">
-                              <div class="d-flex flex-column justify-content-between h-100">
-                                <img class="conceptos-image conceptos-popular-product-image" src="{{ vich_uploader_asset(popular.mainImage, 'imageFile') }}">
-                                <div class="d-flex justify-content-between align-items-center">
-                                  {% if priceOffer != -1 %}
-                                    <span class="conceptos-product-info conceptos-product-price mt-1">$&nbsp;{{priceOffer}}</span>
-                                  {% else %}
-                                    <span class="conceptos-product-info conceptos-product-price mt-1">$&nbsp;{{popular.price}}</span>
-                                  {% endif %}
-                                  <button class="conceptos-add-to-cart-icon pr-0" data-path="{{ path('add_shop_card', {id: popular.id}) }}">
-                                    <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
-                                  </button>
-                                </div>
-                              </div>
-                            </a>
-                          </div>
+                      {% for product in chunk %}
+                        <div class="d-flex col-6 pl-0">
+                          {{include('site/product-summary-short.html.twig')}}
                         </div>
                       {% endfor %}
                   </div>
@@ -146,50 +105,9 @@
               {% for chunk in popularChunksDesktop %}
                 <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
                   <div class="d-flex flex-wrap">
-                      {% for popular in chunk %}
-                        {% set priceOffer = -1 %}
-                        {% set offerId = 'false' %}
-                        {% set onlyForMembers = false %}
-                        {% for offer in popular.offers %}
-                          {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
-                            {% set priceOffer = offer.price %}
-                            {% set offerId = offer.id %}
-                            {% if offer.onlyForMembers %}
-                              {% set onlyForMembers = true %}
-                            {% endif %}
-                          {% endif %}
-                        {% endfor %}
-                        {% if priceOffer == -1 %}
-                          {% for category in popular.categories %}
-                            {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and popular.inStore)) %}
-                              {% set priceOffer = (popular.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
-                            {% else %}
-                              {% for parentCategory in category.parents %}
-                                {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and popular.inStore)) %}
-                                  {% set priceOffer = (popular.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
-                                {% endif %}
-                              {% endfor %}
-                            {% endif %}
-                          {% endfor %}
-                        {% endif %}
-                        <div class="d-flex col-3 justify-content-center p-3 {% if priceOffer != -1 %}popular_product{% endif %}">
-                          <div class="d-flex align-items-center conceptos-white-background p-2">
-                            <a class="h-100" href="{{ path('product_details', {id: popular.id, name: popular.name}) }}">
-                              <div class="d-flex flex-column justify-content-between h-100">
-                                <img class="conceptos-image conceptos-popular-product-image" src="{{ vich_uploader_asset(popular.mainImage, 'imageFile') }}">
-                                <div class="d-flex justify-content-between align-items-center">
-                                  {% if priceOffer != -1 %}
-                                    <span class="conceptos-product-info conceptos-product-price mt-1">$&nbsp;{{priceOffer}}</span>
-                                  {% else %}
-                                    <span class="conceptos-product-info conceptos-product-price mt-1">$&nbsp;{{popular.price}}</span>
-                                  {% endif %}
-                                  <button class="conceptos-add-to-cart-icon pr-0" data-path="{{ path('add_shop_card', {id: popular.id}) }}">
-                                    <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
-                                  </button>
-                                </div>
-                              </div>
-                            </a>
-                          </div>
+                      {% for product in chunk %}
+                        <div class="d-flex col-2 pl-0">
+                          {{include('site/product-summary-short.html.twig')}}
                         </div>
                       {% endfor %}
                   </div>
@@ -219,45 +137,11 @@
           <div class="carousel" data-ride="carousel" id="carousel-in-store" data-interval="5000">
             <div class="carousel-inner">
               {% for product in inStore %}
-                <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
-                  {% set priceOffer = -1 %}
-                  {% set offerId = 'false' %}
-                  {% set onlyForMembers = false %}
-                  {% for offer in product.offers %}
-                    {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
-                      {% set priceOffer = offer.price %}
-                      {% set offerId = offer.id %}
-                      {% if offer.onlyForMembers %}
-                        {% set onlyForMembers = true %}
-                      {% endif %}
-                    {% endif %}
-                  {% endfor %}
-                  {% if priceOffer == -1 %}
-                    {% for category in product.categories %}
-                      {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and product.inStore)) %}
-                        {% set priceOffer = (product.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
-                      {% else %}
-                        {% for parentCategory in category.parents %}
-                          {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and product.inStore)) %}
-                            {% set priceOffer = (product.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
-                          {% endif %}
-                        {% endfor %}
-                      {% endif %}
-                    {% endfor %}
-                  {% endif %}
-                  <a href="{{ path('product_details', {id: product.id, name: product.name}) }}">
-                    <img class="conceptos-image conceptos-in-store-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
-                    <div class="d-flex justify-content-between align-items-center">
-                      {% if priceOffer != -1 %}
-                        <span class="conceptos-product-info conceptos-product-price-big mt-1">$&nbsp;{{priceOffer}}</span>
-                      {% else %}
-                        <span class="conceptos-product-info conceptos-product-price-big mt-1">$&nbsp;{{product.price}}</span>
-                      {% endif %}
-                      <button class="conceptos-add-to-cart-icon conceptos-add-to-cart-icon-big pr-0" data-path="{{ path('add_shop_card', {id: product.id}) }}">
-                        <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
-                      </button>
-                    </div>
-                  </a>
+                <div class="container-fluid carousel-item p-0 {% if loop.first %}active{% endif %}">
+                  <div class="d-flex">
+                    {% set bigFont = true %}
+                    {{include('site/product-summary-short.html.twig')}}
+                  </div>
                 </div>
               {% endfor %}
             </div>
@@ -278,44 +162,10 @@
                 <div class="carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
                   <div class="d-flex flex-wrap w-100">
                     {% for product in chunk %}
-                      {% set priceOffer = -1 %}
-                      {% set offerId = 'false' %}
-                      {% set onlyForMembers = false %}
-                      {% for offer in product.offers %}
-                        {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
-                          {% set priceOffer = offer.price %}
-                          {% set offerId = offer.id %}
-                          {% if offer.onlyForMembers %}
-                            {% set onlyForMembers = true %}
-                          {% endif %}
-                        {% endif %}
-                      {% endfor %}
-                      {% if priceOffer == -1 %}
-                        {% for category in product.categories %}
-                          {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and product.inStore)) %}
-                            {% set priceOffer = (product.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
-                          {% else %}
-                            {% for parentCategory in category.parents %}
-                              {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and product.inStore)) %}
-                                {% set priceOffer = (product.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
-                              {% endif %}
-                            {% endfor %}
-                          {% endif %}
-                        {% endfor %}
-                      {% endif %}
-                      <a class="d-flex flex-column align-items-center col-3 pl-0" href="{{ path('product_details', {id: product.id, name: product.name}) }}">
-                        <img class="conceptos-image conceptos-in-store-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
-                        <div class="d-flex justify-content-between align-items-center conceptos-white-background p-2" style="width: 300px;">
-                          {% if priceOffer != -1 %}
-                            <span class="conceptos-product-info conceptos-product-price-big mt-1">$&nbsp;{{priceOffer}}</span>
-                          {% else %}
-                            <span class="conceptos-product-info conceptos-product-price-big mt-1">$&nbsp;{{product.price}}</span>
-                          {% endif %}
-                          <button class="conceptos-add-to-cart-icon conceptos-add-to-cart-icon-big pr-0" data-path="{{ path('add_shop_card', {id: product.id}) }}">
-                            <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
-                          </button>
-                        </div>
-                      </a>
+                      <div class="d-flex col-3 pl-0">
+                        {% set bigFont = true %}
+                        {{include('site/product-summary-short.html.twig')}}
+                      </div>
                     {% endfor %}
                   </div>
                 </div>

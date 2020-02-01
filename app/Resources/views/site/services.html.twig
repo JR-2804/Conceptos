@@ -36,9 +36,9 @@
       <div class="d-flex conceptos-badge p-3">
         <span class="conceptos-badge-text">OBRAS REALIZADAS</span>
       </div>
-      <div class="d-flex flex-column pl-3 pr-3 pl-lg-5 pr-lg-5 pb-3">
+      <div class="d-flex flex-wrap pl-3 pr-3 pl-lg-5 pr-lg-5 pb-3">
         {% for image in inward.data.services.projects.projects %}
-        <a class="d-flex flex-column" href="{{ path('project_details', {projectTitle: image.title}) }}">
+        <a class="d-flex flex-column col-6 p-lg-3" href="{{ path('project_details', {projectTitle: image.title}) }}">
           <span class="conceptos-title-strong mt-3">{{image.title}}</span>
           <img class="conceptos-project-image mt-2" src="{{image.path}}">
         </a>
@@ -62,9 +62,9 @@
       <div class="d-flex conceptos-badge p-3">
         <span class="conceptos-badge-text">SERVICIOS REALIZADOS</span>
       </div>
-      <div class="d-flex flex-column pl-3 pr-3 pl-lg-5 pr-lg-5 pb-3">
+      <div class="d-flex flex-wrap pl-3 pr-3 pl-lg-5 pr-lg-5 pb-3">
         {% for image in services.data.services.projects.projects %}
-        <a class="d-flex flex-column" href="{{ path('project_details', {projectTitle: image.title}) }}">
+        <a class="d-flex flex-column col-6 p-lg-3" href="{{ path('project_details', {projectTitle: image.title}) }}">
           <span class="conceptos-title-strong mt-3">{{image.title}}</span>
           <img class="conceptos-project-image mt-2" src="{{image.path}}">
         </a>

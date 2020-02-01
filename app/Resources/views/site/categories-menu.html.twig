@@ -1,0 +1,89 @@
+<div class="d-flex flex-column p-3" role="tablist" aria-multiselectable="false" multiple="false">
+  <div class="d-flex align-items-center">
+    <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-all.png') }}">
+    <a class="conceptos-category-title" href="{{ path('products') }}">TODOS</a>
+  </div>
+  <div class="d-flex align-items-center mt-3">
+    <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-offers.png') }}">
+    <a class="conceptos-category-title" href="{{ path('products', {inOffer:true}) }}">OFERTAS</a>
+  </div>
+  <div class="d-flex align-items-center mt-3">
+    <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-in-store.png') }}">
+    <a class="conceptos-category-title" href="{{ path('products', {inStore:true}) }}">ALMACÉN</a>
+  </div>
+  <div class="d-flex align-items-center mt-3">
+    <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-new.png') }}">
+    <a class="conceptos-category-title" href="{{ path('products', {recent:true}) }}">NOVEDADES</a>
+  </div>
+  {% for category in categories %}
+    {% if category.parents | length == 0 %}
+      {% set subCategories = '' %}
+      {% for subCategory in category.subCategories %}
+        {% set subCategories = subCategory.id ~ ', '~ subCategories %}
+      {% endfor %}
+      {% if category.name == "PARA ENAMORADOS" %}
+        {% set order = 'order-1' %}
+        {% set categoryIcon = asset('bundles/conceptos/images/home/category-all.png') %}
+      {% elseif category.name == "DECORACIÓN" %}
+        {% set order = 'order-5' %}
+        {% set categoryIcon = asset('bundles/conceptos/images/home/category-decoration.png') %}
+      {% elseif category.name == "INFANTIL" %}
+        {% set order = 'order-5' %}
+        {% set categoryIcon = asset('bundles/conceptos/images/home/category-child.png') %}
+      {% elseif category.name == "COCINA" %}
+        {% set order = 'order-5' %}
+        {% set categoryIcon = asset('bundles/conceptos/images/home/category-kitchen.png') %}
+      {% elseif category.name == "LUMINARIAS" %}
+        {% set order = 'order-5' %}
+        {% set categoryIcon = asset('bundles/conceptos/images/home/category-lights.png') %}
+      {% elseif category.name == "BAÑO" %}
+        {% set order = 'order-5' %}
+        {% set categoryIcon = asset('bundles/conceptos/images/home/category-bathroom.png') %}
+      {% elseif category.name == "TEXTILES" %}
+        {% set order = 'order-5' %}
+        {% set categoryIcon = asset('bundles/conceptos/images/home/category-cloth.png') %}
+      {% elseif category.name == "ORDEN Y ALMACENAMIENTO" %}
+        {% set order = 'order-5' %}
+        {% set categoryIcon = asset('bundles/conceptos/images/home/category-store.png') %}
+      {% elseif category.name == "COMEDOR" %}
+        {% set order = 'order-5' %}
+        {% set categoryIcon = asset('bundles/conceptos/images/home/category-dining-room.png') %}
+      {% elseif category.name == "MOBILIARIO" %}
+        {% set order = 'order-2' %}
+        {% set categoryIcon = asset('bundles/conceptos/images/home/category-furniture.png') %}
+      {% elseif category.name == "MASCOTAS" %}
+        {% set order = 'order-5' %}
+        {% set categoryIcon = asset('bundles/conceptos/images/home/category-pets.png') %}
+      {% else %}
+        {% set order = 'order-5' %}
+        {% set categoryIcon = asset('bundles/conceptos/images/home/category-all.png') %}
+      {% endif %}
+      <div class="d-flex flex-column conceptos-parent-category mt-3 {{order}}" role="tab">
+        <div class="d-flex align-items-center conceptos-category-header collapsed" data-toggle="collapse" data-target="#subcategories-{{loop.index}}">
+          <img class="conceptos-category-icon mr-2" src="{{categoryIcon}}">
+          <div class="d-flex w-100">
+            <span class="conceptos-category-title">{{category.name}}</span>
+          </div>
+        </div>
+        <div id="subcategories-{{loop.index}}" class="conceptos-subcategories-panel collapse" role="tabpanel">
+          <div class="d-flex flex-column">
+            {% set subCategories = '' %}
+            {% for subCategory in category.subCategories %}
+                {% set subCategories = subCategory.id ~ ', '~ subCategories %}
+            {% endfor %}
+            <div class="d-flex align-items-center mt-3">
+              <img class="conceptos-category-divider-icon ml-3 mr-1" src="{{asset('bundles/conceptos/images/home/category.png')}}">
+              <a class="conceptos-category-subtitle" href="{{ path('products', {categories:subCategories}) }}">TODOS</a>
+            </div>
+            {% for subCategory in category.subCategories %}
+              <div class="d-flex align-items-center mt-3">
+                <img class="conceptos-category-divider-icon ml-3 mr-1" src="{{asset('bundles/conceptos/images/home/category.png')}}">
+                <a class="conceptos-category-subtitle" href="{{ path('products', {categories:subCategory.id}) }}">{{subCategory.name}}</a>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

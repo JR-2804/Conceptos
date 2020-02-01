@@ -1,0 +1,51 @@
+{% set priceOffer = -1 %}
+{% set offerId = 'false' %}
+{% set onlyForMembers = false %}
+{% for offer in product.offers %}
+  {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
+    {% set priceOffer = offer.price %}
+    {% set offerId = offer.id %}
+    {% if offer.onlyForMembers %}
+      {% set onlyForMembers = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+{% if priceOffer == -1 %}
+  {% for category in product.categories %}
+    {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and popular.inStore)) %}
+      {% set priceOffer = (product.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
+    {% else %}
+      {% for parentCategory in category.parents %}
+        {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and popular.inStore)) %}
+          {% set priceOffer = (product.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+<div class="d-flex justify-content-center p-2 {% if priceOffer != -1 %}popular_product{% endif %}">
+  <div class="d-flex align-items-center conceptos-white-background p-2">
+    <a class="h-100" href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+      <div class="d-flex flex-column justify-content-between h-100">
+        <img class="conceptos-image conceptos-popular-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+        <div class="d-flex justify-content-between align-items-center">
+          {% if bigFont is defined %}
+            {% set priceClass = "conceptos-product-price-big" %}
+            {% set iconClass = "conceptos-add-to-cart-icon-big" %}
+          {% else %}
+            {% set priceClass = "conceptos-product-price" %}
+            {% set iconClass = "" %}
+          {% endif %}
+          {% if priceOffer != -1 %}
+            <span class="conceptos-product-info {{priceClass}} mt-1">$&nbsp;{{priceOffer}}</span>
+          {% else %}
+            <span class="conceptos-product-info {{priceClass}} mt-1">$&nbsp;{{product.price}}</span>
+          {% endif %}
+          <button class="conceptos-add-to-cart-icon {{iconClass}} pr-0" data-path="{{ path('add_shop_card', {id: product.id}) }}">
+            <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
+          </button>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
