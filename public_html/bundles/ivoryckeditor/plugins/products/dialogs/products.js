@@ -17,10 +17,20 @@ CKEDITOR.dialog.add("productsDialog", function(editor) {
       }
     ],
     onOk: function() {
-      var content = "<h1>Sample Product</h1>";
 
-      var instance = this.getParentEditor();
-      instance.insertHtml(content);
+      let dialog = this;
+      let elm = editor.document.createElement('div');
+      let child = editor.document.createElement('span');
+      elm.append(child);
+      let product_id = dialog.getValueOf('tab-basic', 'product-id');
+      console.log(product_id);
+
+      elm.setAttribute('data-product', product_id);
+      elm.setAttribute( 'class','ProductMarker');
+      child.setText( "[SP]");
+      editor.insertElement(elm);
+      // var instance = this.getParentEditor();
+      // instance.insertHtml(elm);
     }
   };
 });

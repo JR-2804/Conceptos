@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BlogController extends Controller
 {
     /**
-     * @Route(name="blog_home", path="/blog")
+     * @Route(name="blog_home", path="/blog/")
      *
      * @param Request $request
      *
@@ -58,6 +58,27 @@ class BlogController extends Controller
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
         ]);
+    }
+
+    /**
+     * @Route(name="apiLoadProducts", path="/apiProduct/{code}")
+     */
+    public function getProduct($code){
+
+        $productsRepository = $this->getDoctrine()->getRepository('AppBundle:Product');
+        $product = $productsRepository->findOneBy(['code'=>$code]);
+        $productJson = [];
+        $productJson['name'] = $product->getName();
+        $productJson['id'] = $product->getId();
+        $productJson['description'] = $product->getDescription();
+        $productJson['price'] = $product->getPrice();
+        $productJson['image'] = '/uploads/'.$product->getMainImage()->getImage();
+        $productJson['url'] = $this->generateUrl('product_details', ['id'=>$product->getId()]);
+        $productJson['addCart'] = $this->generateUrl('add_shop_card', ['id'=>$product->getId()]);
+        $productJson['inStore'] = $product->getInStore();
+        $productJson['priceOffer'] = $product->getPriceOffer();
+
+        return $this->json($productJson);
     }
 
     /**
@@ -307,7 +328,7 @@ class BlogController extends Controller
 
     private function getShopCartProducts($products)
     {
-      if ($products == null) {
+      if ($products === null) {
         $products = [];
       }
 
