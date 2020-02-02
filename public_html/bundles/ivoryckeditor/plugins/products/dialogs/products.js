@@ -21,16 +21,26 @@ CKEDITOR.dialog.add("productsDialog", function(editor) {
       let dialog = this;
       let elm = editor.document.createElement('div');
       let child = editor.document.createElement('span');
+      child.style.border = '2px dashed green';
       elm.append(child);
       let product_id = dialog.getValueOf('tab-basic', 'product-id');
       console.log(product_id);
 
       elm.setAttribute('data-product', product_id);
       elm.setAttribute( 'class','ProductMarker');
-      child.setText( "[SP]");
+      child.setText( "["+product_id.toString()+"]");
       editor.insertElement(elm);
       // var instance = this.getParentEditor();
       // instance.insertHtml(elm);
+    },
+    onShow: function () {
+        // Get the selection from the editor.
+        let selection = editor.getSelection();
+
+        // Get the element at the start of the selection.
+        let element = selection.getStartElement();
+        element = editor.restoreRealElement(element);
+        console.log()
     }
   };
 });
