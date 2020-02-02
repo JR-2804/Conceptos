@@ -330,13 +330,22 @@ $(document).ready(function() {
 
   function ValidateContactInfo() {
     var result = true;
-    if (!$("#check_out_name").val()) {
-      $("#check_out_name").removeClass("conceptos-success-input");
-      $("#check_out_name").addClass("conceptos-error-input");
+    if (!$("#check_out_firstName").val()) {
+      $("#check_out_firstName").removeClass("conceptos-success-input");
+      $("#check_out_firstName").addClass("conceptos-error-input");
       result = false;
     } else {
-      $("#check_out_name").removeClass("conceptos-error-input");
-      $("#check_out_name").addClass("conceptos-success-input");
+      $("#check_out_firstName").removeClass("conceptos-error-input");
+      $("#check_out_firstName").addClass("conceptos-success-input");
+    }
+
+    if (!$("#check_out_lastName").val()) {
+      $("#check_out_lastName").removeClass("conceptos-success-input");
+      $("#check_out_lastName").addClass("conceptos-error-input");
+      result = false;
+    } else {
+      $("#check_out_lastName").removeClass("conceptos-error-input");
+      $("#check_out_lastName").addClass("conceptos-success-input");
     }
 
     if (!$("#check_out_email").val()) {

@@ -408,7 +408,8 @@ class SiteController extends Controller
 
         $user = $this->getUser();
         if ($user) {
-          $dto->setName($user->getFirstName().' '.$user->getLastName());
+          $dto->setFirstName($user->getFirstName());
+          $dto->setLastName($user->getLastName());
           $dto->setEmail($user->getEmail());
           $dto->setAddress($user->getAddress());
           $dto->setMovil($user->getMobileNumber());
@@ -479,7 +480,8 @@ class SiteController extends Controller
                 $client = new Client();
             }
 
-            $client->setName($data->getName());
+            $client->setFirstName($data->getFirstName());
+            $client->setLastName($data->getLastName());
             $client->setEmail($data->getEmail());
             $client->setAddress($data->getAddress());
             $client->setMovil($data->getMovil());
@@ -1294,7 +1296,7 @@ class SiteController extends Controller
 //             'forClient' => true,
 //         ]);
 
-        $this->get('email_service')->send($client->getEmail(), $client->getName(), $config->getEmail(), 'Pedido realizardo a través de la WEB', $body);
+        $this->get('email_service')->send($client->getEmail(), $client->getFirstName().' '.$client->getLastName(), $config->getEmail(), 'Pedido realizardo a través de la WEB', $body);
         $this->get('email_service')->send($config->getEmail(), 'Equipo comercial Conceptos', $client->getEmail(), 'Pedido realizado a través de la WEB', $bodyClient);
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
