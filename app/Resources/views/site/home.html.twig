@@ -266,4 +266,21 @@
 {% block js %}
   <script src="{{ asset('bundles/conceptos/14ndy15/scripts/index.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/home/js/home.js') }}"></script>
+  <script>
+    {% if showSuccessToast is defined and showSuccessToast == true %}
+      $.toast({
+        text: 'Pedido realizado correctamente',
+        showHideTransition: "fade",
+        bgColor: "#c2b930",
+        textColor: "#3f3c03",
+        allowToastClose: true,
+        hideAfter: 3000,
+        stack: 5,
+        textAlign: "center",
+        position: "mid-center",
+        icon: "success",
+        heading: "Correcto"
+      });
+    {% endif %}
+  </script>
 {% endblock %}

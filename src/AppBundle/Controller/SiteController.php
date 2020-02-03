@@ -156,7 +156,14 @@ class SiteController extends Controller
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
+        $showSuccessToast = false;
+        if ($request->getSession()->get('successRequestToast') == true) {
+          $request->getSession()->set('successRequestToast', false);
+          $showSuccessToast = true;
+        }
+
         return $this->render(':site:home.html.twig', [
+            'showSuccessToast' => $showSuccessToast,
             'displayLoginError' => $displayLoginError,
             'offers' => $offers,
             'offersImage' => $offersImage,
@@ -1291,6 +1298,7 @@ class SiteController extends Controller
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
+        $request->getSession()->set('successRequestToast', true);
         return $this->redirectToRoute('site_home');
     }
 
