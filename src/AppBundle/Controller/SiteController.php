@@ -1286,35 +1286,12 @@ class SiteController extends Controller
             'forClient' => true,
         ]);
 
-//        TODO: pasar la variable del los productos de oferta
-//         return $this->render(':site:request-email.html.twig', [
-//             'request' => $requestDB,
-//             'inStore' => $inStore,
-//             'home' => $home,
-//             'products' => $productsResponse,
-//             'membership' => $membership,
-//             'forClient' => true,
-//         ]);
-
         $this->get('email_service')->send($client->getEmail(), $client->getFirstName().' '.$client->getLastName(), $config->getEmail(), 'Pedido realizardo a través de la WEB', $body);
         $this->get('email_service')->send($config->getEmail(), 'Equipo comercial Conceptos', $client->getEmail(), 'Pedido realizado a través de la WEB', $bodyClient);
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
-        return $this->render(':site:success-request.html.twig', [
-            'request' => $requestDB,
-            'products' => $productsResponse,
-            'client' => $client,
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
-            'page' => $page,
-            'membership' => $membership,
-            'home' => $home,
-            'terms' => $config->getTermAndConditions(),
-            'privacy' => $config->getPrivacyPolicy(),
-            'categories' => $this->get('category_service')->getAll(),
-            'currentDate' => new \DateTime(),
-        ]);
+        return $this->redirectToRoute('site_home');
     }
 
     /**
