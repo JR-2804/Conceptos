@@ -203,8 +203,10 @@
   <script src="{{ asset('bundles/conceptos/products/js/products.js') }}"></script>
   <script>
     $(document).ready(function() {
-      document.getElementById("open-categories-menu").remove()
-      document.getElementById("categories-menu").remove()
+      if (window.screen.width > 992) {
+        document.getElementById("open-categories-menu").remove()
+        document.getElementById("categories-menu").remove()
+      }
     });
   </script>
 {% endblock %}
