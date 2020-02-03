@@ -12,32 +12,39 @@
     {% endif %}
 
       <div class="home__hero__content">
-          {% set offer = offers | last %}
-          {% if offer %}
-              <div class="home__hero__content__title">
-                  {% if offer.name %}
-                    <h1>{{ offer.name }}</h1>
-                  {% endif %}
-                  {% if offer.description %}
-                    <h2>{{ offer.description }}</h2>
-                  {% endif %}
-              </div>
-              <div class="home__hero__content__btn">
-                  <a href="{{path('products', {inOffer:true})}}">VER OFERTAS</a>
-              </div>
-          {% elseif page.data.slides and page.data.slides is not empty %}
-            {% set slide = page.data.slides[0] %}
-            {% if slide.main %}
+        {% set offer = offers | last %}
+        {% if offer %}
+          <div class="home__hero__content__title">
+            {% if offer.name %}
+              <h1>{{ offer.name }}</h1>
+            {% endif %}
+            {% if offer.description %}
+              <h2>{{ offer.description }}</h2>
+            {% endif %}
+          </div>
+          <div class="home__hero__content__btn">
+            <a href="{{path('products', {inOffer:true})}}">VER OFERTAS</a>
+          </div>
+        {% elseif page.data.slides and page.data.slides is not empty %}
+          {% set slide = page.data.slides[0] %}
+          <div class="home__hero__content__title">
+            {% if slide.main is defined %}
               <h1>{{ slide.main }}</h1>
             {% endif %}
-            {% if slide.secondary %}
+            {% if slide.secondary is defined %}
               <h2>{{ slide.secondary }}</h2>
             {% endif %}
-          {% else %}
-              <div class="home__hero__content__title">
-                  <h1>Bienvenidos a Conceptos 2020</h1>
-              </div>
+          </div>
+          {% if slide.link is defined %}
+            <div class="home__hero__content__btn">
+              <a href="{{slide.link}}">VER MÁS</a>
+            </div>
           {% endif %}
+        {% else %}
+          <div class="home__hero__content__title">
+            <h1>Bienvenidos a Conceptos</h1>
+          </div>
+        {% endif %}
       </div>
 
       <div class="membership_card membership_card--no-display">
