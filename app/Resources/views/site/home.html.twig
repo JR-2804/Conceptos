@@ -196,7 +196,7 @@
   </div>
 
   <div class="d-flex flex-column">
-      <div class="d-flex conceptos-badge p-2">
+    <div class="d-flex conceptos-badge p-2">
       <div class="d-flex align-items-center m-2">
         <span class="conceptos-badge-text">SERVICIOS</span>
       </div>
@@ -220,13 +220,13 @@
       </a>
     </div>
     <div class="d-none d-lg-flex flex-column align-items-center ml-5 mr-5 mt-3 mb-3">
-      <div class="d-flex col-7">
+      <div class="d-flex">
         {% if page.data.services.image is defined %}
-          <div class="d-flex align-items-center conceptos-white-background p-2">
+          <div class="d-flex col-5 align-items-center conceptos-white-background p-2">
             <img class="conceptos-image" src="{{ page.data.services.image.path }}">
           </div>
         {% endif %}
-        <div class="d-flex flex-column ml-3 justify-content-center">
+        <div class="d-flex flex-column col-7 justify-content-center ml-3">
           {% if page.data.services.title is defined %}
             <span class="conceptos-title align-self-start">{{page.data.services.title}}</span>
           {% endif %}
