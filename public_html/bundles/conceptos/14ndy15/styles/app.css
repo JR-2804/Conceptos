@@ -5,13 +5,13 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
   font-family: 'Montserrat', sans-serif !important; }
 
 .login_modal__container {
-  background-color: #e5e5e5; }
+  background-color: #e3e3e3; }
 
 .login_modal__container form input {
     background: white; }
 
 .login_modal__container form button[type='submit'] {
-    background: #e5e5e5;
+    background: #e3e3e3;
     border: #c2b930 1px solid;
     text-transform: uppercase;
     padding: .5em .75em;
@@ -238,7 +238,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
            object-fit: cover; }
 
 #conceptos-contact-form {
-  background: #e5e5e5; }
+  background: #e3e3e3; }
 
 #conceptos-contact-form .conceptos-image {
     position: absolute;

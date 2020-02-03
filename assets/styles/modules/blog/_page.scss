@@ -1,0 +1,56 @@
+.blog_list__title{
+    width: 80%;
+    margin: auto;
+
+    & h2{
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 1.2em;
+    }
+}
+
+.content-post{
+    background: $mainGrey;
+}
+
+.content-post{
+    padding: 0;
+    width: 95%;
+    margin: auto;
+}
+
+.post{
+    background: white;
+    width: 90%;
+    margin: auto;
+    padding-left: 0;
+
+    &-thumbnail{
+        padding: 5%;
+    }
+
+    &-details{
+        padding: 0 5% 0;
+
+        & h3{
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 1.15em;
+        }
+    }
+}
+
+.post-single{
+
+}
+
+.post-body{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    & .ProductMarker{
+        width: 45%;
+    }
+}

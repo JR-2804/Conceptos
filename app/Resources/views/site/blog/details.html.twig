@@ -16,37 +16,85 @@
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/libs/@fancyapps/fancybox/jquery.fancybox.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/blog/css/style.default.css') }}" id="theme-stylesheet">
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/blog/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/styles/blog.css') }}" type="text/css">
 {% endblock %}
 {% block body %}
     <div class="container-fluid content-post pl-2 pr-2">
         <div class="row">
+
+            <div class="product_prototype" style="display: none">
+                <div id="is_offer" class="d-flex justify-content-center p-1 pb-4">
+                    <div class="d-flex align-items-center conceptos-white-background">
+                        <a class="h-100" href="">
+                            <div class="d-flex flex-column justify-content-between h-100">
+                                <img class="conceptos-image conceptos-popular-product-image" src="">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="conceptos-product-info conceptos-product-price mt-1"></span>
+{#                                    {{ path('add_shop_card', {id: popular.id}) }}#}
+                                    <button class="conceptos-add-to-cart-icon pr-0" data-path="">
+                                        <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="is_offer" class="d-flex col-6 justify-content-center p-2 ">
+                    <div class="d-flex align-items-center conceptos-white-background p-2">
+{#                        {{ path('product_details', {id: popular.id, name: popular.name}) }}#}
+                        <a class="h-100 " href="">
+                            <div class="d-flex flex-column justify-content-between h-100">
+                                <img class="conceptos-image conceptos-popular-product-image" src="">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="conceptos-product-info conceptos-product-price mt-1"></span>
+{#                                    {{ path('add_shop_card', {id: popular.id}) }}#}
+                                    <button class="conceptos-add-to-cart-icon pr-0" data-path="">
+                                        <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="blog_list__title">
+                <h2>Inspiraciones</h2>
+            </div>
+
             <main class="post blog-post col-lg-8 pl-0 pl-lg-5 pt-3 pt-lg-5">
+
+
+
                 <div class="container">
                     <div class="post-single">
+                        <h1 class="d-none d-lg-block">{{ post.title }}</h1>
+                        <h2 class="d-lg-none">{{ post.title }}</h2>
+
                         <div class="post-thumbnail">
                             <img src="{{ absolute_url(vich_uploader_asset(post, 'imageFile')) }}" alt="{{ post.title }}" class="img-fluid">
                         </div>
                         <div class="post-details">
-                            <div class="post-meta d-flex justify-content-between">
-                                <div class="category"><a href="#">{{ post.category.name }}</a></div>
-                            </div>
-                            <h1 class="d-none d-lg-block">{{ post.title }}</h1>
-                            <h2 class="d-lg-none">{{ post.title }}</h2>
+{#                            <div class="post-meta d-flex justify-content-between">#}
+{#                                <div class="category"><a href="#">{{ post.category.name }}</a></div>#}
+{#                            </div>#}
+
                             <div class="post-footer d-flex align-items-center flex-column flex-row">
-                                <a href="#" class="author d-flex align-items-center flex-wrap">
-                                    <div class="title"><span>{{ post.user.username }}</span></div>
-                                </a>
+{#                                <a href="#" class="author d-flex align-items-center flex-wrap">#}
+{#                                    <div class="title"><span>{{ post.user.username }}</span></div>#}
+{#                                </a>#}
                                 <div class="d-flex align-items-center flex-wrap">
-                                    <div class="date"><i
-                                                class="mbri-clock"></i>{{ post.createdDate | date('d-m-Y') }}
+                                    <div class="date">
+                                        <i class="mbri-clock"></i>{{ post.createdDate | date('d-m-Y') }}
                                     </div>
-                                    <div class="views"><i class="mbri-preview"></i>{{ post.visitCount }}</div>
-                                    <div class="views"><a class="btn-print"><i class="mbri-print"></i></a></div>
-                                    <div class="comments meta-last"><i
-                                                class="mbri-info"></i>{{ post.comments | length }}
-                                    </div>
-                                </div>
-                                <div class="sharetastic"></div>
+{#                                    <div class="views"><i class="mbri-preview"></i>{{ post.visitCount }}</div>#}
+{#                                    <div class="views"><a class="btn-print"><i class="mbri-print"></i></a></div>#}
+{#                                    <div class="comments meta-last"><i#}
+{#                                                class="mbri-info"></i>{{ post.comments | length }}#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="sharetastic"></div>#}
                             </div>
                             <div class="post-body mt-3">
                                 {#<p class="lead">{{ post.summary }}</p>#}
@@ -91,72 +139,73 @@
                     </div>
                 </div>
             </main>
-            <aside class="col-lg-4">
-                <!-- Widget [Search Bar Widget]-->
-                <div class="widget search">
-                    <header class="header-custom">
-                        <h3 class="h6">Buscar</h3>
-                    </header>
-                    <form action="#" class="search-form">
-                        <div class="form-group">
-                            <input type="search" placeholder="¿Qué estas buscando?">
-                            <button type="submit" class="submit"><i class="mbri-search"></i></button>
-                        </div>
-                    </form>
-                </div>
-                <!-- Widget [Latest Posts Widget]        -->
-                <div class="widget latest-posts">
-                    <header class="header-custom">
-                        <h3 class="h6">Últimos artículos</h3>
-                    </header>
-                    <div class="blog-posts">
-                        {% for last in lasts %}
-                            <a href="{{ path('blog_details', {id: last.id, title: last.path }) }}">
-                                <div class="item d-flex align-items-center">
-                                    <div class="image"><img src="{{ absolute_url(vich_uploader_asset(last, 'imageFile')) }}"
-                                                            alt="{{ last.title }}" class="img-fluid"></div>
-                                    <div class="title"><strong>{{ last.title }}</strong>
-                                        <div class="d-flex align-items-center">
-                                            <div class="views"><i class="mbri-preview"></i>{{ last.visitCount }}</div>
-                                            <div class="comments"><i class="mbri-info"></i>{{ last.comments | length }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        {% endfor %}
-                    </div>
-                </div>
-                <!-- Widget [Categories Widget]-->
-                <div class="widget categories">
-                    <header class="header-custom">
-                        <h3 class="h6">Categorías</h3>
-                    </header>
-                    {% for category in blogCategories %}
-                        <div class="item d-flex justify-content-between"><a
-                                    href="{{ path('post_category', {id: category.id, category: category.name}) }}">{{ category.name }}</a><span>{{ category.posts | length }}</span>
-                        </div>
-                    {% endfor %}
-                </div>
-                <!-- Widget [Tags Cloud Widget]-->
-                <div class="widget tags">
-                    <header class="header-custom">
-                        <h3 class="h6">Tags</h3>
-                    </header>
-                    <ul class="list-inline">
-                        {% for tag in tags %}
-                            <li class="list-inline-item"><a href="{{ path('post_tag', {id: tag.id, tag: tag.value}) }}"
-                                                            class="tag">#{{ tag.value }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </aside>
+{#            <aside class="col-lg-4">#}
+{#                <!-- Widget [Search Bar Widget]-->#}
+{#                <div class="widget search">#}
+{#                    <header class="header-custom">#}
+{#                        <h3 class="h6">Buscar</h3>#}
+{#                    </header>#}
+{#                    <form action="#" class="search-form">#}
+{#                        <div class="form-group">#}
+{#                            <input type="search" placeholder="¿Qué estas buscando?">#}
+{#                            <button type="submit" class="submit"><i class="mbri-search"></i></button>#}
+{#                        </div>#}
+{#                    </form>#}
+{#                </div>#}
+{#                <!-- Widget [Latest Posts Widget]        -->#}
+{#                <div class="widget latest-posts">#}
+{#                    <header class="header-custom">#}
+{#                        <h3 class="h6">Últimos artículos</h3>#}
+{#                    </header>#}
+{#                    <div class="blog-posts">#}
+{#                        {% for last in lasts %}#}
+{#                            <a href="{{ path('blog_details', {id: last.id, title: last.path }) }}">#}
+{#                                <div class="item d-flex align-items-center">#}
+{#                                    <div class="image"><img src="{{ absolute_url(vich_uploader_asset(last, 'imageFile')) }}"#}
+{#                                                            alt="{{ last.title }}" class="img-fluid"></div>#}
+{#                                    <div class="title"><strong>{{ last.title }}</strong>#}
+{#                                        <div class="d-flex align-items-center">#}
+{#                                            <div class="views"><i class="mbri-preview"></i>{{ last.visitCount }}</div>#}
+{#                                            <div class="comments"><i class="mbri-info"></i>{{ last.comments | length }}#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </a>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                </div>#}
+{#                <!-- Widget [Categories Widget]-->#}
+{#                <div class="widget categories">#}
+{#                    <header class="header-custom">#}
+{#                        <h3 class="h6">Categorías</h3>#}
+{#                    </header>#}
+{#                    {% for category in blogCategories %}#}
+{#                        <div class="item d-flex justify-content-between"><a#}
+{#                                    href="{{ path('post_category', {id: category.id, category: category.name}) }}">{{ category.name }}</a><span>{{ category.posts | length }}</span>#}
+{#                        </div>#}
+{#                    {% endfor %}#}
+{#                </div>#}
+{#                <!-- Widget [Tags Cloud Widget]-->#}
+{#                <div class="widget tags">#}
+{#                    <header class="header-custom">#}
+{#                        <h3 class="h6">Tags</h3>#}
+{#                    </header>#}
+{#                    <ul class="list-inline">#}
+{#                        {% for tag in tags %}#}
+{#                            <li class="list-inline-item"><a href="{{ path('post_tag', {id: tag.id, tag: tag.value}) }}"#}
+{#                                                            class="tag">#{{ tag.value }}</a></li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{#                </div>#}
+{#            </aside>#}
             <!-- Latest Posts -->
         </div>
     </div>
 {% endblock %}
 {% block contact %}{% endblock %}
 {% block js %}
+    <script src="{{ asset('bundles/conceptos/14ndy15/scripts/blog.js') }}"></script>
     <script src="{{ asset('bundles/conceptos/blog/libs/sharetastic/sharetastic.js') }}"></script>
     <script src="{{ asset('bundles/conceptos/assets/popper/popper.min.js') }}"></script>
     <script src="{{ asset('bundles/conceptos/libs/jquery.cookie/jquery.cookie.js') }}"></script>
