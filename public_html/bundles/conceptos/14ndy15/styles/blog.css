@@ -25,3 +25,11 @@
       text-transform: uppercase;
       font-weight: 700;
       font-size: 1.15em; }
+  .post-body {
+  display: -webkit-box;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+          justify-content: space-between; }
+  .post-body .ProductMarker {
+    width: 45%; }
