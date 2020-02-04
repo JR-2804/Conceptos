@@ -1054,11 +1054,11 @@ a.conceptos-category-subtitle:focus {
   }
 
   .conceptos-testimony-text {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .conceptos-testimony-author {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .conceptos-primary-button-gray {
@@ -1082,6 +1082,18 @@ a.conceptos-category-subtitle:focus {
 
   .conceptos-product-price {
     font-size: 20px;
+  }
+
+  .conceptos-product-summary-image {
+    max-height: 150px;
+    max-width: 150px;
+    object-fit: cover;
+  }
+
+  .conceptos-project-image {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
   }
 }
 

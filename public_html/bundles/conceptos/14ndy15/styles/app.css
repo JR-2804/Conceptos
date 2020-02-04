@@ -250,7 +250,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 #conceptos-contact-form:after {
     content: '';
     position: absolute;
-    height: 48%;
+    height: 70%;
     width: 100%;
     background: -webkit-gradient(linear, left bottom, left top, from(transparent), to(#e5e5e5));
     background: linear-gradient(to top, transparent, #e5e5e5);

@@ -9,11 +9,11 @@
   <div class="d-flex flex-column m-2 p-2 p-lg-5">
     <div class="d-flex flex-column conceptos-white-background">
       <div class="carousel p-lg-5" data-ride="carousel" id="carousel-product-details" data-interval="5000">
-        <div class="carousel-inner pl-5 pr-5">
+        <div class="carousel-inner pl-lg-5 pr-lg-5">
           {% set count = 0 %}
           {% for imageSet in imageSets %}
             {% for image in imageSet %}
-              <div class="carousel-item {% if count == 0 %}active{% endif %}">
+              <div class="carousel-item {% if count == 0 %}active{% endif %} pl-lg-5 pr-lg-5">
                 <img src="{{ vich_uploader_asset(image, 'imageFile') }}">
               </div>
               {% set count = count + 1 %}

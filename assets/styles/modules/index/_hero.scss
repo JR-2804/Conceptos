@@ -55,4 +55,10 @@
             }
         }
     }
+
+    @media (min-width: 992px) {
+      &__content {
+        left: 4em;
+      }
+    }
 }

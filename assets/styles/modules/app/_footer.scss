@@ -7,12 +7,12 @@
         height: 75vh;
         object-fit: cover;
     }
-    
+
 
     &:after{
         content: '';
         position: absolute;
-        height: 48%;
+        height: 70%;
         width: 100%;
         background: linear-gradient(to top, transparent, #e5e5e5);
         top: 60vh;
