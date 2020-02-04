@@ -275,6 +275,7 @@ textarea {
 
 .conceptos-badge {
   background-color: #282827;
+  z-index: 10;
 }
 
 #conceptos-services-badge {
