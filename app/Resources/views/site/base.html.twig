@@ -251,7 +251,7 @@
     var marginTop = $(".navbar.navbar-dropdown").css("height");
     $("#conceptos-services-badge").css("top", marginTop);
 
-    {% if displayLoginError is defined and displayLoginError %}
+    {% if loginError is defined and loginError %}
       $("#loginModal").modal();
     {% endif %}
   });
