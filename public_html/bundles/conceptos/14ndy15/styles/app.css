@@ -235,23 +235,25 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
         width: 100%;
         height: 100%;
         -o-object-fit: cover;
-           object-fit: cover; }
+           object-fit: cover;
+        max-width: 80vh; }
 
-#conceptos-contact-form {
-  background: #e3e3e3; }
+@media (min-width: 992px) {
+    #carousel-product-details {
+      height: 70vh; } }
 
 #conceptos-contact-form .conceptos-image {
-    position: absolute;
-    top: 60vh;
-    height: 75vh;
-    -o-object-fit: cover;
-       object-fit: cover; }
+  position: absolute;
+  top: 65vh;
+  height: 75vh;
+  -o-object-fit: cover;
+     object-fit: cover; }
 
 #conceptos-contact-form:after {
-    content: '';
-    position: absolute;
-    height: 70%;
-    width: 100%;
-    background: -webkit-gradient(linear, left bottom, left top, from(transparent), to(#e5e5e5));
-    background: linear-gradient(to top, transparent, #e5e5e5);
-    top: 60vh; }
+  content: '';
+  position: absolute;
+  height: 48%;
+  width: 100%;
+  background: -webkit-gradient(linear, left bottom, left top, from(transparent), to(#e5e5e5));
+  background: linear-gradient(to top, transparent, #e5e5e5);
+  top: 65vh; }

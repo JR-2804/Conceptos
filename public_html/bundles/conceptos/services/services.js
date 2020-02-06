@@ -49,9 +49,9 @@ $(document).ready(function() {
     window.history.pushState(null, null, "#obras");
   });
 
-  if (window.location.href.includes("#interiorismo")) {
-    $(".services-inward-button").click();
-  } else {
+  if (window.location.href.includes("#obras")) {
     $(".services-obras-button").click();
+  } else {
+    $(".services-inward-button").click();
   }
 });

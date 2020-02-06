@@ -59,11 +59,11 @@
         {% for network in home.data.social_network.networks %}
           {% if network.network == 'facebook' %}
             <a href="{{network.link}}" class="mr-2" target="_blank">
-              <img class="conceptos-social-network-icon" src="{{ asset('bundles/conceptos/images/home/facebook.png') }}">
+              <div class="conceptos-social-network-icon-facebook"></div>
             </a>
           {% elseif network.network == 'instagram' %}
             <a href="{{network.link}}" target="_blank">
-              <img class="conceptos-social-network-icon" src="{{ asset('bundles/conceptos/images/home/instagram.png') }}">
+              <div class="conceptos-social-network-icon-instagram"></div>
             </a>
           {% endif %}
         {% endfor %}

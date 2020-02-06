@@ -6,15 +6,17 @@
   <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/products.css') }}">
 {% endblock %}
 {% block body %}
-  <div class="d-flex flex-column m-2 p-2 p-lg-5">
+  <div class="d-flex flex-column m-2 p-2 pt-lg-3 pl-lg-5 pr-lg-5">
     <div class="d-flex flex-column conceptos-white-background p-2">
-      <div class="carousel p-lg-5" data-ride="carousel" id="carousel-product-details" data-interval="5000">
+      <div class="carousel pt-lg-3 pb-lg-2 pl-lg-5 pr-lg-5" data-ride="carousel" id="carousel-product-details" data-interval="5000">
         <div class="carousel-inner pl-lg-5 pr-lg-5">
           {% set count = 0 %}
           {% for imageSet in imageSets %}
             {% for image in imageSet %}
               <div class="carousel-item {% if count == 0 %}active{% endif %} pl-lg-5 pr-lg-5">
-                <img src="{{ image.path }}">
+                <div class="d-flex justify-content-center w-100">
+                  <img src="{{ image.path }}">
+                </div>
               </div>
               {% set count = count + 1 %}
             {% endfor %}

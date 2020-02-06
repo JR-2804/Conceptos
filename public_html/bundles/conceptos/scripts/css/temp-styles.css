@@ -277,6 +277,7 @@ textarea {
 
 #conceptos-services-badge {
   position: sticky;
+  z-index: 15;
 }
 
 .conceptos-badge-text {
@@ -590,9 +591,32 @@ a.conceptos-category-subtitle:focus {
   min-width: 18px;
 }
 
-.conceptos-social-network-icon {
+.conceptos-social-network-icon-facebook {
   width: 35px;
   height: 35px;
+  background-color: transparent;
+  background-image: url("../../images/home/facebook.png");
+  background-size: cover;
+}
+
+.conceptos-social-network-icon-facebook:focus,
+.conceptos-social-network-icon-facebook:hover {
+  background-image: url("../../images/home/facebook-active.png");
+  outline: none;
+}
+
+.conceptos-social-network-icon-instagram {
+  width: 35px;
+  height: 35px;
+  background-color: transparent;
+  background-image: url("../../images/home/instagram.png");
+  background-size: cover;
+}
+
+.conceptos-social-network-icon-instagram:focus,
+.conceptos-social-network-icon-instagram:hover {
+  background-image: url("../../images/home/instagram-active.png");
+  outline: none;
 }
 
 .conceptos-go-to-cart-icon {
@@ -1060,7 +1084,7 @@ a.conceptos-category-subtitle:focus {
   }
 
   .conceptos-primary-button-gray {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .conceptos-in-store-image {
