@@ -13,7 +13,7 @@
 
       <div class="home__hero__content">
         {% set offer = offers | last %}
-        {% if offer %}
+        {% if offer and not page.data.prioritizeSlideText %}
           <div class="home__hero__content__title">
             {% if offer.name %}
               <h1>{{ offer.name }}</h1>
