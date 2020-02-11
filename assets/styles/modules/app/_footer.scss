@@ -1,13 +1,11 @@
 #conceptos-contact-form{
-    background: $mainGrey;
-
     & .conceptos-image{
         position: absolute;
-        top: 60vh;
+        top: 65vh;
         height: 75vh;
         object-fit: cover;
     }
-    
+
 
     &:after{
         content: '';
@@ -15,6 +13,6 @@
         height: 48%;
         width: 100%;
         background: linear-gradient(to top, transparent, #e5e5e5);
-        top: 60vh;
+        top: 65vh;
     }
 }

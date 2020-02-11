@@ -43,8 +43,6 @@ class SiteController extends Controller
     {
         $currentDate = new \DateTime();
 
-        $displayLoginError = $request->query->get('displayLoginError', false);
-
         $offers = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')
             ->createQueryBuilder('o')
             ->where('o.startDate <= :date AND o.endDate >= :date')
@@ -156,8 +154,21 @@ class SiteController extends Controller
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
+        $showSuccessToast = false;
+        if ($request->getSession()->get('successRequestToast') == true) {
+          $request->getSession()->set('successRequestToast', false);
+          $showSuccessToast = true;
+        }
+
+        $loginError = false;
+        if ($request->getSession()->get('loginError') == true) {
+          $request->getSession()->set('successRequestToast', false);
+          $loginError = true;
+        }
+
         return $this->render(':site:home.html.twig', [
-            'displayLoginError' => $displayLoginError,
+            'showSuccessToast' => $showSuccessToast,
+            'loginError' => $loginError,
             'offers' => $offers,
             'offersImage' => $offersImage,
             'lasted' => $lasted,
@@ -170,7 +181,7 @@ class SiteController extends Controller
             'inStoreDesktop' => array_chunk($inStore, 4),
             'inStoreHighlight' => $inStoreHighlight,
             'popularChunks' => array_chunk($populars, 6),
-            'popularChunksDesktop' => array_chunk($populars, 8),
+            'popularChunksDesktop' => array_chunk($populars, 12),
             'count' => $this->countShopCart($request),
             'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
             'config' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1),
@@ -408,7 +419,8 @@ class SiteController extends Controller
 
         $user = $this->getUser();
         if ($user) {
-          $dto->setName($user->getFirstName().' '.$user->getLastName());
+          $dto->setFirstName($user->getFirstName());
+          $dto->setLastName($user->getLastName());
           $dto->setEmail($user->getEmail());
           $dto->setAddress($user->getAddress());
           $dto->setMovil($user->getMobileNumber());
@@ -479,7 +491,8 @@ class SiteController extends Controller
                 $client = new Client();
             }
 
-            $client->setName($data->getName());
+            $client->setFirstName($data->getFirstName());
+            $client->setLastName($data->getLastName());
             $client->setEmail($data->getEmail());
             $client->setAddress($data->getAddress());
             $client->setMovil($data->getMovil());
@@ -1284,35 +1297,13 @@ class SiteController extends Controller
             'forClient' => true,
         ]);
 
-//        TODO: pasar la variable del los productos de oferta
-//         return $this->render(':site:request-email.html.twig', [
-//             'request' => $requestDB,
-//             'inStore' => $inStore,
-//             'home' => $home,
-//             'products' => $productsResponse,
-//             'membership' => $membership,
-//             'forClient' => true,
-//         ]);
-
-        $this->get('email_service')->send($client->getEmail(), $client->getName(), $config->getEmail(), 'Pedido realizardo a través de la WEB', $body);
+        $this->get('email_service')->send($client->getEmail(), $client->getFirstName().' '.$client->getLastName(), $config->getEmail(), 'Pedido realizardo a través de la WEB', $body);
         $this->get('email_service')->send($config->getEmail(), 'Equipo comercial Conceptos', $client->getEmail(), 'Pedido realizado a través de la WEB', $bodyClient);
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
-        return $this->render(':site:success-request.html.twig', [
-            'request' => $requestDB,
-            'products' => $productsResponse,
-            'client' => $client,
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
-            'page' => $page,
-            'membership' => $membership,
-            'home' => $home,
-            'terms' => $config->getTermAndConditions(),
-            'privacy' => $config->getPrivacyPolicy(),
-            'categories' => $this->get('category_service')->getAll(),
-            'currentDate' => new \DateTime(),
-        ]);
+        $request->getSession()->set('successRequestToast', true);
+        return $this->redirectToRoute('site_home');
     }
 
     /**

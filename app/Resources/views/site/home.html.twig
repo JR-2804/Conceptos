@@ -12,32 +12,39 @@
     {% endif %}
 
       <div class="home__hero__content">
-          {% set offer = offers | last %}
-          {% if offer %}
-              <div class="home__hero__content__title">
-                  {% if offer.name %}
-                    <h1>{{ offer.name }}</h1>
-                  {% endif %}
-                  {% if offer.description %}
-                    <h2>{{ offer.description }}</h2>
-                  {% endif %}
-              </div>
-              <div class="home__hero__content__btn">
-                  <a href="{{path('products', {inOffer:true})}}">VER OFERTAS</a>
-              </div>
-          {% elseif page.data.slides and page.data.slides is not empty %}
-            {% set slide = page.data.slides[0] %}
-            {% if slide.main %}
+        {% set offer = offers | last %}
+        {% if offer %}
+          <div class="home__hero__content__title">
+            {% if offer.name %}
+              <h1>{{ offer.name }}</h1>
+            {% endif %}
+            {% if offer.description %}
+              <h2>{{ offer.description }}</h2>
+            {% endif %}
+          </div>
+          <div class="home__hero__content__btn">
+            <a href="{{path('products', {inOffer:true})}}">VER OFERTAS</a>
+          </div>
+        {% elseif page.data.slides and page.data.slides is not empty %}
+          {% set slide = page.data.slides[0] %}
+          <div class="home__hero__content__title">
+            {% if slide.main is defined %}
               <h1>{{ slide.main }}</h1>
             {% endif %}
-            {% if slide.secondary %}
+            {% if slide.secondary is defined %}
               <h2>{{ slide.secondary }}</h2>
             {% endif %}
-          {% else %}
-              <div class="home__hero__content__title">
-                  <h1>Bienvenidos a Conceptos 2020</h1>
-              </div>
+          </div>
+          {% if slide.link is defined %}
+            <div class="home__hero__content__btn">
+              <a href="{{slide.link}}">VER MÁS</a>
+            </div>
           {% endif %}
+        {% else %}
+          <div class="home__hero__content__title">
+            <h1>Bienvenidos a Conceptos</h1>
+          </div>
+        {% endif %}
       </div>
 
       <div class="membership_card membership_card--no-display">
@@ -69,50 +76,9 @@
               {% for chunk in popularChunks %}
                 <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
                   <div class="d-flex flex-wrap">
-                      {% for popular in chunk %}
-                        {% set priceOffer = -1 %}
-                        {% set offerId = 'false' %}
-                        {% set onlyForMembers = false %}
-                        {% for offer in popular.offers %}
-                          {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
-                            {% set priceOffer = offer.price %}
-                            {% set offerId = offer.id %}
-                            {% if offer.onlyForMembers %}
-                              {% set onlyForMembers = true %}
-                            {% endif %}
-                          {% endif %}
-                        {% endfor %}
-                        {% if priceOffer == -1 %}
-                          {% for category in popular.categories %}
-                            {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and popular.inStore)) %}
-                              {% set priceOffer = (popular.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
-                            {% else %}
-                              {% for parentCategory in category.parents %}
-                                {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and popular.inStore)) %}
-                                  {% set priceOffer = (popular.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
-                                {% endif %}
-                              {% endfor %}
-                            {% endif %}
-                          {% endfor %}
-                        {% endif %}
-                        <div class="d-flex col-6 justify-content-center p-2 {% if priceOffer != -1 %}popular_product{% endif %}">
-                          <div class="d-flex align-items-center conceptos-white-background p-2">
-                            <a class="h-100" href="{{ path('product_details', {id: popular.id, name: popular.name}) }}">
-                              <div class="d-flex flex-column justify-content-between h-100">
-                                <img class="conceptos-image conceptos-popular-product-image" src="{{ vich_uploader_asset(popular.mainImage, 'imageFile') }}">
-                                <div class="d-flex justify-content-between align-items-center">
-                                  {% if priceOffer != -1 %}
-                                    <span class="conceptos-product-info conceptos-product-price mt-1">$&nbsp;{{priceOffer}}</span>
-                                  {% else %}
-                                    <span class="conceptos-product-info conceptos-product-price mt-1">$&nbsp;{{popular.price}}</span>
-                                  {% endif %}
-                                  <button class="conceptos-add-to-cart-icon pr-0" data-path="{{ path('add_shop_card', {id: popular.id}) }}">
-                                    <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
-                                  </button>
-                                </div>
-                              </div>
-                            </a>
-                          </div>
+                      {% for product in chunk %}
+                        <div class="d-flex col-6 pl-0">
+                          {{include('site/product-summary-short.html.twig')}}
                         </div>
                       {% endfor %}
                   </div>
@@ -146,51 +112,9 @@
               {% for chunk in popularChunksDesktop %}
                 <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
                   <div class="d-flex flex-wrap">
-                      {% for popular in chunk %}
-                        {% set priceOffer = -1 %}
-                        {% set offerId = 'false' %}
-                        {% set onlyForMembers = false %}
-                        {% for offer in popular.offers %}
-                          {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
-                            {% set priceOffer = offer.price %}
-                            {% set offerId = offer.id %}
-                            {% if offer.onlyForMembers %}
-                              {% set onlyForMembers = true %}
-                            {% endif %}
-                          {% endif %}
-                        {% endfor %}
-                        {% if priceOffer == -1 %}
-                          {% for category in popular.categories %}
-                            {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and popular.inStore)) %}
-                              {% set priceOffer = (popular.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
-                            {% else %}
-                              {% for parentCategory in category.parents %}
-                                {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and popular.inStore)) %}
-                                  {% set priceOffer = (popular.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
-                                {% endif %}
-                              {% endfor %}
-                            {% endif %}
-                          {% endfor %}
-                        {% endif %}
-
-                        <div class="d-flex col-3 justify-content-center p-3 {% if priceOffer != -1 %}popular_product{% endif %}">
-                          <div class="d-flex align-items-center conceptos-white-background p-2">
-                            <a class="h-100" href="{{ path('product_details', {id: popular.id, name: popular.name}) }}">
-                              <div class="d-flex flex-column justify-content-between h-100">
-                                <img class="conceptos-image conceptos-popular-product-image" src="{{ vich_uploader_asset(popular.mainImage, 'imageFile') }}">
-                                <div class="d-flex justify-content-between align-items-center">
-                                  {% if priceOffer != -1 %}
-                                    <span class="conceptos-product-info conceptos-product-price mt-1">$&nbsp;{{priceOffer}} </span>
-                                  {% else %}
-                                    <span class="conceptos-product-info conceptos-product-price mt-1">$&nbsp;{{popular.price}} </span>
-                                  {% endif %}
-                                  <button class="conceptos-add-to-cart-icon pr-0" data-path="{{ path('add_shop_card', {id: popular.id}) }}">
-                                    <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
-                                  </button>
-                                </div>
-                              </div>
-                            </a>
-                          </div>
+                      {% for product in chunk %}
+                        <div class="d-flex col-2 pl-0">
+                          {{include('site/product-summary-short.html.twig')}}
                         </div>
                       {% endfor %}
                   </div>
@@ -209,7 +133,7 @@
 
   <div class="d-flex flex-column">
     <div class="d-flex conceptos-badge p-2">
-      <div class="d-flex flex-column justify-content-center m-2">
+      <div class="d-flex flex-column justify-content-center m-2 ml-lg-5">
         <span class="conceptos-badge-text">ALMACÉN</span>
         <span class="conceptos-badge-subtitle">{{page.data.subtitles.inStore|raw}}</span>
       </div>
@@ -220,45 +144,11 @@
           <div class="carousel" data-ride="carousel" id="carousel-in-store" data-interval="5000">
             <div class="carousel-inner">
               {% for product in inStore %}
-                <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
-                  {% set priceOffer = -1 %}
-                  {% set offerId = 'false' %}
-                  {% set onlyForMembers = false %}
-                  {% for offer in product.offers %}
-                    {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
-                      {% set priceOffer = offer.price %}
-                      {% set offerId = offer.id %}
-                      {% if offer.onlyForMembers %}
-                        {% set onlyForMembers = true %}
-                      {% endif %}
-                    {% endif %}
-                  {% endfor %}
-                  {% if priceOffer == -1 %}
-                    {% for category in product.categories %}
-                      {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and product.inStore)) %}
-                        {% set priceOffer = (product.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
-                      {% else %}
-                        {% for parentCategory in category.parents %}
-                          {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and product.inStore)) %}
-                            {% set priceOffer = (product.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
-                          {% endif %}
-                        {% endfor %}
-                      {% endif %}
-                    {% endfor %}
-                  {% endif %}
-                  <a href="{{ path('product_details', {id: product.id, name: product.name}) }}">
-                    <img class="conceptos-image conceptos-in-store-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
-                    <div class="d-flex justify-content-between align-items-center">
-                      {% if priceOffer != -1 %}
-                        <span class="conceptos-product-info conceptos-product-price-big mt-1">$&nbsp;{{priceOffer}}</span>
-                      {% else %}
-                        <span class="conceptos-product-info conceptos-product-price-big mt-1">$&nbsp;{{product.price}}</span>
-                      {% endif %}
-                      <button class="conceptos-add-to-cart-icon conceptos-add-to-cart-icon-big pr-0" data-path="{{ path('add_shop_card', {id: product.id}) }}">
-                        <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
-                      </button>
-                    </div>
-                  </a>
+                <div class="container-fluid carousel-item p-0 {% if loop.first %}active{% endif %}">
+                  <div class="d-flex">
+                    {% set bigFont = true %}
+                    {{include('site/product-summary-short.html.twig')}}
+                  </div>
                 </div>
               {% endfor %}
             </div>
@@ -279,44 +169,10 @@
                 <div class="carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
                   <div class="d-flex flex-wrap w-100">
                     {% for product in chunk %}
-                      {% set priceOffer = -1 %}
-                      {% set offerId = 'false' %}
-                      {% set onlyForMembers = false %}
-                      {% for offer in product.offers %}
-                        {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
-                          {% set priceOffer = offer.price %}
-                          {% set offerId = offer.id %}
-                          {% if offer.onlyForMembers %}
-                            {% set onlyForMembers = true %}
-                          {% endif %}
-                        {% endif %}
-                      {% endfor %}
-                      {% if priceOffer == -1 %}
-                        {% for category in product.categories %}
-                          {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and product.inStore)) %}
-                            {% set priceOffer = (product.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
-                          {% else %}
-                            {% for parentCategory in category.parents %}
-                              {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and product.inStore)) %}
-                                {% set priceOffer = (product.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
-                              {% endif %}
-                            {% endfor %}
-                          {% endif %}
-                        {% endfor %}
-                      {% endif %}
-                      <a class="d-flex flex-column align-items-center col-3 pl-0" href="{{ path('product_details', {id: product.id, name: product.name}) }}">
-                        <img class="conceptos-image conceptos-in-store-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
-                        <div class="d-flex justify-content-between align-items-center conceptos-white-background p-2" style="width: 300px;">
-                          {% if priceOffer != -1 %}
-                            <span class="conceptos-product-info conceptos-product-price-big mt-1">$&nbsp;{{priceOffer}}</span>
-                          {% else %}
-                            <span class="conceptos-product-info conceptos-product-price-big mt-1">$&nbsp;{{product.price}}</span>
-                          {% endif %}
-                          <button class="conceptos-add-to-cart-icon conceptos-add-to-cart-icon-big pr-0" data-path="{{ path('add_shop_card', {id: product.id}) }}">
-                            <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
-                          </button>
-                        </div>
-                      </a>
+                      <div class="d-flex col-3 pl-0">
+                        {% set bigFont = true %}
+                        {{include('site/product-summary-short.html.twig')}}
+                      </div>
                     {% endfor %}
                   </div>
                 </div>
@@ -340,8 +196,8 @@
   </div>
 
   <div class="d-flex flex-column">
-      <div class="d-flex conceptos-badge p-2">
-      <div class="d-flex align-items-center m-2">
+    <div class="d-flex conceptos-badge p-2 pl-lg-0">
+      <div class="d-flex align-items-center m-2 ml-lg-5">
         <span class="conceptos-badge-text">SERVICIOS</span>
       </div>
     </div>
@@ -364,13 +220,13 @@
       </a>
     </div>
     <div class="d-none d-lg-flex flex-column align-items-center ml-5 mr-5 mt-3 mb-3">
-      <div class="d-flex col-7">
+      <div class="d-flex justify-content-center">
         {% if page.data.services.image is defined %}
-          <div class="d-flex align-items-center conceptos-white-background p-2">
+          <div class="d-flex col-4 align-items-center conceptos-white-background p-2">
             <img class="conceptos-image" src="{{ page.data.services.image.path }}">
           </div>
         {% endif %}
-        <div class="d-flex flex-column ml-3 justify-content-center">
+        <div class="d-flex flex-column col-5 justify-content-center ml-lg-5 pl-lg-5">
           {% if page.data.services.title is defined %}
             <span class="conceptos-title align-self-start">{{page.data.services.title}}</span>
           {% endif %}
@@ -387,8 +243,8 @@
 
   {% if lasts is not empty %}
     <div class="d-flex flex-column">
-      <div class="d-flex conceptos-badge p-2">
-        <div class="d-flex align-items-center m-2">
+      <div class="d-flex conceptos-badge p-2 pl-lg-0">
+        <div class="d-flex align-items-center m-2 ml-lg-5">
           <span class="conceptos-badge-text">INSPIRACIÓN</span>
         </div>
       </div>
@@ -417,4 +273,21 @@
 {% block js %}
   <script src="{{ asset('bundles/conceptos/14ndy15/scripts/index.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/home/js/home.js') }}"></script>
+  <script>
+    {% if showSuccessToast is defined and showSuccessToast == true %}
+      $.toast({
+        text: 'Pedido realizado correctamente',
+        showHideTransition: "fade",
+        bgColor: "#c2b930",
+        textColor: "#3f3c03",
+        allowToastClose: true,
+        hideAfter: 3000,
+        stack: 5,
+        textAlign: "center",
+        position: "mid-center",
+        icon: "success",
+        heading: "Correcto"
+      });
+    {% endif %}
+  </script>
 {% endblock %}

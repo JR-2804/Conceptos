@@ -5,7 +5,6 @@
     margin: 20px auto;
     background: rgba(0, 0, 0, 0.25);
     border-radius: 3px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .switch-label {
@@ -17,7 +16,6 @@
     font-size: 11px;
     color: $mainDark;
     text-align: center;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
     cursor: pointer;
     transition: color .3s ease-in;
 }
@@ -41,7 +39,7 @@
     font-weight: bold;
     color: white;
     transition: 0.15s ease-out;
-    transition-property: color, text-shadow;
+    transition-property: color;
 }
 .switch-input:checked + .switch-label-on ~ .switch-selection {
     left: 70px;
@@ -59,8 +57,5 @@
     border-radius: 3px;
     background-color: $mainYellow;
     background-image: linear-gradient(top, rgba($mainYellow, .85), rgba($mainYellow, .95));
-    box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 0 2px rgba(0, 0, 0, 0.2);
     transition: left 0.15s ease-out;
 }
-
-

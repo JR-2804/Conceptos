@@ -164,12 +164,17 @@
           <img class="conceptos-icon" src="{{ asset('bundles/conceptos/images/products/filter.png') }}">
         </div>
       </div>
-      <div class="d-flex flex-wrap pl-lg-5 pr-lg-5">
-        {% for product in products %}
-          {{include('site/components/product-summary.html.twig')}}
-        {% else %}
-          <span class="conceptos-title-strong conceptos-text-align-center">NO EXISTEN PRODUCTOS CON LOS PARÁMETROS SELECCIONADOS</span>
-        {% endfor %}
+      <div class="d-flex pl-lg-5 pr-lg-5">
+        <div class="d-none d-lg-flex pr-5">
+          {{include('site/categories-menu.html.twig')}}
+        </div>
+        <div class="d-flex flex-wrap">
+          {% for product in products %}
+            {{include('site/components/product-summary.html.twig')}}
+          {% else %}
+            <span class="conceptos-title-strong conceptos-text-align-center">NO EXISTEN PRODUCTOS CON LOS PARÁMETROS SELECCIONADOS</span>
+          {% endfor %}
+        </div>
       </div>
     </div>
 
@@ -196,4 +201,12 @@
   <script src="{{ asset('bundles/conceptos/libs/slimscroll/jquery.slimscroll.min.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/home/js/classie.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/products/js/products.js') }}"></script>
+  <script>
+    $(document).ready(function() {
+      if (window.screen.width > 992) {
+        document.getElementById("open-categories-menu").remove()
+        document.getElementById("categories-menu").remove()
+      }
+    });
+  </script>
 {% endblock %}

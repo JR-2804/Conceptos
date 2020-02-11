@@ -1,5 +1,5 @@
 {% for product in shopCartProducts %}
-  <div class="d-flex shop-cart-product p-2 {% if loop.index > 1 %}mt-2{% endif %} {% if product.offerExists is defined and product.offerExists %}popular_product{% endif %}"
+  <div class="d-flex shop-cart-product p-2 {% if loop.index > 1 %}mt-2{% endif %}"
       data-product="{{product.id}}"
       data-uuid="{{ product.uuid }}"
       data-calculate-price-path="{{ path('calculate_product_price') }}"
@@ -20,10 +20,12 @@
       {% set productName = product.name %}
       {% set productPrice = product.price %}
     {% endif %}
-    <div class="d-flex col-5 conceptos-white-background justify-content-center align-items-center p-2">
-      <img class="conceptos-image conceptos-product-summary-image" src="{{imagePath}}" alt="{{productName}}">
+    <div class="d-flex col-5 col-lg-2 conceptos-white-background justify-content-center align-items-center p-0 {% if product.offerExists is defined and product.offerExists %}popular_product{% endif %}">
+      <div class="d-flex pl-1">
+        <img class="conceptos-image conceptos-product-summary-image" src="{{imagePath}}" alt="{{productName}}">
+      </div>
     </div>
-    <div class="d-flex flex-column col-7 pl-2">
+    <div class="d-flex flex-column col-7 col-lg-10 pl-2">
       <div class="d-flex flex-column">
         <span class="conceptos-product-info">{{productName}}</span>
         <span class="conceptos-product-info" data-price="{{productPrice}}">${{productPrice}}.00</span>

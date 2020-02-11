@@ -29,6 +29,8 @@ $(document).ready(function() {
     $(".services-inward-info").removeClass("d-none");
     $(".services-obras-info").addClass("d-none");
     $(".services-obras-info").removeClass("d-flex");
+
+    window.history.pushState(null, null, "#interiorismo");
   });
 
   $(".services-obras-button").click(function() {
@@ -43,7 +45,13 @@ $(document).ready(function() {
     $(".services-obras-info").removeClass("d-none");
     $(".services-inward-info").addClass("d-none");
     $(".services-inward-info").removeClass("d-flex");
+
+    window.history.pushState(null, null, "#obras");
   });
 
-  $(".services-inward-button").click();
+  if (window.location.href.includes("#obras")) {
+    $(".services-obras-button").click();
+  } else {
+    $(".services-inward-button").click();
+  }
 });

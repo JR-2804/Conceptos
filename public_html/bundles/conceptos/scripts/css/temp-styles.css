@@ -100,11 +100,8 @@ textarea {
   background-color: #e5e5e5;
 }
 
-.checkbox-container input:checked ~ .checkmark {
-  background-color: #282827;
-}
-
 .checkmark:after {
+  content: "";
   position: absolute;
   display: none;
 }
@@ -118,8 +115,8 @@ textarea {
   top: 5px;
   width: 5px;
   height: 10px;
-  border: solid #ffffff;
-  border-width: 0 3px 0 3px;
+  border: solid #282827;
+  border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
@@ -275,10 +272,12 @@ textarea {
 
 .conceptos-badge {
   background-color: #282827;
+  z-index: 10;
 }
 
 #conceptos-services-badge {
   position: sticky;
+  z-index: 15;
 }
 
 .conceptos-badge-text {
@@ -414,7 +413,7 @@ a.conceptos-subtitle:focus {
 }
 
 .conceptos-product-price-big {
-  font-size: 20px;
+  font-size: 20px !important;
 }
 
 .conceptos-offer-product-badge {
@@ -592,9 +591,32 @@ a.conceptos-category-subtitle:focus {
   min-width: 18px;
 }
 
-.conceptos-social-network-icon {
+.conceptos-social-network-icon-facebook {
   width: 35px;
   height: 35px;
+  background-color: transparent;
+  background-image: url("../../images/home/facebook.png");
+  background-size: cover;
+}
+
+.conceptos-social-network-icon-facebook:focus,
+.conceptos-social-network-icon-facebook:hover {
+  background-image: url("../../images/home/facebook-active.png");
+  outline: none;
+}
+
+.conceptos-social-network-icon-instagram {
+  width: 35px;
+  height: 35px;
+  background-color: transparent;
+  background-image: url("../../images/home/instagram.png");
+  background-size: cover;
+}
+
+.conceptos-social-network-icon-instagram:focus,
+.conceptos-social-network-icon-instagram:hover {
+  background-image: url("../../images/home/instagram-active.png");
+  outline: none;
 }
 
 .conceptos-go-to-cart-icon {
@@ -646,7 +668,6 @@ a.conceptos-category-subtitle:focus {
 
 .conceptos-project-image {
   max-height: 500px;
-  max-width: 500px;
   object-fit: cover;
   width: 100%;
 }
@@ -1055,15 +1076,15 @@ a.conceptos-category-subtitle:focus {
   }
 
   .conceptos-testimony-text {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .conceptos-testimony-author {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .conceptos-primary-button-gray {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .conceptos-in-store-image {
@@ -1083,6 +1104,18 @@ a.conceptos-category-subtitle:focus {
 
   .conceptos-product-price {
     font-size: 20px;
+  }
+
+  .conceptos-product-summary-image {
+    max-height: 150px;
+    max-width: 150px;
+    object-fit: cover;
+  }
+
+  .conceptos-project-image {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
   }
 }
 

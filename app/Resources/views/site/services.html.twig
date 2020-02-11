@@ -10,7 +10,7 @@
     <span class="conceptos-title-strong p-3 pl-lg-5">SERVICIOS</span>
     <div id="conceptos-services-badge" class="d-flex conceptos-badge pl-3 pr-3 pt-2 pb-2">
       <div class="d-flex justify-content-center align-items-center w-100">
-        <button class="conceptos-primary-button-badge conceptos-primary-button-badge-focused services-inward-button">
+        <button class="conceptos-primary-button-badge services-inward-button">
           <span class="pl-2 pr-2 w-100">INTERIORISMO</span>
         </button>
         <img class="conceptos-icon m-2" src="{{ asset('bundles/conceptos/images/home/arrows.png') }}">
@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="d-flex flex-column services-inward-info">
-      <div class="d-flex flex-column p-3 pl-lg-5 pr-lg-5">
+      <div class="d-flex flex-column col-lg-11 p-3 pl-lg-5 pr-lg-5">
         <span class="conceptos-title">{{inward.data.services.designersTeam.title}}</span>
         <span class="conceptos-subtitle">{{inward.data.services.designersTeam.description}}</span>
         <select id="service-select" class="conceptos-white-select mt-2 align-self-start">
@@ -33,12 +33,12 @@
           {% endfor %}
         </select>
       </div>
-      <div class="d-flex conceptos-badge p-3">
+      <div class="d-flex conceptos-badge p-3 pl-lg-5">
         <span class="conceptos-badge-text">OBRAS REALIZADAS</span>
       </div>
-      <div class="d-flex flex-column pl-3 pr-3 pl-lg-5 pr-lg-5 pb-3">
+      <div class="d-flex flex-wrap pl-3 pr-3 pl-lg-5 pr-lg-5 pb-3">
         {% for image in inward.data.services.projects.projects %}
-        <a class="d-flex flex-column" href="{{ path('project_details', {projectTitle: image.title}) }}">
+        <a class="d-flex flex-column align-items-center col-12 col-lg-6 pl-0 p-lg-3" href="{{ path('project_details', {projectTitle: image.title}) }}">
           <span class="conceptos-title-strong mt-3">{{image.title}}</span>
           <img class="conceptos-project-image mt-2" src="{{image.path}}">
         </a>
@@ -46,7 +46,7 @@
       </div>
     </div>
     <div class="d-none flex-column services-obras-info">
-      <div class="d-flex flex-column p-3 pl-lg-5 pr-lg-5">
+      <div class="d-flex flex-column col-lg-11 p-3 pl-lg-5 pr-lg-5">
         <span class="conceptos-title">{{services.data.services.designersTeam.title}}</span>
         <span class="conceptos-subtitle">{{services.data.services.designersTeam.description}}</span>
         <select id="obras-select" class="conceptos-white-select mt-2 align-self-start">
@@ -59,12 +59,12 @@
           {% endfor %}
         </select>
       </div>
-      <div class="d-flex conceptos-badge p-3">
+      <div class="d-flex conceptos-badge p-3 pl-lg-5">
         <span class="conceptos-badge-text">SERVICIOS REALIZADOS</span>
       </div>
-      <div class="d-flex flex-column pl-3 pr-3 pl-lg-5 pr-lg-5 pb-3">
+      <div class="d-flex flex-wrap pl-3 pr-3 pl-lg-5 pr-lg-5 pb-3">
         {% for image in services.data.services.projects.projects %}
-        <a class="d-flex flex-column" href="{{ path('project_details', {projectTitle: image.title}) }}">
+        <a class="d-flex flex-column align-items-center col-12 col-lg-6 pl-0 p-lg-3" href="{{ path('project_details', {projectTitle: image.title}) }}">
           <span class="conceptos-title-strong mt-3">{{image.title}}</span>
           <img class="conceptos-project-image mt-2" src="{{image.path}}">
         </a>

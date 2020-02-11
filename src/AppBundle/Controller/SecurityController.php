@@ -51,7 +51,10 @@ class SecurityController extends Controller
         }
 
         if ($error != null) {
-          return new RedirectResponse($this->generateUrl('site_home', ['displayLoginError' => true]));
+          $request->getSession()->set('loginError', true);
+          return new RedirectResponse($this->generateUrl('site_home'));
+        } else {
+          $request->getSession()->set('loginError', false);
         }
 
         // last username entered by the user

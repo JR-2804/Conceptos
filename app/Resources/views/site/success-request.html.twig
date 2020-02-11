@@ -19,7 +19,7 @@
             </div>
         </div>
     </section>
-    <section id="export-section" data-name="{{request.id}}-{{currentDate|date('Y')}} ({{request.client.name}})">
+    <section id="export-section" data-name="{{request.id}}-{{currentDate|date('Y')}} ({{request.client.firstName}})">
         <section class="checkout-data-section mb-0 pb-3">
             <div class="container-fluid pl-4 pr-4 pl-lg-5 pr-lg-5">
                 <div class="row">
@@ -29,8 +29,7 @@
                             <span class="rob-table-text checkout-subtitle">{{request.id}}-{{currentDate|date('Y')}}</span>
                         </div>
                         <div class="d-flex justify-content-between ml-2 flex-wrap">
-                            <span class="rob-table-text checkout-subtitle d-none d-lg-block"><strong>Nombre y Apellidos:</strong> {{request.client.name}}</span>
-                            <span class="rob-table-text checkout-subtitle d-lg-none"><strong>Nombre:</strong> {{request.client.name}}</span>
+                            <span class="rob-table-text checkout-subtitle d-none d-lg-block"><strong>Nombre y Apellidos:</strong> {{request.client.firstName}} {{request.client.lastName}}</span>
                             <span class="rob-table-text checkout-subtitle"><strong>Correo:</strong> {{request.client.email}}</span>
                             {% if request.client.movil %}<span class="rob-table-text checkout-subtitle"><strong>Teléfono Movil:</strong> {{request.client.movil}}</span>{% endif %}
                             {% if request.client.phone %}<span class="rob-table-text checkout-subtitle"><strong>Teléfono de Casa:</strong> {{request.client.phone}}</span>{% endif %}
