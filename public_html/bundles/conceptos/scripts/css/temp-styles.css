@@ -703,6 +703,7 @@ a.conceptos-category-subtitle:focus {
 .conceptos-primary-button:hover {
   background-color: #c2b930;
   outline: none;
+  color: #282827;
 }
 
 .conceptos-primary-button[disabled="disabled"] {

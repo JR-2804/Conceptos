@@ -576,6 +576,9 @@ function init() {
     $("#testimony-text-3").val(data.testimonies.text3);
     $("#testimony-author-3").val(data.testimonies.author3);
   }
+  if (data.prioritizeSlideText) {
+    $("#prioritize-slide-text").prop("checked", data.prioritizeSlideText);
+  }
 
   $("#app-app").val(data.app.app);
   $("#app-db").val(data.app.db);
@@ -592,6 +595,7 @@ function init() {
 function generateData() {
   var data = {
     slides: headerImages,
+    prioritizeSlideText: $("#prioritize-slide-text").prop("checked"),
     top: {
       image1: topImage1,
       image2: topImage2,
