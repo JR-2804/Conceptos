@@ -46,22 +46,9 @@ class Member
      */
     private $user;
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $balance;
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\BalanceUpdate", mappedBy="member")
-     */
-    private $balanceUpdates;
-    /**
      * @ORM\Column(type="date")
      */
     private $date;
-
-    public function __construct()
-    {
-        $this->balanceUpdates = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     public function getId()
     {
@@ -150,33 +137,6 @@ class Member
     public function getAddress()
     {
         return $this->address;
-    }
-
-    public function setBalance($balance)
-    {
-        $this->balance = $balance;
-    }
-
-    public function getBalance()
-    {
-        return $this->balance;
-    }
-
-    public function addBalanceUpdate($balanceUpdate)
-    {
-        $this->balanceUpdates[] = $balanceUpdate;
-
-        return $this;
-    }
-
-    public function removeBalanceUpdate($balanceUpdate)
-    {
-        $this->balanceUpdates->removeElement($balanceUpdate);
-    }
-
-    public function getBalanceUpdates()
-    {
-        return $this->balanceUpdates;
     }
 
     public function setDate($date)

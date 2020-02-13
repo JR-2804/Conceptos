@@ -6,6 +6,27 @@
 {% endblock %}
 
 {% block body %}
+  <div id="successShopRequestModal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="d-flex flex-column align-items-center">
+            <span class="conceptos-title">PEDIDO REALIZADO CORRECTAMENTE</span>
+            {% if app.user|default %}
+              <a class="conceptos-primary-button pl-2 pr-2" href="{{ path('site_profile') }}">
+                COMPROBAR ESTADO DE LOS PEDIDOS
+              </a>
+            {% else %}
+              <a class="conceptos-primary-button pl-2 pr-2" href="" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">
+                ACCEDA PARA COMPROBAR EL ESTADO DE SUS PEDIDOS
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="home-header" class="d-flex justify-content-center home__hero align-items-start">
     {% if page.data.slides and page.data.slides is not empty %}
       <img class="conceptos-image" src="{{page.data.slides[0].path}}">
@@ -275,19 +296,7 @@
   <script src="{{ asset('bundles/conceptos/home/js/home.js') }}"></script>
   <script>
     {% if showSuccessToast is defined and showSuccessToast == true %}
-      $.toast({
-        text: 'Pedido realizado correctamente',
-        showHideTransition: "fade",
-        bgColor: "#c2b930",
-        textColor: "#3f3c03",
-        allowToastClose: true,
-        hideAfter: 3000,
-        stack: 5,
-        textAlign: "center",
-        position: "mid-center",
-        icon: "success",
-        heading: "Correcto"
-      });
+      $("#successShopRequestModal").modal();
     {% endif %}
   </script>
 {% endblock %}
