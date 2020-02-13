@@ -678,7 +678,8 @@ a.conceptos-category-subtitle:focus {
 }
 
 .conceptos-product-image {
-  object-fit: cover;
+  object-fit: scale-down;
+  height: 25vh;
 }
 
 .conceptos-product-summary-image {
