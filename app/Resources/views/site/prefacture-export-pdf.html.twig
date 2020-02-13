@@ -77,7 +77,8 @@
         <span>{{prefacture.date|date('d/m/Y')}}</span>
       </div>
       <div class="d-flex flex-column">
-        <span>NOMBRE: {{prefacture.client.name}}</span>
+        <span>NOMBRE: {{prefacture.client.firstName}}</span>
+        <span>APELLIDOS: {{prefacture.client.lastName}}</span>
         <span>EMAIL: {{prefacture.client.email}}</span>
         <span>DIRECCIÓN: {{prefacture.client.address}}</span>
         <span>TELÉFONO: {{prefacture.client.movil ? prefacture.client.movil : prefacture.client.phone}}</span>
@@ -168,11 +169,11 @@
         </table>
       </div>
     </div>
-    <div class="d-flex justify-content-end footer">
+    {# <div class="d-flex justify-content-end footer">
       <div class="d-flex flex-column pr-5 align-items-end">
         <span>www.tiendaconceptos.com</span>
       </div>
-    </div>
+    </div> #}
   </div>
 </body>
 </html>
