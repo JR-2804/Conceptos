@@ -678,7 +678,8 @@ a.conceptos-category-subtitle:focus {
 }
 
 .conceptos-product-image {
-  object-fit: cover;
+  object-fit: scale-down;
+  height: 25vh;
 }
 
 .conceptos-product-summary-image {
@@ -1108,8 +1109,8 @@ a.conceptos-category-subtitle:focus {
   }
 
   .conceptos-product-summary-image {
-    max-height: 150px;
-    max-width: 150px;
+    max-height: 200px;
+    max-width: 200px;
     object-fit: cover;
   }
 
