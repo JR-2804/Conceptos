@@ -53,4 +53,11 @@
     & .ProductMarker{
         width: 45%;
     }
+
+    & p img{
+        position: relative;
+        width: calc(100% + 60px) !important;
+        height: 50vh !important;
+        left: -30px !important;
+    }
 }
