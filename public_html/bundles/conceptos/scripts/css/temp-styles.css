@@ -1119,6 +1119,10 @@ a.conceptos-category-subtitle:focus {
     height: 500px;
     object-fit: cover;
   }
+
+  .shop-cart-product-list-section {
+    max-height: 70vh;
+  }
 }
 
 #cartPreviewModal .product-delivery {
