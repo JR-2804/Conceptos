@@ -23,8 +23,8 @@
     {% endif %}
   {% endfor %}
 {% endif %}
-<div class="d-flex justify-content-center p-2 {% if priceOffer != -1 %}popular_product{% endif %}">
-  <div class="d-flex align-items-center conceptos-white-background p-2">
+<div class="d-flex justify-content-center p-2 w-100 {% if priceOffer != -1 %}popular_product{% endif %}">
+  <div class="d-flex align-items-center conceptos-white-background p-2 w-100">
     <a class="h-100" href="{{ path('product_details', {id: product.id, name: product.name}) }}">
       <div class="d-flex flex-column justify-content-between h-100">
         <img class="conceptos-image conceptos-popular-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">

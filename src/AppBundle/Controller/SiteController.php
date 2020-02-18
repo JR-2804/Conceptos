@@ -41,8 +41,6 @@ class SiteController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $currentDate = new \DateTime();
-
         $offers = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')
             ->createQueryBuilder('o')
             ->where('o.startDate <= :date AND o.endDate >= :date')
@@ -62,9 +60,9 @@ class SiteController extends Controller
                 ];
             }
             foreach ($offer->getProducts() as $product) {
-                $offersProduct = $this->get('product_service')->findOffersByProductAndDate($product->getId(), $currentDate);
-                if (count($offersProduct) > 0) {
-                    $product->setPriceOffer($offersProduct[0]->getPrice());
+                $offer = $this->get('product_service')->findProductOffer($product->getId());
+                if ($offer) {
+                    $product->setPriceOffer($offer->getPrice());
                 }
                 if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
                   $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
@@ -106,9 +104,9 @@ class SiteController extends Controller
         $lastedHighlight = null;
         foreach ($products as $product) {
           if ($product->getIsHighlight()) {
-            $offersInStore = $this->get('product_service')->findOffersByProductAndDate($product->getId(), $currentDate);
-            if (count($offersInStore) > 0) {
-                $product->setPriceOffer($offersInStore[0]->getPrice());
+            $offer = $this->get('product_service')->findProductOffer($product->getId());
+            if ($offer) {
+              $product->setPriceOffer($offer->getPrice());
             }
             if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
                 $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
@@ -130,9 +128,9 @@ class SiteController extends Controller
         }
 
         foreach ($inStore as $product) {
-            $offersInStore = $this->get('product_service')->findOffersByProductAndDate($product->getId(), $currentDate);
-            if (count($offersInStore) > 0) {
-                $product->setPriceOffer($offersInStore[0]->getPrice());
+            $offer = $this->get('product_service')->findProductOffer($product->getId());
+            if ($offer) {
+              $product->setPriceOffer($offer->getPrice());
             }
             if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
                 $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
@@ -140,9 +138,9 @@ class SiteController extends Controller
         }
 
         foreach ($lasted as $product) {
-            $offersInLast = $this->get('product_service')->findOffersByProductAndDate($product->getId(), $currentDate);
-            if (count($offersInLast) > 0) {
-                $product->setPriceOffer($offersInLast[0]->getPrice());
+            $offer = $this->get('product_service')->findProductOffer($product->getId());
+            if ($offer) {
+              $product->setPriceOffer($offer->getPrice());
             }
             if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
                 $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
@@ -349,17 +347,7 @@ class SiteController extends Controller
                 $productR->setFavorite($this->get('product_service')->existProductInFavorite($productR->getId(), $this->getUser()->getId()));
             }
         }
-        $offer = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')->createQueryBuilder('o')
-            ->join('o.products', 'p')
-            ->where('o.startDate < :date AND o.endDate > :date AND p.id = :product')
-            ->setParameter('date', new \DateTime(), Type::DATE)
-            ->setParameter('product', $id)
-            ->getQuery()->getResult();
-        if (count($offer) > 0) {
-            $offer = $offer[0];
-        } else {
-            $offer = null;
-        }
+        $offer = $this->get('product_service')->findProductOffer($product->getId());
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
@@ -472,7 +460,7 @@ class SiteController extends Controller
 
             $cucExtra = 0;
             if ($paymentCurrency == 'cuc') {
-              $cucExtra = ceil($totalPriceBase * 0.2);
+              $cucExtra = ceil($totalPriceBase * 0.15);
               $totalPrice += $cucExtra;
             }
 
@@ -1288,7 +1276,7 @@ class SiteController extends Controller
             'forClient' => false,
         ]);
 
-        $bodyClient = $this->renderView(':site:request-email.html.twig', [
+        return $this->render(':site:request-email.html.twig', [
             'request' => $requestDB,
             'inStore' => $inStore,
             'home' => $home,
@@ -1717,30 +1705,10 @@ class SiteController extends Controller
               $price = $productDB->getPrice();
 
               $offerExists = false;
-              $offerDB = null;
-              if ($productDB->getOffers() && $productDB->getOffers()[0]) {
-                $offerDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')->find($productDB->getOffers()[0]);
-              }
-
-              if ($offerDB) {
-                $price = $offerDB->getPrice();
+              $offer = $this->get('product_service')->findProductOffer($productDB->getId());
+              if ($offer) {
+                $price = $offer->getPrice();
                 $offerExists = true;
-              } else {
-                foreach ($productDB->getCategories() as $category) {
-                  $categories[] = $category->getId();
-
-                  if (($category->getOffers()[0]) && ((!$category->getOffers()[0]->getOnlyInStoreProducts()) or ($category->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
-                    $price = ceil($productDB->getPrice()*(1 - $category->getOffers()[0]->getPrice()/100));
-                    $offerExists = true;
-                  } else {
-                    foreach ($category->getParents() as $parentCategory) {
-                      if (($parentCategory->getOffers()[0]) && ((!$parentCategory->getOffers()[0]->getOnlyInStoreProducts()) or ($parentCategory->getOffers()[0]->getOnlyInStoreProducts() && $productDB->getInStore()))) {
-                        $price = ceil($productDB->getPrice()*(1 - $parentCategory->getOffers()[0]->getPrice()/100));
-                        $offerExists = true;
-                      }
-                    }
-                  }
-                }
               }
 
               $productsDB[] = [

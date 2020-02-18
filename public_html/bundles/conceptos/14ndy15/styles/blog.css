@@ -1,35 +1,37 @@
 .blog_list__title {
-  width: 80%;
-  margin: auto; }
-  .blog_list__title h2 {
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 1.2em; }
-  .content-post {
-  background: #e3e3e3; }
-  .content-post {
+}
+.blog_list__title h2 {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.2em;
+}
+.content-post {
+  background: #e3e3e3;
+}
+.content-post {
   padding: 0;
-  width: 95%;
-  margin: auto; }
-  .post {
-  background: white;
-  width: 90%;
   margin: auto;
-  padding-left: 0; }
-  .post-thumbnail {
-    padding: 5%; }
-  .post-details {
-    padding: 0 5% 0; }
-  .post-details h3 {
-      margin: 0;
-      text-transform: uppercase;
-      font-weight: 700;
-      font-size: 1.15em; }
-  .post-body {
+}
+.post {
+  background: white;
+  margin: auto;
+  padding-left: 0;
+}
+.post-details {
+}
+.post-details h3 {
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.15em;
+}
+.post-body {
   display: -webkit-box;
   display: flex;
   flex-wrap: wrap;
   -webkit-box-pack: justify;
-          justify-content: space-between; }
-  .post-body .ProductMarker {
-    width: 45%; }
+  justify-content: space-between;
+}
+.post-body .ProductMarker {
+  width: 45%;
+}

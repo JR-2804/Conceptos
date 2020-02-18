@@ -40,14 +40,20 @@ class ProductService
         return $this->productRepository->find($id);
     }
 
-    public function findOffersByProductAndDate($product, $date)
+    public function findProductOffer($product)
     {
-        return $this->offerRepository->createQueryBuilder('o')
-            ->join('o.products', 'p')
-            ->where('p.id = :product AND o.startDate <= :date AND o.endDate >= :date')
-            ->setParameter('product', $product)
-            ->setParameter('date', $date, Type::DATE)
-            ->getQuery()->getResult();
+      $offers = $this->offerRepository->createQueryBuilder('o')
+        ->join('o.products', 'p')
+        ->where('p.id = :product AND o.startDate <= :date AND o.endDate >= :date')
+        ->setParameter('product', $product)
+        ->setParameter('date', new \DateTime(), Type::DATE)
+        ->getQuery()->getResult();
+
+      if (count($offers) > 0) {
+        return $offers[0];
+      }
+
+      return null;
     }
 
     public function findAll()
