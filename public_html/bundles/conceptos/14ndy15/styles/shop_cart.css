@@ -57,3 +57,11 @@
   background-image: linear-gradient(top, rgba(194, 185, 48, 0.85), rgba(194, 185, 48, 0.95));
   -webkit-transition: left 0.15s ease-out;
   transition: left 0.15s ease-out; }
+
+#termsAndConditions, #privacyPolicy {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  opacity: 1; }

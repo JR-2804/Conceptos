@@ -37,6 +37,7 @@ class LoadProduct{
 
             axios.get(newUrl).then((response)=>{
                 let productData = response.data;
+                console.log(newUrl);
                 this.addProduct(productData, index);
 
             }).catch((error)=>{
