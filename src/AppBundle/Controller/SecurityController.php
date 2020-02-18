@@ -274,6 +274,7 @@ class SecurityController extends Controller
       }
 
       $productsDB = [];
+      $categories = [];
       foreach ($products as $product) {
           if (array_key_exists('id', $product) && ('target15' == $product['id'] || 'target25' == $product['id'] || 'target50' == $product['id'] || 'target100' == $product['id'])) {
               $name = 'Tarjeta de 15 CUC';
@@ -316,7 +317,6 @@ class SecurityController extends Controller
                 $price = $offerDB->getPrice();
                 $offerExists = true;
               } else {
-                $categories = [];
                 foreach ($productDB->getCategories() as $category) {
                   $categories[] = $category->getId();
 

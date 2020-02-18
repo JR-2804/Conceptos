@@ -1362,33 +1362,51 @@ class SiteController extends Controller
     {
         $prefactureDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->find($id);
 
+        $numberOfProducts = 0;
+        $subtotal = 0;
         $productsResponse = [];
         foreach ($prefactureDB->getPreFactureProducts() as $product) {
           $productDB = $product->getProduct();
 
+          $airplane = 'MARÍTIMO';
+          if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
+            $airplane = 'AÉREO';
+          }
+
+          $numberOfProducts += $product->getCount();
+          $subtotal += $product->getCount() * $product->getProductPrice();
           $productsResponse[] = [
               'image' => $productDB->getMainImage(),
               'code' => $productDB->getCode(),
+              'description' => $productDB->getDescription(),
               'count' => $product->getCount(),
               'price' => $product->getProductPrice(),
               'product' => $productDB,
+              'airplane' => $airplane,
           ];
         }
 
         foreach ($prefactureDB->getPreFactureCards() as $card) {
           $price = $card->getPrice();
 
+          $numberOfProducts += $card->getCount();
+          $subtotal += $card->getCount() * $price;
           $productsResponse[] = [
               'name' => 'Tarjeta de $'.$price,
+              'description' => 'Tarjeta de $'.$price,
               'code' => $price,
               'count' => $card->getCount(),
               'price' => $price,
+              'airplane' => 'NINGUNO',
           ];
         }
 
         return $this->render(':site:prefacture-export-pdf.html.twig', [
             'prefacture' => $prefactureDB,
             'products' => $productsResponse,
+            'numberOfProducts' => $numberOfProducts,
+            'subtotal' => $subtotal,
+            'firstPayment' => ceil($prefactureDB->getFinalPrice() / 1.8),
             'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
             'membership' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Membresia']),
         ]);
@@ -1665,6 +1683,7 @@ class SiteController extends Controller
       }
 
       $productsDB = [];
+      $categories = [];
       foreach ($products as $product) {
           if (array_key_exists('id', $product) && ('target15' == $product['id'] || 'target25' == $product['id'] || 'target50' == $product['id'] || 'target100' == $product['id'])) {
               $name = 'Tarjeta de 15 CUC';
@@ -1703,7 +1722,6 @@ class SiteController extends Controller
                 $offerDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')->find($productDB->getOffers()[0]);
               }
 
-              $categories = [];
               if ($offerDB) {
                 $price = $offerDB->getPrice();
                 $offerExists = true;

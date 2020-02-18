@@ -68,38 +68,66 @@
       <div class="row justify-content-end">
         <div class="col-3 pl-0">
           <div class="d-flex flex-column align-items-end">
-            <strong>PREFACTURA</strong>
-            <span>{{prefacture.id}}-{{prefacture.date|date('Y')}}</span>
+            <span><strong>PREFACTURA:</strong> {{prefacture.id}}-{{prefacture.date|date('Y')}}</span>
+            <span><strong>FECHA:</strong> {{prefacture.date|date('d/m/Y')}}</span>
           </div>
         </div>
       </div>
-      <div class="d-flex">
-        <span>{{prefacture.date|date('d/m/Y')}}</span>
-      </div>
-      <div class="d-flex flex-column">
-        <span>NOMBRE: {{prefacture.client.firstName}}</span>
-        <span>APELLIDOS: {{prefacture.client.lastName}}</span>
-        <span>EMAIL: {{prefacture.client.email}}</span>
-        <span>DIRECCIÓN: {{prefacture.client.address}}</span>
-        <span>TELÉFONO: {{prefacture.client.movil ? prefacture.client.movil : prefacture.client.phone}}</span>
-        {% if prefacture.client.memberNumber %}
-          <span>NÚMERO DE MIEMBRO: {{prefacture.client.memberNumber}}</span>
-        {% endif %}
+      <div class="d-flex justify-content-between mt-3">
+        <div class="d-flex flex-column">
+          <span>NOMBRE Y APELLIDOS: {{prefacture.client.firstName}} {{prefacture.client.lastName}}</span>
+          <span>CORREO: {{prefacture.client.email}}</span>
+          <span>DIRECCIÓN PARTICULAR: {{prefacture.client.address}}</span>
+          {% if prefacture.client.phone %}
+            <span>TELÉFONO FIJO: {{prefacture.client.phone}}</span>
+          {% endif %}
+          {% if prefacture.client.movil %}
+            <span>TELÉFONO MÓVIL: {{prefacture.client.movil}}</span>
+          {% endif %}
+          {% if prefacture.client.memberNumber %}
+            <span>NÚMERO DE MIEMBRO: {{prefacture.client.memberNumber}}</span>
+          {% endif %}
+          <span style="margin-top: 15px;">FIRMA DEL CLIENTE: ____________________________</span>
+          <span style="margin-top: 10px;">FIRMA DEL COMERCIAL: ____________________________</span>
+        </div>
+        <div class="d-flex flex-column">
+          <span>CANTIDAD DE ARTÍCULOS: {{numberOfProducts}}</span>
+          <span>SUBTOTAL DE COMPRA: ${{subtotal}}.00</span>
+          <span>TIPO DE MONEDA: {% if prefacture.cucExtra %}CUC{% else %}USD{% endif %}</span>
+          {% if prefacture.cucExtra %}
+            <span>EXTRA POR CUC: ${{prefacture.cucExtra}}.00</span>
+          {% endif %}
+          <span>PLAZOS DE PAGO: {% if prefacture.twoStepExtra %}2{% else %}1{% endif %}</span>
+          {% if prefacture.twoStepExtra %}
+          <span>EXTRA POR 2 PLAZOS: ${{prefacture.twoStepExtra}}.00</span>
+          {% endif %}
+          {% if prefacture.discount %}
+            <span>DESCUENTO DE MIEMBRO: ${{prefacture.discount}}.00</span>
+          {% endif %}
+          <span>COSTO DE TRANSPORTE: ${{prefacture.transportCost}}.00</span>
+          <span>TOTAL A PAGAR: ${{prefacture.finalPrice}}.00</span>
+          {% if firstPayment %}
+            <span>PAGO ANTICIPADO: ${{firstPayment}}.00</span>
+          {% endif %}
+        </div>
       </div>
       <div class="row pt-3">
         <table class="table table-bordered">
           <thead>
           <tr>
-            <th class="pl-2">PRODUCTOS</th>
             <th class="pl-2">CÓDIGO</th>
+            <th class="pl-2">FOTO</th>
+            <th class="pl-2" style="max-width: 200px;">DESCRIPCIÓN</th>
             <th class="pl-2">CANTIDAD</th>
-            <th class="pl-2">PRECIO UNIDAD</th>
-            <th class="pl-2">PRECIO SUBTOTAL</th>
+            <th class="pl-2">PRECIO</th>
+            <th class="pl-2">TOTAL</th>
+            <th class="pl-2">TIPO DE ENVÍO</th>
           </tr>
           </thead>
           <tbody class="table-members">
             {% for product in products %}
               <tr>
+                <td class="pl-2">{{product.code}}</td>
                 <td>
                   {% if product.image is defined %}
                     <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.image, 'imageFile')) }}" />
@@ -116,55 +144,13 @@
                     <img class="ml-5 mt-2 mb-2 product-image" src="{{imagePath}}" />
                   {% endif %}
                 </td>
-                <td class="pl-2">{{product.code}}</td>
+                <td class="pl-2" style="max-width: 200px;">{{product.description}}</td>
                 <td class="pl-2">{{product.count}}</td>
                 <td class="pl-2">{{product.price}}</td>
                 <td class="pl-2">{{product.price * product.count}}</td>
+                <td class="pl-2">{{product.airplane}}</td>
               </tr>
             {% endfor %}
-            <tr>
-              <td class="pl-2">Total (cuc): ${{prefacture.finalPrice}}.00</td>
-              <td class="pl-2">Total (cup): ${{prefacture.finalPrice * cupConversionRate}}.00</td>
-              <td class="pl-2">
-                <div class="d-flex flex-column">
-                  <span>Descuento por membresía:</span>
-                  <div class="d-flex">
-                    <div>
-                      <span>CUC: ${{prefacture.discount}}.00</span>
-                    </div>
-                    <div class="pl-5">
-                      <span>CUP: ${{prefacture.discount * cupConversionRate}}.00</span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="pl-2">
-                <div class="d-flex flex-column">
-                  <span>Descuento por primera compra:</span>
-                  <div class="d-flex">
-                    <div>
-                      <span>CUC: ${{prefacture.firstClientDiscount}}.00</span>
-                    </div>
-                    <div class="pl-5">
-                      <span>CUP: ${{prefacture.firstClientDiscount * cupConversionRate}}.00</span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="pl-2">
-                <div class="d-flex flex-column">
-                  <span>Entrega a domicilio:</span>
-                  <div class="d-flex">
-                    <div>
-                      <span>CUC: ${{prefacture.transportCost}}.00</span>
-                    </div>
-                    <div class="pl-5">
-                      <span>CUP: ${{prefacture.transportCost * cupConversionRate}}.00</span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>
