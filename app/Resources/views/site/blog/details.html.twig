@@ -44,17 +44,16 @@
       <div class="post-single">
         <h1 class="d-none d-lg-block">{{ post.title }}</h1>
         <h2 class="d-lg-none">{{ post.title }}</h2>
-        <img src="{{ absolute_url(vich_uploader_asset(post, 'imageFile')) }}" alt="{{ post.title }}" class="img-fluid mb-2">
+        <img src="{{ absolute_url(vich_uploader_asset(post, 'imageFile')) }}" alt="{{ post.title }}" class="conceptos-image mb-2">
         <div class="post-details">
-          <div class="post-footer d-flex align-items-center flex-column flex-row">
-            <div class="sharetastic ml-0"></div>
-            <div class="d-flex align-items-center flex-wrap">
-              <div class="date">
-                <i class="mbri-clock"></i>{{ post.createdDate | date('d-m-Y') }}
-              </div>
+          <div class="d-flex align-items-center flex-column">
+            <div class="d-flex justify-content-between w-100">
+              <span class="conceptos-blog-info">{{post.createdDate | date('d M | Y')}}</span>
+              <span class="conceptos-blog-info"><i class="fa fa-eye"></i> {{post.visitCount}}</span>
             </div>
+            <div class="sharetastic ml-0"></div>
           </div>
-          <div class="post-body mt-2">
+          <div class="post-body">
             {{ post.body | raw }}
           </div>
           <div class="post-tags">

@@ -353,6 +353,13 @@ a.conceptos-title-strong:focus {
   color: #282827;
 }
 
+.conceptos-blog-info {
+  font-family: Montserrat;
+  font-size: 12px;
+  color: #777777;
+  text-transform: uppercase;
+}
+
 .conceptos-text-align-center {
   text-align: center;
 }
@@ -1038,6 +1045,10 @@ a.conceptos-category-subtitle:focus {
 
 /* -------------------------------------------------------- */
 
+#cartPreviewModal .product-delivery {
+  display: none !important;
+}
+
 @media (min-width: 992px) {
   .carousel-indicators li {
     height: 13px;
@@ -1131,8 +1142,4 @@ a.conceptos-category-subtitle:focus {
   .shop-cart-product-list-section {
     max-height: 70vh;
   }
-}
-
-#cartPreviewModal .product-delivery {
-  display: none !important;
 }
