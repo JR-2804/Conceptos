@@ -533,6 +533,7 @@ a.conceptos-category-subtitle:focus {
   border: none;
   background: none;
   outline: none !important;
+  cursor: pointer;
 }
 
 .conceptos-add-to-cart-icon img {
@@ -654,6 +655,7 @@ a.conceptos-category-subtitle:focus {
 
 .conceptos-popular-product-image {
   object-fit: cover;
+  height: 80%;
 }
 
 .conceptos-in-store-image {
@@ -685,6 +687,12 @@ a.conceptos-category-subtitle:focus {
 .conceptos-product-summary-image {
   max-height: 100px;
   max-width: 100px;
+  object-fit: cover;
+}
+
+.conceptos-comment-image {
+  max-height: 50px;
+  max-width: 50px;
   object-fit: cover;
 }
 

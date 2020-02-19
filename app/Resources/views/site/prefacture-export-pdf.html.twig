@@ -65,7 +65,7 @@
       <img class="pl-5 pt-2 pb-2" src="{{ home.data.logo.image.path }}" />
     </div>
     <div class="ml-5 mr-5 content">
-      <div class="row justify-content-end">
+      <div class="d-flex justify-content-end">
         <div class="col-3 pl-0">
           <div class="d-flex flex-column align-items-end">
             <span><strong>PREFACTURA:</strong> {{prefacture.id}}-{{prefacture.date|date('Y')}}</span>
@@ -75,91 +75,120 @@
       </div>
       <div class="d-flex justify-content-between mt-3">
         <div class="d-flex flex-column">
-          <span>NOMBRE Y APELLIDOS: {{prefacture.client.firstName}} {{prefacture.client.lastName}}</span>
-          <span>CORREO: {{prefacture.client.email}}</span>
-          <span>DIRECCIÓN PARTICULAR: {{prefacture.client.address}}</span>
+          <span><strong>NOMBRE Y APELLIDOS:</strong> {{prefacture.client.firstName}} {{prefacture.client.lastName}}</span>
+          <span><strong>CORREO:</strong> {{prefacture.client.email}}</span>
+          <span><strong>DIRECCIÓN PARTICULAR:</strong> {{prefacture.client.address}}</span>
           {% if prefacture.client.phone %}
-            <span>TELÉFONO FIJO: {{prefacture.client.phone}}</span>
+            <span><strong>TELÉFONO FIJO:</strong> {{prefacture.client.phone}}</span>
           {% endif %}
           {% if prefacture.client.movil %}
-            <span>TELÉFONO MÓVIL: {{prefacture.client.movil}}</span>
+            <span><strong>TELÉFONO MÓVIL:</strong> {{prefacture.client.movil}}</span>
           {% endif %}
           {% if prefacture.client.memberNumber %}
-            <span>NÚMERO DE MIEMBRO: {{prefacture.client.memberNumber}}</span>
+            <span><strong>NÚMERO DE MIEMBRO:</strong> {{prefacture.client.memberNumber}}</span>
           {% endif %}
-          <span style="margin-top: 15px;">FIRMA DEL CLIENTE: ____________________________</span>
-          <span style="margin-top: 10px;">FIRMA DEL COMERCIAL: ____________________________</span>
+          <div class="d-flex justify-content-between mt-3">
+            <strong>FIRMA DEL CLIENTE:</strong>
+            <span class="ml-2">____________________________</span>
+          </div>
+          <div class="d-flex justify-content-between mt-2">
+            <strong>FIRMA DEL COMERCIAL:</strong>
+            <span class="ml-2">____________________________</span>
+          </div>
         </div>
         <div class="d-flex flex-column">
-          <span>CANTIDAD DE ARTÍCULOS: {{numberOfProducts}}</span>
-          <span>SUBTOTAL DE COMPRA: ${{subtotal}}.00</span>
-          <span>TIPO DE MONEDA: {% if prefacture.cucExtra %}CUC{% else %}USD{% endif %}</span>
+          <span><strong>CANTIDAD DE ARTÍCULOS:</strong> {{numberOfProducts}}</span>
+          <span><strong>SUBTOTAL DE COMPRA:</strong> ${{subtotal}}.00</span>
+          <span><strong>TIPO DE MONEDA:</strong> {% if prefacture.cucExtra %}CUC{% else %}USD{% endif %}</span>
           {% if prefacture.cucExtra %}
-            <span>EXTRA POR CUC: ${{prefacture.cucExtra}}.00</span>
+            <span><strong>EXTRA POR CUC:</strong> ${{prefacture.cucExtra}}.00</span>
           {% endif %}
-          <span>PLAZOS DE PAGO: {% if prefacture.twoStepExtra %}2{% else %}1{% endif %}</span>
+            <span><strong>PLAZOS DE PAGO:</strong> {% if prefacture.twoStepExtra %}2{% else %}1{% endif %}</span>
           {% if prefacture.twoStepExtra %}
-          <span>EXTRA POR 2 PLAZOS: ${{prefacture.twoStepExtra}}.00</span>
+            <span><strong>EXTRA POR 2 PLAZOS:</strong> ${{prefacture.twoStepExtra}}.00</span>
+            <span><strong>PAGO ANTICIPADO:</strong> ${{firstPayment}}.00</span>
           {% endif %}
           {% if prefacture.discount %}
-            <span>DESCUENTO DE MIEMBRO: ${{prefacture.discount}}.00</span>
+            <span><strong>DESCUENTO DE MIEMBRO:</strong> ${{prefacture.discount}}.00</span>
           {% endif %}
-          <span>COSTO DE TRANSPORTE: ${{prefacture.transportCost}}.00</span>
-          <span>TOTAL A PAGAR: ${{prefacture.finalPrice}}.00</span>
-          {% if firstPayment %}
-            <span>PAGO ANTICIPADO: ${{firstPayment}}.00</span>
-          {% endif %}
+          <span><strong>COSTO DE TRANSPORTE:</strong> ${{prefacture.transportCost}}.00</span>
+          <span><strong>TOTAL A PAGAR:</strong> ${{prefacture.finalPrice}}.00</span>
         </div>
       </div>
-      <div class="row pt-3">
-        <table class="table table-bordered">
-          <thead>
-          <tr>
-            <th class="pl-2">CÓDIGO</th>
-            <th class="pl-2">FOTO</th>
-            <th class="pl-2" style="max-width: 200px;">DESCRIPCIÓN</th>
-            <th class="pl-2">CANTIDAD</th>
-            <th class="pl-2">PRECIO</th>
-            <th class="pl-2">TOTAL</th>
-            <th class="pl-2">TIPO DE ENVÍO</th>
-          </tr>
-          </thead>
-          <tbody class="table-members">
-            {% for product in products %}
-              <tr>
-                <td class="pl-2">{{product.code}}</td>
-                <td>
-                  {% if product.image is defined %}
-                    <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.image, 'imageFile')) }}" />
+      <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+          <th class="pl-2">CÓDIGO</th>
+          <th class="pl-2">FOTO</th>
+          <th class="pl-2" style="max-width: 200px;">DESCRIPCIÓN</th>
+          <th class="pl-2">CANTIDAD</th>
+          <th class="pl-2">PRECIO</th>
+          <th class="pl-2">TOTAL</th>
+          <th class="pl-2">TIPO DE ENVÍO</th>
+        </tr>
+        </thead>
+        <tbody class="table-members">
+          {% for product in products %}
+            <tr>
+              <td class="pl-2">{{product.code}}</td>
+              <td>
+                {% if product.image is defined %}
+                  <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.image, 'imageFile')) }}" />
+                {% else %}
+                  {% if product.price == 15 %}
+                    {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
+                  {% elseif product.price == 25 %}
+                    {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
+                  {% elseif product.price == 50 %}
+                    {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
                   {% else %}
-                    {% if product.price == 15 %}
-                      {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
-                    {% elseif product.price == 25 %}
-                      {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
-                    {% elseif product.price == 50 %}
-                      {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
-                    {% else %}
-                      {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
-                    {% endif %}
-                    <img class="ml-5 mt-2 mb-2 product-image" src="{{imagePath}}" />
+                    {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
                   {% endif %}
-                </td>
-                <td class="pl-2" style="max-width: 200px;">{{product.description}}</td>
-                <td class="pl-2">{{product.count}}</td>
-                <td class="pl-2">{{product.price}}</td>
-                <td class="pl-2">{{product.price * product.count}}</td>
-                <td class="pl-2">{{product.airplane}}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+                  <img class="ml-5 mt-2 mb-2 product-image" src="{{imagePath}}" />
+                {% endif %}
+              </td>
+              <td class="pl-2" style="max-width: 200px;">{{product.description}}</td>
+              <td class="pl-2">{{product.count}}</td>
+              <td class="pl-2">{{product.price}}</td>
+              <td class="pl-2">{{product.price * product.count}}</td>
+              <td class="pl-2">{{product.airplane}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-    {# <div class="d-flex justify-content-end footer">
-      <div class="d-flex flex-column pr-5 align-items-end">
-        <span>www.tiendaconceptos.com</span>
-      </div>
-    </div> #}
   </div>
 </body>
+<script src="{{ asset('bundles/conceptos/assets/html2canvas/html2canvas.min.js') }}"></script>
+<script src="{{ asset('bundles/conceptos/assets/jspdf/jspdf.min.js') }}"></script>
+<script>
+  // var pdf = new jsPDF('p', 'pt', 'a4');
+  // pdf.fromHTML(document.body, 15, 15, {}, function(dispose) {
+  //   pdf.save('Test.pdf')
+  // });
+
+  // var pdf = new jsPDF('p', 'pt', 'a4');
+  // pdf.addHTML(document.body, function() {
+  //   console.log(1);
+  //   pdf.save('Test.pdf');
+  // });
+
+  // html2canvas(document.body, {
+  //   onrendered: function(canvas) {
+  //     console.log(1);
+  //     var img = canvas.toDataURL("image/png")
+
+  //     var pdf = new jsPDF('p', 'pt', 'a4');
+  //     pdf.addImage(img, 'JPEG', 20, 20);
+  //     pdf.save('Test.pdf');
+  //   }
+  // });
+
+  // html2canvas(document.body).then(function(canvas) {
+  //   var img = canvas.toDataURL("image/png")
+  //   var pdf = new jsPDF('p', 'pt', 'a4');
+  //   pdf.addImage(img, 'JPEG', 0, 0);
+  //   pdf.save('Test.pdf');
+  // });
+</script>
 </html>

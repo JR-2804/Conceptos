@@ -283,7 +283,7 @@ $(document).ready(function() {
 
     var currencyExtraSection = $(".shop-cart-currency-extra");
     if (paymentCurrency == "cuc") {
-      var currencyExtra = Math.ceil(totalPriceBase * 0.2);
+      var currencyExtra = Math.ceil(totalPriceBase * 0.15);
       totalPrice += currencyExtra;
       $(".shop-cart-currency").text("CUC");
       currencyExtraSection.parent().removeClass("d-none");
@@ -487,18 +487,20 @@ $(document).ready(function() {
 
   // ==================================================
 
-  let containerBlog = document.querySelector('.post-single');
-  if (containerBlog !== null){
-    containerBlog.addEventListener('DOMNodeInserted', (e)=>{
+  let containerBlog = document.querySelector(".post-single");
+  if (containerBlog !== null) {
+    containerBlog.addEventListener("DOMNodeInserted", e => {
       e.preventDefault();
       e.stopPropagation();
 
       let product = e.target;
-      product.querySelector('.conceptos-add-to-cart-icon').addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var url = $(this).data("path");
-        ajax(
+      product
+        .querySelector(".conceptos-add-to-cart-icon")
+        .addEventListener("click", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var url = $(this).data("path");
+          ajax(
             url,
             "POST",
             {},
@@ -512,8 +514,8 @@ $(document).ready(function() {
               $(".shop-cart-products-count").text(response.count);
               products = JSON.parse(response.products);
               $("#products-summary")
-                  .children()
-                  .remove();
+                .children()
+                .remove();
               $("#products-summary").append(response.html);
               CreateCartSummaryActions();
               recalculateAllPrices();
@@ -546,17 +548,14 @@ $(document).ready(function() {
                 heading: "Error"
               });
             }
-        );
-      });
+          );
+        });
 
       // $(".conceptos-add-to-cart-icon").click();
     });
   }
 
   // ==================================================
-
-
-
 
   $(".conceptos-add-to-cart-icon").click(function(e) {
     e.preventDefault();

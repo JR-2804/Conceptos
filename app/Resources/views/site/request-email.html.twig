@@ -680,6 +680,10 @@
   </style>
 </head>
 
+{% set amount = 0 %}
+{% for product in products %}
+  {% set amount = amount + product.count %}
+{% endfor %}
 <body>
 <div class="es-wrapper-color">
   <!--[if gte mso 9]>
@@ -785,9 +789,6 @@
                                 </p>
                               </td>
                             </tr>
-                            <tr>
-                              <td class="esd-block-button es-p15t es-p10b" align="center"><span class="es-button-border" style="border-radius: 5px; border-style: solid; border-top: 0px solid rgb(44, 181, 67); border-bottom: 0px solid rgb(44, 181, 67); background: rgb(194, 185, 48) none repeat scroll 0% 0%; border-color: rgb(44, 181, 67);"><a href="https://viewstripo.email/" class="es-button" target="_blank" style="font-size: 16px; border-top-width: 10px; border-bottom-width: 10px; border-radius: 5px; background: rgb(194, 185, 48) none repeat scroll 0% 0%; border-color: rgb(194, 185, 48);">View order status</a></span></td>
-                            </tr>
                             </tbody>
                           </table>
                         </td>
@@ -811,7 +812,7 @@
                 <tr>
                   <td class="esd-structure es-p20t es-p30b es-p20r es-p20l" align="left">
                     <!--[if mso]><table width="560" cellpadding="0" cellspacing="0"><tr><td width="280" valign="top"><![endif]-->
-                    <table class="es-left" cellspacing="0" cellpadding="0" align="left">
+                    <table class="es-right" cellspacing="0" cellpadding="0" align="right">
                       <tbody>
                       <tr>
                         <td class="es-m-p20b esd-container-frame" width="280" align="left">
@@ -838,6 +839,18 @@
                                     <td><span style="font-size: 14px; line-height: 150%;">Total a pagar:</span></td>
                                     <td><span style="font-size: 14px; line-height: 150%;">${{ request.finalPrice }}</span></td>
                                   </tr>
+                                  {% if request.client.phone %}
+                                    <tr>
+                                      <td><span style="font-size: 14px; line-height: 150%;">&nbsp;</span></td>
+                                      <td><span style="font-size: 14px; line-height: 150%;">&nbsp;</span></td>
+                                    </tr>
+                                  {% endif %}
+                                  {% if request.client.movil %}
+                                    <tr>
+                                      <td><span style="font-size: 14px; line-height: 150%;">&nbsp;</span></td>
+                                      <td><span style="font-size: 14px; line-height: 150%;">&nbsp;</span></td>
+                                    </tr>
+                                  {% endif %}
                                   </tbody>
                                 </table>
                                 <p style="line-height: 150%;"><br></p>
@@ -850,7 +863,7 @@
                       </tbody>
                     </table>
                     <!--[if mso]></td><td width="0"></td><td width="280" valign="top"><![endif]-->
-                    <table class="es-right" cellspacing="0" cellpadding="0" align="right">
+                    <table class="es-left" cellspacing="0" cellpadding="0" align="left">
                       <tbody>
                       <tr>
                         <td class="esd-container-frame" width="280" align="left">
@@ -866,6 +879,12 @@
                                 <p>{{ request.client.firstName }} {{ request.client.lastName }}</p>
                                 <p>{{ request.client.email }}</p>
                                 <p>{{ request.client.address }}</p>
+                                {% if request.client.phone %}
+                                  <p>{{ request.client.phone }}</p>
+                                {% endif %}
+                                {% if request.client.movil %}
+                                  <p>{{ request.client.movil }}</p>
+                                {% endif %}
                               </td>
                             </tr>
                             </tbody>
@@ -921,7 +940,7 @@
                                 <table style="width: 100%;" class="cke_show_border" cellspacing="1" cellpadding="1" border="0">
                                   <tbody>
                                   <tr>
-                                    <td><span style="font-size:13px;">DESCRIPCION</span></td>
+                                    <td><span style="font-size:13px;">DESCRIPCIÓN</span></td>
                                     <td style="text-align: center;" width="60"><span style="font-size:13px;"><span style="line-height: 100%;">CANT.</span></span></td>
                                     <td style="text-align: center;" width="100"><span style="font-size:13px;"><span style="line-height: 100%;">PRECIO</span></span></td>
                                   </tr>
@@ -982,7 +1001,8 @@
                                 <a href="https://viewstripo.email" target="_blank">
                                   <img src="{{ absolute_url(vich_uploader_asset(product.product.mainImage, 'imageFile')) }}"
                                        alt="{{product.product.name}}"
-                                       title="{{product.product.name}}" class="adapt-img" width="125">
+                                       title="{{product.product.name}}" class="adapt-img" width="125" height="125"
+                                       style="object-fit: cover;">
                                 </a>
                               </td>
                             </tr>
@@ -1080,10 +1100,6 @@
                                 <table style="width: 500px;" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="right">
                                   <tbody>
                                   <tr>
-                                    {% set amount = 0 %}
-                                    {% for product in products %}
-                                      {% set amount = amount + product.count %}
-                                    {% endfor %}
                                     <td style="text-align: right; font-size: 18px; line-height: 150%;">Cantidad artículos:</td>
                                     <td style="text-align: right; font-size: 18px; line-height: 150%;">{{ amount }}</td>
                                   </tr>
@@ -1095,10 +1111,12 @@
                                     <td style="text-align: right; font-size: 18px; line-height: 150%;">Tipo de pago:</td>
                                     <td style="text-align: right; font-size: 18px; line-height: 150%;">{% if request.twoStepExtra > 0  %} 2 plazos {% else %} 1 plazo {% endif %}</td>
                                   </tr>
+                                  {% if request.discount %}
                                   <tr>
                                     <td style="text-align: right; font-size: 18px; line-height: 150%;">Descuento de miembro:</td>
                                     <td style="text-align: right; font-size: 18px; line-height: 150%;">${{ request.discount }}.00</td>
                                   </tr>
+                                  {% endif %}
                                   {% if request.cucExtra %}
                                     <tr>
                                       <td style="text-align: right; font-size: 18px; line-height: 150%;">Extra CUC:</td>

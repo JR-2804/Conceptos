@@ -63,8 +63,7 @@ class BlogController extends Controller
     /**
      * @Route(name="apiLoadProducts", path="/apiProduct/{code}")
      */
-    public function getProduct($code){
-
+    public function getProduct($code) {
         $productsRepository = $this->getDoctrine()->getRepository('AppBundle:Product');
         $product = $productsRepository->findOneBy(['code'=>$code]);
         $productJson = [];
@@ -77,7 +76,12 @@ class BlogController extends Controller
         $productJson['addCart'] = $this->generateUrl('add_shop_card', ['id'=>$product->getId()]);
         $productJson['inStore'] = $product->getInStore();
 
-        $productJson['priceOffer'] = $product->getPriceOffer();
+        $offer = $this->get('product_service')->findProductOffer($product->getId());
+        if ($offer) {
+          $productJson['priceOffer'] = $offer->getPrice();
+        } else {
+          $productJson['priceOffer'] = null;
+        }
 
         return $this->json($productJson);
     }
@@ -289,7 +293,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route(name="add_comment", path="/blog/post/comment/add", methods={"POST"})
+     * @Route(name="add_comment", path="/blog/post/comment/add/{id}", methods={"POST"})
      *
      * @param Request $request
      * @param $id
@@ -298,33 +302,34 @@ class BlogController extends Controller
      */
     public function sendCommentAction(Request $request, $id)
     {
-        $dto = new CommentDTO();
-        $dto->setId($id);
-        $form = $this->createForm(CommentType::class, $dto);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+      $dto = new CommentDTO();
+      $dto->setId($id);
+      $form = $this->createForm(CommentType::class, $dto);
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+        $data = $form->getData();
+        $post = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($id);
 
-            $comment = new Comment();
-            $comment->setDate(new \DateTime());
-            $comment->setEmail($data->getEmail());
-            $comment->setName($data->getName());
-            $comment->setText($data->getText());
-            $post = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($id);
-            $comment->setPost($post);
-            $this->getDoctrine()->getManager()->persist($comment);
-            $post->addComment($comment);
-            $this->getDoctrine()->getManager()->flush();
+        $comment = new Comment();
+        $comment->setDate(new \DateTime());
+        $comment->setName($data->getName());
+        $comment->setEmail($data->getEmail());
+        $comment->setText($data->getText());
+        $comment->setPost($post);
+        $post->addComment($comment);
+        $this->getDoctrine()->getManager()->persist($comment);
+        $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('blog_details', [
-                'id' => $id,
-                'title' => $post->getPath(),
-            ]);
-        }
-
-        return $this->render(':site/blog:add-comment.html.twig', [
-            'form' => $form->createView(),
+        return $this->redirectToRoute('blog_details', [
+          'id' => $id,
+          'title' => $post->getPath(),
         ]);
+      }
+
+      return $this->render(':site/blog:add-comment.html.twig', [
+        'form' => $form->createView(),
+        'postId' => $id
+      ]);
     }
 
     private function getShopCartProducts($products)
