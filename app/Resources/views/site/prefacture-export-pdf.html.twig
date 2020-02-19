@@ -162,9 +162,33 @@
 <script src="{{ asset('bundles/conceptos/assets/html2canvas/html2canvas.min.js') }}"></script>
 <script src="{{ asset('bundles/conceptos/assets/jspdf/jspdf.min.js') }}"></script>
 <script>
-  var doc = new jsPDF('portrait', 'mm', 'a4');
-  doc.fromHTML(document.body, 15, 15, {}, function(dispose) {
-    doc.save('Test.pdf')
-  });
+  // var pdf = new jsPDF('p', 'pt', 'a4');
+  // pdf.fromHTML(document.body, 15, 15, {}, function(dispose) {
+  //   pdf.save('Test.pdf')
+  // });
+
+  // var pdf = new jsPDF('p', 'pt', 'a4');
+  // pdf.addHTML(document.body, function() {
+  //   console.log(1);
+  //   pdf.save('Test.pdf');
+  // });
+
+  // html2canvas(document.body, {
+  //   onrendered: function(canvas) {
+  //     console.log(1);
+  //     var img = canvas.toDataURL("image/png")
+
+  //     var pdf = new jsPDF('p', 'pt', 'a4');
+  //     pdf.addImage(img, 'JPEG', 20, 20);
+  //     pdf.save('Test.pdf');
+  //   }
+  // });
+
+  // html2canvas(document.body).then(function(canvas) {
+  //   var img = canvas.toDataURL("image/png")
+  //   var pdf = new jsPDF('p', 'pt', 'a4');
+  //   pdf.addImage(img, 'JPEG', 0, 0);
+  //   pdf.save('Test.pdf');
+  // });
 </script>
 </html>

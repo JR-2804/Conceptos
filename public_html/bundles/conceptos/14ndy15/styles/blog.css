@@ -1,37 +1,34 @@
-.blog_list__title {
-}
 .blog_list__title h2 {
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 1.2em;
-}
+  font-size: 1.2em; }
+
 .content-post {
-  background: #e3e3e3;
-}
+  background: #e3e3e3; }
+
 .content-post {
   padding: 0;
-  margin: auto;
-}
+  margin: auto; }
+
 .post {
   background: white;
   margin: auto;
-  padding-left: 0;
-}
-.post-details {
-}
+  padding-left: 0; }
+
 .post-details h3 {
-  margin: 0;
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 1.15em;
-}
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.15em; }
+
 .post-body {
-  display: -webkit-box;
   display: flex;
   flex-wrap: wrap;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-}
+  justify-content: space-between; }
+
 .post-body .ProductMarker {
-  width: 45%;
-}
+    flex: 0 0 50%; }
+
+@media (min-width: 992px) {
+      .post-body .ProductMarker {
+        flex: 0 0 25%; } }
