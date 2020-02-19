@@ -1276,7 +1276,7 @@ class SiteController extends Controller
             'forClient' => false,
         ]);
 
-        return $this->render(':site:request-email.html.twig', [
+        $bodyClient = $this->renderView(':site:request-email.html.twig', [
             'request' => $requestDB,
             'inStore' => $inStore,
             'home' => $home,
