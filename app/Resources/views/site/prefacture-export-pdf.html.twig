@@ -26,8 +26,15 @@
       padding-top: 80px;
     }
     .product-image {
-      height: 50px;
-      width: 50px;
+      height: 100px;
+      width: 100px;
+    }
+    .product-description {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
     }
     .footer {
       position: absolute;
@@ -120,17 +127,19 @@
         <tr>
           <th class="pl-2">CÓDIGO</th>
           <th class="pl-2">FOTO</th>
-          <th class="pl-2" style="max-width: 200px;">DESCRIPCIÓN</th>
+          <th class="pl-2">DESCRIPCIÓN</th>
           <th class="pl-2">CANTIDAD</th>
           <th class="pl-2">PRECIO</th>
           <th class="pl-2">TOTAL</th>
-          <th class="pl-2">TIPO DE ENVÍO</th>
+          <th class="pl-2" style="min-width: 150px;">TIPO DE ENVÍO</th>
         </tr>
         </thead>
         <tbody class="table-members">
           {% for product in products %}
             <tr>
-              <td class="pl-2">{{product.code}}</td>
+              <td class="pl-2 pt-2">
+                <span>{{product.code}}</span>
+              </td>
               <td>
                 {% if product.image is defined %}
                   <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.image, 'imageFile')) }}" />
@@ -147,11 +156,21 @@
                   <img class="ml-5 mt-2 mb-2 product-image" src="{{imagePath}}" />
                 {% endif %}
               </td>
-              <td class="pl-2" style="max-width: 200px;">{{product.description}}</td>
-              <td class="pl-2">{{product.count}}</td>
-              <td class="pl-2">{{product.price}}</td>
-              <td class="pl-2">{{product.price * product.count}}</td>
-              <td class="pl-2">{{product.airplane}}</td>
+              <td class="pl-3 pt-2">
+                <span class="product-description">{{product.description}}</span>
+              </td>
+              <td class="pl-2 pt-2">
+                <span>{{product.count}}</span>
+              </td>
+              <td class="pl-2 pt-2">
+                <span>{{product.price}}</span>
+              </td>
+              <td class="pl-2 pt-2">
+                <span>{{product.price * product.count}}</span>
+              </td>
+              <td class="pl-2 pt-2" style="min-width: 150px;">
+                <span>{{product.airplane}}</span>
+              </td>
             </tr>
           {% endfor %}
         </tbody>
@@ -171,17 +190,6 @@
   // pdf.addHTML(document.body, function() {
   //   console.log(1);
   //   pdf.save('Test.pdf');
-  // });
-
-  // html2canvas(document.body, {
-  //   onrendered: function(canvas) {
-  //     console.log(1);
-  //     var img = canvas.toDataURL("image/png")
-
-  //     var pdf = new jsPDF('p', 'pt', 'a4');
-  //     pdf.addImage(img, 'JPEG', 20, 20);
-  //     pdf.save('Test.pdf');
-  //   }
   // });
 
   // html2canvas(document.body).then(function(canvas) {
