@@ -159,6 +159,6 @@
             transform: translateX(100%); }
   .membership_card--no-display {
     display: none; }
-  .conceptos-popular-product-image {
+  .storage .conceptos-popular-product-image {
   height: 50vh;
   width: 80vw; }
