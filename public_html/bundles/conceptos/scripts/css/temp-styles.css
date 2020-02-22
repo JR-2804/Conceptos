@@ -1048,6 +1048,18 @@ a.conceptos-category-subtitle:focus {
 
 /* -------------------------------------------------------- */
 
+.conceptos-contact-section {
+  bottom: 0;
+  right: 0;
+}
+
+.conceptos-contact-text {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 10px;
+  color: #282827;
+}
+
 #cartPreviewModal .product-delivery {
   display: none !important;
 }

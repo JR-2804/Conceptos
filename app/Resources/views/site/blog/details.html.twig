@@ -68,8 +68,7 @@
             {% for comment in post.comments %}
               <div class="d-flex flex-column conceptos-gray-background p-2 p-lg-3 mt-2">
                 <div class="d-flex align-items-center">
-                  <img class="conceptos-image conceptos-comment-image rounded-circle" src="{{ absolute_url(asset('bundles/conceptos/blog/user.svg')) }}" alt="{{ comment.name }}">
-                  <span class="conceptos-title ml-2">{{comment.name}}</span>
+                  <span class="conceptos-title">{{comment.name}}</span>
                 </div>
                 <span class="conceptos-subtitle mt-2">{{comment.text}}</span>
                 <span class="align-self-end conceptos-subtitle">{{ comment.date | date('d/m/Y') }}</span>

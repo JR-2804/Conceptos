@@ -591,8 +591,23 @@ function init() {
   populateSocialNetworksTable();
   $("#blog-main").val(data.blog.main);
   $("#blog-secondary").val(data.blog.secondary);
-  $("#contact-main").val(data.contact.main);
-  $("#contact-secondary").val(data.contact.secondary);
+  if (data.contact) {
+    $("#contact-main").val(data.contact.main);
+    $("#contact-secondary").val(data.contact.secondary);
+
+    if (data.contact.phone) {
+      $("#contact-phone").val(data.contact.phone);
+    }
+    if (data.contact.email) {
+      $("#contact-email").val(data.contact.email);
+    }
+    if (data.contact.address) {
+      $("#contact-address").val(data.contact.address);
+    }
+    if (data.contact.schedule) {
+      $("#contact-schedule").val(data.contact.schedule);
+    }
+  }
 }
 
 function generateData() {
@@ -639,6 +654,10 @@ function generateData() {
     contact: {
       main: $("#contact-main").val(),
       secondary: $("#contact-secondary").val(),
+      phone: $("#contact-phone").val(),
+      email: $("#contact-email").val(),
+      address: $("#contact-address").val(),
+      schedule: $("#contact-schedule").val(),
       image: contactImage
     },
     shopCart: {
@@ -700,9 +719,6 @@ function validateSubmitData() {
     valid = false;
   }
   if (!$("#blog-main").val() || !$("#blog-secondary").val()) {
-    valid = false;
-  }
-  if (!$("#contact-main").val() || !$("#contact-secondary").val()) {
     valid = false;
   }
   if (!loginImage) {
