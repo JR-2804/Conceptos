@@ -17,32 +17,29 @@ CKEDITOR.dialog.add("productsDialog", function(editor) {
       }
     ],
     onOk: function() {
-
       let dialog = this;
-      let elm = editor.document.createElement('div');
-      let child = editor.document.createElement('span');
-      console.log(elm);
-      child.setStyle('border', '2px dashed green');
+      let elm = editor.document.createElement("div");
+      let child = editor.document.createElement("span");
+      child.setStyle("border", "2px dashed green");
       elm.append(child);
 
-      let product_id = dialog.getValueOf('tab-basic', 'product-id');
-      console.log(product_id);
+      let product_id = dialog.getValueOf("tab-basic", "product-id");
 
-      elm.setAttribute('data-product', product_id);
-      elm.setAttribute( 'class','ProductMarker');
-      child.setText( "SP ["+product_id.toString()+"]");
+      elm.setAttribute("data-product", product_id);
+      elm.setAttribute("class", "ProductMarker");
+      child.setText("SP [" + product_id.toString() + "]");
       editor.insertElement(elm);
-      // var instance = this.getParentEditor();
-      // instance.insertHtml(elm);
     },
-    onShow: function () {
-        // Get the selection from the editor.
-        let selection = editor.getSelection();
+    onShow: function() {
+      let text = editor
+        .getSelection()
+        .getStartElement()
+        .getText();
 
-        // Get the element at the start of the selection.
-        let element = selection.getStartElement();
-        element = editor.restoreRealElement(element);
-        console.log()
+      if (text.startsWith("SP [")) {
+        var products = text.substr(4, text.length - 5);
+        console.log(products);
+      }
     }
   };
 });
