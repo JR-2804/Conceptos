@@ -627,18 +627,20 @@ a.conceptos-category-subtitle:focus {
   outline: none;
 }
 
-.conceptos-go-to-cart-icon {
-  width: 47px;
-  height: 45px;
-  background-color: transparent;
-  background-image: url("../../images/home/go-to-cart.png");
-  background-size: cover;
+.conceptos-go-to-cart {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 15px;
+  color: #c2b930;
+  border: 1px solid #c2b930;
+  text-transform: uppercase;
 }
 
-.conceptos-go-to-cart-icon:focus,
-.conceptos-go-to-cart-icon:hover {
-  background-image: url("../../images/home/go-to-cart-active.png");
+.conceptos-go-to-cart:focus,
+.conceptos-go-to-cart:hover {
   outline: none;
+  color: #c2b930;
+  border: 1px solid #c2b930;
 }
 
 .conceptos-remove-all-icon {
