@@ -15,7 +15,7 @@
             {% for image in imageSet %}
               <div class="carousel-item {% if count == 0 %}active{% endif %} pl-lg-5 pr-lg-5">
                 <div class="d-flex justify-content-center w-100">
-                  <img src="{{ image.path }}">
+                  <img class="image-viewer" src="{{ image.path }}">
                 </div>
               </div>
               {% set count = count + 1 %}
