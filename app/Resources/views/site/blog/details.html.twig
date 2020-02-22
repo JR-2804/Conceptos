@@ -53,7 +53,7 @@
                 {% if app.user|default %}
                   {% set alreadyLiked = false %}
                   {% for like in post.likes %}
-                    {% if post.user.id == app.user.id %}
+                    {% if like.user.id == app.user.id %}
                       {% set alreadyLiked = true %}
                     {% endif %}
                   {% endfor %}
