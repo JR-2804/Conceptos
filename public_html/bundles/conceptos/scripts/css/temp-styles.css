@@ -327,9 +327,9 @@ a.conceptos-title:focus i {
 }
 
 .conceptos-title-strong {
-  font-family: Montserrat-ExtraBold;
+  font-family: Montserrat-ExtraBold !important;
   font-weight: bolder;
-  font-size: 13px;
+  font-size: 14px;
   color: #282827;
   text-transform: uppercase;
 }
@@ -370,9 +370,10 @@ a.conceptos-subtitle:focus {
   outline: none;
 }
 
-.conceptos-subtitle-2 {
+.conceptos-subtitle-strong {
   font-family: Montserrat;
-  font-size: 10px;
+  font-weight: bold;
+  font-size: 12px;
   color: #282827;
 }
 
@@ -1059,6 +1060,10 @@ a.conceptos-category-subtitle:focus {
 
   .conceptos-title-strong {
     font-size: 20px;
+  }
+
+  .conceptos-subtitle-strong {
+    font-size: 17px;
   }
 
   .conceptos-title {
