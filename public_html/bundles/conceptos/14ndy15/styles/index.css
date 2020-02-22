@@ -103,7 +103,8 @@
     height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center; }
+    align-items: center;
+    z-index: 2; }
   .membership_card__content {
     position: relative;
     display: flex;
