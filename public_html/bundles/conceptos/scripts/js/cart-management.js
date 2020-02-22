@@ -1,6 +1,7 @@
 var updatingProductId = undefined;
 var memberNumber = undefined;
 var transportCost = 5;
+var homeDelivery = undefined;
 var paymentType = undefined;
 var paymentCurrency = undefined;
 var homeCollect = false;
@@ -221,6 +222,11 @@ $(document).ready(function() {
   }
 
   function recalculateAllPrices() {
+    if ($("#yes").prop("checked")) {
+      homeDelivery = "yes";
+    } else {
+      homeDelivery = "no";
+    }
     if ($("#cuc").prop("checked")) {
       paymentCurrency = "cuc";
     } else {
@@ -295,7 +301,7 @@ $(document).ready(function() {
       currencyExtraSection.parent().addClass("d-none");
     }
 
-    if (homeCollect) {
+    if (homeDelivery == "yes") {
       transportCost = 10;
     } else {
       transportCost = 5;
@@ -697,6 +703,10 @@ $(document).ready(function() {
     ).removeClass("ship-delivery-focused");
 
     UpdateProductDeliveryType(productId, 2);
+  });
+
+  $("#home-delivery").change(function() {
+    recalculateAllPrices();
   });
 
   $("#payment-type").change(function() {

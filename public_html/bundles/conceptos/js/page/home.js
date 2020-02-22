@@ -557,6 +557,9 @@ function init() {
     $("#shop-cart-main-text").val(data.shopCart.mainText);
     $("#shop-cart-secondary-text").val(data.shopCart.secondaryText);
 
+    if (data.shopCart.homeDeliveryText) {
+      $("#home-delivery-text").val(data.shopCart.homeDeliveryText);
+    }
     if (data.shopCart.currencyTypeText) {
       $("#currency-type-text").val(data.shopCart.currencyTypeText);
     }
@@ -641,6 +644,7 @@ function generateData() {
     shopCart: {
       mainText: $("#shop-cart-main-text").val(),
       secondaryText: $("#shop-cart-secondary-text").val(),
+      homeDeliveryText: $("#home-delivery-text").val(),
       currencyTypeText: $("#currency-type-text").val(),
       paymentTypeText: $("#payment-type-text").val()
     },
