@@ -49,7 +49,29 @@
           <div class="d-flex align-items-center flex-column">
             <div class="d-flex justify-content-between w-100">
               <span class="conceptos-blog-info">{{post.createdDate | date('d M | Y')}}</span>
-              <span class="conceptos-blog-info"><i class="fa fa-eye"></i> {{post.visitCount}}</span>
+              <div class="d-flex">
+                {% if app.user|default %}
+                  {% set alreadyLiked = false %}
+                  {% for like in post.likes %}
+                    {% if post.user.id == app.user.id %}
+                      {% set alreadyLiked = true %}
+                    {% endif %}
+                  {% endfor %}
+
+                  {% if alreadyLiked == false %}
+                    <a class="conceptos-blog-info mr-2" href="{{ path('add_like', {id: post.id}) }}">
+                      <i class="fa fa fa-thumbs-up"></i> {{post.likes|length}}
+                    </a>
+                  {% else %}
+                    <span class="conceptos-blog-info conceptos-blog-info-active mr-2">
+                      <i class="fa fa fa-thumbs-up"></i> {{post.likes|length}}
+                    </span>
+                  {% endif %}
+                {% endif %}
+                <span class="conceptos-blog-info">
+                  <i class="fa fa-eye"></i> {{post.visitCount}}
+                </span>
+              </div>
             </div>
             <div class="sharetastic ml-0"></div>
           </div>

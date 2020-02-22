@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\DTO\CommentDTO;
 use AppBundle\Entity\Blog\Comment;
+use AppBundle\Entity\Blog\BlogLike;
 use AppBundle\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -329,6 +330,32 @@ class BlogController extends Controller
       return $this->render(':site/blog:add-comment.html.twig', [
         'form' => $form->createView(),
         'postId' => $id
+      ]);
+    }
+
+    /**
+     * @Route(name="add_like", path="/blog/post/like/add/{id}")
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function sendLikeAction(Request $request, $id)
+    {
+      $post = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($id);
+      if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+        $like = new BlogLike();
+        $like->setPost($post);
+        $like->setUser($this->getUser());
+        $post->addLike($like);
+        $this->getDoctrine()->getManager()->persist($like);
+        $this->getDoctrine()->getManager()->flush();
+      }
+
+      return $this->redirectToRoute('blog_details', [
+        'id' => $id,
+        'title' => $post->getPath(),
       ]);
     }
 

@@ -360,6 +360,16 @@ a.conceptos-title-strong:focus {
   text-transform: uppercase;
 }
 
+.conceptos-blog-info-active {
+  color: #c2b930;
+}
+
+a.conceptos-blog-info:hover,
+a.conceptos-blog-info:focus {
+  color: #c2b930;
+  outline: none;
+}
+
 .conceptos-text-align-center {
   text-align: center;
 }
