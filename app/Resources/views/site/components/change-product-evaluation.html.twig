@@ -1,22 +1,28 @@
 {% if app.user|default %}
-    {% set totalEvaluationPoints = 0 %}
-    {% set numberOfEvaluations = 0 %}
-    {% for evaluation in product.evaluations %}
-        {% set totalEvaluationPoints = totalEvaluationPoints + evaluation.evaluationValue %}
-        {% set numberOfEvaluations = numberOfEvaluations + 1 %}
-    {% endfor %}
-    {% if numberOfEvaluations > 0 %}
-        {% set productEvaluation = totalEvaluationPoints / numberOfEvaluations %}
-    {% else %}
-        {% set productEvaluation = 0 %}
+  {% set userEvaluation = 0 %}
+  {% set totalEvaluationPoints = 0 %}
+  {% set numberOfEvaluations = 0 %}
+  {% for evaluation in product.evaluations %}
+    {% if app.user.id == evaluation.user.id %}
+      {% set userEvaluation = evaluation.evaluationValue %}
     {% endif %}
-    <div id="change-product-evaluation" class="d-flex align-self-start" data-evaluation="{{productEvaluation}}">
-        <div class="d-flex">
-            <span data-evaluate-path="{{ path('evaluate_product', {productId: product.id, evaluationValue: 1}) }}" data-star="1" class="{% if productEvaluation > 0 %}favorite{% endif %} change-product-evaluation fa fa-star"></span>
-            <span data-evaluate-path="{{ path('evaluate_product', {productId: product.id, evaluationValue: 2}) }}" data-star="2" class="{% if productEvaluation > 1 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></span>
-            <span data-evaluate-path="{{ path('evaluate_product', {productId: product.id, evaluationValue: 3}) }}" data-star="3" class="{% if productEvaluation > 2 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></span>
-            <span data-evaluate-path="{{ path('evaluate_product', {productId: product.id, evaluationValue: 4}) }}" data-star="4" class="{% if productEvaluation > 3 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></span>
-            <span data-evaluate-path="{{ path('evaluate_product', {productId: product.id, evaluationValue: 5}) }}" data-star="5" class="{% if productEvaluation > 4 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></span>
-        </div>
+
+    {% set totalEvaluationPoints = totalEvaluationPoints + evaluation.evaluationValue %}
+    {% set numberOfEvaluations = numberOfEvaluations + 1 %}
+  {% endfor %}
+  {% if numberOfEvaluations > 0 %}
+    {% set productEvaluation = totalEvaluationPoints / numberOfEvaluations %}
+  {% else %}
+    {% set productEvaluation = 0 %}
+  {% endif %}
+  <div id="change-product-evaluation" class="d-flex align-self-start" data-evaluation="{{userEvaluation}}">
+    <div class="d-flex align-items-center">
+      <i data-evaluate-path="{{ path('evaluate_product', {productId: product.id, evaluationValue: 1}) }}" data-star="1" class="{% if userEvaluation > 0 %}favorite{% endif %} change-product-evaluation fa fa-star"></i>
+      <i data-evaluate-path="{{ path('evaluate_product', {productId: product.id, evaluationValue: 2}) }}" data-star="2" class="{% if userEvaluation > 1 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></i>
+      <i data-evaluate-path="{{ path('evaluate_product', {productId: product.id, evaluationValue: 3}) }}" data-star="3" class="{% if userEvaluation > 2 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></i>
+      <i data-evaluate-path="{{ path('evaluate_product', {productId: product.id, evaluationValue: 4}) }}" data-star="4" class="{% if userEvaluation > 3 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></i>
+      <i data-evaluate-path="{{ path('evaluate_product', {productId: product.id, evaluationValue: 5}) }}" data-star="5" class="{% if userEvaluation > 4 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></i>
+      <span class="conceptos-title ml-2">({{productEvaluation}})</span>
     </div>
+  </div>
 {% endif %}

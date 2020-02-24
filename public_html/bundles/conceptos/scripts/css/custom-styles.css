@@ -2232,16 +2232,6 @@ i.share-icon:hover {
   color: #f7ed4a !important;
 }
 
-.change-product-evaluation {
-  font-size: 30px;
-  color: #b3aeae !important;
-  cursor: pointer;
-}
-
-.change-product-evaluation.favorite {
-  color: #f7ed4a !important;
-}
-
 .help-page-header {
   height: 75vh;
   width: 100%;

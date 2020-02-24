@@ -1095,6 +1095,16 @@ a.conceptos-category-subtitle:focus {
   position: relative;
 }
 
+.change-product-evaluation {
+  font-size: 30px;
+  color: #b3aeae !important;
+  cursor: pointer;
+}
+
+.change-product-evaluation.favorite {
+  color: #c2b930 !important;
+}
+
 @media (min-width: 992px) {
   .carousel-indicators li {
     height: 13px;
