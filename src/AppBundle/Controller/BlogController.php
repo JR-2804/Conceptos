@@ -334,6 +334,28 @@ class BlogController extends Controller
     }
 
     /**
+     * @Route(name="remove_comment", path="/blog/post/comment/remove/{postId}/{commentId}")
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function removeCommentAction(Request $request, $postId, $commentId)
+    {
+      $post = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($postId);
+      $comment = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Comment')->find($commentId);
+
+      $this->getDoctrine()->getManager()->remove($comment);
+      $this->getDoctrine()->getManager()->flush();
+
+      return $this->redirectToRoute('blog_details', [
+        'id' => $postId,
+        'title' => $post->getPath(),
+      ]);
+    }
+
+    /**
      * @Route(name="add_like", path="/blog/post/like/add/{id}")
      *
      * @param Request $request
