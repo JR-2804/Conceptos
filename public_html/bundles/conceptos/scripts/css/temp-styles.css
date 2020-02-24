@@ -1074,6 +1074,27 @@ a.conceptos-category-subtitle:focus {
   display: none !important;
 }
 
+.favorite-product {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  font-size: 20px;
+  color: #b3aeae !important;
+  z-index: 10;
+}
+
+.favorite-product:hover {
+  color: #c2b930 !important;
+}
+
+.favorite-product.favorite {
+  color: #c2b930 !important;
+}
+
+.conceptos-product-card > div {
+  position: relative;
+}
+
 @media (min-width: 992px) {
   .carousel-indicators li {
     height: 13px;
@@ -1170,5 +1191,9 @@ a.conceptos-category-subtitle:focus {
 
   .shop-cart-product-list-section {
     max-height: 70vh;
+  }
+
+  .favorite-product {
+    font-size: 30px;
   }
 }

@@ -26,6 +26,13 @@
 <a class="d-flex flex-column conceptos-product-card col-6 col-lg-3 p-2 p-lg-3 {% if priceOffer != -1 %}popular_product{% endif %}"
    href="{{ path('product_details', {id: product.id, name: product.name}) }}">
   <div class="d-flex align-items-center conceptos-white-background p-2">
+    {% if app.user|default %}
+      <span data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"
+         data-path-remove="{{ path('remove_from_favorite', {id: product.id}) }}"
+         class="favorite-product {% if product.favorite %}favorite{% endif %}">
+         <i class="fa fa-heart"></i>
+      </span>
+    {% endif %}
     <img class="conceptos-image conceptos-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
   </div>
   <div class="d-flex flex-column conceptos-white-background pl-2 pr-2 pb-3 w-100">

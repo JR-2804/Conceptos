@@ -564,10 +564,6 @@ a.header-text.active {
   font-size: 15px !important;
 }
 
-.product-details .favorite-product {
-  margin-left: 27px;
-}
-
 .product-details .add-to-cart-button-container {
   justify-content: start !important;
 }
@@ -1441,24 +1437,6 @@ a.header-text.active {
 
 .user-profile {
   margin-top: 100px;
-}
-
-.favorite-product {
-  position: absolute;
-  left: 15px;
-  font-size: 30px;
-  top: -10px;
-  color: #b3aeae !important;
-  margin-top: 25px;
-  margin-left: 5px;
-}
-
-.favorite-product:hover {
-  color: #f7ed4a !important;
-}
-
-.favorite-product.favorite {
-  color: #f7ed4a !important;
 }
 
 .home-advertising-section {

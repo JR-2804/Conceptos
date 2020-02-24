@@ -159,21 +159,21 @@
         <span class="conceptos-badge-subtitle">{{page.data.subtitles.inStore|raw}}</span>
       </div>
     </div>
-    <div class="d-flex flex-column align-items-center m-3 ml-lg-5 mr-lg-5 mt-lg-3 mb-lg-3">
+    <div class="d-flex flex-column align-items-center mb-3 ml-lg-5 mr-lg-5 mt-lg-3 mb-lg-3">
       {% if inStore and inStore is not empty %}
-        <div class="d-flex d-lg-none align-items-center conceptos-white-background p-2">
-          <div class="carousel" data-ride="carousel" id="carousel-in-store" data-interval="5000">
+        <div class="d-flex d-lg-none align-items-center p-2 w-100">
+          <div id="carousel-in-store" class="carousel w-100" data-ride="carousel" data-interval="5000">
             <div class="carousel-inner">
               {% for product in inStore %}
                 <div class="container-fluid carousel-item p-0 {% if loop.first %}active{% endif %}">
-                  <div class="d-flex">
+                  <div class="d-flex w-100">
                     {% set bigFont = true %}
                     {{include('site/product-summary-short.html.twig')}}
                   </div>
                 </div>
               {% endfor %}
             </div>
-            <div class="d-flex">
+            <div class="d-flex ">
               <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" href="#carousel-in-store">
                 <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
               </a>
