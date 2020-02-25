@@ -819,24 +819,24 @@
                           <table style="background-color: rgb(229, 229, 229); border-color: rgb(239, 239, 239); border-collapse: separate; border-width: 1px 0px 1px 1px; border-style: solid;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#e5e5e5">
                             <tbody>
                             <tr>
-                              <td class="esd-block-text es-p20t es-p10b es-p20r es-p20l" align="left">
+                              <td class="esd-block-text es-p5t es-p5b es-p5r es-p5l" align="left">
                                 <h4>RESUMEN:</h4>
                               </td>
                             </tr>
                             <tr>
-                              <td class="esd-block-text es-p20b es-p20r es-p20l" align="left">
+                              <td class="esd-block-text es-p5b es-p5r es-p5l" align="left">
                                 <table style="width: 100%;" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left">
                                   <tbody>
                                   <tr>
-                                    <td><span style="font-size: 14px; line-height: 150%;">No. Orden:</span></td>
+                                    <td><span style="font-size: 14px; line-height: 150%;"><strong>No. Orden:</strong></span></td>
                                     <td><span style="font-size: 14px; line-height: 150%;">{{ request.id }}</span></td>
                                   </tr>
                                   <tr>
-                                    <td><span style="font-size: 14px; line-height: 150%;">Fecha de la Orden:</span></td>
+                                    <td><span style="font-size: 14px; line-height: 150%;"><strong>Fecha de la Orden:</strong></span></td>
                                     <td><span style="font-size: 14px; line-height: 150%;">{{ request.date | date('d-M-Y') }}</span></td>
                                   </tr>
                                   <tr>
-                                    <td><span style="font-size: 14px; line-height: 150%;">Total a pagar:</span></td>
+                                    <td><span style="font-size: 14px; line-height: 150%;"><strong>Total a pagar:</strong></span></td>
                                     <td><span style="font-size: 14px; line-height: 150%;">${{ request.finalPrice }}</span></td>
                                   </tr>
                                   {% if request.client.phone %}
@@ -870,20 +870,20 @@
                           <table style="background-color: rgb(229, 229, 229); border-collapse: separate; border-width: 1px; border-style: solid; border-color: rgb(239, 239, 239);" width="100%" cellspacing="0" cellpadding="0" bgcolor="#e5e5e5">
                             <tbody>
                             <tr>
-                              <td class="esd-block-text es-p20t es-p10b es-p20r es-p20l" align="left">
-                                <h4>DATOS DE ENVIO:</h4>
+                              <td class="esd-block-text es-p5t es-p5b es-p5r es-p5l" align="left">
+                                <h4>DATOS DEL CLIENTE:</h4>
                               </td>
                             </tr>
                             <tr>
-                              <td class="esd-block-text es-p20b es-p20r es-p20l" align="left">
-                                <p>{{ request.client.firstName }} {{ request.client.lastName }}</p>
-                                <p>{{ request.client.email }}</p>
-                                <p>{{ request.client.address }}</p>
+                              <td class="esd-block-text es-p5b es-p5r es-p5l" align="left">
+                                <p><strong>Nombre:</strong> {{ request.client.firstName }} {{ request.client.lastName }}</p>
+                                <p><strong>Correo:</strong> {{ request.client.email }}</p>
+                                <p><strong>Dirección:</strong> {{ request.client.address }}</p>
                                 {% if request.client.phone %}
-                                  <p>{{ request.client.phone }}</p>
+                                  <p><strong>Teléfono fijo:</strong> {{ request.client.phone }}</p>
                                 {% endif %}
                                 {% if request.client.movil %}
-                                  <p>{{ request.client.movil }}</p>
+                                  <p><strong>Teléfono movil:</strong> {{ request.client.movil }}</p>
                                 {% endif %}
                               </td>
                             </tr>
@@ -1197,7 +1197,7 @@
                                   <br>
                                   <a target="_blank"
                                      href="mailto:comercial@tiendaconceptos.com">
-                                    E-Mail
+                                    CONTÁCTENOS
                                   </a>
                                 </p>
                               </td>
