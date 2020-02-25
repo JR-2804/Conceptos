@@ -6,7 +6,7 @@ $(document).ready(function() {
   $("#description").val($("#product_description").val());
   $("#description").val($("#product_description").val());
   $("#price").val($("#product_price").val());
-  $("#weight").val($("#product_weight").val());
+  $("#weight-kg").val($("#product_weight").val());
   $("#shipping-limit").val($("#product_shippingLimit").val());
   $("#ikea-price").val($("#product_ikeaPrice").val());
   if (

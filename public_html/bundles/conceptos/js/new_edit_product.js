@@ -251,14 +251,12 @@ $(document).ready(function() {
 });
 
 function getWeight() {
-  var weight = $("#weight").val();
-  var weightUnity = $("#weight-unity").val();
-  if (weightUnity === "oz") {
-    weight = (weight / 35.27).toFixed(2);
-  } else if (weightUnity === "lbs") {
-    weight = (weight / 2.2).toFixed(2);
-  }
-  return weight;
+  var weightKg = parseFloat($("#weight-kg").val()) || 0;
+  var weightOz = parseFloat($("#weight-oz").val()) || 0;
+  var weightLb = parseFloat($("#weight-lb").val()) || 0;
+
+  var finalWeight = (weightKg + weightOz / 2.2 + weightLb / 35.27).toFixed(2);
+  return finalWeight;
 }
 
 function validForm() {
@@ -305,7 +303,7 @@ function validForm() {
   } else {
     addRemoveErrorClass(color, false);
   }
-  var weight = $("#weight");
+  var weight = $("#weight-kg");
   if (!$(weight).val()) {
     addRemoveErrorClass(weight, true);
     valid = false;
