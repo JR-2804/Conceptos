@@ -1,29 +1,4 @@
-{% set priceOffer = -1 %}
-{% set offerId = 'false' %}
-{% set onlyForMembers = false %}
-{% for offer in product.offers %}
-  {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
-    {% set priceOffer = offer.price %}
-    {% set offerId = offer.id %}
-    {% if offer.onlyForMembers %}
-      {% set onlyForMembers = true %}
-    {% endif %}
-  {% endif %}
-{% endfor %}
-{% if priceOffer == -1 %}
-  {% for category in product.categories %}
-    {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and product.inStore)) %}
-      {% set priceOffer = (product.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
-    {% else %}
-      {% for parentCategory in category.parents %}
-        {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and product.inStore)) %}
-          {% set priceOffer = (product.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-  {% endfor %}
-{% endif %}
-<a class="d-flex flex-column conceptos-product-card col-6 col-lg-3 p-2 p-lg-3 {% if priceOffer != -1 %}popular_product{% endif %}"
+<a class="d-flex flex-column conceptos-product-card col-6 col-lg-3 p-2 p-lg-3 {% if product.priceOffer != -1 %}popular_product{% endif %}"
    href="{{ path('product_details', {id: product.id, name: product.name}) }}">
   <div class="d-flex align-items-center conceptos-white-background p-2">
     {% if app.user|default %}
@@ -39,8 +14,8 @@
     <span class="conceptos-product-info">{{product.name}}</span>
     <span class="conceptos-product-info-description">{{product.item}}</span>
     <div class="d-flex align-items-center">
-      {% if priceOffer != -1 %}
-        <span class="conceptos-product-info conceptos-product-price mr-2">$&nbsp;{{priceOffer}}</span>
+      {% if product.priceOffer != -1 %}
+        <span class="conceptos-product-info conceptos-product-price mr-2">$&nbsp;{{product.priceOffer}}</span>
         <span class="conceptos-product-info conceptos-offer-price">$&nbsp;{{product.price}}</span>
       {% else %}
         <span class="conceptos-product-info conceptos-product-price">$&nbsp;{{product.price}}</span>

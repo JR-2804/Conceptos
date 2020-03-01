@@ -41,37 +41,12 @@
         {% endif %}
       </div>
       <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5">
-        {% set priceOffer = -1 %}
-        {% set offerId = 'false' %}
-        {% set onlyForMembers = false %}
-        {% for offer in product.offers %}
-          {% if offer.startDate <= currentDate and offer.endDate >= currentDate %}
-            {% set priceOffer = offer.price %}
-            {% set offerId = offer.id %}
-            {% if offer.onlyForMembers %}
-              {% set onlyForMembers = true %}
-            {% endif %}
-          {% endif %}
-        {% endfor %}
-        {% if priceOffer == -1 %}
-          {% for category in product.categories %}
-            {% if (category.offers[0] is defined) and ((not category.offers[0].onlyInStoreProducts) or (category.offers[0].onlyInStoreProducts and product.inStore)) %}
-              {% set priceOffer = (product.price * (1 - category.offers[0].price / 100))|round(0, 'ceil') %}
-            {% else %}
-              {% for parentCategory in category.parents %}
-                {% if (parentCategory.offers[0] is defined) and ((not parentCategory.offers[0].onlyInStoreProducts) or (parentCategory.offers[0].onlyInStoreProducts and product.inStore)) %}
-                  {% set priceOffer = (product.price * (1 - parentCategory.offers[0].price / 100))|round(0, 'ceil') %}
-                {% endif %}
-              {% endfor %}
-            {% endif %}
-          {% endfor %}
-        {% endif %}
         <span class="conceptos-title-strong">{{product.name}}</span>
         <span class="conceptos-subtitle">{{product.item}}</span>
         <div class="d-flex justify-content-between align-items-center">
           <div class="d-flex align-items-center">
-            {% if priceOffer != -1 %}
-              <span class="conceptos-product-info conceptos-product-price-big mr-2">${{priceOffer}}</span>
+            {% if product.priceOffer != -1 %}
+              <span class="conceptos-product-info conceptos-product-price-big mr-2">${{product.priceOffer}}</span>
               <span class="conceptos-product-info conceptos-offer-price">$&nbsp;{{product.price}}</span>
             {% else %}
               <span class="conceptos-product-info conceptos-product-price-big">$&nbsp;{{product.price}}</span>

@@ -77,12 +77,8 @@ class BlogController extends Controller
         $productJson['addCart'] = $this->generateUrl('add_shop_card', ['id'=>$product->getId()]);
         $productJson['inStore'] = $product->getInStore();
 
-        $offer = $this->get('product_service')->findProductOffer($product->getId());
-        if ($offer) {
-          $productJson['priceOffer'] = $offer->getPrice();
-        } else {
-          $productJson['priceOffer'] = null;
-        }
+        $offerPrice = $this->get('product_service')->findProductOfferPrice($product);
+        $productJson['priceOffer'] = $offerPrice;
 
         return $this->json($productJson);
     }

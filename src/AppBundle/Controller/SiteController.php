@@ -60,10 +60,8 @@ class SiteController extends Controller
                 ];
             }
             foreach ($offer->getProducts() as $product) {
-                $offer = $this->get('product_service')->findProductOffer($product->getId());
-                if ($offer) {
-                    $product->setPriceOffer($offer->getPrice());
-                }
+                $offerPrice = $this->get('product_service')->findProductOfferPrice($product);
+                $product->setPriceOffer($offerPrice);
                 if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
                   $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
                 }
@@ -98,16 +96,22 @@ class SiteController extends Controller
           ->getQuery()
           ->getResult();
 
+        foreach ($populars as $product) {
+          $offerPrice = $this->get('product_service')->findProductOfferPrice($product);
+          $product->setPriceOffer($offerPrice);
+          if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
+          }
+        }
+
         $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findAll();
 
         $inStoreHighlight = null;
         $lastedHighlight = null;
         foreach ($products as $product) {
           if ($product->getIsHighlight()) {
-            $offer = $this->get('product_service')->findProductOffer($product->getId());
-            if ($offer) {
-              $product->setPriceOffer($offer->getPrice());
-            }
+            $offerPrice = $this->get('product_service')->findProductOfferPrice($product);
+            $product->setPriceOffer($offerPrice);
             if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
                 $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
             }
@@ -128,20 +132,16 @@ class SiteController extends Controller
         }
 
         foreach ($inStore as $product) {
-            $offer = $this->get('product_service')->findProductOffer($product->getId());
-            if ($offer) {
-              $product->setPriceOffer($offer->getPrice());
-            }
+            $offerPrice = $this->get('product_service')->findProductOfferPrice($product);
+            $product->setPriceOffer($offerPrice);
             if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
                 $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
             }
         }
 
         foreach ($lasted as $product) {
-            $offer = $this->get('product_service')->findProductOffer($product->getId());
-            if ($offer) {
-              $product->setPriceOffer($offer->getPrice());
-            }
+            $offerPrice = $this->get('product_service')->findProductOfferPrice($product);
+            $product->setPriceOffer($offerPrice);
             if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
                 $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
             }
@@ -315,6 +315,8 @@ class SiteController extends Controller
             'name' => 'Membresia',
         ]);
         $product = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($id);
+        $offerPrice = $this->get('product_service')->findProductOfferPrice($product);
+        $product->setPriceOffer($offerPrice);
         if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
         }
@@ -347,14 +349,12 @@ class SiteController extends Controller
                 $productR->setFavorite($this->get('product_service')->existProductInFavorite($productR->getId(), $this->getUser()->getId()));
             }
         }
-        $offer = $this->get('product_service')->findProductOffer($product->getId());
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
         return $this->render(':site:product-details.html.twig', [
             'product' => $product,
             'imageSets' => array_chunk($product->getImages()->toArray(), 3),
-            'offer' => $offer,
             'home' => $home,
             'membership' => $membership,
             'currentDate' => new \DateTime(),
@@ -1705,9 +1705,9 @@ class SiteController extends Controller
               $price = $productDB->getPrice();
 
               $offerExists = false;
-              $offer = $this->get('product_service')->findProductOffer($productDB->getId());
-              if ($offer) {
-                $price = $offer->getPrice();
+              $offerPrice = $this->get('product_service')->findProductOfferPrice($productDB);
+              if ($offerPrice != -1) {
+                $price = $offerPrice;
                 $offerExists = true;
               }
 
