@@ -79,7 +79,7 @@
           <label class="control-label">Cliente</label>
           <select class="form-control" id="client" multiple>
               {% for client in clients %}
-                  <option value="{{ client.id }}">{{ client.name }}</option>
+                  <option value="{{ client.id }}">{{ client.firstName }} {{client.lastName}}</option>
               {% endfor %}
           </select>
         </div>
