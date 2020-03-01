@@ -254,7 +254,8 @@ easy_admin:
                     - {name: 'new', label: 'Nuevo Cliente'}
                 fields:
                     - id
-                    - {property: 'name', label: 'Nombre'}
+                    - {property: 'firstName', label: 'Nombre'}
+                    - {property: 'lastName', label: 'Apellidos'}
                     - {property: 'address', label: 'Dirección'}
                     - {property: 'email', label: 'Correo', type: 'email'}
                     - {property: 'movil', label: 'Movil', type: 'tel'}
@@ -263,7 +264,8 @@ easy_admin:
             show:
                 title: Detalles del cliente
                 fields:
-                    - {property: 'name', label: 'Nombre'}
+                    - {property: 'firstName', label: 'Nombre'}
+                    - {property: 'lastName', label: 'Apellidos'}
                     - {property: 'address', label: 'Dirección'}
                     - {property: 'email', label: 'Correo', type: 'email'}
                     - {property: 'movil', label: 'Movil', type: 'tel'}
@@ -272,7 +274,8 @@ easy_admin:
                     - {property: 'requests', label: 'Pedidos', template: 'show_request.html.twig'}
             form:
                 fields:
-                    - {property: 'name', label: 'Nombre'}
+                    - {property: 'firstName', label: 'Nombre'}
+                    - {property: 'LastName', label: 'Apellidos'}
                     - {property: 'address', label: 'Dirección'}
                     - {property: 'email', label: 'Correo', type: 'email'}
                     - {property: 'movil', label: 'Movil'}
