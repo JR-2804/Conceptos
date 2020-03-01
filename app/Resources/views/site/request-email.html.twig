@@ -1029,11 +1029,9 @@
                                     {{product.product.item}} <br>
                                     {{product.product.code}} <br>
                                     <strong>Envio:</strong>
-                                      {% if (product.product.isFurniture and
-                                                          (not product.product.isAriplaneForniture)) or
-                                                          (product.product.isMattress and
-                                                          (not product.product.isAriplaneMattress)) %}
-                                        Marítitmo
+                                      {% if (product.product.isFurniture and (not product.product.isAriplaneForniture)) or
+                                            (product.product.isMattress and (not product.product.isAriplaneMattress)) %}
+                                        Marítimo
                                       {% else %}
                                         Aéreo
                                       {% endif %}
