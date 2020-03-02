@@ -1200,7 +1200,7 @@
                                                             <td class="esd-block-image" align="center" style="font-size:0">
                                                                 <a target="_blank" href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}">
                                                                     <img class="adapt-img"
-                                                                         src="{{ vich_uploader_asset(blog, 'imageFile') }}"
+                                                                         src="{{ absolute_url(vich_uploader_asset(blog, 'imageFile')) }}"
                                                                          alt="Make it special"
                                                                          style="display: block;"
                                                                          title="Make it special"
@@ -1289,7 +1289,7 @@
                                                                 <td class="esd-block-image es-p15t es-p20r es-p20l" align="center" style="font-size:0">
                                                                     <a target="_blank" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}">
                                                                         <img class="adapt-img product-image"
-                                                                             src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}"
+                                                                             src="{{ absolute_url(vich_uploader_asset(product.mainImage, 'imageFile')) }}"
                                                                              alt="Scented Sweet Peas & Stocks Jug"
                                                                              style="display: block;"
                                                                              title="Scented Sweet Peas & Stocks Jug"
@@ -1380,7 +1380,7 @@
                                                                         <td class="esd-block-image" align="center" style="font-size:0">
                                                                             <a target="_blank" href="{{ absolute_url(path('product_details', {id: productGallery.id, name: productGallery.name})) }}">
                                                                                 <img class="adapt-img"
-                                                                                     src="{{ vich_uploader_asset(productGallery.mainImage, 'imageFile') }}"
+                                                                                     src="{{ absolute_url(vich_uploader_asset(productGallery.mainImage, 'imageFile')) }}"
                                                                                      alt
                                                                                      style="display: block;"
                                                                                      width="150">
