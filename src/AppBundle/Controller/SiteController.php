@@ -347,6 +347,8 @@ class SiteController extends Controller
         foreach ($related as $productR) {
             if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
                 $productR->setFavorite($this->get('product_service')->existProductInFavorite($productR->getId(), $this->getUser()->getId()));
+                $offerPrice = $this->get('product_service')->findProductOfferPrice($productR);
+                $productR->setPriceOffer($offerPrice);
             }
         }
 
@@ -885,6 +887,10 @@ class SiteController extends Controller
             ->getQuery()
             ->getResult()
           ;
+          foreach($products as $product) {
+            $offerPrice = $this->get('product_service')->findProductOfferPrice($product);
+            $product->setPriceOffer($offerPrice);
+          }
         }
 
         $project['images'] = array_merge([$project], $project['extraImages']);
@@ -955,6 +961,10 @@ class SiteController extends Controller
               ->getQuery()
               ->getResult()
           ;
+          foreach($products as $product) {
+            $offerPrice = $this->get('product_service')->findProductOfferPrice($product);
+            $product->setPriceOffer($offerPrice);
+          }
         }
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
@@ -1549,27 +1559,29 @@ class SiteController extends Controller
      */
     public function favoriteProductsAction(Request $request)
     {
-        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Home',
-        ]);
+      $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+        'name' => 'Home',
+      ]);
 
-        $products = $this->get('member_service')->findFavoriteProducts($this->getUser()->getId());
-        foreach ($products as $product) {
-            $product->setFavorite(true);
-        }
+      $products = $this->get('member_service')->findFavoriteProducts($this->getUser()->getId());
+      foreach ($products as $product) {
+        $product->setFavorite(true);
+        $offerPrice = $this->get('product_service')->findProductOfferPrice($product);
+        $product->setPriceOffer($offerPrice);
+      }
 
-        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+      $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
-        return $this->render(':site:favorite-products.html.twig', [
-            'home' => $home,
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
-            'products' => $products,
-            'categories' => $this->get('category_service')->getAll(),
-            'terms' => $config->getTermAndConditions(),
-            'privacy' => $config->getPrivacyPolicy(),
-            'currentDate' => new \DateTime(),
-        ]);
+      return $this->render(':site:favorite-products.html.twig', [
+        'home' => $home,
+        'count' => $this->countShopCart($request),
+        'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+        'products' => $products,
+        'categories' => $this->get('category_service')->getAll(),
+        'terms' => $config->getTermAndConditions(),
+        'privacy' => $config->getPrivacyPolicy(),
+        'currentDate' => new \DateTime(),
+      ]);
     }
 
     /**

@@ -20,7 +20,10 @@ class LoadProduct {
       .querySelector("button")
       .setAttribute("data-path", productData["addCart"]);
 
-    if (productData["priceOffer"] !== null) {
+    if (
+      productData["priceOffer"] !== null &&
+      productData["priceOffer"] !== -1
+    ) {
       product.classList.add("popular_product");
       product.querySelector(
         ".conceptos-product-price"
