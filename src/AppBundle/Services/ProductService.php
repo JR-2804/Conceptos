@@ -390,6 +390,8 @@ class ProductService
             if ($user) {
                 $product->setFavorite($this->existProductInFavorite($product->getId(), $user->getId()));
             }
+            $offerPrice = $this->findProductOfferPrice($product);
+            $product->setPriceOffer($offerPrice);
         }
 
         $inOfferHeader = false;
