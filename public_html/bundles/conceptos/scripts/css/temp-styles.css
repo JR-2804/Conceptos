@@ -716,6 +716,25 @@ a.conceptos-category-subtitle:focus {
   object-fit: cover;
 }
 
+.conceptos-login-button {
+  background-color: transparent;
+  border: 2px solid #282827;
+  border-radius: 0 !important;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 14px;
+  color: #282827;
+  outline: none;
+  min-width: 100px;
+}
+
+.conceptos-login-button:focus,
+.conceptos-login-button:hover {
+  background-color: transparent;
+  outline: none;
+  color: #282827;
+}
+
 .conceptos-primary-button {
   background-color: transparent;
   border: 2px solid #c2b930;
@@ -1105,6 +1124,10 @@ a.conceptos-category-subtitle:focus {
   color: #c2b930 !important;
 }
 
+#successShopRequestModal .modal-body {
+  height: 300px;
+}
+
 @media (min-width: 992px) {
   .carousel-indicators li {
     height: 13px;
@@ -1205,5 +1228,13 @@ a.conceptos-category-subtitle:focus {
 
   .favorite-product {
     font-size: 30px;
+  }
+
+  #successShopRequestModal .modal-dialog {
+    width: 500px;
+  }
+
+  #successShopRequestModal .modal-body {
+    height: 400px;
   }
 }

@@ -8,18 +8,17 @@
 {% block body %}
   <div id="successShopRequestModal" class="modal fade">
     <div class="modal-dialog modal-lg">
-      <div class="modal-content">
+      <div class="modal-content" style="background-image: url('{{page.data.login.image.path}}');background-size: cover;">
         <div class="modal-body">
-          <div class="d-flex flex-column align-items-center">
-            <span class="conceptos-title">PEDIDO REALIZADO CORRECTAMENTE</span>
-            {% if app.user|default %}
-              <a class="conceptos-primary-button pl-2 pr-2" href="{{ path('site_profile') }}">
-                COMPROBAR ESTADO DE LOS PEDIDOS
-              </a>
-            {% else %}
-              <a class="conceptos-primary-button pl-2 pr-2" href="" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">
-                ACCEDA PARA COMPROBAR EL ESTADO DE SUS PEDIDOS
-              </a>
+          <div class="d-flex flex-column justify-content-between h-100">
+            <span class="conceptos-title-strong col-6 pl-0">SU COMPRA SE HA REALIZADO CON ÉXITO</span>
+            {% if not app.user|default %}
+              <div class="d-flex flex-column col-5 justify-content-end align-items-start pl-0">
+                <span class="conceptos-subtitle-strong">REGÍSTRESE AQUÍ PARA RASTREAR SUS PRODUCTOS</span>
+                <a class="conceptos-login-button pl-2 pr-2" href="" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">
+                  REGISTRARSE
+                </a>
+              </div>
             {% endif %}
           </div>
         </div>
@@ -296,7 +295,7 @@
   <script src="{{ asset('bundles/conceptos/home/js/home.js') }}"></script>
   <script>
     {% if showSuccessToast is defined and showSuccessToast == true %}
-      // $("#successShopRequestModal").modal();
+      $("#successShopRequestModal").modal();
     {% endif %}
   </script>
 {% endblock %}
