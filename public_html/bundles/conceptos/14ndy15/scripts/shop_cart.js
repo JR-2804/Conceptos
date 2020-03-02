@@ -81,20 +81,32 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./assets/scripts/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./assets/scripts/shop_cart.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./assets/scripts/index.js":
-/*!*********************************!*\
-  !*** ./assets/scripts/index.js ***!
-  \*********************************/
+/***/ "./assets/scripts/modules/shop_cart/_membership_card.js":
+/*!**************************************************************!*\
+  !*** ./assets/scripts/modules/shop_cart/_membership_card.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\n//# sourceURL=webpack:///./assets/scripts/index.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar MembershipCard = function () {\n  function MembershipCard() {\n    _classCallCheck(this, MembershipCard);\n\n    this.membershipCard = document.querySelector(\".membership_card\");\n    this.membershipCardClose = document.querySelector(\".membership_card__close\");\n\n    if (this.membershipCard) {\n      this.showOrNot();\n    }\n  }\n\n  _createClass(MembershipCard, [{\n    key: \"showOrNot\",\n    value: function showOrNot() {\n      this.membershipCard.classList.remove(\"membership_card--no-display\");\n      this.event();\n    }\n  }, {\n    key: \"event\",\n    value: function event() {\n      setTimeout(this.hideCard.bind(this), 20000);\n      this.membershipCardClose.addEventListener(\"click\", this.hideCard.bind(this));\n    }\n  }, {\n    key: \"hideCard\",\n    value: function hideCard() {\n      this.membershipCard.classList.add(\"membership_card--hide\");\n    }\n  }]);\n\n  return MembershipCard;\n}();\n\nexports.default = MembershipCard;\n\n//# sourceURL=webpack:///./assets/scripts/modules/shop_cart/_membership_card.js?");
+
+/***/ }),
+
+/***/ "./assets/scripts/shop_cart.js":
+/*!*************************************!*\
+  !*** ./assets/scripts/shop_cart.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nvar _membership_card = __webpack_require__(/*! ./modules/shop_cart/_membership_card */ \"./assets/scripts/modules/shop_cart/_membership_card.js\");\n\nvar _membership_card2 = _interopRequireDefault(_membership_card);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nnew _membership_card2.default();\n\n//# sourceURL=webpack:///./assets/scripts/shop_cart.js?");
 
 /***/ })
 

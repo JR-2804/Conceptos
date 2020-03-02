@@ -17,18 +17,22 @@
 }
 
 .membership_card{
-    position: absolute;
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
-    bottom: 0;
+    top: 60%;
     right: 0;
     width: 50%;
     height: 20vh;
     animation: show 2s ease-in-out 1;
     background: $mainDark;
     transition: transform 1s ease-in;
-    z-index: 1;
+    z-index: 15;
+
+    @media (min-width: 992px) {
+      width: 20%;
+    }
 
     &__close{
         display: flex;
@@ -37,7 +41,7 @@
         position: absolute;
         top: 0;
         right: 0;
-        z-index: 1;
+        z-index: 16;
         width: 2.5em;
         height: 2.5em;
         background: $mainDark;
@@ -72,13 +76,13 @@
     &__content{
         position: relative;
         display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
 
         height: 90%;
         width: 95%;
-        padding: 1.5em 0;
+        padding: 1em 0 0 0.5em;
         border: 2px $mainYellow solid;
 
         & h2, h3, h4{

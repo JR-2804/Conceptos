@@ -2,11 +2,22 @@
 
 {% block title %}Carrito de compras{% endblock %}
 {% block css %}
-    <link rel="stylesheet" href="{{ asset('bundles/conceptos/shop-cart/shop-cart.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/styles/shop_cart.css') }}">
+  <link rel="stylesheet" href="{{ asset('bundles/conceptos/shop-cart/shop-cart.css') }}">
+  <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/styles/shop_cart.css') }}">
 {% endblock %}
 {% block body %}
-
+  {% if (not app.user|default) or (not app.user.member.number is defined) %}
+    <div class="membership_card membership_card--no-display">
+      <div class="membership_card__close"></div>
+      <a href="{{ path('membership') }}">
+        <div class="membership_card__content">
+          <h2>Ahorre</h2>
+          <h3>Hasta un 20%</h3>
+          <h4>con nuestra membresía</h4>
+        </div>
+      </a>
+    </div>
+  {% endif %}
 
   {{ form_start(form) }}
     <div class="d-flex flex-column pt-2 pl-2 pr-2 pt-lg-3 pl-lg-5 pr-lg-5">
@@ -251,5 +262,6 @@
 {% block footer %}
 {% endblock %}
 {% block js %}
+  <script src="{{ asset('bundles/conceptos/14ndy15/scripts/shop_cart.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/shop-cart/js/shop-cart.js') }}"></script>
 {% endblock %}
