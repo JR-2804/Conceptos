@@ -20,3 +20,4 @@ easy_admin:
                   - { entity: 'Tag', label: 'Tags'}
             - { entity: 'Page', label: 'Páginas'}
             - { entity: 'User', label: 'Usuarios'}
+            - { entity: 'PromotionEmail', label: 'Correos'}

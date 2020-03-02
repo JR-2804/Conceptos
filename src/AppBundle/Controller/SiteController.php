@@ -20,7 +20,9 @@ use AppBundle\Entity\Request\PreFactureProduct;
 use AppBundle\Form\CheckOutType;
 use AppBundle\Form\MembershipRequestType;
 use AppBundle\Form\EmailType;
+use AppBundle\Repository\PromotionEmailRepository;
 use Doctrine\DBAL\Types\Type;
+use http\Message\Body;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -1220,6 +1222,139 @@ class SiteController extends Controller
               'privacy' => $config->getPrivacyPolicy(),
             ])
         ]);
+    }
+
+    /**
+     * @Route(name="preview_promotion_email", path="/previewPromotionEmail/{id}")
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function previewPromotionEmail(Request $request, $id){
+
+        $promEmail = $this->getDoctrine()->getManager()->getRepository('AppBundle:PromotionEmail')->find($id);
+
+        $blogs = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->createQueryBuilder('p')
+            ->orderBy('p.createdDate', 'DESC')
+            ->setMaxResults(2)->getQuery()->getResult();
+
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Home',
+        ]);
+
+        $productsStr = $promEmail->getAllProducts();
+        $products = [];
+
+        foreach ($productsStr as $productStr){
+            $products[] = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findOneBy([
+                'code' => $productStr,
+            ]);
+        }
+
+        $productsGallery = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findBy([
+            'inStore' => true,
+        ], null, 4);
+
+        return $this->render('site/promotionEmail/promotionEmail.html.twig', [
+            'home'=>$home,
+            'primaryPicture'=>$promEmail->getPrimaryPicture(),
+            'primaryContentTitle'=>$promEmail->getPrimaryContentTitle(),
+            'primaryContent'=>$promEmail->getPrimaryContentReal(),
+            'secundaryPicture1'=>$promEmail->getSecundaryPicture1(),
+            'secundaryPicture2'=>$promEmail->getSecundaryPicture2(),
+            'secundaryPicture3'=>$promEmail->getSecundaryPicture3(),
+            'secundaryContentTitle'=>$promEmail->getSecundaryContentTitle(),
+            'secundaryContent'=>$promEmail->getSecundaryContentReal(),
+            'tercearyPicture'=>$promEmail->getTercearyPicture(),
+            'tercearyContentTitle'=>$promEmail->getTercearyContentTitle(),
+            'tercearyContent'=>$promEmail->getTercearyContentReal(),
+            'blogs'=>$blogs,
+            'products'=>$products,
+            'productsGallery'=>$productsGallery,
+        ]);
+
+    }
+
+    /**
+     * @Route(name="send_promotion_email", path="/sendPromotionEmail/{id}")
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function sendPromotionEmail(Request $request, $id){
+
+        $promEmail = $this->getDoctrine()->getManager()->getRepository('AppBundle:PromotionEmail')->find($id);
+
+        $blogs = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->createQueryBuilder('p')
+            ->orderBy('p.createdDate', 'DESC')
+            ->setMaxResults(2)->getQuery()->getResult();
+
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Home',
+        ]);
+
+        $productsStr = $promEmail->getAllProducts();
+        $products = [];
+
+        foreach ($productsStr as $productStr){
+            $products[] = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findOneBy([
+                'code' => $productStr,
+            ]);
+        }
+
+        $productsGallery = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findBy([
+            'inStore' => true,
+        ], null, 4);
+
+
+        $body = $this->renderView('site/promotionEmail/promotionEmail.html.twig', [
+            'home'=>$home,
+            'primaryPicture'=>$promEmail->getPrimaryPicture(),
+            'primaryContentTitle'=>$promEmail->getPrimaryContentTitle(),
+            'primaryContent'=>$promEmail->getPrimaryContentReal(),
+            'secundaryPicture1'=>$promEmail->getSecundaryPicture1(),
+            'secundaryPicture2'=>$promEmail->getSecundaryPicture2(),
+            'secundaryPicture3'=>$promEmail->getSecundaryPicture3(),
+            'secundaryContentTitle'=>$promEmail->getSecundaryContentTitle(),
+            'secundaryContent'=>$promEmail->getSecundaryContentReal(),
+            'tercearyPicture'=>$promEmail->getTercearyPicture(),
+            'tercearyContentTitle'=>$promEmail->getTercearyContentTitle(),
+            'tercearyContent'=>$promEmail->getTercearyContentReal(),
+            'blogs'=>$blogs,
+            'products'=>$products,
+            'productsGallery'=>$productsGallery,
+        ]);
+        $bodyRender = $this->render('site/promotionEmail/promotionEmail.html.twig', [
+            'home'=>$home,
+            'primaryPicture'=>$promEmail->getPrimaryPicture(),
+            'primaryContentTitle'=>$promEmail->getPrimaryContentTitle(),
+            'primaryContent'=>$promEmail->getPrimaryContentReal(),
+            'secundaryPicture1'=>$promEmail->getSecundaryPicture1(),
+            'secundaryPicture2'=>$promEmail->getSecundaryPicture2(),
+            'secundaryPicture3'=>$promEmail->getSecundaryPicture3(),
+            'secundaryContentTitle'=>$promEmail->getSecundaryContentTitle(),
+            'secundaryContent'=>$promEmail->getSecundaryContentReal(),
+            'tercearyPicture'=>$promEmail->getTercearyPicture(),
+            'tercearyContentTitle'=>$promEmail->getTercearyContentTitle(),
+            'tercearyContent'=>$promEmail->getTercearyContentReal(),
+            'blogs'=>$blogs,
+            'products'=>$products,
+            'productsGallery'=>$productsGallery,
+        ]);
+
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+        $mails = explode(';', $promEmail->getEmails());
+        foreach ($mails as $mail){
+            $this->get('email_service')->send($config->getEmail(), $promEmail->getSubject(), $mail,
+                'Pedido realizado a través de la WEB',
+                $body);
+        }
+
+        return $bodyRender;
     }
 
     /**

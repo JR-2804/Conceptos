@@ -40,124 +40,78 @@
     <div class="blog_list__title">
       <h2>Inspiraciones</h2>
     </div>
-    <div class="d-flex flex-column conceptos-white-background p-2 p-lg-5 mb-2 mb-lg-5">
-      <div class="post-single">
-        <h1 class="d-none d-lg-block">{{ post.title }}</h1>
-        <h2 class="d-lg-none">{{ post.title }}</h2>
-        <img src="{{ absolute_url(vich_uploader_asset(post, 'imageFile')) }}" alt="{{ post.title }}" class="img-fluid mb-2">
-        <div class="post-details">
-          <div class="post-footer d-flex align-items-center flex-column flex-row">
-            <div class="sharetastic ml-0"></div>
-            <div class="d-flex align-items-center flex-wrap">
-              <div class="date">
-                <i class="mbri-clock"></i>{{ post.createdDate | date('d-m-Y') }}
-              </div>
-            </div>
-<<<<<<< HEAD
+    <main class="post blog-post col-lg-8 pl-0 pl-lg-5 pt-3 pt-lg-5">
+        <div class="container">
+            <div class="post-single">
+                <h1 class="d-none d-lg-block">{{ post.title }}</h1>
+                <h2 class="d-lg-none">{{ post.title }}</h2>
 
-            <main class="post blog-post col-lg-8 pl-0 pl-lg-5 pt-3 pt-lg-5">
-
-
-
-                <div class="container">
-                    <div class="post-single">
-                        <h1 class="d-none d-lg-block">{{ post.title }}</h1>
-                        <h2 class="d-lg-none">{{ post.title }}</h2>
-
-                        <div class="post-thumbnail">
-                            <img src="{{ absolute_url(vich_uploader_asset(post, 'imageFile')) }}" alt="{{ post.title }}" class="img-fluid">
-                        </div>
-                        <div class="post-details">
+                <div class="post-thumbnail">
+                    <img src="{{ absolute_url(vich_uploader_asset(post, 'imageFile')) }}" alt="{{ post.title }}" class="img-fluid">
+                </div>
+                <div class="post-details">
 {#                            <div class="post-meta d-flex justify-content-between">#}
 {#                                <div class="category"><a href="#">{{ post.category.name }}</a></div>#}
 {#                            </div>#}
-
-                            <div class="post-footer d-flex align-items-center flex-column flex-row">
+                    <div class="post-footer d-flex align-items-center flex-column flex-row">
 {#                                <a href="#" class="author d-flex align-items-center flex-wrap">#}
 {#                                    <div class="title"><span>{{ post.user.username }}</span></div>#}
 {#                                </a>#}
-                                <div class="d-flex align-items-center flex-wrap">
-                                    <div class="date">
-                                        <i class="mbri-clock"></i>{{ post.createdDate | date('d-m-Y') }}
-                                    </div>
+                        <div class="d-flex align-items-center flex-wrap">
+                            <div class="date">
+                                <i class="mbri-clock"></i>{{ post.createdDate | date('d-m-Y') }}
+                            </div>
 {#                                    <div class="views"><i class="mbri-preview"></i>{{ post.visitCount }}</div>#}
 {#                                    <div class="views"><a class="btn-print"><i class="mbri-print"></i></a></div>#}
 {#                                    <div class="comments meta-last"><i class="mbri-info"></i>{{ post.comments | length }}</div>#}
-                                </div>
-                                <div class="sharetastic"></div>
-                            </div>
-                            <div class="post-body mt-3">
-                                {#<p class="lead">{{ post.summary }}</p>#}
-                                {{ post.body | raw }}
-                            </div>
-                            <div class="post-tags">
-                                {% for tag in post.tags %}
-                                    <a href="#" class="tag">#{{ tag.value }}</a>
-                                {% endfor %}
-                            </div>
-                            <div class="post-comments">
-                                <header>
-                                    <h3 class="h6">Comentarios
-                                        <span class="no-of-comments">({{ post.comments | length }})</span>
-                                    </h3>
-                                </header>
-                                {% for comment in post.comments %}
-                                    <div class="comment">
-                                        <div class="comment-header d-flex justify-content-between">
-                                            <div class="user d-flex align-items-center">
-                                                <div class="image"><img
-                                                            src="{{ absolute_url(asset('bundles/conceptos/blog/user.svg')) }}"
-                                                            alt="{{ comment.name }}" class="img-fluid rounded-circle">
-                                                </div>
-                                                <div class="title"><strong>{{ comment.name }}</strong><span
-                                                            class="date">{{ comment.date | date('d-m-Y') }}</span>
-                                                </div>
-                                            </div>
+                        </div>
+                        <div class="sharetastic"></div>
+                    </div>
+                    <div class="post-body mt-3">
+                        {#<p class="lead">{{ post.summary }}</p>#}
+                        {{ post.body | raw }}
+                    </div>
+                    <div class="post-tags">
+                        {% for tag in post.tags %}
+                            <a href="#" class="tag">#{{ tag.value }}</a>
+                        {% endfor %}
+                    </div>
+                    <div class="post-comments">
+                        <header>
+                            <h3 class="h6">Comentarios
+                                <span class="no-of-comments">({{ post.comments | length }})</span>
+                            </h3>
+                        </header>
+                        {% for comment in post.comments %}
+                            <div class="comment">
+                                <div class="comment-header d-flex justify-content-between">
+                                    <div class="user d-flex align-items-center">
+                                        <div class="image"><img
+                                                    src="{{ absolute_url(asset('bundles/conceptos/blog/user.svg')) }}"
+                                                    alt="{{ comment.name }}" class="img-fluid rounded-circle">
                                         </div>
-                                        <div class="comment-body">
-                                            <p>{{ comment.text }}</p>
+                                        <div class="title"><strong>{{ comment.name }}</strong><span
+                                                    class="date">{{ comment.date | date('d-m-Y') }}</span>
                                         </div>
                                     </div>
-                                {% endfor %}
+                                </div>
+                                <div class="comment-body">
+                                    <p>{{ comment.text }}</p>
+                                </div>
                             </div>
-                            {{ render(controller('AppBundle:Blog:sendComment', {'id': post.id })) }}
-                            <div class="row">
-                                <div class="col-3"></div>
-                                <div class="col-9"></div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
-=======
-          </div>
-          <div class="post-body mt-2">
-            {{ post.body | raw }}
-          </div>
-          <div class="post-tags">
-            {% for tag in post.tags %}
-              <a href="#" class="tag">#{{ tag.value }}</a>
-            {% endfor %}
-          </div>
-          <div class="post-comments">
-            <header>
-              <span class="conceptos-title mt-3">COMENTARIOS ({{ post.comments | length }})</span>
-            </header>
-            {% for comment in post.comments %}
-              <div class="d-flex flex-column conceptos-gray-background p-2 p-lg-3 mt-2">
-                <div class="d-flex align-items-center">
-                  <img class="conceptos-image conceptos-comment-image rounded-circle" src="{{ absolute_url(asset('bundles/conceptos/blog/user.svg')) }}" alt="{{ comment.name }}">
-                  <span class="conceptos-title ml-2">{{comment.name}}</span>
->>>>>>> c991dbc6992e64a237ea5536fa149b2f01d94f25
+                    {{ render(controller('AppBundle:Blog:sendComment', {'id': post.id })) }}
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-9"></div>
+                    </div>
                 </div>
-                <span class="conceptos-subtitle mt-2">{{comment.text}}</span>
-                <span class="align-self-end conceptos-subtitle">{{ comment.date | date('d/m/Y') }}</span>
-              </div>
-            {% endfor %}
-          </div>
-          {{ render(controller('AppBundle:Blog:sendComment', {'id': post.id })) }}
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
+    </main>
+</div>
+
 {% endblock %}
 {% block contact %}{% endblock %}
 {% block js %}
