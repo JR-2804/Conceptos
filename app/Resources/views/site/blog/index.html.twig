@@ -22,7 +22,10 @@
             <span class="conceptos-title">{{post.title}}</span>
           </a>
           <span class="conceptos-subtitle conceptos-blog-summary mt-2">{{post.summary}}</span>
-          <span class="date meta-last">{{post.createdDate | date('d M | Y')}}</span>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <span class="conceptos-blog-info">{{post.createdDate | date('d M | Y')}}</span>
+            <span class="conceptos-blog-info"><i class="fa fa-eye"></i> {{post.visitCount}}</span>
+          </div>
         </div>
       {% endfor %}
     </div>
