@@ -1349,7 +1349,7 @@ class SiteController extends Controller
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
         $mails = explode(';', $promEmail->getEmails());
         foreach ($mails as $mail){
-            if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+            if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
                 $this->get('email_service')->send($config->getEmail(), $promEmail->getSubject(), $mail,
                     'Pedido realizado a través de la WEB',
                     $body);
