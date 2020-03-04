@@ -30,16 +30,23 @@
   }
 }
 
-.post-body{
+.post-body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 
-  & .ProductMarker{
+  & .ProductMarker {
     flex: 0 0 50%;
 
     @media (min-width: 992px) {
       flex: 0 0 25%;
     }
+
+  }
+
+  & p img {
+    position: relative;
+    height: 50vh !important;
+    object-fit: cover;
   }
 }

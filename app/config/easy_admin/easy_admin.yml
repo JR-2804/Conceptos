@@ -369,6 +369,40 @@ easy_admin:
                     - {property: 'date', label: 'Fecha'}
             edit:
                 title: 'Editar Miembro'
+        PromotionEmail:
+            class: AppBundle\Entity\PromotionEmail
+            actions:
+                - {name: 'new', label: 'Crear Correo'}
+            list:
+                title: 'Correos de promocion'
+                fields:
+                    - id
+                    - {property: 'title', label: 'Nombre'}
+                    - {property: 'subject', label: 'Asunto'}
+                    - {property: 'emails', label: 'Correos'}
+                    - {property: 'primaryPicture', label: 'Imágen Principal', type: 'image', base_path: '%app.path.email.images%'}
+                actions:
+                    - {name: 'preview_promotion_email', type: 'route'}
+                    - {name: 'send_promotion_email', type: 'route'}
+            form:
+                title: 'Nuevo Correo'
+                fields:
+                    - {property: 'title', label: 'Nombre interno del correo'}
+                    - {property: 'subject', label: 'Asunto'}
+                    - {property: 'emails', label: 'destinatarios (separados por ;)'}
+                    - {property: 'primaryPictureFile', type: 'file', label: 'Imágen principal'}
+                    - {property: 'primaryContentTitle', label: 'Titulo primera parte'}
+                    - {property: 'primaryContent', label: 'Primera parte', type: 'ckeditor'}
+                    - {property: 'secundaryPictureFile1', type: 'file', label: 'Segunda imagen 1'}
+                    - {property: 'secundaryPictureFile2', type: 'file', label: 'Segunda imagen 2'}
+                    - {property: 'secundaryPictureFile3', type: 'file', label: 'Segunda imagen 3'}
+                    - {property: 'secundaryContentTitle', label: 'Titulo segunda parte'}
+                    - {property: 'secundaryContent', label: 'Segunda parte', type: 'ckeditor'}
+                    - {property: 'tercearyPictureFile', type: 'file', label: 'Tercera imagen'}
+                    - {property: 'tercearyContentTitle', label: 'Titulo tercera parte'}
+                    - {property: 'tercearyContent', label: 'Tercera parte', type: 'ckeditor'}
+            edit:
+                title: 'Editar Correo'
 
         User:
             class: AppBundle\Entity\User

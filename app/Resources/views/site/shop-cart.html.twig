@@ -224,15 +224,15 @@
         {% if shopCartProducts|length > 0 %}
           <div class="d-flex">
             <label class="d-flex checkbox-container align-self-start">
-              <span class="conceptos-subtitle">He leído y acepto los <a class="conceptos-title conceptos-title-italic" data-toggle="modal" data-target="#termsAndConditionsModal" href="#">Términos y condiciones</a></span>
-              <input id="termsAndConditions" type="checkbox">
+              <span class="conceptos-subtitle required pl-2">He leído y acepto los <a class="conceptos-title conceptos-title-italic" data-toggle="modal" data-target="#termsAndConditionsModal" href="#">Términos y condiciones</a></span>
+              <input id="termsAndConditions" type="checkbox" required>
               <span class="checkmark"></span>
             </label>
           </div>
           <div class="d-flex mt-2">
             <label class="d-flex checkbox-container align-self-start">
-              <span class="conceptos-subtitle">He leído y acepto la <a class="conceptos-title conceptos-title-italic" data-toggle="modal" data-target="#privacyPolicyModal" href="#">Política de privacidad</a></span>
-              <input id="privacyPolicy" type="checkbox">
+              <span class="conceptos-subtitle required pl-2">He leído y acepto la <a class="conceptos-title conceptos-title-italic" data-toggle="modal" data-target="#privacyPolicyModal" href="#">Política de privacidad</a></span>
+              <input id="privacyPolicy" type="checkbox" required>
               <span class="checkmark"></span>
             </label>
           </div>

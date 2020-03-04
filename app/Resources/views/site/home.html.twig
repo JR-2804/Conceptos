@@ -140,7 +140,7 @@
     </div>
   {% endif %}
 
-  <div class="d-flex flex-column">
+  <div class="d-flex flex-column storage">
     <div class="d-flex conceptos-badge p-2">
       <div class="d-flex flex-column justify-content-center m-2 ml-lg-5">
         <span class="conceptos-badge-text">ALMACÉN</span>
@@ -260,7 +260,7 @@
       <div class="d-flex flex-wrap m-3 ml-lg-5 mr-lg-5 mt-lg-3 mb-lg-3">
         {% for post in lasts %}
           {% if loop.index <= 2 %}
-            <div class="d-flex flex-column col-12 col-lg-6 align-self-center pl-0 pr-3 pb-0">
+            <div class="d-flex flex-column col-12 col-lg-6 align-self-center pl-0 pr-3 pb-3">
               <div class="d-flex align-items-center">
                 <img class="conceptos-image conceptos-blog-image" src="{{ vich_uploader_asset(post, 'imageFile') }}">
               </div>

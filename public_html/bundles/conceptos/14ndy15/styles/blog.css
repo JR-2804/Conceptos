@@ -32,3 +32,9 @@
 @media (min-width: 992px) {
       .post-body .ProductMarker {
         flex: 0 0 25%; } }
+
+.post-body p img {
+    position: relative;
+    height: 50vh !important;
+    -o-object-fit: cover;
+       object-fit: cover; }

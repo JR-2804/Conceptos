@@ -44,6 +44,7 @@ class Offer
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product", inversedBy="offers")
      */
     private $products;
+
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="offers")
      * @ORM\JoinTable(name="offer_category")
