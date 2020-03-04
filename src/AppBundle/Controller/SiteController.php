@@ -7,6 +7,7 @@ use AppBundle\DTO\EmailDTO;
 use AppBundle\DTO\MembershipRequestDTO;
 use AppBundle\Entity\Evaluation;
 use AppBundle\Entity\FavoriteProduct;
+use AppBundle\Entity\ShopCartProduct;
 use AppBundle\Entity\Request\Client;
 use AppBundle\Entity\Request\Request as ProductRequest;
 use AppBundle\Entity\Request\Facture;
@@ -182,8 +183,8 @@ class SiteController extends Controller
             'inStoreHighlight' => $inStoreHighlight,
             'popularChunks' => array_chunk($populars, 6),
             'popularChunksDesktop' => array_chunk($populars, 12),
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
             'config' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1),
             'brands' => array_chunk($brands, 4),
             'currentDate' => new \DateTime(),
@@ -218,8 +219,8 @@ class SiteController extends Controller
             'home' => $home,
             'membership' => $membership,
             'page' => $page,
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -251,8 +252,8 @@ class SiteController extends Controller
             'home' => $home,
             'membership' => $membership,
             'page' => $page,
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
             'config' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -292,8 +293,8 @@ class SiteController extends Controller
         $result += ['currentDate' => new \DateTime()];
         $result += ['page' => $page];
         $result += ['membership' => $membership];
-        $result += ['count' => $this->countShopCart($request)];
-        $result += ['shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true))];
+        $result += ['count' => $this->get('shop_cart_service')->countShopCart($this->getUser())];
+        $result += ['shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser())];
 
         return $this->render(':site:products.html.twig', $result);
     }
@@ -365,8 +366,8 @@ class SiteController extends Controller
             'membership' => $membership,
             'currentDate' => new \DateTime(),
             'related' => $related,
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -398,13 +399,7 @@ class SiteController extends Controller
           $requestProducts = json_decode($requestProducts, true);
         }
 
-        $session = $request->getSession();
-        if ($session->has('products')) {
-            $products = json_decode($session->get('products'), true);
-        } else {
-            $products = [];
-        }
-        $productsDB = $this->getShopCartProducts($products);
+        $productsDB = $this->get('shop_cart_service')->getShopCartProducts($this->getUser());
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
@@ -620,7 +615,6 @@ class SiteController extends Controller
             }
 
             $this->getDoctrine()->getManager()->flush();
-            $request->getSession()->invalidate();
 
             if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
               return $this->redirectToRoute('site_home');
@@ -634,7 +628,7 @@ class SiteController extends Controller
           'form' => $form->createView(),
           'home' => $home,
           'membership' => $membership,
-          'count' => $this->countShopCart($request),
+          'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
           'shopCartProducts' => $productsDB,
           'terms' => $config->getTermAndConditions(),
           'privacy' => $config->getPrivacyPolicy(),
@@ -656,29 +650,20 @@ class SiteController extends Controller
      */
     public function persistProductCountShopCarAction(Request $request, $product = -1, $count = -1)
     {
-        $session = $request->getSession();
-        if ($session->has('products')) {
-            $products = json_decode($session->get('products'), true);
-        } else {
-            $products = [];
+      $shopCartProducts = $this->getDoctrine()->getManager()->getRepository('AppBundle:ShopCartProduct')->findBy([
+        'user' => $this->getUser()->getId(),
+      ]);
+      foreach ($shopCartProducts as $shopCartProduct) {
+        if ($shopCartProduct->getUuid() == $product) {
+          $shopCartProduct->setCount($count);
+          $this->getDoctrine()->getManager()->persist($shopCartProduct);
+          $this->getDoctrine()->getManager()->flush();
         }
-        $productsDB = [];
-        foreach ($products as $productS) {
-            if ($product == $productS['uuid']) {
-                $productS['count'] = $count;
-            }
-            $productsDB[] = $productS;
-        }
-        $session->set('products', json_encode($productsDB));
+      }
 
-        $count = 0;
-        foreach ($productsDB as $product) {
-          $count += $product['count'];
-        }
-
-        return new JsonResponse([
-          'count' => $count,
-        ]);
+      return new JsonResponse([
+        'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+      ]);
     }
 
     /**
@@ -690,10 +675,9 @@ class SiteController extends Controller
      */
     public function emptyShopCarAction(Request $request)
     {
-        $session = $request->getSession();
-        $session->set('products', json_encode([]));
+      $this->get('shop_cart_service')->emptyShopCart($this->getUser());
 
-        return $this->redirectToRoute('site_home');
+      return $this->redirectToRoute('site_home');
     }
 
     /**
@@ -725,8 +709,8 @@ class SiteController extends Controller
             'membership' => $membership,
             'services' => $services,
             'inward' => $inward,
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -757,8 +741,8 @@ class SiteController extends Controller
         return $this->render(':site:inward.html.twig', [
             'home' => $home,
             'membership' => $membership,
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
             'page' => $page,
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -795,8 +779,8 @@ class SiteController extends Controller
 
         return $this->render(':site:membership.html.twig', [
             'home' => $home,
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
             'page' => $page,
             'membership' => $page,
             'terms' => $config->getTermAndConditions(),
@@ -831,8 +815,8 @@ class SiteController extends Controller
         return $this->render(':site:help.html.twig', [
             'home' => $home,
             'membership' => $membership,
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
             'page' => $page,
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -904,8 +888,8 @@ class SiteController extends Controller
         return $this->render(':site:project-details.html.twig', [
             'home' => $home,
             'membership' => $membership,
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
             'project' => $project,
             'imageSets' => array_chunk($project['images'], 3),
             'products' => $products,
@@ -976,8 +960,8 @@ class SiteController extends Controller
         return $this->render(':site:service-details.html.twig', [
             'home' => $home,
             'membership' => $membership,
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
             'service' => $service,
             'imageSets' => array_chunk($service['images'], 3),
             'products' => $products,
@@ -1023,8 +1007,8 @@ class SiteController extends Controller
         return $this->render(':site:request-service.html.twig', [
             'home' => $home,
             'form' => $form->createView(),
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -1078,8 +1062,8 @@ class SiteController extends Controller
             return $this->render(':site:membership.html.twig', [
               'showSuccessToast' => true,
               'home' => $home,
-              'count' => $this->countShopCart($request),
-              'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+              'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+              'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
               'page' => $membership,
               'terms' => $config->getTermAndConditions(),
               'privacy' => $config->getPrivacyPolicy(),
@@ -1095,8 +1079,8 @@ class SiteController extends Controller
             'home' => $home,
             'page' => $membership,
             'form' => $form->createView(),
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -1104,7 +1088,7 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="add_shop_card", path="/shop-card/add/{id}/{offer}", methods={"POST", "GET"}, defaults={"offer"="false"})
+     * @Route(name="add_shop_card", path="/shop-card/add/{id}", methods={"POST", "GET"})
      *
      * @param Request $request
      * @param $id
@@ -1113,49 +1097,31 @@ class SiteController extends Controller
      */
     public function addShopCartAction(Request $request, $id)
     {
-        $session = $request->getSession();
-
-        $products = [];
-        if ($session->has('products')) {
-            $products = json_decode($session->get('products'), true);
-        }
+        $shopCartProducts = $this->getDoctrine()->getManager()->getRepository('AppBundle:ShopCartProduct')->findBy([
+          'user' => $this->getUser()->getId(),
+        ]);
 
         $exist = false;
-        $index = 0;
-        foreach ($products as $product) {
-            if (
-              (array_key_exists('id', $product) && $product['id'] == $id) ||
-              (!array_key_exists('id', $product) && $product['product'] == $id)) {
-                $exist = true;
-                $products[$index]['count'] += 1;
-            }
-          $index += 1;
+        foreach ($shopCartProducts as $shopCartProduct) {
+          if ($shopCartProduct->getProductId() == $id) {
+            $exist = true;
+            $shopCartProduct->setCount($shopCartProduct->getCount() + 1);
+            $this->getDoctrine()->getManager()->persist($shopCartProduct);
+            $this->getDoctrine()->getManager()->flush();
+          }
         }
         if (!$exist) {
-            if ('target15' == $id || 'target25' == $id || 'target50' == $id || 'target100' == $id) {
-                $products[] = [
-                    'id' => $id,
-                    'name' => $request->request->get('name'),
-                    'uuid' => uniqid(),
-                    'count' => 1,
-                ];
-            } else {
-                $products[] = [
-                    'product' => $id,
-                    'uuid' => uniqid(),
-                    'count' => 1,
-                ];
-            }
-        }
-        $session->set('products', json_encode($products));
-
-        $count = 0;
-        foreach ($products as $product) {
-          $count += $product['count'];
+          $shopCartProduct = new ShopCartProduct();
+          $shopCartProduct->setProductId($id);
+          $shopCartProduct->setCount(1);
+          $shopCartProduct->setUuid(uniqid());
+          $shopCartProduct->setUser($this->getUser());
+          $this->getDoctrine()->getManager()->persist($shopCartProduct);
+          $this->getDoctrine()->getManager()->flush();
         }
 
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Home',
+          'name' => 'Home',
         ]);
         $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
           'name' => 'Membresia',
@@ -1164,18 +1130,18 @@ class SiteController extends Controller
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
         return new JsonResponse([
-            'count' => $count,
-            'exist' => $exist,
-            'products' => json_encode($this->getShopCartProducts(json_decode($request->getSession()->get('products'), true))),
-            'html' => $this->renderView(':site:products-summary.html.twig', [
-              'home' => $home,
-              'membership' => $membership,
-              'count' => $this->countShopCart($request),
-              'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
-              'categories' => $this->get('category_service')->getAll(),
-              'terms' => $config->getTermAndConditions(),
-              'privacy' => $config->getPrivacyPolicy(),
-            ])
+          'exist' => $exist,
+          'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+          'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+          'html' => $this->renderView(':site:products-summary.html.twig', [
+            'home' => $home,
+            'membership' => $membership,
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'categories' => $this->get('category_service')->getAll(),
+            'terms' => $config->getTermAndConditions(),
+            'privacy' => $config->getPrivacyPolicy(),
+          ])
         ]);
     }
 
@@ -1189,51 +1155,38 @@ class SiteController extends Controller
      */
     public function removeFromCartShop(Request $request, $id)
     {
-        $session = $request->getSession();
-        if ($session->has('products')) {
-            $products = json_decode($session->get('products'), true);
-            $newProducts = [];
-            foreach ($products as $product) {
-                if (array_key_exists('id', $product)) {
-                    if ($product['id'] != $id) {
-                        $newProducts[] = $product;
-                    }
-                } elseif ($product['product'] != $id) {
-                    $newProducts[] = $product;
-                }
-            }
-        } else {
-            $newProducts = [];
+      $shopCartProducts = $this->getDoctrine()->getManager()->getRepository('AppBundle:ShopCartProduct')->findBy([
+        'user' => $this->getUser()->getId(),
+      ]);
+      foreach ($shopCartProducts as $shopCartProduct) {
+        if ($shopCartProduct->getProductId() == $id) {
+          $this->getDoctrine()->getManager()->remove($shopCartProduct);
+          $this->getDoctrine()->getManager()->flush();
         }
-        $session->set('products', json_encode($newProducts));
+      }
 
-        $count = 0;
-        foreach ($newProducts as $product) {
-          $count += $product['count'];
-        }
+      $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+        'name' => 'Home',
+      ]);
+      $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+        'name' => 'Membresia',
+      ]);
 
-        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-          'name' => 'Home',
-        ]);
-        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-          'name' => 'Membresia',
-        ]);
+      $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
-        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
-
-        return new JsonResponse([
-            'count' => $count,
-            'products' => json_encode($this->getShopCartProducts(json_decode($request->getSession()->get('products'), true))),
-            'html' => $this->renderView(':site:products-summary.html.twig', [
-              'home' => $home,
-              'membership' => $membership,
-              'count' => $this->countShopCart($request),
-              'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
-              'categories' => $this->get('category_service')->getAll(),
-              'terms' => $config->getTermAndConditions(),
-              'privacy' => $config->getPrivacyPolicy(),
-            ])
-        ]);
+      return new JsonResponse([
+        'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+        'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+        'html' => $this->renderView(':site:products-summary.html.twig', [
+          'home' => $home,
+          'membership' => $membership,
+          'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+          'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+          'categories' => $this->get('category_service')->getAll(),
+          'terms' => $config->getTermAndConditions(),
+          'privacy' => $config->getPrivacyPolicy(),
+        ])
+      ]);
     }
 
     /**
@@ -1713,8 +1666,8 @@ class SiteController extends Controller
 
       return $this->render(':site:favorite-products.html.twig', [
         'home' => $home,
-        'count' => $this->countShopCart($request),
-        'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+        'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+        'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
         'products' => $products,
         'categories' => $this->get('category_service')->getAll(),
         'terms' => $config->getTermAndConditions(),
@@ -1749,8 +1702,8 @@ class SiteController extends Controller
 
         return $this->render(':site:request-status.html.twig', [
             'home' => $home,
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
             'requests' => $clientRequests,
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -1807,106 +1760,11 @@ class SiteController extends Controller
         return $this->render(':site:products-summary.html.twig', [
             'home' => $home,
             'membership' => $membership,
-            'count' => $this->countShopCart($request),
-            'shopCartProducts' => $this->getShopCartProducts(json_decode($request->getSession()->get('products'), true)),
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
         ]);
-    }
-
-    private function getShopCartProducts($products)
-    {
-      if ($products == null) {
-        $products = [];
-      }
-
-      $productsDB = [];
-      $categories = [];
-      foreach ($products as $product) {
-          if (array_key_exists('id', $product) && ('target15' == $product['id'] || 'target25' == $product['id'] || 'target50' == $product['id'] || 'target100' == $product['id'])) {
-              $name = 'Tarjeta de 15 CUC';
-              switch ($product['id']) {
-                  case 'target15':
-                      $price = 15;
-                      break;
-                  case 'target25':
-                      $name = 'Tarjeta de 25 CUC';
-                      $price = 25;
-                      break;
-                  case 'target50':
-                      $name = 'Tarjeta de 50 CUC';
-                      $price = 50;
-                      break;
-                  default:
-                      $name = 'Tarjeta de 100 CUC';
-                      $price = 100;
-                      break;
-              }
-              $productsDB[] = [
-                  'id' => $product['id'],
-                  'uuid' => $product['uuid'],
-                  'type' => 'target',
-                  'price' => $price,
-                  'count' => $product['count'],
-                  'name' => $name,
-              ];
-          } else {
-              $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['product']);
-              $price = $productDB->getPrice();
-
-              $offerExists = false;
-              $offerPrice = $this->get('product_service')->findProductOfferPrice($productDB);
-              if ($offerPrice != -1) {
-                $price = $offerPrice;
-                $offerExists = true;
-              }
-
-              $productsDB[] = [
-                  'id' => $productDB->getId(),
-                  'uuid' => $product['uuid'],
-                  'price' => $price,
-                  'offerExists' => $offerExists,
-                  'count' => $product['count'],
-                  'storeCount' => $productDB->getStoreCount(),
-                  'name' => $productDB->getName(),
-                  'image' => $productDB->getMainImage(),
-                  'weight' => $productDB->getWeight(),
-                  'ikeaPrice' => $productDB->getIkeaPrice(),
-                  'isFurniture' => $productDB->getIsFurniture(),
-                  'isFragile' => $productDB->getIsFragile(),
-                  'isAirplaneFurniture' => $productDB->getIsAriplaneForniture(),
-                  'isOversize' => $productDB->getIsOversize(),
-                  'isTableware' => $productDB->getIsTableware(),
-                  'isLamp' => $productDB->getIsLamp(),
-                  'numberOfPackages' => $productDB->getNumberOfPackages(),
-                  'isMattress' => $productDB->getIsMattress(),
-                  'isAirplaneMattress' => $productDB->getIsAriplaneMattress(),
-                  'isFaucet' => $productDB->getIsFaucet(),
-                  'isGrill' => $productDB->getIsGrill(),
-                  'isShelf' => $productDB->getIsShelf(),
-                  'isDesk' => $productDB->getIsDesk(),
-                  'isBookcase' => $productDB->getIsBookcase(),
-                  'isComoda' => $productDB->getIsComoda(),
-                  'isRepisa' => $productDB->getIsRepisa(),
-                  'categories' => json_encode($categories),
-              ];
-          }
-      }
-      return $productsDB;
-    }
-
-    private function countShopCart(Request $request)
-    {
-      $total = 0;
-      $session = $request->getSession();
-      if ($session->has('products')) {
-        $products = json_decode($session->get('products'), true);
-        foreach ($products as $product) {
-          $total += $product['count'];
-        }
-      }
-
-      return $total;
     }
 }

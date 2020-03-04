@@ -46,3 +46,7 @@ services:
   api_category_service:
     class: AppBundle\Api\Services\CategoryService
     arguments: ["@doctrine.orm.entity_manager"]
+
+  shop_cart_service:
+    class: AppBundle\Services\ShopCartService
+    arguments: ["@doctrine.orm.entity_manager", "@product_service"]

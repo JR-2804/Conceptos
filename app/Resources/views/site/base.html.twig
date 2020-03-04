@@ -43,6 +43,11 @@
 <body>
 <input type="hidden" value="{{ path('site_home') }}" id="site-path">
 <input type="hidden" value="{{ path('persist_count_shop_car') }}" id="persist-count-path">
+{% if app.user|default %}
+  <input type="hidden" value="{{ true }}" id="user-authenticated">
+{% else %}
+  <input type="hidden" value="{{ false }}" id="user-authenticated">
+{% endif %}
 
 <div class="la-anim-10 d-none d-lg-block"></div>
 <div class="la-anim-10 small-anim d-lg-none"></div>

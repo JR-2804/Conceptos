@@ -1,6 +1,7 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 <div id ="login-form">
+  <span id="login-info" class="conceptos-subtitle"></span>
   <form class="d-flex flex-column w-100" role="form" method="POST" action="{{ path('fos_user_security_check') }}">
     {% if csrf_token %}
       <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>

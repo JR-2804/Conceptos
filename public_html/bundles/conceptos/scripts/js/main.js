@@ -82,19 +82,22 @@ $(document).ready(function() {
   $("#loginModal label").addClass("collapse");
 
   $(".conceptos-navbar-icon.conceptos-user-icon").click(function() {
-    $(".register-checkbox").click(function() {
-      if ($(this).prop("checked")) {
-        $("#login-form").hide();
-        $("#register-form").show();
+    $("#loginModal #login-info").text("");
+    $("#loginModal #login-info").hide();
+  });
 
-        FlagRegisterFieldsAsNonRequired();
-      } else {
-        $("#login-form").show();
-        $("#register-form").hide();
+  $(".register-checkbox").click(function() {
+    if ($(this).prop("checked")) {
+      $("#login-form").hide();
+      $("#register-form").show();
 
-        FlagRegisterFieldsAsNonRequired();
-      }
-    });
+      FlagRegisterFieldsAsNonRequired();
+    } else {
+      $("#login-form").show();
+      $("#register-form").hide();
+
+      FlagRegisterFieldsAsNonRequired();
+    }
   });
 
   function hideBadges(element) {

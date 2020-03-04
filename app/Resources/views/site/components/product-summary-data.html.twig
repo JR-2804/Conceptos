@@ -55,7 +55,7 @@
 <span class="product-subtitle d-none d-lg-block">{{ product.item }}</span>
 <span class="product-subtitle product-subtitle-short d-lg-none">{{ product.item }}</span>
 <div class="d-flex justify-content-center add-to-cart-button-container mt-1 mt-lg-0">
-    <a class="d-flex justify-content-center header-button add-to-cart-button m-0" data-path="{{ path('add_shop_card', {id: product.id, offer: offerId}) }}">
+    <a class="d-flex justify-content-center header-button add-to-cart-button m-0" data-path="{{ path('add_shop_card', {id: product.id}) }}">
         <span class="d-none d-lg-block">Añadir al carrito</span>
         <img class="add-to-cart-icon" src="{{ asset('bundles/conceptos/images/products/cart.png') }}">
     </a>

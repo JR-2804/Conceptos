@@ -455,7 +455,7 @@ $(document).ready(function() {
           }
           $("#conceptos-shop-cart-count").data("count", response.count);
           $(".shop-cart-products-count").text(response.count);
-          products = JSON.parse(response.products);
+          products = response.shopCartProducts;
           $('.shop-cart-product[data-product="' + product + '"]').remove();
           recalculateAllPrices();
           $.toast({
@@ -491,6 +491,70 @@ $(document).ready(function() {
     });
   }
 
+  function OnCartIconCLick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var authenticated = $("#user-authenticated").val();
+    if (authenticated) {
+      var url = $(this).data("path");
+      ajax(
+        url,
+        "POST",
+        {},
+        function(response) {
+          if (response.count > 99) {
+            $("#conceptos-shop-cart-count").text("+99");
+          } else {
+            $("#conceptos-shop-cart-count").text(response.count);
+          }
+          $("#conceptos-shop-cart-count").data("count", response.count);
+          $(".shop-cart-products-count").text(response.count);
+          products = response.shopCartProducts;
+          $("#products-summary")
+            .children()
+            .remove();
+          $("#products-summary").append(response.html);
+          CreateCartSummaryActions();
+          recalculateAllPrices();
+          $.toast({
+            text: "Producto añadido al carrito correctamente",
+            showHideTransition: "fade",
+            bgColor: "#c2b930",
+            textColor: "#3f3c03",
+            allowToastClose: true,
+            hideAfter: 3000,
+            stack: 5,
+            textAlign: "center",
+            position: "mid-center",
+            icon: "success",
+            heading: "Correcto"
+          });
+        },
+        function() {
+          $.toast({
+            text: "Ha ocurrido un error añadiendo el producto al carrito",
+            showHideTransition: "fade",
+            bgColor: "#c2b930",
+            textColor: "#3f3c03",
+            allowToastClose: true,
+            hideAfter: 3000,
+            stack: 5,
+            textAlign: "center",
+            position: "mid-center",
+            icon: "error",
+            heading: "Error"
+          });
+        }
+      );
+    } else {
+      $("#loginModal #login-info").text(
+        "Necesita estar registrado para poder comprar"
+      );
+      $("#loginModal").modal();
+    }
+  }
+
   // ==================================================
 
   let containerBlog = document.querySelector(".post-single");
@@ -499,124 +563,16 @@ $(document).ready(function() {
       e.preventDefault();
       e.stopPropagation();
 
-      let product = e.target;
-      product
-        .querySelector(".conceptos-add-to-cart-icon")
-        .addEventListener("click", function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          var url = $(this).data("path");
-          ajax(
-            url,
-            "POST",
-            {},
-            function(response) {
-              if (response.count > 99) {
-                $("#conceptos-shop-cart-count").text("+99");
-              } else {
-                $("#conceptos-shop-cart-count").text(response.count);
-              }
-              $("#conceptos-shop-cart-count").data("count", response.count);
-              $(".shop-cart-products-count").text(response.count);
-              products = JSON.parse(response.products);
-              $("#products-summary")
-                .children()
-                .remove();
-              $("#products-summary").append(response.html);
-              CreateCartSummaryActions();
-              recalculateAllPrices();
-              $.toast({
-                text: "Producto añadido al carrito correctamente",
-                showHideTransition: "fade",
-                bgColor: "#c2b930",
-                textColor: "#3f3c03",
-                allowToastClose: true,
-                hideAfter: 3000,
-                stack: 5,
-                textAlign: "center",
-                position: "mid-center",
-                icon: "success",
-                heading: "Correcto"
-              });
-            },
-            function() {
-              $.toast({
-                text: "Ha ocurrido un error añadiendo el producto al carrito",
-                showHideTransition: "fade",
-                bgColor: "#c2b930",
-                textColor: "#3f3c03",
-                allowToastClose: true,
-                hideAfter: 3000,
-                stack: 5,
-                textAlign: "center",
-                position: "mid-center",
-                icon: "error",
-                heading: "Error"
-              });
-            }
-          );
-        });
-
-      // $(".conceptos-add-to-cart-icon").click();
+      let cartIcon = e.target.querySelector(".conceptos-add-to-cart-icon");
+      if (cartIcon) {
+        cartIcon.addEventListener("click", OnCartIconCLick);
+      }
     });
   }
 
   // ==================================================
 
-  $(".conceptos-add-to-cart-icon").click(function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    var url = $(this).data("path");
-    ajax(
-      url,
-      "POST",
-      {},
-      function(response) {
-        if (response.count > 99) {
-          $("#conceptos-shop-cart-count").text("+99");
-        } else {
-          $("#conceptos-shop-cart-count").text(response.count);
-        }
-        $("#conceptos-shop-cart-count").data("count", response.count);
-        $(".shop-cart-products-count").text(response.count);
-        products = JSON.parse(response.products);
-        $("#products-summary")
-          .children()
-          .remove();
-        $("#products-summary").append(response.html);
-        CreateCartSummaryActions();
-        recalculateAllPrices();
-        $.toast({
-          text: "Producto añadido al carrito correctamente",
-          showHideTransition: "fade",
-          bgColor: "#c2b930",
-          textColor: "#3f3c03",
-          allowToastClose: true,
-          hideAfter: 3000,
-          stack: 5,
-          textAlign: "center",
-          position: "mid-center",
-          icon: "success",
-          heading: "Correcto"
-        });
-      },
-      function() {
-        $.toast({
-          text: "Ha ocurrido un error añadiendo el producto al carrito",
-          showHideTransition: "fade",
-          bgColor: "#c2b930",
-          textColor: "#3f3c03",
-          allowToastClose: true,
-          hideAfter: 3000,
-          stack: 5,
-          textAlign: "center",
-          position: "mid-center",
-          icon: "error",
-          heading: "Error"
-        });
-      }
-    );
-  });
+  $(".conceptos-add-to-cart-icon").click(OnCartIconCLick);
 
   $(".conceptos-add-gift-card-to-cart-button").click(function(e) {
     e.preventDefault();
@@ -638,7 +594,7 @@ $(document).ready(function() {
           $("#conceptos-shop-cart-count").text(response.count);
         }
         $("#conceptos-shop-cart-count").data("count", response.count);
-        products = JSON.parse(response.products);
+        products = response.shopCartProducts;
         $("#products-summary")
           .children()
           .remove();
