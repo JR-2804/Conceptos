@@ -15,10 +15,12 @@
     <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-new.png') }}">
     <a class="conceptos-category-title" href="{{ path('products', {recent:true}) }}">NOVEDADES</a>
   </div>
-  <div class="d-flex align-items-center mt-3">
-    <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-love.png') }}">
-    <a class="conceptos-category-title" href="{{ path('favorite_products') }}">FAVORITOS</a>
-  </div>
+  {% if app.user|default %}
+    <div class="d-flex align-items-center mt-3">
+      <img class="conceptos-category-icon mr-2" src="{{ asset('bundles/conceptos/images/home/category-love.png') }}">
+      <a class="conceptos-category-title" href="{{ path('favorite_products') }}">FAVORITOS</a>
+    </div>
+  {% endif %}
   {% for category in categories %}
     {% if category.parents | length == 0 %}
       {% set subCategories = '' %}
