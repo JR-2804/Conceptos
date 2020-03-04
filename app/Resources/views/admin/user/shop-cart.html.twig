@@ -1,0 +1,68 @@
+{% extends ':easy_admin:layout.html.twig' %}
+
+{% block content_title %}
+  Carrito de compras
+{% endblock %}
+
+{% block main %}
+  <div class="row">
+    <div class="col-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            Carrito de compras de: {{ user.username }}
+          </h4>
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+              <tr>
+                <th style="width:25%;">Código</th>
+                <th style="width:25%;" class="text-center">Imágen</th>
+                <th style="width:25%;" class="text-center">Cantidad</th>
+                <th style="width:25%;" class="text-center">Precio</th>
+              </tr>
+              </thead>
+              <tbody>
+                {% for product in products %}
+                  <tr>
+                    <td style="padding-left: 20px;">
+                      <strong>{{ product.code }}</strong>
+                    </td>
+                    <td>
+                      {% if product.type is defined %}
+                        {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
+                        {% if product.price == 25 %}
+                            {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
+                        {% elseif product.price == 50 %}
+                            {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
+                        {% elseif product.price == 100 %}
+                            {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
+                        {% endif %}
+                        <img src="{{ imagePath }}"
+                             class="center-block img-responsive" style="max-width: 100px;">
+                      {% else %}
+                        <img src="{{ vich_uploader_asset(product.image, 'imageFile') }}"
+                             class="center-block img-responsive" style="max-width: 100px;">
+                      {% endif %}
+                    </td>
+                    <td class="text-center">{{ product.count }}</td>
+                    <td class="text-center">{{ product.price }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-12">
+          <a class="btn btn-secondary" href="{{ path('easyadmin', {entity: 'User', action: 'list', menuIndex: app.request.query.get('menuIndex'), submenuIndex: app.request.query.get('submenuIndex')}) }}">
+            Volver
+          </a>
+      </div>
+  </div>
+{% endblock %}

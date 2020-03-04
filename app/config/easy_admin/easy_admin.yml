@@ -410,6 +410,7 @@ easy_admin:
                 title: Usuarios registrados
                 actions:
                     - { name: 'favorite_products_user', type: 'route', label: 'Productos Favoritos' }
+                    - { name: 'shop_cart_user', type: 'route', label: 'Carrito' }
                 fields:
                     - id
                     - {property: 'username', label: 'Usuario'}
