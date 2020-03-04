@@ -285,9 +285,5 @@
     {% if showSuccessToast is defined and showSuccessToast == true %}
       $("#successShopRequestModal").modal();
     {% endif %}
-
-    {% if (loginError is defined and loginError) or (not app.user|default) %}
-      $("#loginModal").modal();
-    {% endif %}
   </script>
 {% endblock %}

@@ -255,7 +255,7 @@ function getWeight() {
   var weightOz = parseFloat($("#weight-oz").val()) || 0;
   var weightLb = parseFloat($("#weight-lb").val()) || 0;
 
-  var finalWeight = (weightKg + weightOz / 2.2 + weightLb / 35.27).toFixed(2);
+  var finalWeight = (weightKg + weightOz / 35.27 + weightLb / 2.2).toFixed(2);
   return finalWeight;
 }
 
