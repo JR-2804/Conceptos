@@ -352,6 +352,8 @@ class SiteController extends Controller
                 $offerPrice = $this->get('product_service')->findProductOfferPrice($productR);
                 $productR->setPriceOffer($offerPrice);
             }
+            $offerPrice = $this->get('product_service')->findProductOfferPrice($productR);
+            $productR->setPriceOffer($offerPrice);
         }
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
