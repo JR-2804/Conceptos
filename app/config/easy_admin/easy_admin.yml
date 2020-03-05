@@ -187,6 +187,8 @@ easy_admin:
                     - {property: 'client', label: 'Cliente'}
                     - {property: 'preFactureProducts', label: 'Productos', template: 'show_products.html.twig'}
                     - {property: 'preFactureCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
+                    - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
+                    - {property: 'cucExtra', label: 'Extra CUC'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'finalPrice', label: 'Precio final'}
@@ -196,6 +198,8 @@ easy_admin:
                     - {property: 'client', label: 'Cliente'}
                     - {property: 'preFactureProducts', label: 'Productos', template: 'show_products.html.twig'}
                     - {property: 'preFactureCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
+                    - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
+                    - {property: 'cucExtra', label: 'Extra CUC'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'finalPrice', label: 'Precio final'}
