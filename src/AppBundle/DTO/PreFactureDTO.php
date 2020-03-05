@@ -5,8 +5,6 @@ namespace AppBundle\DTO;
 class PreFactureDTO
 {
   private $id;
-  private $date;
-  private $client;
   private $preFactureProducts;
   private $preFactureCards;
   private $finalPrice;

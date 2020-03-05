@@ -1,0 +1,63 @@
+{% extends ':easy_admin:layout.html.twig' %}
+{% block body_javascript %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/conceptos/libs/dropzone/dropzone.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/js/common.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/js/new_edit_pre_facture.js') }}"></script>
+{% endblock %}
+{% block head_stylesheets %}
+  {{ parent() }}
+  <link href="{{ asset('bundles/conceptos/libs/select2/css/select2.min.css') }}" type="text/css" rel="stylesheet">
+  <link href="{{ asset('bundles/conceptos/libs/select2/css/select2-bootstrap.min.css') }}" type="text/css" rel="stylesheet">
+  <link href="{{ asset('bundles/conceptos/libs/dropzone/dropzone.css') }}" type="text/css" rel="stylesheet">
+  <link href="{{ asset('bundles/conceptos/css/new_edit_product.css') }}" type="text/css" rel="stylesheet">
+  <link href="{{ asset('bundles/conceptos/css/edit_page.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+{% block content_title %}
+  Editar prefactura
+{% endblock %}
+{% block main %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="d-flex flex-wrap col-12">
+        <div class="col-12" style="padding-left: 0; padding-right: 0;">
+          <div class="panel panel-primary" style="height: 100%;">
+            <div class="panel-heading">
+              <h3 class="panel-title">Productos</h3>
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-condensed">
+                  <thead>
+                  <tr>
+                    <th>Imágen</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Mueble por Avión</th>
+                    <th>Colchón por Avión</th>
+                    <th>Estado</th>
+                  </tr>
+                  </thead>
+                  <tbody class="product-rows">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 20px;">
+      <div class="col-12">
+        {{ form_start(form) }}
+        <button class="btn btn-primary pull-left" type="submit" id="save_data">
+          <i class="fa fa-plus"></i>Aceptar
+        </button>
+        <a class="btn btn-secondary action-list pull-left" href="{{ path('easyadmin', {'entity': 'PreFacture', 'action': 'list'}) }}">
+          Cancelar
+        </a>
+        {{ form_end(form) }}
+      </div>
+    </div>
+  </div>
+{% endblock %}
