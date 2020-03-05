@@ -31,51 +31,19 @@ class PreFactureController extends Controller
   {
     $preFactureDB = $this->getDoctrine()->getRepository('AppBundle:Request\PreFacture')->find($id);
     $dto = new PreFactureDTO();
-    $dto->setDate(json_encode($preFactureDB->getDate()));
-    $dto->setClient($preFactureDB->getClient()->getId());
-    $dto->setFinalPrice($preFactureDB->getFinalPrice());
-    $dto->setTransportCost($preFactureDB->getTransportCost());
-    $dto->setDiscount($preFactureDB->getDiscount());
-    $dto->setFirstClientDiscount($preFactureDB->getFirstClientDiscount());
 
     $preFactureProducts = [];
     foreach ($preFactureDB->getPreFactureProducts() as $preFactureProduct) {
       $newPreFactureProduct = [
         'id' => $preFactureProduct->getId(),
-        'product' => $preFactureProduct->getProduct()->getId(),
-        'code' => $preFactureProduct->getProduct()->getCode(),
         'image' => $preFactureProduct->getProduct()->getMainImage()->getImage(),
-        'price' => $preFactureProduct->getProduct()->getPrice(),
+        'code' => $preFactureProduct->getProduct()->getCode(),
         'count' => $preFactureProduct->getCount(),
-        'airplaneFurniture' => $preFactureProduct->getIsAriplaneForniture(),
-        'airplaneMattress' => $preFactureProduct->getIsAriplaneMattress(),
+        'price' => $preFactureProduct->getProduct()->getPrice(),
       ];
-      if ($preFactureProduct->getOffer()) {
-        $newPreFactureProduct["offerId"] = $preFactureProduct->getOffer()->getId();
-        $newPreFactureProduct["offerPrice"] = $preFactureProduct->getOffer()->getPrice();
-      }
       $preFactureProducts[] = $newPreFactureProduct;
     }
     $dto->setPreFactureProducts(json_encode($preFactureProducts));
-
-    $preFactureCards = [];
-    foreach ($preFactureDB->getPreFactureCards() as $preFactureCard) {
-      $preFactureCards[] = [
-        'id' => $preFactureCard->getId(),
-        'price' => $preFactureCard->getPrice(),
-        'count' => $preFactureCard->getCount(),
-      ];
-    }
-    $dto->setPreFactureCards(json_encode($preFactureCards));
-
-    $factures = [];
-    foreach ($preFactureDB->getFactures() as $facture) {
-      $factures[] = [
-        'id' => $facture->getId(),
-        'date' => date_format($facture->getDate(), 'Y'),
-      ];
-    }
-    $dto->setFactures(json_encode($factures));
 
     $form = $this->createForm(PreFactureType::class, $dto);
     $form->handleRequest($request);
