@@ -163,7 +163,7 @@ easy_admin:
                 title: 'Editar pedido'
         PreFacture:
             class: AppBundle\Entity\Request\PreFacture
-            label: Factura
+            label: Prefactura
             list:
                 title: Prefacturas realizadas
                 actions:
@@ -311,7 +311,7 @@ easy_admin:
                     - {property: 'image', label: 'Imágen', type: 'image', base_path: '%app.path.blog.images%'}
                     - {property: 'createdDate', label: 'Creado'}
                     - {property: 'visitCount', label: 'Cantidad de visitas'}
-                    - {property: 'promoted', label: 'Detacado', type: 'toggle'}
+                    - {property: 'promoted', label: 'Destacado', type: 'toggle'}
                     - {property: 'tags', label: 'Tags', template: 'tags.html.twig'}
                     - {property: 'category', label: 'Categoría'}
                     - {property: 'user', label: 'Usuario'}
@@ -378,7 +378,7 @@ easy_admin:
             actions:
                 - {name: 'new', label: 'Crear Correo'}
             list:
-                title: 'Correos de promocion'
+                title: 'Correos de promoción'
                 fields:
                     - id
                     - {property: 'title', label: 'Nombre'}
