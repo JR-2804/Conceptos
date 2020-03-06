@@ -38,9 +38,10 @@ class MemberController extends Controller
      */
     public function userShopCartAction(Request $request)
     {
-      $user = $this->getUser();
+      $userId = $request->query->get("id");
+      $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->find($userId);
       $shopCartProducts = $this->getDoctrine()->getManager()->getRepository('AppBundle:ShopCartProduct')->findBy([
-        'user' => $user->getId(),
+        'user' => $userId,
       ]);
 
       $products = [];
