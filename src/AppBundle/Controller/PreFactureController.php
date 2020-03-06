@@ -39,7 +39,7 @@ class PreFactureController extends Controller
         'image' => $preFactureProduct->getProduct()->getMainImage()->getImage(),
         'code' => $preFactureProduct->getProduct()->getCode(),
         'count' => $preFactureProduct->getCount(),
-        'price' => $preFactureProduct->getProduct()->getPrice(),
+        'state' => $preFactureProduct->getState(),
       ];
       $preFactureProducts[] = $newPreFactureProduct;
     }
@@ -48,75 +48,22 @@ class PreFactureController extends Controller
     $form = $this->createForm(PreFactureType::class, $dto);
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
-      $date = new \DateTime($form->get('date')->getData());
-
-      $clientId = json_decode($form->get('client')->getData(), true)[0];
-      $client = $this->getDoctrine()->getRepository('AppBundle:Request\Client')->find($clientId);
-
       $preFactureDB = $this->getDoctrine()->getRepository('AppBundle:Request\PreFacture')->find($id);
-      $preFactureDB->setDate($date);
-      $preFactureDB->setClient($client);
-      $preFactureDB->setFinalPrice($form->get('finalPrice')->getData());
-      $preFactureDB->setTransportCost($form->get('transportCost')->getData());
-      $preFactureDB->setDiscount($form->get('discount')->getData());
-      $preFactureDB->setFirstClientDiscount($form->get('firstClientDiscount')->getData());
-
-      foreach ($preFactureDB->getPreFactureProducts() as $preFactureProduct) {
-        $preFactureProductDB = $this->getDoctrine()->getRepository('AppBundle:Request\PreFactureProduct')->find($preFactureProduct->getId());
-        $this->getDoctrine()->getManager()->remove($preFactureProductDB);
-      }
-      $preFactureDB->getPreFactureProducts()->clear();
       $preFactureProducts = json_decode($form->get('preFactureProducts')->getData(), true);
       if (!is_array($preFactureProducts)) {
         $preFactureProducts = [];
       }
-      foreach ($preFactureProducts as $product) {
-        $preFactureProduct = new PreFactureProduct();
-        $preFactureProduct->setPreFacture($preFactureDB);
-        $preFactureProduct->setProduct($this->getDoctrine()->getRepository('AppBundle:Product')->find($product['product']));
-        $preFactureProduct->setCount($product['count']);
-        $preFactureProduct->setIsAriplaneForniture($product['airplaneFurniture']);
-        $preFactureProduct->setIsAriplaneMattress($product['airplaneMattress']);
-        if (array_key_exists('offerId', $product)) {
-          $preFactureProduct->setOffer($this->getDoctrine()->getRepository('AppBundle:Offer')->find($product['offerId']));
+
+      foreach ($preFactureDB->getPreFactureProducts() as $preFactureProductDb) {
+        foreach ($preFactureProducts as $preFactureProduct) {
+          if ($preFactureProduct["id"] == $preFactureProductDb->getId()) {
+            $preFactureProductDb->setState($preFactureProduct["state"]);
+            $this->getDoctrine()->getManager()->persist($preFactureProductDb);
+          }
         }
+      }
+      $preFactureDB->getPreFactureProducts()->clear();
 
-        $this->getDoctrine()->getManager()->persist($preFactureProduct);
-        $preFactureDB->addPreFactureProduct($preFactureProduct);
-      }
-
-      foreach ($preFactureDB->getPreFactureCards() as $preFactureCard) {
-        $preFactureCardDB = $this->getDoctrine()->getRepository('AppBundle:Request\PreFactureCard')->find($preFactureCard->getId());
-        $this->getDoctrine()->getManager()->remove($preFactureCardDB);
-      }
-      $preFactureDB->getPreFactureCards()->clear();
-      $preFactureCards = json_decode($form->get('preFactureCards')->getData(), true);
-      if (!is_array($preFactureCards)) {
-        $preFactureCards = [];
-      }
-      foreach ($preFactureCards as $card) {
-        $preFactureCard = new PreFactureCard();
-        $preFactureCard->setPreFacture($preFactureDB);
-        $preFactureCard->setPrice($card['card']);
-        $preFactureCard->setCount($card['count']);
-        $this->getDoctrine()->getManager()->persist($preFactureCard);
-        $preFactureDB->addPreFactureCard($preFactureCard);
-      }
-
-      foreach ($preFactureDB->getFactures() as $facture) {
-        $facture->setPreFacture(null);
-      }
-      $preFactureDB->getFactures()->clear();
-      $factures = json_decode($form->get('factures')->getData(), true);
-      if (!is_array($factures)) {
-        $factures = [];
-      }
-      foreach ($factures as $facture) {
-        $factureDB = $this->getDoctrine()->getRepository('AppBundle:Request\Facture')->find($facture['id']);
-        $factureDB->setPreFacture($preFactureDB);
-      }
-
-      $preFactureDB->calculatePrice($this->get('product_service'));
       $this->getDoctrine()->getManager()->flush();
 
       return $this->redirectToRoute('easyadmin', [
