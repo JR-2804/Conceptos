@@ -45,3 +45,7 @@
   .storage .conceptos-popular-product-image {
   height: 50vh;
   width: 80vw; }
+  @media (min-width: 992px) {
+    .storage .conceptos-popular-product-image {
+      height: 40vh;
+      width: 100%; } }
