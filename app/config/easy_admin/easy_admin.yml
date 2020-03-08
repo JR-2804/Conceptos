@@ -42,6 +42,7 @@ easy_admin:
                     - {name: 'new', label: 'Nueva Evaluación'}
                 fields:
                     - id
+                    - {property: 'product.code', label: 'Código'}
                     - {property: 'product.name', label: 'Producto'}
                     - {property: 'user', label: 'Usuario'}
                     - {property: 'evaluationValue', label: 'Evaluación'}
