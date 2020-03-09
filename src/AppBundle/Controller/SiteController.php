@@ -1390,6 +1390,8 @@ class SiteController extends Controller
         $this->get('email_service')->send($client->getEmail(), $client->getFirstName().' '.$client->getLastName(), $config->getEmail(), 'Pedido realizardo a través de la WEB', $body);
         $this->get('email_service')->send($config->getEmail(), 'Equipo comercial Conceptos', $client->getEmail(), 'Pedido realizado a través de la WEB', $bodyClient);
 
+        $this->get('shop_cart_service')->emptyShopCart($this->getUser());
+
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
         $request->getSession()->set('successRequestToast', true);
