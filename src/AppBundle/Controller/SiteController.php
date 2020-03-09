@@ -1369,7 +1369,7 @@ class SiteController extends Controller
             'inStore' => true,
         ], null, 3);
 
-        return $this->render(':site:request-email.html.twig', [
+        $body = $this->renderView(':site:request-email.html.twig', [
             'request' => $requestDB,
             'home' => $home,
             'inStore' => $inStore,
