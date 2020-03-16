@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/home/css/component.css') }}">
     <link href="{{ asset('bundles/conceptos/products/css/products.css') }}" type="text/css" rel="stylesheet">
 {% endblock %}
+
+{% block meta %}
+    <link rel="canonical" href="{{ absolute_url(path('products')) }}"/>
+{% endblock %}
+
 {% block body %}
   <form action="{{ path('products') }}" method="get">
     <input type="hidden" value="{{ app.request.query.get('term') }}" id="term" name="term">

@@ -10,6 +10,12 @@
   <meta property="og:locale" content="es_ES"/>
 {% endblock %}
 {% block meta_description %}{{ post.summary }}{% endblock %}
+
+{{% block meta %}
+<link rel="canonical" href="{{ absolute_url(path('blog_details', {id: post.id, title: post.path})) }}"/>
+{% endblock %}
+
+
 {% block css %}
   <link rel="stylesheet" href="{{ asset('bundles/conceptos/blog/libs/sharetastic/sharetastic.css') }}">
   <link rel="stylesheet" href="{{ asset('bundles/conceptos/blog/css/fontastic.css') }}">
