@@ -18,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
+use Doctrine\ORM\EntityNotFoundException;
 
 class SecurityController extends Controller
 {
@@ -248,6 +249,11 @@ class SecurityController extends Controller
         $persistedPrefactures = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->findAll();
         foreach ($persistedPrefactures as $persistedPrefacture) {
           if ($persistedPrefacture->getClient()->getEmail() == $userMail) {
+            foreach ($persistedPrefacture->getPreFactureProducts() as $prefactureProduct) {
+              if (!$this->IsEntityDefined($prefactureProduct)) {
+                $prefactureProduct->setProduct(null);
+              }
+            }
             $clientPrefactures[] = $persistedPrefacture;
           }
         }
@@ -265,5 +271,15 @@ class SecurityController extends Controller
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
         ]);
+    }
+
+    public function IsEntityDefined($prefactureProduct) {
+      try {
+        if ($prefactureProduct->getProduct()->getName() != null) {
+          return true;
+        }
+      } catch (EntityNotFoundException $e) {
+        return false;
+      }
     }
 }
