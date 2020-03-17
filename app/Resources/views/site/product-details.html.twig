@@ -1,6 +1,11 @@
 {% extends ':site:base.html.twig' %}
 {% block title %}Detalles del producto - {{ product.item }}{% endblock %}
 
+
+{% block meta %}
+    <link rel="canonical" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}"/>
+{% endblock %}
+
 {% block css %}
   <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/product-details.css') }}">
   <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/products.css') }}">

@@ -8,6 +8,11 @@
   <link rel="stylesheet" href="{{ asset('bundles/conceptos/blog/index.css') }}">
   <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/styles/blog.css') }}" type="text/css">
 {% endblock %}
+
+{% block meta %}
+    <link rel="canonical" href="{{ absolute_url(path('blog_home')) }}"/>
+{% endblock %}
+
 {% block body %}
   <div class="blog_list pt-3 pl-2 pr-2 pl-lg-5 pr-lg-5">
     <div class="blog_list__title">
