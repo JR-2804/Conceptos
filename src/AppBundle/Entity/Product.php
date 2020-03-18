@@ -218,6 +218,11 @@ class Product
     private $evaluations;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ComboProduct", mappedBy="parentProduct")
+     */
+    private $comboProducts;
+
+    /**
      * Product constructor.
      */
     public function __construct()
@@ -231,6 +236,7 @@ class Product
         $this->favorite = false;
         $this->highlightImages = new ArrayCollection();
         $this->evaluations = new ArrayCollection();
+        $this->comboProducts = new ArrayCollection();
     }
 
     public function __toString()
@@ -836,5 +842,22 @@ class Product
     public function getEvaluations()
     {
         return $this->evaluations;
+    }
+
+    public function addComboProduct(ComboProduct $comboProduct)
+    {
+        $this->comboProducts[] = $comboProduct;
+
+        return $this;
+    }
+
+    public function removeComboProduct(ComboProduct $comboProduct)
+    {
+        $this->comboProducts->removeElement($comboProduct);
+    }
+
+    public function getComboProducts()
+    {
+        return $this->comboProducts;
     }
 }

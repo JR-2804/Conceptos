@@ -7,6 +7,7 @@ use AppBundle\Entity\Color;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Material;
 use AppBundle\Entity\Product;
+use AppBundle\Entity\ComboProduct;
 use AppBundle\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -296,6 +297,20 @@ class ProductController extends Controller
                     }
                 }
             }
+            $comboProducts = json_decode($form->get('comboProducts')->getData(), true);
+            if (null != $comboProducts) {
+                foreach ($comboProducts as $comboProductId) {
+                    $productDB = $this->getDoctrine()->getRepository('AppBundle:Product')->find($comboProductId);
+                    if (null != $productDB) {
+                        $comboProduct = new ComboProduct();
+                        $comboProduct->setParentProduct($product);
+                        $comboProduct->setProduct($productDB);
+                        $this->getDoctrine()->getManager()->persist($comboProduct);
+
+                        $product->addComboProduct($comboProduct);
+                    }
+                }
+            }
             $this->getDoctrine()->getManager()->persist($product);
             $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
             $config->setLastProductUpdate(new \DateTime());
@@ -317,6 +332,7 @@ class ProductController extends Controller
         return $this->render('::new_edit_product.html.twig', [
             'action' => 'new',
             'categories' => $categories,
+            'products' => $this->getDoctrine()->getRepository('AppBundle:Product')->findAll(),
             'parents' => $parents,
             'colors' => $this->getDoctrine()->getRepository('AppBundle:Color')->findAll(),
             'materials' => $this->getDoctrine()->getRepository('AppBundle:Material')->findAll(),
@@ -382,6 +398,11 @@ class ProductController extends Controller
             $favorites[] = $favorite->getId();
         }
         $dto->setFavoritesCategories(json_encode($favorites));
+        $comboProducts = [];
+        foreach ($product->getComboProducts() as $comboProduct) {
+            $comboProducts[] = $comboProduct->getProduct()->getId();
+        }
+        $dto->setComboProducts(json_encode($comboProducts));
         $color = $product->getColor();
         $dto->setColor(null != $color ? $color->getId() : null);
         $material = $product->getMaterial();
@@ -708,6 +729,25 @@ class ProductController extends Controller
                     }
                 }
             }
+            $comboProducts = json_decode($form->get('comboProducts')->getData(), true);
+            foreach ($product->getComboProducts() as $comboProduct) {
+                $product->removeComboProduct($comboProduct);
+                $this->getDoctrine()->getManager()->remove($comboProduct);
+            }
+            $product->getComboProducts()->clear();
+            if ($comboProducts != null) {
+                foreach ($comboProducts as $comboProductId) {
+                  $productDB = $this->getDoctrine()->getRepository('AppBundle:Product')->find($comboProductId);
+                  if (null != $productDB) {
+                      $comboProduct = new ComboProduct();
+                      $comboProduct->setParentProduct($product);
+                      $comboProduct->setProduct($productDB);
+                      $this->getDoctrine()->getManager()->persist($comboProduct);
+
+                      $product->addComboProduct($comboProduct);
+                  }
+                }
+            }
             $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
             $config->setLastProductUpdate(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
@@ -726,6 +766,7 @@ class ProductController extends Controller
         return $this->render('::new_edit_product.html.twig', [
             'action' => 'edit',
             'categories' => $categories,
+            'products' => $this->getDoctrine()->getRepository('AppBundle:Product')->findAll(),
             'parents' => $parents,
             'colors' => $this->getDoctrine()->getRepository('AppBundle:Color')->findAll(),
             'materials' => $this->getDoctrine()->getRepository('AppBundle:Material')->findAll(),

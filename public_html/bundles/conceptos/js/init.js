@@ -55,6 +55,9 @@ $(document).ready(function() {
   $("#category-favorite")
     .val(JSON.parse($("#product_favoritesCategories").val()))
     .trigger("change");
+  $("#combo-products")
+    .val(JSON.parse($("#product_comboProducts").val()))
+    .trigger("change");
   $("#is-highlight").prop("checked", $("#product_isHighlight").val() == 1);
   var highlightImages = $("#product_highlightImages").val();
   if (highlightImages) {

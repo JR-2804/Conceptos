@@ -128,7 +128,7 @@ $(document).ready(function() {
     maximumSelectionLength: 1
   });
 
-  $("#category-favorite").select2({
+  $("#category-favorite, #combo-products").select2({
     theme: "bootstrap",
     language: "es",
     allowClear: true
@@ -220,6 +220,9 @@ $(document).ready(function() {
       $("#product_material").val($("#material").val());
       $("#product_favoritesCategories").val(
         JSON.stringify($("#category-favorite").val())
+      );
+      $("#product_comboProducts").val(
+        JSON.stringify($("#combo-products").val())
       );
       $("#product_weight").val(weight);
       $("#product_shippingLimit").val($("#shipping-limit").val());

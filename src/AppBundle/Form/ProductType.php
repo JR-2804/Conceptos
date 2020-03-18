@@ -29,6 +29,7 @@ class ProductType extends AbstractType
             ->add('inStore', HiddenType::class)
             ->add('countStore', HiddenType::class)
             ->add('favoritesCategories', HiddenType::class)
+            ->add('comboProducts', HiddenType::class)
             ->add('weight', HiddenType::class)
             ->add('shippingLimit', HiddenType::class)
             ->add('ikeaPrice', HiddenType::class)
