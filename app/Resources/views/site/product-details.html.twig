@@ -1,9 +1,16 @@
 {% extends ':site:base.html.twig' %}
-{% block title %}Detalles del producto - {{ product.item }}{% endblock %}
-
+{% block title %}
+    {% if product %}
+        Detalles del producto - {{ product.item }}
+    {% else %}
+        Producto no encontrado
+    {% endif %}
+{% endblock %}
 
 {% block meta %}
-    <link rel="canonical" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}"/>
+    {% if product %}
+        <link rel="canonical" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}"/>
+    {% endif %}
 {% endblock %}
 
 {% block css %}
@@ -11,84 +18,87 @@
   <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/products.css') }}">
 {% endblock %}
 {% block body %}
+
   <div class="d-flex flex-column m-2 p-2 pt-lg-3 pl-lg-5 pr-lg-5">
-    <div class="d-flex flex-column conceptos-white-background">
-      <div class="carousel pt-lg-3 pb-lg-2 pl-lg-5 pr-lg-5 pt-2" data-ride="carousel" id="carousel-product-details" data-interval="5000">
-        <div class="carousel-inner pl-lg-5 pr-lg-5">
-          {% if app.user|default %}
-            <span data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"
-              data-path-remove="{{ path('remove_from_favorite', {id: product.id}) }}"
-              class="favorite-product {% if product.favorite %}favorite{% endif %}">
-              <i class="fa fa-heart"></i>
-            </span>
-          {% endif %}
-          {% set count = 0 %}
-          {% for imageSet in imageSets %}
-            {% for image in imageSet %}
-              <div class="carousel-item {% if count == 0 %}active{% endif %} pl-lg-5 pr-lg-5">
-                <div class="d-flex justify-content-center w-100">
-                  <img class="image-viewer" src="{{ vich_uploader_asset(image, 'imageFile') }}">
-                </div>
+
+      {% if product %}
+        <div class="d-flex flex-column conceptos-white-background">
+          <div class="carousel pt-lg-3 pb-lg-2 pl-lg-5 pr-lg-5 pt-2" data-ride="carousel" id="carousel-product-details" data-interval="5000">
+            <div class="carousel-inner pl-lg-5 pr-lg-5">
+              {% if app.user|default %}
+                <span data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"
+                  data-path-remove="{{ path('remove_from_favorite', {id: product.id}) }}"
+                  class="favorite-product {% if product.favorite %}favorite{% endif %}">
+                  <i class="fa fa-heart"></i>
+                </span>
+              {% endif %}
+              {% set count = 0 %}
+              {% for imageSet in imageSets %}
+                {% for image in imageSet %}
+                  <div class="carousel-item {% if count == 0 %}active{% endif %} pl-lg-5 pr-lg-5">
+                    <div class="d-flex justify-content-center w-100">
+                      <img class="image-viewer" src="{{ vich_uploader_asset(image, 'imageFile') }}">
+                    </div>
+                  </div>
+                  {% set count = count + 1 %}
+                {% endfor %}
+              {% endfor %}
+            </div>
+            {% if count > 1 %}
+              <div class="d-flex">
+                <a class="carousel-control carousel-control-prev ml-lg-5" role="button" data-slide="prev" href="#carousel-product-details">
+                  <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+                </a>
+                <a class="carousel-control carousel-control-next mr-lg-5" role="button" data-slide="next" href="#carousel-product-details">
+                  <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+                </a>
               </div>
-              {% set count = count + 1 %}
-            {% endfor %}
-          {% endfor %}
-        </div>
-        {% if count > 1 %}
-          <div class="d-flex">
-            <a class="carousel-control carousel-control-prev ml-lg-5" role="button" data-slide="prev" href="#carousel-product-details">
-              <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-            </a>
-            <a class="carousel-control carousel-control-next mr-lg-5" role="button" data-slide="next" href="#carousel-product-details">
-              <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-            </a>
-          </div>
-        {% endif %}
-      </div>
-      <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5">
-        <span class="conceptos-title-strong">{{product.name}}</span>
-        <span class="conceptos-subtitle">{{product.item}}</span>
-        <div class="d-flex justify-content-between align-items-center">
-          <div class="d-flex align-items-center">
-            {% if product.priceOffer != -1 %}
-              <span class="conceptos-product-info conceptos-product-price-big mr-2">${{product.priceOffer}}</span>
-              <span class="conceptos-product-info conceptos-offer-price">$&nbsp;{{product.price}}</span>
-            {% else %}
-              <span class="conceptos-product-info conceptos-product-price-big">$&nbsp;{{product.price}}</span>
             {% endif %}
           </div>
-          <button class="conceptos-add-to-cart-icon conceptos-add-to-cart-icon-big" data-path="{{ path('add_shop_card', {id: product.id}) }}">
-            <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
-          </button>
-        </div>
-        <div class="d-flex justify-content-start align-items-center mt-1">
-          <div class="d-flex flex-column">
-            {% if product.inStore %}
-              <span class="conceptos-in-store-product-badge">ALMACÉN</span>
+          <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5">
+            <span class="conceptos-title-strong">{{product.name}}</span>
+            <span class="conceptos-subtitle">{{product.item}}</span>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                {% if product.priceOffer != -1 %}
+                  <span class="conceptos-product-info conceptos-product-price-big mr-2">${{product.priceOffer}}</span>
+                  <span class="conceptos-product-info conceptos-offer-price">$&nbsp;{{product.price}}</span>
+                {% else %}
+                  <span class="conceptos-product-info conceptos-product-price-big">$&nbsp;{{product.price}}</span>
+                {% endif %}
+              </div>
+              <button class="conceptos-add-to-cart-icon conceptos-add-to-cart-icon-big" data-path="{{ path('add_shop_card', {id: product.id}) }}">
+                <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
+              </button>
+            </div>
+            <div class="d-flex justify-content-start align-items-center mt-1">
+              <div class="d-flex flex-column">
+                {% if product.inStore %}
+                  <span class="conceptos-in-store-product-badge">ALMACÉN</span>
+                {% endif %}
+                {% if product.recent %}
+                  <span class="conceptos-new-product-badge">NUEVO</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="d-flex pl-2 pl-lg-5">
+            {{include('site/components/change-product-evaluation.html.twig')}}
+          </div>
+          <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3">
+            <span class="conceptos-title">DETALLES DEL PRODUCTO</span>
+            <span class="conceptos-subtitle">CÓDIGO: {{product.code}}</span>
+            {% if product.storeCount and product.storeCount > 0 %}
+              <span class="conceptos-subtitle">
+                Disponibles en almacén: {{product.storeCount}}
+              </span>
             {% endif %}
-            {% if product.recent %}
-              <span class="conceptos-new-product-badge">NUEVO</span>
-            {% endif %}
+          <span class="conceptos-subtitle">COLOR: {{product.color}}</span>
+          <span class="conceptos-subtitle">MATERIAL: {{product.material}}</span>
+          <span class="conceptos-subtitle">{{product.description}}</span>
           </div>
         </div>
-      </div>
-      <div class="d-flex pl-2 pl-lg-5">
-        {{include('site/components/change-product-evaluation.html.twig')}}
-      </div>
-      <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3">
-        <span class="conceptos-title">DETALLES DEL PRODUCTO</span>
-        <span class="conceptos-subtitle">CÓDIGO: {{product.code}}</span>
-        {% if product.storeCount and product.storeCount > 0 %}
-          <span class="conceptos-subtitle">
-            Disponibles en almacén: {{product.storeCount}}
-          </span>
-        {% endif %}
-      <span class="conceptos-subtitle">COLOR: {{product.color}}</span>
-      <span class="conceptos-subtitle">MATERIAL: {{product.material}}</span>
-      <span class="conceptos-subtitle">{{product.description}}</span>
-      </div>
-    </div>
-    <div class="d-flex flex-column mt-3">
+        <div class="d-flex flex-column mt-3">
       <span class="conceptos-title">PRODUCTOS RELACIONADOS</span>
       <div class="d-flex flex-wrap">
         {% for product in related %}
@@ -98,6 +108,9 @@
         {% endfor %}
       </div>
     </div>
+      {% else %}
+          <h1>Producto no encontrado</h1>
+      {% endif %}
   </div>
 {% endblock %}
 {% block js %}
