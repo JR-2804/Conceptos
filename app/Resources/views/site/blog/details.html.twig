@@ -11,8 +11,8 @@
 {% endblock %}
 {% block meta_description %}{{ post.summary }}{% endblock %}
 
-{{% block meta %}
-<link rel="canonical" href="{{ absolute_url(path('blog_details', {id: post.id, title: post.path})) }}"/>
+{% block meta %}
+<link rel="canonical" href="{{ absolute_url(path('blog_details', {id: post.id, title: post.path} )) }}"/>
 {% endblock %}
 
 

@@ -10,6 +10,44 @@
 {% block meta %}
     {% if product %}
         <link rel="canonical" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}"/>
+
+        {#TODO: faltan las imagenes en otra dimensiones #}
+        <script type="application/ld+json">
+        {
+            "@context": "http://schema.org/",
+            "@type": "Product",
+                "name": "{{ product.name }}",
+            "image": [
+                {% for imageSet in imageSets | first %}
+                  {% for image in imageSet | first %}
+                  "{{ absolute_url(vich_uploader_asset(image, 'imageFile') ) }}"
+                  {% endfor %}
+                {% endfor %}
+{#            "{{ absolute_url(asset(transfer.getWebPath("full-1x1"))) }}",#}
+{#            "{{ absolute_url(asset(transfer.getWebPath("full-4x3"))) }}",#}
+{#            "{{ absolute_url(asset(transfer.getWebPath("full-16x9"))) }}"#}
+            ],
+            "description": "{{product.description}}",
+            "mpn": "",
+            "brand": {
+                "@type": "Thing",
+                "name": "Tienda Conceptos"
+            },
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "USD",
+                "price": "{{ product.price }}",
+                "priceValidUntil": "2020-12-31",
+                "itemCondition": "http://schema.org/UsedCondition",
+                "availability": "http://schema.org/InStock",
+                "seller": {
+                    "@type": "Organization",
+                    "name": "Tienda Conceptos"
+                    }
+                }
+        }
+        </script>
+
     {% endif %}
 {% endblock %}
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -61,6 +61,29 @@
 
     <meta name="theme-color" content="#c2b930">
     {% block meta %}{% endblock %}
+
+    <!-- Todo: FALTA LA DIRECCION-->
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "TravelAgency",
+        "name": "Tienda Conceptos",
+        "image": "",
+        "logo": "{{ absolute_url(home.data.logo.image.path) }}",
+        "url": "https://www.tiendaconceptos.com",
+        "telephone": "+53 52458380",
+        "sameAs": ["http://www.facebook.com/TiendaConceptos/","http://instagram.com/TiendaConceptos/"],
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Ave 7ma, No. 8607",
+            "addressLocality": "Nuevo Vedado - Plaza",
+            "postalCode": "11300",
+            "addressCountry": "Cuba"
+        },
+        "priceRange" : "$10 - $5000",
+        "email" : "comercial@tiendaconceptos.com"
+    }
+</script>
 
 </head>
 <body>
