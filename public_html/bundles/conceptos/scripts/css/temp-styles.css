@@ -468,6 +468,18 @@ a.conceptos-subtitle:focus {
   min-height: 30px;
 }
 
+.conceptos-product-info-admin {
+  font-family: Montserrat;
+  font-size: 11px;
+  color: #282827;
+  line-height: 15px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
 .conceptos-blog-summary {
   text-overflow: ellipsis;
   overflow: hidden;

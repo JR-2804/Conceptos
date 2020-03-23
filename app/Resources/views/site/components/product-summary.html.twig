@@ -34,5 +34,16 @@
         <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
       </button>
     </div>
+    {% if app.user|default %}
+      {% if is_granted('ROLE_COMMERCIAL') %}
+      <div class="conceptos-divider mt-2 mb-2"></div>
+      <span class="conceptos-product-info">{{product.code}}</span>
+      <span class="conceptos-product-info-admin">Cant Almacén: {{product.storeCount}}</span>
+      <span class="conceptos-product-info-admin">Material: {{product.material.name}}</span>
+      <span class="conceptos-product-info-admin">Color: {{product.color.name}}</span>
+      <span class="conceptos-product-info-admin">Peso: {{product.weight}}</span>
+      <span class="conceptos-product-info-admin">Precio Ikea: ${{product.ikeaPrice}}.</span>
+      {% endif %}
+    {% endif %}
   </div>
 </a>
