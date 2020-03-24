@@ -32,7 +32,8 @@
         "lionware/symfony-session-timeout": "^1.0",
         "excelwebzone/recaptcha-bundle": "^1.4",
         "knplabs/knp-snappy-bundle": "^1.4",
-        "h4cc/wkhtmltopdf-i386": "^0.12.4"
+        "h4cc/wkhtmltopdf-i386": "^0.12.4",
+        "liip/imagine-bundle": "^1.9"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

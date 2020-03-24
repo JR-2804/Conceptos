@@ -189,3 +189,163 @@ knp_snappy:
     pdf:
         enabled: true
         binary: %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-win/bin/wkhtmltopdf.exe
+
+# See dos how to configure the bundle: https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
+liip_imagine:
+  # valid drivers options include "gd" or "gmagick" or "imagick"
+  driver: "gd"
+  resolvers:
+    default:
+      web_path:
+        web_root: "%kernel.root_dir%/../public_html/"
+        cache_prefix: /static/cache
+  loaders:
+    default:
+      filesystem:
+        data_root: %kernel.root_dir%/../public_html/
+
+  # define your filter sets under this option
+  filter_sets:
+
+    # an example thumbnail transformation definition
+    # https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html#create-thumbnails
+    extrasmall_thumbnail:
+
+      # set your image quality defaults
+      jpeg_quality:          20
+      png_compression_level: 9
+
+      # setup the filter steps to apply for this transformation
+      filters:
+
+        # auto rotate the image using EXIF metadata
+        auto_rotate: ~
+
+        # strip the image of all metadata
+        strip: ~
+
+        # scale and square the image to the given dimensions
+        thumbnail:
+          size:          [10, 10]
+          mode:          outbound
+
+    small_thumbnail:
+
+      # set your image quality defaults
+      jpeg_quality:          60
+      png_compression_level: 8
+
+      # setup the filter steps to apply for this transformation
+      filters:
+
+        # auto rotate the image using EXIF metadata
+        auto_rotate: ~
+
+        # strip the image of all metadata
+        strip: ~
+
+        # scale and square the image to the given dimensions
+        thumbnail:
+          size:          [40, 40]
+          mode:          outbound
+
+    squared_thumbnail:
+
+      # set your image quality defaults
+      jpeg_quality:          90
+      png_compression_level: 8
+
+      # setup the filter steps to apply for this transformation
+      filters:
+
+        # auto rotate the image using EXIF metadata
+        auto_rotate: ~
+
+        # strip the image of all metadata
+        strip: ~
+
+        # scale and square the image to the given dimensions
+        thumbnail:
+          size:          [253, 253]
+          mode:          outbound
+          allow_upscale: true
+        #                # create border by placing image on larger black background
+        background:
+          size:     [256, 256]
+          position: center
+          color:    '#fff'
+
+    min_width_1920:
+      jpeg_quality: 90
+      png_compression_level: 8
+      filters:
+        auto_rotate: ~
+        strip: ~
+        downscale:
+          # input 3960x2560px -> output 1980x1280px
+          max: [1920, ]
+
+    min_width_1200:
+      jpeg_quality: 90
+      png_compression_level: 8
+      filters:
+        auto_rotate: ~
+        strip: ~
+        downscale:
+          # input 3960x2560px -> output 1980x1280px
+          max: [1200, ]
+
+    min_width_1000:
+      # set your image quality defaults
+      jpeg_quality:          90
+      png_compression_level: 8
+
+      # setup the filter steps to apply for this transformation
+      filters:
+        auto_rotate: ~
+        strip: ~
+        downscale:
+          # input 3960x2560px -> output 1980x1280px
+          max: [1000, ]
+
+    min_width_900:
+
+      # set your image quality defaults
+      jpeg_quality:          90
+      png_compression_level: 8
+
+      # setup the filter steps to apply for this transformation
+      filters:
+        auto_rotate: ~
+        strip: ~
+        downscale:
+          # input 3960x2560px -> output 1980x1280px
+          max: [900, ]
+
+    min_width_800:
+
+      # set your image quality defaults
+      jpeg_quality:          90
+      png_compression_level: 8
+
+      # setup the filter steps to apply for this transformation
+      filters:
+        auto_rotate: ~
+        strip: ~
+        downscale:
+          # input 3960x2560px -> output 1980x1280px
+          max: [800, ]
+
+    min_width_600:
+
+      # set your image quality defaults
+      jpeg_quality:          90
+      png_compression_level: 8
+
+      # setup the filter steps to apply for this transformation
+      filters:
+        auto_rotate: ~
+        strip: ~
+        downscale:
+          # input 3960x2560px -> output 1980x1280px
+          max: [600, ]
