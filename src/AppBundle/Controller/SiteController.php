@@ -281,12 +281,30 @@ class SiteController extends Controller
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
+        $filteredColors = [];
+        $colors = $this->get('color_service')->getAll();
+        foreach ($colors as $color) {
+          $exists = false;
+          foreach ($filteredColors as $filteredColor) {
+            if (strtolower($filteredColor->getName()) == strtolower($color->getName())) {
+              $exists = true;
+            }
+          }
+
+          $multipleWords = explode(' ', $color->getName());
+          $separated = explode('-', $color->getName());
+
+          if (!$exists and count($multipleWords) == 1 and count($separated) == 1) {
+            $filteredColors[] = $color;
+          }
+        }
+
         $result = [];
         $result += $this->get('page_service')->getHome();
-        $result += $this->get('color_service')->getAll();
         $result += $this->get('material_service')->getAll();
         $result += $this->get('product_service')->getPriceRange();
         $result += $this->get('product_service')->filterProducts($request, $this->getUser());
+        $result += ['colors' => $filteredColors];
         $result += ['categories' => $this->get('category_service')->getAll()];
         $result += ['terms' => $config->getTermAndConditions()];
         $result += ['privacy' => $config->getPrivacyPolicy()];
