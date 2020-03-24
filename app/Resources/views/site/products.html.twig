@@ -90,8 +90,7 @@
                     <option value="-1">Todos</option>
                     {% for color in colors %}
                       {% set selectedColor = app.request.query.get('color', -1) %}
-                      <option value="{{color.id}}"
-                              {% if selectedColor != -1 and selectedColor == color.id %}selected{% endif %}>
+                      <option value="{{color.id}}" {% if selectedColor != -1 and selectedColor == color.id %}selected{% endif %}>
                         {{color.name}}
                       </option>
                     {% endfor %}
