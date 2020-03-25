@@ -30,7 +30,7 @@
 
 .post-body .ProductMarker {
     -webkit-box-flex: 0;
-            flex: 0 0 50%; }
+            flex: 0 0 45%; }
 
 @media (min-width: 992px) {
       .post-body .ProductMarker {
