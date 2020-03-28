@@ -47,6 +47,7 @@
   & p img {
     position: relative;
     object-fit: cover;
-      width: 100% !important;
+    width: 100% !important;
+    max-height: 75vh;
   }
 }

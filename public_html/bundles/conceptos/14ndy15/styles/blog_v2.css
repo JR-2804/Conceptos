@@ -1,0 +1,45 @@
+.blog_list__title h2 {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.2em; }
+
+.content-post {
+  background: #e3e3e3; }
+
+.content-post {
+  padding: 0;
+  margin: auto; }
+
+.post {
+  background: white;
+  margin: auto;
+  padding-left: 0; }
+
+.post-details h3 {
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.15em; }
+
+.post-body {
+  display: -webkit-box;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+          justify-content: space-between; }
+
+.post-body .ProductMarker {
+    -webkit-box-flex: 0;
+            flex: 0 0 45%; }
+
+@media (min-width: 992px) {
+      .post-body .ProductMarker {
+        -webkit-box-flex: 0;
+                flex: 0 0 25%; } }
+
+.post-body p img {
+    position: relative;
+    -o-object-fit: cover;
+       object-fit: cover;
+    width: 100% !important;
+    max-height: 75vh; }
