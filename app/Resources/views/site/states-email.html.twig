@@ -1,0 +1,4 @@
+<p>Estimado "{{ username }}" el estado de los siguientes productos ha cambiado:</p>
+{% for stateData in newStates %}
+  <p>El producto {{stateData.code}} pasó de "{{stateData.oldState}}" a "{{stateData.newState}}"</p>
+{% endfor %}
