@@ -1410,8 +1410,6 @@ class SiteController extends Controller
 
         $this->get('shop_cart_service')->emptyShopCart($this->getUser());
 
-        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
-
         $request->getSession()->set('successRequestToast', true);
         return $this->redirectToRoute('site_home');
     }
