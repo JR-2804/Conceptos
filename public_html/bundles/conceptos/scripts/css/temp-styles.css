@@ -493,6 +493,11 @@ a.conceptos-subtitle:focus {
   height: 23px;
 }
 
+.conceptos-icon-big {
+  width: 35px;
+  height: 35px;
+}
+
 .conceptos-request-success-icon {
   display: none;
   position: absolute;
@@ -842,6 +847,10 @@ a.conceptos-category-subtitle:focus {
   text-align: initial;
 }
 
+#giftCardsModal .modal-dialog {
+  min-width: 625px;
+}
+
 /* -------------------------------------------------------- */
 
 .home-view-more-link {
@@ -1103,6 +1112,10 @@ a.conceptos-category-subtitle:focus {
 
 #cartPreviewModal .product-delivery {
   display: none !important;
+}
+
+.favorite-icon-big {
+  font-size: 30px;
 }
 
 .favorite-product {

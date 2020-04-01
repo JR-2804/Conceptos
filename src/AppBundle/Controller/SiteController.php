@@ -377,9 +377,16 @@ class SiteController extends Controller
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
+        $images = $product->getImages()->toArray();
+        foreach ($product->getComboProducts() as $comboProduct) {
+          foreach ($comboProduct->getProduct()->getImages() as $image) {
+            $images[] = $image;
+          }
+        }
+
         return $this->render(':site:product-details.html.twig', [
             'product' => $product,
-            'imageSets' => array_chunk($product->getImages()->toArray(), 3),
+            'imageSets' => array_chunk($images, 3),
             'home' => $home,
             'membership' => $membership,
             'currentDate' => new \DateTime(),

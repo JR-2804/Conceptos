@@ -18,7 +18,7 @@
             <span data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"
               data-path-remove="{{ path('remove_from_favorite', {id: product.id}) }}"
               class="favorite-product {% if product.favorite %}favorite{% endif %}">
-              <i class="fa fa-heart"></i>
+              <i class="fa fa-heart favorite-icon-big"></i>
             </span>
           {% endif %}
           {% set count = 0 %}
@@ -90,6 +90,19 @@
             <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
           </button>
         </div>
+        {% if product.comboProducts %}
+        <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3">
+          <span class="conceptos-title">PRODUCTOS QUE LO COMPONEN</span>
+          <div class="d-flex flex-wrap">
+            {% for comboProduct in product.comboProducts %}
+              {% set product = comboProduct.product %}
+              <div class="d-flex col-6 col-lg-2 pl-0">
+                {{include('site/product-summary-short.html.twig')}}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
       </div>
     </div>
     <div class="d-flex flex-column mt-3">
