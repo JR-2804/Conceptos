@@ -29,6 +29,8 @@
         <span>SOLICITAR</span>
       </button>
     </div>
-    <img class="conceptos-image conceptos-section-image mt-2" src="{{ page.data.header.advertisementImage.path }}">
+    <a href="{% if page.data.header.bottomImageLink is defined %}{{page.data.header.bottomImageLink}}{% else %}#{% endif %}">
+      <img class="conceptos-image conceptos-section-image mt-2" src="{{ page.data.header.advertisementImage.path }}">
+    </a>
   {{ form_end(form) }}
 </div>

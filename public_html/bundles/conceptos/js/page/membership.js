@@ -352,6 +352,13 @@ function init() {
   if (data.header && data.header.mainText) {
     $("#form-main-text").val(data.header.mainText);
     $("#form-bottom-text").val(data.header.bottomText);
+
+    if (data.header.bottomImageText) {
+      $("#bottom-image-text").val(data.header.bottomImageText);
+    }
+    if (data.header.bottomImageLink) {
+      $("#bottom-image-link").val(data.header.bottomImageLink);
+    }
   }
   if (data.headerSection) {
     $("#header-main-text").val(data.headerSection.mainText);
@@ -375,7 +382,9 @@ function generateData() {
       image: headerImage,
       advertisementImage: advertisementImage,
       mainText: $("#form-main-text").val(),
-      bottomText: $("#form-bottom-text").val()
+      bottomText: $("#form-bottom-text").val(),
+      bottomImageText: $("#bottom-image-text").val(),
+      bottomImageLink: $("#bottom-image-link").val()
     },
     headerSection: {
       mainText: $("#header-main-text").val(),
