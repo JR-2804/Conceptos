@@ -22,6 +22,7 @@ class ProductDTO
     private $color;
     private $material;
     private $favoritesCategories;
+    private $comboProduct;
     private $weight;
     private $shippingLimit;
     private $ikeaPrice;
@@ -203,6 +204,16 @@ class ProductDTO
     public function setFavoritesCategories($favoritesCategories)
     {
         $this->favoritesCategories = $favoritesCategories;
+    }
+
+    public function getComboProducts()
+    {
+        return $this->comboProduct;
+    }
+
+    public function setComboProducts($comboProduct)
+    {
+        $this->comboProduct = $comboProduct;
     }
 
     public function getInStore()

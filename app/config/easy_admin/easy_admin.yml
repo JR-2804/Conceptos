@@ -25,14 +25,15 @@ easy_admin:
                     - {property: 'code', label: 'Código'}
                     - {property: 'price', label: 'Precio'}
                     - {property: 'categoryText', label: 'Categoría'}
-                    - {property: 'parentCategoryText', label: 'Categoría Padre'}
                     - {property: 'popular', label: 'Popular', type: 'toggle'}
                     - {property: 'recent', label: 'Novedades', type: 'toggle'}
                     - {property: 'inStore', label: 'En almacén', type: 'toggle'}
+                    - {property: 'storeCount', label: 'Cantidad en almacén'}
                     - {property: 'mainImage', label: 'Imágen Principal', type: 'image', base_path: '/uploads'}
-                    - {property: 'color', label: 'Color'}
                     - {property: 'material', label: 'Material'}
-                    - {property: 'images', label: 'Otras imágenes'}
+                    - {property: 'weight', label: 'Peso'}
+                    - {property: 'ikeaPrice', label: 'Precio Ikea'}
+                    - {property: 'labels', label: 'Etiquetas Asociadas'}
         Evaluation:
             class: AppBundle\Entity\Evaluation
             label: Evaluaciones
@@ -471,6 +472,7 @@ easy_admin:
                     - {property: 'email', label: 'Correo'}
                     - {property: 'enabled', label: 'Habilitado', type: 'toggle'}
                     - {property: 'lastLogin', label: 'Último acceso'}
+                    - {property: 'ProductsInCartCount', label: 'Cantidad en Carrito', type: 'integer'}
             edit:
                 fields:
                     - { property: 'plainPassword', type_options: { required: false} }

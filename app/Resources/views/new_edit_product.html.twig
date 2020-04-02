@@ -321,6 +321,18 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+          <div class="col-12">
+              <div class="form-group">
+                  <label class="control-label">Combo de productos</label>
+                  <select class="form-control" id="combo-products" multiple>
+                      {% for product in products %}
+                          <option value="{{ product.id }}">{{ product.code }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+          </div>
+      </div>
         <br><br>
         <div class="row">
             <div class="col-12">

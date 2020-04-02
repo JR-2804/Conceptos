@@ -468,6 +468,18 @@ a.conceptos-subtitle:focus {
   min-height: 30px;
 }
 
+.conceptos-product-info-admin {
+  font-family: Montserrat;
+  font-size: 11px;
+  color: #282827;
+  line-height: 15px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
 .conceptos-blog-summary {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -479,6 +491,11 @@ a.conceptos-subtitle:focus {
 .conceptos-icon {
   width: 23px;
   height: 23px;
+}
+
+.conceptos-icon-big {
+  width: 35px;
+  height: 35px;
 }
 
 .conceptos-request-success-icon {
@@ -830,6 +847,10 @@ a.conceptos-category-subtitle:focus {
   text-align: initial;
 }
 
+#giftCardsModal .modal-dialog {
+  min-width: 625px;
+}
+
 /* -------------------------------------------------------- */
 
 .home-view-more-link {
@@ -1091,6 +1112,10 @@ a.conceptos-category-subtitle:focus {
 
 #cartPreviewModal .product-delivery {
   display: none !important;
+}
+
+.favorite-icon-big {
+  font-size: 30px;
 }
 
 .favorite-product {

@@ -281,12 +281,30 @@ class SiteController extends Controller
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
+        $filteredColors = [];
+        $colors = $this->get('color_service')->getAll();
+        foreach ($colors as $color) {
+          $exists = false;
+          foreach ($filteredColors as $filteredColor) {
+            if (strtolower($filteredColor->getName()) == strtolower($color->getName())) {
+              $exists = true;
+            }
+          }
+
+          $multipleWords = explode(' ', $color->getName());
+          $separated = explode('-', $color->getName());
+
+          if (!$exists and count($multipleWords) == 1 and count($separated) == 1) {
+            $filteredColors[] = $color;
+          }
+        }
+
         $result = [];
         $result += $this->get('page_service')->getHome();
-        $result += $this->get('color_service')->getAll();
         $result += $this->get('material_service')->getAll();
         $result += $this->get('product_service')->getPriceRange();
         $result += $this->get('product_service')->filterProducts($request, $this->getUser());
+        $result += ['colors' => $filteredColors];
         $result += ['categories' => $this->get('category_service')->getAll()];
         $result += ['terms' => $config->getTermAndConditions()];
         $result += ['privacy' => $config->getPrivacyPolicy()];
@@ -380,9 +398,19 @@ class SiteController extends Controller
         }
 
 
+        $images = $product->getImages()->toArray();
+        foreach ($product->getComboProducts() as $comboProduct) {
+          $offerPrice = $this->get('product_service')->findProductOfferPrice($comboProduct->getProduct());
+          $comboProduct->getProduct()->setPriceOffer($offerPrice);
+
+          foreach ($comboProduct->getProduct()->getImages() as $image) {
+            $images[] = $image;
+          }
+        }
+
         return $this->render(':site:product-details.html.twig', [
             'product' => $product,
-            'imageSets' => array_chunk($product->getImages()->toArray(), 3),
+            'imageSets' => array_chunk($images, 3),
             'home' => $home,
             'membership' => $membership,
             'currentDate' => new \DateTime(),
@@ -1510,8 +1538,6 @@ class SiteController extends Controller
         $this->get('email_service')->send($config->getEmail(), 'Equipo comercial Conceptos', $client->getEmail(), 'Pedido realizado a través de la WEB', $bodyClient);
 
         $this->get('shop_cart_service')->emptyShopCart($this->getUser());
-
-        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
         $request->getSession()->set('successRequestToast', true);
         return $this->redirectToRoute('site_home');

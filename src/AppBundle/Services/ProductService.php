@@ -250,18 +250,20 @@ class ProductService
             $qbProductCount->setParameter('maxPrice', $priceMax);
         }
         if (-1 != $color) {
+            $colorName = $this->colorRepository->find($color)->getName();
+
             $qbProduct->join('p.color', 'c');
             $qbProductCount->join('p.color', 'c');
             if ($hasWhere) {
-                $qbProduct->andWhere('c.id = :color');
-                $qbProductCount->andWhere('c.id = :color');
+                $qbProduct->andWhere('c.name like :color');
+                $qbProductCount->andWhere('c.name like :color');
             } else {
-                $qbProduct->where('c.id = :color');
-                $qbProductCount->where('c.id = :color');
+                $qbProduct->where('c.name like :color');
+                $qbProductCount->where('c.name like :color');
                 $hasWhere = true;
             }
-            $qbProduct->setParameter('color', $color);
-            $qbProductCount->setParameter('color', $color);
+            $qbProduct->setParameter('color', $colorName."%");
+            $qbProductCount->setParameter('color', $colorName."%");
         }
         if (-1 != $material) {
             $qbProduct->join('p.material', 'm');

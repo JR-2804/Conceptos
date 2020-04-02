@@ -6,21 +6,19 @@ use Doctrine\ORM\EntityManager;
 
 class ColorService
 {
-    private $colorRepository;
+  private $colorRepository;
 
-    public function __construct(EntityManager $em)
-    {
-        $this->colorRepository = $em->getRepository('AppBundle:Color');
-    }
+  public function __construct(EntityManager $em)
+  {
+    $this->colorRepository = $em->getRepository('AppBundle:Color');
+  }
 
-    public function getAll()
-    {
-        return [
-            'colors' => $this->colorRepository
-                ->createQueryBuilder('color')
-                ->orderBy('color.name', 'ASC')
-                ->getQuery()
-                ->getResult(),
-        ];
-    }
+  public function getAll()
+  {
+    return $this->colorRepository
+      ->createQueryBuilder('color')
+      ->orderBy('color.name', 'ASC')
+      ->getQuery()
+      ->getResult();
+  }
 }

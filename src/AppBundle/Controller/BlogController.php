@@ -317,6 +317,14 @@ class BlogController extends Controller
         $this->getDoctrine()->getManager()->persist($comment);
         $this->getDoctrine()->getManager()->flush();
 
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+        $emailBody = $this->renderView(':site:comment-email.html.twig', [
+          'username' => $data->getName(),
+          'comment' => $data->getText(),
+        ]);
+        $this->get('email_service')->send($config->getEmail(), 'Comentario Realizado', "comercial@tiendaconceptos.com", 'Comentario Realizado', $emailBody);
+
         return $this->redirectToRoute('blog_details', [
           'id' => $id,
           'title' => $post->getPath(),
