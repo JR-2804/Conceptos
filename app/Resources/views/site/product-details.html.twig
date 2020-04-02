@@ -137,13 +137,13 @@
             <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
           </button>
         </div>
-        {% if product.comboProducts %}
+        {% if product.comboProducts|length > 0 %}
         <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3">
           <span class="conceptos-title">PRODUCTOS QUE LO COMPONEN</span>
           <div class="d-flex flex-wrap">
             {% for comboProduct in product.comboProducts %}
               {% set product = comboProduct.product %}
-              <div class="d-flex col-6 col-lg-2 pl-0">
+              <div class="d-flex col-6 col-lg-3 pl-0">
                 {{include('site/product-summary-short.html.twig')}}
               </div>
             {% endfor %}
@@ -162,9 +162,6 @@
         {% endfor %}
       </div>
     </div>
-      {% else %}
-          <h1>Producto no encontrado</h1>
-      {% endif %}
   </div>
 {% endblock %}
 {% block js %}

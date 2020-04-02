@@ -400,6 +400,9 @@ class SiteController extends Controller
 
         $images = $product->getImages()->toArray();
         foreach ($product->getComboProducts() as $comboProduct) {
+          $offerPrice = $this->get('product_service')->findProductOfferPrice($comboProduct->getProduct());
+          $comboProduct->getProduct()->setPriceOffer($offerPrice);
+
           foreach ($comboProduct->getProduct()->getImages() as $image) {
             $images[] = $image;
           }
