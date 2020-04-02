@@ -1479,6 +1479,7 @@ class SiteController extends Controller
             'servicesTitle'=>$servicesTitle,
             'services'=>$services,
             'footerPicture'=>$footerPicture,
+            'footerLink'=>$footerLink,
         ]);
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
