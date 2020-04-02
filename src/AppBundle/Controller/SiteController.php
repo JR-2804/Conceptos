@@ -1359,7 +1359,6 @@ class SiteController extends Controller
         $promEmail = $this->getDoctrine()->getManager()->getRepository('AppBundle:PromotionEmail')->find($id);
 
         $subject = $promEmail->getSubject();
-        $emails = $promEmail->getEmails();
         $primaryPicture = $promEmail->getPrimaryPicture();
 
         $introTitle1 = $promEmail->getIntroTitle1();
@@ -1459,10 +1458,10 @@ class SiteController extends Controller
         ]);
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
-        $mails = explode(';', $promEmail->getEmails());
-        foreach ($mails as $mail){
-            if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-                $this->get('email_service')->send($config->getEmail(), $promEmail->getSubject(), $mail,
+        $emails = explode(';', $promEmail->getEmails());
+        foreach ($emails as $email){
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $this->get('email_service')->send($config->getEmail(), $promEmail->getSubject(), $email,
                     $promEmail->getSubject(),
                     $body);
             }

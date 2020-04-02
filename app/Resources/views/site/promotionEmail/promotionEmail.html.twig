@@ -765,8 +765,8 @@
                                                                 <a target="_blank" href="https://viewstripo.email/">
                                                                     <img class="adapt-img esdev-stretch-width esdev-banner-rendered"
                                                                          src="{{ absolute_url('/uploads/images/email/'~primaryPicture) }}"
-                                                                         alt="Send some sunshine with a beautiful bouquet or a plant gift from our new summer collection."
-                                                                         title="Send some sunshine with a beautiful bouquet or a plant gift from our new summer collection."
+                                                                         alt="{{ promotion.title }}"
+                                                                         title="{{ promotion.title }}"
                                                                          width="600" style="display: block;">
                                                                 </a>
                                                             </td>
@@ -793,7 +793,7 @@
                             <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
                                 <tbody>
                                 <tr>
-                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" esd-custom-block-id="9790" align="left">
+                                    <td style="padding-top: 20px" class="esd-structure es-p20t es-p20b es-p20r es-p20l" esd-custom-block-id="9790" align="left">
                                         {% for intro in intros %}
                                             <!--[if mso]><table width="530" cellpadding="0"
                                                                 cellspacing="0"><tr><td width="194" valign="top"><![endif]-->
