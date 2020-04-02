@@ -30,7 +30,8 @@
 
 .post-body .ProductMarker {
     -webkit-box-flex: 0;
-            flex: 0 0 45%; }
+            flex: 0 0 45%;
+    height: 30vh; }
 
 @media (min-width: 992px) {
       .post-body .ProductMarker {
@@ -41,4 +42,5 @@
     position: relative;
     -o-object-fit: cover;
        object-fit: cover;
-    width: 100% !important; }
+    width: 100% !important;
+    max-height: 60vh; }

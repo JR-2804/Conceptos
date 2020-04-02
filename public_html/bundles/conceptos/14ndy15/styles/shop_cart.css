@@ -16,6 +16,7 @@
   color: #282827;
   text-align: center;
   cursor: pointer;
+  -webkit-transition: color .3s ease-in;
   transition: color .3s ease-in; }
 
 .switch-label:active {
@@ -33,7 +34,9 @@
 .switch-input:checked + .switch-label {
   font-weight: bold;
   color: white;
+  -webkit-transition: 0.15s ease-out;
   transition: 0.15s ease-out;
+  -webkit-transition-property: color;
   transition-property: color; }
 
 .switch-input:checked + .switch-label-on ~ .switch-selection {
@@ -50,38 +53,51 @@
   height: 22px;
   border-radius: 3px;
   background-color: #c2b930;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(194, 185, 48, 0.85)), to(rgba(194, 185, 48, 0.95)));
   background-image: linear-gradient(top, rgba(194, 185, 48, 0.85), rgba(194, 185, 48, 0.95));
+  -webkit-transition: left 0.15s ease-out;
   transition: left 0.15s ease-out; }
 
 @-webkit-keyframes show {
   0% {
-    transform: translateX(100%); }
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%); }
   100% {
-    transform: translateX(0); } }
+    -webkit-transform: translateX(0);
+            transform: translateX(0); } }
 
 @keyframes show {
   0% {
-    transform: translateX(100%); }
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%); }
   100% {
-    transform: translateX(0); } }
+    -webkit-transform: translateX(0);
+            transform: translateX(0); } }
 
 @-webkit-keyframes hide {
   0% {
-    transform: translateX(100%); }
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%); }
   100% {
-    transform: translateX(0); } }
+    -webkit-transform: translateX(0);
+            transform: translateX(0); } }
 
 @keyframes hide {
   0% {
-    transform: translateX(100%); }
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%); }
   100% {
-    transform: translateX(0); } }
+    -webkit-transform: translateX(0);
+            transform: translateX(0); } }
 
 .membership_card {
   position: fixed;
+  display: -webkit-box;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
   top: 60%;
   right: 0;
   width: 50%;
@@ -89,7 +105,10 @@
   -webkit-animation: show 2s ease-in-out 1;
           animation: show 2s ease-in-out 1;
   background: #282827;
+  -webkit-transition: -webkit-transform 1s ease-in;
+  transition: -webkit-transform 1s ease-in;
   transition: transform 1s ease-in;
+  transition: transform 1s ease-in, -webkit-transform 1s ease-in;
   z-index: 15; }
 
 @media (min-width: 992px) {
@@ -97,9 +116,12 @@
       width: 20%; } }
 
 .membership_card__close {
+    display: -webkit-box;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+            align-items: center;
     position: absolute;
     top: 0;
     right: 0;
@@ -117,25 +139,35 @@
       background: #e3e3e3; }
 
 .membership_card__close:before {
-      transform: rotate(45deg); }
+      -webkit-transform: rotate(45deg);
+              transform: rotate(45deg); }
 
 .membership_card__close:after {
-      transform: rotate(-45deg); }
+      -webkit-transform: rotate(-45deg);
+              transform: rotate(-45deg); }
 
 .membership_card a {
     width: 100%;
     height: 100%;
+    display: -webkit-box;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+            align-items: center;
     z-index: 2; }
 
 .membership_card__content {
     position: relative;
+    display: -webkit-box;
     display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+            flex-direction: column;
+    -webkit-box-pack: start;
+            justify-content: start;
+    -webkit-box-align: start;
+            align-items: start;
     height: 90%;
     width: 95%;
     padding: 1em 0 0 0.5em;
@@ -160,7 +192,8 @@
       font-size: .7em; }
 
 .membership_card--hide {
-    transform: translateX(100%); }
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%); }
 
 .membership_card--no-display {
     display: none; }

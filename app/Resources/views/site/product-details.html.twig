@@ -1,8 +1,54 @@
 {% extends ':site:base.html.twig' %}
-{% block title %}Detalles del producto - {{ product.item }}{% endblock %}
+{% block title %}
+    {% if product %}
+        Detalles del producto - {{ product.item }}
+    {% else %}
+        Producto no encontrado
+    {% endif %}
+{% endblock %}
 
 {% block meta %}
-    <link rel="canonical" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}"/>
+    {% if product %}
+        <link rel="canonical" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}"/>
+
+        {#TODO: faltan las imagenes en otra dimensiones #}
+        <script type="application/ld+json">
+        {
+            "@context": "http://schema.org/",
+            "@type": "Product",
+                "name": "{{ product.name }}",
+            "image": [
+                {% for imageSet in imageSets | first %}
+                  {% for image in imageSet | first %}
+                  "{{ absolute_url(vich_uploader_asset(image, 'imageFile') ) }}"
+                  {% endfor %}
+                {% endfor %}
+{#            "{{ absolute_url(asset(transfer.getWebPath("full-1x1"))) }}",#}
+{#            "{{ absolute_url(asset(transfer.getWebPath("full-4x3"))) }}",#}
+{#            "{{ absolute_url(asset(transfer.getWebPath("full-16x9"))) }}"#}
+            ],
+            "description": "{{product.description}}",
+            "mpn": "",
+            "brand": {
+                "@type": "Thing",
+                "name": "Tienda Conceptos"
+            },
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": "USD",
+                "price": "{{ product.price }}",
+                "priceValidUntil": "2020-12-31",
+                "itemCondition": "http://schema.org/UsedCondition",
+                "availability": "http://schema.org/InStock",
+                "seller": {
+                    "@type": "Organization",
+                    "name": "Tienda Conceptos"
+                    }
+                }
+        }
+        </script>
+
+    {% endif %}
 {% endblock %}
 
 {% block css %}
@@ -10,6 +56,7 @@
   <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/products.css') }}">
 {% endblock %}
 {% block body %}
+
   <div class="d-flex flex-column m-2 p-2 pt-lg-3 pl-lg-5 pr-lg-5">
     <div class="d-flex flex-wrap conceptos-white-background">
       <div class="d-flex col-12 col-lg-6 carousel pl-0 pt-lg-3 pb-lg-2 pl-lg-5 pr-lg-5 pt-2" data-ride="carousel" id="carousel-product-details" data-interval="5000">
@@ -115,6 +162,9 @@
         {% endfor %}
       </div>
     </div>
+      {% else %}
+          <h1>Producto no encontrado</h1>
+      {% endif %}
   </div>
 {% endblock %}
 {% block js %}
