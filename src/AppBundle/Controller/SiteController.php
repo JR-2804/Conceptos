@@ -1303,27 +1303,38 @@ class SiteController extends Controller
         $blogTitle = $promEmail->getBlogTitle();
         $blogId1 = $promEmail->getBlogId1();
         $blogId2 = $promEmail->getBlogId2();
-        $blog1 = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($blogId1);
-        $blog2 = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($blogId2);
-        $blogs = [$blog1, $blog2];
+        $blogs = [];
+        if ($blogId1!=null) {
+            $blog1 = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($blogId1);
+            array_push($blogs, $blog1);
+        }
+        if ($blogId2!=null) {
+            $blog2 = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($blogId2);
+            array_push($blogs, $blog2);
+        }
 
 
         $servicesTitle = $promEmail->getServicesTitle();
+
         $serviceTitle1 = $promEmail->getServiceTitle1();
         $servicePicture1 = $promEmail->getServicePicture1();
         $serviceContent1 = $promEmail->getServiceContent1();
         $serviceLink1 = $promEmail->getServiceLink1();
+
         $serviceTitle2 = $promEmail->getServiceTitle2();
         $servicePicture2 = $promEmail->getServicePicture2();
         $serviceContent2 = $promEmail->getServiceContent2();
         $serviceLink2 = $promEmail->getServiceLink2();
-
-        $services = [
-            ['title'=>$serviceTitle1, 'picture'=>$servicePicture1, 'content'=>$serviceContent1, 'link'=>$serviceLink1],
-            ['title'=>$serviceTitle2, 'picture'=>$servicePicture2, 'content'=>$serviceContent2, 'link'=>$serviceLink2]
-        ];
+        $services = [];
+        if ($serviceTitle1 != null) {
+            array_push($services, ['title'=>$serviceTitle1, 'picture'=>$servicePicture1, 'content'=>$serviceContent1, 'link'=>$serviceLink1]);
+        }
+        if ($serviceTitle2 != null) {
+            array_push($services, ['title'=>$serviceTitle2, 'picture'=>$servicePicture2, 'content'=>$serviceContent2, 'link'=>$serviceLink2]);
+        }
 
         $footerPicture = $promEmail->getFooterPicture();
+        $footerLink = $promEmail->getFooterPictureLink();
 
         return $this->render('site/promotionEmail/promotionEmail.html.twig', [
             'subject'=>$subject,
@@ -1338,6 +1349,7 @@ class SiteController extends Controller
             'servicesTitle'=>$servicesTitle,
             'services'=>$services,
             'footerPicture'=>$footerPicture,
+            'footerLink'=>$footerLink,
         ]);
 
     }

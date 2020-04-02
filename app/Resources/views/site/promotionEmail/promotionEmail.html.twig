@@ -981,7 +981,7 @@
                                                     <table style="background-color: #fafafa;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#fafafa">
                                                         <tbody>
                                                         <tr>
-                                                            <td class="esd-block-text es-p5t es-p20r es-p20l" align="left">
+                                                            <td class="esd-block-text es-p5t es-p20r es-p20l" style="padding-top: 5px; padding-right: 20px; padding-left: 20px;" align="left">
                                                                 <a target="_blank" href="{{ promotion.link }}" style="text-decoration: none;">
                                                                     <h3>
                                                                         {{ promotion.title }}
@@ -1019,7 +1019,7 @@
                             <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
                                 <tbody>
                                 <tr>
-                                    <td class="esd-structure es-p30t es-p10b es-p20r es-p20l" align="left">
+                                    <td class="esd-structure es-p30t es-p10b es-p20r es-p20l" style="padding-top: 30px; padding-bottom: 10px; padding-right: 20px; padding-left: 20px;" align="left">
                                         <table width="100%" cellspacing="0" cellpadding="0">
                                             <tbody>
                                             <tr>
@@ -1040,11 +1040,13 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="esd-structure es-p20t es-p20r es-p20l" esd-custom-block-id="9793" align="left">
+                                    <td class="esd-structure es-p20t es-p20r es-p20l"
+                                        style="padding-top: 20px; padding-right: 20px; padding-left: 20px;" esd-custom-block-id="9793" align="{% if blogs | length > 1 %} left {% endif %}">
                                         <!--[if mso]><table width="560" cellpadding="0"
                                                             cellspacing="0"><tr><td width="270" valign="top"><![endif]-->
                                         {% for blog in blogs %}
-                                        <table class="{% if loop.index0 == 0 %} es-left {% else %} es-right {% endif %}" cellspacing="0" cellpadding="0" align="{% if loop.index0 == 0 %} left {% else %} right {% endif %}">
+                                        <table class="{% if blogs | length == 1 %} {% else %} {% if loop.index0 == 0 %} es-left {% else %} es-right {% endif %} {% endif %}"
+                                               cellspacing="0" align="{% if blogs | length == 1 %}center{% else %}{% if loop.index0 == 0 %}left{% else %}right{% endif %}{% endif %}">
                                             <tbody>
                                             <tr>
                                                 <td class="es-m-p0r es-m-p20b esd-container-frame" width="270" valign="top" align="center" esdev-config="h13">
@@ -1063,7 +1065,7 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="esd-block-text es-p20t es-p20r es-p20l es-m-txt-c" align="left">
+                                                            <td class="esd-block-text es-p20t es-p20r es-p20l es-m-txt-c" style="padding-top: 20px; padding-right: 20px; padding-left: 20px;" align="left">
                                                                 <p style="color: #999999; font-size: 12px;"><strong><span class="product-category"> {% if blog.tags | length > 0 %}
                                                                                                                             {% set tag = blog.tags | first  %}
                                                                                                                             {{ tag.value | upper }}
@@ -1073,7 +1075,7 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="esd-block-text es-p5t es-p20r es-p20l" align="left">
+                                                            <td class="esd-block-text es-p5t es-p20r es-p20l" style="padding-top: 5px; padding-right: 20px; padding-left: 20px;" align="left">
                                                                 <a href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" style="text-decoration: none;" target="_blank">
                                                                     <h3>{{ blog.title }}</h3>
                                                                 </a>
@@ -1088,7 +1090,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="left">
-                                                                <p><a href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" target="_blank">Leer más</a></p>
+                                                                <p><a style="color: #7a7416;" href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" target="_blank">Leer más</a></p>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -1140,7 +1142,8 @@
                                         <!--[if mso]><table width="560" cellpadding="0"
                                                             cellspacing="0"><tr><td width="270" valign="top"><![endif]-->
                                         {% for service in services %}
-                                            <table class="{% if loop.index0 == 0 %} es-left {% else %} es-right {% endif %}" cellspacing="0" cellpadding="0" align="{% if loop.index0 == 0 %} left {% else %} right {% endif %}">
+                                            <table class="{% if blogs | length == 1 %} {% else %} {% if loop.index0 == 0 %}es-left{% else %}es-right{% endif %} {% endif %}" cellspacing="0" cellpadding="0"
+                                                   align="{% if services | length == 1 %}center{% else %}{% if loop.index0 == 0 %}left{% else %}right{% endif %}{% endif %}">
                                                 <tbody>
                                                 <tr>
                                                     <td class="es-m-p0r es-m-p20b esd-container-frame" width="270" valign="top" align="center" esdev-config="h13">
@@ -1192,7 +1195,8 @@
                     </tbody>
                 </table>
 
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                {% if footerPicture %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
                     <tbody>
                     <tr>
                         <td class="esd-stripe" esd-custom-block-id="9784" align="center">
@@ -1208,7 +1212,7 @@
                                                         <tbody>
                                                         <tr>
                                                             <td class="esd-block-banner" style="position: relative;" align="center" esdev-config="h19">
-                                                                <a target="_blank" href="https://viewstripo.email/">
+                                                                <a target="_blank" href="{{ footerLink }}">
                                                                     <img class="adapt-img esdev-stretch-width esdev-banner-rendered"
                                                                          src="{{ absolute_url('/uploads/images/email/'~footerPicture) }}"
                                                                          alt="Send some sunshine with a beautiful bouquet or a plant gift from our new summer collection."
@@ -1231,7 +1235,8 @@
                     </tr>
                     </tbody>
                 </table>
-
+                {% endif %}
+                
                 <table class="es-footer" cellspacing="0" cellpadding="0" align="center">
                     <tbody>
                     <tr>
