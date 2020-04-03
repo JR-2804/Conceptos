@@ -77,44 +77,46 @@ class ShopCartService
           ];
         } else {
           $productDB = $this->productRepository->find($shopCartProduct->getProductId());
-          $price = $productDB->getPrice();
+          if ($productDB) {
+            $price = $productDB->getPrice();
 
-          $offerExists = false;
-          $offerPrice = $this->productService->findProductOfferPrice($productDB);
-          if ($offerPrice != -1) {
-            $price = $offerPrice;
-            $offerExists = true;
+            $offerExists = false;
+            $offerPrice = $this->productService->findProductOfferPrice($productDB);
+            if ($offerPrice != -1) {
+              $price = $offerPrice;
+              $offerExists = true;
+            }
+
+            $productsDB[] = [
+              'id' => $productDB->getId(),
+              'uuid' => $shopCartProduct->getUuid(),
+              'price' => $price,
+              'offerExists' => $offerExists,
+              'count' => $shopCartProduct->getCount(),
+              'storeCount' => $productDB->getStoreCount(),
+              'name' => $productDB->getName(),
+              'image' => $productDB->getMainImage(),
+              'weight' => $productDB->getWeight(),
+              'ikeaPrice' => $productDB->getIkeaPrice(),
+              'isFurniture' => $productDB->getIsFurniture(),
+              'isFragile' => $productDB->getIsFragile(),
+              'isAirplaneFurniture' => $productDB->getIsAriplaneForniture(),
+              'isOversize' => $productDB->getIsOversize(),
+              'isTableware' => $productDB->getIsTableware(),
+              'isLamp' => $productDB->getIsLamp(),
+              'numberOfPackages' => $productDB->getNumberOfPackages(),
+              'isMattress' => $productDB->getIsMattress(),
+              'isAirplaneMattress' => $productDB->getIsAriplaneMattress(),
+              'isFaucet' => $productDB->getIsFaucet(),
+              'isGrill' => $productDB->getIsGrill(),
+              'isShelf' => $productDB->getIsShelf(),
+              'isDesk' => $productDB->getIsDesk(),
+              'isBookcase' => $productDB->getIsBookcase(),
+              'isComoda' => $productDB->getIsComoda(),
+              'isRepisa' => $productDB->getIsRepisa(),
+              'categories' => json_encode($categories),
+            ];
           }
-
-          $productsDB[] = [
-            'id' => $productDB->getId(),
-            'uuid' => $shopCartProduct->getUuid(),
-            'price' => $price,
-            'offerExists' => $offerExists,
-            'count' => $shopCartProduct->getCount(),
-            'storeCount' => $productDB->getStoreCount(),
-            'name' => $productDB->getName(),
-            'image' => $productDB->getMainImage(),
-            'weight' => $productDB->getWeight(),
-            'ikeaPrice' => $productDB->getIkeaPrice(),
-            'isFurniture' => $productDB->getIsFurniture(),
-            'isFragile' => $productDB->getIsFragile(),
-            'isAirplaneFurniture' => $productDB->getIsAriplaneForniture(),
-            'isOversize' => $productDB->getIsOversize(),
-            'isTableware' => $productDB->getIsTableware(),
-            'isLamp' => $productDB->getIsLamp(),
-            'numberOfPackages' => $productDB->getNumberOfPackages(),
-            'isMattress' => $productDB->getIsMattress(),
-            'isAirplaneMattress' => $productDB->getIsAriplaneMattress(),
-            'isFaucet' => $productDB->getIsFaucet(),
-            'isGrill' => $productDB->getIsGrill(),
-            'isShelf' => $productDB->getIsShelf(),
-            'isDesk' => $productDB->getIsDesk(),
-            'isBookcase' => $productDB->getIsBookcase(),
-            'isComoda' => $productDB->getIsComoda(),
-            'isRepisa' => $productDB->getIsRepisa(),
-            'categories' => json_encode($categories),
-          ];
         }
       }
       return $productsDB;
