@@ -51,12 +51,12 @@
         </div>
       {% elseif page.data.slides and page.data.slides is not empty %}
         {% set slide = page.data.slides[0] %}
-        <div class="home__hero__content__title">
+        <div class="home__hero__content__title" style="{% if page.data.slideTopMargin %}padding-top: {{page.data.slideTopMargin}}px;{% endif %}{% if page.data.slideLeftMargin %}padding-left: {{page.data.slideLeftMargin}}px;{% endif %}">
           {% if slide.main is defined %}
-            <h1>{{ slide.main }}</h1>
+            <h1 style="{% if page.data.slideFontSize %}font-size: {{page.data.slideFontSize + 0.75}}em;{% endif %}{% if page.data.slideFontColor %}color: {{page.data.slideFontColor}};{% endif %}">{{ slide.main }}</h1>
           {% endif %}
           {% if slide.secondary is defined %}
-            <h2>{{ slide.secondary }}</h2>
+            <h2 style="{% if page.data.slideFontSize %}font-size: {{page.data.slideFontSize}}em;{% endif %}{% if page.data.slideFontColor %}color: {{page.data.slideFontColor}};{% endif %}">{{ slide.secondary }}</h2>
           {% endif %}
         </div>
         {% if slide.link is defined %}
