@@ -142,6 +142,18 @@ $(document).ready(function() {
     }
   });
 
+  $("#combo-products").change(function() {
+    var price = 0;
+
+    $(this)
+      .val()
+      .forEach(function(id) {
+        price += $("#combo-products option[value=" + id + "]").data("price");
+      });
+
+    $("#price").val(price);
+  });
+
   $(".btn-calculate-price").click(function() {
     var weight = getWeight();
     var ikeaPrice = $("#ikea-price").val();

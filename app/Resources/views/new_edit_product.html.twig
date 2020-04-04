@@ -327,7 +327,7 @@
                   <label class="control-label">Combo de productos</label>
                   <select class="form-control" id="combo-products" multiple>
                       {% for product in products %}
-                          <option value="{{ product.id }}">{{ product.code }}</option>
+                          <option value="{{ product.id }}" data-price="{{product.price}}">{{ product.code }}</option>
                       {% endfor %}
                   </select>
               </div>
