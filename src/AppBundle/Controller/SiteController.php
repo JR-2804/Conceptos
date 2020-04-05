@@ -1395,20 +1395,26 @@ class SiteController extends Controller
         $introContent3 = $promEmail->getIntroContent3();
         $introLink3 = $promEmail->getIntroLink3();
 
-        $intros = [
-            ['title'=>$introTitle1, 'picture'=>$introPicture1, 'content'=>$introContent1, 'link'=>$introLink1],
-            ['title'=>$introTitle2, 'picture'=>$introPicture2, 'content'=>$introContent2, 'link'=>$introLink2],
-            ['title'=>$introTitle3, 'picture'=>$introPicture3, 'content'=>$introContent3, 'link'=>$introLink3],
-        ];
+        $intros = [];
+        if ($introTitle1 != null)
+            array_push($intros, ['title'=>$introTitle1, 'picture'=>$introPicture1, 'content'=>$introContent1, 'link'=>$introLink1]);
+        if ($introTitle2 != null)
+            array_push($intros, ['title'=>$introTitle2, 'picture'=>$introPicture2, 'content'=>$introContent2, 'link'=>$introLink2]);
+        if ($introTitle3 != null)
+            array_push($intros, ['title'=>$introTitle3, 'picture'=>$introPicture3, 'content'=>$introContent3, 'link'=>$introLink3]);
 
+
+        $offers = [];
         $offersTitle = $promEmail->getOffersTitle();
         $offerItem1 = $promEmail->getOfferItem1();
-        $offerItem1 = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findOneBy(['code'=>$offerItem1]);
         $offerItem2 = $promEmail->getOfferItem2();
-        $offerItem2 = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findOneBy(['code'=>$offerItem2]);
         $offerItem3 = $promEmail->getOfferItem3();
-        $offerItem3 = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findOneBy(['code'=>$offerItem3]);
-        $offers = [$offerItem1, $offerItem2, $offerItem3];
+        if ($offerItem1 != null)
+            array_push($offers, $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findOneBy(['code'=>$offerItem1]));
+        if ($offerItem2 != null)
+            array_push($offers, $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findOneBy(['code'=>$offerItem2]));
+        if ($offerItem3 != null)
+            array_push($offers, $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findOneBy(['code'=>$offerItem3]));
 
 
         $promotionTitle = $promEmail->getPromotionTitle();
