@@ -516,7 +516,7 @@
             }
 
             h2 {
-                font-size: 24px !important;
+                font-size: 20px !important;
                 text-align: center;
                 line-height: 120% !important;
             }
@@ -791,7 +791,8 @@
                     </tbody>
                 </table>
 
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                {% if intros | length > 0 %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
                     <tbody>
                     <tr>
                         <td class="esd-stripe" align="center">
@@ -807,10 +808,11 @@
                                                 <tbody>
                                                 <tr>
                                                     <td class="es-m-p20b esd-container-frame" esd-custom-block-id="9799"
-                                                        width="170" align="left" esdev-config="h7"
+                                                        width="{{ 515 / (intros | length) }}" align="left" esdev-config="h7"
                                                         {% if loop.index < 3 %}
-                                                            style="padding-right: 10px; border-right: 1px #7a7416 solid;"
-                                                        {% endif %}>
+                                                            style="padding-right: 10px; {#border-right: 1px #7a7416 solid;#}"
+                                                        {% endif %}
+                                                    >
                                                         <table width="100%" cellspacing="0" cellpadding="0">
                                                             <tbody>
                                                             <tr>
@@ -821,7 +823,7 @@
                                                                              alt="{{ intro.title }}"
                                                                              style="display: block;"
                                                                              title="{{ intro.title }}"
-                                                                             width="170">
+                                                                             width="{{ 515 / (intros | length) }}">
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -859,8 +861,9 @@
                     </tr>
                     </tbody>
                 </table>
-
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                {% endif %}
+                {% if offers | length > 0 %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
                     <tbody>
                     <tr>
                         <td class="esd-stripe" align="center">
@@ -898,7 +901,7 @@
                                                     <td class="es-m-p20b esd-container-frame" esd-custom-block-id="9799"
                                                         width="174" align="left" esdev-config="h7"
                                                         {% if loop.index < 3 %}
-                                                            style="border-right: 1px #666 solid; padding-right: 10px;"
+                                                            style="padding-right: 10px; {#border-right: 1px #666 solid;#}"
                                                         {% endif %}>
                                                         <table  width="100%" cellspacing="0" cellpadding="0">
                                                             <tbody>
@@ -943,48 +946,50 @@
                     </tr>
                     </tbody>
                 </table>
+                {% endif %}
 
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
-                    <tbody>
-                    <tr>
-                        <td class="esd-stripe" esd-custom-block-id="9784" align="center">
-                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
-                                <tbody>
-                                <tr>
-                                    <td class="esd-structure es-p20t es-p20r es-p20l" align="left">
-                                        <table width="100%" cellspacing="0" cellpadding="0">
-                                            <tbody>
-                                            <tr>
-                                                <td class="esd-container-frame" width="560" valign="top" align="center">
-                                                    <table width="100%" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-banner" style="position: relative;" align="center" esdev-config="h19">
-                                                                <a target="_blank" href="{{ promotion.link }}">
-                                                                    <img class="adapt-img esdev-stretch-width esdev-banner-rendered"
-                                                                         src="{{ absolute_url('/uploads/images/email/'~promotion.picture) }}"
-                                                                         alt="{{ promotion.title }}"
-                                                                         title="{{ promotion.title }}"
-                                                                         width="560" style="display: block;">
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                {% if promotion.title %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                        <tbody>
+                        <tr>
+                            <td class="esd-stripe" esd-custom-block-id="9784" align="center">
+                                <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                    <tbody>
+                                    <tr>
+                                        <td class="esd-structure es-p20t es-p20r es-p20l" align="left">
+                                            <table width="100%" cellspacing="0" cellpadding="0">
+                                                <tbody>
+                                                <tr>
+                                                    <td class="esd-container-frame" width="560" valign="top" align="center">
+                                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="esd-block-banner" style="position: relative;" align="center" esdev-config="h19">
+                                                                    <a target="_blank" href="{{ promotion.link }}">
+                                                                        <img class="adapt-img esdev-stretch-width esdev-banner-rendered"
+                                                                             src="{{ absolute_url('/uploads/images/email/'~promotion.picture) }}"
+                                                                             alt="{{ promotion.title }}"
+                                                                             title="{{ promotion.title }}"
+                                                                             width="560" style="display: block;">
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
                     <tbody>
                     <tr>
                         <td class="esd-stripe" align="center">
@@ -1030,6 +1035,8 @@
                     </tr>
                     </tbody>
                 </table>
+                {% endif %}
+
 
                 {% if blogs | length > 0 %}
                     <table class="es-content" cellspacing="0" cellpadding="0" align="center">
@@ -1069,7 +1076,8 @@
                                                cellspacing="0" align="{% if blogs | length == 1 %}center{% else %}{% if loop.index0 == 0 %}left{% else %}right{% endif %}{% endif %}">
                                             <tbody>
                                             <tr>
-                                                <td class="es-m-p0r es-m-p20b esd-container-frame" width="270" valign="top" align="center" esdev-config="h13">
+                                                <td class="es-m-p0r es-m-p20b esd-container-frame"
+                                                    width="{{ 515 / (blogs | length) }}" valign="top" align="center" esdev-config="h13">
                                                     <table style="background-color: #fafafa;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#fafafa">
                                                         <tbody>
                                                         <tr>
@@ -1080,7 +1088,7 @@
                                                                          alt="Make it special"
                                                                          style="display: block;"
                                                                          title="Make it special"
-                                                                         width="270">
+                                                                         width="{{ 515 / (blogs | length) }}">
                                                                 </a>
                                                             </td>
                                                         </tr>
@@ -1109,8 +1117,8 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="left">
-                                                                <p><a style="color: #7a7416;" href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" target="_blank">Leer más</a></p>
+                                                            <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="right">
+                                                                <p><a style="color: #7a7416;" href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" target="_blank">ver más</a></p>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -1131,7 +1139,8 @@
                 </table>
                 {% endif %}
 
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                {% if services | length > 0 %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
                     <tbody>
                     <tr>
                         <td class="esd-stripe" align="center">
@@ -1167,7 +1176,8 @@
                                                    align="{% if services | length == 1 %}center{% else %}{% if loop.index0 == 0 %}left{% else %}right{% endif %}{% endif %}">
                                                 <tbody>
                                                 <tr>
-                                                    <td class="es-m-p0r es-m-p20b esd-container-frame" width="270" valign="top" align="center" esdev-config="h13">
+                                                    <td class="es-m-p0r es-m-p20b esd-container-frame"
+                                                        width="{{ 515 / (services | length) }}" valign="top" align="center" esdev-config="h13">
                                                         <table style="background-color: #fafafa;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#fafafa">
                                                             <tbody>
                                                             <tr>
@@ -1178,7 +1188,7 @@
                                                                              alt="{{ service.title }}"
                                                                              style="display: block;"
                                                                              title="{{ service.title }}"
-                                                                             width="270">
+                                                                             width="{{ 515 / (services | length) }}">
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -1195,8 +1205,8 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="left">
-                                                                    <p><a style="color: #7a7416;" href="{{ service.link }}" target="_blank">más</a></p>
+                                                                <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="right">
+                                                                    <p><a style="color: #7a7416;" href="{{ service.link }}" target="_blank">ver más</a></p>
                                                                 </td>
                                                             </tr>
                                                             </tbody>
@@ -1215,6 +1225,7 @@
                     </tr>
                     </tbody>
                 </table>
+                {% endif %}
 
                 {% if footerPicture %}
                     <table class="es-content" cellspacing="0" cellpadding="0" align="center">

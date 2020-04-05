@@ -403,9 +403,9 @@ easy_admin:
                     - { type: 'group', label: 'Imagen Principal', icon: 'cogs', columns: 12 }
                     - {property: 'primaryPictureFile', type: 'file', label: 'Imágen principal'}
 
-                    - { type: 'group', label: 'Seccion Intro', icon: 'cogs', columns: 12 }
+                    - { type: 'group', label: 'Seccion Intro', icon: 'cogs', columns: 12, help: 'Si no se pone ningún título, no se mostrara esta sección' }
 
-                    - {property: 'introTitle1', label: 'Intro titulo 1'}
+                    - {property: 'introTitle1', label: 'Intro titulo 1', help: 'Si no se pone el título, no se mostrara este intro'}
                     - {property: 'introPicture1File', type: 'file', label: 'Intro Imagen 1'}
                     - {property: 'introContent1', label: 'Intro content 1', type: 'ckeditor'}
                     - {property: 'introLink1', label: 'Enlace del intro 1'}
@@ -420,7 +420,7 @@ easy_admin:
                     - {property: 'introContent3', label: 'Intro content 3', type: 'ckeditor'}
                     - {property: 'introLink3', label: 'Enlace del intro 3'}
 
-                    - { type: 'group', label: 'Seccion Ofertas', icon: 'cogs', columns: 12 }
+                    - { type: 'group', label: 'Seccion Ofertas', icon: 'cogs', columns: 12, help: 'Si no hay codigos, no se mostrara esta sección' }
 
                     - {property: 'offersTitle', label: 'Titulo seccion ofertas'}
                     - {property: 'offerItem1', label: 'Codigo del producto 1 en offerta'}
@@ -429,7 +429,7 @@ easy_admin:
 
                     - { type: 'group', label: 'Seccion Promocion', icon: 'cogs', columns: 12 }
 
-                    - {property: 'promotionTitle', label: 'Titulo promocion'}
+                    - {property: 'promotionTitle', label: 'Titulo promocion', help: 'Si no se añade el titulo, no se mostrara esta sección'}
                     - {property: 'promotionPictureFile', type: 'file', label: 'Imagen de promocion'}
                     - {property: 'promotionContent', label: 'contenido de promocion', type: 'ckeditor'}
                     - {property: 'promotionLink', label: 'Enlace de la promocion'}
@@ -437,17 +437,17 @@ easy_admin:
                     - { type: 'group', label: 'Seccion Blogs', icon: 'cogs', columns: 12 }
 
                     - {property: 'blogTitle', label: 'Titulo seccion Blog'}
-                    - {property: 'blogId1', label: 'Id del articulo del blog 1'}
-                    - {property: 'blogId2', label: 'Id del articulo del blog 2'}
+                    - {property: 'blogId1', label: 'Id del articulo del blog 1', help: 'Si no se anade ningun id, no se mostrara esta seccion'}
+                    - {property: 'blogId2', label: 'Id del articulo del blog 2', help: 'Si no se anade ningun id, no se mostrara esta seccion'}
 
-                    - { type: 'group', label: 'Seccion Servicios', icon: 'cogs', columns: 12 }
+                    - { type: 'group', label: 'Sección Servicios', icon: 'cogs', columns: 12, help: 'Si los servicio no posee títulos no se añadira esta sección.' }
 
                     - {property: 'servicesTitle', label: 'Titulo seccion Servicios'}
-                    - {property: 'serviceTitle1', label: 'Servicio titulo 1'}
+                    - {property: 'serviceTitle1', label: 'Servicio titulo 1', help: 'Si el Servicio no posee título no se añadira.'}
                     - {property: 'servicePicture1File', type: 'file', label: 'Servicio Imagen 1'}
                     - {property: 'serviceContent1', label: 'Servicio content 1', type: 'ckeditor'}
 
-                    - {property: 'serviceTitle2', label: 'Servicio titulo 2'}
+                    - {property: 'serviceTitle2', label: 'Servicio titulo 2', help: 'Si el servicio no posee título no se añadira.'}
                     - {property: 'servicePicture2File', type: 'file', label: 'Servicio Imagen 2'}
                     - {property: 'serviceContent2', label: 'Servicio content 2', type: 'ckeditor'}
 
