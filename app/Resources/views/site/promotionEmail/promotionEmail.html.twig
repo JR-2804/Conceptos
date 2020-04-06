@@ -896,7 +896,11 @@
                                         {% for product in offers %}
                                             <!--[if mso]><table width="530" cellpadding="0"
                                                                 cellspacing="0"><tr><td width="194" valign="top"><![endif]-->
-                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left">
+                                            <table class="es-left" style="width: 50% !important;
+                                            {% if loop.index == offers | length and loop.index % 2 == 1 %}
+                                                margin: 0 25%;
+                                            {% endif %}
+                                            " cellspacing="0" cellpadding="0" align="left">
                                                 <tbody>
                                                 <tr>
                                                     <td class="es-m-p20b esd-container-frame" esd-custom-block-id="9799"
@@ -927,7 +931,7 @@
                                                                 <td class="esd-block-text es-p5t es-p10b es-p15r es-p15l" align="left">
                                                                     <p style="color: #333333;">
                                                                         <span class="product-name">{{ product.name }}</span>
-                                                                        <br><br>
+                                                                        <br>
                                                                         {{ product.description | striptags | slice(0, 50)  }}...
                                                                     </p>
                                                                 </td>
@@ -1273,7 +1277,7 @@
                     <tbody>
                     <tr>
                         <td class="esd-stripe" esd-custom-block-id="9796" align="center">
-                            <table class="es-footer-body" style="border-top:1px solid #ff80ab; background-color: #333333;" bgcolor="#333333" width="600" cellspacing="0" cellpadding="0" align="center">
+                            <table class="es-footer-body" style="background-color: #333333;" bgcolor="#333333" width="600" cellspacing="0" cellpadding="0" align="center">
                                 <tbody>
                                 <tr>
                                     <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" align="left"
@@ -1324,9 +1328,9 @@
                                                                     <tbody>
                                                                     <tr>
                                                                         <td class="es-p10r" valign="top" align="center">
-                                                                            <a target="_blank" href="http://wa.me/+5352458380?text=Estoy%20interesado%20en%20...">
+                                                                            <a target="_blank" href="http://wa.me/5352458380?text=Estoy%20interesado%20en%20...">
                                                                                 <img title="whatsapp" src="https://stripo.email/static/assets/img/messenger-icons/circle-gray-bordered/whatsapp-circle-gray-bordered.png"
-                                                                                     alt="Fb" width="32">
+                                                                                     alt="whatsapp" width="32">
                                                                             </a>
                                                                         </td>
                                                                         <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.facebook.com/TiendaConceptos/"><img title="Facebook" src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-gray-bordered/facebook-circle-gray-bordered.png" alt="Fb" width="32"></a></td>
