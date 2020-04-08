@@ -410,6 +410,7 @@ class SiteController extends Controller
 
         return $this->render(':site:product-details.html.twig', [
             'product' => $product,
+            'comboChunks' => array_chunk($product->getComboProducts()->toArray(), 3),
             'imageSets' => array_chunk($images, 3),
             'home' => $home,
             'membership' => $membership,

@@ -299,15 +299,16 @@ class ProductController extends Controller
             }
             $comboProducts = json_decode($form->get('comboProducts')->getData(), true);
             if (null != $comboProducts) {
-                foreach ($comboProducts as $comboProductId) {
-                    $productDB = $this->getDoctrine()->getRepository('AppBundle:Product')->find($comboProductId);
+                foreach ($comboProducts as $comboProduct) {
+                    $productDB = $this->getDoctrine()->getRepository('AppBundle:Product')->find($comboProduct["id"]);
                     if (null != $productDB) {
-                        $comboProduct = new ComboProduct();
-                        $comboProduct->setParentProduct($product);
-                        $comboProduct->setProduct($productDB);
-                        $this->getDoctrine()->getManager()->persist($comboProduct);
+                        $combo = new ComboProduct();
+                        $combo->setParentProduct($product);
+                        $combo->setProduct($productDB);
+                        $combo->setCount($comboProduct["count"]);
+                        $this->getDoctrine()->getManager()->persist($combo);
 
-                        $product->addComboProduct($comboProduct);
+                        $product->addComboProduct($combo);
                     }
                 }
             }

@@ -140,18 +140,35 @@
             <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
           </button>
         </div>
-        {% if product.comboProducts|length > 0 %}
-        <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3">
-          <span class="conceptos-title">PRODUCTOS QUE LO COMPONEN</span>
-          <div class="d-flex flex-wrap">
-            {% for comboProduct in product.comboProducts %}
-              {% set product = comboProduct.product %}
-              <div class="d-flex col-6 col-lg-3 pl-0">
-                {{include('site/product-summary-short.html.twig')}}
+        {% if comboChunks is not empty %}
+          <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3 mb-2">
+            <span class="conceptos-title">PRODUCTOS QUE LO COMPONEN</span>
+            <div class="d-flex flex-wrap">
+              <div class="carousel" data-ride="carousel" id="carousel-combo-products" data-interval="10000">
+                <ol class="carousel-indicators">
+                  {% for chunk in comboChunks %}
+                    <li data-target="#carousel-combo-products"
+                        class="{% if loop.first %}active{% endif %}"
+                        data-slide-to="{{ loop.index - 1 }}"></li>
+                  {% endfor %}
+                </ol>
+                <div class="carousel-inner">
+                    {% for chunk in comboChunks %}
+                      <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
+                        <div class="d-flex flex-wrap">
+                          {% for comboProduct in chunk %}
+                            {% set product = comboProduct.product %}
+                            <div class="d-flex col-4 col-lg-2 pl-0">
+                              {{include('site/combo-summary-short.html.twig')}}
+                            </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    {% endfor %}
+                </div>
               </div>
-            {% endfor %}
+            </div>
           </div>
-        </div>
         {% endif %}
       </div>
     </div>

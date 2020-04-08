@@ -13,6 +13,7 @@ var data = {
 };
 
 Dropzone.autoDiscover = false;
+var comboProducts = [];
 var currentComboProductCode = undefined;
 var currentComboProductPrice = undefined;
 var dropzone = undefined;
@@ -434,6 +435,7 @@ function RecalculateComboPrice() {
     price += comboProduct.price * comboProduct.count;
   });
   $("#price").val(price);
+  $("#calculate-price").val(price);
 }
 
 function populateComboProductsTable() {
