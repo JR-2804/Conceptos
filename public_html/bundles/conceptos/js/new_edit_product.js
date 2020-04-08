@@ -122,7 +122,7 @@ $(document).ready(function() {
     }
   });
 
-  $("#category").select2({
+  $("#category, #combo-product").select2({
     theme: "bootstrap",
     language: "es",
     allowClear: true
@@ -288,7 +288,9 @@ $(document).ready(function() {
     }
   });
 
-  $("#combo-product").val("");
+  $("#combo-product")
+    .val([])
+    .trigger("change");
 
   populateComboProductsTable();
 });
