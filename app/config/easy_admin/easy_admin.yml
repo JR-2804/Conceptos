@@ -420,14 +420,15 @@ easy_admin:
                     - {property: 'introContent3', label: 'Intro content 3', type: 'ckeditor'}
                     - {property: 'introLink3', label: 'Enlace del intro 3'}
 
-                    - { type: 'group', label: 'Seccion Ofertas', icon: 'cogs', columns: 12, help: 'Si no hay codigos, no se mostrara esta sección' }
-
+                    - { type: 'group', label: 'Seccion Ofertas', icon: 'cogs', columns: 12, help: 'Si no hay codigos, no se mostrara esta sección'}
                     - {property: 'offersTitle', label: 'Titulo seccion ofertas'}
-                    - {property: 'offerItem1', label: 'Codigo del producto 1 en offerta'}
-                    - {property: 'offerItem2', label: 'Codigo del producto 2 en offerta'}
-                    - {property: 'offerItem3', label: 'Codigo del producto 3 en offerta'}
+                    - {property: 'offers', label: 'Ofertas disponibles en el sitio'}
 
-                    - { type: 'group', label: 'Seccion Promocion', icon: 'cogs', columns: 12 }
+                    - { type: 'group', label: 'Seccion productos', icon: 'cogs', columns: 12, help: 'Si no hay códigos, no se mostrara esta sección' }
+                    - {property: 'productsTitle', label: 'Título sección productos'}
+                    - {property: 'products', label: 'Código de los productos'}
+
+                    - { type: 'group', label: 'Sección promoción', icon: 'cogs', columns: 12 }
 
                     - {property: 'promotionTitle', label: 'Titulo promocion', help: 'Si no se añade el titulo, no se mostrara esta sección'}
                     - {property: 'promotionPictureFile', type: 'file', label: 'Imagen de promocion'}

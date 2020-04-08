@@ -70,6 +70,7 @@ class SiteController extends Controller
                 }
             }
         }
+
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
@@ -1252,13 +1253,11 @@ class SiteController extends Controller
             'name' => 'Home',
         ]);
 
-
         $promEmail = $this->getDoctrine()->getManager()->getRepository('AppBundle:PromotionEmail')->find($id);
 
         $subject = $promEmail->getSubject();
         $emails = $promEmail->getEmails();
         $primaryPicture = $promEmail->getPrimaryPicture();
-
 
         $introTitle1 = $promEmail->getIntroTitle1();
         $introPicture1 = $promEmail->getIntroPicture1();
@@ -1284,18 +1283,23 @@ class SiteController extends Controller
             array_push($intros, ['title'=>$introTitle3, 'picture'=>$introPicture3, 'content'=>$introContent3, 'link'=>$introLink3]);
 
 
-        $offers = [];
         $offersTitle = $promEmail->getOffersTitle();
-        $offerItem1 = $promEmail->getOfferItem1();
-        $offerItem2 = $promEmail->getOfferItem2();
-        $offerItem3 = $promEmail->getOfferItem3();
-        if ($offerItem1 != null)
-            array_push($offers, $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findOneBy(['code'=>$offerItem1]));
-        if ($offerItem2 != null)
-            array_push($offers, $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findOneBy(['code'=>$offerItem2]));
-        if ($offerItem3 != null)
-            array_push($offers, $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findOneBy(['code'=>$offerItem3]));
+        $offers = $promEmail->getOffers();
+        $offersProducts_ = [];
+        $offersProducts = [];
+        foreach ($offers as $offer)
+            foreach ($offer->getProducts() as $product)
+                $offersProducts_[] = ['product'=>$product,'offerPrice'=> $offer->getPrice()];
 
+        $offersProductsIndex = array_rand($offersProducts_, min([count($offersProducts_), 4]));
+        if (is_array($offersProductsIndex))
+            foreach ($offersProductsIndex as $index)
+                $offersProducts[] = $offersProducts_[$index];
+        else
+            $offersProducts[] = $offersProducts_[$offersProductsIndex];
+
+        $productsTitle = $promEmail->getProductsTitle();
+        $products = $promEmail->getProducts();
 
         $promotionTitle = $promEmail->getPromotionTitle();
         $promotionPicture = $promEmail->getPromotionPicture();
@@ -1319,7 +1323,6 @@ class SiteController extends Controller
             $blog2 = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($blogId2);
             array_push($blogs, $blog2);
         }
-
 
         $servicesTitle = $promEmail->getServicesTitle();
 
@@ -1349,7 +1352,9 @@ class SiteController extends Controller
             'primaryPicture'=>$primaryPicture,
             'intros'=>$intros,
             'offersTitle'=>$offersTitle,
-            'offers'=>$offers,
+            'offers'=>$offersProducts,
+            'productsTitle'=>$productsTitle,
+            'products'=>$products,
             'promotion'=>$promotion,
             'blogsTitle'=>$blogTitle,
             'blogs'=>$blogs,
@@ -1404,18 +1409,23 @@ class SiteController extends Controller
             array_push($intros, ['title'=>$introTitle3, 'picture'=>$introPicture3, 'content'=>$introContent3, 'link'=>$introLink3]);
 
 
-        $offers = [];
         $offersTitle = $promEmail->getOffersTitle();
-        $offerItem1 = $promEmail->getOfferItem1();
-        $offerItem2 = $promEmail->getOfferItem2();
-        $offerItem3 = $promEmail->getOfferItem3();
-        if ($offerItem1 != null)
-            array_push($offers, $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findOneBy(['code'=>$offerItem1]));
-        if ($offerItem2 != null)
-            array_push($offers, $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findOneBy(['code'=>$offerItem2]));
-        if ($offerItem3 != null)
-            array_push($offers, $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findOneBy(['code'=>$offerItem3]));
+        $offers = $promEmail->getOffers();
+        $offersProducts_ = [];
+        $offersProducts = [];
+        foreach ($offers as $offer)
+            foreach ($offer->getProducts() as $product)
+                $offersProducts_[] = ['product'=>$product,'offerPrice'=> $offer->getPrice()];
 
+        $offersProductsIndex = array_rand($offersProducts_, min([count($offersProducts_), 4]));
+        if (is_array($offersProductsIndex))
+            foreach ($offersProductsIndex as $index)
+                $offersProducts[] = $offersProducts_[$index];
+        else
+            $offersProducts[] = $offersProducts_[$offersProductsIndex];
+
+        $productsTitle = $promEmail->getProductsTitle();
+        $products = $promEmail->getProducts();
 
         $promotionTitle = $promEmail->getPromotionTitle();
         $promotionPicture = $promEmail->getPromotionPicture();
@@ -1439,7 +1449,6 @@ class SiteController extends Controller
             $blog2 = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($blogId2);
             array_push($blogs, $blog2);
         }
-
 
         $servicesTitle = $promEmail->getServicesTitle();
 
@@ -1469,7 +1478,9 @@ class SiteController extends Controller
             'primaryPicture'=>$primaryPicture,
             'intros'=>$intros,
             'offersTitle'=>$offersTitle,
-            'offers'=>$offers,
+            'offers'=>$offersProducts,
+            'productsTitle'=>$productsTitle,
+            'products'=>$products,
             'promotion'=>$promotion,
             'blogsTitle'=>$blogTitle,
             'blogs'=>$blogs,
@@ -1485,7 +1496,9 @@ class SiteController extends Controller
             'primaryPicture'=>$primaryPicture,
             'intros'=>$intros,
             'offersTitle'=>$offersTitle,
-            'offers'=>$offers,
+            'offers'=>$offersProducts,
+            'productsTitle'=>$productsTitle,
+            'products'=>$products,
             'promotion'=>$promotion,
             'blogsTitle'=>$blogTitle,
             'blogs'=>$blogs,

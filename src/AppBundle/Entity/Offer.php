@@ -395,4 +395,12 @@ class Offer
     {
         return $this->onlyInStoreProducts;
     }
+
+    /*
+    * @return string
+    */
+    public function __toString()
+    {
+        return $this->getName() == null ? 'null' : $this->getName();
+    }
 }

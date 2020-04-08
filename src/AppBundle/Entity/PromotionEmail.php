@@ -2,11 +2,14 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Mapping as ORM;
+use PhpOption\Tests\Repository;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-include __DIR__.'/../Utils/simple_html_dom.php';
-use AppBundle\utils\DOM;
+//include __DIR__.'/../Utils/simple_html_dom.php';
+//use AppBundle\utils\DOM;
 
 /**
  * PromotionEmail
@@ -174,7 +177,7 @@ class PromotionEmail
     /**
      * @var string
      *
-     * @ORM\Column(name="introPicture1", type="string", length=255)
+     * @ORM\Column(name="introPicture1", type="string", length=255, nullable=true)
      */
     private $introPicture1;
 
@@ -658,97 +661,117 @@ class PromotionEmail
     }
 
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="offerItem1",  type="string", length=255, nullable=true)
-     */
-    private $offerItem1;
+
 
     /**
-     * Set offerItem1
-     *
-     * @param string $offerItem1
-     *
-     * @return PromotionEmail
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Offer")
      */
-    public function setOfferItem1($offerItem1)
+    private $offers;
+
+    /**
+     * Add product.
+     *
+     * @param \AppBundle\Entity\Product $offers
+     *
+     * @return Offer
+     */
+    public function addOffers(Offer $offers)
     {
-        $this->offerItem1 = $offerItem1;
+        $this->offers[] = $offers;
 
         return $this;
     }
 
     /**
-     * Get offerItem1
+     * Remove offers.
      *
-     * @return string
+     * @param \AppBundle\Entity\Offer $offers
      */
-    public function getOfferItem1()
+    public function removeOffers(Product $offers)
     {
-        return $this->offerItem1;
+        $this->offers->removeElement($offers);
     }
+
+    /**
+     * Get offers.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOffers()
+    {
+        return $this->offers;
+    }
+
+
 
     /**
      * @var string
      *
-     * @ORM\Column(name="offerItem2",  type="string", length=255, nullable=true)
+     * @ORM\Column(name="productsTitle",  type="string", length=255, nullable=true)
      */
-    private $offerItem2;
+    private $productsTitle;
 
     /**
-     * Set offerItem2
+     * Set introTitle1
      *
-     * @param string $offerItem2
+     * @param string $productsTitle
      *
      * @return PromotionEmail
      */
-    public function setOfferItem2($offerItem2)
+    public function setProductsTitle($productsTitle)
     {
-        $this->offerItem2 = $offerItem2;
+        $this->productsTitle = $productsTitle;
 
         return $this;
     }
 
     /**
-     * Get offerItem2
+     * Get productsTitle
      *
      * @return string
      */
-    public function getOfferItem2()
+    public function getProductsTitle()
     {
-        return $this->offerItem2;
+        return $this->productsTitle;
     }
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="offerItem3",  type="string", length=255, nullable=true)
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product")
      */
-    private $offerItem3;
+    private $products;
 
     /**
-     * Set offerItem3
+     * Add product.
      *
-     * @param string $offerItem3
+     * @param \AppBundle\Entity\Product $product
      *
-     * @return PromotionEmail
+     * @return Offer
      */
-    public function setOfferItem3($offerItem3)
+    public function addProduct(Product $product)
     {
-        $this->offerItem3 = $offerItem3;
+        $this->products[] = $product;
 
         return $this;
     }
 
     /**
-     * Get offerItem3
+     * Remove product.
      *
-     * @return string
+     * @param \AppBundle\Entity\Product $product
      */
-    public function getOfferItem3()
+    public function removeProduct(Product $product)
     {
-        return $this->offerItem3;
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 
 
@@ -1347,8 +1370,6 @@ class PromotionEmail
 
 
 
-
-
     /**
      * @var string
      *
@@ -1438,5 +1459,16 @@ class PromotionEmail
     {
         return $this->footerPictureLink;
     }
+
+
+    public function __construct()
+    {
+
+        $this->products = new ArrayCollection();
+
+
+        $this->offers = new ArrayCollection();
+    }
+
 }
 

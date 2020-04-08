@@ -893,7 +893,9 @@
                                 </tr>
                                 <tr>
                                     <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" esd-custom-block-id="9790" align="left">
-                                        {% for product in offers %}
+                                        {% for productAndPrice in offers %}
+                                            {% set product = productAndPrice.product %}
+                                            {% set price = productAndPrice.offerPrice %}
                                             <!--[if mso]><table width="530" cellpadding="0"
                                                                 cellspacing="0"><tr><td width="194" valign="top"><![endif]-->
                                             <table class="es-left" style="width: 50% !important;
@@ -923,7 +925,7 @@
                                                             <tr>
                                                                 <td class="esd-block-text es-p15t es-p15r es-p15l" align="left">
                                                                     <a href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}" style="text-decoration: none;">
-                                                                        <h4 style="color: #333;">$<span style="font-weight: 700;" class="price">{{ product.price }}.00 </span></h4>
+                                                                        <h4 style="color: #333;">$<span style="font-weight: 700;" class="price">{{ price }}.00 </span></h4>
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -951,6 +953,96 @@
                     </tr>
                     </tbody>
                 </table>
+                {% endif %}
+
+                {% if products | length > 0 %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                        <tbody>
+                        <tr>
+                            <td class="esd-stripe" align="center">
+                                <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                    <tbody>
+                                    <tr>
+                                        <td class="esd-structure es-p30t es-p10b es-p20r es-p20l" align="left">
+                                            <table width="100%" cellspacing="0" cellpadding="0">
+                                                <tbody>
+                                                <tr>
+                                                    <td class="esd-container-frame" width="560" valign="top" align="center">
+                                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="esd-block-text" align="center">
+                                                                    <h2>- {{ productsTitle | upper }} -<br></h2>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" esd-custom-block-id="9790" align="left">
+                                            {% for product in products %}
+                                                <!--[if mso]><table width="530" cellpadding="0"
+                                                                    cellspacing="0"><tr><td width="194" valign="top"><![endif]-->
+                                                <table class="es-left" style="width: 50% !important;
+                                                {% if loop.index == products | length and loop.index % 2 == 1 %}
+                                                        margin: 0 25%;
+                                                {% endif %}
+                                                        " cellspacing="0" cellpadding="0" align="left">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="es-m-p20b esd-container-frame" esd-custom-block-id="9799"
+                                                            width="174" align="left" esdev-config="h7"
+                                                                {% if loop.index < 3 %}
+                                                            style="padding-right: 10px; {#border-right: 1px #666 solid;#}"
+                                                                {% endif %}>
+                                                            <table  width="100%" cellspacing="0" cellpadding="0">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td class="esd-block-image es-p15t es-p20r es-p20l" align="center" style="font-size:0">
+                                                                        <a target="_blank" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}">
+                                                                            <img class="adapt-img product-image"
+                                                                                 src="{{ absolute_url(vich_uploader_asset(product.mainImage, 'imageFile')) }}"
+                                                                                 alt="{{ product.item }}"
+                                                                                 style="display: block;"
+                                                                                 title="{{ product.item }}"
+                                                                                 width="134"></a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="esd-block-text es-p15t es-p15r es-p15l" align="left">
+                                                                        <a href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}" style="text-decoration: none;">
+                                                                            <h4 style="color: #333;">$<span style="font-weight: 700;" class="price">{{ product.price }}.00 </span></h4>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="esd-block-text es-p5t es-p10b es-p15r es-p15l" align="left">
+                                                                        <p style="color: #333333;">
+                                                                            <span class="product-name">{{ product.name }}</span>
+                                                                            <br>
+                                                                            {{ product.description | striptags | slice(0, 50)  }}...
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 {% endif %}
 
                 {% if promotion.title %}
