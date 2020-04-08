@@ -14,9 +14,9 @@
     </style>
     <![endif]-->
     <!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]-->
-    <!--[if !mso]><!-- -->
+    <!--[if !mso]>
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
-    <!--<![endif]-->
+    <![endif]-->
 
     <style type="text/css">
         /*
@@ -128,6 +128,13 @@
             line-height: 120%;
             mso-line-height-rule: exactly;
             font-family: georgia, times, 'times new roman', serif;
+        }
+
+        h4{
+            Margin: 0;
+            line-height: 120%;
+            mso-line-height-rule: exactly;
+            font-family: 'times new roman', serif;
         }
 
         p,
@@ -338,7 +345,7 @@
         h2 {
             font-size: 24px;
             font-style: normal;
-            font-weight: normal;
+            font-weight: 700;
             color: #333333;
         }
 
@@ -378,7 +385,6 @@
         .es-wrapper {
             width: 100%;
             height: 100%;
-            background-image: ;
             background-repeat: repeat;
             background-position: center top;
         }
@@ -403,7 +409,6 @@
 
         .es-header {
             background-color: transparent;
-            background-image: ;
             background-repeat: repeat;
             background-position: center top;
         }
@@ -426,7 +431,6 @@
 
         .es-footer {
             background-color: transparent;
-            background-image: ;
             background-repeat: repeat;
             background-position: center top;
         }
@@ -512,7 +516,7 @@
             }
 
             h2 {
-                font-size: 24px !important;
+                font-size: 20px !important;
                 text-align: center;
                 line-height: 120% !important;
             }
@@ -714,7 +718,8 @@
                             <table class="es-header-body" style="background-color: #ffffff;" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
                                 <tbody>
                                 <tr>
-                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" style="background-repeat: no-repeat; background-color: #333333;" bgcolor="#333333" align="left">
+                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l"
+                                        style="padding: 20px;  background-repeat: no-repeat; background-color: #333333;" bgcolor="#333333" align="left">
                                         <table width="100%" cellspacing="0" cellpadding="0">
                                             <tbody>
                                             <tr>
@@ -786,22 +791,29 @@
                     </tbody>
                 </table>
 
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                {% if intros | length > 0 %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
                     <tbody>
                     <tr>
                         <td class="esd-stripe" align="center">
                             <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
                                 <tbody>
                                 <tr>
-                                    <td style="padding-top: 20px" class="esd-structure es-p20t es-p20b es-p20r es-p20l" esd-custom-block-id="9790" align="left">
+                                    <td style="padding-top: 20px" class="esd-structure es-p20t es-p20b es-p20r es-p20l"
+                                        esd-custom-block-id="9790" align="left">
                                         {% for intro in intros %}
                                             <!--[if mso]><table width="530" cellpadding="0"
                                                                 cellspacing="0"><tr><td width="194" valign="top"><![endif]-->
                                             <table class="es-left" cellspacing="0" cellpadding="0" align="left">
                                                 <tbody>
                                                 <tr>
-                                                    <td class="es-m-p20b esd-container-frame" esd-custom-block-id="9799" width="174" align="left" esdev-config="h7">
-                                                        <table style="" width="100%" cellspacing="0" cellpadding="0">
+                                                    <td class="es-m-p20b esd-container-frame" esd-custom-block-id="9799"
+                                                        width="{{ 515 / (intros | length) }}" align="left" esdev-config="h7"
+                                                        {% if loop.index < 3 %}
+                                                            style="padding-right: 10px; {#border-right: 1px #7a7416 solid;#}"
+                                                        {% endif %}
+                                                    >
+                                                        <table width="100%" cellspacing="0" cellpadding="0">
                                                             <tbody>
                                                             <tr>
                                                                 <td class="esd-block-image" align="center" style="font-size:0">
@@ -811,7 +823,7 @@
                                                                              alt="{{ intro.title }}"
                                                                              style="display: block;"
                                                                              title="{{ intro.title }}"
-                                                                             width="170">
+                                                                             width="{{ 515 / (intros | length) }}">
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -834,7 +846,9 @@
                                                             </tbody>
                                                         </table>
                                                     </td>
-                                                    <td class="es-hidden" width="10"></td>
+                                                    {% if loop.index < 3 %}
+                                                        <td class="es-hidden" width="10"></td>
+                                                    {% endif %}
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -847,8 +861,10 @@
                     </tr>
                     </tbody>
                 </table>
+                {% endif %}
 
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                {% if offers | length > 0 %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
                     <tbody>
                     <tr>
                         <td class="esd-stripe" align="center">
@@ -864,7 +880,7 @@
                                                         <tbody>
                                                         <tr>
                                                             <td class="esd-block-text" align="center">
-                                                                <h3>- {{ offersTitle | upper }} -<br></h3>
+                                                                <h2>- {{ offersTitle | upper }} -<br></h2>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -880,10 +896,18 @@
                                         {% for product in offers %}
                                             <!--[if mso]><table width="530" cellpadding="0"
                                                                 cellspacing="0"><tr><td width="194" valign="top"><![endif]-->
-                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left">
+                                            <table class="es-left" style="width: 50% !important;
+                                            {% if loop.index == offers | length and loop.index % 2 == 1 %}
+                                                margin: 0 25%;
+                                            {% endif %}
+                                            " cellspacing="0" cellpadding="0" align="left">
                                                 <tbody>
                                                 <tr>
-                                                    <td class="es-m-p20b esd-container-frame" esd-custom-block-id="9799" width="174" align="left" esdev-config="h7">
+                                                    <td class="es-m-p20b esd-container-frame" esd-custom-block-id="9799"
+                                                        width="174" align="left" esdev-config="h7"
+                                                        {% if loop.index < 3 %}
+                                                            style="padding-right: 10px; {#border-right: 1px #666 solid;#}"
+                                                        {% endif %}>
                                                         <table  width="100%" cellspacing="0" cellpadding="0">
                                                             <tbody>
                                                             <tr>
@@ -899,19 +923,22 @@
                                                             <tr>
                                                                 <td class="esd-block-text es-p15t es-p15r es-p15l" align="left">
                                                                     <a href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}" style="text-decoration: none;">
-                                                                        <h3 style="">$<span class="price">{{ product.price }}.00 </span></h3>
+                                                                        <h4 style="color: #333;">$<span style="font-weight: 700;" class="price">{{ product.price }}.00 </span></h4>
                                                                     </a>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="esd-block-text es-p5t es-p10b es-p15r es-p15l" align="left">
-                                                                    <p style="color: #333333;"><span class="product-name">{{ product.item }}</span></p>
+                                                                    <p style="color: #333333;">
+                                                                        <span class="product-name">{{ product.name }}</span>
+                                                                        <br>
+                                                                        {{ product.description | striptags | slice(0, 50)  }}...
+                                                                    </p>
                                                                 </td>
                                                             </tr>
                                                             </tbody>
                                                         </table>
                                                     </td>
-                                                    <td class="es-hidden" width="10"></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -924,48 +951,50 @@
                     </tr>
                     </tbody>
                 </table>
+                {% endif %}
 
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
-                    <tbody>
-                    <tr>
-                        <td class="esd-stripe" esd-custom-block-id="9784" align="center">
-                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
-                                <tbody>
-                                <tr>
-                                    <td class="esd-structure es-p20t es-p20r es-p20l" align="left">
-                                        <table width="100%" cellspacing="0" cellpadding="0">
-                                            <tbody>
-                                            <tr>
-                                                <td class="esd-container-frame" width="560" valign="top" align="center">
-                                                    <table width="100%" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-banner" style="position: relative;" align="center" esdev-config="h19">
-                                                                <a target="_blank" href="{{ promotion.link }}">
-                                                                    <img class="adapt-img esdev-stretch-width esdev-banner-rendered"
-                                                                         src="{{ absolute_url('/uploads/images/email/'~promotion.picture) }}"
-                                                                         alt="{{ promotion.title }}"
-                                                                         title="{{ promotion.title }}"
-                                                                         width="560" style="display: block;">
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                {% if promotion.title %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                        <tbody>
+                        <tr>
+                            <td class="esd-stripe" esd-custom-block-id="9784" align="center">
+                                <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                    <tbody>
+                                    <tr>
+                                        <td class="esd-structure es-p20t es-p20r es-p20l" align="left">
+                                            <table width="100%" cellspacing="0" cellpadding="0">
+                                                <tbody>
+                                                <tr>
+                                                    <td class="esd-container-frame" width="560" valign="top" align="center">
+                                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="esd-block-banner" style="position: relative;" align="center" esdev-config="h19">
+                                                                    <a target="_blank" href="{{ promotion.link }}">
+                                                                        <img class="adapt-img esdev-stretch-width esdev-banner-rendered"
+                                                                             src="{{ absolute_url('/uploads/images/email/'~promotion.picture) }}"
+                                                                             alt="{{ promotion.title }}"
+                                                                             title="{{ promotion.title }}"
+                                                                             width="560" style="display: block;">
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
                     <tbody>
                     <tr>
                         <td class="esd-stripe" align="center">
@@ -1011,8 +1040,10 @@
                     </tr>
                     </tbody>
                 </table>
+                {% endif %}
 
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                {% if blogs | length > 0 %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
                     <tbody>
                     <tr>
                         <td class="esd-stripe" align="center">
@@ -1028,7 +1059,7 @@
                                                         <tbody>
                                                         <tr>
                                                             <td class="esd-block-text" align="center">
-                                                                <h3>- {{ blogsTitle | upper }} -<br></h3>
+                                                                <h2>- {{ blogsTitle | upper }} -<br></h2>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -1049,7 +1080,8 @@
                                                cellspacing="0" align="{% if blogs | length == 1 %}center{% else %}{% if loop.index0 == 0 %}left{% else %}right{% endif %}{% endif %}">
                                             <tbody>
                                             <tr>
-                                                <td class="es-m-p0r es-m-p20b esd-container-frame" width="270" valign="top" align="center" esdev-config="h13">
+                                                <td class="es-m-p0r es-m-p20b esd-container-frame"
+                                                    width="{{ 515 / (blogs | length) }}" valign="top" align="center" esdev-config="h13">
                                                     <table style="background-color: #fafafa;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#fafafa">
                                                         <tbody>
                                                         <tr>
@@ -1060,23 +1092,23 @@
                                                                          alt="Make it special"
                                                                          style="display: block;"
                                                                          title="Make it special"
-                                                                         width="270">
+                                                                         width="{{ 515 / (blogs | length) }}">
                                                                 </a>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="esd-block-text es-p20t es-p20r es-p20l es-m-txt-c" style="padding-top: 20px; padding-right: 20px; padding-left: 20px;" align="left">
-                                                                <p style="color: #999999; font-size: 12px;"><strong><span class="product-category"> {% if blog.tags | length > 0 %}
-                                                                                                                            {% set tag = blog.tags | first  %}
-                                                                                                                            {{ tag.value | upper }}
-                                                                                                                        {% else %}
-                                                                                                                            &nbsp;
-                                                                                                                        {% endif %} </span></strong></p>
-                                                            </td>
+{#                                                            <td class="esd-block-text es-p20t es-p20r es-p20l es-m-txt-c" style="padding-top: 20px; padding-right: 20px; padding-left: 20px;" align="left">#}
+{#                                                                <p style="color: #999999; font-size: 12px;"><strong><span class="product-category"> {% if blog.tags | length > 0 %}#}
+{#                                                                                                                            {% set tag = blog.tags | first  %}#}
+{#                                                                                                                            {{ tag.value | upper }}#}
+{#                                                                                                                        {% else %}#}
+{#                                                                                                                            &nbsp;#}
+{#                                                                                                                        {% endif %} </span></strong></p>#}
+{#                                                            </td>#}
                                                         </tr>
                                                         <tr>
                                                             <td class="esd-block-text es-p5t es-p20r es-p20l" style="padding-top: 5px; padding-right: 20px; padding-left: 20px;" align="left">
-                                                                <a href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" style="text-decoration: none;" target="_blank">
+                                                                <a href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" style="" target="_blank">
                                                                     <h3>{{ blog.title }}</h3>
                                                                 </a>
                                                             </td>
@@ -1089,8 +1121,8 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="left">
-                                                                <p><a style="color: #7a7416;" href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" target="_blank">Leer más</a></p>
+                                                            <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="right">
+                                                                <p><a style="color: #7a7416;" href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" target="_blank">ver más</a></p>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -1109,8 +1141,10 @@
                     </tr>
                     </tbody>
                 </table>
+                {% endif %}
 
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                {% if services | length > 0 %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
                     <tbody>
                     <tr>
                         <td class="esd-stripe" align="center">
@@ -1126,7 +1160,7 @@
                                                         <tbody>
                                                         <tr>
                                                             <td class="esd-block-text" align="center">
-                                                                <h3>- {{ servicesTitle | upper }} -<br></h3>
+                                                                <h2>- {{ servicesTitle | upper }} -<br></h2>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -1142,11 +1176,12 @@
                                         <!--[if mso]><table width="560" cellpadding="0"
                                                             cellspacing="0"><tr><td width="270" valign="top"><![endif]-->
                                         {% for service in services %}
-                                            <table class="{% if blogs | length == 1 %} {% else %} {% if loop.index0 == 0 %}es-left{% else %}es-right{% endif %} {% endif %}" cellspacing="0" cellpadding="0"
+                                            <table class="{% if services | length == 1 %} {% else %} {% if loop.index0 == 0 %}es-left{% else %}es-right{% endif %} {% endif %}" cellspacing="0" cellpadding="0"
                                                    align="{% if services | length == 1 %}center{% else %}{% if loop.index0 == 0 %}left{% else %}right{% endif %}{% endif %}">
                                                 <tbody>
                                                 <tr>
-                                                    <td class="es-m-p0r es-m-p20b esd-container-frame" width="270" valign="top" align="center" esdev-config="h13">
+                                                    <td class="es-m-p0r es-m-p20b esd-container-frame"
+                                                        width="{{ 515 / (services | length) }}" valign="top" align="center" esdev-config="h13">
                                                         <table style="background-color: #fafafa;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#fafafa">
                                                             <tbody>
                                                             <tr>
@@ -1157,13 +1192,13 @@
                                                                              alt="{{ service.title }}"
                                                                              style="display: block;"
                                                                              title="{{ service.title }}"
-                                                                             width="270">
+                                                                             width="{{ 515 / (services | length) }}">
                                                                     </a>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="esd-block-text es-p5t es-p20r es-p20l" align="left">
-                                                                    <a href="{{ service.link }}" target="_blank" style="text-decoration: none;">
+                                                                    <a href="{{ service.link }}" target="_blank">
                                                                         <h3>{{ service.title }}</h3>
                                                                     </a>
                                                                 </td>
@@ -1174,8 +1209,8 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="left">
-                                                                    <p><a href="{{ service.link }}" target="_blank">más</a></p>
+                                                                <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="right">
+                                                                    <p><a style="color: #7a7416;" href="{{ service.link }}" target="_blank">ver más</a></p>
                                                                 </td>
                                                             </tr>
                                                             </tbody>
@@ -1194,6 +1229,7 @@
                     </tr>
                     </tbody>
                 </table>
+                {% endif %}
 
                 {% if footerPicture %}
                     <table class="es-content" cellspacing="0" cellpadding="0" align="center">
@@ -1241,10 +1277,11 @@
                     <tbody>
                     <tr>
                         <td class="esd-stripe" esd-custom-block-id="9796" align="center">
-                            <table class="es-footer-body" style="border-top:1px solid #ff80ab; background-color: #333333;" bgcolor="#333333" width="600" cellspacing="0" cellpadding="0" align="center">
+                            <table class="es-footer-body" style="background-color: #333333;" bgcolor="#333333" width="600" cellspacing="0" cellpadding="0" align="center">
                                 <tbody>
                                 <tr>
-                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" align="left">
+                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" align="left"
+                                    style="padding: 20px;">
                                         <!--[if mso]><table width="560" cellpadding="0"
                                                             cellspacing="0"><tr><td width="180" valign="top"><![endif]-->
                                         <table class="es-left" cellspacing="0" cellpadding="0" align="left">
@@ -1267,9 +1304,9 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="esd-block-text" align="left">
-                                                                <p><a target="_blank" href="tel://+5352458380">+53 5245 8380</a>
-                                                                    <a target="_blank" href="mailto:comercial@tiendaconceptos.com">comercial@tiendaconceptos.com</a></p>
-                                                                <p>© {{ 'now' | date('Y') }} Tienda Conceptos</p>
+                                                                <p><a style="color: #999999;" target="_blank" href="tel://+5352458380">+53 5245 8380</a>
+                                                                    <a style="color: #999999;" target="_blank" href="mailto:comercial@tiendaconceptos.com">comercial@tiendaconceptos.com</a></p>
+                                                                <p style="color: #999999;" >© {{ 'now' | date('Y') }} Conceptos</p>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -1290,6 +1327,12 @@
                                                                 <table class="es-table-not-adapt es-social" cellspacing="0" cellpadding="0">
                                                                     <tbody>
                                                                     <tr>
+                                                                        <td class="es-p10r" valign="top" align="center">
+                                                                            <a target="_blank" href="http://wa.me/5352458380?text=Estoy%20interesado%20en%20...">
+                                                                                <img title="whatsapp" src="https://stripo.email/static/assets/img/messenger-icons/circle-gray-bordered/whatsapp-circle-gray-bordered.png"
+                                                                                     alt="whatsapp" width="32">
+                                                                            </a>
+                                                                        </td>
                                                                         <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.facebook.com/TiendaConceptos/"><img title="Facebook" src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-gray-bordered/facebook-circle-gray-bordered.png" alt="Fb" width="32"></a></td>
                                                                         <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.instagram.com/TiendaConceptos/"><img title="Instagram" src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-gray-bordered/instagram-circle-gray-bordered.png" alt="Inst" width="32"></a></td>
                                                                     </tr>
@@ -1299,7 +1342,8 @@
                                                         </tr>
                                                         <tr>
                                                             <td align="left" class="esd-block-text">
-                                                                <p>Estas recibiendo este correo, por que visitaste nuestro sitio web y aceptaste que te enviaramos correos regularmente.</p>
+                                                                <p style="color: #999999;">Estás recibiendo este correo, porque visitó nuestro sitio web y
+                                                                    aceptasto que le enviaramos correos regularmente.</p>
                                                             </td>
                                                         </tr>
                                                         </tbody>
