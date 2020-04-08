@@ -29,6 +29,10 @@ class ComboProduct
    * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
    */
   private $product;
+  /**
+   * @ORM\Column(type="integer")
+   */
+  private $count;
 
   public function getId()
   {
@@ -57,5 +61,17 @@ class ComboProduct
   public function getProduct()
   {
     return $this->product;
+  }
+
+  public function setCount($count)
+  {
+      $this->count = $count;
+
+      return $this;
+  }
+
+  public function getCount()
+  {
+      return $this->count;
   }
 }

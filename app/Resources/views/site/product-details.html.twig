@@ -94,6 +94,9 @@
       <div class="d-flex col-12 col-lg-6 flex-column pl-0 pt-lg-3">
         <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5">
           <span class="conceptos-title-strong">{{product.name}}</span>
+          {% if product.comboProducts|length > 0 %}
+            <span class="conceptos-subtitle">Lo componen {{product.comboProducts|length}} productos</span>
+          {% endif %}
           <span class="conceptos-subtitle">{{product.item}}</span>
           <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">

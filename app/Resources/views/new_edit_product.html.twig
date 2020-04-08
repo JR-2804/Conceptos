@@ -321,18 +321,42 @@
                 </div>
             </div>
         </div>
+        <br><br>
         <div class="row">
-          <div class="col-12">
-              <div class="form-group">
-                  <label class="control-label">Combo de productos</label>
-                  <select class="form-control" id="combo-products" multiple>
-                      {% for product in products %}
-                          <option value="{{ product.id }}" data-price="{{product.price}}">{{ product.code }}</option>
-                      {% endfor %}
-                  </select>
-              </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label class="control-label">Producto</label>
+              <select class="form-control" id="combo-product">
+                {% for product in products %}
+                  <option value="{{ product.id }}" data-price="{{product.price}}" data-code="{{product.code}}">{{ product.code }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Cantidad</label>
+              <input type="number" class="form-control" id="combo-product-count">
+            </div>
+            <button class="btn btn-primary btn-add-combo-product" data-edit="false">Añadir</button>
           </div>
-      </div>
+          <div class="col-6">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover table-striped table-condensed table-combo-products">
+                <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th class="text-center">Cantidad</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td colspan="3" class="text-center">Sin productos añadidos</td>
+                </tr>
+                </tbody>
+              </table>
+          </div>
+        </div>
+        </div>
         <br><br>
         <div class="row">
             <div class="col-12">

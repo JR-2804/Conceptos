@@ -400,7 +400,12 @@ class ProductController extends Controller
         $dto->setFavoritesCategories(json_encode($favorites));
         $comboProducts = [];
         foreach ($product->getComboProducts() as $comboProduct) {
-            $comboProducts[] = $comboProduct->getProduct()->getId();
+            $comboProducts[] = [
+              "id" => $comboProduct->getProduct()->getId(),
+              "code" => $comboProduct->getProduct()->getCode(),
+              "count" => $comboProduct->getCount(),
+              "price" => $comboProduct->getProduct()->getPrice(),
+            ];
         }
         $dto->setComboProducts(json_encode($comboProducts));
         $color = $product->getColor();
@@ -736,15 +741,16 @@ class ProductController extends Controller
             }
             $product->getComboProducts()->clear();
             if ($comboProducts != null) {
-                foreach ($comboProducts as $comboProductId) {
-                  $productDB = $this->getDoctrine()->getRepository('AppBundle:Product')->find($comboProductId);
+                foreach ($comboProducts as $comboProduct) {
+                  $productDB = $this->getDoctrine()->getRepository('AppBundle:Product')->find($comboProduct["id"]);
                   if (null != $productDB) {
-                      $comboProduct = new ComboProduct();
-                      $comboProduct->setParentProduct($product);
-                      $comboProduct->setProduct($productDB);
-                      $this->getDoctrine()->getManager()->persist($comboProduct);
+                      $combo = new ComboProduct();
+                      $combo->setParentProduct($product);
+                      $combo->setProduct($productDB);
+                      $combo->setCount($comboProduct["count"]);
+                      $this->getDoctrine()->getManager()->persist($combo);
 
-                      $product->addComboProduct($comboProduct);
+                      $product->addComboProduct($combo);
                   }
                 }
             }
