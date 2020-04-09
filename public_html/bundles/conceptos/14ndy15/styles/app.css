@@ -21,8 +21,10 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     display: block !important; }
 
 .login_modal__container__remember {
+    display: -webkit-box;
     display: flex;
-    justify-content: space-between; }
+    -webkit-box-pack: justify;
+            justify-content: space-between; }
 
 .conceptos-header-image {
   height: auto;
@@ -40,9 +42,12 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 
 .search_bar form {
     width: 100%;
+    display: -webkit-box;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    -webkit-box-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+            align-items: center;
     flex-wrap: nowrap; }
 
 .search_bar form input[type='text'] {
@@ -61,7 +66,8 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
       position: absolute;
       z-index: 4;
       right: 1em;
-      transform: scale(0.75); }
+      -webkit-transform: scale(0.75);
+              transform: scale(0.75); }
 
 .search_bar form button[type='submit']:before {
         position: absolute;
@@ -72,7 +78,8 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
         height: 1.25em;
         border-radius: 50%;
         border: 2px #282827 solid;
-        transform: translateY(50%); }
+        -webkit-transform: translateY(50%);
+                transform: translateY(50%); }
 
 .search_bar form button[type='submit']:after {
         position: absolute;
@@ -80,8 +87,10 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
         width: 1.05em;
         height: 1px;
         border: 1px #282827 solid;
-        transform: rotate(46deg) translateX(-60%);
-        transform-origin: 0 50%;
+        -webkit-transform: rotate(46deg) translateX(-60%);
+                transform: rotate(46deg) translateX(-60%);
+        -webkit-transform-origin: 0 50%;
+                transform-origin: 0 50%;
         bottom: 25%; }
 
 /**
@@ -91,13 +100,18 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 
 .headroom {
   will-change: transform;
-  transition: transform 200ms linear; }
+  -webkit-transition: -webkit-transform 200ms linear;
+  transition: -webkit-transform 200ms linear;
+  transition: transform 200ms linear;
+  transition: transform 200ms linear, -webkit-transform 200ms linear; }
 
 .headroom--pinned {
-  transform: translateY(0%); }
+  -webkit-transform: translateY(0%);
+          transform: translateY(0%); }
 
 .headroom--unpinned {
-  transform: translateY(-100%); }
+  -webkit-transform: translateY(-100%);
+          transform: translateY(-100%); }
 
 .conceptos-category-icon {
   width: 1.5em;
@@ -105,19 +119,25 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 
 @-webkit-keyframes zoomIn {
   0% {
-    transform: scaleX(1); }
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1); }
   50% {
-    transform: scaleX(1.5); }
+    -webkit-transform: scaleX(1.5);
+            transform: scaleX(1.5); }
   100% {
-    transform: scaleX(1); } }
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1); } }
 
 @keyframes zoomIn {
   0% {
-    transform: scaleX(1); }
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1); }
   50% {
-    transform: scaleX(1.5); }
+    -webkit-transform: scaleX(1.5);
+            transform: scaleX(1.5); }
   100% {
-    transform: scaleX(1); } }
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1); } }
 
 #open-categories-menu {
   -webkit-animation: zoomIn 2.5s ease-in 10;
@@ -146,7 +166,8 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     width: 75%;
     top: 40%;
     left: 25%;
-    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
     height: 2px;
     background: #282827; }
 
@@ -169,7 +190,9 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     color: #282827;
     font-weight: 700;
     padding: .1em 2em;
-    transform: translate(-35%, 50%) rotate(-45deg);
+    -webkit-transform: translate(-35%, 50%) rotate(-45deg);
+            transform: translate(-35%, 50%) rotate(-45deg);
+    -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
     font-size: .8em; }
 
@@ -231,5 +254,6 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
   position: absolute;
   height: 48%;
   width: 100%;
+  background: -webkit-gradient(linear, left bottom, left top, from(transparent), to(#e5e5e5));
   background: linear-gradient(to top, transparent, #e5e5e5);
   top: 65vh; }

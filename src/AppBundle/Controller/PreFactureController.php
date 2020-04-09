@@ -54,17 +54,39 @@ class PreFactureController extends Controller
         $preFactureProducts = [];
       }
 
+      $newStates = [];
       foreach ($preFactureDB->getPreFactureProducts() as $preFactureProductDb) {
         foreach ($preFactureProducts as $preFactureProduct) {
           if ($preFactureProduct["id"] == $preFactureProductDb->getId()) {
+            if ($preFactureProductDb->getState() != $preFactureProduct["state"]) {
+              $newStates[] = [
+                "code" => $preFactureProductDb->getProduct()->getCode(),
+                "oldState" => $preFactureProductDb->getState(),
+                "newState" => $preFactureProduct["state"],
+              ];
+            }
+
             $preFactureProductDb->setState($preFactureProduct["state"]);
             $this->getDoctrine()->getManager()->persist($preFactureProductDb);
           }
         }
       }
       $preFactureDB->getPreFactureProducts()->clear();
-
       $this->getDoctrine()->getManager()->flush();
+
+      $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+      $username = $preFactureDB->getClient()->getFirstName()." ".$preFactureDB->getClient()->getLastName();
+      $emailBody = $this->renderView(':site:states-email.html.twig', [
+        'username' => $username,
+        'newStates' => $newStates,
+      ]);
+      $this->get('email_service')->send($config->getEmail(), $username, $preFactureDB->getClient()->getEmail(), 'Estados de productos actualizados', $emailBody);
+
+      return $this->redirectToRoute('blog_details', [
+        'id' => $id,
+        'title' => $post->getPath(),
+      ]);
 
       return $this->redirectToRoute('easyadmin', [
         'entity' => 'PreFacture',

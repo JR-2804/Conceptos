@@ -61,12 +61,17 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Evaluation", mappedBy="user")
      */
     private $evaluations;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ShopCartProduct", mappedBy="user")
+     */
+    private $shopCartProducts;
 
     public function __construct()
     {
         parent::__construct();
         $this->favorites = new \Doctrine\Common\Collections\ArrayCollection();
         $this->evaluations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->shopCartProducts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString()
@@ -202,5 +207,15 @@ class User extends BaseUser
     public function getEvaluations()
     {
         return $this->evaluations;
+    }
+
+    public function getProductsInCartCount()
+    {
+      $count = 0;
+      foreach ($this->shopCartProducts as $shopCartProduct) {
+        $count = $count + 1;
+      }
+
+      return $count;
     }
 }

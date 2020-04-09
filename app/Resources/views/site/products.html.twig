@@ -71,7 +71,7 @@
             <div class="d-flex flex-column p-2">
               <span class="conceptos-title-strong mb-2">FILTROS</span>
               <div class="d-flex flex-column conceptos-white-background p-2">
-                <span class="conceptos-title-strong">PRECIO</span>
+                <span class="conceptos-title">PRECIO</span>
                 <div class="d-flex justify-content-between">
                   <div class="d-flex align-items-center">
                     <label class="conceptos-subtitle m-0 mr-2" for="priceMin">MIN</label>
@@ -85,20 +85,19 @@
                   </div>
                 </div>
                 <div class="d-flex flex-column mt-2">
-                  <label class="conceptos-title-strong m-0 mr-2" for="color">COLOR</label>
+                  <label class="conceptos-title m-0 mr-2" for="color">COLOR</label>
                   <select name="color">
                     <option value="-1">Todos</option>
                     {% for color in colors %}
                       {% set selectedColor = app.request.query.get('color', -1) %}
-                      <option value="{{color.id}}"
-                              {% if selectedColor != -1 and selectedColor == color.id %}selected{% endif %}>
+                      <option value="{{color.id}}" {% if selectedColor != -1 and selectedColor == color.id %}selected{% endif %}>
                         {{color.name}}
                       </option>
                     {% endfor %}
                   </select>
                 </div>
                 <div class="d-flex flex-column mt-2">
-                  <label class="conceptos-title-strong m-0 mr-2" for="material">MATERIAL</label>
+                  <label class="conceptos-title m-0 mr-2" for="material">MATERIAL</label>
                   <select name="material">
                     <option value="-1">Todos</option>
                     {% for material in materials %}
@@ -166,7 +165,8 @@
           {% endif %}
         </div>
         <div class="d-flex" data-toggle="modal" data-target="#filterProductsModal">
-          <img class="conceptos-icon" src="{{ asset('bundles/conceptos/images/products/filter.png') }}">
+          <img class="conceptos-icon d-flex d-lg-none" src="{{ asset('bundles/conceptos/images/products/filter.png') }}">
+          <img class="conceptos-icon-big d-none d-lg-flex" src="{{ asset('bundles/conceptos/images/products/filter.png') }}">
         </div>
       </div>
       <div class="d-flex pl-lg-5 pr-lg-5">

@@ -36,17 +36,18 @@
   justify-content: space-between;
 
   & .ProductMarker {
-    flex: 0 0 50%;
+    flex: 0 0 45%;
+      height: 30vh;
 
     @media (min-width: 992px) {
       flex: 0 0 25%;
     }
-
   }
 
   & p img {
     position: relative;
-    height: 50vh !important;
     object-fit: cover;
+    width: 100% !important;
+    max-height: 60vh;
   }
 }

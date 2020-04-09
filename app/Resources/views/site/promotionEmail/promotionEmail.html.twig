@@ -14,9 +14,9 @@
     </style>
     <![endif]-->
     <!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]-->
-    <!--[if !mso]><!-- -->
+    <!--[if !mso]>
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
-    <!--<![endif]-->
+    <![endif]-->
 
     <style type="text/css">
         /*
@@ -128,6 +128,13 @@
             line-height: 120%;
             mso-line-height-rule: exactly;
             font-family: georgia, times, 'times new roman', serif;
+        }
+
+        h4{
+            Margin: 0;
+            line-height: 120%;
+            mso-line-height-rule: exactly;
+            font-family: 'times new roman', serif;
         }
 
         p,
@@ -338,7 +345,7 @@
         h2 {
             font-size: 24px;
             font-style: normal;
-            font-weight: normal;
+            font-weight: 700;
             color: #333333;
         }
 
@@ -378,7 +385,6 @@
         .es-wrapper {
             width: 100%;
             height: 100%;
-            background-image: ;
             background-repeat: repeat;
             background-position: center top;
         }
@@ -398,12 +404,11 @@
         }
 
         .es-content-body a {
-            color: #c04a81;
+            color: #7a7416;
         }
 
         .es-header {
             background-color: transparent;
-            background-image: ;
             background-repeat: repeat;
             background-position: center top;
         }
@@ -420,13 +425,12 @@
         }
 
         .es-header-body a {
-            color: #c04a81;
+            color: #7a7416;
             font-size: 14px;
         }
 
         .es-footer {
             background-color: transparent;
-            background-image: ;
             background-repeat: repeat;
             background-position: center top;
         }
@@ -512,7 +516,7 @@
             }
 
             h2 {
-                font-size: 24px !important;
+                font-size: 20px !important;
                 text-align: center;
                 line-height: 120% !important;
             }
@@ -714,7 +718,8 @@
                             <table class="es-header-body" style="background-color: #ffffff;" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
                                 <tbody>
                                 <tr>
-                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" style="background-repeat: no-repeat; background-color: #333333;" bgcolor="#333333" align="left">
+                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l"
+                                        style="padding: 20px;  background-repeat: no-repeat; background-color: #333333;" bgcolor="#333333" align="left">
                                         <table width="100%" cellspacing="0" cellpadding="0">
                                             <tbody>
                                             <tr>
@@ -725,7 +730,7 @@
                                                             <td class="esd-block-image" align="center" style="font-size:0">
                                                                 <a href="{{ absolute_url(path('site_home')) }}" target="_blank">
                                                                     <img src="{{ absolute_url(asset(home.data.logo.image.path)) }}"
-                                                                         alt
+                                                                         alt="{{ subject }}"
                                                                          style="display: block;"
                                                                          width="162">
                                                                 </a>
@@ -765,6 +770,579 @@
                                                                 <a target="_blank" href="https://viewstripo.email/">
                                                                     <img class="adapt-img esdev-stretch-width esdev-banner-rendered"
                                                                          src="{{ absolute_url('/uploads/images/email/'~primaryPicture) }}"
+                                                                         alt="{{ promotion.title }}"
+                                                                         title="{{ promotion.title }}"
+                                                                         width="600" style="display: block;">
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                {% if intros | length > 0 %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                    <tbody>
+                    <tr>
+                        <td class="esd-stripe" align="center">
+                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                <tbody>
+                                <tr>
+                                    <td style="padding-top: 20px" class="esd-structure es-p20t es-p20b es-p20r es-p20l"
+                                        esd-custom-block-id="9790" align="left">
+                                        {% for intro in intros %}
+                                            <!--[if mso]><table width="530" cellpadding="0"
+                                                                cellspacing="0"><tr><td width="194" valign="top"><![endif]-->
+                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left">
+                                                <tbody>
+                                                <tr>
+                                                    <td class="es-m-p20b esd-container-frame" esd-custom-block-id="9799"
+                                                        width="{{ 515 / (intros | length) }}" align="left" esdev-config="h7"
+                                                        {% if loop.index < 3 %}
+                                                            style="padding-right: 10px; {#border-right: 1px #7a7416 solid;#}"
+                                                        {% endif %}
+                                                    >
+                                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="esd-block-image" align="center" style="font-size:0">
+                                                                    <a target="_blank" href="{{ intro.link }}">
+                                                                        <img class="adapt-img product-image"
+                                                                             src="{{ absolute_url('/uploads/images/email/'~intro.picture) }}"
+                                                                             alt="{{ intro.title }}"
+                                                                             style="display: block;"
+                                                                             title="{{ intro.title }}"
+                                                                             width="{{ 515 / (intros | length) }}">
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="esd-block-text es-p5t es-p10b">
+                                                                    <a target="_blank" href="{{ intro.link }}" style="text-decoration: none;">
+                                                                        <h4 style="color: #333333;">
+                                                                            <span class="product-name">{{ intro.title }}</span>
+                                                                        </h4>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="esd-block-text es-p10b">
+                                                                    <a target="_blank" href="{{ intro.link }}" style="text-decoration: none;">
+                                                                        {{ intro.content | striptags('<p><b><strong><em>') | raw }}
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                    {% if loop.index < 3 %}
+                                                        <td class="es-hidden" width="10"></td>
+                                                    {% endif %}
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                {% endif %}
+
+                {% if offers | length > 0 %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                    <tbody>
+                    <tr>
+                        <td class="esd-stripe" align="center">
+                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                <tbody>
+                                <tr>
+                                    <td class="esd-structure es-p30t es-p10b es-p20r es-p20l" align="left">
+                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                            <tbody>
+                                            <tr>
+                                                <td class="esd-container-frame" width="560" valign="top" align="center">
+                                                    <table width="100%" cellspacing="0" cellpadding="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="esd-block-text" align="center">
+                                                                <h2>- {{ offersTitle | upper }} -<br></h2>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" esd-custom-block-id="9790" align="left">
+                                        {% for productAndPrice in offers %}
+                                            {% set product = productAndPrice.product %}
+                                            {% set price = productAndPrice.offerPrice %}
+                                            <!--[if mso]><table width="530" cellpadding="0"
+                                                                cellspacing="0"><tr><td width="194" valign="top"><![endif]-->
+                                            <table class="es-left" style="width: 50% !important;
+                                            {% if loop.index == offers | length and loop.index % 2 == 1 %}
+                                                margin: 0 25%;
+                                            {% endif %}
+                                            " cellspacing="0" cellpadding="0" align="left">
+                                                <tbody>
+                                                <tr>
+                                                    <td class="es-m-p20b esd-container-frame" esd-custom-block-id="9799"
+                                                        width="174" align="left" esdev-config="h7"
+                                                        {% if loop.index < 3 %}
+                                                            style="padding-right: 10px; {#border-right: 1px #666 solid;#}"
+                                                        {% endif %}>
+                                                        <table  width="100%" cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="esd-block-image es-p15t es-p20r es-p20l" align="center" style="font-size:0">
+                                                                    <a target="_blank" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}">
+                                                                        <img class="adapt-img product-image"
+                                                                             src="{{ absolute_url(vich_uploader_asset(product.mainImage, 'imageFile')) }}"
+                                                                             alt="{{ product.item }}"
+                                                                             style="display: block;"
+                                                                             title="{{ product.item }}"
+                                                                             width="134"></a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="esd-block-text es-p15t es-p15r es-p15l" align="left">
+                                                                    <a href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}" style="text-decoration: none;">
+                                                                        <h4 style="color: #333;">$<span style="font-weight: 700;" class="price">{{ price }}.00 </span></h4>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="esd-block-text es-p5t es-p10b es-p15r es-p15l" align="left">
+                                                                    <p style="color: #333333;">
+                                                                        <span class="product-name">{{ product.name }}</span>
+                                                                        <br>
+                                                                        {{ product.description | striptags | slice(0, 50)  }}...
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                {% endif %}
+
+                {% if products | length > 0 %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                        <tbody>
+                        <tr>
+                            <td class="esd-stripe" align="center">
+                                <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                    <tbody>
+                                    <tr>
+                                        <td class="esd-structure es-p30t es-p10b es-p20r es-p20l" align="left">
+                                            <table width="100%" cellspacing="0" cellpadding="0">
+                                                <tbody>
+                                                <tr>
+                                                    <td class="esd-container-frame" width="560" valign="top" align="center">
+                                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="esd-block-text" align="center">
+                                                                    <h2>- {{ productsTitle | upper }} -<br></h2>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" esd-custom-block-id="9790" align="left">
+                                            {% for product in products %}
+                                                <!--[if mso]><table width="530" cellpadding="0"
+                                                                    cellspacing="0"><tr><td width="194" valign="top"><![endif]-->
+                                                <table class="es-left" style="width: 50% !important;
+                                                {% if loop.index == products | length and loop.index % 2 == 1 %}
+                                                        margin: 0 25%;
+                                                {% endif %}
+                                                        " cellspacing="0" cellpadding="0" align="left">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="es-m-p20b esd-container-frame" esd-custom-block-id="9799"
+                                                            width="174" align="left" esdev-config="h7"
+                                                                {% if loop.index < 3 %}
+                                                            style="padding-right: 10px; {#border-right: 1px #666 solid;#}"
+                                                                {% endif %}>
+                                                            <table  width="100%" cellspacing="0" cellpadding="0">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td class="esd-block-image es-p15t es-p20r es-p20l" align="center" style="font-size:0">
+                                                                        <a target="_blank" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}">
+                                                                            <img class="adapt-img product-image"
+                                                                                 src="{{ absolute_url(vich_uploader_asset(product.mainImage, 'imageFile')) }}"
+                                                                                 alt="{{ product.item }}"
+                                                                                 style="display: block;"
+                                                                                 title="{{ product.item }}"
+                                                                                 width="134"></a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="esd-block-text es-p15t es-p15r es-p15l" align="left">
+                                                                        <a href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}" style="text-decoration: none;">
+                                                                            <h4 style="color: #333;">$<span style="font-weight: 700;" class="price">{{ product.price }}.00 </span></h4>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="esd-block-text es-p5t es-p10b es-p15r es-p15l" align="left">
+                                                                        <p style="color: #333333;">
+                                                                            <span class="product-name">{{ product.name }}</span>
+                                                                            <br>
+                                                                            {{ product.description | striptags | slice(0, 50)  }}...
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+
+                {% if promotion.title %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                        <tbody>
+                        <tr>
+                            <td class="esd-stripe" esd-custom-block-id="9784" align="center">
+                                <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                    <tbody>
+                                    <tr>
+                                        <td class="esd-structure es-p20t es-p20r es-p20l" align="left">
+                                            <table width="100%" cellspacing="0" cellpadding="0">
+                                                <tbody>
+                                                <tr>
+                                                    <td class="esd-container-frame" width="560" valign="top" align="center">
+                                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="esd-block-banner" style="position: relative;" align="center" esdev-config="h19">
+                                                                    <a target="_blank" href="{{ promotion.link }}">
+                                                                        <img class="adapt-img esdev-stretch-width esdev-banner-rendered"
+                                                                             src="{{ absolute_url('/uploads/images/email/'~promotion.picture) }}"
+                                                                             alt="{{ promotion.title }}"
+                                                                             title="{{ promotion.title }}"
+                                                                             width="560" style="display: block;">
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                    <tbody>
+                    <tr>
+                        <td class="esd-stripe" align="center">
+                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                <tbody>
+                                <tr>
+                                    <td class="esd-structure es-p20r es-p20l" esd-custom-block-id="9795" align="left" esdev-config="h4">
+                                        <!--[if mso]></td><td dir="ltr" width="0"></td><td dir="ltr" width="560" valign="top"><![endif]-->
+                                        <table class="es-left" cellspacing="0" cellpadding="0" align="left">
+                                            <tbody>
+                                            <tr>
+                                                <td class="esd-container-frame" width="560" align="left">
+                                                    <table style="background-color: #fafafa;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#fafafa">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="esd-block-text es-p5t es-p20r es-p20l" style="padding-top: 5px; padding-right: 20px; padding-left: 20px;" align="left">
+                                                                <a target="_blank" href="{{ promotion.link }}" style="text-decoration: none;">
+                                                                    <h3>
+                                                                        {{ promotion.title }}
+                                                                    </h3>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-c" align="left">
+                                                                <a target="_blank" href="{{ promotion.link }}" style="text-decoration: none;">
+                                                                    {{ promotion.content | striptags('<p><b><i>') | raw }}
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--[if mso]></td></tr></table><![endif]-->
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                {% endif %}
+
+                {% if blogs | length > 0 %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                    <tbody>
+                    <tr>
+                        <td class="esd-stripe" align="center">
+                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                <tbody>
+                                <tr>
+                                    <td class="esd-structure es-p30t es-p10b es-p20r es-p20l" style="padding-top: 30px; padding-bottom: 10px; padding-right: 20px; padding-left: 20px;" align="left">
+                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                            <tbody>
+                                            <tr>
+                                                <td class="esd-container-frame" width="560" valign="top" align="center">
+                                                    <table width="100%" cellspacing="0" cellpadding="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="esd-block-text" align="center">
+                                                                <h2>- {{ blogsTitle | upper }} -<br></h2>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="esd-structure es-p20t es-p20r es-p20l"
+                                        style="padding-top: 20px; padding-right: 20px; padding-left: 20px;" esd-custom-block-id="9793" align="{% if blogs | length > 1 %} left {% endif %}">
+                                        <!--[if mso]><table width="560" cellpadding="0"
+                                                            cellspacing="0"><tr><td width="270" valign="top"><![endif]-->
+                                        {% for blog in blogs %}
+                                        <table class="{% if blogs | length == 1 %} {% else %} {% if loop.index0 == 0 %} es-left {% else %} es-right {% endif %} {% endif %}"
+                                               cellspacing="0" align="{% if blogs | length == 1 %}center{% else %}{% if loop.index0 == 0 %}left{% else %}right{% endif %}{% endif %}">
+                                            <tbody>
+                                            <tr>
+                                                <td class="es-m-p0r es-m-p20b esd-container-frame"
+                                                    width="{{ 515 / (blogs | length) }}" valign="top" align="center" esdev-config="h13">
+                                                    <table style="background-color: #fafafa;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#fafafa">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="esd-block-image" align="center" style="font-size:0">
+                                                                <a target="_blank" href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}">
+                                                                    <img class="adapt-img"
+                                                                         src="{{ absolute_url(vich_uploader_asset(blog, 'imageFile')) }}"
+                                                                         alt="Make it special"
+                                                                         style="display: block;"
+                                                                         title="Make it special"
+                                                                         width="{{ 515 / (blogs | length) }}">
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+{#                                                            <td class="esd-block-text es-p20t es-p20r es-p20l es-m-txt-c" style="padding-top: 20px; padding-right: 20px; padding-left: 20px;" align="left">#}
+{#                                                                <p style="color: #999999; font-size: 12px;"><strong><span class="product-category"> {% if blog.tags | length > 0 %}#}
+{#                                                                                                                            {% set tag = blog.tags | first  %}#}
+{#                                                                                                                            {{ tag.value | upper }}#}
+{#                                                                                                                        {% else %}#}
+{#                                                                                                                            &nbsp;#}
+{#                                                                                                                        {% endif %} </span></strong></p>#}
+{#                                                            </td>#}
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="esd-block-text es-p5t es-p20r es-p20l" style="padding-top: 5px; padding-right: 20px; padding-left: 20px;" align="left">
+                                                                <a href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" style="" target="_blank">
+                                                                    <h3>{{ blog.title }}</h3>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-c" align="left">
+                                                                <p class="product-description">
+                                                                    {{ blog.summary  | striptags | slice(0, 150) }}...
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="right">
+                                                                <p><a style="color: #7a7416;" href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" target="_blank">ver más</a></p>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--[if mso]></td><td width="20"></td><td width="270" valign="top"><![endif]-->
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                {% endif %}
+
+                {% if services | length > 0 %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                    <tbody>
+                    <tr>
+                        <td class="esd-stripe" align="center">
+                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                <tbody>
+                                <tr>
+                                    <td class="esd-structure es-p30t es-p10b es-p20r es-p20l" align="left">
+                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                            <tbody>
+                                            <tr>
+                                                <td class="esd-container-frame" width="560" valign="top" align="center">
+                                                    <table width="100%" cellspacing="0" cellpadding="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="esd-block-text" align="center">
+                                                                <h2>- {{ servicesTitle | upper }} -<br></h2>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="esd-structure es-p20t es-p20r es-p20l" esd-custom-block-id="9793" align="left">
+                                        <!--[if mso]><table width="560" cellpadding="0"
+                                                            cellspacing="0"><tr><td width="270" valign="top"><![endif]-->
+                                        {% for service in services %}
+                                            <table class="{% if services | length == 1 %} {% else %} {% if loop.index0 == 0 %}es-left{% else %}es-right{% endif %} {% endif %}" cellspacing="0" cellpadding="0"
+                                                   align="{% if services | length == 1 %}center{% else %}{% if loop.index0 == 0 %}left{% else %}right{% endif %}{% endif %}">
+                                                <tbody>
+                                                <tr>
+                                                    <td class="es-m-p0r es-m-p20b esd-container-frame"
+                                                        width="{{ 515 / (services | length) }}" valign="top" align="center" esdev-config="h13">
+                                                        <table style="background-color: #fafafa;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#fafafa">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="esd-block-image" align="center" style="font-size:0">
+                                                                    <a target="_blank" href="{{ service.link }}">
+                                                                        <img class="adapt-img"
+                                                                             src="{{ absolute_url('/uploads/images/email/'~service.picture) }}"
+                                                                             alt="{{ service.title }}"
+                                                                             style="display: block;"
+                                                                             title="{{ service.title }}"
+                                                                             width="{{ 515 / (services | length) }}">
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="esd-block-text es-p5t es-p20r es-p20l" align="left">
+                                                                    <a href="{{ service.link }}" target="_blank">
+                                                                        <h3>{{ service.title }}</h3>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-c" align="left">
+                                                                    {{ service.content | raw }}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="right">
+                                                                    <p><a style="color: #7a7416;" href="{{ service.link }}" target="_blank">ver más</a></p>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <!--[if mso]></td><td width="20"></td><td width="270" valign="top"><![endif]-->
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                {% endif %}
+
+                {% if footerPicture %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                    <tbody>
+                    <tr>
+                        <td class="esd-stripe" esd-custom-block-id="9784" align="center">
+                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                <tbody>
+                                <tr>
+                                    <td class="esd-structure es-p20t" align="left">
+                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                            <tbody>
+                                            <tr>
+                                                <td class="esd-container-frame" width="600" valign="top" align="center">
+                                                    <table width="100%" cellspacing="0" cellpadding="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="esd-block-banner" style="position: relative;" align="center" esdev-config="h19">
+                                                                <a target="_blank" href="{{ footerLink }}">
+                                                                    <img class="adapt-img esdev-stretch-width esdev-banner-rendered"
+                                                                         src="{{ absolute_url('/uploads/images/email/'~footerPicture) }}"
                                                                          alt="Send some sunshine with a beautiful bouquet or a plant gift from our new summer collection."
                                                                          title="Send some sunshine with a beautiful bouquet or a plant gift from our new summer collection."
                                                                          width="600" style="display: block;">
@@ -785,636 +1363,17 @@
                     </tr>
                     </tbody>
                 </table>
-
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
-                    <tbody>
-                    <tr></tr>
-                    <tr>
-                        <td class="esd-stripe" esd-custom-block-id="9678" align="center">
-                            <table class="es-content-body" style="background-color: #fccddf;" width="600" cellspacing="0" cellpadding="0" bgcolor="#fccddf" align="center">
-                                <tbody>
-                                <tr>
-                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" esd-custom-block-id="9785" align="left">
-                                        <!--[if mso]><table width="560" cellpadding="0"
-                                                            cellspacing="0"><tr><td width="72" valign="top"><![endif]-->
-                                        <table class="es-left" cellspacing="0" cellpadding="0" align="left">
-                                            <tbody>
-                                            <tr>
-                                                <td class="es-m-p0r es-m-p20b esd-container-frame" width="62" align="center">
-                                                    <table width="100%" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-image es-p5t" align="center" style="font-size:0"><a target="_blank"><img src="https://tlr.stripocdn.email/content/guids/CABINET_7bc1ef7fc538809882d0ba8c4de5ee10/images/11711525951468549.png" alt style="display: block;" height="58"></a></td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                                <td class="es-hidden" width="10"></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <!--[if mso]></td><td width="213" valign="top"><![endif]-->
-                                        <table class="es-left" cellspacing="0" cellpadding="0" align="left">
-                                            <tbody>
-                                            <tr>
-                                                <td class="es-m-p20b esd-container-frame" width="203" align="center">
-                                                    <table width="100%" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-text" align="left">
-                                                                <h3 style="color: #333333;">Ahorre hasta un 20%<br></h3>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="esd-block-text es-p5t es-m-txt-c" align="left">
-                                                                <p style="color: #af6f87;"><a href="{{ absolute_url(path('membership')) }}">Hazte miembro</a> y tendras accesso a multiples
-                                                                                opciones y nuestro mayor descuento.</p>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                                <td class="es-hidden" width="10"></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <!--[if mso]></td><td width="62" valign="top"><![endif]-->
-                                        <table class="es-left" cellspacing="0" cellpadding="0" align="left">
-                                            <tbody>
-                                            <tr>
-                                                <td class="es-m-p20b esd-container-frame" width="62" align="center">
-                                                    <table width="100%" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-image es-p5t" align="center" style="font-size:0"><a target="_blank"><img src="https://tlr.stripocdn.email/content/guids/CABINET_7bc1ef7fc538809882d0ba8c4de5ee10/images/31501525951474993.png" alt style="display: block;" height="58"></a></td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <!--[if mso]></td><td width="10"></td><td width="203" valign="top"><![endif]-->
-                                        <table class="es-right" cellspacing="0" cellpadding="0" align="right">
-                                            <tbody>
-                                            <tr>
-                                                <td class="esd-container-frame" width="203" align="center">
-                                                    <table width="100%" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-text" align="left">
-                                                                <h3 style="color: #333333;">Tarjetas de Regalo</h3>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="esd-block-text es-p5t es-m-txt-c" align="left">
-                                                                <p style="color: #af6f87;">From delectable hampers to elegant alcohol gifts.<br></p>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <!--[if mso]></td></tr></table><![endif]-->
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
-                    <tbody>
-                    <tr>
-                        <td class="esd-stripe" align="center">
-                            <table class="es-content-body" style="background-color: #ffffff;" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
-                                <tbody>
-                                <tr>
-                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" style="background-repeat: no-repeat;" esd-custom-block-id="9786" align="left">
-                                        <table width="100%" cellspacing="0" cellpadding="0">
-                                            <tbody>
-                                            <tr>
-                                                <td class="esd-container-frame" width="560" valign="top" align="center">
-                                                    <table width="100%" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-text es-m-txt-c" align="center">
-                                                                <h2>- {{ primaryContentTitle }} -</h2>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="esd-block-text es-p10t es-p15b es-m-txt-c" align="center" style="color: #666666;">
-                                                                {{ primaryContent | raw }}
-
-                                                            </td>
-                                                        </tr>
-{#                                                        <tr>#}
-{#                                                            <td class="esd-block-button" align="center"><span class="es-button-border" style="background: #ff80ab none repeat scroll 0% 0%;"><a href="https://viewstripo.email/" class="es-button" target="_blank" style="border-width: 10px 20px; background: #ff80ab none repeat scroll 0% 0%; border-color: #ff80ab;">Read more</a></span></td>#}
-{#                                                        </tr>#}
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
-                    <tbody>
-                    <tr>
-                        <td class="esd-stripe" align="center">
-                            <table class="es-content-body" style="background-color: #fff8f8;" width="600" cellspacing="0" cellpadding="0" bgcolor="#fff8f8" align="center">
-                                <tbody>
-                                <tr>
-                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" esd-custom-block-id="9787" align="left">
-                                        <!--[if mso]><table width="560" cellpadding="0"
-                                                            cellspacing="0"><tr><td width="194" valign="top"><![endif]-->
-                                        <table class="es-left" cellspacing="0" cellpadding="0" align="left">
-                                            <tbody>
-                                            <tr>
-                                                <td class="es-m-p0r es-m-p20b esd-container-frame" width="174" align="center">
-                                                    <table width="100%" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-banner" style="position: relative;" align="center" esdev-config="h20">
-                                                                <a target="_blank" href="https://viewstripo.email/">
-                                                                    <img class="adapt-img esdev-stretch-width esdev-banner-rendered"
-                                                                         src="{{ absolute_url('/uploads/images/email/'~secundaryPicture1) }}"
-                                                                         alt="Flowers"
-                                                                         title="Flowers"
-                                                                         width="174"
-                                                                         style="display: block;">
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                                <td class="es-hidden" width="20"></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <!--[if mso]></td><td width="173" valign="top"><![endif]-->
-                                        <table class="es-left" cellspacing="0" cellpadding="0" align="left">
-                                            <tbody>
-                                            <tr>
-                                                <td class="es-m-p20b esd-container-frame" width="173" align="center">
-                                                    <table width="100%" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-banner" style="position: relative;" align="center" esdev-config="h21">
-                                                                <a target="_blank" href="https://viewstripo.email/">
-                                                                    <img class="adapt-img esdev-stretch-width esdev-banner-rendered"
-                                                                         src="{{ absolute_url('/uploads/images/email/'~secundaryPicture2) }}"
-                                                                         alt="Plants" title="Plants"
-                                                                         width="173"
-                                                                         style="display: block;">
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <!--[if mso]></td><td width="20"></td><td width="173" valign="top"><![endif]-->
-                                        <table class="es-right" cellspacing="0" cellpadding="0" align="right">
-                                            <tbody>
-                                            <tr>
-                                                <td class="esd-container-frame" width="173" align="center">
-                                                    <table width="100%" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-banner" style="position: relative;" align="center" esdev-config="h22">
-                                                                <a target="_blank" href="https://viewstripo.email/">
-                                                                    <img class="adapt-img esdev-stretch-width esdev-banner-rendered"
-                                                                         src="{{ absolute_url('/uploads/images/email/'~secundaryPicture3) }}"
-                                                                         alt="Occasions"
-                                                                         title="Occasions"
-                                                                         style="display: block;"
-                                                                         width="173">
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <!--[if mso]></td></tr></table><![endif]-->
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
-                    <tbody>
-                    <tr>
-                        <td class="esd-stripe" align="center">
-                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
-                                <tbody>
-                                <tr>
-                                    <td class="esd-structure es-p20t es-p20r es-p20l" esd-custom-block-id="9794" align="left" esdev-config="h3">
-                                        <!--[if mso]><table width="560" cellpadding="0" cellspacing="0"><tr><td width="180" valign="top"><![endif]-->
-
-                                        <!--[if mso]></td><td width="0"></td><td width="560" valign="top"><![endif]-->
-                                        <table cellspacing="0" cellpadding="0" align="right">
-                                            <tbody>
-                                            <tr>
-                                                <td class="es-m-p20b esd-container-frame" width="560" align="left">
-                                                    <table style="background-color: #fafafa;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#fafafa">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-text es-p20t es-p20r es-p20l es-m-txt-c" align="left">
-                                                                <p style="color: #008734; font-size: 12px;"><strong><span class="product-category">NEW</span></strong></p>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="esd-block-text es-p5t es-p20r es-p20l" align="left">
-                                                                <h3>{{ secundaryContentTitle }}</h3>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-c" align="left">
-                                                                {{ secundaryContent | raw }}
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <!--[if mso]></td></tr></table><![endif]-->
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
-                    <tbody>
-                    <tr>
-                        <td class="esd-stripe" esd-custom-block-id="9784" align="center">
-                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
-                                <tbody>
-                                <tr>
-                                    <td class="esd-structure es-p20t es-p20r es-p20l" align="left">
-                                        <table width="100%" cellspacing="0" cellpadding="0">
-                                            <tbody>
-                                            <tr>
-                                                <td class="esd-container-frame" width="560" valign="top" align="center">
-                                                    <table width="100%" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-banner" style="position: relative;" align="center" esdev-config="h19">
-                                                                <a target="_blank" href="https://viewstripo.email/">
-                                                                    <img class="adapt-img esdev-stretch-width esdev-banner-rendered"
-                                                                         src="{{ absolute_url('/uploads/images/email/'~tercearyPicture) }}"
-                                                                         alt="Send some sunshine with a beautiful bouquet or a plant gift from our new summer collection."
-                                                                         title="Send some sunshine with a beautiful bouquet or a plant gift from our new summer collection."
-                                                                         width="560" style="display: block;">
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
-                    <tbody>
-                    <tr>
-                        <td class="esd-stripe" align="center">
-                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
-                                <tbody>
-                                <tr>
-                                    <td class="esd-structure es-p20t es-p20r es-p20l" esd-custom-block-id="9795" align="left" esdev-config="h4">
-                                        <!--[if mso]></td><td dir="ltr" width="0"></td><td dir="ltr" width="560" valign="top"><![endif]-->
-                                        <table class="es-left" cellspacing="0" cellpadding="0" align="left">
-                                            <tbody>
-                                            <tr>
-                                                <td class="esd-container-frame" width="560" align="left">
-                                                    <table style="background-color: #fafafa;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#fafafa">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-text es-p20t es-p20r es-p20l es-m-txt-c" align="left">
-                                                                <p style="color: #999999; font-size: 12px;"><strong><span class="product-category">WEDDING</span></strong></p>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="esd-block-text es-p5t es-p20r es-p20l" align="left">
-                                                                <h3>{{ tercearyContentTitle }}</h3>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-c" align="left">
-                                                                {{ tercearyContent | raw }}
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <!--[if mso]></td></tr></table><![endif]-->
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
-                    <tbody>
-                    <tr>
-                        <td class="esd-stripe" align="center">
-                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
-                                <tbody>
-                                <tr>
-                                    <td class="esd-structure es-p30t es-p10b es-p20r es-p20l" align="left">
-                                        <table width="100%" cellspacing="0" cellpadding="0">
-                                            <tbody>
-                                            <tr>
-                                                <td class="esd-container-frame" width="560" valign="top" align="center">
-                                                    <table width="100%" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-text" align="center">
-                                                                <h3>- ULTIMOS ARTICULOS -<br></h3>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="esd-structure es-p20t es-p20r es-p20l" esd-custom-block-id="9793" align="left">
-                                        <!--[if mso]><table width="560" cellpadding="0"
-                                                            cellspacing="0"><tr><td width="270" valign="top"><![endif]-->
-                                        {% for blog in blogs %}
-                                        <table class="es-left" cellspacing="0" cellpadding="0" align="left">
-                                            <tbody>
-                                            <tr>
-                                                <td class="es-m-p0r es-m-p20b esd-container-frame" width="270" valign="top" align="center" esdev-config="h13">
-                                                    <table style="background-color: #fafafa;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#fafafa">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-image" align="center" style="font-size:0">
-                                                                <a target="_blank" href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}">
-                                                                    <img class="adapt-img"
-                                                                         src="{{ absolute_url(vich_uploader_asset(blog, 'imageFile')) }}"
-                                                                         alt="Make it special"
-                                                                         style="display: block;"
-                                                                         title="Make it special"
-                                                                         width="270">
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="esd-block-text es-p20t es-p20r es-p20l es-m-txt-c" align="left">
-                                                                <p style="color: #999999; font-size: 12px;"><strong><span class="product-category">WEDDING</span></strong></p>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="esd-block-text es-p5t es-p20r es-p20l" align="left">
-                                                                <h3>{{ blog.title }}</h3>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-c" align="left">
-                                                                <p class="product-description">
-                                                                    {{ blog.summary  | slice(0, 150) }}...
-                                                                </p>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="left">
-                                                                <p><a href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" target="_blank">Leer más +</a></p>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <!--[if mso]></td><td width="20"></td><td width="270" valign="top"><![endif]-->
-                                        {% endfor %}
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
-                    <tbody>
-                    <tr>
-                        <td class="esd-stripe" align="center">
-                            <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
-                                <tbody>
-                                <tr>
-                                    <td class="esd-structure es-p30t es-p10b es-p20r es-p20l" align="left">
-                                        <table width="100%" cellspacing="0" cellpadding="0">
-                                            <tbody>
-                                            <tr>
-                                                <td class="esd-container-frame" width="560" valign="top" align="center">
-                                                    <table width="100%" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-text" align="center">
-                                                                <h3>- PRODUCTOS POPULARES -<br></h3>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" esd-custom-block-id="9790" align="left">
-                                        {% for product in products %}
-                                            <!--[if mso]><table width="530" cellpadding="0"
-                                                                cellspacing="0"><tr><td width="194" valign="top"><![endif]-->
-                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left">
-                                                <tbody>
-                                                <tr>
-                                                    <td class="es-m-p20b esd-container-frame" esd-custom-block-id="9799" width="174" align="left" esdev-config="h7">
-                                                        <table style="background-color: #fafafa;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#fafafa">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td class="esd-block-image es-p15t es-p20r es-p20l" align="center" style="font-size:0">
-                                                                    <a target="_blank" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}">
-                                                                        <img class="adapt-img product-image"
-                                                                             src="{{ absolute_url(vich_uploader_asset(product.mainImage, 'imageFile')) }}"
-                                                                             alt="Scented Sweet Peas & Stocks Jug"
-                                                                             style="display: block;"
-                                                                             title="Scented Sweet Peas & Stocks Jug"
-                                                                             width="134"></a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="esd-block-text es-p15t es-p15r es-p15l" align="center">
-                                                                    <h3 style="color: #c04a81;">$<span class="price">{{ product.price }}.00 </span></h3>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="esd-block-text es-p5t es-p10b es-p15r es-p15l" align="center">
-                                                                    <p style="color: #333333;"><span class="product-name">{{ product.item }}</span></p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="esd-block-image es-p20b" align="center" style="font-size:0">
-                                                                    <a target="_blank" href="https://viewstripo.email/">
-                                                                        <img src="https://tlr.stripocdn.email/content/guids/CABINET_7bc1ef7fc538809882d0ba8c4de5ee10/images/93681525949667456.png" alt="5 star" style="display: block;" title="5 star" width="81"></a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="esd-block-button es-p20b es-p15r es-p15l" align="center">
-                                                                    <span class="es-button-border">
-                                                                        <a href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}" class="es-button" target="_blank" style="border-width: 5px 25px;">
-                                                                            Ver más
-                                                                        </a>
-                                                                    </span>
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                    <td class="es-hidden" width="10"></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        {% endfor %}
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <table class="es-content" cellspacing="0" cellpadding="0" align="center">
-                    <tbody>
-                    <tr>
-                        <td class="esd-stripe" esd-custom-block-id="9797" align="center">
-                            <table class="es-content-body" style="background-color: #ffffff;" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
-                                <tbody>
-                                <tr>
-                                    <td class="esd-structure es-p30t es-p30b es-p20r es-p20l" align="left">
-                                        <table width="100%" cellspacing="0" cellpadding="0">
-                                            <tbody>
-                                            <tr>
-                                                <td class="esd-container-frame" width="560" valign="top" align="center">
-                                                    <table width="100%" cellspacing="0" cellpadding="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-text" align="center">
-                                                                <h3>- GALERIA -<br></h3>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="esd-structure es-p20b esdev-adapt-off" align="left">
-                                        <table class="esdev-mso-table" width="600" cellspacing="0" cellpadding="0">
-                                            <tbody>
-                                            <tr>
-                                                {% for productGallery in productsGallery %}
-                                                <td class="esdev-mso-td" valign="top">
-                                                    <table class="es-left" cellspacing="0" cellpadding="0" align="left">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="es-m-p0r esd-container-frame" width="150" align="center">
-                                                                <table width="100%" cellspacing="0" cellpadding="0">
-                                                                    <tbody>
-                                                                    <tr>
-                                                                        <td class="esd-block-image" align="center" style="font-size:0">
-                                                                            <a target="_blank" href="{{ absolute_url(path('product_details', {id: productGallery.id, name: productGallery.name})) }}">
-                                                                                <img class="adapt-img"
-                                                                                     src="{{ absolute_url(vich_uploader_asset(productGallery.mainImage, 'imageFile')) }}"
-                                                                                     alt
-                                                                                     style="display: block;"
-                                                                                     width="150">
-                                                                            </a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                             {% endfor %}
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                {% endif %}
 
                 <table class="es-footer" cellspacing="0" cellpadding="0" align="center">
                     <tbody>
                     <tr>
                         <td class="esd-stripe" esd-custom-block-id="9796" align="center">
-                            <table class="es-footer-body" style="border-top:1px solid #ff80ab; background-color: #333333;" bgcolor="#333333" width="600" cellspacing="0" cellpadding="0" align="center">
+                            <table class="es-footer-body" style="background-color: #333333;" bgcolor="#333333" width="600" cellspacing="0" cellpadding="0" align="center">
                                 <tbody>
                                 <tr>
-                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" align="left">
+                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" align="left"
+                                    style="padding: 20px;">
                                         <!--[if mso]><table width="560" cellpadding="0"
                                                             cellspacing="0"><tr><td width="180" valign="top"><![endif]-->
                                         <table class="es-left" cellspacing="0" cellpadding="0" align="left">
@@ -1437,8 +1396,9 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="esd-block-text" align="left">
-                                                                <p><a target="_blank" href="tel:123456789">123456789</a><a target="_blank" href="mailto:your@mail.com">your@mail.com</a></p>
-                                                                <p>© 2018 Flowers</p>
+                                                                <p><a style="color: #999999;" target="_blank" href="tel://+5352458380">+53 5245 8380</a>
+                                                                    <a style="color: #999999;" target="_blank" href="mailto:comercial@tiendaconceptos.com">comercial@tiendaconceptos.com</a></p>
+                                                                <p style="color: #999999;" >© {{ 'now' | date('Y') }} Conceptos</p>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -1455,13 +1415,18 @@
                                                     <table width="100%" cellspacing="0" cellpadding="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td class="esd-block-social es-p15b" align="left" style="font-size:0">
+                                                            <td class="esd-block-social es-p15b" align="right" style="font-size:0">
                                                                 <table class="es-table-not-adapt es-social" cellspacing="0" cellpadding="0">
                                                                     <tbody>
                                                                     <tr>
+                                                                        <td class="es-p10r" valign="top" align="center">
+                                                                            <a target="_blank" href="http://wa.me/5352458380?text=Estoy%20interesado%20en%20...">
+                                                                                <img title="whatsapp" src="https://stripo.email/static/assets/img/messenger-icons/circle-gray-bordered/whatsapp-circle-gray-bordered.png"
+                                                                                     alt="whatsapp" width="32">
+                                                                            </a>
+                                                                        </td>
                                                                         <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.facebook.com/TiendaConceptos/"><img title="Facebook" src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-gray-bordered/facebook-circle-gray-bordered.png" alt="Fb" width="32"></a></td>
-                                                                        <td class="es-p10r" valign="top" align="center"><a target="_blank" href><img title="Instagram" src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-gray-bordered/instagram-circle-gray-bordered.png" alt="Inst" width="32"></a></td>
-                                                                        <td class="es-p10r" valign="top" align="center"><a target="_blank" href><img title="Youtube" src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-gray-bordered/youtube-circle-gray-bordered.png" alt="Yt" width="32"></a></td>
+                                                                        <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.instagram.com/TiendaConceptos/"><img title="Instagram" src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-gray-bordered/instagram-circle-gray-bordered.png" alt="Inst" width="32"></a></td>
                                                                     </tr>
                                                                     </tbody>
                                                                 </table>
@@ -1469,7 +1434,8 @@
                                                         </tr>
                                                         <tr>
                                                             <td align="left" class="esd-block-text">
-                                                                <p>You are receiving this email because you have visited our site or asked us about regular newsletter. You can <a class="unsubscribe" target="_blank" href>unsubscribe here</a> or <a target="_blank" href="https://viewstripo.email/">update your subscription preferences</a>.</p>
+                                                                <p style="color: #999999;">Estás recibiendo este correo, porque visitó nuestro sitio web y
+                                                                    acepto que le enviáramos correos regularmente.</p>
                                                             </td>
                                                         </tr>
                                                         </tbody>

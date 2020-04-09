@@ -218,6 +218,11 @@ class Product
     private $evaluations;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ComboProduct", mappedBy="parentProduct")
+     */
+    private $comboProducts;
+
+    /**
      * Product constructor.
      */
     public function __construct()
@@ -231,6 +236,7 @@ class Product
         $this->favorite = false;
         $this->highlightImages = new ArrayCollection();
         $this->evaluations = new ArrayCollection();
+        $this->comboProducts = new ArrayCollection();
     }
 
     public function __toString()
@@ -836,5 +842,75 @@ class Product
     public function getEvaluations()
     {
         return $this->evaluations;
+    }
+
+    public function addComboProduct(ComboProduct $comboProduct)
+    {
+        $this->comboProducts[] = $comboProduct;
+
+        return $this;
+    }
+
+    public function removeComboProduct(ComboProduct $comboProduct)
+    {
+        $this->comboProducts->removeElement($comboProduct);
+    }
+
+    public function getComboProducts()
+    {
+        return $this->comboProducts;
+    }
+
+    public function getLabels()
+    {
+      $labels = "";
+
+      if ($this->isOversize) {
+        $labels = $labels."Bulto independiente-";
+      }
+      if ($this->isDesk) {
+        $labels = $labels."Buró-";
+      }
+      if ($this->isMattress) {
+        $labels = $labels."Colchón-";
+      }
+      if ($this->isComoda) {
+        $labels = $labels."Cómoda o Gavetero-";
+      }
+      if ($this->isAriplaneMattress) {
+        $labels = $labels."Colchón por avión-";
+      }
+      if ($this->isShelf) {
+        $labels = $labels."Estante-";
+      }
+      if ($this->isFragile) {
+        $labels = $labels."Frágil-";
+      }
+      if ($this->isFaucet) {
+        $labels = $labels."Grifo-";
+      }
+      if ($this->isGrill) {
+        $labels = $labels."Grill-";
+      }
+      if ($this->isTableware) {
+        $labels = $labels."Juego de vajilla-";
+      }
+      if ($this->isLamp) {
+        $labels = $labels."Lámpara-";
+      }
+      if ($this->isBookcase) {
+        $labels = $labels."Librero-";
+      }
+      if ($this->isFurniture) {
+        $labels = $labels."Mobiliario-";
+      }
+      if ($this->isAriplaneForniture) {
+        $labels = $labels."Mobiliario por avión-";
+      }
+      if ($this->isRepisa) {
+        $labels = $labels."Repisa-";
+      }
+
+      return $labels;
     }
 }

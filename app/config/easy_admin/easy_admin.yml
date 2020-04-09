@@ -25,14 +25,15 @@ easy_admin:
                     - {property: 'code', label: 'Código'}
                     - {property: 'price', label: 'Precio'}
                     - {property: 'categoryText', label: 'Categoría'}
-                    - {property: 'parentCategoryText', label: 'Categoría Padre'}
                     - {property: 'popular', label: 'Popular', type: 'toggle'}
                     - {property: 'recent', label: 'Novedades', type: 'toggle'}
                     - {property: 'inStore', label: 'En almacén', type: 'toggle'}
+                    - {property: 'storeCount', label: 'Cantidad en almacén'}
                     - {property: 'mainImage', label: 'Imágen Principal', type: 'image', base_path: '/uploads'}
-                    - {property: 'color', label: 'Color'}
                     - {property: 'material', label: 'Material'}
-                    - {property: 'images', label: 'Otras imágenes'}
+                    - {property: 'weight', label: 'Peso'}
+                    - {property: 'ikeaPrice', label: 'Precio Ikea'}
+                    - {property: 'labels', label: 'Etiquetas Asociadas'}
         Evaluation:
             class: AppBundle\Entity\Evaluation
             label: Evaluaciones
@@ -385,7 +386,6 @@ easy_admin:
                 title: 'Correos de promoción'
                 fields:
                     - id
-                    - {property: 'title', label: 'Nombre'}
                     - {property: 'subject', label: 'Asunto'}
                     - {property: 'emails', label: 'Correos'}
                     - {property: 'primaryPicture', label: 'Imágen Principal', type: 'image', base_path: '%app.path.email.images%'}
@@ -393,22 +393,70 @@ easy_admin:
                     - {name: 'preview_promotion_email', type: 'route'}
                     - {name: 'send_promotion_email', type: 'route'}
             form:
-                title: 'Nuevo Correo'
+                title: 'Nuevo correo de promocion'
                 fields:
-                    - {property: 'title', label: 'Nombre interno del correo'}
+                    - { type: 'group', label: 'Seccion Informacion', icon: 'cogs', columns: 12 }
+
                     - {property: 'subject', label: 'Asunto'}
-                    - {property: 'emails', label: 'destinatarios (separados por ;)'}
+                    - {property: 'emails', label: 'Destinatarios (separados por ;)'}
+
+                    - { type: 'group', label: 'Imagen Principal', icon: 'cogs', columns: 12 }
                     - {property: 'primaryPictureFile', type: 'file', label: 'Imágen principal'}
-                    - {property: 'primaryContentTitle', label: 'Titulo primera parte'}
-                    - {property: 'primaryContent', label: 'Primera parte', type: 'ckeditor'}
-                    - {property: 'secundaryPictureFile1', type: 'file', label: 'Segunda imagen 1'}
-                    - {property: 'secundaryPictureFile2', type: 'file', label: 'Segunda imagen 2'}
-                    - {property: 'secundaryPictureFile3', type: 'file', label: 'Segunda imagen 3'}
-                    - {property: 'secundaryContentTitle', label: 'Titulo segunda parte'}
-                    - {property: 'secundaryContent', label: 'Segunda parte', type: 'ckeditor'}
-                    - {property: 'tercearyPictureFile', type: 'file', label: 'Tercera imagen'}
-                    - {property: 'tercearyContentTitle', label: 'Titulo tercera parte'}
-                    - {property: 'tercearyContent', label: 'Tercera parte', type: 'ckeditor'}
+
+                    - { type: 'group', label: 'Seccion Intro', icon: 'cogs', columns: 12, help: 'Si no se pone ningún título, no se mostrara esta sección' }
+
+                    - {property: 'introTitle1', label: 'Intro titulo 1', help: 'Si no se pone el título, no se mostrara este intro'}
+                    - {property: 'introPicture1File', type: 'file', label: 'Intro Imagen 1'}
+                    - {property: 'introContent1', label: 'Intro content 1', type: 'ckeditor'}
+                    - {property: 'introLink1', label: 'Enlace del intro 1'}
+
+                    - {property: 'introTitle2', label: 'Intro titulo 2'}
+                    - {property: 'introPicture2File', type: 'file', label: 'Intro Imagen 2'}
+                    - {property: 'introContent2', label: 'Intro content 2', type: 'ckeditor'}
+                    - {property: 'introLink2', label: 'Enlace del intro 2'}
+
+                    - {property: 'introTitle3', label: 'Intro titulo 3'}
+                    - {property: 'introPicture3File', type: 'file', label: 'Intro Imagen 3'}
+                    - {property: 'introContent3', label: 'Intro content 3', type: 'ckeditor'}
+                    - {property: 'introLink3', label: 'Enlace del intro 3'}
+
+                    - { type: 'group', label: 'Seccion Ofertas', icon: 'cogs', columns: 12, help: 'Si no hay codigos, no se mostrara esta sección'}
+                    - {property: 'offersTitle', label: 'Titulo seccion ofertas'}
+                    - {property: 'offers', label: 'Ofertas disponibles en el sitio'}
+
+                    - { type: 'group', label: 'Seccion productos', icon: 'cogs', columns: 12, help: 'Si no hay códigos, no se mostrara esta sección' }
+                    - {property: 'productsTitle', label: 'Título sección productos'}
+                    - {property: 'products', label: 'Código de los productos'}
+
+                    - { type: 'group', label: 'Sección promoción', icon: 'cogs', columns: 12 }
+
+                    - {property: 'promotionTitle', label: 'Titulo promocion', help: 'Si no se añade el titulo, no se mostrara esta sección'}
+                    - {property: 'promotionPictureFile', type: 'file', label: 'Imagen de promocion'}
+                    - {property: 'promotionContent', label: 'contenido de promocion', type: 'ckeditor'}
+                    - {property: 'promotionLink', label: 'Enlace de la promocion'}
+
+                    - { type: 'group', label: 'Seccion Blogs', icon: 'cogs', columns: 12 }
+
+                    - {property: 'blogTitle', label: 'Titulo seccion Blog'}
+                    - {property: 'blogId1', label: 'Id del articulo del blog 1', help: 'Si no se anade ningun id, no se mostrara esta seccion'}
+                    - {property: 'blogId2', label: 'Id del articulo del blog 2', help: 'Si no se anade ningun id, no se mostrara esta seccion'}
+
+                    - { type: 'group', label: 'Sección Servicios', icon: 'cogs', columns: 12, help: 'Si los servicio no posee títulos no se añadira esta sección.' }
+
+                    - {property: 'servicesTitle', label: 'Titulo seccion Servicios'}
+                    - {property: 'serviceTitle1', label: 'Servicio titulo 1', help: 'Si el Servicio no posee título no se añadira.'}
+                    - {property: 'servicePicture1File', type: 'file', label: 'Servicio Imagen 1'}
+                    - {property: 'serviceContent1', label: 'Servicio content 1', type: 'ckeditor'}
+
+                    - {property: 'serviceTitle2', label: 'Servicio titulo 2', help: 'Si el servicio no posee título no se añadira.'}
+                    - {property: 'servicePicture2File', type: 'file', label: 'Servicio Imagen 2'}
+                    - {property: 'serviceContent2', label: 'Servicio content 2', type: 'ckeditor'}
+
+
+                    - { type: 'group', label: 'Seccion Footer', icon: 'cogs', columns: 12 }
+
+                    - {property: 'footerPictureFile', type: 'file', label: 'Footer imagen'}
+                    - {property: 'footerPictureLink', label: 'enlace de la imagen'}
             edit:
                 title: 'Editar Correo'
 
@@ -425,6 +473,7 @@ easy_admin:
                     - {property: 'email', label: 'Correo'}
                     - {property: 'enabled', label: 'Habilitado', type: 'toggle'}
                     - {property: 'lastLogin', label: 'Último acceso'}
+                    - {property: 'ProductsInCartCount', label: 'Cantidad en Carrito', type: 'integer'}
             edit:
                 fields:
                     - { property: 'plainPassword', type_options: { required: false} }
