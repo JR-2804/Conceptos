@@ -408,9 +408,15 @@ class SiteController extends Controller
           }
         }
 
+        foreach ($product->getComplementaryProducts() as $complementaryProduct) {
+          $offerPrice = $this->get('product_service')->findProductOfferPrice($complementaryProduct->getProduct());
+          $complementaryProduct->getProduct()->setPriceOffer($offerPrice);
+        }
+
         return $this->render(':site:product-details.html.twig', [
             'product' => $product,
             'comboChunks' => array_chunk($product->getComboProducts()->toArray(), 3),
+            'complementaryChunks' => array_chunk($product->getComplementaryProducts()->toArray(), 3),
             'imageSets' => array_chunk($images, 3),
             'home' => $home,
             'membership' => $membership,

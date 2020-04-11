@@ -122,7 +122,7 @@ $(document).ready(function() {
     }
   });
 
-  $("#category, #combo-product").select2({
+  $("#category, #combo-product, #complementary-products").select2({
     theme: "bootstrap",
     language: "es",
     allowClear: true
@@ -147,6 +147,14 @@ $(document).ready(function() {
       $(".store-count-content").show();
     } else {
       $(".store-count-content").hide();
+    }
+  });
+
+  $("#is-combo").change(function() {
+    if ($(this).prop("checked") == true) {
+      setComboMode(true);
+    } else {
+      setComboMode(false);
     }
   });
 
@@ -260,6 +268,9 @@ $(document).ready(function() {
         JSON.stringify($("#category-favorite").val())
       );
       $("#product_comboProducts").val(JSON.stringify(comboProducts));
+      $("#product_complementaryProducts").val(
+        JSON.stringify($("#complementary-products").val())
+      );
       $("#product_weight").val(weight);
       $("#product_shippingLimit").val($("#shipping-limit").val());
       $("#product_ikeaPrice").val($("#ikea-price").val());
@@ -292,8 +303,47 @@ $(document).ready(function() {
     .val([])
     .trigger("change");
 
+  if (comboProducts.length === 0) {
+    setComboMode(false);
+  }
   populateComboProductsTable();
 });
+
+function setComboMode(comboMode) {
+  if (comboMode) {
+    $("#combo-products-section").show();
+
+    $("#weight-section").hide();
+    $("#price-section").hide();
+    $("#shipping-section").hide();
+    $("#labels-section").hide();
+    $("#calculate-section").hide();
+
+    if (!$("#weight-kg").val()) {
+      $("#weight-kg").val(0);
+    }
+    if (!$("#ikea-price").val()) {
+      $("#ikea-price").val(0);
+    }
+    if (!$("#shipping-limit").val()) {
+      $("#shipping-limit").val(0);
+    }
+    if (!$("#calculate-price").val()) {
+      $("#calculate-price").val(0);
+    }
+    if (!$("#price").val()) {
+      $("#price").val(0);
+    }
+  } else {
+    $("#combo-products-section").hide();
+
+    $("#weight-section").show();
+    $("#price-section").show();
+    $("#shipping-section").show();
+    $("#labels-section").show();
+    $("#calculate-section").show();
+  }
+}
 
 function getWeight() {
   var weightKg = parseFloat($("#weight-kg").val()) || 0;

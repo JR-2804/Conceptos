@@ -23,6 +23,7 @@ class ProductDTO
     private $material;
     private $favoritesCategories;
     private $comboProduct;
+    private $complementaryProducts;
     private $weight;
     private $shippingLimit;
     private $ikeaPrice;
@@ -214,6 +215,16 @@ class ProductDTO
     public function setComboProducts($comboProduct)
     {
         $this->comboProduct = $comboProduct;
+    }
+
+    public function getComplementaryProducts()
+    {
+        return $this->complementaryProducts;
+    }
+
+    public function setComplementaryProducts($complementaryProducts)
+    {
+        $this->complementaryProducts = $complementaryProducts;
     }
 
     public function getInStore()

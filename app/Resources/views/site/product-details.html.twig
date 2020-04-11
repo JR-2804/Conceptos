@@ -144,7 +144,7 @@
           <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3 mb-2">
             <span class="conceptos-title">PRODUCTOS QUE LO COMPONEN</span>
             <div class="d-flex flex-wrap">
-              <div class="carousel" data-ride="carousel" id="carousel-combo-products" data-interval="10000">
+              <div class="w-100 carousel" data-ride="carousel" id="carousel-combo-products" data-interval="10000">
                 <ol class="carousel-indicators">
                   {% for chunk in comboChunks %}
                     <li data-target="#carousel-combo-products"
@@ -155,7 +155,37 @@
                 <div class="carousel-inner">
                     {% for chunk in comboChunks %}
                       <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
-                        <div class="d-flex flex-wrap">
+                        <div class="d-flex flex-wrap w-100">
+                          {% for comboProduct in chunk %}
+                            {% set product = comboProduct.product %}
+                            <div class="d-flex col-4 pl-0">
+                              {{include('site/combo-summary-short.html.twig')}}
+                            </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        {% if complementaryChunks is not empty %}
+          <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3 mb-2">
+            <span class="conceptos-title">PRODUCTOS COMPLEMENTARIOS</span>
+            <div class="d-flex flex-wrap">
+              <div class="w-100 carousel" data-ride="carousel" id="carousel-complementary-products" data-interval="10000">
+                <ol class="carousel-indicators">
+                  {% for chunk in complementaryChunks %}
+                    <li data-target="#carousel-complementary-products"
+                        class="{% if loop.first %}active{% endif %}"
+                        data-slide-to="{{ loop.index - 1 }}"></li>
+                  {% endfor %}
+                </ol>
+                <div class="carousel-inner">
+                    {% for chunk in complementaryChunks %}
+                      <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
+                        <div class="d-flex flex-wrap w-100">
                           {% for comboProduct in chunk %}
                             {% set product = comboProduct.product %}
                             <div class="d-flex col-4 pl-0">
