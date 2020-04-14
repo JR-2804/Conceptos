@@ -3,29 +3,12 @@
 {% else %}
 {% set comboProductCount = comboProduct.count %}
 {% endif %}
-<div class="d-flex justify-content-center conceptos-product-card p-2 w-100 {% if product.priceOffer != -1 %}popular_product{% endif %}">
-  <div class="d-flex align-items-center conceptos-white-background p-2 w-100">
+<div class="d-flex justify-content-center conceptos-product-card mt-2 w-100 {% if product.priceOffer != -1 %}popular_product{% endif %}">
+  <div class="d-flex align-items-center conceptos-white-background w-100">
     <a class="h-100 w-100" href="{{ path('product_details', {id: product.id, name: product.name}) }}">
       <div class="d-flex flex-column justify-content-between h-100">
         <img class="conceptos-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
-        <div class="d-flex justify-content-between align-items-center">
-          {% if bigFont is defined %}
-            {% set priceClass = "conceptos-product-price-big" %}
-            {% set iconClass = "conceptos-add-to-cart-icon-big" %}
-          {% else %}
-            {% set priceClass = "conceptos-product-price" %}
-            {% set iconClass = "" %}
-          {% endif %}
-          {% if product.priceOffer != -1 %}
-            <span class="conceptos-product-info {{priceClass}} mt-1">$&nbsp;{{product.priceOffer}}</span>
-          {% else %}
-            <span class="conceptos-product-info {{priceClass}} mt-1">$&nbsp;{{product.price}}</span>
-          {% endif %}
-          <button class="conceptos-add-to-cart-icon {{iconClass}} pr-0" data-path="{{ path('add_shop_card', {id: product.id}) }}">
-            <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
-          </button>
-        </div>
-        <span class="conceptos-product-info align-self-center conceptos-product-info">x{{comboProductCount}}</span>
+        <span class="conceptos-product-info align-self-center conceptos-product-info">{{comboProductCount}}x</span>
       </div>
     </a>
   </div>
