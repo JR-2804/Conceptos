@@ -185,7 +185,6 @@
                 </div>
               </div>
             </div>
-            {{ form_widget(form.recaptcha) }}
             {% if is_granted('ROLE_COMMERCIAL') %}
               <div class="conceptos-divider mt-3 mb-3"></div>
               <select id="type-select" class="mb-2">
@@ -215,7 +214,6 @@
         {{ form_widget(form.phone, {'attr': {'class': 'd-none'}}) }}
         {{ form_widget(form.movil, {'attr': {'class': 'd-none'}}) }}
         {{ form_widget(form.memberNumber, {'attr': {'class': 'd-none'}}) }}
-        {{ form_widget(form.recaptcha, {'attr': {'class': 'd-none'}}) }}
       {% endif %}
     </div>
     <div id="shop-cart-contact-form" class="d-flex flex-column">
