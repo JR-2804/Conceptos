@@ -7,7 +7,7 @@
   <div class="d-flex align-items-center conceptos-white-background w-100">
     <a class="h-100 w-100" href="{{ path('product_details', {id: product.id, name: product.name}) }}">
       <div class="d-flex flex-column justify-content-between h-100">
-        <img class="conceptos-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+        <img class="conceptos-image conceptos-popular-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
         <span class="conceptos-product-info align-self-center conceptos-product-info">{{comboProductCount}}x</span>
       </div>
     </a>
