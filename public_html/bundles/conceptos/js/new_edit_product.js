@@ -313,6 +313,16 @@ function setComboMode(comboMode) {
   if (comboMode) {
     $("#combo-products-section").show();
 
+    $("#material-section").hide();
+    $("#material")
+      .val([$("#material option").prop("value")])
+      .trigger("change");
+
+    $("#color-section").hide();
+    $("#color")
+      .val([$("#color option").prop("value")])
+      .trigger("change");
+
     $("#weight-section").hide();
     $("#price-section").hide();
     $("#shipping-section").hide();
@@ -336,6 +346,9 @@ function setComboMode(comboMode) {
     }
   } else {
     $("#combo-products-section").hide();
+
+    $("#material-section").show();
+    $("#color-section").show();
 
     $("#weight-section").show();
     $("#price-section").show();
