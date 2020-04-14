@@ -83,11 +83,6 @@ class PreFactureController extends Controller
       ]);
       $this->get('email_service')->send($config->getEmail(), $username, $preFactureDB->getClient()->getEmail(), 'Estados de productos actualizados', $emailBody);
 
-      return $this->redirectToRoute('blog_details', [
-        'id' => $id,
-        'title' => $post->getPath(),
-      ]);
-
       return $this->redirectToRoute('easyadmin', [
         'entity' => 'PreFacture',
         'action' => 'list',

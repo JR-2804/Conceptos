@@ -43,33 +43,29 @@ class ProductService
     public function findProductOfferPrice($product)
     {
       $offers = $this->offerRepository->createQueryBuilder('o')
-          ->join('o.products', 'p')
-          ->where('p.id = :product AND o.startDate <= :date AND o.endDate >= :date')
-          ->setParameter('product', $product->getId())
-          ->setParameter('date', new \DateTime(), Type::DATE)
-          ->getQuery()->getResult();
+        ->join('o.products', 'p')
+        ->where('p.id = :product AND o.startDate <= :date AND o.endDate >= :date')
+        ->setParameter('product', $product->getId())
+        ->setParameter('date', new \DateTime(), Type::DATE)
+        ->getQuery()->getResult();
 
       if (count($offers) > 0) {
-          return $offers[0]->getPrice();
+        return $offers[0]->getPrice();
       }
 
       foreach ($product->getCategories() as $category) {
-              $offer = $category->getOffers()[0];
-              if (
-                  $offer != null &&
-                  (!$offer->getOnlyInStoreProducts() || ($offer->getOnlyInStoreProducts() && $product->getInStore()))) {
-                  return ceil($product->getPrice() * (1 - $offer->getPrice() / 100));
-              } else {
-                  foreach ($category->getParents() as $parentCategory) {
-                      $offer = $parentCategory->getOffers()[0];
-                      if (
-                          $offer != null &&
-                          (!$offer->getOnlyInStoreProducts() || ($offer->getOnlyInStoreProducts() && $product->getInStore()))) {
-                          return ceil($product->getPrice() * (1 - $offer->getPrice() / 100));
-                      }
-                  }
-              }
+        $offer = $category->getOffers()[0];
+        if ($offer != null && (!$offer->getOnlyInStoreProducts() || ($offer->getOnlyInStoreProducts() && $product->getInStore()))) {
+          return ceil($product->getPrice() * (1 - $offer->getPrice() / 100));
+        } else {
+          foreach ($category->getParents() as $parentCategory) {
+            $offer = $parentCategory->getOffers()[0];
+            if ($offer != null && (!$offer->getOnlyInStoreProducts() || ($offer->getOnlyInStoreProducts() && $product->getInStore()))) {
+              return ceil($product->getPrice() * (1 - $offer->getPrice() / 100));
+            }
           }
+        }
+    }
 
       return -1;
     }
