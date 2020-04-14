@@ -38,7 +38,9 @@
       {% if is_granted('ROLE_COMMERCIAL') %}
       <div class="conceptos-divider mt-2 mb-2"></div>
       <span class="conceptos-product-info">{{product.code}}</span>
-      <span class="conceptos-product-info-admin">Cant Almacén: {{product.storeCount}}</span>
+      {% if product.inStore and product.storeCount and product.storeCount > 0 %}
+        <span class="conceptos-product-info-admin">Cant Almacén: {{product.storeCount}}</span>
+      {% endif %}
       <span class="conceptos-product-info-admin">Material: {{product.material.name}}</span>
       <span class="conceptos-product-info-admin">Color: {{product.color.name}}</span>
       <span class="conceptos-product-info-admin">Peso: {{product.weight}}</span>
