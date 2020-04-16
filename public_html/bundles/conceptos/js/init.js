@@ -1,3 +1,5 @@
+var comboProducts = [];
+
 $(document).ready(function() {
   $("#name").val($("#product_name").val());
   $("#priority").val($("#product_priority").val());
@@ -55,8 +57,9 @@ $(document).ready(function() {
   $("#category-favorite")
     .val(JSON.parse($("#product_favoritesCategories").val()))
     .trigger("change");
-  $("#combo-products")
-    .val(JSON.parse($("#product_comboProducts").val()))
+  comboProducts = JSON.parse($("#product_comboProducts").val());
+  $("#complementary-products")
+    .val(JSON.parse($("#product_complementaryProducts").val()))
     .trigger("change");
   $("#is-highlight").prop("checked", $("#product_isHighlight").val() == 1);
   var highlightImages = $("#product_highlightImages").val();

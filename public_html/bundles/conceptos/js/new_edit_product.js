@@ -1,3 +1,8 @@
+var template_combo_product_empty =
+  '<tr><td colspan="3" class="text-center">Sin combos añadidos</td></tr>';
+var template_combo_product =
+  '<tr><td>%1</td><td>%2</td><td><a class="btn btn-secondary btn-remove-combo-product" data-index="%3"><i class="fa fa-remove"></i></a></td></tr>';
+
 var data = {
   image: {
     id: 0
@@ -8,6 +13,9 @@ var data = {
 };
 
 Dropzone.autoDiscover = false;
+var comboProducts = [];
+var currentComboProductCode = undefined;
+var currentComboProductPrice = undefined;
 var dropzone = undefined;
 var dropzoneImages = undefined;
 $(document).ready(function() {
@@ -114,7 +122,7 @@ $(document).ready(function() {
     }
   });
 
-  $("#category").select2({
+  $("#category, #combo-product, #complementary-products").select2({
     theme: "bootstrap",
     language: "es",
     allowClear: true
@@ -128,7 +136,7 @@ $(document).ready(function() {
     maximumSelectionLength: 1
   });
 
-  $("#category-favorite, #combo-products").select2({
+  $("#category-favorite").select2({
     theme: "bootstrap",
     language: "es",
     allowClear: true
@@ -140,6 +148,23 @@ $(document).ready(function() {
     } else {
       $(".store-count-content").hide();
     }
+  });
+
+  $("#is-combo").change(function() {
+    if ($(this).prop("checked") == true) {
+      setComboMode(true);
+    } else {
+      setComboMode(false);
+    }
+  });
+
+  $("#combo-product").change(function() {
+    currentComboProductCode = $(
+      "#combo-product option[value=" + $(this).val() + "]"
+    ).data("code");
+    currentComboProductPrice = $(
+      "#combo-product option[value=" + $(this).val() + "]"
+    ).data("price");
   });
 
   $(".btn-calculate-price").click(function() {
@@ -183,6 +208,27 @@ $(document).ready(function() {
     }
   });
 
+  $(".btn-add-combo-product").click(function() {
+    if ($("#combo-product").val() && $("#combo-product-count").val()) {
+      comboProducts.push({
+        id: $("#combo-product").val(),
+        count: $("#combo-product-count").val(),
+        code: currentComboProductCode,
+        price: currentComboProductPrice
+      });
+
+      $("#combo-product")
+        .val([])
+        .trigger("change");
+      $("#combo-product-count").val("");
+
+      RecalculateComboPrice();
+      populateComboProductsTable();
+    } else {
+      alert("Debe llenar todos los campos del combo");
+    }
+  });
+
   $('form[name="product"]').submit(function(e) {
     if (!validForm()) {
       e.preventDefault();
@@ -221,8 +267,9 @@ $(document).ready(function() {
       $("#product_favoritesCategories").val(
         JSON.stringify($("#category-favorite").val())
       );
-      $("#product_comboProducts").val(
-        JSON.stringify($("#combo-products").val())
+      $("#product_comboProducts").val(JSON.stringify(comboProducts));
+      $("#product_complementaryProducts").val(
+        JSON.stringify($("#complementary-products").val())
       );
       $("#product_weight").val(weight);
       $("#product_shippingLimit").val($("#shipping-limit").val());
@@ -251,7 +298,65 @@ $(document).ready(function() {
       $("#product_numberOfPackages").val($("#number-of-packages").val());
     }
   });
+
+  $("#combo-product")
+    .val([])
+    .trigger("change");
+
+  if (comboProducts.length === 0) {
+    setComboMode(false);
+  }
+  populateComboProductsTable();
 });
+
+function setComboMode(comboMode) {
+  if (comboMode) {
+    $("#combo-products-section").show();
+
+    $("#material-section").hide();
+    $("#material")
+      .val([$("#material option").prop("value")])
+      .trigger("change");
+
+    $("#color-section").hide();
+    $("#color")
+      .val([$("#color option").prop("value")])
+      .trigger("change");
+
+    $("#weight-section").hide();
+    $("#price-section").hide();
+    $("#shipping-section").hide();
+    $("#labels-section").hide();
+    $("#calculate-section").hide();
+
+    if (!$("#weight-kg").val()) {
+      $("#weight-kg").val(0);
+    }
+    if (!$("#ikea-price").val()) {
+      $("#ikea-price").val(0);
+    }
+    if (!$("#shipping-limit").val()) {
+      $("#shipping-limit").val(0);
+    }
+    if (!$("#calculate-price").val()) {
+      $("#calculate-price").val(0);
+    }
+    if (!$("#price").val()) {
+      $("#price").val(0);
+    }
+  } else {
+    $("#combo-products-section").hide();
+
+    $("#material-section").show();
+    $("#color-section").show();
+
+    $("#weight-section").show();
+    $("#price-section").show();
+    $("#shipping-section").show();
+    $("#labels-section").show();
+    $("#calculate-section").show();
+  }
+}
 
 function getWeight() {
   var weightKg = parseFloat($("#weight-kg").val()) || 0;
@@ -386,5 +491,37 @@ function addRemoveErrorClass(input, add) {
     $(input)
       .parent()
       .removeClass("has-error");
+  }
+}
+
+function RecalculateComboPrice() {
+  var price = 0;
+  comboProducts.forEach(comboProduct => {
+    price += comboProduct.price * comboProduct.count;
+  });
+  $("#price").val(price);
+  $("#calculate-price").val(price);
+}
+
+function populateComboProductsTable() {
+  $(".table-combo-products tbody tr").remove();
+  if (comboProducts.length == 0) {
+    var tmp_empty = template_combo_product_empty.substring(-1);
+    $(".table-combo-products tbody").append(tmp_empty);
+  } else {
+    $.each(comboProducts, function(i, s) {
+      var tmp = template_combo_product
+        .substring(-1)
+        .replace("%1", s.code)
+        .replace("%2", s.count)
+        .replace("%3", i);
+      $(".table-combo-products tbody").append(tmp);
+    });
+    $(".btn-remove-combo-product").click(function() {
+      var index = $(this).data("index");
+      comboProducts.splice(index, 1);
+      populateComboProductsTable();
+      RecalculateComboPrice();
+    });
   }
 }
