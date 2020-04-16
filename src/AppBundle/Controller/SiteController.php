@@ -364,24 +364,30 @@ class SiteController extends Controller
         if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
         }
+
+        $filterParameter = [$product->getId()];
+        foreach ($product->getComboProducts() as $comboProduct) {
+          $filterParameter[] = $comboProduct->getProduct()->getId();
+        }
+
         $related = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->createQueryBuilder('p')
-            ->where('p.name = :name AND p.id <> :current')
+            ->where('p.name = :name AND p.id NOT IN (:current)')
             ->setParameter('name', $product->getName())
-            ->setParameter('current', $product->getId())
+            ->setParameter('current', $filterParameter)
             ->orderBy('p.name', 'ASC')
             ->setMaxResults(12)
             ->getQuery()->getResult();
 
-        if (count($related) < 21) {
+        if (count($related) < 12) {
             $categories = [];
             foreach ($product->getCategories() as $category) {
                 $categories[] = $category->getId();
             }
             $otherRelated = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->createQueryBuilder('p')
                 ->join('p.categories', 'c')
-                ->where('c.id IN (:category) AND p.id <> :current')
+                ->where('c.id IN (:category) AND p.id NOT IN (:current)')
                 ->setParameter('category', $categories)
-                ->setParameter('current', $product->getId())
+                ->setParameter('current', $filterParameter)
                 ->orderBy('p.name', 'ASC')
                 ->setMaxResults(12 - count($related))
                 ->getQuery()->getResult();
@@ -409,8 +415,15 @@ class SiteController extends Controller
           }
         }
 
+        foreach ($product->getComplementaryProducts() as $complementaryProduct) {
+          $offerPrice = $this->get('product_service')->findProductOfferPrice($complementaryProduct->getProduct());
+          $complementaryProduct->getProduct()->setPriceOffer($offerPrice);
+        }
+
         return $this->render(':site:product-details.html.twig', [
             'product' => $product,
+            'comboChunks' => array_chunk($product->getComboProducts()->toArray(), 3),
+            'complementaryProducts' => $product->getComplementaryProducts()->toArray(),
             'imageSets' => array_chunk($images, 3),
             'home' => $home,
             'membership' => $membership,

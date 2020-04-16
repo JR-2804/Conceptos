@@ -43,33 +43,29 @@ class ProductService
     public function findProductOfferPrice($product)
     {
       $offers = $this->offerRepository->createQueryBuilder('o')
-          ->join('o.products', 'p')
-          ->where('p.id = :product AND o.startDate <= :date AND o.endDate >= :date')
-          ->setParameter('product', $product->getId())
-          ->setParameter('date', new \DateTime(), Type::DATE)
-          ->getQuery()->getResult();
+        ->join('o.products', 'p')
+        ->where('p.id = :product AND o.startDate <= :date AND o.endDate >= :date')
+        ->setParameter('product', $product->getId())
+        ->setParameter('date', new \DateTime(), Type::DATE)
+        ->getQuery()->getResult();
 
       if (count($offers) > 0) {
-          return $offers[0]->getPrice();
+        return $offers[0]->getPrice();
       }
 
       foreach ($product->getCategories() as $category) {
-              $offer = $category->getOffers()[0];
-              if (
-                  $offer != null &&
-                  (!$offer->getOnlyInStoreProducts() || ($offer->getOnlyInStoreProducts() && $product->getInStore()))) {
-                  return ceil($product->getPrice() * (1 - $offer->getPrice() / 100));
-              } else {
-                  foreach ($category->getParents() as $parentCategory) {
-                      $offer = $parentCategory->getOffers()[0];
-                      if (
-                          $offer != null &&
-                          (!$offer->getOnlyInStoreProducts() || ($offer->getOnlyInStoreProducts() && $product->getInStore()))) {
-                          return ceil($product->getPrice() * (1 - $offer->getPrice() / 100));
-                      }
-                  }
-              }
+        $offer = $category->getOffers()[0];
+        if ($offer != null && (!$offer->getOnlyInStoreProducts() || ($offer->getOnlyInStoreProducts() && $product->getInStore()))) {
+          return ceil($product->getPrice() * (1 - $offer->getPrice() / 100));
+        } else {
+          foreach ($category->getParents() as $parentCategory) {
+            $offer = $parentCategory->getOffers()[0];
+            if ($offer != null && (!$offer->getOnlyInStoreProducts() || ($offer->getOnlyInStoreProducts() && $product->getInStore()))) {
+              return ceil($product->getPrice() * (1 - $offer->getPrice() / 100));
+            }
           }
+        }
+    }
 
       return -1;
     }
@@ -252,14 +248,20 @@ class ProductService
         if (-1 != $color) {
             $colorName = $this->colorRepository->find($color)->getName();
 
-            $qbProduct->join('p.color', 'c');
-            $qbProductCount->join('p.color', 'c');
+            $qbProduct->leftJoin('p.color', 'c');
+            $qbProduct->leftJoin('p.comboProducts', 'cp');
+            $qbProduct->leftJoin('cp.product', 'cpp');
+            $qbProduct->leftJoin('cpp.color', 'cppc');
+            $qbProductCount->leftJoin('p.color', 'c');
+            $qbProductCount->leftJoin('p.comboProducts', 'cp');
+            $qbProductCount->leftJoin('cp.product', 'cpp');
+            $qbProductCount->leftJoin('cpp.color', 'cppc');
             if ($hasWhere) {
-                $qbProduct->andWhere('c.name like :color');
-                $qbProductCount->andWhere('c.name like :color');
+                $qbProduct->andWhere('(cp.id is null and c.name like :color) or (cppc.name like :color)');
+                $qbProductCount->andWhere('(cp.id is null and c.name like :color) or (cppc.name like :color)');
             } else {
-                $qbProduct->where('c.name like :color');
-                $qbProductCount->where('c.name like :color');
+                $qbProduct->where('(cp.id is null and c.name like :color) or (cppc.name like :color)');
+                $qbProductCount->where('(cp.id is null and c.name like :color) or (cppc.name like :color)');
                 $hasWhere = true;
             }
             $qbProduct->setParameter('color', $colorName."%");
@@ -267,13 +269,19 @@ class ProductService
         }
         if (-1 != $material) {
             $qbProduct->join('p.material', 'm');
+            $qbProduct->leftJoin('p.comboProducts', 'mp');
+            $qbProduct->leftJoin('mp.product', 'mpp');
+            $qbProduct->leftJoin('mpp.material', 'mppm');
             $qbProductCount->join('p.material', 'm');
+            $qbProductCount->leftJoin('p.comboProducts', 'mp');
+            $qbProductCount->leftJoin('mp.product', 'mpp');
+            $qbProductCount->leftJoin('mpp.material', 'mppm');
             if ($hasWhere) {
-                $qbProduct->andWhere('m.id = :material');
-                $qbProductCount->andWhere('m.id = :material');
+                $qbProduct->andWhere('(mp.id is null and m.id = :material) or (mppm.id = :material)');
+                $qbProductCount->andWhere('(mp.id is null and m.id = :material) or (mppm.id = :material)');
             } else {
-                $qbProduct->where('m.id = :material');
-                $qbProductCount->where('m.id = :material');
+                $qbProduct->where('(mp.id is null and m.id = :material) or (mppm.id = :material)');
+                $qbProductCount->where('(mp.id is null and m.id = :material) or (mppm.id = :material)');
                 $hasWhere = true;
             }
             $qbProduct->setParameter('material', $material);

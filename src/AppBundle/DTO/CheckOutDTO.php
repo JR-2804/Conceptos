@@ -2,8 +2,6 @@
 
 namespace AppBundle\DTO;
 
-use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
-
 class CheckOutDTO
 {
     private $firstName;
@@ -17,11 +15,6 @@ class CheckOutDTO
     private $type;
     private $prefacture;
     private $ignoreTransport;
-
-    /**
-     * @Recaptcha\IsTrue
-     */
-    public $recaptcha;
 
     public function getFirstName()
     {
@@ -91,16 +84,6 @@ class CheckOutDTO
     public function setEmail($email)
     {
         $this->email = $email;
-    }
-
-    public function getRecaptcha()
-    {
-        return $this->recaptcha;
-    }
-
-    public function setRecaptcha($recaptcha)
-    {
-        $this->recaptcha = $recaptcha;
     }
 
     public function getMemberNumber()

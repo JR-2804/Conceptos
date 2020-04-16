@@ -8,6 +8,7 @@ use AppBundle\Entity\Image;
 use AppBundle\Entity\Material;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\ComboProduct;
+use AppBundle\Entity\ComplementaryProduct;
 use AppBundle\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -299,15 +300,30 @@ class ProductController extends Controller
             }
             $comboProducts = json_decode($form->get('comboProducts')->getData(), true);
             if (null != $comboProducts) {
-                foreach ($comboProducts as $comboProductId) {
-                    $productDB = $this->getDoctrine()->getRepository('AppBundle:Product')->find($comboProductId);
+                foreach ($comboProducts as $comboProduct) {
+                    $productDB = $this->getDoctrine()->getRepository('AppBundle:Product')->find($comboProduct["id"]);
                     if (null != $productDB) {
-                        $comboProduct = new ComboProduct();
-                        $comboProduct->setParentProduct($product);
-                        $comboProduct->setProduct($productDB);
-                        $this->getDoctrine()->getManager()->persist($comboProduct);
+                        $combo = new ComboProduct();
+                        $combo->setParentProduct($product);
+                        $combo->setProduct($productDB);
+                        $combo->setCount($comboProduct["count"]);
+                        $this->getDoctrine()->getManager()->persist($combo);
 
-                        $product->addComboProduct($comboProduct);
+                        $product->addComboProduct($combo);
+                    }
+                }
+            }
+            $complementaryProducts = json_decode($form->get('complementaryProducts')->getData(), true);
+            if (null != $complementaryProducts) {
+                foreach ($complementaryProducts as $complementaryProductId) {
+                    $productDB = $this->getDoctrine()->getRepository('AppBundle:Product')->find($complementaryProductId);
+                    if (null != $productDB) {
+                        $complementaryProduct = new ComplementaryProduct();
+                        $complementaryProduct->setParentProduct($product);
+                        $complementaryProduct->setProduct($productDB);
+                        $this->getDoctrine()->getManager()->persist($complementaryProduct);
+
+                        $product->addComplementaryProduct($complementaryProduct);
                     }
                 }
             }
@@ -400,9 +416,19 @@ class ProductController extends Controller
         $dto->setFavoritesCategories(json_encode($favorites));
         $comboProducts = [];
         foreach ($product->getComboProducts() as $comboProduct) {
-            $comboProducts[] = $comboProduct->getProduct()->getId();
+            $comboProducts[] = [
+              "id" => $comboProduct->getProduct()->getId(),
+              "code" => $comboProduct->getProduct()->getCode(),
+              "count" => $comboProduct->getCount(),
+              "price" => $comboProduct->getProduct()->getPrice(),
+            ];
         }
         $dto->setComboProducts(json_encode($comboProducts));
+        $complementaryProducts = [];
+        foreach ($product->getComplementaryProducts() as $complementaryProduct) {
+            $complementaryProducts[] = $complementaryProduct->getProduct()->getId();
+        }
+        $dto->setComplementaryProducts(json_encode($complementaryProducts));
         $color = $product->getColor();
         $dto->setColor(null != $color ? $color->getId() : null);
         $material = $product->getMaterial();
@@ -736,15 +762,35 @@ class ProductController extends Controller
             }
             $product->getComboProducts()->clear();
             if ($comboProducts != null) {
-                foreach ($comboProducts as $comboProductId) {
-                  $productDB = $this->getDoctrine()->getRepository('AppBundle:Product')->find($comboProductId);
+                foreach ($comboProducts as $comboProduct) {
+                  $productDB = $this->getDoctrine()->getRepository('AppBundle:Product')->find($comboProduct["id"]);
                   if (null != $productDB) {
-                      $comboProduct = new ComboProduct();
-                      $comboProduct->setParentProduct($product);
-                      $comboProduct->setProduct($productDB);
-                      $this->getDoctrine()->getManager()->persist($comboProduct);
+                      $combo = new ComboProduct();
+                      $combo->setParentProduct($product);
+                      $combo->setProduct($productDB);
+                      $combo->setCount($comboProduct["count"]);
+                      $this->getDoctrine()->getManager()->persist($combo);
 
-                      $product->addComboProduct($comboProduct);
+                      $product->addComboProduct($combo);
+                  }
+                }
+            }
+            $complementaryProducts = json_decode($form->get('complementaryProducts')->getData(), true);
+            foreach ($product->getComplementaryProducts() as $complementaryProduct) {
+                $product->removeComplementaryProduct($complementaryProduct);
+                $this->getDoctrine()->getManager()->remove($complementaryProduct);
+            }
+            $product->getComplementaryProducts()->clear();
+            if ($complementaryProducts != null) {
+                foreach ($complementaryProducts as $complementaryProductId) {
+                  $productDB = $this->getDoctrine()->getRepository('AppBundle:Product')->find($complementaryProductId);
+                  if (null != $productDB) {
+                      $complementaryProduct = new ComplementaryProduct();
+                      $complementaryProduct->setParentProduct($product);
+                      $complementaryProduct->setProduct($productDB);
+                      $this->getDoctrine()->getManager()->persist($complementaryProduct);
+
+                      $product->addComplementaryProduct($complementaryProduct);
                   }
                 }
             }

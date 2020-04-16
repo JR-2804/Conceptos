@@ -582,6 +582,18 @@ function init() {
   if (data.prioritizeSlideText) {
     $("#prioritize-slide-text").prop("checked", data.prioritizeSlideText);
   }
+  if (data.slideTopMargin) {
+    $("#slide-top-margin").val(data.slideTopMargin);
+  }
+  if (data.slideLeftMargin) {
+    $("#slide-left-margin").val(data.slideLeftMargin);
+  }
+  if (data.slideFontSize) {
+    $("#slide-font-size").val(data.slideFontSize);
+  }
+  if (data.slideFontColor) {
+    $("#slide-font-color").val(data.slideFontColor);
+  }
 
   $("#app-app").val(data.app.app);
   $("#app-db").val(data.app.db);
@@ -614,6 +626,10 @@ function generateData() {
   var data = {
     slides: headerImages,
     prioritizeSlideText: $("#prioritize-slide-text").prop("checked"),
+    slideTopMargin: $("#slide-top-margin").val(),
+    slideLeftMargin: $("#slide-left-margin").val(),
+    slideFontSize: $("#slide-font-size").val(),
+    slideFontColor: $("#slide-font-color").val(),
     top: {
       image1: topImage1,
       image2: topImage2,

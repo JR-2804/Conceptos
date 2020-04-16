@@ -7,9 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table()
- * Class ComboProduct
+ * Class ComplementaryProduct
  */
-class ComboProduct
+class ComplementaryProduct
 {
   /**
    * @ORM\Id()
@@ -19,7 +19,7 @@ class ComboProduct
   private $id;
 
   /**
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product", inversedBy="comboProducts")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product", inversedBy="complementaryProducts")
    * @ORM\JoinColumn(name="parent_product_id", referencedColumnName="id")
    */
   private $parentProduct;
@@ -29,10 +29,6 @@ class ComboProduct
    * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
    */
   private $product;
-  /**
-   * @ORM\Column(type="integer")
-   */
-  private $count;
 
   public function getId()
   {
@@ -61,17 +57,5 @@ class ComboProduct
   public function getProduct()
   {
     return $this->product;
-  }
-
-  public function setCount($count)
-  {
-      $this->count = $count;
-
-      return $this;
-  }
-
-  public function getCount()
-  {
-      return $this->count;
   }
 }

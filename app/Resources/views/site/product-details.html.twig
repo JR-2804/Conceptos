@@ -94,6 +94,9 @@
       <div class="d-flex col-12 col-lg-6 flex-column pl-0 pt-lg-3">
         <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5">
           <span class="conceptos-title-strong">{{product.name}}</span>
+          {% if product.comboProducts|length > 0 %}
+            <span class="conceptos-subtitle">Lo componen {{product.comboProducts|length}} productos</span>
+          {% endif %}
           <span class="conceptos-subtitle">{{product.item}}</span>
           <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
@@ -137,18 +140,84 @@
             <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
           </button>
         </div>
-        {% if product.comboProducts|length > 0 %}
-        <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3">
-          <span class="conceptos-title">PRODUCTOS QUE LO COMPONEN</span>
-          <div class="d-flex flex-wrap">
-            {% for comboProduct in product.comboProducts %}
-              {% set product = comboProduct.product %}
-              <div class="d-flex col-6 col-lg-3 pl-0">
-                {{include('site/product-summary-short.html.twig')}}
+        {% if comboChunks is not empty %}
+          <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3 mb-2">
+            <span class="conceptos-title">PRODUCTOS QUE LO COMPONEN</span>
+            <div class="d-flex flex-wrap">
+              <div class="w-100 carousel" data-ride="carousel" id="carousel-combo-products" data-interval="10000">
+                <ol class="carousel-indicators">
+                  {% for chunk in comboChunks %}
+                    <li data-target="#carousel-combo-products"
+                        class="{% if loop.first %}active{% endif %}"
+                        data-slide-to="{{ loop.index - 1 }}"></li>
+                  {% endfor %}
+                </ol>
+                <div class="carousel-inner">
+                    {% for chunk in comboChunks %}
+                      <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
+                        <div class="d-flex flex-wrap justify-content-center w-100">
+                          {% for comboProduct in chunk %}
+                            {% set product = comboProduct.product %}
+                            <div class="d-flex col-4 pl-0">
+                              {{include('site/combo-summary-short.html.twig')}}
+                            </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    {% endfor %}
+                </div>
               </div>
-            {% endfor %}
+            </div>
           </div>
-        </div>
+        {% endif %}
+        {% if complementaryProducts is not empty %}
+          {% set mainProduct = product %}
+          {% set totalPrice = 0 %}
+          <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3 mb-2">
+            <span class="conceptos-title">PRODUCTOS COMPLEMENTARIOS</span>
+            <div class="d-flex justify-content-center w-100">
+              {% if complementaryProducts[0] is defined %}
+                {% set product = complementaryProducts[0].product %}
+                {% if product.priceOffer != -1 %}
+                  {% set totalPrice = totalPrice + product.priceOffer %}
+                {% else %}
+                  {% set totalPrice = totalPrice + product.price %}
+                {% endif %}
+                <div class="d-flex col-3 pl-0">
+                  {{include('site/combo-summary-short.html.twig')}}
+                </div>
+                <div class="d-flex col-1 justify-content-center align-items-center pl-0">
+                  +
+                </div>
+              {% endif %}
+              {% if complementaryProducts[1] is defined %}
+                {% set product = complementaryProducts[1].product %}
+                {% if product.priceOffer != -1 %}
+                  {% set totalPrice = totalPrice + product.priceOffer %}
+                {% else %}
+                  {% set totalPrice = totalPrice + product.price %}
+                {% endif %}
+                <div class="d-flex col-3 pl-0">
+                  {{include('site/combo-summary-short.html.twig')}}
+                </div>
+                <div class="d-flex col-1 justify-content-center align-items-center pl-0">
+                  +
+                </div>
+              {% endif %}
+              {% set product = mainProduct %}
+              {% if product.priceOffer != -1 %}
+                  {% set totalPrice = totalPrice + product.priceOffer %}
+                {% else %}
+                  {% set totalPrice = totalPrice + product.price %}
+                {% endif %}
+              <div class="d-flex col-2 pl-0">
+                {{include('site/combo-summary-short.html.twig')}}
+              </div>
+              <div class="d-flex col-2 justify-content-center align-items-center pl-0">
+                = {{ totalPrice }}
+              </div>
+            </div>
+          </div>
         {% endif %}
       </div>
     </div>
