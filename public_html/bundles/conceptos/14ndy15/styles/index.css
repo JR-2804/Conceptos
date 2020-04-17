@@ -18,7 +18,8 @@
   .home__hero img {
     height: 75vh;
     -o-object-fit: cover;
-       object-fit: cover; }
+       object-fit: cover;
+    width: 100%; }
   .home__hero__content {
     position: absolute;
     top: 2em;
