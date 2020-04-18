@@ -245,7 +245,9 @@
       <div class="d-flex justify-content-center">
         {% if page.data.services.image is defined %}
           <div class="d-flex col-4 align-items-center conceptos-white-background p-2">
-            <img class="conceptos-image" src="{{ page.data.services.image.path }}">
+              {% set sizes = '(min-width: 1000px) 50vw, 95vw' %}
+              {{ page.data.services.image.path | imgTag(sizes=sizes, class='conceptos-image') | raw }}
+{#            <img class="conceptos-image" src="{{ page.data.services.image.path }}">#}
           </div>
         {% endif %}
         <div class="d-flex flex-column col-5 justify-content-center ml-lg-5 pl-lg-5">
