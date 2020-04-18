@@ -22,13 +22,13 @@ class AppExtension extends \Twig_Extension
         );
     }
 
-    public function imgTag($image, $sizes = '100vw', $alt = null, $class = null)
+    public function imgTag($image, $sizes = '100vw', $alt = null, $class = null, $style='')
     {
         $html = "<img class=\"lazyload blur-up $class \" sizes=\"$sizes\" ";
         $src = $this->imagineCacheManager->getBrowserPath($image, 'extrasmall_thumbnail');
         $html .= " src=\"$src\" ";
         $html .= " data-srcset=\"".$this->filterSrcset($image)."\" ";
-        $html .= "alt=\"$alt\">";
+        $html .= "alt=\"$alt\" style=\"$style\">";
 
         return $html;
     }

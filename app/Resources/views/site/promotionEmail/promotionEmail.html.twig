@@ -830,7 +830,7 @@
                                                             <tr>
                                                                 <td class="esd-block-text es-p5t es-p10b">
                                                                     <a target="_blank" href="{{ intro.link }}" style="text-decoration: none;">
-                                                                        <h4 style="color: #333333;">
+                                                                        <h4 style="color: #333333; font-size: 20px;">
                                                                             <span class="product-name">{{ intro.title }}</span>
                                                                         </h4>
                                                                     </a>
@@ -838,7 +838,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td class="esd-block-text es-p10b">
-                                                                    <a target="_blank" href="{{ intro.link }}" style="text-decoration: none;">
+                                                                    <a target="_blank" href="{{ intro.link }}" style="font-size: 16px; text-decoration: none;">
                                                                         {{ intro.content | striptags('<p><b><strong><em>') | raw }}
                                                                     </a>
                                                                 </td>
@@ -880,7 +880,7 @@
                                                         <tbody>
                                                         <tr>
                                                             <td class="esd-block-text" align="center">
-                                                                <h2>- {{ offersTitle | upper }} -<br></h2>
+                                                                <h2 style="font-size: 22px;">- {{ offersTitle | upper }} -<br></h2>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -931,7 +931,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td class="esd-block-text es-p5t es-p10b es-p15r es-p15l" align="left">
-                                                                    <p style="color: #333333;">
+                                                                    <p style="color: #333333; font-size: 16px;">
                                                                         <span class="product-name">{{ product.name }}</span>
                                                                         <br>
                                                                         {{ product.description | striptags | slice(0, 50)  }}...
@@ -972,7 +972,7 @@
                                                             <tbody>
                                                             <tr>
                                                                 <td class="esd-block-text" align="center">
-                                                                    <h2>- {{ productsTitle | upper }} -<br></h2>
+                                                                    <h2 style="font-size: 20px;">- {{ productsTitle | upper }} -<br></h2>
                                                                 </td>
                                                             </tr>
                                                             </tbody>
@@ -1021,7 +1021,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="esd-block-text es-p5t es-p10b es-p15r es-p15l" align="left">
-                                                                        <p style="color: #333333;">
+                                                                        <p style="color: #333333; font-size: 16px;">
                                                                             <span class="product-name">{{ product.name }}</span>
                                                                             <br>
                                                                             {{ product.description | striptags | slice(0, 50)  }}...
@@ -1104,14 +1104,14 @@
                                                         <tr>
                                                             <td class="esd-block-text es-p5t es-p20r es-p20l" style="padding-top: 5px; padding-right: 20px; padding-left: 20px;" align="left">
                                                                 <a target="_blank" href="{{ promotion.link }}" style="text-decoration: none;">
-                                                                    <h3>
+                                                                    <h3 style="font-size: 20px;">
                                                                         {{ promotion.title }}
                                                                     </h3>
                                                                 </a>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-c" align="left">
+                                                            <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-l" align="left">
                                                                 <a target="_blank" href="{{ promotion.link }}" style="text-decoration: none;">
                                                                     {{ promotion.content | striptags('<p><b><i>') | raw }}
                                                                 </a>
@@ -1151,7 +1151,7 @@
                                                         <tbody>
                                                         <tr>
                                                             <td class="esd-block-text" align="center">
-                                                                <h2>- {{ blogsTitle | upper }} -<br></h2>
+                                                                <h2 style="font-size: 20px">- {{ blogsTitle | upper }} -<br></h2>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -1189,31 +1189,23 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-{#                                                            <td class="esd-block-text es-p20t es-p20r es-p20l es-m-txt-c" style="padding-top: 20px; padding-right: 20px; padding-left: 20px;" align="left">#}
-{#                                                                <p style="color: #999999; font-size: 12px;"><strong><span class="product-category"> {% if blog.tags | length > 0 %}#}
-{#                                                                                                                            {% set tag = blog.tags | first  %}#}
-{#                                                                                                                            {{ tag.value | upper }}#}
-{#                                                                                                                        {% else %}#}
-{#                                                                                                                            &nbsp;#}
-{#                                                                                                                        {% endif %} </span></strong></p>#}
-{#                                                            </td>#}
                                                         </tr>
                                                         <tr>
                                                             <td class="esd-block-text es-p5t es-p20r es-p20l" style="padding-top: 5px; padding-right: 20px; padding-left: 20px;" align="left">
                                                                 <a href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" style="" target="_blank">
-                                                                    <h3>{{ blog.title }}</h3>
+                                                                    <h3 style="font-size: 20px;">{{ blog.title }}</h3>
                                                                 </a>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-c" align="left">
-                                                                <p class="product-description">
+                                                            <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-l" align="left">
+                                                                <p class="product-description" style="font-size: 16px;">
                                                                     {{ blog.summary  | striptags | slice(0, 150) }}...
                                                                 </p>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="right">
+                                                            <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-l" align="right">
                                                                 <p><a style="color: #7a7416;" href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" target="_blank">ver más</a></p>
                                                             </td>
                                                         </tr>
@@ -1296,12 +1288,12 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-c" align="left">
+                                                                <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-l" align="left">
                                                                     {{ service.content | raw }}
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="right">
+                                                                <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-l" align="right">
                                                                     <p><a style="color: #7a7416;" href="{{ service.link }}" target="_blank">ver más</a></p>
                                                                 </td>
                                                             </tr>
@@ -1434,7 +1426,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td align="left" class="esd-block-text">
-                                                                <p style="color: #999999;">Estás recibiendo este correo, porque visitó nuestro sitio web y
+                                                                <p style="color: #999999; font-size: 16px;">Estás recibiendo este correo, porque visitó nuestro sitio web y
                                                                     acepto que le enviáramos correos regularmente.</p>
                                                             </td>
                                                         </tr>

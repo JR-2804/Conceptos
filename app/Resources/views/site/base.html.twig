@@ -226,14 +226,13 @@
       </ul>
       <div class="menu-logo col-6 col-lg-3 pl-0 pl-lg-3">
           <div class="navbar-brand ml-0">
-              <span class="navbar-logo">
+              <span class="navbar-logo" style="">
                   <a href="{{ path('site_home') }}">
-                      <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
-                            title="Conceptos"
-                            style="height: 2.8rem;" class="logo-menu d-none d-lg-flex">
-                      <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
-                            title="Conceptos"
-                            style="width:100%;height: auto !important;" class="logo-menu d-lg-none">
+                      {{ home.data.logo.image.path | imgTag(sizes='(min-width:1000px) 33vw, 60vw',
+                                                    alt='Conceptos logo', class='logo-menu', style='width:100% !important; height: auto !important; max-height: 2.8rem;') | raw }}
+{#                      <img src="{{ home.data.logo.image.path }}" alt="Conceptos"#}
+{#                            title="Conceptos"#}
+{#                            style="width:100%;" class="">#}
                   </a>
               </span>
           </div>
