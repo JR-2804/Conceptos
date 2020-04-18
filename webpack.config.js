@@ -2,7 +2,7 @@ var path = require("path");
 
 module.exports = {
   entry: {
-    app: "./assets/scripts/app.js",
+    app_v1: "./assets/scripts/app.js",
     index: "./assets/scripts/index.js",
     shop_cart: "./assets/scripts/shop_cart.js",
     blog: "./assets/scripts/blog.js"
@@ -26,6 +26,6 @@ module.exports = {
       }
     ]
   },
-  mode: "development"
-  // mode: 'production',
+  // mode: "development"
+  mode: 'production',
 };
