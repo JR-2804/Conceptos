@@ -11,7 +11,7 @@
         {% endif %}
 
 {#        <img class="conceptos-image conceptos-popular-product-image" src="{{ asset(vich_uploader_asset(product.mainImage, 'imageFile') | imagine_filter('min_width_1200')) }}">#}
-          {{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag('22vw', null, 'conceptos-image conceptos-popular-product-image') | raw }}
+          {{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes, null, 'conceptos-image conceptos-popular-product-image') | raw }}
 
       <div class="d-flex justify-content-between align-items-center">
           {% if bigFont is defined %}

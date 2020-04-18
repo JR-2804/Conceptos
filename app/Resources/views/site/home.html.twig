@@ -31,9 +31,10 @@
   </div>
 
   <div id="home-header" class="d-flex justify-content-center home__hero align-items-start">
+
     {% if page.data.slides and page.data.slides is not empty %}
-{#      <img class="conceptos-image" src="{{  page.data.slides[0].path }}">#}
-      {{  page.data.slides[0].path | imgTag | raw }}
+        {#<img class="conceptos-image" src="{{  page.data.slides[0].path }}">#}
+        {{  page.data.slides[0].path | imgTag(sizes = '100vw') | raw }}
     {% endif %}
 
     <div class="home__hero__content col-7 col-lg-4 pl-0">
@@ -88,6 +89,7 @@
           </ol>
 
           <div class="carousel-inner">
+              {% set sizes = '(min-width: 1000px) 45vw, 16vw' %}
               {% for chunk in popularChunks %}
                 <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
                   <div class="d-flex flex-wrap">
@@ -124,6 +126,7 @@
             {% endfor %}
           </ol>
           <div class="carousel-inner">
+              {% set sizes = '(min-width: 1000px) 45vw, 16vw' %}
               {% for chunk in popularChunksDesktop %}
                 <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
                   <div class="d-flex flex-wrap">
@@ -158,6 +161,7 @@
         <div class="d-flex d-lg-none align-items-center p-2 w-100">
           <div id="carousel-in-store" class="carousel w-100" data-ride="carousel" data-interval="5000">
             <div class="carousel-inner">
+                {% set sizes = '(min-width: 1000px) 20vw, 95vw' %}
               {% for product in inStore %}
                 <div class="container-fluid carousel-item p-0 {% if loop.first %}active{% endif %}">
                   <div class="d-flex w-100">
@@ -180,13 +184,14 @@
         <div class="d-none d-lg-flex col-12 justify-content-center align-items-center p-2">
           <div class="d-flex carousel w-100" data-ride="carousel" id="carousel-in-store-desktop" data-interval="5000">
             <div class="d-flex carousel-inner w-100">
+                {% set sizes = '(min-width: 1000px) 20vw, 95vw' %}
               {% for chunk in inStoreDesktop %}
                 <div class="carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
                   <div class="d-flex flex-wrap w-100">
                     {% for product in chunk %}
                       <div class="d-flex col-3 pl-0">
                         {% set bigFont = true %}
-                        {{include('site/product-summary-short.html.twig')}}
+                        {{ include('site/product-summary-short.html.twig') }}
                       </div>
                     {% endfor %}
                   </div>
@@ -220,7 +225,9 @@
       {% if page.data.services.image is defined %}
         <div class="d-flex align-items-center conceptos-white-background p-2">
           <a href="{{ path('services') }}">
-            <img class="conceptos-image" src="{{ page.data.services.image.path }}">
+              {% set sizes = '(min-width: 1000px) 50vw, 95vw' %}
+{#            <img class="conceptos-image" src="{{ page.data.services.image.path }}">#}
+            {{ page.data.services.image.path | imgTag(sizes=sizes) | raw }}
           </a>
         </div>
       {% endif %}
@@ -269,7 +276,8 @@
             <div class="d-flex flex-column col-12 col-lg-6 align-self-center pl-0 pr-3 pb-3">
               <div class="d-flex align-items-center">
 {#                <img class="conceptos-image conceptos-blog-image" src="{{ vich_uploader_asset(post, 'imageFile') }}">#}
-                  {{  vich_uploader_asset(post, 'imageFile') | imgTag('50vw', null, 'conceptos-image conceptos-blog-image') | raw }}
+                  {% set sizes = '(min-width: 1000px) 50vw, 95vw' %}
+                  {{  vich_uploader_asset(post, 'imageFile') | imgTag(sizes, null, 'conceptos-image conceptos-blog-image') | raw }}
               </div>
               <div class="d-flex flex-column conceptos-white-background p-3">
                 <span class="conceptos-title">{{post.title}}</span>
