@@ -1301,7 +1301,7 @@ class SiteController extends Controller
         $offersProducts_ = [];
         $offersProducts = [];
         if (count($offers) > 0) {
-            
+
             foreach ($offers as $offer)
                 foreach ($offer->getProducts() as $product)
                     $offersProducts_[] = ['product' => $product, 'offerPrice' => $offer->getPrice()];
@@ -1429,16 +1429,18 @@ class SiteController extends Controller
         $offers = $promEmail->getOffers();
         $offersProducts_ = [];
         $offersProducts = [];
-        foreach ($offers as $offer)
-            foreach ($offer->getProducts() as $product)
-                $offersProducts_[] = ['product'=>$product,'offerPrice'=> $offer->getPrice()];
+        if (count($offers) > 0) {
+            foreach ($offers as $offer)
+                foreach ($offer->getProducts() as $product)
+                    $offersProducts_[] = ['product' => $product, 'offerPrice' => $offer->getPrice()];
 
-        $offersProductsIndex = array_rand($offersProducts_, min([count($offersProducts_), 4]));
-        if (is_array($offersProductsIndex))
-            foreach ($offersProductsIndex as $index)
-                $offersProducts[] = $offersProducts_[$index];
-        else
-            $offersProducts[] = $offersProducts_[$offersProductsIndex];
+            $offersProductsIndex = array_rand($offersProducts_, min([count($offersProducts_), 4]));
+            if (is_array($offersProductsIndex))
+                foreach ($offersProductsIndex as $index)
+                    $offersProducts[] = $offersProducts_[$index];
+            else
+                $offersProducts[] = $offersProducts_[$offersProductsIndex];
+        }
 
         $productsTitle = $promEmail->getProductsTitle();
         $products = $promEmail->getProducts();
