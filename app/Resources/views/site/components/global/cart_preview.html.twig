@@ -1,0 +1,26 @@
+<div id="cartPreviewModal" class="modal fade">
+    <div class="modal-dialog modal-lg mt-0">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="shop-cart-product-list-section conceptos-add-scroll">
+                    <div id="products-summary" class="d-flex flex-column mt-3 ml-3 mr-3">
+                        {{ render(controller('AppBundle:Site:productsSummary')) }}
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center conceptos-badge mt-3">
+                        <div class="d-flex flex-column m-2">
+                            <span class="conceptos-badge-text">CANTIDAD</span>
+                            <span class="conceptos-badge-text shop-cart-products-count">{{count}} {% if count == 1 %}PRODUCTO{% else %}PRODUCTOS{% endif %}</span>
+                        </div>
+                        <div class="d-flex flex-column m-2">
+                            <span class="conceptos-badge-text">PRECIO</span>
+                            <span class="conceptos-badge-text shop-cart-total-price"></span>
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center mr-2">
+                            <a class="conceptos-go-to-cart p-1 p-lg-3" href="{{ path('shop-cart') }}">COMPRAR</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
