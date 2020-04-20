@@ -211,7 +211,7 @@ liip_imagine:
     extrasmall_thumbnail:
 
       # set your image quality defaults
-      jpeg_quality:          20
+      jpeg_quality:          85
       png_compression_level: 9
 
       # setup the filter steps to apply for this transformation
@@ -231,7 +231,7 @@ liip_imagine:
     small_thumbnail:
 
       # set your image quality defaults
-      jpeg_quality:          60
+      jpeg_quality:          85
       png_compression_level: 8
 
       # setup the filter steps to apply for this transformation
@@ -251,7 +251,7 @@ liip_imagine:
     squared_thumbnail:
 
       # set your image quality defaults
-      jpeg_quality:          90
+      jpeg_quality:          85
       png_compression_level: 8
 
       # setup the filter steps to apply for this transformation
@@ -275,7 +275,7 @@ liip_imagine:
           color:    '#fff'
 
     min_width_1920:
-      jpeg_quality: 90
+      jpeg_quality: 85
       png_compression_level: 8
       filters:
         auto_rotate: ~
@@ -285,7 +285,7 @@ liip_imagine:
           max: [1920, ]
 
     min_width_1200:
-      jpeg_quality: 90
+      jpeg_quality: 85
       png_compression_level: 8
       filters:
         auto_rotate: ~
@@ -296,7 +296,7 @@ liip_imagine:
 
     min_width_1000:
       # set your image quality defaults
-      jpeg_quality:          90
+      jpeg_quality:          85
       png_compression_level: 8
 
       # setup the filter steps to apply for this transformation
@@ -310,7 +310,7 @@ liip_imagine:
     min_width_900:
 
       # set your image quality defaults
-      jpeg_quality:          90
+      jpeg_quality:          85
       png_compression_level: 8
 
       # setup the filter steps to apply for this transformation
@@ -324,7 +324,7 @@ liip_imagine:
     min_width_800:
 
       # set your image quality defaults
-      jpeg_quality:          90
+      jpeg_quality:          85
       png_compression_level: 8
 
       # setup the filter steps to apply for this transformation
@@ -338,7 +338,7 @@ liip_imagine:
     min_width_600:
 
       # set your image quality defaults
-      jpeg_quality:          90
+      jpeg_quality:          85
       png_compression_level: 8
 
       # setup the filter steps to apply for this transformation
@@ -353,7 +353,7 @@ liip_imagine:
 
       # set your image quality defaults
       jpeg_quality:          90
-      png_compression_level: 8
+      png_compression_level85
 
       # setup the filter steps to apply for this transformation
       filters:
@@ -366,7 +366,7 @@ liip_imagine:
     min_width_200:
 
       # set your image quality defaults
-      jpeg_quality:          90
+      jpeg_quality:          85
       png_compression_level: 8
 
       # setup the filter steps to apply for this transformation
@@ -380,7 +380,7 @@ liip_imagine:
     min_width_100:
 
       # set your image quality defaults
-      jpeg_quality:          90
+      jpeg_quality:          85
       png_compression_level: 8
 
       # setup the filter steps to apply for this transformation

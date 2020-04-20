@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
   {% block open_graph %}
-    <meta property="og:image" content="{{ absolute_url(asset('bundles/conceptos/images/logo.png')) }}">
+    <meta property="og:image" content="{{ absolute_url(asset('bundles/conceptos/images/logo.png') | imgTag ) }}">
     <meta property="og:title" content="TIENDA CONCEPTOS"/>
     <meta property="og:url" content="http://tiendaconceptos.com"/>
     <meta property="og:type" content="website"/>
