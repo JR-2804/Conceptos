@@ -398,10 +398,12 @@ easy_admin:
                     - { type: 'group', label: 'Seccion Informacion', icon: 'cogs', columns: 12 }
 
                     - {property: 'subject', label: 'Asunto'}
-                    - {property: 'emails', label: 'Destinatarios (separados por ;)'}
+                    - {property: 'tagUser', label: 'Grupo de usuarios', type: choice, type_options: { choices: {'==Ninguno==':'ninguno', 'Clientes': 'clientes', 'Miembros': 'miembros' }} }
+                    - {property: 'emails', label: 'Otros destinatarios (separados por ;)'}
 
                     - { type: 'group', label: 'Imagen Principal', icon: 'cogs', columns: 12 }
                     - {property: 'primaryPictureFile', type: 'file', label: 'Imágen principal'}
+                    - {property: 'primaryTitle', , label: 'Titulo principal'}
 
                     - { type: 'group', label: 'Seccion Intro', icon: 'cogs', columns: 12, help: 'Si no se pone ningún título, no se mostrara esta sección' }
 
@@ -438,8 +440,7 @@ easy_admin:
                     - { type: 'group', label: 'Seccion Blogs', icon: 'cogs', columns: 12 }
 
                     - {property: 'blogTitle', label: 'Titulo seccion Blog'}
-                    - {property: 'blogId1', label: 'Id del articulo del blog 1', help: 'Si no se anade ningun id, no se mostrara esta seccion'}
-                    - {property: 'blogId2', label: 'Id del articulo del blog 2', help: 'Si no se anade ningun id, no se mostrara esta seccion'}
+                    - {property: 'blogs', label: 'articulos del blog', help: 'Si no se añade ningún artículo, no se mostrará esta sección'}
 
                     - { type: 'group', label: 'Sección Servicios', icon: 'cogs', columns: 12, help: 'Si los servicio no posee títulos no se añadira esta sección.' }
 
