@@ -87,6 +87,7 @@
 </head>
 <body>
 <input type="hidden" value="{{ path('site_home') }}" id="site-path">
+
 <input type="hidden" value="{{ path('persist_count_shop_car') }}" id="persist-count-path">
 {% if app.user|default %}
   <input type="hidden" value="{{ true }}" id="user-authenticated">
@@ -97,64 +98,11 @@
 <div class="la-anim-10 d-none d-lg-block"></div>
 <div class="la-anim-10 small-anim d-lg-none"></div>
 
-<div id="termsAndConditionsModal" class="modal fade">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Términos y Condiciones</h4>
-            </div>
-            <div class="modal-body">
-                {{terms|raw}}
-            </div>
-            <div class="modal-footer">
-                <button class="btn navigation-button" data-dismiss="modal">Aceptar</button>
-            </div>
-        </div>
-    </div>
-</div>
+{{ include('site/components/global/terms_conditions.html.twig') }}
 
-<div id="privacyPolicyModal" class="modal fade">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Política de Privacidad</h4>
-            </div>
-            <div class="modal-body">
-                {{privacy|raw}}
-            </div>
-            <div class="modal-footer">
-                <button class="btn navigation-button" data-dismiss="modal">Aceptar</button>
-            </div>
-        </div>
-    </div>
-</div>
+{{ include('site/components/global/privacy_police.html.twig') }}
 
-<div id="cartPreviewModal" class="modal fade">
-  <div class="modal-dialog modal-lg mt-0">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="shop-cart-product-list-section conceptos-add-scroll">
-          <div id="products-summary" class="d-flex flex-column mt-3 ml-3 mr-3">
-            {{ render(controller('AppBundle:Site:productsSummary')) }}
-          </div>
-          <div class="d-flex justify-content-between align-items-center conceptos-badge mt-3">
-            <div class="d-flex flex-column m-2">
-              <span class="conceptos-badge-text">CANTIDAD</span>
-              <span class="conceptos-badge-text shop-cart-products-count">{{count}} {% if count == 1 %}PRODUCTO{% else %}PRODUCTOS{% endif %}</span>
-            </div>
-            <div class="d-flex flex-column m-2">
-              <span class="conceptos-badge-text">PRECIO</span>
-              <span class="conceptos-badge-text shop-cart-total-price"></span>
-            </div>
-            <div class="d-flex flex-column justify-content-center align-items-center mr-2">
-              <a class="conceptos-go-to-cart p-1 p-lg-3" href="{{ path('shop-cart') }}">COMPRAR</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{{ include('site/components/global/cart_preview.html.twig') }}
 
 <div id="imageViewerModal" class="modal fade">
   <div class="modal-dialog modal-lg mt-0">
@@ -166,8 +114,11 @@
   </div>
 </div>
 
-<button id="open-categories-menu" class="d-flex justify-content-end p-2">
-  <img class="conceptos-icon" src="{{ asset('bundles/conceptos/images/home/forward.png') }}">
+
+
+<button id="open-categories-menu" class="category-menu-open d-flex justify-content-end p-2">
+    <div class="animation_flash"></div>
+{#  <img class="conceptos-icon" src="{{ asset('bundles/conceptos/images/home/forward.png') }}">#}
 </button>
 
 <div id="categories-menu" class="conceptos-add-scroll">
@@ -177,6 +128,9 @@
 <div id="close-categories-menu">
   <img class="close-categories-menu-icon mr-2 d-flex d-lg-none" src="{{ asset('bundles/conceptos/images/home/close-categories-menu.png') }}">
 </div>
+
+
+
 
 {% block header %}
   <section class="menu cid-qQ6pVr9Hx2 navbar__container " once="menu">
