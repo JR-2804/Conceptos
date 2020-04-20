@@ -1268,9 +1268,30 @@ class SiteController extends Controller
 
         $promEmail = $this->getDoctrine()->getManager()->getRepository('AppBundle:PromotionEmail')->find($id);
 
+        $emails = explode(';', $promEmail->getEmails());
+        $tagUser = $promEmail->getTagUser();
+        if ($tagUser == 'clientes'){
+            $clients = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Client')->findAll();
+            foreach ($clients as $client){
+                $emails[] = $client->getEmail();
+            }
+        }
+        elseif ($tagUser == 'miembros'){
+            $members = $this->getDoctrine()->getManager()->getRepository('AppBundle:Member')->findAll();
+            foreach ($members as $member){
+                $emails[] = $member->getEmail();
+            }
+        }
+
+        echo '<ul style="height: 25vh; overflow-y: auto;">';
+        foreach ($emails as $email)
+            echo '<li>'.$email.'</li>';
+        echo '</ul>';
+
         $subject = $promEmail->getSubject();
-        $emails = $promEmail->getEmails();
+
         $primaryPicture = $promEmail->getPrimaryPicture();
+        $primaryTitle = $promEmail->getPrimaryTitle();
 
         $introTitle1 = $promEmail->getIntroTitle1();
         $introPicture1 = $promEmail->getIntroPicture1();
@@ -1316,6 +1337,11 @@ class SiteController extends Controller
 
         $productsTitle = $promEmail->getProductsTitle();
         $products = $promEmail->getProducts();
+        $productsOffers = [];
+
+        foreach ($products as $product) {
+            $productsOffers[] = count($product->getOffers()) > 0;
+        }
 
         $promotionTitle = $promEmail->getPromotionTitle();
         $promotionPicture = $promEmail->getPromotionPicture();
@@ -1328,17 +1354,7 @@ class SiteController extends Controller
                         'link'=>$promotionLink];
 
         $blogTitle = $promEmail->getBlogTitle();
-        $blogId1 = $promEmail->getBlogId1();
-        $blogId2 = $promEmail->getBlogId2();
-        $blogs = [];
-        if ($blogId1!=null) {
-            $blog1 = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($blogId1);
-            array_push($blogs, $blog1);
-        }
-        if ($blogId2!=null) {
-            $blog2 = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($blogId2);
-            array_push($blogs, $blog2);
-        }
+        $blogs = $promEmail->getBlogs();
 
         $servicesTitle = $promEmail->getServicesTitle();
 
@@ -1366,11 +1382,13 @@ class SiteController extends Controller
             'subject'=>$subject,
             'home'=>$home,
             'primaryPicture'=>$primaryPicture,
+            'primaryTitle'=>$primaryTitle,
             'intros'=>$intros,
             'offersTitle'=>$offersTitle,
             'offers'=>$offersProducts,
             'productsTitle'=>$productsTitle,
             'products'=>$products,
+            'productsOffers'=>$productsOffers,
             'promotion'=>$promotion,
             'blogsTitle'=>$blogTitle,
             'blogs'=>$blogs,
@@ -1397,6 +1415,22 @@ class SiteController extends Controller
         ]);
 
         $promEmail = $this->getDoctrine()->getManager()->getRepository('AppBundle:PromotionEmail')->find($id);
+
+        $emails = explode(';', $promEmail->getEmails());
+
+        $tagUser = $promEmail->getTagUser();
+        if ($tagUser == 'clientes'){
+            $clients = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Client')->findAll();
+            foreach ($clients as $client){
+                $emails[] = $client->getEmail();
+            }
+        }
+        elseif ($tagUser == 'miembros'){
+            $members = $this->getDoctrine()->getManager()->getRepository('AppBundle:Member')->findAll();
+            foreach ($members as $member){
+                $emails[] = $member->getEmail();
+            }
+        }
 
         $subject = $promEmail->getSubject();
         $primaryPicture = $promEmail->getPrimaryPicture();
@@ -1444,6 +1478,11 @@ class SiteController extends Controller
 
         $productsTitle = $promEmail->getProductsTitle();
         $products = $promEmail->getProducts();
+        $productsOffers = [];
+
+        foreach ($products as $product) {
+            $productsOffers[] = count($product->getOffers()) > 0;
+        }
 
         $promotionTitle = $promEmail->getPromotionTitle();
         $promotionPicture = $promEmail->getPromotionPicture();
@@ -1456,17 +1495,7 @@ class SiteController extends Controller
             'link'=>$promotionLink];
 
         $blogTitle = $promEmail->getBlogTitle();
-        $blogId1 = $promEmail->getBlogId1();
-        $blogId2 = $promEmail->getBlogId2();
-        $blogs = [];
-        if ($blogId1!=null) {
-            $blog1 = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($blogId1);
-            array_push($blogs, $blog1);
-        }
-        if ($blogId2!=null) {
-            $blog2 = $this->getDoctrine()->getManager()->getRepository('AppBundle:Blog\Post')->find($blogId2);
-            array_push($blogs, $blog2);
-        }
+        $blogs = $promEmail->getBlogs();
 
         $servicesTitle = $promEmail->getServicesTitle();
 
@@ -1499,6 +1528,7 @@ class SiteController extends Controller
             'offers'=>$offersProducts,
             'productsTitle'=>$productsTitle,
             'products'=>$products,
+            'productsOffers'=>$productsOffers,
             'promotion'=>$promotion,
             'blogsTitle'=>$blogTitle,
             'blogs'=>$blogs,
@@ -1517,6 +1547,7 @@ class SiteController extends Controller
             'offers'=>$offersProducts,
             'productsTitle'=>$productsTitle,
             'products'=>$products,
+            'productsOffers'=>$productsOffers,
             'promotion'=>$promotion,
             'blogsTitle'=>$blogTitle,
             'blogs'=>$blogs,
@@ -1527,7 +1558,7 @@ class SiteController extends Controller
         ]);
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
-        $emails = explode(';', $promEmail->getEmails());
+
         foreach ($emails as $email){
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $this->get('email_service')->send($config->getEmail(), $promEmail->getSubject(), $email,

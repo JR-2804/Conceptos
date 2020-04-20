@@ -4,12 +4,10 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 use PhpOption\Tests\Repository;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
-//include __DIR__.'/../Utils/simple_html_dom.php';
-//use AppBundle\utils\DOM;
 
 /**
  * PromotionEmail
@@ -79,12 +77,41 @@ class PromotionEmail
      */
     private $updatedAt;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tag_user", type="text")
+     */
+    private $tagUser;
 
+    /**
+     * Set tagUser
+     *
+     * @param string $tagUser
+     *
+     * @return PromotionEmail
+     */
+    public function setTagUser($tagUser)
+    {
+        $this->tagUser = $tagUser;
+
+        return $this;
+    }
+
+    /**
+     * Get tagUser
+     *
+     * @return string
+     */
+    public function getTagUser()
+    {
+        return $this->tagUser;
+    }
 
     /**
      * @var string
      *
-     * @ORM\Column(name="emails", type="text")
+     * @ORM\Column(name="emails", type="text", nullable=true)
      */
     private $emails;
 
@@ -170,6 +197,38 @@ class PromotionEmail
         if ($primaryPictureFile) {
             $this->updatedAt = new \DateTime('now');
         }
+    }
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="primaryTitle", type="string",  nullable=true)
+     */
+    private $primaryTitle;
+
+    /**
+     * Set tagUser
+     *
+     * @param string $primaryTitle
+     *
+     * @return PromotionEmail
+     */
+    public function setPrimaryTitle($primaryTitle)
+    {
+        $this->primaryTitle = $primaryTitle;
+
+        return $this;
+    }
+
+    /**
+     * Get PrimaryTitle
+     *
+     * @return string
+     */
+    public function getPrimaryTitle()
+    {
+        return $this->primaryTitle;
     }
 
 
@@ -963,66 +1022,42 @@ class PromotionEmail
 
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="blogId1",  type="integer", length=255, nullable=true)
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Blog\Post")
      */
-    private $blogId1;
+    private $blogs;
 
     /**
-     * Set blogId1
+     * Add blog.
      *
-     * @param string $blogId1
+     * @param \AppBundle\Entity\Blog\Post $blog
      *
      * @return PromotionEmail
      */
-    public function setBlogId1($blogId1)
+    public function addBlog(Blog\Post $blog)
     {
-        $this->blogId1 = $blogId1;
+        $this->blogs[] = $blog;
 
         return $this;
     }
 
     /**
-     * Get blogId1
+     * Remove blog.
      *
-     * @return string
+     * @param \AppBundle\Entity\Blog\Post $blog
      */
-    public function getBlogId1()
+    public function removeBlog(Product $blog)
     {
-        return $this->blogId1;
-    }
-
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="blogId2",  type="integer", length=255, nullable=true)
-     */
-    private $blogId2;
-
-    /**
-     * Set blogId2
-     *
-     * @param string $blogId2
-     *
-     * @return PromotionEmail
-     */
-    public function setBlogId2($blogId2)
-    {
-        $this->blogId2 = $blogId2;
-
-        return $this;
+        $this->blogs->removeElement($blog);
     }
 
     /**
-     * Get blogId2
+     * Get blogs.
      *
-     * @return string
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getBlogId2()
+    public function getBlogs()
     {
-        return $this->blogId2;
+        return $this->blogs;
     }
 
 
@@ -1460,14 +1495,11 @@ class PromotionEmail
         return $this->footerPictureLink;
     }
 
-
     public function __construct()
     {
-
         $this->products = new ArrayCollection();
-
-
         $this->offers = new ArrayCollection();
+        $this->blogs = new ArrayCollection();
     }
 
 }
