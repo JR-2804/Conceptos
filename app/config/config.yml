@@ -348,3 +348,45 @@ liip_imagine:
         downscale:
           # input 3960x2560px -> output 1980x1280px
           max: [600, ]
+
+    min_width_400:
+
+      # set your image quality defaults
+      jpeg_quality:          90
+      png_compression_level: 8
+
+      # setup the filter steps to apply for this transformation
+      filters:
+        auto_rotate: ~
+        strip: ~
+        downscale:
+          # input 3960x2560px -> output 1980x1280px
+          max: [400, ]
+
+    min_width_200:
+
+      # set your image quality defaults
+      jpeg_quality:          90
+      png_compression_level: 8
+
+      # setup the filter steps to apply for this transformation
+      filters:
+        auto_rotate: ~
+        strip: ~
+        downscale:
+          # input 3960x2560px -> output 1980x1280px
+          max: [200, ]
+
+    min_width_100:
+
+      # set your image quality defaults
+      jpeg_quality:          90
+      png_compression_level: 8
+
+      # setup the filter steps to apply for this transformation
+      filters:
+        auto_rotate: ~
+        strip: ~
+        downscale:
+          # input 3960x2560px -> output 1980x1280px
+          max: [100, ]
