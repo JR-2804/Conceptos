@@ -762,6 +762,38 @@ class PromotionEmail
     }
 
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="linkOffers", type="string", length=255, nullable=true)
+     */
+    private $linkOffers;
+
+    /**
+     * Set $linkOffers
+     *
+     * @param string $linkOffers
+     *
+     * @return PromotionEmail
+     */
+    public function setLinkOffers($linkOffers)
+    {
+        $this->linkOffers = $linkOffers;
+
+        return $this;
+    }
+
+    /**
+     * Get promotionPicture
+     *
+     * @return string
+     */
+    public function getLinkOffers()
+    {
+        return $this->linkOffers;
+    }
+
+
 
     /**
      * @var string
@@ -833,11 +865,42 @@ class PromotionEmail
         return $this->products;
     }
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="linkProducts", type="string", length=255, nullable=true)
+     */
+    private $linkProducts;
+
+    /**
+     * Set $link
+     *
+     * @param string $linkProducts
+     *
+     * @return PromotionEmail
+     */
+    public function setLinkProducts($linkProducts)
+    {
+        $this->linkProducts = $linkProducts;
+
+        return $this;
+    }
+
+    /**
+     * Get linkProducts
+     *
+     * @return string
+     */
+    public function getLinkProducts()
+    {
+        return $this->linkProducts;
+    }
+
 
     /**
      * @var string
      *
-     * @ORM\Column(name="promotionPicture", type="string", length=255)
+     * @ORM\Column(name="promotionPicture", type="string", length=255, nullable=true)
      */
     private $promotionPicture;
 
@@ -1408,7 +1471,7 @@ class PromotionEmail
     /**
      * @var string
      *
-     * @ORM\Column(name="footerPicture", type="string", length=255)
+     * @ORM\Column(name="footerPicture", type="string", length=255, nullable=true)
      */
     private $footerPicture;
 
