@@ -1434,6 +1434,7 @@ class SiteController extends Controller
 
         $subject = $promEmail->getSubject();
         $primaryPicture = $promEmail->getPrimaryPicture();
+        $primaryTitle = $promEmail->getPrimaryTitle();
 
         $introTitle1 = $promEmail->getIntroTitle1();
         $introPicture1 = $promEmail->getIntroPicture1();
@@ -1523,6 +1524,7 @@ class SiteController extends Controller
             'subject'=>$subject,
             'home'=>$home,
             'primaryPicture'=>$primaryPicture,
+            'primaryTitle'=>$primaryTitle,
             'intros'=>$intros,
             'offersTitle'=>$offersTitle,
             'offers'=>$offersProducts,
@@ -1542,6 +1544,7 @@ class SiteController extends Controller
             'subject'=>$subject,
             'home'=>$home,
             'primaryPicture'=>$primaryPicture,
+            'primaryTitle'=>$primaryTitle,
             'intros'=>$intros,
             'offersTitle'=>$offersTitle,
             'offers'=>$offersProducts,
