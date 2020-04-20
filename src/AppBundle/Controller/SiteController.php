@@ -1578,9 +1578,7 @@ class SiteController extends Controller
 
         foreach ($emails as $email){
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $this->get('email_service')->send($config->getEmail(), $promEmail->getSubject(), $email,
-                    $promEmail->getSubject(),
-                    $body);
+                $this->get('email_service')->send($config->getEmail(), 'Comercial Conceptos', $email, $promEmail->getSubject(), $body);
             }
         }
 
