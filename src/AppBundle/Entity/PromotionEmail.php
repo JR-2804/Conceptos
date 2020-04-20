@@ -265,7 +265,7 @@ class PromotionEmail
     }
 
     /**
-     * @Vich\UploadableField(mapping="email_images", fileNameProperty="introPicture1")
+     * @Vich\UploadableField(mapping="email_images", fileNameProperty="introPicture1", nullable=true)
      */
     private $introPicture1File;
 
@@ -416,7 +416,7 @@ class PromotionEmail
     }
 
     /**
-     * @Vich\UploadableField(mapping="email_images", fileNameProperty="introPicture2")
+     * @Vich\UploadableField(mapping="email_images", fileNameProperty="introPicture2",  nullable=true)
      */
     private $introPicture2File;
 
@@ -567,7 +567,7 @@ class PromotionEmail
     }
 
     /**
-     * @Vich\UploadableField(mapping="email_images", fileNameProperty="introPicture3")
+     * @Vich\UploadableField(mapping="email_images", fileNameProperty="introPicture3",  nullable=true)
      */
     private $introPicture3File;
 
@@ -1127,7 +1127,7 @@ class PromotionEmail
 
 
     /**
-     * @Vich\UploadableField(mapping="email_images", fileNameProperty="servicePicture1")
+     * @Vich\UploadableField(mapping="email_images", fileNameProperty="servicePicture1",  nullable=true)
      */
     private $servicePicture1File;
 
@@ -1282,7 +1282,7 @@ class PromotionEmail
 
 
     /**
-     * @Vich\UploadableField(mapping="email_images", fileNameProperty="servicePicture2")
+     * @Vich\UploadableField(mapping="email_images", fileNameProperty="servicePicture2",  nullable=true)
      */
     private $servicePicture2File;
 
