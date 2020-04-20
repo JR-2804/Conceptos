@@ -425,10 +425,12 @@ easy_admin:
                     - { type: 'group', label: 'Seccion Ofertas', icon: 'cogs', columns: 12, help: 'Si no hay codigos, no se mostrara esta sección'}
                     - {property: 'offersTitle', label: 'Titulo seccion ofertas'}
                     - {property: 'offers', label: 'Ofertas disponibles en el sitio'}
+                    - {property: 'linkOffers', label: 'Enlace para ver más ofertas en el sitio'}
 
                     - { type: 'group', label: 'Seccion productos', icon: 'cogs', columns: 12, help: 'Si no hay códigos, no se mostrara esta sección' }
                     - {property: 'productsTitle', label: 'Título sección productos'}
                     - {property: 'products', label: 'Código de los productos'}
+                    - {property: 'linkProducts', label: 'Enlace para ver más productos en el sitio'}
 
                     - { type: 'group', label: 'Sección promoción', icon: 'cogs', columns: 12 }
 

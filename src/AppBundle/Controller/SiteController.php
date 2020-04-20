@@ -1319,6 +1319,7 @@ class SiteController extends Controller
 
         $offersTitle = $promEmail->getOffersTitle();
         $offers = $promEmail->getOffers();
+        $linkOffers = $promEmail->getLinkOffers();
         $offersProducts_ = [];
         $offersProducts = [];
         if (count($offers) > 0) {
@@ -1337,6 +1338,7 @@ class SiteController extends Controller
 
         $productsTitle = $promEmail->getProductsTitle();
         $products = $promEmail->getProducts();
+        $linkProducts = $promEmail->getLinkProducts();
         $productsOffers = [];
 
         foreach ($products as $product) {
@@ -1386,8 +1388,10 @@ class SiteController extends Controller
             'intros'=>$intros,
             'offersTitle'=>$offersTitle,
             'offers'=>$offersProducts,
+            'linkOffers'=>$linkOffers,
             'productsTitle'=>$productsTitle,
             'products'=>$products,
+            'linkProducts'=>$linkProducts,
             'productsOffers'=>$productsOffers,
             'promotion'=>$promotion,
             'blogsTitle'=>$blogTitle,
@@ -1462,6 +1466,7 @@ class SiteController extends Controller
 
         $offersTitle = $promEmail->getOffersTitle();
         $offers = $promEmail->getOffers();
+        $linkOffers = $promEmail->getLinkOffers();
         $offersProducts_ = [];
         $offersProducts = [];
         if (count($offers) > 0) {
@@ -1479,6 +1484,7 @@ class SiteController extends Controller
 
         $productsTitle = $promEmail->getProductsTitle();
         $products = $promEmail->getProducts();
+        $linkProducts = $promEmail->getLinkProducts();
         $productsOffers = [];
 
         foreach ($products as $product) {
@@ -1528,8 +1534,10 @@ class SiteController extends Controller
             'intros'=>$intros,
             'offersTitle'=>$offersTitle,
             'offers'=>$offersProducts,
+            'linkOffers'=>$linkOffers,
             'productsTitle'=>$productsTitle,
             'products'=>$products,
+            'linkProducts'=>$linkProducts,
             'productsOffers'=>$productsOffers,
             'promotion'=>$promotion,
             'blogsTitle'=>$blogTitle,
@@ -1551,6 +1559,7 @@ class SiteController extends Controller
             'productsTitle'=>$productsTitle,
             'products'=>$products,
             'productsOffers'=>$productsOffers,
+            'linkProducts'=>$linkProducts,
             'promotion'=>$promotion,
             'blogsTitle'=>$blogTitle,
             'blogs'=>$blogs,
