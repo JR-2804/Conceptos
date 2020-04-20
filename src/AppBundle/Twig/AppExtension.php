@@ -38,7 +38,7 @@ class AppExtension extends \Twig_Extension
      * @param array $sizes, the sizes, depends on the filters 'min_width_XXX' defined on liip_image config file
      * @return string
      */
-    public function filterSrcset($imagePath, $sizes = [1920, 1200, 1000, 900, 800, 600, 400, 200, 100)
+    public function filterSrcset($imagePath, $sizes = [1920, 1200, 1000, 900, 800, 600, 400, 200, 100])
     {
         $html = '';
         foreach ($sizes as $value) {
