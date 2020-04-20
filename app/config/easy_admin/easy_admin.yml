@@ -391,7 +391,7 @@ easy_admin:
                     - {property: 'primaryPicture', label: 'Imágen Principal', type: 'image', base_path: '%app.path.email.images%'}
                 actions:
                     - {name: 'preview_promotion_email', type: 'route'}
-                    - {name: 'send_promotion_email', type: 'route', ask_confirm: true}
+                    - {name: 'send_promotion_email', type: 'route'}
             form:
                 title: 'Nuevo correo de promocion'
                 fields:
@@ -445,7 +445,6 @@ easy_admin:
                     - { type: 'group', label: 'Sección Servicios', icon: 'cogs', columns: 12, help: 'Si los servicio no posee títulos no se añadira esta sección.' }
 
                     - {property: 'servicesTitle', label: 'Titulo seccion Servicios'}
-                    -
                     - {property: 'serviceTitle1', label: 'Servicio titulo 1', help: 'Si el Servicio no posee título no se añadira.'}
                     - {property: 'servicePicture1File', type: 'file', label: 'Servicio Imagen 1'}
                     - {property: 'serviceContent1', label: 'Servicio content 1', type: 'ckeditor'}
