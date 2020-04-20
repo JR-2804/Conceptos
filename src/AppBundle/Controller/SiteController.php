@@ -1436,6 +1436,11 @@ class SiteController extends Controller
             }
         }
 
+        echo '<ul style="height: 25vh; overflow-y: auto;">';
+        foreach ($emails as $email)
+            echo '<li>'.$email.'</li>';
+        echo '</ul>';
+
         $subject = $promEmail->getSubject();
         $primaryPicture = $promEmail->getPrimaryPicture();
         $primaryTitle = $promEmail->getPrimaryTitle();
