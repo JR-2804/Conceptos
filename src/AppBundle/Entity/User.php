@@ -211,11 +211,11 @@ class User extends BaseUser
 
     public function getProductsInCartCount()
     {
-      $count = 0;
-      foreach ($this->shopCartProducts as $shopCartProduct) {
-        $count = $count + 1;
-      }
+      return count($this->shopCartProducts);
+    }
 
-      return $count;
+    public function getFavoritesCount()
+    {
+      return count($this->favorites);
     }
 }

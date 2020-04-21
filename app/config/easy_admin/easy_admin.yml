@@ -473,6 +473,7 @@ easy_admin:
                     - {property: 'enabled', label: 'Habilitado', type: 'toggle'}
                     - {property: 'lastLogin', label: 'Último acceso'}
                     - {property: 'ProductsInCartCount', label: 'Cantidad en Carrito', type: 'integer'}
+                    - {property: 'FavoritesCount', label: 'Cantidad de Favoritos', type: 'integer'}
             edit:
                 fields:
                     - { property: 'plainPassword', type_options: { required: false} }
