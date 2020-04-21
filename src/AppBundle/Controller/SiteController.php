@@ -1359,6 +1359,7 @@ class SiteController extends Controller
         $blogs = $promEmail->getBlogs();
 
         $servicesTitle = $promEmail->getServicesTitle();
+        $linkServices = $promEmail->getLinkServices();
 
         $serviceTitle1 = $promEmail->getServiceTitle1();
         $servicePicture1 = $promEmail->getServicePicture1();
@@ -1397,6 +1398,7 @@ class SiteController extends Controller
             'blogsTitle'=>$blogTitle,
             'blogs'=>$blogs,
             'servicesTitle'=>$servicesTitle,
+            'linkServices'=>$linkServices,
             'services'=>$services,
             'footerPicture'=>$footerPicture,
             'footerLink'=>$footerLink,
@@ -1510,6 +1512,7 @@ class SiteController extends Controller
         $blogs = $promEmail->getBlogs();
 
         $servicesTitle = $promEmail->getServicesTitle();
+        $linkServices = $promEmail->getLinkServices();
 
         $serviceTitle1 = $promEmail->getServiceTitle1();
         $servicePicture1 = $promEmail->getServicePicture1();
@@ -1548,6 +1551,7 @@ class SiteController extends Controller
             'blogsTitle'=>$blogTitle,
             'blogs'=>$blogs,
             'servicesTitle'=>$servicesTitle,
+            'linkServices'=>$linkServices,
             'services'=>$services,
             'footerPicture'=>$footerPicture,
             'footerLink'=>$footerLink,
@@ -1569,6 +1573,7 @@ class SiteController extends Controller
             'blogsTitle'=>$blogTitle,
             'blogs'=>$blogs,
             'servicesTitle'=>$servicesTitle,
+            'linkServices'=>$linkServices,
             'services'=>$services,
             'footerPicture'=>$footerPicture,
             'footerLink'=>$footerLink,

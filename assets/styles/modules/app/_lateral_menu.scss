@@ -1,3 +1,42 @@
+.category-menu-open{
+    position: fixed;
+    top: 75%;
+    z-index: 2;
+    border: 1px solid #282827;
+    background-color: #c2b930;
+    width: 4em;
+    height: 2.25em;
+    outline: none;
+    overflow: hidden;
+
+    &:before, &:after{
+        position: absolute;
+        right: .5em;
+        content: '';
+        width: 1em;
+        height: .25em;
+        background-color: #282827;
+    }
+
+    &:before{
+        transform: translateY(-102%) rotate(45deg);
+    }
+
+    &:after{
+        transform: translateY(102%) rotate(-45deg);
+    }
+}
+
+.animation_flash{
+    position: absolute;
+    width: 10em;
+    height: 150%;
+    top: -25%;
+    transform: rotate(35deg);
+    background-color: rgba(white, .5);
+    animation: zoomIn 2.5s ease-in 10;
+}
+
 .conceptos-category-icon {
     width: 1.5em;
     height: auto;
@@ -5,16 +44,16 @@
 
 @keyframes zoomIn {
     0%{
-        transform: scaleX(1);
+        transform: translateX(-50) rotate(35deg);
     }
     50%{
-        transform: scaleX(1.5);
+        transform: translateX(100%) rotate(35deg);
     }
     100%{
-        transform: scaleX(1);
+        transform: translateX(0%) rotate(35deg);
     }
 }
 
-#open-categories-menu{
-    animation: zoomIn 2.5s ease-in 10;
-}
+//#open-categories-menu{
+//    animation: zoomIn 2.5s ease-in 10;
+//}

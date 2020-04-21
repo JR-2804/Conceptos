@@ -1157,6 +1157,41 @@ class PromotionEmail
     }
 
 
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="linkServices",  type="string", length=255, nullable=true)
+     */
+    private $linkServices;
+
+    /**
+     * Set linkServices
+     *
+     * @param string $linkServices
+     *
+     * @return PromotionEmail
+     */
+    public function setLinkServices($linkServices)
+    {
+        $this->linkServices = $linkServices;
+
+        return $this;
+    }
+
+    /**
+     * Get linkServices
+     *
+     * @return string
+     */
+    public function getLinkServices()
+    {
+        return $this->linkServices;
+    }
+
+
+
     /**
      * @var string
      *
