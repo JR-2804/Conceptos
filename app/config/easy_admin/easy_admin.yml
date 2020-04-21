@@ -447,13 +447,17 @@ easy_admin:
                     - { type: 'group', label: 'Sección Servicios', icon: 'cogs', columns: 12, help: 'Si los servicio no posee títulos no se añadira esta sección.' }
 
                     - {property: 'servicesTitle', label: 'Titulo seccion Servicios'}
+                    - {property: 'linkServices', label: 'Enlace de los servicios'}
+
                     - {property: 'serviceTitle1', label: 'Servicio titulo 1', help: 'Si el Servicio no posee título no se añadira.'}
                     - {property: 'servicePicture1File', type: 'file', label: 'Servicio Imagen 1'}
                     - {property: 'serviceContent1', label: 'Servicio content 1', type: 'ckeditor'}
+                    - {property: 'serviceLink1', label: 'Enlace del Servicio 1'}
 
                     - {property: 'serviceTitle2', label: 'Servicio titulo 2', help: 'Si el servicio no posee título no se añadira.'}
                     - {property: 'servicePicture2File', type: 'file', label: 'Servicio Imagen 2'}
                     - {property: 'serviceContent2', label: 'Servicio content 2', type: 'ckeditor'}
+                    - {property: 'serviceLink2', label: 'Enlace del Servicio 2'}
 
                     - { type: 'group', label: 'Seccion Footer', icon: 'cogs', columns: 12 }
 
