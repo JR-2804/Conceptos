@@ -195,6 +195,31 @@ class SiteController extends Controller
     }
 
     /**
+     * @Route(name="home_slide", path="/home/slide")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function homeSlideAction(Request $request)
+    {
+      $offers = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')
+        ->createQueryBuilder('o')
+        ->where('o.startDate <= :date AND o.endDate >= :date')
+        ->setParameter('date', new \DateTime(), Type::DATE)
+        ->getQuery()->getResult();
+
+      $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Home',
+      ]);
+
+      return $this->render(':site:home-slide.html.twig', [
+        'offers' => $offers,
+        'page' => $page,
+      ]);
+    }
+
+    /**
      * @Route(name="about_us", path="sobre-nosotros")
      *
      * @param Request $request

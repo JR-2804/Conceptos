@@ -532,6 +532,27 @@ $(document).ready(function() {
     $("#btn-edit-advertisement").hide();
     $("#btn-cancel-edit-advertisement").hide();
   });
+
+  $("#show-slide-preview").change(function() {
+    if ($("#show-slide-preview").prop("checked")) {
+      $("#slide-section").show();
+    } else {
+      $("#slide-section").hide();
+    }
+  });
+
+  $("#update-slide-preview").click(function() {
+    document
+      .getElementById("slide-preview")
+      .contentWindow.location.reload(true);
+  });
+
+  $("#slide-preview").on("load", function() {
+    $(this)
+      .contents()
+      .find("head")
+      .append("<style>.home__hero:after {}</style>");
+  });
 });
 
 function init() {
