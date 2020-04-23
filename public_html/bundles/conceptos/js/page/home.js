@@ -12,6 +12,7 @@ var template_advertisement =
 var social_networks = [];
 var headerImages = undefined;
 var headerImage = undefined;
+var headerImageMobile = undefined;
 var topImage1 = undefined;
 var topImage2 = undefined;
 var servicesImage = undefined;
@@ -82,6 +83,30 @@ $(document).ready(function() {
     },
     success: function(e, r) {
       headerImage = r;
+    }
+  });
+  dropzoneMobile = new Dropzone("form#picture-dropzone-header-mobile", {
+    url: $("#picture-dropzone-header-mobile").attr("action"),
+    maxFiles: 1,
+    thumbnailWidth: 100,
+    thumbnailHeight: 100,
+    addRemoveLinks: true,
+    dictCancelUpload: "Cancelar",
+    dictRemoveFile: "Eliminar",
+    previewTemplate: document.querySelector("#preview-template").innerHTML,
+    acceptedFiles: ".jpg,.jpeg,.png,.gif",
+    init: function() {
+      dropzoneMobile = this;
+      dropzoneMobile.on("removedfile", function() {
+        if (headerImageMobile != undefined) {
+          var path = $(".remove-path-image").val() + "/" + headerImageMobile.id;
+          headerImageMobile = undefined;
+          dropzoneMobile.options.maxFiles = 1;
+        }
+      });
+    },
+    success: function(e, r) {
+      headerImageMobile = r;
     }
   });
   dropzoneTop1 = new Dropzone("form#picture-dropzone-top-1", {
@@ -436,10 +461,13 @@ $(document).ready(function() {
       }
       headerImage.main = $("#header-main").val();
       headerImage.secondary = $("#header-secondary").val();
+      headerImage.mobileImage = headerImageMobile;
       headerImages.push(headerImage);
       headerImage = undefined;
-      var dropzoneHeader = Dropzone.forElement("form#picture-dropzone-header");
-      dropzoneHeader.removeAllFiles(true);
+      Dropzone.forElement("form#picture-dropzone-header").removeAllFiles(true);
+      Dropzone.forElement("form#picture-dropzone-header-mobile").removeAllFiles(
+        true
+      );
       $("#slide-link").val("");
       $("#header-main").val("");
       $("#header-secondary").val("");

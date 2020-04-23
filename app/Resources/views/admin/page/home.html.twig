@@ -47,9 +47,17 @@
                             <form class="dropzone" id="picture-dropzone-header"
                                   action="{{ path('upload_site_image') }}">
                                 <div class="dz-message needsclick colp" style="font-size: 25px;">
-                                    Seleccione una imágen
+                                    Seleccione una imágen para escritorio
                                 </div>
                             </form>
+                            <div class="center-block">
+                              <form class="dropzone" id="picture-dropzone-header-mobile"
+                                    action="{{ path('upload_site_image') }}">
+                                  <div class="dz-message needsclick colp" style="font-size: 25px;">
+                                      Seleccione una imágen para móviles
+                                  </div>
+                              </form>
+                          </div>
                         </div>
                     </div>
                 </div>
