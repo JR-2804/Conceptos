@@ -1187,24 +1187,15 @@ class SiteController extends Controller
         $shopCartProducts = $this->getDoctrine()->getManager()->getRepository('AppBundle:ShopCartProduct')->findBy([
           'user' => $this->getUser()->getId(),
         ]);
+        $product = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($id);
 
-        $exist = false;
-        foreach ($shopCartProducts as $shopCartProduct) {
-          if ($shopCartProduct->getProductId() == $id) {
-            $exist = true;
-            $shopCartProduct->setCount($shopCartProduct->getCount() + 1);
-            $this->getDoctrine()->getManager()->persist($shopCartProduct);
-            $this->getDoctrine()->getManager()->flush();
+        if ($request->query->get('complementary')) {
+          foreach ($product->getComplementaryProducts() as $complementaryProduct) {
+            $this->addShopCartProduct($complementaryProduct->getProduct()->getId(), $shopCartProducts);
           }
-        }
-        if (!$exist) {
-          $shopCartProduct = new ShopCartProduct();
-          $shopCartProduct->setProductId($id);
-          $shopCartProduct->setCount(1);
-          $shopCartProduct->setUuid(uniqid());
-          $shopCartProduct->setUser($this->getUser());
-          $this->getDoctrine()->getManager()->persist($shopCartProduct);
-          $this->getDoctrine()->getManager()->flush();
+          $this->addShopCartProduct($id, $shopCartProducts);
+        } else {
+          $this->addShopCartProduct($id, $shopCartProducts);
         }
 
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
@@ -1217,7 +1208,6 @@ class SiteController extends Controller
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
         return new JsonResponse([
-          'exist' => $exist,
           'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
           'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
           'html' => $this->renderView(':site:products-summary.html.twig', [
@@ -1988,5 +1978,28 @@ class SiteController extends Controller
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
         ]);
+    }
+
+    private function addShopCartProduct($id, $shopCartProducts, $count = 1)
+    {
+      $exist = false;
+      foreach ($shopCartProducts as $shopCartProduct) {
+        if ($shopCartProduct->getProductId() == $id) {
+          $exist = true;
+          $shopCartProduct->setCount($shopCartProduct->getCount() + $count);
+          $this->getDoctrine()->getManager()->persist($shopCartProduct);
+          $this->getDoctrine()->getManager()->flush();
+        }
+      }
+      if (!$exist) {
+        $shopCartProduct = new ShopCartProduct();
+        $shopCartProduct->setProductId($id);
+        $shopCartProduct->setCount($count);
+        $shopCartProduct->setUuid(uniqid());
+        $shopCartProduct->setUser($this->getUser());
+        $shopCartProducts[] = $shopCartProduct;
+        $this->getDoctrine()->getManager()->persist($shopCartProduct);
+        $this->getDoctrine()->getManager()->flush();
+      }
     }
 }

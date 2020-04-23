@@ -47,7 +47,7 @@ class ShopCartService
         if (
             $shopCartProduct->getProductId() == 'target15' ||
             $shopCartProduct->getProductId() == 'target25' ||
-            $shopCartProduct->getProductId() == 'target5' ||
+            $shopCartProduct->getProductId() == 'target50' ||
             $shopCartProduct->getProductId() == 'target100') {
           $name = 'Tarjeta de 15 CUC';
           switch ($shopCartProduct->getProductId()) {

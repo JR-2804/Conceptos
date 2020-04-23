@@ -173,6 +173,10 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     transform-origin: 50% 50%;
     font-size: .8em; }
 
+.popular_product_short > div:first-child:before {
+  transform: translate(-25%, 50%) rotate(-45deg);
+  font-size: .6em; }
+
 .carousel-indicators {
   bottom: -5px;
   margin-bottom: 0; }

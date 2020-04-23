@@ -18,3 +18,8 @@
         }
     }
 }
+
+.popular_product_short > div:first-child:before {
+  transform: translate(-25%, 50%) rotate(-45deg);
+    font-size: .6em;
+}
