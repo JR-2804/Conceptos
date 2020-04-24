@@ -51,6 +51,10 @@ class Request
      */
     private $firstClientDiscount;
     /**
+     * @ORM\Column(type="float")
+     */
+    private $comboDiscount;
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Request\PreFacture", mappedBy="request")
      */
     private $preFactures;
@@ -190,6 +194,18 @@ class Request
     public function getFirstClientDiscount()
     {
         return $this->firstClientDiscount;
+    }
+
+    public function setComboDiscount($comboDiscount)
+    {
+        $this->comboDiscount = $comboDiscount;
+
+        return $this;
+    }
+
+    public function getComboDiscount()
+    {
+        return $this->comboDiscount;
     }
 
     public function addPreFacture(PreFacture $preFacture)

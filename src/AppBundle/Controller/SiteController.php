@@ -575,6 +575,7 @@ class SiteController extends Controller
             $client->setPhone($data->getPhone());
             $this->getDoctrine()->getManager()->persist($client);
 
+            $comboDiscount = 0;
             if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
               if ($data->getType() == "facture") {
                 $facture = new Facture();
@@ -586,28 +587,38 @@ class SiteController extends Controller
 
                 foreach ($productsResponse as $productR) {
                   if (array_key_exists('type', $productR)) {
-                      $factureCard = new FactureCard();
-                      $factureCard->setCount($productR['count']);
-                      $factureCard->setFacture($facture);
-                      $factureCard->setPrice($productR['price']);
-                      $this->getDoctrine()->getManager()->persist($factureCard);
-                      $facture->addFactureCard($factureCard);
+                    $factureCard = new FactureCard();
+                    $factureCard->setCount($productR['count']);
+                    $factureCard->setFacture($facture);
+                    $factureCard->setPrice($productR['price']);
+                    $this->getDoctrine()->getManager()->persist($factureCard);
+                    $facture->addFactureCard($factureCard);
                   } else {
-                      $factureProduct = new FactureProduct();
-                      $factureProduct->setCount($productR['count']);
-                      $factureProduct->setFacture($facture);
-                      $factureProduct->setProduct($productR['product']);
-                      $factureProduct->setProductPrice($productR['price']);
-                      if ($productR['price'] > $productR['product']->getPrice()){
-                        $factureProduct->setIsAriplaneForniture(true);
-                        $factureProduct->setIsAriplaneMattress(true);
-                      } else {
-                        $factureProduct->setIsAriplaneForniture(false);
-                        $factureProduct->setIsAriplaneMattress(false);
-                      }
+                    $product = $productR['product'];
 
-                      $this->getDoctrine()->getManager()->persist($factureProduct);
-                      $facture->addFactureProduct($factureProduct);
+                    if (count($product->getComboProducts()) > 0) {
+                      foreach ($product->getComboProducts() as $comboProduct) {
+                        $this->CreateProduct(
+                          3,
+                          new FactureProduct(),
+                          $facture,
+                          $comboProduct->getProduct(),
+                          $comboProduct->getProduct()->getPrice(),
+                          $comboProduct->getCount() * $productR['count']
+                        );
+                        $comboDiscount += $comboProduct->getProduct()->getPrice() * $comboProduct->getCount() * $productR['count'];
+                      }
+                      $comboDiscount -= $productR['price'];
+                    } else {
+                      $this->CreateProduct(
+                        3,
+                        new FactureProduct(),
+                        $facture,
+                        $product,
+                        $productR['price'],
+                        $productR['count']
+                      );
+                    }
                   }
                 }
               } else {
@@ -616,28 +627,38 @@ class SiteController extends Controller
 
                 foreach ($productsResponse as $productR) {
                   if (array_key_exists('type', $productR)) {
-                      $prefactureCard = new PreFactureCard();
-                      $prefactureCard->setCount($productR['count']);
-                      $prefactureCard->setPreFacture($prefacture);
-                      $prefactureCard->setPrice($productR['price']);
-                      $this->getDoctrine()->getManager()->persist($prefactureCard);
-                      $prefacture->addPreFactureCard($prefactureCard);
+                    $prefactureCard = new PreFactureCard();
+                    $prefactureCard->setCount($productR['count']);
+                    $prefactureCard->setPreFacture($prefacture);
+                    $prefactureCard->setPrice($productR['price']);
+                    $this->getDoctrine()->getManager()->persist($prefactureCard);
+                    $prefacture->addPreFactureCard($prefactureCard);
                   } else {
-                      $preFactureProduct = new PreFactureProduct();
-                      $preFactureProduct->setCount($productR['count']);
-                      $preFactureProduct->setPreFacture($prefacture);
-                      $preFactureProduct->setProduct($productR['product']);
-                      $preFactureProduct->setProductPrice($productR['price']);
-                      if ($productR['price'] > $productR['product']->getPrice()){
-                        $preFactureProduct->setIsAriplaneForniture(true);
-                        $preFactureProduct->setIsAriplaneMattress(true);
-                      } else {
-                        $preFactureProduct->setIsAriplaneForniture(false);
-                        $preFactureProduct->setIsAriplaneMattress(false);
-                      }
+                    $product = $productR['product'];
 
-                      $this->getDoctrine()->getManager()->persist($preFactureProduct);
-                      $prefacture->addPreFactureProduct($preFactureProduct);
+                    if (count($product->getComboProducts()) > 0) {
+                      foreach ($product->getComboProducts() as $comboProduct) {
+                        $this->CreateProduct(
+                          2,
+                          new PreFactureProduct(),
+                          $prefacture,
+                          $comboProduct->getProduct(),
+                          $comboProduct->getProduct()->getPrice(),
+                          $comboProduct->getCount() * $productR['count']
+                        );
+                        $comboDiscount += $comboProduct->getProduct()->getPrice() * $comboProduct->getCount() * $productR['count'];
+                      }
+                      $comboDiscount -= $productR['price'];
+                    } else {
+                      $this->CreateProduct(
+                        2,
+                        new PreFactureProduct(),
+                        $prefacture,
+                        $product,
+                        $productR['price'],
+                        $productR['count']
+                      );
+                    }
                   }
                 }
               }
@@ -647,28 +668,38 @@ class SiteController extends Controller
 
               foreach ($productsResponse as $productR) {
                 if (array_key_exists('type', $productR)) {
-                    $requestCard = new RequestCard();
-                    $requestCard->setCount($productR['count']);
-                    $requestCard->setRequest($requestDB);
-                    $requestCard->setPrice($productR['price']);
-                    $this->getDoctrine()->getManager()->persist($requestCard);
-                    $requestDB->addRequestCard($requestCard);
+                  $requestCard = new RequestCard();
+                  $requestCard->setCount($productR['count']);
+                  $requestCard->setRequest($requestDB);
+                  $requestCard->setPrice($productR['price']);
+                  $this->getDoctrine()->getManager()->persist($requestCard);
+                  $requestDB->addRequestCard($requestCard);
                 } else {
-                    $requestProd = new RequestProduct();
-                    $requestProd->setCount($productR['count']);
-                    $requestProd->setRequest($requestDB);
-                    $requestProd->setProduct($productR['product']);
-                    $requestProd->setProductPrice($productR['price']);
-                    if ($productR['price'] > $productR['product']->getPrice()){
-                      $requestProd->setIsAriplaneForniture(true);
-                      $requestProd->setIsAriplaneMattress(true);
-                    } else {
-                      $requestProd->setIsAriplaneForniture(false);
-                      $requestProd->setIsAriplaneMattress(false);
-                    }
+                  $product = $productR['product'];
 
-                    $this->getDoctrine()->getManager()->persist($requestProd);
-                    $requestDB->addRequestProduct($requestProd);
+                  if (count($product->getComboProducts()) > 0) {
+                    foreach ($product->getComboProducts() as $comboProduct) {
+                      $this->CreateProduct(
+                        1,
+                        new RequestProduct(),
+                        $requestDB,
+                        $comboProduct->getProduct(),
+                        $comboProduct->getProduct()->getPrice(),
+                        $comboProduct->getCount() * $productR['count']
+                      );
+                      $comboDiscount += $comboProduct->getProduct()->getPrice() * $comboProduct->getCount() * $productR['count'];
+                    }
+                    $comboDiscount -= $productR['price'];
+                  } else {
+                    $this->CreateProduct(
+                      1,
+                      new RequestProduct(),
+                      $requestDB,
+                      $product,
+                      $productR['price'],
+                      $productR['count']
+                    );
+                  }
                 }
               }
             }
@@ -679,6 +710,7 @@ class SiteController extends Controller
                 $facture->setTwoStepExtra($twoStepExtra);
                 $facture->setCucExtra($cucExtra);
                 $facture->setFirstClientDiscount(0);
+                $facture->setComboDiscount($comboDiscount);
                 $facture->setTransportCost($transportCost);
                 $facture->setFinalPrice($totalPrice);
                 $this->getDoctrine()->getManager()->persist($facture);
@@ -687,6 +719,7 @@ class SiteController extends Controller
                 $prefacture->setTwoStepExtra($twoStepExtra);
                 $prefacture->setCucExtra($cucExtra);
                 $prefacture->setFirstClientDiscount(0);
+                $prefacture->setComboDiscount($comboDiscount);
                 $prefacture->setTransportCost($transportCost);
                 $prefacture->setFinalPrice($totalPrice);
                 $this->getDoctrine()->getManager()->persist($prefacture);
@@ -696,6 +729,7 @@ class SiteController extends Controller
               $requestDB->setTwoStepExtra($twoStepExtra);
               $requestDB->setCucExtra($cucExtra);
               $requestDB->setFirstClientDiscount(0);
+              $requestDB->setComboDiscount($comboDiscount);
               $requestDB->setTransportCost($transportCost);
               $requestDB->setFinalPrice($totalPrice);
               $this->getDoctrine()->getManager()->persist($requestDB);
@@ -2000,6 +2034,39 @@ class SiteController extends Controller
         $shopCartProducts[] = $shopCartProduct;
         $this->getDoctrine()->getManager()->persist($shopCartProduct);
         $this->getDoctrine()->getManager()->flush();
+      }
+    }
+
+    private function CreateProduct($type, $requestProd, $requestDB, $product, $productPrice, $count)
+    {
+      if ($type == 1) {
+        $requestProd->setRequest($requestDB);
+      } elseif ($type == 2) {
+        $requestProd->setPrefacture($requestDB);
+      } else {
+        $requestProd->setFacture($requestDB);
+      }
+
+
+      $requestProd->setCount($count);
+      $requestProd->setProduct($product);
+      $requestProd->setProductPrice($productPrice);
+      if ($productPrice > $product->getPrice()){
+        $requestProd->setIsAriplaneForniture(true);
+        $requestProd->setIsAriplaneMattress(true);
+      } else {
+        $requestProd->setIsAriplaneForniture(false);
+        $requestProd->setIsAriplaneMattress(false);
+      }
+
+      $this->getDoctrine()->getManager()->persist($requestProd);
+
+      if ($type == 1) {
+        $requestDB->addRequestProduct($requestProd);
+      } elseif ($type == 2) {
+        $requestDB->addPreFactureProduct($requestProd);
+      } else {
+        $requestDB->addFactureProduct($requestProd);
       }
     }
 }

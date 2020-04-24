@@ -51,6 +51,10 @@ class Facture
      */
     private $firstClientDiscount;
     /**
+     * @ORM\Column(type="float")
+     */
+    private $comboDiscount;
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Request\Request", inversedBy="factures")
      * @ORM\JoinColumn(name="request_id", referencedColumnName="id")
      */
@@ -190,6 +194,18 @@ class Facture
     public function getFirstClientDiscount()
     {
         return $this->firstClientDiscount;
+    }
+
+    public function setComboDiscount($comboDiscount)
+    {
+        $this->comboDiscount = $comboDiscount;
+
+        return $this;
+    }
+
+    public function getComboDiscount()
+    {
+        return $this->comboDiscount;
     }
 
     public function setRequest(Request $request = null)

@@ -138,7 +138,7 @@ easy_admin:
                     - {property: 'requestCards', label: 'Tarjetas de Regalo'}
                     - {property: 'transportCost', label: 'Costo de Transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
-                    - {property: 'firstClientDiscount', label: 'Descuento de primera compra'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             show:
                 title: Detalles del pedido
@@ -151,6 +151,7 @@ easy_admin:
                     - {property: 'cucExtra', label: 'Extra CUC'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             form:
                 fields:
@@ -160,6 +161,7 @@ easy_admin:
                     - {property: 'cucExtra', label: 'Extra CUC'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             new:
                 title: 'Nuevo pedido'
@@ -183,7 +185,7 @@ easy_admin:
                     - {property: 'preFactureCards', label: 'Tarjetas de Regalo'}
                     - {property: 'transportCost', label: 'Costo de Transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
-                    - {property: 'firstClientDiscount', label: 'Descuento de primera compra'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             show:
                 title: Detalles de la prefactura
@@ -196,6 +198,7 @@ easy_admin:
                     - {property: 'cucExtra', label: 'Extra CUC'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             form:
                 fields:
@@ -205,6 +208,7 @@ easy_admin:
                     - {property: 'cucExtra', label: 'Extra CUC'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             new:
                 title: 'Nueva prefactura'
@@ -226,7 +230,7 @@ easy_admin:
                     - {property: 'factureCards', label: 'Tarjetas de Regalo'}
                     - {property: 'transportCost', label: 'Costo de Transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
-                    - {property: 'firstClientDiscount', label: 'Descuento de primera compra'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             show:
                 title: Detalles de la factura
@@ -239,6 +243,7 @@ easy_admin:
                     - {property: 'cucExtra', label: 'Extra CUC'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             form:
                 fields:
@@ -248,6 +253,7 @@ easy_admin:
                     - {property: 'cucExtra', label: 'Extra CUC'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             new:
                 title: 'Nueva factura'
