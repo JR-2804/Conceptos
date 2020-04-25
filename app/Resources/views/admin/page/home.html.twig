@@ -80,14 +80,66 @@
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group">
-                      <label class="control-label">Margen Superior</label>
+                      <label class="control-label">Posición horizontal del título</label>
+                      <select class="form-control" id="title-horizontal">
+                        <option value="start">Inicio</option>
+                        <option value="center">Centro</option>
+                        <option value="end">Final</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="control-label">Posición horizontal de la descripción</label>
+                      <select class="form-control" id="description-horizontal">
+                        <option value="start">Inicio</option>
+                        <option value="center">Centro</option>
+                        <option value="end">Final</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="control-label">Posición vertical</label>
+                      <select class="form-control" id="vertical-position">
+                        <option value="start">Inicio</option>
+                        <option value="center">Centro</option>
+                        <option value="end">Final</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="control-label">Estilo de hover</label>
+                      <select class="form-control" id="hover-style">
+                        <option value="none">Ninguno</option>
+                        <option value="text">Solo en texto</option>
+                        <option value="full">Todo el slide</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="control-label">Márgen superior</label>
                       <input type="number" class="form-control" id="slide-top-margin">
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group">
-                      <label class="control-label">Margen Izquierdo</label>
+                      <label class="control-label">Márgen inferior</label>
+                      <input type="number" class="form-control" id="slide-bottom-margin">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="control-label">Márgen izquierdo</label>
                       <input type="number" class="form-control" id="slide-left-margin">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="control-label">Márgen derecho</label>
+                      <input type="number" class="form-control" id="slide-right-margin">
                     </div>
                   </div>
                   <div class="col-6">
@@ -112,7 +164,7 @@
                     </div>
                   </div>
                   <div id="slide-section" class="col-12" style="display: none;">
-                    <button class="btn btn-primary" id="update-slide-preview" style="margin-bottom: 10px;">
+                    <button type="submit" id="update-slide-preview" class="btn btn-primary" style="margin-bottom: 10px;">
                       Actualizar
                     </button>
                     <iframe id="slide-preview" src="{{ path('home_slide') }}">

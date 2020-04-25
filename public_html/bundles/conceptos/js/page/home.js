@@ -631,11 +631,29 @@ function init() {
   if (data.prioritizeSlideText) {
     $("#prioritize-slide-text").prop("checked", data.prioritizeSlideText);
   }
+  if (data.titleHorizontal) {
+    $("#title-horizontal").val(data.titleHorizontal);
+  }
+  if (data.descriptionHorizontal) {
+    $("#description-horizontal").val(data.descriptionHorizontal);
+  }
+  if (data.verticalPosition) {
+    $("#vertical-position").val(data.verticalPosition);
+  }
+  if (data.hoverStyle) {
+    $("#hover-style").val(data.hoverStyle);
+  }
   if (data.slideTopMargin) {
     $("#slide-top-margin").val(data.slideTopMargin);
   }
+  if (data.slideBottomMargin) {
+    $("#slide-bottom-margin").val(data.slideBottomMargin);
+  }
   if (data.slideLeftMargin) {
     $("#slide-left-margin").val(data.slideLeftMargin);
+  }
+  if (data.slideRightMargin) {
+    $("#slide-right-margin").val(data.slideRightMargin);
   }
   if (data.slideFontSize) {
     $("#slide-font-size").val(data.slideFontSize);
@@ -675,8 +693,14 @@ function generateData() {
   var data = {
     slides: headerImages,
     prioritizeSlideText: $("#prioritize-slide-text").prop("checked"),
+    titleHorizontal: $("#title-horizontal").val(),
+    descriptionHorizontal: $("#description-horizontal").val(),
+    verticalPosition: $("#vertical-position").val(),
+    hoverStyle: $("#hover-style").val(),
     slideTopMargin: $("#slide-top-margin").val(),
+    slideBottomMargin: $("#slide-bottom-margin").val(),
     slideLeftMargin: $("#slide-left-margin").val(),
+    slideRightMargin: $("#slide-right-margin").val(),
     slideFontSize: $("#slide-font-size").val(),
     slideFontColor: $("#slide-font-color").val(),
     top: {
