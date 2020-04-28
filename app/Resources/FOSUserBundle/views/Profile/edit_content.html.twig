@@ -74,9 +74,9 @@
       <div class="d-flex flex-column order-2">
         {% set totalCount = 0 %}
         {% set totalPrice = 0 %}
-        {% set totalInProcess = 0 %}
         {% set totalRequested = 0 %}
         {% set totalDelivered = 0 %}
+        {% set totalCards = 0 %}
         {% for prefacture in prefactures|reverse %}
           {% for product in prefacture.preFactureProducts %}
             {% if product.product %}
@@ -93,16 +93,12 @@
                       <span class="conceptos-title">CANTIDAD: {{product.count}}</span>
                     </div>
                     <div class="d-flex mb-2">
-                      {% if product.state == "" or product.state == "InProcess" %}
-                        {% set totalInProcess = totalInProcess + 1 %}
-                        <span class="conceptos-title-strong in-process-product">EN PROCESO</span>
-                      {% elseif product.state == "Requested" %}
-                        {% set totalRequested = totalRequested + 1 %}
-                        <span class="conceptos-title-strong requested-product">PEDIDO</span>
+                      {% if product.state == "Entregado" %}
+                        {% set totalDelivered = totalDelivered + product.count %}
                       {% else %}
-                        {% set totalDelivered = totalDelivered + 1 %}
-                        <span class="conceptos-title-strong delivered-product">ENTREGADO</span>
+                        {% set totalRequested = totalRequested + product.count %}
                       {% endif %}
+                      <span class="conceptos-title-strong">{% if product.state %}{{product.state}}{% else %}Por confirmar{% endif %}</span>
                     </div>
                   </div>
                 </div>
@@ -121,17 +117,7 @@
                                 <span class="conceptos-title">CANTIDAD: {{product.count}}</span>
                               </div>
                               <div class="d-flex flex-column">
-                                <span class="conceptos-title-strong">ESTADO ACTUAL</span>
-                                {% if product.state == "" or product.state == "InProcess" %}
-                                  {% set totalInProcess = totalInProcess + 1 %}
-                                  <span class="conceptos-title-strong in-process-product">EN PROCESO</span>
-                                {% elseif product.state == "Requested" %}
-                                  {% set totalRequested = totalRequested + 1 %}
-                                  <span class="conceptos-title-strong requested-product">PEDIDO</span>
-                                {% else %}
-                                  {% set totalDelivered = totalDelivered + 1 %}
-                                  <span class="conceptos-title-strong delivered-product">ENTREGADO</span>
-                                {% endif %}
+                                <span class="conceptos-title-strong">{% if product.state %}{{product.state}}{% else %}Por confirmar{% endif %}</span>
                               </div>
                             </div>
                           </div>
@@ -157,6 +143,7 @@
           {% endfor %}
           {% for card in prefacture.preFactureCards %}
             {% set totalCount = totalCount + card.count %}
+            {% set totalCards = totalCards + card.count %}
             {% set totalPrice = totalPrice + card.price * card.count %}
             <div class="d-flex profile-product justify-content-between align-items-center p-2 mt-2"
                  data-toggle="modal" data-target="#profile-card-details-modal-{{totalCount}}">
@@ -181,16 +168,7 @@
                     <span class="conceptos-title">CANTIDAD: {{card.count}}</span>
                   </div>
                   <div class="d-flex mb-2">
-                    {% if card.state == "" or card.state == "InProcess" %}
-                      {% set totalInProcess = totalInProcess + 1 %}
-                      <span class="conceptos-title-strong in-process-product">EN PROCESO</span>
-                    {% elseif card.state == "Requested" %}
-                      {% set totalRequested = totalRequested + 1 %}
-                      <span class="conceptos-title-strong requested-product">PEDIDO</span>
-                    {% else %}
-                      {% set totalDelivered = totalDelivered + 1 %}
-                      <span class="conceptos-title-strong delivered-product">ENTREGADO</span>
-                    {% endif %}
+                    <span class="conceptos-title-strong">{{card.state}}</span>
                   </div>
                 </div>
               </div>
@@ -209,17 +187,7 @@
                               <span class="conceptos-title">CANTIDAD: {{card.count}}</span>
                             </div>
                             <div class="d-flex flex-column">
-                              <span class="conceptos-title-strong">ESTADO ACTUAL</span>
-                              {% if card.state == "" or card.state == "InProcess" %}
-                                {% set totalInProcess = totalInProcess + 1 %}
-                                <span class="conceptos-title-strong in-process-product">EN PROCESO</span>
-                              {% elseif card.state == "Requested" %}
-                                {% set totalRequested = totalRequested + 1 %}
-                                <span class="conceptos-title-strong requested-product">PEDIDO</span>
-                              {% else %}
-                                {% set totalDelivered = totalDelivered + 1 %}
-                                <span class="conceptos-title-strong delivered-product">ENTREGADO</span>
-                              {% endif %}
+                              <span class="conceptos-title-strong">{{card.state}}</span>
                             </div>
                           </div>
                         </div>
@@ -248,19 +216,19 @@
         <div class="d-flex flex-column conceptos-badge p-2 mt-2">
           <span class="conceptos-badge-text">RESUMEN</span>
           <div class="d-flex justify-content-between">
-            <span class="conceptos-badge-text">COMPRAS</span>
+            <span class="conceptos-badge-text">COMPRAS TOTALES</span>
             <span class="conceptos-badge-text">{{totalCount}}</span>
           </div>
           <div class="d-flex justify-content-between">
-            <span class="conceptos-badge-text">PRODUCTOS EN PROCESO</span>
-            <span class="conceptos-badge-text">{{totalInProcess}}</span>
+            <span class="conceptos-badge-text">TARJETAS</span>
+            <span class="conceptos-badge-text">{{totalCards}}</span>
           </div>
           <div class="d-flex justify-content-between">
             <span class="conceptos-badge-text">PRODUCTOS PEDIDOS</span>
             <span class="conceptos-badge-text">{{totalRequested}}</span>
           </div>
           <div class="d-flex justify-content-between">
-            <span class="conceptos-badge-text">PRODUCTOS ENVIADOS</span>
+            <span class="conceptos-badge-text">PRODUCTOS ENTREGADOS</span>
             <span class="conceptos-badge-text">{{totalDelivered}}</span>
           </div>
           <div class="d-flex justify-content-between">

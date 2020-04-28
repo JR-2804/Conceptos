@@ -5,7 +5,7 @@ class ContactCard {
     this.contactCard = document.querySelector(".contact_card");
     this.contactCardClose = document.querySelector(".contact_card__close");
 
-    this.showOrNot();
+    setTimeout(this.showOrNot.bind(this), 20000);
   }
 
   showOrNot() {
