@@ -77,6 +77,122 @@
         {% set totalRequested = 0 %}
         {% set totalDelivered = 0 %}
         {% set totalCards = 0 %}
+        {% for request in requests|reverse %}
+          {% for product in request.requestProducts %}
+            {% if product.product %}
+              {% set totalCount = totalCount + product.count %}
+              {% set totalPrice = totalPrice + product.productPrice * product.count %}
+              <div class="d-flex profile-product justify-content-between align-items-center p-2 mt-2"
+                   data-toggle="modal" data-target="#profile-product-details-modal-{{totalCount}}">
+                <div class="d-flex">
+                  <img class="conceptos-image profile-image" src="{{ vich_uploader_asset(product.product.mainImage, 'imageFile') }}">
+                  <div class="d-flex flex-column justify-content-between ml-3">
+                    <div class="d-flex flex-column">
+                      <span class="conceptos-title-strong">{{product.product.name}}</span>
+                      <span class="conceptos-title">${{product.productPrice}}.00</span>
+                      <span class="conceptos-title">CANTIDAD: {{product.count}}</span>
+                    </div>
+                    <div class="d-flex mb-2">
+                      {% if product.state == "Entregado" %}
+                        {% set totalDelivered = totalDelivered + product.count %}
+                      {% else %}
+                        {% set totalRequested = totalRequested + product.count %}
+                      {% endif %}
+                      <span class="conceptos-title-strong">{% if product.state %}{{product.state}}{% else %}Por confirmar{% endif %}</span>
+                    </div>
+                  </div>
+                </div>
+                <button class="view-profile-product-details"></button>
+                <div id="profile-product-details-modal-{{totalCount}}" class="modal fade">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-body conceptos-gray-background">
+                        <div class="d-flex flex-column">
+                          <div class="d-flex">
+                            <img class="conceptos-image profile-image mr-2" src="{{ vich_uploader_asset(product.product.mainImage, 'imageFile') }}">
+                            <div class="d-flex flex-column justify-content-between">
+                              <div class="d-flex flex-column">
+                                <span class="conceptos-title-strong">{{product.product.name}}</span>
+                                <span class="conceptos-title">${{product.productPrice}}.00</span>
+                                <span class="conceptos-title">CANTIDAD: {{product.count}}</span>
+                              </div>
+                              <div class="d-flex flex-column">
+                                <span class="conceptos-title-strong">{% if product.state %}{{product.state}}{% else %}Por confirmar{% endif %}</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="d-flex flex-column mt-3">
+                            <span class="conceptos-title-strong">FECHA DEL PEDIDO</span>
+                            <span class="conceptos-subtitle">{{request.date|date('d/m/Y')}}</span>
+                            <span class="conceptos-title-strong">NÚMERO DEL PEDIDO</span>
+                            <span class="conceptos-subtitle">PEDIDO {{request.id}}-{{request.date|date('Y')}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+          {% for card in request.requestCards %}
+            {% set totalCount = totalCount + card.count %}
+            {% set totalCards = totalCards + card.count %}
+            {% set totalPrice = totalPrice + card.price * card.count %}
+            <div class="d-flex profile-product justify-content-between align-items-center p-2 mt-2"
+                 data-toggle="modal" data-target="#profile-card-details-modal-{{totalCount}}">
+              {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
+              {% set cardName = 'Tarjeta de 15 CUC' %}
+              {% if card.price == 25 %}
+                  {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
+                  {% set cardName = 'Tarjeta de 25 CUC' %}
+              {% elseif card.price == 50 %}
+                  {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
+                  {% set cardName = 'Tarjeta de 50 CUC' %}
+              {% elseif card.price == 100 %}
+                  {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
+                  {% set cardName = 'Tarjeta de 100 CUC' %}
+              {% endif %}
+              <div class="d-flex">
+                <img class="conceptos-image profile-image" src="{{ imagePath }}">
+                <div class="d-flex flex-column justify-content-between ml-3">
+                  <div class="d-flex flex-column">
+                    <span class="conceptos-title-strong">{{cardName}}</span>
+                    <span class="conceptos-title">${{card.price}}.00</span>
+                    <span class="conceptos-title">CANTIDAD: {{card.count}}</span>
+                  </div>
+                </div>
+              </div>
+              <button class="view-profile-product-details"></button>
+              <div id="profile-card-details-modal-{{totalCount}}" class="modal fade">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-body conceptos-gray-background">
+                      <div class="d-flex flex-column">
+                        <div class="d-flex">
+                          <img class="conceptos-image profile-image mr-2" src="{{imagePath}}">
+                          <div class="d-flex flex-column justify-content-between">
+                            <div class="d-flex flex-column">
+                              <span class="conceptos-title-strong">{{cardName}}</span>
+                              <span class="conceptos-title">${{card.price}}.00</span>
+                              <span class="conceptos-title">CANTIDAD: {{card.count}}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-column mt-3">
+                          <span class="conceptos-title-strong">FECHA DEL PEDIDO</span>
+                          <span class="conceptos-subtitle">{{request.date|date('d/m/Y')}}</span>
+                          <span class="conceptos-title-strong">NÚMERO DEL PEDIDO</span>
+                          <span class="conceptos-subtitle">PEDIDO {{request.id}}-{{request.date|date('Y')}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endfor %}
         {% for prefacture in prefactures|reverse %}
           {% for product in prefacture.preFactureProducts %}
             {% if product.product %}
@@ -167,9 +283,6 @@
                     <span class="conceptos-title">${{card.price}}.00</span>
                     <span class="conceptos-title">CANTIDAD: {{card.count}}</span>
                   </div>
-                  <div class="d-flex mb-2">
-                    <span class="conceptos-title-strong">{{card.state}}</span>
-                  </div>
                 </div>
               </div>
               <button class="view-profile-product-details"></button>
@@ -185,9 +298,6 @@
                               <span class="conceptos-title-strong">{{cardName}}</span>
                               <span class="conceptos-title">${{card.price}}.00</span>
                               <span class="conceptos-title">CANTIDAD: {{card.count}}</span>
-                            </div>
-                            <div class="d-flex flex-column">
-                              <span class="conceptos-title-strong">{{card.state}}</span>
                             </div>
                           </div>
                         </div>

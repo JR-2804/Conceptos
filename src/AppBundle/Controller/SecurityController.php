@@ -245,6 +245,7 @@ class SecurityController extends Controller
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
         $userMail = $this->getUser()->getEmail();
+
         $clientPrefactures = [];
         $persistedPrefactures = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->findAll();
         foreach ($persistedPrefactures as $persistedPrefacture) {
@@ -258,10 +259,26 @@ class SecurityController extends Controller
           }
         }
 
+        $clientRequests = [];
+        if (count($clientPrefactures) == 0) {
+          $persistedRequests = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->findAll();
+          foreach ($persistedRequests as $persistedRequest) {
+            if ($persistedRequest->getClient()->getEmail() == $userMail and count($persistedRequest->getPreFactures()) == 0) {
+              foreach ($persistedRequest->getRequestProducts() as $requestProduct) {
+                if (!$this->IsEntityDefined($requestProduct)) {
+                  $requestProduct->setProduct(null);
+                }
+              }
+              $clientRequests[] = $persistedRequest;
+            }
+          }
+        }
+
         return $this->render('@FOSUser/Profile/edit.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
             'showSuccessToast' => $showSuccessToast,
+            'requests' => $clientRequests,
             'prefactures' => $clientPrefactures,
             'home' => $home,
             'membership' => $membership,
@@ -275,8 +292,10 @@ class SecurityController extends Controller
 
     public function IsEntityDefined($prefactureProduct) {
       try {
-        if ($prefactureProduct->getProduct()->getName() != null) {
+        if ($prefactureProduct->getProduct() != null && $prefactureProduct->getProduct()->getName() != null) {
           return true;
+        } else {
+          return false;
         }
       } catch (EntityNotFoundException $e) {
         return false;
