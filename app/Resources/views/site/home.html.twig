@@ -47,7 +47,7 @@
           <div class="carousel-inner">
               {% for chunk in popularChunks %}
                 <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
-                  <div class="d-flex flex-wrap">
+                  <div class="d-flex flex-wrap w-100">
                       {% for product in chunk %}
                         <div class="d-flex col-6 pl-0">
                           {{include('site/product-summary-short.html.twig')}}
@@ -72,7 +72,7 @@
       <span class="pl-2 conceptos-title-strong">{{page.data.populars.title|raw}}</span>
       <span class="pl-2 conceptos-subtitle-strong">{{page.data.populars.subtitle|raw}}</span>
       <div class="d-flex flex-wrap mt-3 mb-3">
-        <div class="carousel pb-3" data-ride="carousel" id="carousel-populars-short" data-interval="10000">
+        <div class="carousel pb-3 w-100" data-ride="carousel" id="carousel-populars-short" data-interval="10000">
           <ol class="carousel-indicators carousel-indicators">
             {% for chunk in popularChunksDesktop %}
                 <li data-app-prevent-settings="" data-target="#slider1-28"
@@ -83,7 +83,7 @@
           <div class="carousel-inner">
               {% for chunk in popularChunksDesktop %}
                 <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
-                  <div class="d-flex flex-wrap">
+                  <div class="d-flex flex-wrap w-100">
                       {% for product in chunk %}
                         <div class="d-flex col-2 pl-0">
                           {{include('site/product-summary-short.html.twig')}}
