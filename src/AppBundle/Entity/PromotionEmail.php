@@ -2,11 +2,12 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
+use PhpOption\Tests\Repository;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
-include __DIR__.'/../Utils/simple_html_dom.php';
-use AppBundle\utils\DOM;
 
 /**
  * PromotionEmail
@@ -76,12 +77,41 @@ class PromotionEmail
      */
     private $updatedAt;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tag_user", type="text")
+     */
+    private $tagUser;
 
+    /**
+     * Set tagUser
+     *
+     * @param string $tagUser
+     *
+     * @return PromotionEmail
+     */
+    public function setTagUser($tagUser)
+    {
+        $this->tagUser = $tagUser;
+
+        return $this;
+    }
+
+    /**
+     * Get tagUser
+     *
+     * @return string
+     */
+    public function getTagUser()
+    {
+        return $this->tagUser;
+    }
 
     /**
      * @var string
      *
-     * @ORM\Column(name="emails", type="text")
+     * @ORM\Column(name="emails", type="text", nullable=true)
      */
     private $emails;
 
@@ -170,11 +200,43 @@ class PromotionEmail
     }
 
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="primaryTitle", type="string",  nullable=true)
+     */
+    private $primaryTitle;
+
+    /**
+     * Set tagUser
+     *
+     * @param string $primaryTitle
+     *
+     * @return PromotionEmail
+     */
+    public function setPrimaryTitle($primaryTitle)
+    {
+        $this->primaryTitle = $primaryTitle;
+
+        return $this;
+    }
+
+    /**
+     * Get PrimaryTitle
+     *
+     * @return string
+     */
+    public function getPrimaryTitle()
+    {
+        return $this->primaryTitle;
+    }
+
+
 
     /**
      * @var string
      *
-     * @ORM\Column(name="introPicture1", type="string", length=255)
+     * @ORM\Column(name="introPicture1", type="string", length=255, nullable=true)
      */
     private $introPicture1;
 
@@ -203,7 +265,7 @@ class PromotionEmail
     }
 
     /**
-     * @Vich\UploadableField(mapping="email_images", fileNameProperty="introPicture1")
+     * @Vich\UploadableField(mapping="email_images", fileNameProperty="introPicture1", nullable=true)
      */
     private $introPicture1File;
 
@@ -354,7 +416,7 @@ class PromotionEmail
     }
 
     /**
-     * @Vich\UploadableField(mapping="email_images", fileNameProperty="introPicture2")
+     * @Vich\UploadableField(mapping="email_images", fileNameProperty="introPicture2",  nullable=true)
      */
     private $introPicture2File;
 
@@ -505,7 +567,7 @@ class PromotionEmail
     }
 
     /**
-     * @Vich\UploadableField(mapping="email_images", fileNameProperty="introPicture3")
+     * @Vich\UploadableField(mapping="email_images", fileNameProperty="introPicture3",  nullable=true)
      */
     private $introPicture3File;
 
@@ -658,104 +720,187 @@ class PromotionEmail
     }
 
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="offerItem1",  type="string", length=255, nullable=true)
-     */
-    private $offerItem1;
+
 
     /**
-     * Set offerItem1
-     *
-     * @param string $offerItem1
-     *
-     * @return PromotionEmail
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Offer")
      */
-    public function setOfferItem1($offerItem1)
+    private $offers;
+
+    /**
+     * Add product.
+     *
+     * @param \AppBundle\Entity\Product $offers
+     *
+     * @return Offer
+     */
+    public function addOffers(Offer $offers)
     {
-        $this->offerItem1 = $offerItem1;
+        $this->offers[] = $offers;
 
         return $this;
     }
 
     /**
-     * Get offerItem1
+     * Remove offers.
      *
-     * @return string
+     * @param \AppBundle\Entity\Offer $offers
      */
-    public function getOfferItem1()
+    public function removeOffers(Product $offers)
     {
-        return $this->offerItem1;
+        $this->offers->removeElement($offers);
     }
+
+    /**
+     * Get offers.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOffers()
+    {
+        return $this->offers;
+    }
+
 
     /**
      * @var string
      *
-     * @ORM\Column(name="offerItem2",  type="string", length=255, nullable=true)
+     * @ORM\Column(name="linkOffers", type="string", length=255, nullable=true)
      */
-    private $offerItem2;
+    private $linkOffers;
 
     /**
-     * Set offerItem2
+     * Set $linkOffers
      *
-     * @param string $offerItem2
+     * @param string $linkOffers
      *
      * @return PromotionEmail
      */
-    public function setOfferItem2($offerItem2)
+    public function setLinkOffers($linkOffers)
     {
-        $this->offerItem2 = $offerItem2;
+        $this->linkOffers = $linkOffers;
 
         return $this;
     }
 
     /**
-     * Get offerItem2
+     * Get promotionPicture
      *
      * @return string
      */
-    public function getOfferItem2()
+    public function getLinkOffers()
     {
-        return $this->offerItem2;
+        return $this->linkOffers;
     }
+
+
 
     /**
      * @var string
      *
-     * @ORM\Column(name="offerItem3",  type="string", length=255, nullable=true)
+     * @ORM\Column(name="productsTitle",  type="string", length=255, nullable=true)
      */
-    private $offerItem3;
+    private $productsTitle;
 
     /**
-     * Set offerItem3
+     * Set introTitle1
      *
-     * @param string $offerItem3
+     * @param string $productsTitle
      *
      * @return PromotionEmail
      */
-    public function setOfferItem3($offerItem3)
+    public function setProductsTitle($productsTitle)
     {
-        $this->offerItem3 = $offerItem3;
+        $this->productsTitle = $productsTitle;
 
         return $this;
     }
 
     /**
-     * Get offerItem3
+     * Get productsTitle
      *
      * @return string
      */
-    public function getOfferItem3()
+    public function getProductsTitle()
     {
-        return $this->offerItem3;
+        return $this->productsTitle;
+    }
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product")
+     */
+    private $products;
+
+    /**
+     * Add product.
+     *
+     * @param \AppBundle\Entity\Product $product
+     *
+     * @return Offer
+     */
+    public function addProduct(Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product.
+     *
+     * @param \AppBundle\Entity\Product $product
+     */
+    public function removeProduct(Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="linkProducts", type="string", length=255, nullable=true)
+     */
+    private $linkProducts;
+
+    /**
+     * Set $link
+     *
+     * @param string $linkProducts
+     *
+     * @return PromotionEmail
+     */
+    public function setLinkProducts($linkProducts)
+    {
+        $this->linkProducts = $linkProducts;
+
+        return $this;
+    }
+
+    /**
+     * Get linkProducts
+     *
+     * @return string
+     */
+    public function getLinkProducts()
+    {
+        return $this->linkProducts;
     }
 
 
     /**
      * @var string
      *
-     * @ORM\Column(name="promotionPicture", type="string", length=255)
+     * @ORM\Column(name="promotionPicture", type="string", length=255, nullable=true)
      */
     private $promotionPicture;
 
@@ -940,66 +1085,42 @@ class PromotionEmail
 
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="blogId1",  type="integer", length=255, nullable=true)
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Blog\Post")
      */
-    private $blogId1;
+    private $blogs;
 
     /**
-     * Set blogId1
+     * Add blog.
      *
-     * @param string $blogId1
+     * @param \AppBundle\Entity\Blog\Post $blog
      *
      * @return PromotionEmail
      */
-    public function setBlogId1($blogId1)
+    public function addBlog(Blog\Post $blog)
     {
-        $this->blogId1 = $blogId1;
+        $this->blogs[] = $blog;
 
         return $this;
     }
 
     /**
-     * Get blogId1
+     * Remove blog.
      *
-     * @return string
+     * @param \AppBundle\Entity\Blog\Post $blog
      */
-    public function getBlogId1()
+    public function removeBlog(Product $blog)
     {
-        return $this->blogId1;
-    }
-
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="blogId2",  type="integer", length=255, nullable=true)
-     */
-    private $blogId2;
-
-    /**
-     * Set blogId2
-     *
-     * @param string $blogId2
-     *
-     * @return PromotionEmail
-     */
-    public function setBlogId2($blogId2)
-    {
-        $this->blogId2 = $blogId2;
-
-        return $this;
+        $this->blogs->removeElement($blog);
     }
 
     /**
-     * Get blogId2
+     * Get blogs.
      *
-     * @return string
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getBlogId2()
+    public function getBlogs()
     {
-        return $this->blogId2;
+        return $this->blogs;
     }
 
 
@@ -1036,6 +1157,41 @@ class PromotionEmail
     }
 
 
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="linkServices",  type="string", length=255, nullable=true)
+     */
+    private $linkServices;
+
+    /**
+     * Set linkServices
+     *
+     * @param string $linkServices
+     *
+     * @return PromotionEmail
+     */
+    public function setLinkServices($linkServices)
+    {
+        $this->linkServices = $linkServices;
+
+        return $this;
+    }
+
+    /**
+     * Get linkServices
+     *
+     * @return string
+     */
+    public function getLinkServices()
+    {
+        return $this->linkServices;
+    }
+
+
+
     /**
      * @var string
      *
@@ -1069,7 +1225,7 @@ class PromotionEmail
 
 
     /**
-     * @Vich\UploadableField(mapping="email_images", fileNameProperty="servicePicture1")
+     * @Vich\UploadableField(mapping="email_images", fileNameProperty="servicePicture1",  nullable=true)
      */
     private $servicePicture1File;
 
@@ -1224,7 +1380,7 @@ class PromotionEmail
 
 
     /**
-     * @Vich\UploadableField(mapping="email_images", fileNameProperty="servicePicture2")
+     * @Vich\UploadableField(mapping="email_images", fileNameProperty="servicePicture2",  nullable=true)
      */
     private $servicePicture2File;
 
@@ -1347,12 +1503,10 @@ class PromotionEmail
 
 
 
-
-
     /**
      * @var string
      *
-     * @ORM\Column(name="footerPicture", type="string", length=255)
+     * @ORM\Column(name="footerPicture", type="string", length=255, nullable=true)
      */
     private $footerPicture;
 
@@ -1438,5 +1592,13 @@ class PromotionEmail
     {
         return $this->footerPictureLink;
     }
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+        $this->offers = new ArrayCollection();
+        $this->blogs = new ArrayCollection();
+    }
+
 }
 

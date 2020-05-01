@@ -193,24 +193,6 @@ textarea {
 
 /* -------------------------------------------------------- */
 
-#open-categories-menu {
-  position: fixed;
-  top: 75%;
-  z-index: 50;
-  border-top: 1px solid #282827;
-  border-bottom: 1px solid #282827;
-  border-right: 1px solid #282827;
-  border-left: none;
-  background-color: #c2b930;
-  width: 45px;
-  outline: none;
-}
-
-#open-categories-menu img {
-  width: 8px;
-  height: 10px;
-}
-
 #close-categories-menu {
   display: none;
   position: fixed;

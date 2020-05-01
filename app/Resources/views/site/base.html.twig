@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
   {% block open_graph %}
-    <meta property="og:image" content="{{ absolute_url(asset('bundles/conceptos/images/logo.png')) }}">
+    <meta property="og:image" content="{{ absolute_url(asset('bundles/conceptos/images/logo.png') | imgTag ) }}">
     <meta property="og:title" content="TIENDA CONCEPTOS"/>
     <meta property="og:url" content="http://tiendaconceptos.com"/>
     <meta property="og:type" content="website"/>
@@ -62,25 +62,24 @@
     <meta name="theme-color" content="#c2b930">
     {% block meta %}{% endblock %}
 
-    <!-- Todo: FALTA LA DIRECCION-->
+
     <script type="application/ld+json">
     {
         "@context": "http://schema.org",
-        "@type": "TravelAgency",
         "name": "Tienda Conceptos",
         "image": "",
         "logo": "{{ absolute_url(home.data.logo.image.path) }}",
         "url": "https://www.tiendaconceptos.com",
         "telephone": "+53 52458380",
-        "sameAs": ["http://www.facebook.com/TiendaConceptos/","http://instagram.com/TiendaConceptos/"],
+        "sameAs": ["http://www.facebook.com/TiendaConceptos/","http://instagram.com/Tienda_conceptos/"],
         "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Ave 7ma, No. 8607",
-            "addressLocality": "Nuevo Vedado - Plaza",
+            "streetAddress": "Calle este, No. 757, apt. 4",
+            "addressLocality": "Tulipan y Conill - Plaza",
             "postalCode": "11300",
             "addressCountry": "Cuba"
         },
-        "priceRange" : "$10 - $5000",
+        "priceRange" : "$5 - $5000",
         "email" : "comercial@tiendaconceptos.com"
     }
 </script>
@@ -88,6 +87,7 @@
 </head>
 <body>
 <input type="hidden" value="{{ path('site_home') }}" id="site-path">
+
 <input type="hidden" value="{{ path('persist_count_shop_car') }}" id="persist-count-path">
 {% if app.user|default %}
   <input type="hidden" value="{{ true }}" id="user-authenticated">
@@ -98,64 +98,11 @@
 <div class="la-anim-10 d-none d-lg-block"></div>
 <div class="la-anim-10 small-anim d-lg-none"></div>
 
-<div id="termsAndConditionsModal" class="modal fade">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Términos y Condiciones</h4>
-            </div>
-            <div class="modal-body">
-                {{terms|raw}}
-            </div>
-            <div class="modal-footer">
-                <button class="btn navigation-button" data-dismiss="modal">Aceptar</button>
-            </div>
-        </div>
-    </div>
-</div>
+{{ include('site/components/global/terms_conditions.html.twig') }}
 
-<div id="privacyPolicyModal" class="modal fade">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Política de Privacidad</h4>
-            </div>
-            <div class="modal-body">
-                {{privacy|raw}}
-            </div>
-            <div class="modal-footer">
-                <button class="btn navigation-button" data-dismiss="modal">Aceptar</button>
-            </div>
-        </div>
-    </div>
-</div>
+{{ include('site/components/global/privacy_police.html.twig') }}
 
-<div id="cartPreviewModal" class="modal fade">
-  <div class="modal-dialog modal-lg mt-0">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="shop-cart-product-list-section conceptos-add-scroll">
-          <div id="products-summary" class="d-flex flex-column mt-3 ml-3 mr-3">
-            {{ render(controller('AppBundle:Site:productsSummary')) }}
-          </div>
-          <div class="d-flex justify-content-between align-items-center conceptos-badge mt-3">
-            <div class="d-flex flex-column m-2">
-              <span class="conceptos-badge-text">CANTIDAD</span>
-              <span class="conceptos-badge-text shop-cart-products-count">{{count}} {% if count == 1 %}PRODUCTO{% else %}PRODUCTOS{% endif %}</span>
-            </div>
-            <div class="d-flex flex-column m-2">
-              <span class="conceptos-badge-text">PRECIO</span>
-              <span class="conceptos-badge-text shop-cart-total-price"></span>
-            </div>
-            <div class="d-flex flex-column justify-content-center align-items-center mr-2">
-              <a class="conceptos-go-to-cart p-1 p-lg-3" href="{{ path('shop-cart') }}">COMPRAR</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{{ include('site/components/global/cart_preview.html.twig') }}
 
 <div id="imageViewerModal" class="modal fade">
   <div class="modal-dialog modal-lg mt-0">
@@ -180,8 +127,8 @@
   </a>
 </div>
 
-<button id="open-categories-menu" class="d-flex justify-content-end p-2">
-  <img class="conceptos-icon" src="{{ asset('bundles/conceptos/images/home/forward.png') }}">
+<button id="open-categories-menu" class="category-menu-open d-flex justify-content-end p-2">
+  <div class="animation_flash"></div>
 </button>
 
 <div id="categories-menu" class="conceptos-add-scroll">
@@ -191,6 +138,9 @@
 <div id="close-categories-menu">
   <img class="close-categories-menu-icon mr-2 d-flex d-lg-none" src="{{ asset('bundles/conceptos/images/home/close-categories-menu.png') }}">
 </div>
+
+
+
 
 {% block header %}
   <section class="menu cid-qQ6pVr9Hx2 navbar__container " once="menu">
@@ -240,14 +190,13 @@
       </ul>
       <div class="menu-logo col-6 col-lg-3 pl-0 pl-lg-3">
           <div class="navbar-brand ml-0">
-              <span class="navbar-logo">
+              <span class="navbar-logo" style="font-size: inherit;">
                   <a href="{{ path('site_home') }}">
-                      <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
-                            title="Conceptos"
-                            style="height: 2.8rem;" class="logo-menu d-none d-lg-flex">
-                      <img src="{{ home.data.logo.image.path }}" alt="Conceptos"
-                            title="Conceptos"
-                            style="width:100%;height: auto !important;" class="logo-menu d-lg-none">
+                      {{ home.data.logo.image.path | imgTag(sizes='(min-width: 1000px) 33vw, 60vw',
+                                                    alt='Conceptos logo', class='logo-menu', style='width: auto; height: auto !important; max-height: 2em;') | raw }}
+{#                      <img src="{{ home.data.logo.image.path }}" alt="Conceptos"#}
+{#                            title="Conceptos"#}
+{#                            style="width:100%;" class="">#}
                   </a>
               </span>
           </div>
@@ -290,7 +239,7 @@
   {{ render(controller('AppBundle:Site:handleEmailNotification')) }}
 {% endblock %}
 {% block javascript %}
-  <script src="{{ asset('bundles/conceptos/14ndy15/scripts/app.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/14ndy15/scripts/app_v1.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/assets/web/assets/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/assets/popper/popper.min.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/assets/tether/tether.min.js') }}"></script>

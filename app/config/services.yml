@@ -50,3 +50,10 @@ services:
   shop_cart_service:
     class: AppBundle\Services\ShopCartService
     arguments: ["@doctrine.orm.entity_manager", "@product_service"]
+
+  app.twig_extension:
+    class: AppBundle\Twig\AppExtension
+    arguments: ["@service_container"]
+    public: false
+    tags:
+      - { name: twig.extension }

@@ -1,0 +1,25 @@
+DROP TABLE promotion_email;
+DROP TABLE promotion_email_product;
+DROP TABLE promotion_email_offer;
+DROP TABLE promotion_email_post;
+
+CREATE TABLE promotion_email (id INT AUTO_INCREMENT NOT NULL, subject VARCHAR(255) NOT NULL, updated_at DATETIME NOT NULL, tag_user LONGTEXT NOT NULL, emails LONGTEXT, primaryPicture VARCHAR(255) NOT NULL, primaryTitle VARCHAR(255) DEFAULT NULL, introPicture1 VARCHAR(255) DEFAULT NULL, introTitle1 VARCHAR(255) DEFAULT NULL, introContent1 LONGTEXT DEFAULT NULL, introLink1 VARCHAR(255) DEFAULT NULL, introPicture2 VARCHAR(255) DEFAULT NULL, introTitle2 VARCHAR(255) DEFAULT NULL, introContent2 LONGTEXT DEFAULT NULL, introLink2 VARCHAR(255) DEFAULT NULL, introPicture3 VARCHAR(255) DEFAULT NULL, introTitle3 VARCHAR(255) DEFAULT NULL, introContent3 LONGTEXT DEFAULT NULL, introLink3 VARCHAR(255) DEFAULT NULL, offersTitle VARCHAR(255) DEFAULT NULL, productsTitle VARCHAR(255) DEFAULT NULL, promotionPicture VARCHAR(255) DEFAULT NULL, promotionTitle VARCHAR(255) DEFAULT NULL, promotionContent LONGTEXT DEFAULT NULL, promotionLink VARCHAR(255) DEFAULT NULL, blogTitle VARCHAR(255) DEFAULT NULL, servicesTitle VARCHAR(255) DEFAULT NULL, servicePicture1 VARCHAR(255) DEFAULT NULL, serviceTitle1 VARCHAR(255) DEFAULT NULL, serviceContent1 LONGTEXT DEFAULT NULL, serviceLink1 VARCHAR(255) DEFAULT NULL, servicePicture2 VARCHAR(255) DEFAULT NULL, serviceTitle2 VARCHAR(255) DEFAULT NULL, serviceLink2 VARCHAR(255) DEFAULT NULL, serviceContent2 LONGTEXT DEFAULT NULL, footerPicture VARCHAR(255) DEFAULT NULL, footerPictureLink VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE promotion_email_product (promotion_email_id INT NOT NULL, product_id INT NOT NULL, INDEX IDX_F7E5EA1D6E66658D (promotion_email_id), INDEX IDX_F7E5EA1D4584665A (product_id), PRIMARY KEY(promotion_email_id, product_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE promotion_email_offer (promotion_email_id INT NOT NULL, offer_id INT NOT NULL, INDEX IDX_65650F6B6E66658D (promotion_email_id), INDEX IDX_65650F6B53C674EE (offer_id), PRIMARY KEY(promotion_email_id, offer_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE promotion_email_post (promotion_email_id INT NOT NULL, post_id INT NOT NULL, INDEX IDX_801267AC6E66658D (promotion_email_id), INDEX IDX_801267AC4B89032C (post_id), PRIMARY KEY(promotion_email_id, post_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+ALTER TABLE promotion_email_offer ADD CONSTRAINT FK_65650F6B6E66658D FOREIGN KEY (promotion_email_id) REFERENCES promotion_email (id) ON DELETE CASCADE;
+ALTER TABLE promotion_email_offer ADD CONSTRAINT FK_65650F6B53C674EE FOREIGN KEY (offer_id) REFERENCES offer (id) ON DELETE CASCADE;
+ALTER TABLE promotion_email_product ADD CONSTRAINT FK_F7E5EA1D6E66658D FOREIGN KEY (promotion_email_id) REFERENCES promotion_email (id) ON DELETE CASCADE;
+ALTER TABLE promotion_email_product ADD CONSTRAINT FK_F7E5EA1D4584665A FOREIGN KEY (product_id) REFERENCES product (id) ON DELETE CASCADE;
+ALTER TABLE promotion_email_post ADD CONSTRAINT FK_801267AC6E66658D FOREIGN KEY (promotion_email_id) REFERENCES promotion_email (id) ON DELETE CASCADE;
+ALTER TABLE promotion_email_post ADD CONSTRAINT FK_801267AC4B89032C FOREIGN KEY (post_id) REFERENCES post (id) ON DELETE CASCADE;
+
+-- ALTER TABLE mytable  mycolumn VARCHAR(255);
+-- ALTER TABLE promotion_email MODIFY introPicture1 VARCHAR(255) DEFAULT NULL;
+-- ALTER TABLE promotion_email MODIFY introPicture2 VARCHAR(255) DEFAULT NULL;
+-- ALTER TABLE promotion_email MODIFY introPicture3 VARCHAR(255) DEFAULT NULL;
+-- ALTER TABLE promotion_email MODIFY promotionPicture VARCHAR(255) DEFAULT NULL;
+-- ALTER TABLE promotion_email MODIFY footerPicture VARCHAR(255) DEFAULT NULL;
+-- ALTER TABLE promotion_email ADD COLUMN linkProducts VARCHAR(255) DEFAULT NULL;
+-- ALTER TABLE promotion_email ADD COLUMN linkOffers VARCHAR(255) DEFAULT NULL;

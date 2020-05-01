@@ -7,6 +7,7 @@
     <meta name="x-apple-disable-message-reformatting">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="telephone=no" name="format-detection">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
     <title></title>
     <!--[if (mso 16)]>
     <style type="text/css">
@@ -791,6 +792,42 @@
                     </tbody>
                 </table>
 
+                {% if primaryTitle %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                        <tbody>
+                        <tr>
+                            <td class="esd-stripe" align="center">
+                                <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                    <tbody>
+                                    <tr>
+                                        <td class="esd-structure es-p30t es-p10b es-p20r es-p20l" align="left">
+                                            <table width="100%" cellspacing="0" cellpadding="0">
+                                                <tbody>
+                                                <tr>
+                                                    <td class="esd-container-frame" width="560" valign="top" align="center">
+                                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="esd-block-text" align="center">
+                                                                    <h2 style="font-size: 22px; font-family: Montserrat !important;"> {{ primaryTitle | upper }}</h2>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+
                 {% if intros | length > 0 %}
                     <table class="es-content" cellspacing="0" cellpadding="0" align="center">
                     <tbody>
@@ -830,7 +867,7 @@
                                                             <tr>
                                                                 <td class="esd-block-text es-p5t es-p10b">
                                                                     <a target="_blank" href="{{ intro.link }}" style="text-decoration: none;">
-                                                                        <h4 style="color: #333333;">
+                                                                        <h4 style="color: #333333; font-size: 20px; font-family: Montserrat !important;">
                                                                             <span class="product-name">{{ intro.title }}</span>
                                                                         </h4>
                                                                     </a>
@@ -838,7 +875,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td class="esd-block-text es-p10b">
-                                                                    <a target="_blank" href="{{ intro.link }}" style="text-decoration: none;">
+                                                                    <a target="_blank" href="{{ intro.link }}" style="font-size: 16px; text-decoration: none;">
                                                                         {{ intro.content | striptags('<p><b><strong><em>') | raw }}
                                                                     </a>
                                                                 </td>
@@ -880,7 +917,7 @@
                                                         <tbody>
                                                         <tr>
                                                             <td class="esd-block-text" align="center">
-                                                                <h2>- {{ offersTitle | upper }} -<br></h2>
+                                                                <h2 style="font-size: 22px; font-family: Montserrat !important;">- {{ offersTitle | upper }} -<br></h2>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -892,8 +929,10 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="esd-structure es-p20t es-p20b es-p20r es-p20l" esd-custom-block-id="9790" align="left">
-                                        {% for product in offers %}
+                                    <td class="esd-structure es-p20t es-p20b es-p5r es-p5l" esd-custom-block-id="9790" align="left">
+                                        {% for productAndPrice in offers %}
+                                            {% set product = productAndPrice.product %}
+                                            {% set price = productAndPrice.offerPrice %}
                                             <!--[if mso]><table width="530" cellpadding="0"
                                                                 cellspacing="0"><tr><td width="194" valign="top"><![endif]-->
                                             <table class="es-left" style="width: 50% !important;
@@ -911,8 +950,10 @@
                                                         <table  width="100%" cellspacing="0" cellpadding="0">
                                                             <tbody>
                                                             <tr>
-                                                                <td class="esd-block-image es-p15t es-p20r es-p20l" align="center" style="font-size:0">
-                                                                    <a target="_blank" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}">
+                                                                <td class="esd-block-image es-p10t" align="center" style="font-size:0">
+                                                                    <a target="_blank" style="position: relative;" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}">
+                                                                        <img style="position: absolute; width: 65px; z-index: 1;" src="{{ absolute_url(asset('uploads/images/oferta.png')) }}" alt="">
+
                                                                         <img class="adapt-img product-image"
                                                                              src="{{ absolute_url(vich_uploader_asset(product.mainImage, 'imageFile')) }}"
                                                                              alt="{{ product.item }}"
@@ -921,15 +962,15 @@
                                                                              width="134"></a></td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="esd-block-text es-p15t es-p15r es-p15l" align="left">
+                                                                <td class="esd-block-text es-p10t es-p15r es-p15l" align="left">
                                                                     <a href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}" style="text-decoration: none;">
-                                                                        <h4 style="color: #333;">$<span style="font-weight: 700;" class="price">{{ product.price }}.00 </span></h4>
+                                                                        <h4 style="color: #333;">$<span style="font-weight: 700; font-family: Montserrat !important;" class="price">{{ price }}.00 </span></h4>
                                                                     </a>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="esd-block-text es-p5t es-p10b es-p15r es-p15l" align="left">
-                                                                    <p style="color: #333333;">
+                                                                    <p style="color: #333333; font-size: 14px; font-family: Montserrat !important;">
                                                                         <span class="product-name">{{ product.name }}</span>
                                                                         <br>
                                                                         {{ product.description | striptags | slice(0, 50)  }}...
@@ -945,12 +986,115 @@
                                         {% endfor %}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-l" align="center">
+                                        <p><a style="color: #7a7416;" href="{{ linkOffers }}" target="_blank">ver más ofertas</a></p>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </td>
                     </tr>
                     </tbody>
                 </table>
+                {% endif %}
+
+                {% if products | length > 0 %}
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                        <tbody>
+                        <tr>
+                            <td class="esd-stripe" align="center">
+                                <table class="es-content-body" width="600" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center">
+                                    <tbody>
+                                    <tr>
+                                        <td class="esd-structure es-p30t es-p10b es-p20r es-p20l" align="left">
+                                            <table width="100%" cellspacing="0" cellpadding="0">
+                                                <tbody>
+                                                <tr>
+                                                    <td class="esd-container-frame" width="560" valign="top" align="center">
+                                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="esd-block-text" align="center">
+                                                                    <h2 style="font-size: 20px; font-family: Montserrat !important;">- {{ productsTitle | upper }} -<br></h2>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="esd-structure es-p20t es-p20b es-p5r es-p5l" esd-custom-block-id="9790" align="left">
+                                            {% for product in products %}
+                                                <!--[if mso]><table width="530" cellpadding="0"
+                                                                    cellspacing="0"><tr><td width="194" valign="top"><![endif]-->
+                                                <table class="es-left" style="width: 50% !important;
+                                                {% if loop.index == products | length and loop.index % 2 == 1 %}
+                                                        margin: 0 25%;
+                                                {% endif %}
+                                                        " cellspacing="0" cellpadding="0" align="left">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="es-m-p20b esd-container-frame" esd-custom-block-id="9799"
+                                                            width="174" align="left" esdev-config="h7"
+                                                                {% if loop.index < 3 %}
+                                                            style="padding-right: 10px; {#border-right: 1px #666 solid;#}"
+                                                                {% endif %}>
+                                                            <table  width="100%" cellspacing="0" cellpadding="0">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td class="esd-block-image es-p10t" align="center" style="font-size:0">
+                                                                        <a target="_blank" style="position: relative;" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}">
+                                                                            {% if productsOffers[loop.index0] %}
+                                                                                <img style="position: absolute; width: 65px;  z-index: 1;" src="{{ absolute_url(asset('uploads/images/oferta.png')) }}" alt="">
+                                                                            {% endif %}
+                                                                            <img class="adapt-img product-image"
+                                                                                 src="{{ absolute_url(vich_uploader_asset(product.mainImage, 'imageFile')) }}"
+                                                                                 alt="{{ product.item }}"
+                                                                                 style="display: block;"
+                                                                                 title="{{ product.item }}"
+                                                                                 width="134"></a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="esd-block-text es-p10t es-p15r es-p15l" align="left">
+                                                                        <a href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}" style="text-decoration: none;">
+                                                                            <h4 style="color: #333;">$<span style="font-weight: 700;font-family: Montserrat !important;" class="price">{{ product.price }}.00 </span></h4>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="esd-block-text es-p5t es-p10b es-p15r es-p15l" align="left">
+                                                                        <p style="color: #333333; font-size: 14px; font-family: Montserrat !important;">
+                                                                            <span class="product-name">{{ product.name }}</span>
+                                                                            <br>
+                                                                            {{ product.description | striptags | slice(0, 40)  }}...
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-l" align="center">
+                                            <p><a style="color: #7a7416;" href="{{ linkProducts }}" target="_blank">ver más productos</a></p>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 {% endif %}
 
                 {% if promotion.title %}
@@ -1012,15 +1156,15 @@
                                                         <tr>
                                                             <td class="esd-block-text es-p5t es-p20r es-p20l" style="padding-top: 5px; padding-right: 20px; padding-left: 20px;" align="left">
                                                                 <a target="_blank" href="{{ promotion.link }}" style="text-decoration: none;">
-                                                                    <h3>
+                                                                    <h3 style="font-size: 20px; font-family: Montserrat !important;">
                                                                         {{ promotion.title }}
                                                                     </h3>
                                                                 </a>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-c" align="left">
-                                                                <a target="_blank" href="{{ promotion.link }}" style="text-decoration: none;">
+                                                            <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-l" align="left">
+                                                                <a target="_blank" href="{{ promotion.link }}" style="text-decoration: none; font-family: Montserrat !important;">
                                                                     {{ promotion.content | striptags('<p><b><i>') | raw }}
                                                                 </a>
                                                             </td>
@@ -1059,7 +1203,7 @@
                                                         <tbody>
                                                         <tr>
                                                             <td class="esd-block-text" align="center">
-                                                                <h2>- {{ blogsTitle | upper }} -<br></h2>
+                                                                <h2 style="font-size: 20px; font-family: Montserrat !important;">- {{ blogsTitle | upper }} -<br></h2>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -1097,31 +1241,23 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-{#                                                            <td class="esd-block-text es-p20t es-p20r es-p20l es-m-txt-c" style="padding-top: 20px; padding-right: 20px; padding-left: 20px;" align="left">#}
-{#                                                                <p style="color: #999999; font-size: 12px;"><strong><span class="product-category"> {% if blog.tags | length > 0 %}#}
-{#                                                                                                                            {% set tag = blog.tags | first  %}#}
-{#                                                                                                                            {{ tag.value | upper }}#}
-{#                                                                                                                        {% else %}#}
-{#                                                                                                                            &nbsp;#}
-{#                                                                                                                        {% endif %} </span></strong></p>#}
-{#                                                            </td>#}
                                                         </tr>
                                                         <tr>
                                                             <td class="esd-block-text es-p5t es-p20r es-p20l" style="padding-top: 5px; padding-right: 20px; padding-left: 20px;" align="left">
                                                                 <a href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" style="" target="_blank">
-                                                                    <h3>{{ blog.title }}</h3>
+                                                                    <h3 style="font-size: 20px; font-family: Montserrat !important;">{{ blog.title }}</h3>
                                                                 </a>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-c" align="left">
-                                                                <p class="product-description">
+                                                            <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-l" align="left">
+                                                                <p class="product-description" style="font-size: 16px; font-family: Montserrat !important;">
                                                                     {{ blog.summary  | striptags | slice(0, 150) }}...
                                                                 </p>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="right">
+                                                            <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-l" align="right">
                                                                 <p><a style="color: #7a7416;" href="{{ absolute_url(path('blog_details', {id: blog.id, title: blog.path})) }}" target="_blank">ver más</a></p>
                                                             </td>
                                                         </tr>
@@ -1160,7 +1296,7 @@
                                                         <tbody>
                                                         <tr>
                                                             <td class="esd-block-text" align="center">
-                                                                <h2>- {{ servicesTitle | upper }} -<br></h2>
+                                                                <h2 style="font-family: Montserrat !important; font-size: 20px;">- {{ servicesTitle | upper }} -<br></h2>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -1199,18 +1335,18 @@
                                                             <tr>
                                                                 <td class="esd-block-text es-p5t es-p20r es-p20l" align="left">
                                                                     <a href="{{ service.link }}" target="_blank">
-                                                                        <h3>{{ service.title }}</h3>
+                                                                        <h3 style="font-family: Montserrat !important;">{{ service.title }}</h3>
                                                                     </a>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-c" align="left">
+                                                                <td style="font-family: Montserrat !important;" class="esd-block-text es-p10t es-p10b es-p20r es-p20l es-m-txt-l" align="left">
                                                                     {{ service.content | raw }}
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-c" align="right">
-                                                                    <p><a style="color: #7a7416;" href="{{ service.link }}" target="_blank">ver más</a></p>
+                                                                <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-l" align="right">
+                                                                    <p><a style="color: #7a7416; font-family: Montserrat !important;" href="{{ service.link }}" target="_blank">ver más</a></p>
                                                                 </td>
                                                             </tr>
                                                             </tbody>
@@ -1221,14 +1357,21 @@
                                             </table>
                                             <!--[if mso]></td><td width="20"></td><td width="270" valign="top"><![endif]-->
                                         {% endfor %}
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                                        </td>
+                                    </tr>
+                                    {% if linkServices %}
+                                        <tr>
+                                            <td class="esd-block-text es-p20b es-p20r es-p20l es-m-txt-l" align="center">
+                                                <p><a style="color: #7a7416;" href="{{ linkServices }}" target="_blank">saber más</a></p>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 {% endif %}
 
                 {% if footerPicture %}
@@ -1295,18 +1438,18 @@
                                                                 <a target="_blank" href="{{ absolute_url(path('site_home')) }}">
                                                                     <img
                                                                             src="{{ absolute_url(asset(home.data.logo.image.path)) }}"
-                                                                            alt="Flowers logo"
+                                                                            alt="Conceptos logo"
                                                                             style="display: block;"
-                                                                            title="Flowers logo"
+                                                                            title="Conceptos logo"
                                                                             width="135">
                                                                 </a>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="esd-block-text" align="left">
-                                                                <p><a style="color: #999999;" target="_blank" href="tel://+5352458380">+53 5245 8380</a>
+                                                                <p style="font-size: 16px;"><a style="color: #999999;" target="_blank" href="tel://+5352458380">+53 5245 8380</a>
                                                                     <a style="color: #999999;" target="_blank" href="mailto:comercial@tiendaconceptos.com">comercial@tiendaconceptos.com</a></p>
-                                                                <p style="color: #999999;" >© {{ 'now' | date('Y') }} Conceptos</p>
+                                                                <p style="color: #999999; font-size: 16px;" >© {{ 'now' | date('Y') }} Conceptos</p>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -1333,8 +1476,14 @@
                                                                                      alt="whatsapp" width="32">
                                                                             </a>
                                                                         </td>
+                                                                        <td class="es-p10r" valign="top" align="center">
+                                                                            <a target="_blank" href="https://m.me/TiendaConceptos">
+                                                                                <img title="messenger" src="https://stripo.email/static/assets/img/messenger-icons/circle-gray-bordered/messenger-circle-gray-bordered.png"
+                                                                                     alt="messenger" width="32">
+                                                                            </a>
+                                                                        </td>
                                                                         <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.facebook.com/TiendaConceptos/"><img title="Facebook" src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-gray-bordered/facebook-circle-gray-bordered.png" alt="Fb" width="32"></a></td>
-                                                                        <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.instagram.com/TiendaConceptos/"><img title="Instagram" src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-gray-bordered/instagram-circle-gray-bordered.png" alt="Inst" width="32"></a></td>
+                                                                        <td class="es-p10r" valign="top" align="center"><a target="_blank" href="https://www.instagram.com/tienda_conceptos/"><img title="Instagram" src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-gray-bordered/instagram-circle-gray-bordered.png" alt="Inst" width="32"></a></td>
                                                                     </tr>
                                                                     </tbody>
                                                                 </table>
@@ -1342,8 +1491,8 @@
                                                         </tr>
                                                         <tr>
                                                             <td align="left" class="esd-block-text">
-                                                                <p style="color: #999999;">Estás recibiendo este correo, porque visitó nuestro sitio web y
-                                                                    aceptasto que le enviaramos correos regularmente.</p>
+                                                                <p style="color: #999999; font-size: 16px;">Estás recibiendo este correo, porque visitó nuestro sitio web y
+                                                                    aceptó que le enviáramos correos regularmente.</p>
                                                             </td>
                                                         </tr>
                                                         </tbody>

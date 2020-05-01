@@ -99,12 +99,51 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 .headroom--unpinned {
   transform: translateY(-100%); }
 
+.category-menu-open {
+  position: fixed;
+  top: 75%;
+  z-index: 2;
+  border: 1px solid #282827;
+  background-color: #c2b930;
+  width: 4em;
+  height: 2em;
+  outline: none;
+  overflow: hidden; }
+
+.category-menu-open:before, .category-menu-open:after {
+    position: absolute;
+    right: .5em;
+    content: '';
+    width: 1em;
+    height: .25em;
+    background-color: #282827; }
+
+.category-menu-open:before {
+    -webkit-transform: translateY(-102%) rotate(45deg);
+            transform: translateY(-102%) rotate(45deg); }
+
+.category-menu-open:after {
+    -webkit-transform: translateY(102%) rotate(-45deg);
+            transform: translateY(102%) rotate(-45deg); }
+
+.animation_flash {
+  position: absolute;
+  width: 10em;
+  height: 150%;
+  top: -25%;
+  -webkit-transform: rotate(35deg);
+          transform: rotate(35deg);
+  background-color: rgba(255, 255, 255, 0.5);
+  -webkit-animation: zoomIn 2.5s ease-in 10;
+          animation: zoomIn 2.5s ease-in 10; }
+
 .conceptos-category-icon {
   width: 1.5em;
   height: auto; }
 
 @-webkit-keyframes zoomIn {
   0% {
+<<<<<<< HEAD
     transform: scaleX(1); }
   50% {
     transform: scaleX(1.5); }
@@ -122,6 +161,27 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 #open-categories-menu {
   -webkit-animation: zoomIn 2.5s ease-in 10;
           animation: zoomIn 2.5s ease-in 10; }
+=======
+    -webkit-transform: translateX(-50) rotate(35deg);
+            transform: translateX(-50) rotate(35deg); }
+  50% {
+    -webkit-transform: translateX(100%) rotate(35deg);
+            transform: translateX(100%) rotate(35deg); }
+  100% {
+    -webkit-transform: translateX(0%) rotate(35deg);
+            transform: translateX(0%) rotate(35deg); } }
+
+@keyframes zoomIn {
+  0% {
+    -webkit-transform: translateX(-50) rotate(35deg);
+            transform: translateX(-50) rotate(35deg); }
+  50% {
+    -webkit-transform: translateX(100%) rotate(35deg);
+            transform: translateX(100%) rotate(35deg); }
+  100% {
+    -webkit-transform: translateX(0%) rotate(35deg);
+            transform: translateX(0%) rotate(35deg); } }
+>>>>>>> 5d3c47ef92d3c80f93292609cbfc6f741ea38417
 
 .required {
   position: relative; }

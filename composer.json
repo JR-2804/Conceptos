@@ -32,7 +32,9 @@
         "lionware/symfony-session-timeout": "^1.0",
         "excelwebzone/recaptcha-bundle": "^1.4",
         "knplabs/knp-snappy-bundle": "^1.4",
-        "h4cc/wkhtmltopdf-i386": "^0.12.4"
+        "h4cc/wkhtmltopdf-i386": "^0.12.4",
+        "liip/imagine-bundle": "^1.9",
+        "twig/extensions": "^1.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
@@ -63,7 +65,7 @@
         "symfony-app-dir": "app",
         "symfony-bin-dir": "bin",
         "symfony-var-dir": "var",
-        "symfony-web-dir": "web",
+        "symfony-web-dir": "public_html",
         "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {

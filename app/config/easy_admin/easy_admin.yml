@@ -404,10 +404,12 @@ easy_admin:
                     - { type: 'group', label: 'Seccion Informacion', icon: 'cogs', columns: 12 }
 
                     - {property: 'subject', label: 'Asunto'}
-                    - {property: 'emails', label: 'Destinatarios (separados por ;)'}
+                    - {property: 'tagUser', label: 'Grupo de usuarios', type: choice, type_options: { choices: {'==Ninguno==':'ninguno', 'Clientes': 'clientes', 'Miembros': 'miembros' }} }
+                    - {property: 'emails', label: 'Otros destinatarios (separados por ;)'}
 
                     - { type: 'group', label: 'Imagen Principal', icon: 'cogs', columns: 12 }
                     - {property: 'primaryPictureFile', type: 'file', label: 'Imágen principal'}
+                    - {property: 'primaryTitle', , label: 'Titulo principal'}
 
                     - { type: 'group', label: 'Seccion Intro', icon: 'cogs', columns: 12, help: 'Si no se pone ningún título, no se mostrara esta sección' }
 
@@ -426,14 +428,17 @@ easy_admin:
                     - {property: 'introContent3', label: 'Intro content 3', type: 'ckeditor'}
                     - {property: 'introLink3', label: 'Enlace del intro 3'}
 
-                    - { type: 'group', label: 'Seccion Ofertas', icon: 'cogs', columns: 12, help: 'Si no hay codigos, no se mostrara esta sección' }
-
+                    - { type: 'group', label: 'Seccion Ofertas', icon: 'cogs', columns: 12, help: 'Si no hay codigos, no se mostrara esta sección'}
                     - {property: 'offersTitle', label: 'Titulo seccion ofertas'}
-                    - {property: 'offerItem1', label: 'Codigo del producto 1 en offerta'}
-                    - {property: 'offerItem2', label: 'Codigo del producto 2 en offerta'}
-                    - {property: 'offerItem3', label: 'Codigo del producto 3 en offerta'}
+                    - {property: 'offers', label: 'Ofertas disponibles en el sitio'}
+                    - {property: 'linkOffers', label: 'Enlace para ver más ofertas en el sitio'}
 
-                    - { type: 'group', label: 'Seccion Promocion', icon: 'cogs', columns: 12 }
+                    - { type: 'group', label: 'Seccion productos', icon: 'cogs', columns: 12, help: 'Si no hay códigos, no se mostrara esta sección' }
+                    - {property: 'productsTitle', label: 'Título sección productos'}
+                    - {property: 'products', label: 'Código de los productos'}
+                    - {property: 'linkProducts', label: 'Enlace para ver más productos en el sitio'}
+
+                    - { type: 'group', label: 'Sección promoción', icon: 'cogs', columns: 12 }
 
                     - {property: 'promotionTitle', label: 'Titulo promocion', help: 'Si no se añade el titulo, no se mostrara esta sección'}
                     - {property: 'promotionPictureFile', type: 'file', label: 'Imagen de promocion'}
@@ -443,20 +448,22 @@ easy_admin:
                     - { type: 'group', label: 'Seccion Blogs', icon: 'cogs', columns: 12 }
 
                     - {property: 'blogTitle', label: 'Titulo seccion Blog'}
-                    - {property: 'blogId1', label: 'Id del articulo del blog 1', help: 'Si no se anade ningun id, no se mostrara esta seccion'}
-                    - {property: 'blogId2', label: 'Id del articulo del blog 2', help: 'Si no se anade ningun id, no se mostrara esta seccion'}
+                    - {property: 'blogs', label: 'articulos del blog', help: 'Si no se añade ningún artículo, no se mostrará esta sección, recomendamos que sean a lo sumo dos articulos'}
 
                     - { type: 'group', label: 'Sección Servicios', icon: 'cogs', columns: 12, help: 'Si los servicio no posee títulos no se añadira esta sección.' }
 
                     - {property: 'servicesTitle', label: 'Titulo seccion Servicios'}
+                    - {property: 'linkServices', label: 'Enlace de los servicios'}
+
                     - {property: 'serviceTitle1', label: 'Servicio titulo 1', help: 'Si el Servicio no posee título no se añadira.'}
                     - {property: 'servicePicture1File', type: 'file', label: 'Servicio Imagen 1'}
                     - {property: 'serviceContent1', label: 'Servicio content 1', type: 'ckeditor'}
+                    - {property: 'serviceLink1', label: 'Enlace del Servicio 1'}
 
                     - {property: 'serviceTitle2', label: 'Servicio titulo 2', help: 'Si el servicio no posee título no se añadira.'}
                     - {property: 'servicePicture2File', type: 'file', label: 'Servicio Imagen 2'}
                     - {property: 'serviceContent2', label: 'Servicio content 2', type: 'ckeditor'}
-
+                    - {property: 'serviceLink2', label: 'Enlace del Servicio 2'}
 
                     - { type: 'group', label: 'Seccion Footer', icon: 'cogs', columns: 12 }
 

@@ -17,6 +17,7 @@
 /public_html/download
 /public_html/db
 /public_html/.htaccess
+public_html/.htaccess
 app/config/parameters.yml
 /.vscode/
 public_html/error_log
