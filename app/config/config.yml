@@ -352,7 +352,7 @@ liip_imagine:
     min_width_400:
       # set your image quality defaults
       jpeg_quality: 85
-      png_compression_level: 85
+      png_compression_level: 8
 
       # setup the filter steps to apply for this transformation
       filters:

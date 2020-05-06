@@ -13,6 +13,7 @@ class CheckOutDTO
     private $products;
     private $memberNumber;
     private $type;
+    private $request;
     private $prefacture;
     private $ignoreTransport;
 
@@ -104,6 +105,16 @@ class CheckOutDTO
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    public function setRequest($request)
+    {
+        $this->request = $request;
     }
 
     public function getPrefacture()

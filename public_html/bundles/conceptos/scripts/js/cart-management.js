@@ -711,8 +711,13 @@ $(document).ready(function() {
 
   $("#type-select").change(function() {
     if ($(this).val() === "facture") {
+      $("#request-select").show();
       $("#prefactures-select").show();
+    } else if ($(this).val() === "prefacture") {
+      $("#request-select").show();
+      $("#prefactures-select").hide();
     } else {
+      $("#request-select").hide();
       $("#prefactures-select").hide();
     }
   });
@@ -731,7 +736,11 @@ $(document).ready(function() {
       );
 
       if ($("#type-select").val() === "facture") {
+        $("#check_out_request").val($("#request-select").val());
         $("#check_out_prefacture").val($("#prefactures-select").val());
+      }
+      if ($("#type-select").val() === "prefacture") {
+        $("#check_out_request").val($("#request-select").val());
       }
     } else {
       e.preventDefault();

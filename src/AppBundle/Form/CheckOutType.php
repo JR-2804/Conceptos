@@ -24,6 +24,7 @@ class CheckOutType extends AbstractType
             ->add('products', HiddenType::class)
             ->add('memberNumber', HiddenType::class, ['required' => false,])
             ->add('type', HiddenType::class)
+            ->add('request', HiddenType::class)
             ->add('prefacture', HiddenType::class)
             ->add('ignoreTransport', HiddenType::class)
         ;
