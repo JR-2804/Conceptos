@@ -42,15 +42,15 @@
               style="{% if page.data.slideFontSize %}font-size: {{page.data.slideFontSize + 0.75}}em;{% endif %}{% if page.data.slideFontColor %}color: {{page.data.slideFontColor}};{% endif %}">{{ slide.main }}</h1>
         {% endif %}
         {% if slide.secondary is defined %}
-          <h2 class="d-flex {% if page.data.descriptionHorizontal is defined %}justify-content-{{page.data.descriptionHorizontal}}{% endif %}"
+          <h2 class="d-flex {% if page.data.titleHorizontal is defined %}justify-content-{{page.data.titleHorizontal}}{% endif %}"
               style="{% if page.data.slideFontSize %}font-size: {{page.data.slideFontSize}}em;{% endif %}{% if page.data.slideFontColor %}color: {{page.data.slideFontColor}};{% endif %}">{{ slide.secondary }}</h2>
         {% endif %}
+        {% if slide.link is defined %}
+          <div class="d-flex home__hero__content__btn {% if page.data.titleHorizontal is defined %}justify-content-{{page.data.titleHorizontal}}{% endif %}">
+            <a href="{{slide.link}}">VER MÁS</a>
+          </div>
+        {% endif %}
       </div>
-      {% if slide.link is defined %}
-        <div class="home__hero__content__btn">
-          <a href="{{slide.link}}">VER MÁS</a>
-        </div>
-      {% endif %}
     {% else %}
       <div class="home__hero__content__title">
         <h1>Bienvenidos a Conceptos</h1>

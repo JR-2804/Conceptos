@@ -264,12 +264,21 @@ class SecurityController extends Controller
           $persistedRequests = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->findAll();
           foreach ($persistedRequests as $persistedRequest) {
             if ($persistedRequest->getClient()->getEmail() == $userMail and count($persistedRequest->getPreFactures()) == 0) {
-              foreach ($persistedRequest->getRequestProducts() as $requestProduct) {
-                if (!$this->IsEntityDefined($requestProduct)) {
-                  $requestProduct->setProduct(null);
+              $exists = false;
+              foreach ($persistedPrefactures as $persistedPrefacture) {
+                if ($persistedPrefacture->getRequest() && $persistedPrefacture->getRequest()->getId() == $clientRequest->getId()) {
+                  $exists = true;
                 }
               }
-              $clientRequests[] = $persistedRequest;
+
+              if ($exists == false) {
+                foreach ($persistedRequest->getRequestProducts() as $requestProduct) {
+                  if (!$this->IsEntityDefined($requestProduct)) {
+                    $requestProduct->setProduct(null);
+                  }
+                }
+                $clientRequests[] = $persistedRequest;
+              }
             }
           }
         }

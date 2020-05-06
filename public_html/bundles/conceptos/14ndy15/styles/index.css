@@ -22,8 +22,7 @@
   .home__hero__content {
     position: absolute;
     top: 2em;
-    left: 2em;
-    width: 80%; }
+    width: 100%; }
   .home__hero__content__title h1 {
       color: #282827;
       font-size: 1.75em;

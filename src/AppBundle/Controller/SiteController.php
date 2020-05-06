@@ -580,6 +580,10 @@ class SiteController extends Controller
               if ($data->getType() == "facture") {
                 $facture = new Facture();
                 $facture->setClient($client);
+                if ($data->getRequest() != "0") {
+                  $req = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->find((int) $data->getRequest());
+                  $facture->setRequest($req);
+                }
                 if ($data->getPrefacture() != "0") {
                   $prefacture = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->find((int) $data->getPrefacture());
                   $facture->setPreFacture($prefacture);
@@ -624,6 +628,10 @@ class SiteController extends Controller
               } else {
                 $prefacture = new PreFacture();
                 $prefacture->setClient($client);
+                if ($data->getRequest() != "0") {
+                  $req = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->find((int) $data->getRequest());
+                  $prefacture->setRequest($req);
+                }
 
                 foreach ($productsResponse as $productR) {
                   if (array_key_exists('type', $productR)) {
@@ -745,6 +753,7 @@ class SiteController extends Controller
         }
 
         return $this->render(':site:shop-cart.html.twig', [
+          'requests' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->findAll(),
           'prefactures' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->findAll(),
           'form' => $form->createView(),
           'home' => $home,

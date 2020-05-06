@@ -192,6 +192,12 @@
                 <option value="prefacture">Prefactura</option>
                 <option value="facture">Factura</option>
               </select>
+              <select id="request-select" class="mb-2" style="display: none;">
+                <option value="0">Ninguna</option>
+                {% for request in requests %}
+                    <option value="{{request.id}}">Pedido: {{request.id}}-{{request.date|date('Y')}}</option>
+                {% endfor %}
+              </select>
               <select id="prefactures-select" class="mb-2" style="display: none;">
                 <option value="0">Ninguna</option>
                 {% for prefacture in prefactures %}
