@@ -226,6 +226,7 @@
       <div class="d-flex flex-wrap">
         {% for product in related %}
           <div class="d-flex col-6 col-lg-2 pl-0">
+            {% set sizes = '(min-width: 1000px) 12vw, 50vw' %}
             {{include('site/product-summary-short.html.twig')}}
           </div>
         {% endfor %}
