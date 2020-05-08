@@ -41,6 +41,7 @@
     {% if products|length > 0 %}
       <div class="d-flex flex-column mt-3">
         <span class="conceptos-title">PRODUCTOS RELACIONADOS</span>
+        {% set sizes = '(min-width: 1000px) 12vw, 45vw' %}
         <div class="d-flex flex-wrap">
           {% for product in products %}
             <div class="d-flex col-6 col-lg-2 pl-0">

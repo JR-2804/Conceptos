@@ -631,17 +631,17 @@ function init() {
   if (data.prioritizeSlideText) {
     $("#prioritize-slide-text").prop("checked", data.prioritizeSlideText);
   }
-  if (data.titleHorizontal) {
-    $("#title-horizontal").val(data.titleHorizontal);
-  }
-  if (data.descriptionHorizontal) {
-    $("#description-horizontal").val(data.descriptionHorizontal);
+  if (data.horizontalPosition) {
+    $("#horizontal-position").val(data.horizontalPosition);
   }
   if (data.verticalPosition) {
     $("#vertical-position").val(data.verticalPosition);
   }
   if (data.hoverStyle) {
     $("#hover-style").val(data.hoverStyle);
+  }
+  if (data.hoverColor) {
+    $("#hover-color").val(data.hoverColor);
   }
   if (data.slideTopMargin) {
     $("#slide-top-margin").val(data.slideTopMargin);
@@ -693,10 +693,10 @@ function generateData() {
   var data = {
     slides: headerImages,
     prioritizeSlideText: $("#prioritize-slide-text").prop("checked"),
-    titleHorizontal: $("#title-horizontal").val(),
-    descriptionHorizontal: $("#description-horizontal").val(),
+    horizontalPosition: $("#horizontal-position").val(),
     verticalPosition: $("#vertical-position").val(),
     hoverStyle: $("#hover-style").val(),
+    hoverColor: $("#hover-color").val(),
     slideTopMargin: $("#slide-top-margin").val(),
     slideBottomMargin: $("#slide-bottom-margin").val(),
     slideLeftMargin: $("#slide-left-margin").val(),
