@@ -1,0 +1,52 @@
+{% extends ':site:base.html.twig' %}
+{% block title %}Pedidos externos{% endblock %}
+{% block body %}
+  <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pt-lg-3 pb-lg-3">
+    <span class="conceptos-title-strong mt-2 mb-2">PEDIDOS EXTERNOS</span>
+    <div class="d-flex flex-wrap">
+      {% for externalRequest in externalRequests %}
+        {% set productCount = 0 %}
+        {% for product in externalRequest.externalRequestProducts %}
+          {% set productCount = productCount + product.count %}
+        {% endfor %}
+        <div class="external-request col-6 col-lg-3 p-2" data-id="{{externalRequest.id}}">
+          <div class="d-flex flex-column conceptos-white-background w-100 p-2">
+            <div class="d-flex flex-column" data-toggle="modal" data-target="#external-request-product-modal-{{loop.index}}">
+              <span class="conceptos-product-info mt-1">Costo: $&nbsp;{{externalRequest.finalPrice}}</span>
+              <span class="conceptos-product-info mt-1">Peso: {{externalRequest.weight}}  Kg</span>
+              <span class="conceptos-product-info mt-1">Cantidad: {{productCount}}</span>
+              <span class="conceptos-product-info mt-1">Presupuesto: $&nbsp;{{externalRequest.budget}}</span>
+              <span class="conceptos-product-info mt-1">Pago: $&nbsp;{{externalRequest.payment}}</span>
+              <span class="conceptos-product-info mt-1">Fecha: {{externalRequest.date|date('d/m/Y')}}</span>
+            </div>
+            <button class="conceptos-primary-button accept-external-request-button mt-2" href="" data-path="{{path('accept_external_request', {id: externalRequest.id})}}">ACEPTAR</button>
+          </div>
+          <div id="external-request-product-modal-{{loop.index}}" class="modal fade">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-body conceptos-gray-background">
+                  <div class="d-flex flex-wrap">
+                    {% set sizes = '(min-width: 1000px) 12vw, 45vw' %}
+                    {% for externalRequestProduct in externalRequest.externalRequestProducts %}
+                      {% set product = externalRequestProduct.product %}
+                      <div class="d-flex col-6 col-lg-3 pl-0">
+                        {{ include('site/product-summary-short.html.twig') }}
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <div class="d-flex justify-content-center w-100">
+          <span class="conceptos-subtitle mt-2 mb-2">No existen pedidos externos</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
+{% block js %}
+  <script src="{{ asset('bundles/conceptos/scripts/js/external-request.js') }}"></script>
+{% endblock %}

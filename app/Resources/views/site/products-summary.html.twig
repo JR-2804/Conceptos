@@ -1,5 +1,5 @@
 {% for product in shopCartProducts %}
-  <div class="d-flex shop-cart-product p-2 {% if loop.index > 1 %}mt-2{% endif %}"
+  <div class="d-flex flex-wrap shop-cart-product align-items-center p-2 {% if loop.index > 1 %}mt-2{% endif %}"
       data-product="{{product.id}}"
       data-uuid="{{ product.uuid }}"
       data-calculate-price-path="{{ path('calculate_product_price') }}"
@@ -20,14 +20,19 @@
       {% set productName = product.name %}
       {% set productPrice = product.price %}
     {% endif %}
-    <div class="d-flex col-5 col-lg-2 conceptos-white-background justify-content-center align-items-center p-0 {% if product.offerExists is defined and product.offerExists %}popular_product{% endif %}">
+    {% if product.comboProducts|length > 0 %}
+      <div class="d-flex justify-content-center col-1 pl-0">
+        <span class="conceptos-product-info combo-product-toggle" data-uuid="{{ product.uuid }}">>></span>
+      </div>
+    {% endif %}
+    <div class="d-flex {% if product.comboProducts|length > 0 %} col-4 col-lg-2 {% else %} col-5 col-lg-3 {% endif %} conceptos-white-background justify-content-center align-items-center p-0 {% if product.offerExists is defined and product.offerExists %}popular_product{% endif %}">
       <div class="d-flex pl-1">
         <a href="{{ path('product_details', {id: product.id, name: product.name}) }}">
           <img class="conceptos-image conceptos-product-summary-image" src="{{imagePath}}" alt="{{productName}}">
         </a>
       </div>
     </div>
-    <div class="d-flex flex-column col-7 col-lg-10 pl-2">
+    <div class="d-flex flex-column {% if product.comboProducts|length > 0 %} col-7 col-lg-9 {% else %} col-7 col-lg-9 {% endif %} pl-2">
       <div class="d-flex flex-column">
         <span class="conceptos-product-info">{{productName}}</span>
         <span class="conceptos-product-info" data-price="{{productPrice}}">${{productPrice}}.00</span>
@@ -49,6 +54,28 @@
         <span class="conceptos-in-store-product-badge" style="display: none;">ALMACÉN</span>
       </div>
     </div>
+    {% if product.comboProducts|length > 0 %}
+      {% for comboProduct in product.comboProducts %}
+        <div class="combo-product-summary w-100">
+          <div class="d-flex col-12 align-items-center p-0 mt-2">
+            <div class="d-flex justify-content-center col-1 pl-0">
+              <span class="conceptos-product-info">{{comboProduct.count}}x</span>
+            </div>
+            <div class="d-flex col-4 col-lg-2 pl-0">
+              <a href="{{ path('product_details', {id: comboProduct.product.id, name: comboProduct.product.name}) }}">
+                <img class="conceptos-image conceptos-product-summary-image" src="{{vich_uploader_asset(comboProduct.product.mainImage, 'imageFile')}}" alt="{{comboProduct.product.name}}">
+              </a>
+            </div>
+            <div class="d-flex col-7 col-lg-9 pl-2">
+              <div class="d-flex flex-column">
+                <span class="conceptos-product-info">{{comboProduct.product.name}}</span>
+                <span class="conceptos-product-info" data-price="{{comboProduct.product.price}}">${{comboProduct.product.price}}.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
   </div>
 {% else %}
   <div class="d-flex justify-content-center">

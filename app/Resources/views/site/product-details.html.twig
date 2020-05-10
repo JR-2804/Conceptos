@@ -177,42 +177,30 @@
             <span class="conceptos-title">PRODUCTOS COMPLEMENTARIOS</span>
             <div class="d-flex flex-column conceptos-gray-background p-2 pl-3">
               <div class="d-flex justify-content-center w-100">
-                {% if complementaryProducts[0] is defined %}
-                  {% set product = complementaryProducts[0].product %}
+                <div class="d-flex conceptos-add-horizontal-scroll">
+                  {% for complementaryProduct in complementaryProducts %}
+                    {% set product = complementaryProduct.product %}
+                    {% if product.priceOffer != -1 %}
+                      {% set totalPrice = totalPrice + product.priceOffer %}
+                    {% else %}
+                      {% set totalPrice = totalPrice + product.price %}
+                    {% endif %}
+                    <div class="d-flex col-4 pl-0">
+                      {{include('site/combo-summary-short.html.twig')}}
+                    </div>
+                    <div class="d-flex col-1 justify-content-center align-items-center pl-0">
+                      +
+                    </div>
+                  {% endfor %}
+                  {% set product = mainProduct %}
                   {% if product.priceOffer != -1 %}
-                    {% set totalPrice = totalPrice + product.priceOffer %}
-                  {% else %}
-                    {% set totalPrice = totalPrice + product.price %}
-                  {% endif %}
-                  <div class="d-flex col-3 pl-0">
+                      {% set totalPrice = totalPrice + product.priceOffer %}
+                    {% else %}
+                      {% set totalPrice = totalPrice + product.price %}
+                    {% endif %}
+                  <div class="d-flex col-4 pl-0">
                     {{include('site/combo-summary-short.html.twig')}}
                   </div>
-                  <div class="d-flex col-1 justify-content-center align-items-center pl-0">
-                    +
-                  </div>
-                {% endif %}
-                {% if complementaryProducts[1] is defined %}
-                  {% set product = complementaryProducts[1].product %}
-                  {% if product.priceOffer != -1 %}
-                    {% set totalPrice = totalPrice + product.priceOffer %}
-                  {% else %}
-                    {% set totalPrice = totalPrice + product.price %}
-                  {% endif %}
-                  <div class="d-flex col-3 pl-0">
-                    {{include('site/combo-summary-short.html.twig')}}
-                  </div>
-                  <div class="d-flex col-1 justify-content-center align-items-center pl-0">
-                    +
-                  </div>
-                {% endif %}
-                {% set product = mainProduct %}
-                {% if product.priceOffer != -1 %}
-                    {% set totalPrice = totalPrice + product.priceOffer %}
-                  {% else %}
-                    {% set totalPrice = totalPrice + product.price %}
-                  {% endif %}
-                <div class="d-flex col-2 col-lg-3 pl-0">
-                  {{include('site/combo-summary-short.html.twig')}}
                 </div>
                 <div class="d-flex col-2 col-lg-1 justify-content-center align-items-center pl-0">
                   = {{ totalPrice }}

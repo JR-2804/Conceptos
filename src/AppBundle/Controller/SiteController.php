@@ -11,6 +11,8 @@ use AppBundle\Entity\ShopCartProduct;
 use AppBundle\Entity\Request\Client;
 use AppBundle\Entity\Request\Request as ProductRequest;
 use AppBundle\Entity\Request\Facture;
+use AppBundle\Entity\Request\ExternalRequest;
+use AppBundle\Entity\Request\ExternalRequestProduct;
 use AppBundle\Entity\Request\PreFacture;
 use AppBundle\Entity\Request\RequestCard;
 use AppBundle\Entity\Request\FactureCard;
@@ -585,98 +587,108 @@ class SiteController extends Controller
             $this->getDoctrine()->getManager()->persist($client);
 
             $comboDiscount = 0;
-            if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
-              if ($data->getType() == "facture") {
-                $facture = new Facture();
-                $facture->setClient($client);
-                if ($data->getRequest() != "0") {
-                  $req = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->find((int) $data->getRequest());
-                  $facture->setRequest($req);
-                }
-                if ($data->getPrefacture() != "0") {
-                  $prefacture = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->find((int) $data->getPrefacture());
-                  $facture->setPreFacture($prefacture);
-                }
+            if ($data->getType() == "facture" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              $facture = new Facture();
+              $facture->setClient($client);
+              if ($data->getRequest() != "0") {
+                $req = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->find((int) $data->getRequest());
+                $facture->setRequest($req);
+              }
+              if ($data->getPrefacture() != "0") {
+                $prefacture = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->find((int) $data->getPrefacture());
+                $facture->setPreFacture($prefacture);
+              }
 
-                foreach ($productsResponse as $productR) {
-                  if (array_key_exists('type', $productR)) {
-                    $factureCard = new FactureCard();
-                    $factureCard->setCount($productR['count']);
-                    $factureCard->setFacture($facture);
-                    $factureCard->setPrice($productR['price']);
-                    $this->getDoctrine()->getManager()->persist($factureCard);
-                    $facture->addFactureCard($factureCard);
-                  } else {
-                    $product = $productR['product'];
+              foreach ($productsResponse as $productR) {
+                if (array_key_exists('type', $productR)) {
+                  $factureCard = new FactureCard();
+                  $factureCard->setCount($productR['count']);
+                  $factureCard->setFacture($facture);
+                  $factureCard->setPrice($productR['price']);
+                  $this->getDoctrine()->getManager()->persist($factureCard);
+                  $facture->addFactureCard($factureCard);
+                } else {
+                  $product = $productR['product'];
 
-                    if (count($product->getComboProducts()) > 0) {
-                      foreach ($product->getComboProducts() as $comboProduct) {
-                        $this->CreateProduct(
-                          3,
-                          new FactureProduct(),
-                          $facture,
-                          $comboProduct->getProduct(),
-                          $comboProduct->getProduct()->getPrice(),
-                          $comboProduct->getCount() * $productR['count']
-                        );
-                        $comboDiscount += $comboProduct->getProduct()->getPrice() * $comboProduct->getCount() * $productR['count'];
-                      }
-                      $comboDiscount -= $productR['price'];
-                    } else {
+                  if (count($product->getComboProducts()) > 0) {
+                    foreach ($product->getComboProducts() as $comboProduct) {
                       $this->CreateProduct(
                         3,
                         new FactureProduct(),
                         $facture,
-                        $product,
-                        $productR['price'],
-                        $productR['count']
+                        $comboProduct->getProduct(),
+                        $comboProduct->getProduct()->getPrice(),
+                        $comboProduct->getCount() * $productR['count']
                       );
+                      $comboDiscount += $comboProduct->getProduct()->getPrice() * $comboProduct->getCount() * $productR['count'];
                     }
+                    $comboDiscount -= $productR['price'];
+                  } else {
+                    $this->CreateProduct(
+                      3,
+                      new FactureProduct(),
+                      $facture,
+                      $product,
+                      $productR['price'],
+                      $productR['count']
+                    );
                   }
                 }
-              } else {
-                $prefacture = new PreFacture();
-                $prefacture->setClient($client);
-                if ($data->getRequest() != "0") {
-                  $req = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->find((int) $data->getRequest());
-                  $prefacture->setRequest($req);
-                }
+              }
+            } elseif ($data->getType() == "prefacture" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              $prefacture = new PreFacture();
+              $prefacture->setClient($client);
+              if ($data->getRequest() != "0") {
+                $req = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->find((int) $data->getRequest());
+                $prefacture->setRequest($req);
+              }
 
-                foreach ($productsResponse as $productR) {
-                  if (array_key_exists('type', $productR)) {
-                    $prefactureCard = new PreFactureCard();
-                    $prefactureCard->setCount($productR['count']);
-                    $prefactureCard->setPreFacture($prefacture);
-                    $prefactureCard->setPrice($productR['price']);
-                    $this->getDoctrine()->getManager()->persist($prefactureCard);
-                    $prefacture->addPreFactureCard($prefactureCard);
-                  } else {
-                    $product = $productR['product'];
+              foreach ($productsResponse as $productR) {
+                if (array_key_exists('type', $productR)) {
+                  $prefactureCard = new PreFactureCard();
+                  $prefactureCard->setCount($productR['count']);
+                  $prefactureCard->setPreFacture($prefacture);
+                  $prefactureCard->setPrice($productR['price']);
+                  $this->getDoctrine()->getManager()->persist($prefactureCard);
+                  $prefacture->addPreFactureCard($prefactureCard);
+                } else {
+                  $product = $productR['product'];
 
-                    if (count($product->getComboProducts()) > 0) {
-                      foreach ($product->getComboProducts() as $comboProduct) {
-                        $this->CreateProduct(
-                          2,
-                          new PreFactureProduct(),
-                          $prefacture,
-                          $comboProduct->getProduct(),
-                          $comboProduct->getProduct()->getPrice(),
-                          $comboProduct->getCount() * $productR['count']
-                        );
-                        $comboDiscount += $comboProduct->getProduct()->getPrice() * $comboProduct->getCount() * $productR['count'];
-                      }
-                      $comboDiscount -= $productR['price'];
-                    } else {
+                  if (count($product->getComboProducts()) > 0) {
+                    foreach ($product->getComboProducts() as $comboProduct) {
                       $this->CreateProduct(
                         2,
                         new PreFactureProduct(),
                         $prefacture,
-                        $product,
-                        $productR['price'],
-                        $productR['count']
+                        $comboProduct->getProduct(),
+                        $comboProduct->getProduct()->getPrice(),
+                        $comboProduct->getCount() * $productR['count']
                       );
+                      $comboDiscount += $comboProduct->getProduct()->getPrice() * $comboProduct->getCount() * $productR['count'];
                     }
+                    $comboDiscount -= $productR['price'];
+                  } else {
+                    $this->CreateProduct(
+                      2,
+                      new PreFactureProduct(),
+                      $prefacture,
+                      $product,
+                      $productR['price'],
+                      $productR['count']
+                    );
                   }
+                }
+              }
+            } elseif ($data->getType() == "external-request" && $this->getUser() && $this->getUser()->hasRole("ROLE_EXTERNAL")) {
+              $externalRequest = new ExternalRequest();
+              foreach ($productsResponse as $productR) {
+                if (!array_key_exists('type', $productR)) {
+                  $externalRequestProduct = new ExternalRequestProduct();
+                  $externalRequestProduct->setExternalRequest($externalRequest);
+                  $externalRequestProduct->setCount($productR['count']);
+                  $externalRequestProduct->setProduct($productR['product']);
+                  $this->getDoctrine()->getManager()->persist($externalRequestProduct);
+                  $externalRequest->addExternalRequestProduct($externalRequestProduct);
                 }
               }
             } else {
@@ -721,26 +733,41 @@ class SiteController extends Controller
               }
             }
 
-            if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
-              if ($data->getType() == "facture") {
-                $facture->setDiscount($discount);
-                $facture->setTwoStepExtra($twoStepExtra);
-                $facture->setCucExtra($cucExtra);
-                $facture->setFirstClientDiscount(0);
-                $facture->setComboDiscount($comboDiscount);
-                $facture->setTransportCost($transportCost);
-                $facture->setFinalPrice($totalPrice);
-                $this->getDoctrine()->getManager()->persist($facture);
-              } else {
-                $prefacture->setDiscount($discount);
-                $prefacture->setTwoStepExtra($twoStepExtra);
-                $prefacture->setCucExtra($cucExtra);
-                $prefacture->setFirstClientDiscount(0);
-                $prefacture->setComboDiscount($comboDiscount);
-                $prefacture->setTransportCost($transportCost);
-                $prefacture->setFinalPrice($totalPrice);
-                $this->getDoctrine()->getManager()->persist($prefacture);
+            if ($data->getType() == "facture" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              $facture->setDiscount($discount);
+              $facture->setTwoStepExtra($twoStepExtra);
+              $facture->setCucExtra($cucExtra);
+              $facture->setFirstClientDiscount(0);
+              $facture->setComboDiscount($comboDiscount);
+              $facture->setTransportCost($transportCost);
+              $facture->setFinalPrice($totalPrice);
+              $this->getDoctrine()->getManager()->persist($facture);
+            } elseif ($data->getType() == "prefacture" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              $prefacture->setDiscount($discount);
+              $prefacture->setTwoStepExtra($twoStepExtra);
+              $prefacture->setCucExtra($cucExtra);
+              $prefacture->setFirstClientDiscount(0);
+              $prefacture->setComboDiscount($comboDiscount);
+              $prefacture->setTransportCost($transportCost);
+              $prefacture->setFinalPrice($totalPrice);
+              $this->getDoctrine()->getManager()->persist($prefacture);
+            } elseif ($data->getType() == "external-request" && $this->getUser() && $this->getUser()->hasRole("ROLE_EXTERNAL")) {
+              $finalPrice = 0;
+              $weight = 0;
+              foreach ($requestProducts as $product) {
+                $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['id']);
+
+                $finalPrice += $productDB->getIkeaPrice();
+                $weight += $productDB->getWeight();
               }
+
+              $externalRequest->setFinalPrice($finalPrice);
+              $externalRequest->setWeight($weight);
+              $externalRequest->setBudget($data->getBudget());
+              $externalRequest->setPayment($data->getPayment());
+              $externalRequest->setDate(new \DateTime($data->getDate()));
+              $externalRequest->setState("Sin estado");
+              $this->getDoctrine()->getManager()->persist($externalRequest);
             } else {
               $requestDB->setDiscount($discount);
               $requestDB->setTwoStepExtra($twoStepExtra);
@@ -754,7 +781,26 @@ class SiteController extends Controller
 
             $this->getDoctrine()->getManager()->flush();
 
-            if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+            if ($data->getType() == "facture" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              return $this->redirectToRoute('site_home');
+            } elseif ($data->getType() == "prefacture" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              return $this->redirectToRoute('site_home');
+            } elseif ($data->getType() == "external-request" && $this->getUser() && $this->getUser()->hasRole("ROLE_EXTERNAL")) {
+              $users = $this->getDoctrine()->getManager()->createQueryBuilder()
+                ->select("u")
+                ->from("AppBundle\Entity\User", "u")
+                ->where("u.roles like :roles")
+                ->setParameter("roles", "%ROLE_EXTERNAL%")
+                ->getQuery()
+                ->getResult();
+
+              foreach ($users as $user) {
+                $body = $this->renderView(':site:new-external-request-email.html.twig', [
+                  'username' => $user->getFirstName().' '.$user->getLastName(),
+                  'externalRequest' => $externalRequest,
+                ]);
+                $this->get('email_service')->send($config->getEmail(), 'Nuevo pedido externo', $config->getEmail(), 'Nuevo pedido externo', $body);
+              }
               return $this->redirectToRoute('site_home');
             } else {
               return $this->redirectToRoute('success_request', ['id' => $requestDB->getId()]);
@@ -2006,6 +2052,85 @@ class SiteController extends Controller
         'privacy' => $config->getPrivacyPolicy(),
         'currentDate' => new \DateTime(),
       ]);
+    }
+
+    /**
+     * @Route(name="external_requests", path="/pedidos-externos")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function externalRequestsAction(Request $request)
+    {
+      $externalRequests = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\ExternalRequest')->findBy([
+        'user' => null,
+      ]);
+      foreach($externalRequests as $externalRequest) {
+        foreach($externalRequest->getExternalRequestProducts() as $externalRequestProduct) {
+          $offerPrice = $this->get('product_service')->findProductOfferPrice($externalRequestProduct->getProduct());
+          $externalRequestProduct->getProduct()->setPriceOffer($offerPrice);
+        }
+      }
+
+      $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+        'name' => 'Home',
+      ]);
+
+      $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+      return $this->render(':site:external-requests.html.twig', [
+        'externalRequests' => $externalRequests,
+        'home' => $home,
+        'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+        'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+        'categories' => $this->get('category_service')->getAll(),
+        'terms' => $config->getTermAndConditions(),
+        'privacy' => $config->getPrivacyPolicy(),
+        'currentDate' => new \DateTime(),
+      ]);
+    }
+
+    /**
+     * @Route(name="accept_external_request", path="/accept-external-request/{id}", methods={"POST", "GET"})
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function acceptExternalRequestAction(Request $request, $id)
+    {
+      $user = $this->getUser();
+      $externalRequest = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\ExternalRequest')->find($id);
+
+      if ($externalRequest->getUser() != null) {
+        return new JsonResponse(-1);
+      } else {
+        $externalRequest->setUser($user);
+        $this->getDoctrine()->getManager()->flush();
+        return new JsonResponse($id);
+      }
+    }
+
+    /**
+     * @Route(name="update_external_request_state", path="/update-external-request-state/{id}", methods={"POST", "GET"})
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function updateExternalRequestStateAction(Request $request, $id)
+    {
+      $state = $request->request->get('state');
+
+      $user = $this->getUser();
+      $externalRequest = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\ExternalRequest')->find($id);
+      $externalRequest->setState($state);
+      $this->getDoctrine()->getManager()->flush();
+
+      return new JsonResponse($state);
     }
 
     /**

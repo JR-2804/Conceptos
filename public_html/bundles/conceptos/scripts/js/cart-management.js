@@ -713,13 +713,33 @@ $(document).ready(function() {
     if ($(this).val() === "facture") {
       $("#request-select").show();
       $("#prefactures-select").show();
+      $("#budget").hide();
+      $("#payment").hide();
+      $("#date").hide();
     } else if ($(this).val() === "prefacture") {
       $("#request-select").show();
       $("#prefactures-select").hide();
+      $("#budget").hide();
+      $("#payment").hide();
+      $("#date").hide();
+    } else if ($(this).val() === "external-request") {
+      $("#request-select").hide();
+      $("#prefactures-select").hide();
+      $("#budget").show();
+      $("#payment").show();
+      $("#date").show();
     } else {
       $("#request-select").hide();
       $("#prefactures-select").hide();
+      $("#budget").hide();
+      $("#payment").hide();
+      $("#date").hide();
     }
+  });
+
+  $(".combo-product-toggle").click(function() {
+    var uuid = $(this).data("uuid");
+    $(".shop-cart-product[data-uuid='" + uuid + "']").toggleClass("opened");
   });
 
   $("form[name='check_out']").submit(function(e) {
@@ -741,6 +761,18 @@ $(document).ready(function() {
       }
       if ($("#type-select").val() === "prefacture") {
         $("#check_out_request").val($("#request-select").val());
+      }
+      if ($("#type-select").val() === "external-request") {
+        var budget = $("#budget input").val();
+        var payment = $("#payment input").val();
+        var date = $("#date input").val();
+        if (!budget || !payment || !date) {
+          e.preventDefault();
+        } else {
+          $("#check_out_budget").val(budget);
+          $("#check_out_payment").val(payment);
+          $("#check_out_date").val(date);
+        }
       }
     } else {
       e.preventDefault();

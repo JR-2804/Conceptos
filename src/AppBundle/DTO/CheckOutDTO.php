@@ -15,6 +15,9 @@ class CheckOutDTO
     private $type;
     private $request;
     private $prefacture;
+    private $budget;
+    private $payment;
+    private $date;
     private $ignoreTransport;
 
     public function getFirstName()
@@ -130,6 +133,36 @@ class CheckOutDTO
     public function getIgnoreTransport()
     {
         return $this->ignoreTransport;
+    }
+
+    public function getBudget()
+    {
+        return $this->budget;
+    }
+
+    public function setBudget($budget)
+    {
+        $this->budget = $budget;
+    }
+
+    public function getPayment()
+    {
+        return $this->payment;
+    }
+
+    public function setPayment($payment)
+    {
+        $this->payment = $payment;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    public function setDate($date)
+    {
+        $this->date = $date;
     }
 
     public function setIgnoreTransport($ignoreTransport)

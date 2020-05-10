@@ -65,6 +65,10 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ShopCartProduct", mappedBy="user")
      */
     private $shopCartProducts;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Request\ExternalRequest", mappedBy="user")
+     */
+    private $externalRequests;
 
     public function __construct()
     {
@@ -72,6 +76,7 @@ class User extends BaseUser
         $this->favorites = new \Doctrine\Common\Collections\ArrayCollection();
         $this->evaluations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->shopCartProducts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->externalRequests = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString()
@@ -207,6 +212,23 @@ class User extends BaseUser
     public function getEvaluations()
     {
         return $this->evaluations;
+    }
+
+    public function addExternalRequest(ExternalRequest $externalRequest)
+    {
+        $this->externalRequests[] = $externalRequest;
+
+        return $this;
+    }
+
+    public function removeExternalRequest(ExternalRequest $externalRequest)
+    {
+        $this->externalRequests->removeElement($externalRequest);
+    }
+
+    public function getExternalRequests()
+    {
+        return $this->externalRequests;
     }
 
     public function getProductsInCartCount()

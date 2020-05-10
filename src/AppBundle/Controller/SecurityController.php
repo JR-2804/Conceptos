@@ -283,12 +283,21 @@ class SecurityController extends Controller
           }
         }
 
+        $externalRequests = $user->getExternalRequests();
+        foreach($externalRequests as $externalRequest) {
+          foreach($externalRequest->getExternalRequestProducts() as $externalRequestProduct) {
+            $offerPrice = $this->get('product_service')->findProductOfferPrice($externalRequestProduct->getProduct());
+            $externalRequestProduct->getProduct()->setPriceOffer($offerPrice);
+          }
+        }
+
         return $this->render('@FOSUser/Profile/edit.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
             'showSuccessToast' => $showSuccessToast,
             'requests' => $clientRequests,
             'prefactures' => $clientPrefactures,
+            'externalRequests' => $externalRequests,
             'home' => $home,
             'membership' => $membership,
             'categories' => $this->get('category_service')->getAll(),

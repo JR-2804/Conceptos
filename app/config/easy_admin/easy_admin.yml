@@ -259,6 +259,46 @@ easy_admin:
                 title: 'Nueva factura'
             edit:
                 title: 'Editar factura'
+        ExternalRequest:
+            class: AppBundle\Entity\Request\ExternalRequest
+            label: Pedido Externo
+            list:
+                title: Pedido externos
+                actions:
+                    - {name: 'show'}
+                    - {name: 'new', label: 'Nuevo pedido externo'}
+                fields:
+                    - id
+                    - {property: 'finalPrice', label: 'Costo de la compra'}
+                    - {property: 'weight', label: 'Peso de los productos'}
+                    - {property: 'budget', label: 'Presupuesto para embalaje o sobrepeso'}
+                    - {property: 'payment', label: 'Pago total'}
+                    - {property: 'state', label: 'Estado'}
+                    - {property: 'user', label: 'Usuario'}
+                    - {property: 'date', label: 'Fecha tope', format: 'd/m/Y'}
+            show:
+                title: Detalles del pedido externo
+                fields:
+                    - {property: 'finalPrice', label: 'Costo de la compra'}
+                    - {property: 'weight', label: 'Peso de los productos'}
+                    - {property: 'budget', label: 'Presupuesto para embalaje o sobrepeso'}
+                    - {property: 'payment', label: 'Pago total'}
+                    - {property: 'state', label: 'Estado'}
+                    - {property: 'user', label: 'Usuario'}
+                    - {property: 'date', label: 'Fecha tope', format: 'd/m/Y'}
+            form:
+                fields:
+                    - {property: 'finalPrice', label: 'Costo de la compra'}
+                    - {property: 'weight', label: 'Peso de los productos'}
+                    - {property: 'budget', label: 'Presupuesto para embalaje o sobrepeso'}
+                    - {property: 'payment', label: 'Pago total'}
+                    - {property: 'state', label: 'Estado', type: choice, type_options: { choices: {'Sin estado':'Sin estado', 'Comprado': 'Comprado', 'Montado': 'Montado', 'Entregado': 'Entregado', 'Pagado': 'Pagado' }}}
+                    - {property: 'user', label: 'Usuario'}
+                    - {property: 'date', label: 'Fecha tope', format: 'd/m/Y'}
+            new:
+                title: 'Nueva pedido externo'
+            edit:
+                title: 'Editar pedido externo'
         Client:
             class: AppBundle\Entity\Request\Client
             label: Clientes

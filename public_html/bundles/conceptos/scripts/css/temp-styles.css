@@ -19,6 +19,7 @@ body {
 
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -35,6 +36,7 @@ input[type="checkbox"] {
 
 select,
 textarea,
+input[type="date"],
 input[type="text"],
 input[type="password"],
 input[type="number"],
@@ -246,6 +248,10 @@ textarea {
 .conceptos-success-input {
   border: 1px solid #2c702b !important;
   outline-color: #2c702b !important;
+}
+
+.conceptos-add-horizontal-scroll {
+  overflow-x: auto;
 }
 
 .conceptos-add-scroll {
@@ -878,6 +884,22 @@ a.conceptos-category-subtitle:focus {
   background-color: #e5e5e5;
 }
 
+.shop-cart-product .combo-product-toggle {
+  transform: rotate(0);
+}
+
+.shop-cart-product.opened .combo-product-toggle {
+  transform: rotate(90deg);
+}
+
+.shop-cart-product .combo-product-summary {
+  display: none;
+}
+
+.shop-cart-product.opened .combo-product-summary {
+  display: flex;
+}
+
 .airplane-delivery {
   border: none;
   width: 25px;
@@ -1033,6 +1055,10 @@ a.conceptos-category-subtitle:focus {
 .view-profile-product-details:focus,
 .view-profile-product-details:hover {
   outline: none;
+}
+
+.profile-product select {
+  background-color: #ffffff;
 }
 
 #edit-profile .dz-preview {

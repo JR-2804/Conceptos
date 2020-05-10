@@ -191,6 +191,7 @@
                 <option value="request">Pedido</option>
                 <option value="prefacture">Prefactura</option>
                 <option value="facture">Factura</option>
+                <option value="external-request">Pedido Externo</option>
               </select>
               <select id="request-select" class="mb-2" style="display: none;">
                 <option value="0">Ninguna</option>
@@ -204,6 +205,18 @@
                     <option value="{{prefacture.id}}">Prefactura: {{prefacture.id}}-{{prefacture.date|date('Y')}}</option>
                 {% endfor %}
               </select>
+              <div id="budget" class="flex-column mt-2" style="display: none;">
+                <span class="conceptos-subtitle pl-2 required">Presupuesto para embalaje o sobrepeso</span>
+                <input type="text" class="w-100">
+              </div>
+              <div id="payment" class="flex-column mt-2" style="display: none;">
+                <span class="conceptos-subtitle pl-2 required">Pago total</span>
+                <input type="text" class="w-100">
+              </div>
+              <div id="date" class="flex-column mt-2 mb-2" style="display: none;">
+                <span class="conceptos-subtitle pl-2 required">Fecha tope</span>
+                <input type="date" class="w-100">
+              </div>
               <label class="d-flex checkbox-container align-self-start">
                 <span class="conceptos-subtitle">Ignorar costo de transporte</span>
                 <input id="ignoreTransport" type="checkbox">

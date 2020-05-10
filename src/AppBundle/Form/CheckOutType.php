@@ -26,6 +26,9 @@ class CheckOutType extends AbstractType
             ->add('type', HiddenType::class)
             ->add('request', HiddenType::class)
             ->add('prefacture', HiddenType::class)
+            ->add('budget', HiddenType::class)
+            ->add('payment', HiddenType::class)
+            ->add('date', HiddenType::class)
             ->add('ignoreTransport', HiddenType::class)
         ;
         parent::buildForm($builder, $options);

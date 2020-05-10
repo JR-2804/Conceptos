@@ -44,6 +44,26 @@ $(document).ready(function() {
     }
   });
 
+  $(".state-select").click(function(e) {
+    e.preventDefault();
+  });
+
+  $(".state-select").change(function() {
+    var state = $(this).val();
+    var path = $(this).data("path");
+    ajax(
+      path,
+      "POST",
+      {
+        state: state
+      },
+      function() {},
+      function() {
+        alert("Ha ocurrido un error actualizando el estado del pedido externo");
+      }
+    );
+  });
+
   $("#edit-profile-button").click(function() {
     if ($("#edit-profile-section").data("hidden") === true) {
       $("#edit-profile-section").show();

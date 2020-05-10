@@ -9,6 +9,7 @@ easy_admin:
             - { entity: 'Request', label: 'Pedidos'}
             - { entity: 'PreFacture', label: 'Prefacturas'}
             - { entity: 'Facture', label: 'Facturas'}
+            - { entity: 'ExternalRequest', label: 'Pedidos Externos'}
             - { entity: 'Member', label: 'Miembros' }
             - {entity: 'Client', label: 'Clientes'}
             - { label: 'Actualizar App', route: 'upload_app'}
