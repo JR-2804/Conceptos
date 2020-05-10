@@ -570,9 +570,21 @@ $(document).ready(function() {
   });
 
   $("#update-slide-preview").click(function() {
-    document
-      .getElementById("slide-preview")
-      .contentWindow.location.reload(true);
+    ajax(
+      $(this).data("path"),
+      "POST",
+      {
+        data: JSON.stringify(generateData())
+      },
+      function() {
+        document
+          .getElementById("slide-preview")
+          .contentWindow.location.reload(true);
+      },
+      function() {
+        alert("Ha ocurrido un error actualizando la vista previa");
+      }
+    );
   });
 
   $("#slide-preview").on("load", function() {
@@ -581,6 +593,20 @@ $(document).ready(function() {
       .find("head")
       .append("<style>.home__hero:after {}</style>");
   });
+
+  ajax(
+    $("#update-slide-preview").data("path"),
+    "POST",
+    {
+      data: JSON.stringify(generateData())
+    },
+    function() {
+      $("#slide-preview").attr("src", $("#slide-preview").data("path"));
+    },
+    function() {
+      alert("Ha ocurrido un error actualizando la vista previa");
+    }
+  );
 });
 
 function init() {

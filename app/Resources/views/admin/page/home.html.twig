@@ -159,11 +159,12 @@
                       </label>
                     </div>
                   </div>
-                  <div id="slide-section" class="col-12" style="display: none;">
-                    <button type="submit" id="update-slide-preview" class="btn btn-primary" style="margin-bottom: 10px;">
+                  <div id="slide-section" class="col-12" style="display: none;padding:0">
+                    <button type="submit" id="update-slide-preview" class="btn btn-primary" style="margin-bottom: 10px;"
+                            data-path="{{ path('update_slide') }}">
                       Actualizar
                     </button>
-                    <iframe id="slide-preview" src="{{ path('home_slide') }}">
+                    <iframe id="slide-preview" data-path="{{ path('site_home', {onlySlide: true}) }}">
                     </iframe>
                   </div>
                 </div>

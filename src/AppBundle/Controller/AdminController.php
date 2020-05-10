@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdmin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AdminController extends BaseAdmin
 {
@@ -27,6 +28,22 @@ class AdminController extends BaseAdmin
             ));
         }
         return parent::indexAction($request);
+    }
+
+    /**
+     * @Route(name="update_slide", path="/update-slide")
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function updateSlideAction(Request $request)
+    {
+      $slidePreview = $this->getDoctrine()->getManager()->getRepository('AppBundle:SlidePreview')->find(1);
+      $slidePreview->setData(json_decode($request->request->get('data'), true));
+      $this->getDoctrine()->getManager()->flush();
+
+      return new JsonResponse();
     }
 
     public function createNewUserEntity()

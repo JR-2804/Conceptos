@@ -44,6 +44,8 @@ class SiteController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $onlySlide = $request->query->get('onlySlide');
+
         $offers = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')
             ->createQueryBuilder('o')
             ->where('o.startDate <= :date AND o.endDate >= :date')
@@ -169,6 +171,7 @@ class SiteController extends Controller
         }
 
         return $this->render(':site:home.html.twig', [
+            'onlySlide' => $onlySlide,
             'showSuccessToast' => $showSuccessToast,
             'loginError' => $loginError,
             'offers' => $offers,
@@ -202,7 +205,7 @@ class SiteController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function homeSlideAction(Request $request)
+    public function homeSlideAction(Request $request, $onlySlide)
     {
       $offers = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')
         ->createQueryBuilder('o')
@@ -210,9 +213,14 @@ class SiteController extends Controller
         ->setParameter('date', new \DateTime(), Type::DATE)
         ->getQuery()->getResult();
 
-      $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+      if ($onlySlide) {
+        $slidePreview = $this->getDoctrine()->getManager()->getRepository('AppBundle:SlidePreview')->find(1);
+        $page = $slidePreview;
+      } else {
+        $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
           'name' => 'Home',
-      ]);
+        ]);
+      }
 
       return $this->render(':site:home-slide.html.twig', [
         'offers' => $offers,

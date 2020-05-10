@@ -19,6 +19,17 @@
       }
     </style>
   {% endif %}
+  {% if page.data.hoverStyle is defined and page.data.hoverStyle == "full" %}
+    <style>
+      .home__hero:before {
+        {% if page.data.hoverColor %}
+          background: {{page.data.hoverColor}};
+        {% else %}
+          background: rgba(255, 255, 255, 0.3);
+        {% endif %}
+      }
+    </style>
+  {% endif %}
 {% endblock %}
 
 <div id="home-header" class="d-flex flex-column justify-content-center home__hero align-items-start">
