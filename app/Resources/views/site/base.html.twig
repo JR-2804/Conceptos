@@ -222,6 +222,9 @@
 {% endblock %}
 
 {% block body %}{% endblock %}
+
+{{ include('site/components/global/whatsapp_float.html.twig') }}
+
 {% block login %}
   {{ render(controller('AppBundle:Security:login')) }}
 {% endblock %}
