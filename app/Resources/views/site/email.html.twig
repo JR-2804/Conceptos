@@ -59,14 +59,25 @@
         {% for network in home.data.social_network.networks %}
           {% if network.network == 'facebook' %}
             <a href="{{network.link}}" class="mr-2" target="_blank">
-              <div class="conceptos-social-network-icon-facebook"></div>
+                <img title="whatsapp" src="{{ asset('bundles/conceptos/images/social/facebook.svg') }}"
+                     alt="whatsapp" width="32">
             </a>
           {% elseif network.network == 'instagram' %}
-            <a href="{{network.link}}" target="_blank">
-              <div class="conceptos-social-network-icon-instagram"></div>
+            <a href="{{network.link}}" class="mr-2" target="_blank">
+                <img title="whatsapp" src="{{ asset('bundles/conceptos/images/social/instagram.svg') }}"
+                     alt="whatsapp" width="32">
             </a>
           {% endif %}
         {% endfor %}
+          <a target="_blank" href="http://wa.me/5352458380?text=Estoy%20interesado%20en%20...">
+              <img title="whatsapp" class="mr-2" src="{{ asset('bundles/conceptos/images/social/whatsapp.svg') }}"
+                   alt="whatsapp" width="32">
+          </a>
+          <a target="_blank" href="https://m.me/TiendaConceptos">
+              <img title="whatsapp" class="mr-2" src="{{ asset('bundles/conceptos/images/social/messenger.svg') }}"
+                   alt="whatsapp" width="32">
+          </a>
+
       </div>
     </div>
     <div class="d-flex flex-column align-items-end conceptos-contact-section mt-3 pr-2">
