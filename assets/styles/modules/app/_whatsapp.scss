@@ -1,0 +1,112 @@
+.whatsapp_float{
+    position: fixed;
+    width: 100%;
+    height: 5em;
+    bottom: 0;
+    flex-wrap: nowrap;
+    background: #282827;
+    border-radius: 2px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+
+
+    &__close{
+        display: none;
+
+        @include atLarge {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 1.2em;
+            height: 1.2em;
+            cursor: pointer;
+            z-index: 4;
+
+            &:before,
+            &:after {
+                content: '';
+                position: absolute;
+                width: 55%;
+                height: 2px;
+                background: #e3e3e3;
+            }
+
+            &:before {
+                transform: rotate(45deg);
+            }
+            &:after {
+                transform: rotate(-45deg);
+            }
+        }
+    }
+
+    &__image{
+        margin: .5em;
+        width: 3.5em;
+        height: 3.5em;
+
+        @include atLarge{
+            margin: 1em;
+            width: 4em;
+            height: 4em;
+        }
+
+        & img{
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    &__text{
+        width: 95%;
+        margin: auto;
+        color: white;
+
+        &__title{
+            font-size: 1.1em;
+            font-weight: 700;
+        }
+
+        &__subtitle{
+            font-size: .9em;
+        }
+
+        & p{
+            margin: .1em;
+        }
+    }
+
+    @include atLarge {
+        bottom: 3em;
+        width: 20%;
+        flex-wrap: wrap;
+        right: 0;
+        height: auto;
+
+        &.whatsapp_float--small {
+            bottom: 0;
+            width: 100%;
+            flex-wrap: nowrap;
+            right: auto;
+            height: 5em;
+
+            .whatsapp_float &__close {
+                display: none;
+            }
+        }
+    }
+
+
+    & a > div{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 3;
+        top: 0;
+        left: 0;
+    }
+}
