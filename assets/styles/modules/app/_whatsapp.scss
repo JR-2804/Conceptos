@@ -97,13 +97,19 @@
 
     &--small {
         width: 100%;
-        height: 5em;
-        bottom: 1em;
+        height: 3.5em;
+        bottom: .25em;
         flex-wrap: nowrap;
         align-items: center;
 
         @include atLarge{
             width: 18%;
+        }
+
+        .whatsapp_float__image {
+            margin: .5em;
+            width: 3em;
+            height: 3em;
         }
 
         .whatsapp_float__text.big{
@@ -132,6 +138,10 @@
         }
     }
 
+    &--close{
+        transform: translateY(150%);
+    }
+
 
     & a > div{
         position: absolute;
@@ -141,4 +151,8 @@
         top: 0;
         left: 0;
     }
+}
+
+.carousel-indicators{
+    z-index: 2;
 }
