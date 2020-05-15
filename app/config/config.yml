@@ -212,7 +212,7 @@ liip_imagine:
 
       # set your image quality defaults
       jpeg_quality:          85
-      png_compression_level: 9
+      png_compression_level: 8
 
       # setup the filter steps to apply for this transformation
       filters:

@@ -1,0 +1,158 @@
+.whatsapp_float{
+    position: fixed;
+    background: #282827ba;
+    border-radius: 2px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+
+    bottom: 3em;
+    width: 42%;
+    flex-wrap: wrap;
+    right: 0;
+    height: auto;
+    padding: .5em 0;
+    transition: all .3s;
+
+    @include atLarge {
+        width: 12%;
+    }
+
+    &__close{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 1.5em;
+        height: 1.5em;
+        cursor: pointer;
+        padding: .5em;
+        z-index: 4;
+
+        &:before,
+        &:after {
+            content: '';
+            position: absolute;
+            width: 55%;
+            height: 2px;
+            background: #e3e3e3;
+        }
+
+        &:before {
+            transform: rotate(45deg);
+        }
+        &:after {
+            transform: rotate(-45deg);
+        }
+
+    }
+
+    &__image{
+        margin: .5em;
+        width: 3.5em;
+        height: 3.5em;
+
+        @include atLarge{
+            margin: 1em;
+            width: 4em;
+            height: 4em;
+        }
+
+        & img{
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    &__text{
+        width: 95%;
+        margin: auto;
+        color: white;
+
+        &__title{
+            font-size: .9em;
+            font-weight: 700;
+        }
+
+        &__subtitle{
+            font-size: .75em;
+        }
+
+        & p{
+            margin: .1em;
+        }
+
+        &.big{
+            position: relative;
+            opacity: 1;
+        }
+
+        &.small{
+            position: absolute;
+            opacity: 0;
+        }
+    }
+
+    &--small {
+        width: 100%;
+        height: 3.5em;
+        bottom: .25em;
+        flex-wrap: nowrap;
+        align-items: center;
+
+        @include atLarge{
+            width: 18%;
+        }
+
+        .whatsapp_float__image {
+            margin: .5em;
+            width: 3em;
+            height: 3em;
+        }
+
+        .whatsapp_float__text.big{
+            position: absolute;
+            opacity: 0;
+        }
+
+        .whatsapp_float__text.small{
+            position: relative;
+            opacity: 1;
+            width: auto;
+            text-align: center;
+
+            & p{
+                font-size: 1.1em;
+                font-weight: 700;
+            }
+
+        }
+
+        & .whatsapp_float__close {
+            position: relative;
+            right: 1em;
+            width: 1.5em;
+            height: 1.5em;
+        }
+    }
+
+    &--close{
+        transform: translateY(150%);
+    }
+
+
+    & a > div{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 3;
+        top: 0;
+        left: 0;
+    }
+}
+
+.carousel-indicators{
+    z-index: 2;
+}

@@ -1,4 +1,5 @@
 @import "./base/variables";
+@import "./base/mixins";
 
 @import "./modules/app/global";
 @import "./modules/app/login_modal";
@@ -11,4 +12,4 @@
 @import "./modules/app/popular_product";
 @import "./modules/app/carousell";
 @import "./modules/app/footer";
-@import "./modules/app/contact_card";
+@import "./modules/app/whatsapp";
