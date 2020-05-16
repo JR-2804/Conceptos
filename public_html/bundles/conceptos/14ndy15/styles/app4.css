@@ -292,6 +292,18 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
   background: linear-gradient(to top, transparent, #e5e5e5);
   top: 65vh; }
 
+@-webkit-keyframes showWhatsappCard {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 1; } }
+
+@keyframes showWhatsappCard {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 1; } }
+
 .whatsapp_float {
   position: fixed;
   background: #282827ba;
@@ -304,11 +316,14 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
   bottom: 3em;
   width: 42%;
   flex-wrap: wrap;
-  right: 0;
+  right: 1em;
   height: auto;
   padding: .5em 0;
   -webkit-transition: all .3s;
-  transition: all .3s; }
+  transition: all .3s;
+  opacity: 0;
+  -webkit-animation: showWhatsappCard 60s ease-in-out 7s;
+          animation: showWhatsappCard 60s ease-in-out 7s; }
 
 @media (min-width: 1200px) {
     .whatsapp_float {
@@ -389,11 +404,13 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     bottom: .25em;
     flex-wrap: nowrap;
     -webkit-box-align: center;
-            align-items: center; }
+            align-items: center;
+    right: 0; }
 
 @media (min-width: 1200px) {
       .whatsapp_float--small {
-        width: 18%; } }
+        width: 18%;
+        right: 1em; } }
 
 .whatsapp_float--small .whatsapp_float__image {
       margin: .5em;
