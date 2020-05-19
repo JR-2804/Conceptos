@@ -1,3 +1,12 @@
+@keyframes showWhatsappCard {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
 .whatsapp_float{
     position: fixed;
     background: #282827ba;
@@ -9,10 +18,13 @@
     bottom: 3em;
     width: 42%;
     flex-wrap: wrap;
-    right: 0;
+    right: 1em;
     height: auto;
     padding: .5em 0;
     transition: all .3s;
+    opacity: 0;
+
+    animation: showWhatsappCard 60s ease-in-out 7s;
 
     @include atLarge {
         width: 12%;
@@ -101,9 +113,11 @@
         bottom: .25em;
         flex-wrap: nowrap;
         align-items: center;
+        right: 0;
 
         @include atLarge{
             width: 18%;
+            right: 1em;
         }
 
         .whatsapp_float__image {

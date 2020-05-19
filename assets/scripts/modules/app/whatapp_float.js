@@ -20,7 +20,7 @@ class WhatsappFloat{
     }
 
     close(){
-        setCookie(1, 'whatsapp_float_close');
+        setCookie(1, 'whatsapp_float_close', -1);
         this.float.classList.add('whatsapp_float--close');
     }
 

@@ -324,6 +324,10 @@ $(document).ready(function() {
       transportCost = 5;
     }
 
+    if (totalPrice < 0) {
+      totalPrice = 0;
+    }
+
     $(".shop-cart-total-price").text("$" + Number(totalPriceBase).toFixed(2));
     $(".shop-cart-transport-cost").text("$" + transportCost.toFixed(2));
     totalPrice += transportCost;

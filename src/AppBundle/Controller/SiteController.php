@@ -32,6 +32,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class SiteController extends Controller
 {
@@ -548,6 +550,7 @@ class SiteController extends Controller
 
             $discount = 0;
             $balanceDiscount = 0;
+            $remainingBalance = 0;
             if ($memberNumber) {
               $discount = ceil($totalPriceBase * 0.1);
               $balanceDiscount = ceil($this->getUser()->getMember()->getBalance());
@@ -565,6 +568,11 @@ class SiteController extends Controller
             if ($paymentCurrency == 'cuc') {
               $cucExtra = ceil($totalPriceBase * 0.15);
               $totalPrice += $cucExtra;
+            }
+
+            if ($totalPrice < 0) {
+              $remainingBalance = 0 - $totalPrice;
+              $totalPrice = 0;
             }
 
             if ($memberNumber) {
@@ -789,7 +797,7 @@ class SiteController extends Controller
               $this->getDoctrine()->getManager()->persist($requestDB);
 
               if ($memberNumber) {
-                $this->getUser()->getMember()->setBalance($memberBalance);
+                $this->getUser()->getMember()->setBalance($remainingBalance + $memberBalance);
               }
             }
 
@@ -1892,6 +1900,15 @@ class SiteController extends Controller
             'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
             'membership' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Membresia']),
         ]);
+
+        // $options = new Options();
+        // $options->set('defaultFont', 'Courier');
+        // $dompdf = new Dompdf($options);
+        // $dompdf->loadHtml($html);
+        // $dompdf->setPaper('A4', 'portrait');
+        // $dompdf->set_option('isHtml5ParserEnabled', true);
+        // $dompdf->render();
+        // return $dompdf->stream("my.pdf", ["Attachment" => true]);
     }
 
     /**

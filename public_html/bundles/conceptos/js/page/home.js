@@ -28,6 +28,22 @@ var logoImage = undefined;
 
 var editingAdvertisement = undefined;
 
+var hoverColorParent = document.querySelector("#hover-color");
+var hoverColorPicker = new Picker(hoverColorParent);
+var hoverColor = undefined;
+hoverColorPicker.onChange = function(color) {
+  hoverColor = color.rgbaString;
+  hoverColorParent.style.background = hoverColor;
+};
+
+var fontColorParent = document.querySelector("#slide-font-color");
+var fontColorPicker = new Picker(fontColorParent);
+var fontColor = undefined;
+fontColorPicker.onChange = function(color) {
+  fontColor = color.rgbaString;
+  fontColorParent.style.background = fontColor;
+};
+
 $(document).ready(function() {
   if (data.top) {
     topImage1 = data.top.image1;
@@ -667,7 +683,7 @@ function init() {
     $("#hover-style").val(data.hoverStyle);
   }
   if (data.hoverColor) {
-    $("#hover-color").val(data.hoverColor);
+    hoverColorPicker.setColor(data.hoverColor);
   }
   if (data.slideTopMargin) {
     $("#slide-top-margin").val(data.slideTopMargin);
@@ -685,7 +701,7 @@ function init() {
     $("#slide-font-size").val(data.slideFontSize);
   }
   if (data.slideFontColor) {
-    $("#slide-font-color").val(data.slideFontColor);
+    fontColorPicker.setColor(data.slideFontColor);
   }
 
   $("#app-app").val(data.app.app);
@@ -722,13 +738,13 @@ function generateData() {
     horizontalPosition: $("#horizontal-position").val(),
     verticalPosition: $("#vertical-position").val(),
     hoverStyle: $("#hover-style").val(),
-    hoverColor: $("#hover-color").val(),
+    hoverColor: hoverColor,
     slideTopMargin: $("#slide-top-margin").val(),
     slideBottomMargin: $("#slide-bottom-margin").val(),
     slideLeftMargin: $("#slide-left-margin").val(),
     slideRightMargin: $("#slide-right-margin").val(),
     slideFontSize: $("#slide-font-size").val(),
-    slideFontColor: $("#slide-font-color").val(),
+    slideFontColor: fontColor,
     top: {
       image1: topImage1,
       image2: topImage2,
