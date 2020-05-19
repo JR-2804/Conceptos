@@ -253,15 +253,32 @@ $(document).ready(function() {
     var totalPrice = totalPriceBase;
 
     var membershipDiscountSection = $(".shop-cart-membership-discount");
+    var membershipBalanceDiscountSection = $(".shop-cart-balance-discount");
     if (memberNumber) {
       var membershipDiscount = Math.ceil(totalPriceBase * 0.1);
+      var membershipBalanceDiscount = Math.ceil(
+        membershipBalanceDiscountSection.data("balance")
+      );
       totalPrice -= membershipDiscount;
+      totalPrice -= membershipBalanceDiscount;
+
       membershipDiscountSection.parent().removeClass("d-none");
       membershipDiscountSection.parent().addClass("d-flex");
       membershipDiscountSection.text("$" + membershipDiscount.toFixed(2));
+
+      if (membershipBalanceDiscount > 0) {
+        membershipBalanceDiscountSection.parent().removeClass("d-none");
+        membershipBalanceDiscountSection.parent().addClass("d-flex");
+        membershipBalanceDiscountSection.text(
+          "$" + membershipBalanceDiscount.toFixed(2)
+        );
+      }
     } else {
       membershipDiscountSection.parent().removeClass("d-flex");
       membershipDiscountSection.parent().addClass("d-none");
+
+      membershipBalanceDiscountSection.parent().removeClass("d-flex");
+      membershipBalanceDiscountSection.parent().addClass("d-none");
     }
 
     var paymentTypeExtraSection = $(".shop-cart-payment-type-extra");

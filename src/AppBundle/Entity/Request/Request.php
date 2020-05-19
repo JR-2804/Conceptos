@@ -49,6 +49,10 @@ class Request
     /**
      * @ORM\Column(type="float")
      */
+    private $balanceDiscount;
+    /**
+     * @ORM\Column(type="float")
+     */
     private $firstClientDiscount;
     /**
      * @ORM\Column(type="float")
@@ -182,6 +186,18 @@ class Request
     public function getDiscount()
     {
         return $this->discount;
+    }
+
+    public function setBalanceDiscount($balanceDiscount)
+    {
+        $this->balanceDiscount = $balanceDiscount;
+
+        return $this;
+    }
+
+    public function getBalanceDiscount()
+    {
+        return $this->balanceDiscount;
     }
 
     public function setFirstClientDiscount($firstClientDiscount)

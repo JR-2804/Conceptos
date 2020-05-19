@@ -40,6 +40,14 @@ class ExternalRequest
   /**
    * @ORM\Column(type="datetime")
    */
+  private $creationDate;
+  /**
+   * @ORM\Column(type="datetime")
+   */
+  private $acceptDate;
+  /**
+   * @ORM\Column(type="datetime")
+   */
   private $date;
   /**
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="externalRequests")
@@ -125,6 +133,30 @@ class ExternalRequest
   public function getPayment()
   {
     return $this->payment;
+  }
+
+  public function setCreationDate($creationDate)
+  {
+      $this->creationDate = $creationDate;
+
+      return $this;
+  }
+
+  public function getCreationDate()
+  {
+      return $this->creationDate;
+  }
+
+  public function setAcceptDate($acceptDate)
+  {
+      $this->acceptDate = $acceptDate;
+
+      return $this;
+  }
+
+  public function getAcceptDate()
+  {
+      return $this->acceptDate;
   }
 
   public function setDate($date)

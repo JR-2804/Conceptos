@@ -8,8 +8,9 @@
       </form>
       <div class="d-flex flex-column p-3">
         <span class="conceptos-title-strong">{{user.firstName}}</span>
-        {% if user.memberNumber is defined %}
-          <span class="conceptos-subtitle">MIEMBRO: {{user.memberNumber}}</span>
+        {% if user.member is defined %}
+          <span class="conceptos-subtitle">NÚMERO DE MIEMBRO: {{user.member.number}}</span>
+          <span class="conceptos-subtitle">SALDO: ${{user.member.balance}}.00</span>
         {% endif %}
       </div>
     </div>

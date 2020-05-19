@@ -214,14 +214,14 @@ class User extends BaseUser
         return $this->evaluations;
     }
 
-    public function addExternalRequest(ExternalRequest $externalRequest)
+    public function addExternalRequest($externalRequest)
     {
         $this->externalRequests[] = $externalRequest;
 
         return $this;
     }
 
-    public function removeExternalRequest(ExternalRequest $externalRequest)
+    public function removeExternalRequest($externalRequest)
     {
         $this->externalRequests->removeElement($externalRequest);
     }

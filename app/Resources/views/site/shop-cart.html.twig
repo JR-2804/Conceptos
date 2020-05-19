@@ -123,6 +123,10 @@
               <span class="conceptos-badge-text shop-cart-membership-discount"></span>
             </div>
             <div class="d-none justify-content-between align-items-center">
+              <span class="conceptos-badge-text">DESCUENTO DE SALDO MIEMBRO</span>
+              <span class="conceptos-badge-text shop-cart-balance-discount" {% if app.user.member is defined %}data-balance="{{app.user.member.balance}}"{% endif %}></span>
+            </div>
+            <div class="d-none justify-content-between align-items-center">
               <span class="conceptos-badge-text">EXTRA CUC</span>
               <span class="conceptos-badge-text shop-cart-currency-extra"></span>
             </div>

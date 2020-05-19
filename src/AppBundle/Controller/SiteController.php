@@ -520,6 +520,7 @@ class SiteController extends Controller
             $productsResponse = [];
             $totalPriceBase = 0;
             $cucExtra = 0;
+            $memberBalance = 0;
             foreach ($requestProducts as $product) {
                 if (!array_key_exists('type', $product)) {
                     $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['id']);
@@ -546,9 +547,12 @@ class SiteController extends Controller
             $totalPrice = $totalPriceBase;
 
             $discount = 0;
+            $balanceDiscount = 0;
             if ($memberNumber) {
               $discount = ceil($totalPriceBase * 0.1);
+              $balanceDiscount = ceil($this->getUser()->getMember()->getBalance());
               $totalPrice -= $discount;
+              $totalPrice -= $balanceDiscount;
             }
 
             $twoStepExtra = 0;
@@ -561,6 +565,10 @@ class SiteController extends Controller
             if ($paymentCurrency == 'cuc') {
               $cucExtra = ceil($totalPriceBase * 0.15);
               $totalPrice += $cucExtra;
+            }
+
+            if ($memberNumber) {
+              $memberBalance = ceil($totalPrice * 0.05);
             }
 
             $totalPrice += $transportCost;
@@ -765,11 +773,13 @@ class SiteController extends Controller
               $externalRequest->setWeight($weight);
               $externalRequest->setBudget($data->getBudget());
               $externalRequest->setPayment($data->getPayment());
+              $externalRequest->setCreationDate(new \DateTime('now'));
               $externalRequest->setDate(new \DateTime($data->getDate()));
               $externalRequest->setState("Sin estado");
               $this->getDoctrine()->getManager()->persist($externalRequest);
             } else {
               $requestDB->setDiscount($discount);
+              $requestDB->setBalanceDiscount($balanceDiscount);
               $requestDB->setTwoStepExtra($twoStepExtra);
               $requestDB->setCucExtra($cucExtra);
               $requestDB->setFirstClientDiscount(0);
@@ -777,6 +787,10 @@ class SiteController extends Controller
               $requestDB->setTransportCost($transportCost);
               $requestDB->setFinalPrice($totalPrice);
               $this->getDoctrine()->getManager()->persist($requestDB);
+
+              if ($memberNumber) {
+                $this->getUser()->getMember()->setBalance($memberBalance);
+              }
             }
 
             $this->getDoctrine()->getManager()->flush();
@@ -2108,6 +2122,7 @@ class SiteController extends Controller
         return new JsonResponse(-1);
       } else {
         $externalRequest->setUser($user);
+        $externalRequest->setAcceptDate(new \DateTime());
         $this->getDoctrine()->getManager()->flush();
         return new JsonResponse($id);
       }

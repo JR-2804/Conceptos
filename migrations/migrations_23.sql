@@ -5,6 +5,8 @@ CREATE TABLE `external_request` (
   `budget`  double NOT NULL ,
   `payment`  double NOT NULL ,
   `date`  datetime NOT NULL ,
+  `creation_date`  datetime NOT NULL ,
+  `accept_date`  datetime NULL ,
   `state`  varchar(255) NOT NULL ,
   `user_id`  int(11) ,
   PRIMARY KEY (`id`),
@@ -23,3 +25,6 @@ CREATE TABLE `external_request_product` (
   INDEX `IDX_F97E86FA4584665A` (`product_id`) USING BTREE ,
   INDEX `IDX_F97E86FA427EB8A5` (`external_request_id`) USING BTREE
 );
+
+ALTER TABLE `member` DROP COLUMN `balance`, ADD COLUMN `balance` double NOT NULL AFTER `date`;
+ALTER TABLE `request` ADD COLUMN `balance_discount` double NOT NULL AFTER `cuc_extra`;
