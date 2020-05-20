@@ -1858,22 +1858,24 @@ class SiteController extends Controller
         foreach ($prefactureDB->getPreFactureProducts() as $product) {
           $productDB = $product->getProduct();
 
-          $airplane = 'MARÍTIMO';
-          if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
-            $airplane = 'AÉREO';
-          }
+          if ($productDB != null) {
+            $airplane = 'MARÍTIMO';
+            if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
+              $airplane = 'AÉREO';
+            }
 
-          $numberOfProducts += $product->getCount();
-          $subtotal += $product->getCount() * $product->getProductPrice();
-          $productsResponse[] = [
-              'image' => $productDB->getMainImage(),
-              'code' => $productDB->getCode(),
-              'description' => $productDB->getDescription(),
-              'count' => $product->getCount(),
-              'price' => $product->getProductPrice(),
-              'product' => $productDB,
-              'airplane' => $airplane,
-          ];
+            $numberOfProducts += $product->getCount();
+            $subtotal += $product->getCount() * $product->getProductPrice();
+            $productsResponse[] = [
+                'image' => $productDB->getMainImage(),
+                'code' => $productDB->getCode(),
+                'item' => $productDB->getItem(),
+                'count' => $product->getCount(),
+                'price' => $product->getProductPrice(),
+                'product' => $productDB,
+                'airplane' => $airplane,
+            ];
+          }
         }
 
         foreach ($prefactureDB->getPreFactureCards() as $card) {
@@ -1883,7 +1885,7 @@ class SiteController extends Controller
           $subtotal += $card->getCount() * $price;
           $productsResponse[] = [
               'name' => 'Tarjeta de $'.$price,
-              'description' => 'Tarjeta de $'.$price,
+              'item' => 'Tarjeta de $'.$price,
               'code' => $price,
               'count' => $card->getCount(),
               'price' => $price,
@@ -1891,7 +1893,7 @@ class SiteController extends Controller
           ];
         }
 
-        return $this->render(':site:prefacture-export-pdf.html.twig', [
+        $html = $this->renderView(':site:prefacture-export-pdf.html.twig', [
             'prefacture' => $prefactureDB,
             'products' => $productsResponse,
             'numberOfProducts' => $numberOfProducts,
@@ -1901,14 +1903,14 @@ class SiteController extends Controller
             'membership' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Membresia']),
         ]);
 
-        // $options = new Options();
-        // $options->set('defaultFont', 'Courier');
-        // $dompdf = new Dompdf($options);
-        // $dompdf->loadHtml($html);
-        // $dompdf->setPaper('A4', 'portrait');
-        // $dompdf->set_option('isHtml5ParserEnabled', true);
-        // $dompdf->render();
-        // return $dompdf->stream("my.pdf", ["Attachment" => true]);
+        $dompdf = new Dompdf(array('enable_remote' => true));
+        $dompdf->loadHtml($html);
+        $dompdf->set_option('isHtml5ParserEnabled', true);
+        $dompdf->render();
+        return $dompdf->stream(
+          "Prefactura-".$prefactureDB->getId()."-".date_format($prefactureDB->getDate(), "Y").".pdf",
+          ["Attachment" => true]
+        );
     }
 
     /**
@@ -1921,38 +1923,67 @@ class SiteController extends Controller
      */
     public function printFactureAction(Request $request, $id)
     {
-        $factureDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Facture')->find($id);
+      $factureDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Facture')->find($id);
 
-        $productsResponse = [];
-        foreach ($factureDB->getFactureProducts() as $product) {
-          $productDB = $product->getProduct();
+      $numberOfProducts = 0;
+      $subtotal = 0;
+      $productsResponse = [];
+      foreach ($factureDB->getFactureProducts() as $product) {
+        $productDB = $product->getProduct();
 
+        if ($productDB != null) {
+          $airplane = 'MARÍTIMO';
+          if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
+            $airplane = 'AÉREO';
+          }
+
+          $numberOfProducts += $product->getCount();
+          $subtotal += $product->getCount() * $product->getProductPrice();
           $productsResponse[] = [
               'image' => $productDB->getMainImage(),
               'code' => $productDB->getCode(),
+              'item' => $productDB->getItem(),
               'count' => $product->getCount(),
               'price' => $product->getProductPrice(),
               'product' => $productDB,
+              'airplane' => $airplane,
           ];
         }
+      }
 
-        foreach ($factureDB->getFactureCards() as $card) {
-          $price = $card->getPrice();
+      foreach ($factureDB->getFactureCards() as $card) {
+        $price = $card->getPrice();
 
-          $productsResponse[] = [
-              'name' => 'Tarjeta de $'.$price,
-              'code' => $price,
-              'count' => $card->getCount(),
-              'price' => $price,
-          ];
-        }
+        $numberOfProducts += $card->getCount();
+        $subtotal += $card->getCount() * $price;
+        $productsResponse[] = [
+            'name' => 'Tarjeta de $'.$price,
+            'item' => 'Tarjeta de $'.$price,
+            'code' => $price,
+            'count' => $card->getCount(),
+            'price' => $price,
+            'airplane' => 'NINGUNO',
+        ];
+      }
 
-        return $this->render(':site:facture-export-pdf.html.twig', [
-            'facture' => $factureDB,
-            'products' => $productsResponse,
-            'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
-            'membership' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Membresia']),
-        ]);
+      $html = $this->renderView(':site:facture-export-pdf.html.twig', [
+          'facture' => $factureDB,
+          'products' => $productsResponse,
+          'numberOfProducts' => $numberOfProducts,
+          'subtotal' => $subtotal,
+          'firstPayment' => ceil($factureDB->getFinalPrice() / 1.8),
+          'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
+          'membership' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Membresia']),
+      ]);
+
+      $dompdf = new Dompdf(array('enable_remote' => true));
+      $dompdf->loadHtml($html);
+      $dompdf->set_option('isHtml5ParserEnabled', true);
+      $dompdf->render();
+      return $dompdf->stream(
+        "Factura-".$factureDB->getId()."-".date_format($factureDB->getDate(), "Y").".pdf",
+        ["Attachment" => true]
+      );
     }
 
     /**

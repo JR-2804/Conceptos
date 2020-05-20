@@ -9,57 +9,92 @@
   <meta content="width=device-width" name="viewport" />
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
   <title></title>
-  <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap-grid.min.css') }}">
 
   <style>
+    body {
+      margin: 0;
+    }
+
+    p {
+      margin-top: 0.3em;
+      margin-bottom: 0;
+    }
+
     .header {
       position: absolute;
       top: 0;
       width: 100%;
       background-color: #333333;
     }
+
     .header img {
-      width: 250px;
+      width: 200px;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      margin-left: 0.5em;
+      margin-right: 0.5em;
     }
+
     .content {
       padding-top: 80px;
     }
+
+    .prefacture-date {
+      float: right;
+    }
+
+    .prefacture-info {
+      margin-top: 60px;
+    }
+
+    .client-info {
+    }
+
+    .prefacture-summary {
+      float: right;
+    }
+
+    .products-table {
+      margin-top: 75px;
+    }
+
     .product-image {
-      height: 100px;
-      width: 100px;
+      height: 80px;
+      width: 80px;
+      margin: 5px;
     }
+
     .product-description {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 4;
-      -webkit-box-orient: vertical;
+      width: 200px;
     }
+
     .footer {
       position: absolute;
       bottom: 0;
       width: 100%;
       background-color: #333333;
     }
+
     .footer span {
       color: #FFFFFF;
       font-size: 15px;
     }
 
-    .table-striped tbody tr:nth-of-type(odd) {
-      background-color: #FFFFFF;
-    }
     .table-bordered {
+      margin-top: 0.5em;
       border: 1px solid #000000;
+      float: left;
     }
+
     .table thead th {
       border-bottom: 1px solid #000000;
     }
+
     .table-bordered td, .table-bordered th {
       border: 0px;
       border-bottom: 1px solid #000000;
     }
+
     .table td, .table th {
       padding: 0;
     }
@@ -69,134 +104,111 @@
   {% set cupConversionRate = 25 %}
   <div class="d-flex flex-column">
     <div class="d-flex header">
-      <img class="pl-5 pt-2 pb-2" src="{{ home.data.logo.image.path }}" />
+      <img class="pl-5 pt-2 pb-2" src="{{ absolute_url(asset(home.data.logo.image.path)) }}" />
     </div>
-    <div class="ml-5 mr-5 content">
-      <div class="d-flex justify-content-end">
-        <div class="col-3 pl-0">
-          <div class="d-flex flex-column align-items-end">
-            <span><strong>PREFACTURA:</strong> {{prefacture.id}}-{{prefacture.date|date('Y')}}</span>
-            <span><strong>FECHA:</strong> {{prefacture.date|date('d/m/Y')}}</span>
-          </div>
-        </div>
+    <div class="content">
+      <div class="prefacture-date">
+        <p><strong>PREFACTURA:</strong> {{prefacture.id}}-{{prefacture.date|date('Y')}}</p>
+        <p><strong>FECHA:</strong> {{prefacture.date|date('d/m/Y')}}</p>
       </div>
-      <div class="d-flex justify-content-between mt-3">
-        <div class="d-flex flex-column">
-          <span><strong>NOMBRE Y APELLIDOS:</strong> {{prefacture.client.firstName}} {{prefacture.client.lastName}}</span>
-          <span><strong>CORREO:</strong> {{prefacture.client.email}}</span>
-          <span><strong>DIRECCIÓN PARTICULAR:</strong> {{prefacture.client.address}}</span>
+      <div class="prefacture-info">
+        <div class="prefacture-summary">
+          <p><strong>CANTIDAD DE ARTÍCULOS:</strong> {{numberOfProducts}}</p>
+          <p><strong>SUBTOTAL DE COMPRA:</strong> ${{subtotal}}.00</p>
+          <p><strong>TIPO DE MONEDA:</strong> {% if prefacture.cucExtra %}CUC{% else %}USD{% endif %}</p>
+          {% if prefacture.cucExtra %}
+            <p><strong>EXTRA POR CUC:</strong> ${{prefacture.cucExtra}}.00</p>
+          {% endif %}
+            <p><strong>PLAZOS DE PAGO:</strong> {% if prefacture.twoStepExtra %}2{% else %}1{% endif %}</p>
+          {% if prefacture.twoStepExtra %}
+            <p><strong>EXTRA POR 2 PLAZOS:</strong> ${{prefacture.twoStepExtra}}.00</p>
+            <p><strong>PAGO ANTICIPADO:</strong> ${{firstPayment}}.00</p>
+          {% endif %}
+          {% if prefacture.discount %}
+            <p><strong>DESCUENTO DE MIEMBRO:</strong> ${{prefacture.discount}}.00</p>
+          {% endif %}
+          <p><strong>COSTO DE TRANSPORTE:</strong> ${{prefacture.transportCost}}.00</p>
+          <p><strong>TOTAL A PAGAR:</strong> ${{prefacture.finalPrice}}.00</p>
+        </div>
+        <div class="client-info">
+          <p><strong>NOMBRE Y APELLIDOS:</strong> {{prefacture.client.firstName}} {{prefacture.client.lastName}}</p>
+          <p><strong>CORREO:</strong> {{prefacture.client.email}}</p>
+          <p><strong>DIRECCIÓN PARTICULAR:</strong> {{prefacture.client.address}}</p>
           {% if prefacture.client.phone %}
-            <span><strong>TELÉFONO FIJO:</strong> {{prefacture.client.phone}}</span>
+            <p><strong>TELÉFONO FIJO:</strong> {{prefacture.client.phone}}</p>
           {% endif %}
           {% if prefacture.client.movil %}
-            <span><strong>TELÉFONO MÓVIL:</strong> {{prefacture.client.movil}}</span>
+            <p><strong>TELÉFONO MÓVIL:</strong> {{prefacture.client.movil}}</p>
           {% endif %}
           {% if prefacture.client.memberNumber %}
-            <span><strong>NÚMERO DE MIEMBRO:</strong> {{prefacture.client.memberNumber}}</span>
+            <p><strong>NÚMERO DE MIEMBRO:</strong> {{prefacture.client.memberNumber}}</p>
           {% endif %}
           <div class="d-flex justify-content-between mt-3">
             <strong>FIRMA DEL CLIENTE:</strong>
-            <span class="ml-2">____________________________</span>
+            <p class="ml-2">____________________________</p>
           </div>
           <div class="d-flex justify-content-between mt-2">
             <strong>FIRMA DEL COMERCIAL:</strong>
-            <span class="ml-2">____________________________</span>
+            <p class="ml-2">____________________________</p>
           </div>
         </div>
-        <div class="d-flex flex-column">
-          <span><strong>CANTIDAD DE ARTÍCULOS:</strong> {{numberOfProducts}}</span>
-          <span><strong>SUBTOTAL DE COMPRA:</strong> ${{subtotal}}.00</span>
-          <span><strong>TIPO DE MONEDA:</strong> {% if prefacture.cucExtra %}CUC{% else %}USD{% endif %}</span>
-          {% if prefacture.cucExtra %}
-            <span><strong>EXTRA POR CUC:</strong> ${{prefacture.cucExtra}}.00</span>
-          {% endif %}
-            <span><strong>PLAZOS DE PAGO:</strong> {% if prefacture.twoStepExtra %}2{% else %}1{% endif %}</span>
-          {% if prefacture.twoStepExtra %}
-            <span><strong>EXTRA POR 2 PLAZOS:</strong> ${{prefacture.twoStepExtra}}.00</span>
-            <span><strong>PAGO ANTICIPADO:</strong> ${{firstPayment}}.00</span>
-          {% endif %}
-          {% if prefacture.discount %}
-            <span><strong>DESCUENTO DE MIEMBRO:</strong> ${{prefacture.discount}}.00</span>
-          {% endif %}
-          <span><strong>COSTO DE TRANSPORTE:</strong> ${{prefacture.transportCost}}.00</span>
-          <span><strong>TOTAL A PAGAR:</strong> ${{prefacture.finalPrice}}.00</span>
-        </div>
       </div>
-      <table class="table table-bordered mt-3">
-        <thead>
-        <tr>
-          <th class="pl-2">CÓDIGO</th>
-          <th class="pl-2">FOTO</th>
-          <th class="pl-2">DESCRIPCIÓN</th>
-          <th class="pl-2">CANTIDAD</th>
-          <th class="pl-2">PRECIO</th>
-          <th class="pl-2">TOTAL</th>
-          <th class="pl-2" style="min-width: 150px;">TIPO DE ENVÍO</th>
-        </tr>
-        </thead>
-        <tbody class="table-members">
-          {% for product in products %}
-            <tr>
-              <td class="pl-2 pt-2">
-                <span>{{product.code}}</span>
-              </td>
-              <td>
-                {% if product.image is defined %}
-                  <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.image, 'imageFile')) }}" />
-                {% else %}
-                  {% if product.price == 15 %}
-                    {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
-                  {% elseif product.price == 25 %}
-                    {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
-                  {% elseif product.price == 50 %}
-                    {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
+      <div class="products-table">
+        <table class="table table-bordered mt-3">
+          <thead>
+          <tr>
+            <th class="pl-2">CÓDIGO</th>
+            <th class="pl-2">FOTO</th>
+            <th class="pl-2">DESCRIPCIÓN</th>
+            <th class="pl-2">CANTIDAD</th>
+            <th class="pl-2">PRECIO</th>
+            <th class="pl-2">TOTAL</th>
+            <th class="pl-2" style="min-width: 150px;">ENVÍO</th>
+          </tr>
+          </thead>
+          <tbody class="table-members">
+            {% for product in products %}
+              <tr>
+                <td class="pl-2 pt-2">
+                  <span>{{product.code}}</span>
+                </td>
+                <td>
+                  {% if product.image is defined %}
+                    <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.image, 'imageFile')) }}" />
                   {% else %}
-                    {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
+                    {% if product.price == 15 %}
+                      {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
+                    {% elseif product.price == 25 %}
+                      {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
+                    {% elseif product.price == 50 %}
+                      {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
+                    {% else %}
+                      {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
+                    {% endif %}
+                    <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(asset(imagePath)) }}" />
                   {% endif %}
-                  <img class="ml-5 mt-2 mb-2 product-image" src="{{imagePath}}" />
-                {% endif %}
-              </td>
-              <td class="pl-3 pt-2">
-                <span class="product-description">{{product.description}}</span>
-              </td>
-              <td class="pl-2 pt-2">
-                <span>{{product.count}}</span>
-              </td>
-              <td class="pl-2 pt-2">
-                <span>{{product.price}}</span>
-              </td>
-              <td class="pl-2 pt-2">
-                <span>{{product.price * product.count}}</span>
-              </td>
-              <td class="pl-2 pt-2" style="min-width: 150px;">
-                <span>{{product.airplane}}</span>
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+                </td>
+                <td class="pl-3 pt-2">
+                  <span class="product-description">{{product.item}}</span>
+                </td>
+                <td class="pl-2 pt-2">
+                  <span>{{product.count}}</span>
+                </td>
+                <td class="pl-2 pt-2">
+                  <span>{{product.price}}</span>
+                </td>
+                <td class="pl-2 pt-2">
+                  <span>{{product.price * product.count}}</span>
+                </td>
+                <td class="pl-2 pt-2" style="min-width: 150px;">
+                  <span>{{product.airplane}}</span>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </body>
-<script src="{{ asset('bundles/conceptos/assets/html2canvas/html2canvas.min.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/jspdf/jspdf.min.js') }}"></script>
-<script>
-  // var pdf = new jsPDF('p', 'pt', 'a4');
-  // pdf.fromHTML(document.body, 15, 15, {}, function(dispose) {
-  //   pdf.save('Test.pdf')
-  // });
-
-  // var pdf = new jsPDF('p', 'pt', 'a4');
-  // pdf.addHTML(document.body, function() {
-  //   console.log(1);
-  //   pdf.save('Test.pdf');
-  // });
-
-  // html2canvas(document.body).then(function(canvas) {
-  //   var img = canvas.toDataURL("image/png")
-  //   var pdf = new jsPDF('p', 'pt', 'a4');
-  //   pdf.addImage(img, 'JPEG', 0, 0);
-  //   pdf.save('Test.pdf');
-  // });
-</script>
 </html>
