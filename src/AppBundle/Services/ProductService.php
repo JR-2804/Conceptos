@@ -208,7 +208,7 @@ class ProductService
 
     public function filterProducts($request, $user)
     {
-        $products = null;
+        $products = [];
         $mainSubcategory = null;
         $mainCategory = null;
 
@@ -363,6 +363,18 @@ class ProductService
             }
         }
         if (-1 != $inOffer) {
+
+            $activeOfferQB = $this->offerRepository->createQueryBuilder('o');
+            $activeOfferQB->where('o.startDate <= (:now)');
+            $activeOfferQB->where('o.endDate >= (:now)');
+            $activeOfferQB->setParameter('now', new \DateTime(), Type::DATE);
+            $activeOffers = $activeOfferQB->getQuery()->getResult();
+
+            foreach ($activeOffers as $activeOffer)
+                foreach ($activeOffer->getCategories() as $category)
+                    foreach ($category->getProducts() as $product)
+                        array_push($products, $product);
+
             $qbProduct->leftJoin('p.offers', 'o');
             $qbProductCount->leftJoin('p.offers', 'o');
             if ($hasWhere) {
@@ -374,6 +386,7 @@ class ProductService
             }
             $qbProduct->setParameter('current', new \DateTime(), Type::DATE);
             $qbProductCount->setParameter('current', new \DateTime(), Type::DATE);
+
         } else {
           $qbProduct->leftJoin('p.offers', 'o');
           $qbProductCount->leftJoin('p.offers', 'o');
@@ -384,16 +397,20 @@ class ProductService
             $firstResult = (($page - 1) * 50);
         }
 
-        $products = $qbProduct
+        $_products = $qbProduct
             ->orderBy('o.price', 'DESC')
             ->addOrderBy('p.inStore', 'DESC')
+            ->addOrderBy('p.name', 'ASC')
             ->addOrderBy('p.price', 'ASC')
-            ->addOrderBy('p.name', 'DESC')
             ->setFirstResult($firstResult)
             ->setMaxResults(50)
             ->getQuery()
             ->getResult()
         ;
+
+        foreach ($_products as $product)
+            array_push($products, $product);
+
         $countProducts = $qbProductCount->getQuery()->getSingleScalarResult();
 
         foreach ($products as $product) {
