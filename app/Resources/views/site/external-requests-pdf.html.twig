@@ -1,0 +1,141 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:v="urn:schemas-microsoft-com:vml">
+
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta content="width=device-width" name="viewport" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <title></title>
+
+  <style>
+    body {
+      margin: 0;
+    }
+
+    p {
+      margin-top: 0.3em;
+      margin-bottom: 0;
+    }
+
+    .header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      background-color: #333333;
+    }
+
+    .header img {
+      width: 200px;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      margin-left: 0.5em;
+      margin-right: 0.5em;
+    }
+
+    .content {
+      padding-top: 20px;
+    }
+
+    .prefacture-summary {
+      float: right;
+    }
+
+    .products-table {
+      margin-top: 75px;
+    }
+
+    .product-image {
+      height: 80px;
+      width: 80px;
+      margin: 5px;
+    }
+
+    .product-description {
+      width: 200px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background-color: #333333;
+    }
+
+    .footer span {
+      color: #FFFFFF;
+      font-size: 15px;
+    }
+
+    .table-bordered {
+      margin-top: 0.5em;
+      border: 1px solid #000000;
+      float: left;
+    }
+
+    .table thead th {
+      border-bottom: 1px solid #000000;
+    }
+
+    .table-bordered td, .table-bordered th {
+      border: 0px;
+      border-bottom: 1px solid #000000;
+    }
+
+    .table td, .table th {
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  {% set cupConversionRate = 25 %}
+  <div class="d-flex flex-column">
+    <div class="d-flex header">
+      <img class="pl-5 pt-2 pb-2" src="{{ absolute_url(asset(home.data.logo.image.path)) }}" />
+    </div>
+    <div class="content">
+      <div class="products-table">
+        <table class="table table-bordered mt-3">
+          <thead>
+          <tr>
+            <th class="pl-2">CÓDIGO</th>
+            <th class="pl-2">FOTO</th>
+            <th class="pl-2">DESCRIPCIÓN</th>
+            <th class="pl-2">CANTIDAD</th>
+            <th class="pl-2">PRECIO</th>
+            <th class="pl-2">TOTAL</th>
+          </tr>
+          </thead>
+          <tbody class="table-members">
+            {% for externalRequestProduct in externalRequestProducts %}
+              {% set product = externalRequestProduct.product %}
+              <tr>
+                <td class="pl-2 pt-2">
+                  <span>{{product.code}}</span>
+                </td>
+                <td>
+                  <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.mainImage, 'imageFile')) }}" />
+                </td>
+                <td class="pl-3 pt-2">
+                  <span class="product-description">{{product.item}}</span>
+                </td>
+                <td class="pl-2 pt-2">
+                  <span>{{externalRequestProduct.count}}</span>
+                </td>
+                <td class="pl-2 pt-2">
+                  <span>{{product.ikeaPrice}}</span>
+                </td>
+                <td class="pl-2 pt-2">
+                  <span>{{product.ikeaPrice * externalRequestProduct.count}}</span>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -750,6 +750,7 @@ a.conceptos-category-subtitle:focus {
   color: #282827;
   outline: none;
   min-width: 100px;
+  text-align: center;
 }
 
 .conceptos-primary-button:focus,
@@ -778,6 +779,7 @@ a.conceptos-category-subtitle:focus {
   font-size: 14px;
   color: #282827;
   outline: none;
+  text-align: center;
 }
 
 .conceptos-primary-button-gray:focus,

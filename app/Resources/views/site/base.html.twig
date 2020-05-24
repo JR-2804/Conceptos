@@ -170,7 +170,7 @@
           {% if app.user|default %}
             <li><a class="conceptos-navbar-item" href="{{ path('favorite_products') }}">FAVORITOS</a></li>
             {% if is_granted('ROLE_EXTERNAL') %}
-              <li><a class="conceptos-navbar-item" href="{{ path('external_requests') }}">PEDIDOS EXTERNOS</a></li>
+              <li><a class="conceptos-navbar-item" href="{{ path('external_requests') }}">PEDIDOS EXTERNOS</a>a</li>
             {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
               <li><a class="conceptos-navbar-item" href="{{ path('easyadmin') }}">ADMINISTRAR</a></li>

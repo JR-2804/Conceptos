@@ -2129,6 +2129,9 @@ class SiteController extends Controller
         'user' => null,
       ]);
       foreach($externalRequests as $externalRequest) {
+        $remainingTimeFromCreation = $externalRequest->getCreationDate()->diff(new \DateTime('now'));
+        $externalRequest->setRemainingTimeFromCreation($remainingTimeFromCreation);
+
         foreach($externalRequest->getExternalRequestProducts() as $externalRequestProduct) {
           $offerPrice = $this->get('product_service')->findProductOfferPrice($externalRequestProduct->getProduct());
           $externalRequestProduct->getProduct()->setPriceOffer($offerPrice);
@@ -2174,6 +2177,34 @@ class SiteController extends Controller
         $this->getDoctrine()->getManager()->flush();
         return new JsonResponse($id);
       }
+    }
+
+    /**
+     * @Route(name="export_external_request", path="/export-external-request/{id}", methods={"POST", "GET"})
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function exportExternalRequestAction(Request $request, $id)
+    {
+      $user = $this->getUser();
+      $externalRequest = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\ExternalRequest')->find($id);
+
+      $html = $this->renderView(':site:external-requests-pdf.html.twig', [
+        'externalRequestProducts' => $externalRequest->getExternalRequestProducts(),
+        'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
+      ]);
+
+      $dompdf = new Dompdf(array('enable_remote' => true));
+      $dompdf->loadHtml($html);
+      $dompdf->set_option('isHtml5ParserEnabled', true);
+      $dompdf->render();
+      return $dompdf->stream(
+        "Pedido-".$externalRequest->getId().".pdf",
+        ["Attachment" => true]
+      );
     }
 
     /**
