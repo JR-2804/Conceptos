@@ -72,6 +72,10 @@ class Facture
      * @ORM\Column(type="float")
      */
     private $cucExtra;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $bagsExtra;
 
     public function __construct()
     {
@@ -319,6 +323,18 @@ class Facture
     public function getCucExtra()
     {
         return $this->cucExtra;
+    }
+
+    public function setBagsExtra($bagsExtra)
+    {
+        $this->bagsExtra = $bagsExtra;
+
+        return $this;
+    }
+
+    public function getBagsExtra()
+    {
+        return $this->bagsExtra;
     }
 
     function __toString()

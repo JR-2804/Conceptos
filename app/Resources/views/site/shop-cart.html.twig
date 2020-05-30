@@ -138,6 +138,12 @@
               <span class="conceptos-badge-text">PAGO PRIMER PLAZO</span>
               <span class="conceptos-badge-text first-payment"></span>
             </div>
+            {% if shopCartBags is defined and shopCartBags %}
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="conceptos-badge-text">COSTO DE BOLSAS</span>
+                <span class="conceptos-badge-text shop-cart-bag-cost" data-bags="{{shopCartBags.numberOfPayedBags}}"></span>
+              </div>
+            {% endif %}
             <div class="d-flex justify-content-between align-items-center">
               <span class="conceptos-badge-text">COSTO DE TRANSPORTE</span>
               <span class="conceptos-badge-text shop-cart-transport-cost"></span>

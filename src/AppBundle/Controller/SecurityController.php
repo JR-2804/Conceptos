@@ -305,6 +305,7 @@ class SecurityController extends Controller
             'privacy' => $config->getPrivacyPolicy(),
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
         ]);
     }
 

@@ -30,6 +30,7 @@ class CheckOutType extends AbstractType
             ->add('payment', HiddenType::class)
             ->add('date', HiddenType::class)
             ->add('ignoreTransport', HiddenType::class)
+            ->add('numberOfBags', HiddenType::class)
         ;
         parent::buildForm($builder, $options);
     }

@@ -149,6 +149,7 @@ easy_admin:
                     - {property: 'requestCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
@@ -159,6 +160,7 @@ easy_admin:
                     - {property: 'client', label: 'Cliente'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
@@ -196,6 +198,7 @@ easy_admin:
                     - {property: 'preFactureCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
@@ -206,6 +209,7 @@ easy_admin:
                     - {property: 'client', label: 'Cliente'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
@@ -242,6 +246,7 @@ easy_admin:
                     - {property: 'factureCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
@@ -252,6 +257,7 @@ easy_admin:
                     - {property: 'client', label: 'Cliente'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}

@@ -8,6 +8,7 @@ use AppBundle\DTO\MembershipRequestDTO;
 use AppBundle\Entity\Evaluation;
 use AppBundle\Entity\FavoriteProduct;
 use AppBundle\Entity\ShopCartProduct;
+use AppBundle\Entity\ShopCartBags;
 use AppBundle\Entity\Request\Client;
 use AppBundle\Entity\Request\Request as ProductRequest;
 use AppBundle\Entity\Request\Facture;
@@ -193,6 +194,7 @@ class SiteController extends Controller
             'popularChunksDesktop' => array_chunk($populars, 12),
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'config' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1),
             'brands' => array_chunk($brands, 4),
             'currentDate' => new \DateTime(),
@@ -259,6 +261,7 @@ class SiteController extends Controller
             'page' => $page,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -292,6 +295,7 @@ class SiteController extends Controller
             'page' => $page,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'config' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -351,6 +355,7 @@ class SiteController extends Controller
         $result += ['membership' => $membership];
         $result += ['count' => $this->get('shop_cart_service')->countShopCart($this->getUser())];
         $result += ['shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser())];
+        $result += ['shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser())];
 
         return $this->render(':site:products.html.twig', $result);
     }
@@ -389,6 +394,7 @@ class SiteController extends Controller
                 'related' => null,
                 'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
                 'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+                'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
                 'categories' => $this->get('category_service')->getAll(),
                 'terms' => $config->getTermAndConditions(),
                 'privacy' => $config->getPrivacyPolicy(),
@@ -468,6 +474,7 @@ class SiteController extends Controller
             'related' => $related,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -500,6 +507,7 @@ class SiteController extends Controller
         }
 
         $productsDB = $this->get('shop_cart_service')->getShopCartProducts($this->getUser());
+        $shopCartBags = $this->get('shop_cart_service')->getShopCartBags($this->getUser());
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
@@ -522,6 +530,7 @@ class SiteController extends Controller
             $productsResponse = [];
             $totalPriceBase = 0;
             $cucExtra = 0;
+            $bagsExtra = 0;
             $memberBalance = 0;
             foreach ($requestProducts as $product) {
                 if (!array_key_exists('type', $product)) {
@@ -564,10 +573,14 @@ class SiteController extends Controller
               $totalPrice += $twoStepExtra;
             }
 
-            $cucExtra = 0;
             if ($paymentCurrency == 'cuc') {
               $cucExtra = ceil($totalPriceBase * 0.15);
               $totalPrice += $cucExtra;
+            }
+
+            if ($shopCartBags != null) {
+              $bagsExtra = $shopCartBags->getNumberOfPayedBags() * 5;
+              $totalPrice += $bagsExtra;
             }
 
             if ($totalPrice < 0) {
@@ -753,6 +766,7 @@ class SiteController extends Controller
               $facture->setDiscount($discount);
               $facture->setTwoStepExtra($twoStepExtra);
               $facture->setCucExtra($cucExtra);
+              $facture->setBagsExtra($bagsExtra);
               $facture->setFirstClientDiscount(0);
               $facture->setComboDiscount($comboDiscount);
               $facture->setTransportCost($transportCost);
@@ -762,6 +776,7 @@ class SiteController extends Controller
               $prefacture->setDiscount($discount);
               $prefacture->setTwoStepExtra($twoStepExtra);
               $prefacture->setCucExtra($cucExtra);
+              $prefacture->setBagsExtra($bagsExtra);
               $prefacture->setFirstClientDiscount(0);
               $prefacture->setComboDiscount($comboDiscount);
               $prefacture->setTransportCost($transportCost);
@@ -790,6 +805,7 @@ class SiteController extends Controller
               $requestDB->setBalanceDiscount($balanceDiscount);
               $requestDB->setTwoStepExtra($twoStepExtra);
               $requestDB->setCucExtra($cucExtra);
+              $requestDB->setBagsExtra($bagsExtra);
               $requestDB->setFirstClientDiscount(0);
               $requestDB->setComboDiscount($comboDiscount);
               $requestDB->setTransportCost($transportCost);
@@ -837,6 +853,7 @@ class SiteController extends Controller
           'membership' => $membership,
           'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
           'shopCartProducts' => $productsDB,
+          'shopCartBags' => $shopCartBags,
           'terms' => $config->getTermAndConditions(),
           'privacy' => $config->getPrivacyPolicy(),
           'currentDate' => new \DateTime(),
@@ -918,6 +935,7 @@ class SiteController extends Controller
             'inward' => $inward,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -950,6 +968,7 @@ class SiteController extends Controller
             'membership' => $membership,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'page' => $page,
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -988,6 +1007,7 @@ class SiteController extends Controller
             'home' => $home,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'page' => $page,
             'membership' => $page,
             'terms' => $config->getTermAndConditions(),
@@ -1024,6 +1044,7 @@ class SiteController extends Controller
             'membership' => $membership,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'page' => $page,
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -1097,6 +1118,7 @@ class SiteController extends Controller
             'membership' => $membership,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'project' => $project,
             'imageSets' => array_chunk($project['images'], 3),
             'products' => $products,
@@ -1169,6 +1191,7 @@ class SiteController extends Controller
             'membership' => $membership,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'service' => $service,
             'imageSets' => array_chunk($service['images'], 3),
             'products' => $products,
@@ -1216,6 +1239,7 @@ class SiteController extends Controller
             'form' => $form->createView(),
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -1271,6 +1295,7 @@ class SiteController extends Controller
               'home' => $home,
               'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
               'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+              'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
               'page' => $membership,
               'terms' => $config->getTermAndConditions(),
               'privacy' => $config->getPrivacyPolicy(),
@@ -1288,6 +1313,7 @@ class SiteController extends Controller
             'form' => $form->createView(),
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -1330,11 +1356,65 @@ class SiteController extends Controller
         return new JsonResponse([
           'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
           'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+          'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
           'html' => $this->renderView(':site:products-summary.html.twig', [
             'home' => $home,
             'membership' => $membership,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
+            'categories' => $this->get('category_service')->getAll(),
+            'terms' => $config->getTermAndConditions(),
+            'privacy' => $config->getPrivacyPolicy(),
+          ])
+        ]);
+    }
+
+    /**
+     * @Route(name="add_bags", path="/bags/add/{numberOfPayedBags}/{numberOfFreeBags}", methods={"POST", "GET"})
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function addBagsAction(Request $request, $numberOfPayedBags, $numberOfFreeBags)
+    {
+        $shopCartBags = $this->getDoctrine()->getManager()->getRepository('AppBundle:ShopCartBags')->findOneBy([
+          'user' => $this->getUser()->getId(),
+        ]);
+
+        if ($shopCartBags == null) {
+          $shopCartBags = new ShopCartBags();
+          $shopCartBags->setUser($this->getUser());
+          $shopCartBags->setNumberOfPayedBags($numberOfPayedBags);
+          $shopCartBags->setNumberOfFreeBags($numberOfFreeBags);
+          $this->getDoctrine()->getManager()->persist($shopCartBags);
+          $this->getDoctrine()->getManager()->flush();
+        } else {
+          $shopCartBags->setNumberOfPayedBags($numberOfPayedBags);
+          $shopCartBags->setNumberOfFreeBags($numberOfFreeBags);
+        }
+
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Membresia',
+        ]);
+
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+        return new JsonResponse([
+          'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+          'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+          'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
+          'html' => $this->renderView(':site:products-summary.html.twig', [
+            'home' => $home,
+            'membership' => $membership,
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -1374,11 +1454,13 @@ class SiteController extends Controller
       return new JsonResponse([
         'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
         'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+        'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
         'html' => $this->renderView(':site:products-summary.html.twig', [
           'home' => $home,
           'membership' => $membership,
           'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
           'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+          'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
           'categories' => $this->get('category_service')->getAll(),
           'terms' => $config->getTermAndConditions(),
           'privacy' => $config->getPrivacyPolicy(),
@@ -1791,6 +1873,7 @@ class SiteController extends Controller
         $this->get('email_service')->send($config->getEmail(), 'Equipo comercial Conceptos', $client->getEmail(), 'Pedido realizado a través de la WEB', $bodyClient);
 
         $this->get('shop_cart_service')->emptyShopCart($this->getUser());
+        $this->get('shop_cart_service')->emptyShopCartBags($this->getUser());
 
         $request->getSession()->set('successRequestToast', true);
         return $this->redirectToRoute('site_home');
@@ -2108,6 +2191,7 @@ class SiteController extends Controller
         'home' => $home,
         'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
         'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+        'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
         'products' => $products,
         'categories' => $this->get('category_service')->getAll(),
         'terms' => $config->getTermAndConditions(),
@@ -2149,6 +2233,7 @@ class SiteController extends Controller
         'home' => $home,
         'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
         'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+        'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
         'categories' => $this->get('category_service')->getAll(),
         'terms' => $config->getTermAndConditions(),
         'privacy' => $config->getPrivacyPolicy(),
@@ -2255,6 +2340,7 @@ class SiteController extends Controller
             'home' => $home,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'requests' => $clientRequests,
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -2313,6 +2399,7 @@ class SiteController extends Controller
             'membership' => $membership,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),

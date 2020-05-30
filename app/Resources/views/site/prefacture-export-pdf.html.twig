@@ -127,6 +127,9 @@
           {% if prefacture.discount %}
             <p><strong>DESCUENTO DE MIEMBRO:</strong> ${{prefacture.discount}}.00</p>
           {% endif %}
+          {% if prefacture.bagsExtra %}
+            <p><strong>EXTRA DE BOLSAS:</strong> ${{prefacture.bagsExtra}}.00</p>
+          {% endif %}
           <p><strong>COSTO DE TRANSPORTE:</strong> ${{prefacture.transportCost}}.00</p>
           <p><strong>TOTAL A PAGAR:</strong> ${{prefacture.finalPrice}}.00</p>
         </div>
@@ -157,22 +160,22 @@
         <table class="table table-bordered mt-3">
           <thead>
           <tr>
-            <th class="pl-2">CÓDIGO</th>
-            <th class="pl-2">FOTO</th>
-            <th class="pl-2">DESCRIPCIÓN</th>
-            <th class="pl-2">CANTIDAD</th>
-            <th class="pl-2">PRECIO</th>
-            <th class="pl-2">TOTAL</th>
-            <th class="pl-2" style="min-width: 150px;">ENVÍO</th>
+            <th style="padding-left: 10px;">CÓDIGO</th>
+            <th style="padding-left: 10px;">FOTO</th>
+            <th style="padding-left: 10px;">DESCRIPCIÓN</th>
+            <th style="padding-left: 10px;">CANTIDAD</th>
+            <th style="padding-left: 10px;">PRECIO</th>
+            <th style="padding-left: 10px;">TOTAL</th>
+            <th style="padding-left: 10px; min-width: 150px;">ENVÍO</th>
           </tr>
           </thead>
           <tbody class="table-members">
             {% for product in products %}
               <tr>
-                <td class="pl-2 pt-2">
+                <td style="padding-left: 10px;">
                   <span>{{product.code}}</span>
                 </td>
-                <td>
+                <td style="padding-left: 10px;">
                   {% if product.image is defined %}
                     <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.image, 'imageFile')) }}" />
                   {% else %}
@@ -188,19 +191,19 @@
                     <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(asset(imagePath)) }}" />
                   {% endif %}
                 </td>
-                <td class="pl-3 pt-2">
+                <td style="padding-left: 10px;">
                   <span class="product-description">{{product.item}}</span>
                 </td>
-                <td class="pl-2 pt-2">
+                <td style="padding-left: 10px;">
                   <span>{{product.count}}</span>
                 </td>
-                <td class="pl-2 pt-2">
+                <td style="padding-left: 10px;">
                   <span>{{product.price}}</span>
                 </td>
-                <td class="pl-2 pt-2">
+                <td style="padding-left: 10px;">
                   <span>{{product.price * product.count}}</span>
                 </td>
-                <td class="pl-2 pt-2" style="min-width: 150px;">
+                <td style="padding-left: 10px; min-width: 150px;">
                   <span>{{product.airplane}}</span>
                 </td>
               </tr>
