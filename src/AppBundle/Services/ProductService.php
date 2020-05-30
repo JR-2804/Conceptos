@@ -363,7 +363,6 @@ class ProductService
             }
         }
         if (-1 != $inOffer) {
-
             $activeOfferQB = $this->offerRepository->createQueryBuilder('o');
             $activeOfferQB->where('o.startDate <= (:now)');
             $activeOfferQB->where('o.endDate >= (:now)');
@@ -405,8 +404,7 @@ class ProductService
             ->setFirstResult($firstResult)
             ->setMaxResults(50)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
 
         foreach ($_products as $product)
             array_push($products, $product);
