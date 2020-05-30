@@ -166,6 +166,9 @@
           <li><a class="conceptos-navbar-item" href="{{ path('services') }}">SERVICIOS</a></li>
           <li><a class="conceptos-navbar-item" href="{{ path('membership') }}">MEMBRESÍA</a></li>
           <li><a class="conceptos-navbar-item" href="{{ path('blog_home') }}">INSPIRACIONES</a></li>
+          {% if home.data.cataloge is defined and home.data.cataloge %}
+            <li><a class="conceptos-navbar-item" href="{{ home.data.cataloge.path }}" target="_blank">CATÁLOGO</a></li>
+          {% endif %}
           <li><a class="conceptos-navbar-item" href="{{ path('help') }}">AYUDA</a></li>
           {% if app.user|default %}
             <li><a class="conceptos-navbar-item" href="{{ path('favorite_products') }}">FAVORITOS</a></li>
@@ -194,6 +197,9 @@
               <li><a class="conceptos-navbar-item" href="{{ path('services') }}">SERVICIOS</a></li>
               <li><a class="conceptos-navbar-item" href="{{ path('membership') }}">MEMBRESÍA</a></li>
               <li><a class="conceptos-navbar-item" href="{{ path('blog_home') }}">INSPIRACIONES</a></li>
+              {% if home.data.cataloge is defined and home.data.cataloge %}
+                <li><a class="conceptos-navbar-item" href="{{ home.data.cataloge.path }}" target="_blank">CATÁLOGO</a></li>
+              {% endif %}
               <li><a class="conceptos-navbar-item" href="{{ path('help') }}">AYUDA</a></li>
               <li><div class="conceptos-navbar-divider" role="separator"></div></li>
               {% if app.user|default %}
