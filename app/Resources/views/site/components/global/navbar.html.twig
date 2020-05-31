@@ -1,11 +1,12 @@
 <div class="new_navbar">
+
     <div class="new_navbar__logo">
         <a href="{{ path('site_home') }}">
             <img src="{{ home.data.logo.image.path }}" alt="">
         </a>
     </div>
 
-    <div class="new_navbar__content">
+{#    <div class="new_navbar__content">#}
 
         <div class="new_navbar__content__menu">
             <div class="new_navbar__content__menu__middle"></div>
@@ -13,7 +14,7 @@
 
         <div class="lateral_menu">
             <button class="lateral_menu__close"></button>
-            <nav class="lateral_menu__content ">
+            <nav class="lateral_menu__content">
                 <ul>
                     <li><a data-next="next" href="#">Productos</a>
 {#                    <li><a data-next="true" href="{{ path('products') }}">Productos</a>#}
@@ -170,7 +171,7 @@
             <img src="{{ asset('bundles/conceptos/images/home/nav-cart.png') }}">
             <span class="new_navbar__content__cart__count" id="conceptos-shop-cart-count" data-count="{{count}}">{% if count > 99 %}+99{% else %}{{count}}{% endif %}</span>
         </div>
-    </div>
+{#    </div>#}
 </div>
 
 
@@ -262,4 +263,4 @@
 {#</section>#}
 
 {#push elements#}
-<div style="position: relative; height: 7em;"></div>
+<div style="position: relative; height: 6em;"></div>

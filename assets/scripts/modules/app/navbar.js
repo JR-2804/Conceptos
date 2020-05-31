@@ -1,4 +1,5 @@
 import Headroom from "headroom.js";
+import {setCookie, getCookie} from "./_utils";
 
 class NavBar{
 
