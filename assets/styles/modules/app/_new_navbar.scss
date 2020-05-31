@@ -132,6 +132,10 @@
             & img{
                 width: 90%;
                 height: 1.8em;
+
+                @include atLarge{
+                    width: auto;
+                }
             }
         }
 
