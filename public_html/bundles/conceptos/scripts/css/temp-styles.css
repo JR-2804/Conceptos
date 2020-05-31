@@ -260,7 +260,7 @@ textarea {
 
 #conceptos-services-badge {
   position: sticky;
-  z-index: 15;
+  z-index: 1;
 }
 
 .conceptos-badge-text {
