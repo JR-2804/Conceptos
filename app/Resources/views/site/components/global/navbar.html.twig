@@ -160,6 +160,12 @@
             {% endif %}
         </div>
 
+        <div class="new_navbar__content__favorite">
+            <a href="{{ path('favorite_products') }}">
+                <img src="{{ asset('bundles/conceptos/images/home/favorite.svg') }}">
+            </a>
+        </div>
+
         <div class="new_navbar__content__cart" data-toggle="modal" data-target="#cartPreviewModal">
             <img src="{{ asset('bundles/conceptos/images/home/nav-cart.png') }}">
             <span class="new_navbar__content__cart__count" id="conceptos-shop-cart-count" data-count="{{count}}">{% if count > 99 %}+99{% else %}{{count}}{% endif %}</span>
@@ -254,3 +260,6 @@
 {#    </aside>#}
 
 {#</section>#}
+
+{#push elements#}
+<div style="position: relative; height: 7em;"></div>

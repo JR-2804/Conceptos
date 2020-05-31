@@ -7,7 +7,7 @@
     display: flex;
     flex-wrap: wrap;
     z-index: 3;
-    padding: .5em 1em;
+    padding: .5em;
     width: 100%;
 
     &__logo{
@@ -22,21 +22,22 @@
 
     &__content{
         display: grid;
-        grid-template-areas: "menu search user cart";
-        grid-template-columns: 12% 67% 10% 10%;
+        grid-template-areas: "menu search user favorite cart";
+        grid-template-columns: 10% 56% 10% 10% 11%;
         width: 100%;
         grid-gap: 1%;
 
         @include atMedium{
-            grid-template-columns: 4% 85% 4% 4%;
+            grid-template-columns: 4% 81% 4% 4% 4%;
         }
 
         &__menu{
             grid-area: menu;
 
             position: relative;
-            width: 2em;
-            height: 80%;
+            width: 1.75em;
+            height: 70%;
+            top: 15%;
             display: flex;
             align-items: center;
 
@@ -79,7 +80,7 @@
                 }
 
                 & input[type='text']{
-                    border-radius: 5px;
+                    border-radius: 30px;
                     border: 1px solid white;
                     background: white;
                     padding: 0 .75em;
@@ -124,15 +125,18 @@
             }
         }
 
-        &__user, &__cart{
+        &__user, &__cart, &__favorite{
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
 
             & img{
-                width: 2.25em;
-                height: auto;
-                max-height: 2.25em;
+                width: 90%;
+                height: 1.8em;
             }
+        }
+
+        &__favorite{
+            grid-area: favorite;
         }
 
         &__user{
@@ -237,12 +241,13 @@
 
             & li {
                 list-style: none;
-                margin: .75em .25em;
+                margin: .5em .25em;
+                display: flex;
 
                 & a {
                     color: white;
                     font-weight: 500;
-                    font-size: 1.05em;
+                    font-size: 1em;
                     text-transform: uppercase;
                 }
 
@@ -320,4 +325,8 @@
 }
 .headroom--unpinned {
     transform: translateY(-100%);
+}
+
+.no-scroll{
+    overflow-y: hidden;
 }

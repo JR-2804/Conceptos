@@ -3,6 +3,7 @@ import Headroom from "headroom.js";
 class NavBar{
 
     constructor() {
+        this.body = document.querySelector('body');
         this.navbar = document.querySelector('.new_navbar');
         this.menuIcon = document.querySelector('.new_navbar__content__menu');
         this.menuIconClose = document.querySelector('.lateral_menu__close');
@@ -32,6 +33,8 @@ class NavBar{
 
     toggleMenu(){
         this.menuContainer.classList.toggle('lateral_menu--visible');
+        this.body.classList.toggle('no-scroll');
+
     }
 
     move(e){

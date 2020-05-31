@@ -177,6 +177,7 @@ textarea {
 
 .conceptos-navbar-divider {
   border-top: 3px solid #c2b930;
+    width: 100%;
 }
 
 .conceptos-navbar-username {
