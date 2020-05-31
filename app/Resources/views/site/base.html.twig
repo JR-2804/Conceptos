@@ -114,112 +114,20 @@
   </div>
 </div>
 
-
-
-<button id="open-categories-menu" class="category-menu-open d-flex justify-content-end p-2">
-    <div class="animation_flash"></div>
+{#<button id="open-categories-menu" class="category-menu-open d-flex justify-content-end p-2">#}
+{#    <div class="animation_flash"></div>#}
 {#  <img class="conceptos-icon" src="{{ asset('bundles/conceptos/images/home/forward.png') }}">#}
-</button>
+{#</button>#}
 
-<div id="categories-menu" class="conceptos-add-scroll">
-  {{include('site/categories-menu.html.twig')}}
-</div>
+{#<div id="categories-menu" class="conceptos-add-scroll">#}
+{#  {{include('site/categories-menu.html.twig')}}#}
+{#</div>#}
 
-<div id="close-categories-menu">
-  <img class="close-categories-menu-icon mr-2 d-flex d-lg-none" src="{{ asset('bundles/conceptos/images/home/close-categories-menu.png') }}">
-</div>
+{#<div id="close-categories-menu">#}
+{#  <img class="close-categories-menu-icon mr-2 d-flex d-lg-none" src="{{ asset('bundles/conceptos/images/home/close-categories-menu.png') }}">#}
+{#</div>#}
 
-
-
-
-{% block header %}
-  <section class="menu cid-qQ6pVr9Hx2 navbar__container " once="menu">
-    <nav class="navbar navbar-dropdown navbar-fixed-top navbar-toggleable conceptos-navbar p-0">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-              data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-              aria-label="Toggle navigation">
-          <div class="hamburger">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-          </div>
-      </button>
-      <button class="conceptos-navbar-icon" data-toggle="modal" data-target="#cartPreviewModal">
-        <div class="d-flex align-items-center">
-          <img src="{{ asset('bundles/conceptos/images/home/nav-cart.png') }}">
-          <span id="conceptos-shop-cart-count" data-count="{{count}}">{% if count > 99 %}+99{% else %}{{count}}{% endif %}</span>
-        </div>
-      </button>
-      {% if app.user|default %}
-      <a class="conceptos-navbar-icon conceptos-user-icon" href="{{ path('site_profile') }}">
-        <div class="d-flex align-items-center">
-          <img src="{{ asset('bundles/conceptos/images/home/user.png') }}">
-        </div>
-      </a>
-      {% else %}
-      <a class="conceptos-navbar-icon conceptos-user-icon" href="" data-toggle="modal" data-target="#loginModal">
-        <div class="d-flex align-items-center">
-          <img src="{{ asset('bundles/conceptos/images/home/user.png') }}">
-        </div>
-      </a>
-      {% endif %}
-      <ul id="conceptos-navbar-links" class="navbar-nav nav-dropdown conceptos-navbar-dropdown d-none d-lg-flex" data-app-modern-menu="true">
-        <li><a class="conceptos-navbar-item" href="{{ path('products') }}">PRODUCTOS</a></li>
-        <li><a class="conceptos-navbar-item" href="{{ path('services') }}">SERVICIOS</a></li>
-        <li><a class="conceptos-navbar-item" href="{{ path('membership') }}">MEMBRESÍA</a></li>
-        <li><a class="conceptos-navbar-item" href="{{ path('blog_home') }}">INSPIRACIONES</a></li>
-        <li><a class="conceptos-navbar-item" href="{{ path('help') }}">AYUDA</a></li>
-        {% if app.user|default %}
-          <li><a class="conceptos-navbar-item" href="{{ path('favorite_products') }}">FAVORITOS</a></li>
-          {% if is_granted('ROLE_ADMIN') %}
-            <li><a class="conceptos-navbar-item" href="{{ path('easyadmin') }}">ADMINISTRAR</a></li>
-          {% endif %}
-          <li><a class="conceptos-navbar-item" href="{{ path('fos_user_security_logout') }}">CERRAR SESIÓN</a></li>
-        {% endif %}
-      </ul>
-      <div class="menu-logo col-6 col-lg-3 pl-0 pl-lg-3">
-          <div class="navbar-brand ml-0">
-              <span class="navbar-logo" style="font-size: inherit;">
-                  <a href="{{ path('site_home') }}">
-                      {{ home.data.logo.image.path | imgTag(sizes='(min-width: 1000px) 33vw, 60vw',
-                                                    alt='Conceptos logo', class='logo-menu', style='width: auto; height: auto !important; max-height: 2em;') | raw }}
-{#                      <img src="{{ home.data.logo.image.path }}" alt="Conceptos"#}
-{#                            title="Conceptos"#}
-{#                            style="width:100%;" class="">#}
-                  </a>
-              </span>
-          </div>
-      </div>
-      <div class="d-flex flex-column collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav nav-dropdown conceptos-navbar-dropdown d-flex d-lg-none" data-app-modern-menu="true">
-            <li><a class="conceptos-navbar-item" href="{{ path('products') }}">PRODUCTOS</a></li>
-            <li><a class="conceptos-navbar-item" href="{{ path('services') }}">SERVICIOS</a></li>
-            <li><a class="conceptos-navbar-item" href="{{ path('membership') }}">MEMBRESÍA</a></li>
-            <li><a class="conceptos-navbar-item" href="{{ path('blog_home') }}">INSPIRACIONES</a></li>
-            <li><a class="conceptos-navbar-item" href="{{ path('help') }}">AYUDA</a></li>
-            <li><div class="conceptos-navbar-divider" role="separator"></div></li>
-            {% if app.user|default %}
-              <li><a class="conceptos-navbar-item" href="{{ path('favorite_products') }}">FAVORITOS</a></li>
-              {% if is_granted('ROLE_ADMIN') %}
-                <li><a class="conceptos-navbar-item" href="{{ path('easyadmin') }}">ADMINISTRAR</a></li>
-              {% endif %}
-              <li><a class="conceptos-navbar-item" href="{{ path('fos_user_security_logout') }}">CERRAR SESIÓN</a></li>
-            {% endif %}
-        </ul>
-      </div>
-    </nav>
-
-      <aside class="search_bar d-flex">
-          <form id="home-search-form" action="{{ path('products') }}" method="get">
-              <label class="sr-only" for="search_bar_products">Buscar producto</label>
-              <input type="text" name="term" id="search_bar_products" placeholder="Buscar productos">
-              <button type="submit" value="buscar"></button>
-          </form>
-      </aside>
-
-  </section>
-{% endblock %}
+{{ include('site/components/global/navbar.html.twig') }}
 
 {% block body %}{% endblock %}
 
