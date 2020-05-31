@@ -169,7 +169,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
   position: absolute;
   background: #282827;
   width: 85%;
-  top: 6em;
+  top: 6.9em;
   left: 0;
   overflow: hidden;
   -webkit-transform: translateX(-100%);
