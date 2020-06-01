@@ -10,7 +10,7 @@
     display: grid;
     grid-template-areas: "logo logo user favorite cart"
                          "menu search search search search";
-    grid-template-columns: 10% 50% 12% 12% 12%;
+    grid-template-columns: 13% 45% 12% 12% 12%;
     grid-template-rows: 3em 3em;
     width: 100%;
     grid-gap: 1%;
@@ -39,6 +39,7 @@
             width: 1.75em;
             height: 1.75em;
             top: .625em;
+            margin-left: .5em;
             display: flex;
             align-items: center;
 
@@ -291,15 +292,14 @@
                         right: 1em;
                         width: 1em;
                         height: .25em;
+                        top: 50%;
                     }
 
                     &:before{
-                        top: 32%;
-                        transform: rotate(-45deg);
+                        transform: translateY(-100%) rotate(-45deg);
                     }
                     &:after{
-                        top: 68%;
-                        transform: rotate(45deg);
+                        transform: translateY(100%) rotate(45deg);
                     }
                 }
 

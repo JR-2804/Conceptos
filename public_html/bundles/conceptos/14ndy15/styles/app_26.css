@@ -13,7 +13,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
   padding: .5em;
   display: grid;
   grid-template-areas: "logo logo user favorite cart" "menu search search search search";
-  grid-template-columns: 10% 50% 12% 12% 12%;
+  grid-template-columns: 13% 45% 12% 12% 12%;
   grid-template-rows: 3em 3em;
   width: 100%;
   grid-gap: 1%; }
@@ -39,6 +39,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     width: 1.75em;
     height: 1.75em;
     top: .625em;
+    margin-left: .5em;
     display: -webkit-box;
     display: flex;
     -webkit-box-align: center;
@@ -283,17 +284,16 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
             background: white;
             right: 1em;
             width: 1em;
-            height: .25em; }
+            height: .25em;
+            top: 50%; }
 
 .lateral_menu__content ul ul.sub li:first-child:before, .lateral_menu__content ul.sub ul.sub li:first-child:before {
-            top: 32%;
-            -webkit-transform: rotate(-45deg);
-                    transform: rotate(-45deg); }
+            -webkit-transform: translateY(-100%) rotate(-45deg);
+                    transform: translateY(-100%) rotate(-45deg); }
 
 .lateral_menu__content ul ul.sub li:first-child:after, .lateral_menu__content ul.sub ul.sub li:first-child:after {
-            top: 68%;
-            -webkit-transform: rotate(45deg);
-                    transform: rotate(45deg); }
+            -webkit-transform: translateY(100%) rotate(45deg);
+                    transform: translateY(100%) rotate(45deg); }
 
 .lateral_menu__content ul ul.sub li:nth-child(2), .lateral_menu__content ul.sub ul.sub li:nth-child(2) {
           width: 70%; }
