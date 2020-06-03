@@ -481,6 +481,7 @@ class SiteController extends Controller
         ]);
     }
 
+
     /**
      * @Route(name="shop-cart", path="/carrito-compras")
      *

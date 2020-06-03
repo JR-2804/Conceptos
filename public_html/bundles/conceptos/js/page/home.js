@@ -640,6 +640,10 @@ function init() {
     $("#populars-title").val(data.populars.title);
     $("#populars-subtitle").val(data.populars.subtitle);
   }
+  if (data.store) {
+    $("#store-title").val(data.store.title);
+    $("#store-subtitle").val(data.store.subtitle);
+  }
   if (data.cubanBrands) {
     $("#cuban-brands-title").val(data.cubanBrands.title);
     $("#cuban-brands-subtitle").val(data.cubanBrands.subtitle);
@@ -764,6 +768,10 @@ function generateData() {
       title: $("#populars-title").val(),
       subtitle: $("#populars-subtitle").val()
     },
+    store: {
+      title: $("#store-title").val() === '' ? 'Almacen' : $("#store-title").val(),
+      subtitle: $("#store-subtitle").val()
+    },
     cubanBrands: {
       title: $("#cuban-brands-title").val(),
       subtitle: $("#cuban-brands-subtitle").val()
@@ -839,6 +847,9 @@ function validateSubmitData() {
   }
   if (!$("#populars-title").val()) {
     valid = false;
+  }
+  if (!$("#store-title").val()) {
+      valid = false;
   }
   if (!$("#cuban-brands-title").val() || !$("#cuban-brands-subtitle").val()) {
     valid = false;
