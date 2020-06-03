@@ -55,7 +55,7 @@ class Product
      */
     private $images;
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal")
      */
     private $price;
     /**

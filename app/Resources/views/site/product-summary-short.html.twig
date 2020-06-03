@@ -23,7 +23,7 @@
           {% if product.priceOffer != -1 %}
             <span class="conceptos-product-info {{priceClass}} mt-1">$&nbsp;{{product.priceOffer}}</span>
           {% else %}
-            <span class="conceptos-product-info {{priceClass}} mt-1">$&nbsp;{{product.price}}</span>
+            <span class="conceptos-product-info {{priceClass}} mt-1">$&nbsp;{{product.price  }}</span>
           {% endif %}
           <button class="conceptos-add-to-cart-icon {{iconClass}} pr-0" data-path="{{ path('add_shop_card', {id: product.id}) }}">
             <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">

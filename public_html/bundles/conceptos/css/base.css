@@ -19,8 +19,8 @@
 }
 
 .la-anim-10.la-animate {
-  -webkit-transform: translateX(50%) translateY(-50%) rotate(45deg);
-  transform: translateX(50%) translateY(-50%) rotate(45deg);
+  -webkit-transform: translateX(50%) translateY(-68%) rotate(45deg);
+  transform: translateX(50%) translateY(-68%) rotate(45deg);
 }
 
 /* Loading circle idea from http://codepen.io/Metty/details/lgJck */
