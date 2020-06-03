@@ -171,6 +171,11 @@ $(document).ready(function() {
           var uuid = getProductUuid(product.id);
           var path = $("#persist-count-path").val() + "/" + uuid + "/" + count;
           ajax(path, "POST", {}, function(response) {
+            $("#products-summary")
+              .children()
+              .remove();
+            $("#products-summary").append(response.html);
+            CreateCartSummaryActions();
             var count = response.count;
             $(".badge-shop-cart").text(count);
           });
@@ -523,6 +528,46 @@ $(document).ready(function() {
         }
       );
     });
+
+    $(".add-bag-icon").click(function() {
+      var url = $(this).data("path");
+      ajax(
+        url,
+        "POST",
+        {},
+        function() {
+          $("#shop-cart-bags-badge").hide();
+          $.toast({
+            text: "Bolsas añadidas al carrito correctamente",
+            showHideTransition: "fade",
+            bgColor: "#c2b930",
+            textColor: "#3f3c03",
+            allowToastClose: true,
+            hideAfter: 3000,
+            stack: 5,
+            textAlign: "center",
+            position: "mid-center",
+            icon: "success",
+            heading: "Correcto"
+          });
+        },
+        function() {
+          $.toast({
+            text: "Ha ocurrido un error añadiendo las bolsas al carrito",
+            showHideTransition: "fade",
+            bgColor: "#c2b930",
+            textColor: "#3f3c03",
+            allowToastClose: true,
+            hideAfter: 3000,
+            stack: 5,
+            textAlign: "center",
+            position: "mid-center",
+            icon: "error",
+            heading: "Error"
+          });
+        }
+      );
+    });
   }
 
   function OnCartIconCLick(e) {
@@ -774,46 +819,6 @@ $(document).ready(function() {
   $(".combo-product-toggle").click(function() {
     var uuid = $(this).data("uuid");
     $(".shop-cart-product[data-uuid='" + uuid + "']").toggleClass("opened");
-  });
-
-  $(".add-bag-icon").click(function() {
-    var url = $(this).data("path");
-    ajax(
-      url,
-      "POST",
-      {},
-      function() {
-        $("#shop-cart-bags-badge").hide();
-        $.toast({
-          text: "Bolsas añadidas al carrito correctamente",
-          showHideTransition: "fade",
-          bgColor: "#c2b930",
-          textColor: "#3f3c03",
-          allowToastClose: true,
-          hideAfter: 3000,
-          stack: 5,
-          textAlign: "center",
-          position: "mid-center",
-          icon: "success",
-          heading: "Correcto"
-        });
-      },
-      function() {
-        $.toast({
-          text: "Ha ocurrido un error añadiendo las bolsas al carrito",
-          showHideTransition: "fade",
-          bgColor: "#c2b930",
-          textColor: "#3f3c03",
-          allowToastClose: true,
-          hideAfter: 3000,
-          stack: 5,
-          textAlign: "center",
-          position: "mid-center",
-          icon: "error",
-          heading: "Error"
-        });
-      }
-    );
   });
 
   $("form[name='check_out']").submit(function(e) {

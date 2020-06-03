@@ -668,7 +668,7 @@ a.conceptos-category-subtitle:focus {
   width: 37px;
   height: 35px;
   background-color: transparent;
-  background-image: url("../../images/home/remove-all-icon.png");
+  background-image: url("../../images/home/remove-all-icon-active.png");
   background-size: cover;
 }
 
@@ -1185,7 +1185,7 @@ a.conceptos-category-subtitle:focus {
 }
 
 .bag-icon {
-  width: 2em;
+  width: 30px;
   height: auto;
 }
 

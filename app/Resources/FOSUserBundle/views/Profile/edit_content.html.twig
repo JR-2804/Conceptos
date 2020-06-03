@@ -81,6 +81,7 @@
           <div class="d-flex flex-column profile-product p-2 mt-2">
             <div class="d-flex justify-content-between align-items-center" data-toggle="modal" data-target="#external-request-modal-{{loop.index}}">
               <div class="d-flex flex-column">
+                <span class="conceptos-title-strong mb-1">Pedido: {{externalRequest.id}}</span>
                 <span class="conceptos-title">Costo: $&nbsp;{{externalRequest.finalPrice}}</span>
                 <span class="conceptos-title">Peso: {{externalRequest.weight}} Kg</span>
                 <span class="conceptos-title">Cantidad: {{productCount}}</span>

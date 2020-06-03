@@ -889,8 +889,28 @@ class SiteController extends Controller
         }
       }
 
+      $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+        'name' => 'Home',
+      ]);
+
+      $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+        'name' => 'Membresia',
+      ]);
+
+      $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
       return new JsonResponse([
         'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+        'html' => $this->renderView(':site:products-summary.html.twig', [
+          'home' => $home,
+          'membership' => $membership,
+          'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+          'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+          'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
+          'categories' => $this->get('category_service')->getAll(),
+          'terms' => $config->getTermAndConditions(),
+          'privacy' => $config->getPrivacyPolicy(),
+        ])
       ]);
     }
 

@@ -134,6 +134,10 @@ class ShopCartService
 
     public function getShopCartBags($user)
     {
+      if ($user == null) {
+        return null;
+      }
+
       return $this->entityManager->getRepository('AppBundle:ShopCartBags')->findOneBy([
         'user' => $user->getId(),
       ]);
