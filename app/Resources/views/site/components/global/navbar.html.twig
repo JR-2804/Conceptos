@@ -46,12 +46,6 @@
                             </li>
                         {% endif %}
 
-                        {% if is_granted('ROLE_EXTERNAL') %}
-                            <li>
-                                <a href="{{ path('external_requests') }}">PEDIDOS EXTERNOS</a>
-                            </li>
-                        {% endif %}
-
                         {% for category in categories %}
 
                             {% if category.parents | length == 0 %}
