@@ -20,19 +20,19 @@
       {% set productName = product.name %}
       {% set productPrice = product.price %}
     {% endif %}
-    {% if product.comboProducts|length > 0 %}
+    {% if product.comboProducts is defined and product.comboProducts|length > 0 %}
       <div class="d-flex justify-content-center col-1 pl-0">
         <span class="conceptos-product-info combo-product-toggle" data-uuid="{{ product.uuid }}">>></span>
       </div>
     {% endif %}
-    <div class="d-flex {% if product.comboProducts|length > 0 %} col-4 col-lg-2 {% else %} col-5 col-lg-3 {% endif %} conceptos-white-background justify-content-center align-items-center p-0 {% if product.offerExists is defined and product.offerExists %}popular_product{% endif %}">
+    <div class="d-flex {% if product.comboProducts is defined and product.comboProducts|length > 0 %} col-4 col-lg-2 {% else %} col-5 col-lg-3 {% endif %} conceptos-white-background justify-content-center align-items-center p-0 {% if product.offerExists is defined and product.offerExists %}popular_product{% endif %}">
       <div class="d-flex pl-1">
         <a href="{{ path('product_details', {id: product.id, name: product.name}) }}">
           <img class="conceptos-image conceptos-product-summary-image" src="{{imagePath}}" alt="{{productName}}">
         </a>
       </div>
     </div>
-    <div class="d-flex flex-column {% if product.comboProducts|length > 0 %} col-7 col-lg-9 {% else %} col-7 col-lg-9 {% endif %} pl-2">
+    <div class="d-flex flex-column {% if product.comboProducts is defined and product.comboProducts|length > 0 %} col-7 col-lg-9 {% else %} col-7 col-lg-9 {% endif %} pl-2">
       <div class="d-flex flex-column">
         <span class="conceptos-product-info">{{productName}}</span>
         <span class="conceptos-product-info" data-price="{{productPrice}}">${{productPrice}}.00</span>
@@ -54,7 +54,7 @@
         <span class="conceptos-in-store-product-badge" style="display: none;">ALMACÉN</span>
       </div>
     </div>
-    {% if product.comboProducts|length > 0 %}
+    {% if product.comboProducts is defined and product.comboProducts|length > 0 %}
       {% for comboProduct in product.comboProducts %}
         <div class="combo-product-summary w-100">
           <div class="d-flex col-12 align-items-center p-0 mt-2">

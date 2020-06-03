@@ -321,7 +321,7 @@ $(document).ready(function() {
     var bagsSection = $(".shop-cart-bag-cost");
     var numberOfBags = bagsSection.data("bags");
     if (numberOfBags > 0) {
-      var bagsExtra = numberOfBags * 5;
+      var bagsExtra = numberOfBags * 7;
       totalPrice += bagsExtra;
       bagsSection.parent().removeClass("d-none");
       bagsSection.parent().addClass("d-flex");

@@ -76,6 +76,11 @@ class Facture
      * @ORM\Column(type="float")
      */
     private $bagsExtra;
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="commercial_id", referencedColumnName="id")
+     */
+    private $commercial;
 
     public function __construct()
     {
@@ -335,6 +340,18 @@ class Facture
     public function getBagsExtra()
     {
         return $this->bagsExtra;
+    }
+
+    public function setCommercial($commercial)
+    {
+        $this->commercial = $commercial;
+
+        return $this;
+    }
+
+    public function getCommercial()
+    {
+        return $this->commercial;
     }
 
     function __toString()

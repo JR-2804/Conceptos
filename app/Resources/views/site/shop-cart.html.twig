@@ -141,7 +141,7 @@
             {% if shopCartBags is defined and shopCartBags %}
               <div class="d-flex justify-content-between align-items-center">
                 <span class="conceptos-badge-text">COSTO DE BOLSAS</span>
-                <span class="conceptos-badge-text shop-cart-bag-cost" data-bags="{{shopCartBags.numberOfPayedBags}}"></span>
+                <span class="conceptos-badge-text shop-cart-bag-cost" data-bags="{{shopCartBags.numberOfPayedBags - shopCartBags.numberOfFreeBags}}"></span>
               </div>
             {% endif %}
             <div class="d-flex justify-content-between align-items-center">

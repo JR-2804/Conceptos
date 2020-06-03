@@ -579,8 +579,10 @@ class SiteController extends Controller
             }
 
             if ($shopCartBags != null) {
-              $bagsExtra = $shopCartBags->getNumberOfPayedBags() * 5;
-              $totalPrice += $bagsExtra;
+              $bagsExtra = $shopCartBags->getNumberOfPayedBags() - $shopCartBags->getNumberOfFreeBags() * 7;
+              if ($bagsExtra > 0) {
+                $totalPrice += $bagsExtra;
+              }
             }
 
             if ($totalPrice < 0) {
@@ -771,6 +773,7 @@ class SiteController extends Controller
               $facture->setComboDiscount($comboDiscount);
               $facture->setTransportCost($transportCost);
               $facture->setFinalPrice($totalPrice);
+              $facture->setCommercial($this->getUser());
               $this->getDoctrine()->getManager()->persist($facture);
             } elseif ($data->getType() == "prefacture" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
               $prefacture->setDiscount($discount);
@@ -781,6 +784,7 @@ class SiteController extends Controller
               $prefacture->setComboDiscount($comboDiscount);
               $prefacture->setTransportCost($transportCost);
               $prefacture->setFinalPrice($totalPrice);
+              $prefacture->setCommercial($this->getUser());
               $this->getDoctrine()->getManager()->persist($prefacture);
             } elseif ($data->getType() == "external-request" && $this->getUser() && $this->getUser()->hasRole("ROLE_EXTERNAL")) {
               $finalPrice = 0;
@@ -1390,11 +1394,11 @@ class SiteController extends Controller
           $shopCartBags->setNumberOfPayedBags($numberOfPayedBags);
           $shopCartBags->setNumberOfFreeBags($numberOfFreeBags);
           $this->getDoctrine()->getManager()->persist($shopCartBags);
-          $this->getDoctrine()->getManager()->flush();
         } else {
           $shopCartBags->setNumberOfPayedBags($numberOfPayedBags);
           $shopCartBags->setNumberOfFreeBags($numberOfFreeBags);
         }
+        $this->getDoctrine()->getManager()->flush();
 
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
           'name' => 'Home',

@@ -1,47 +1,68 @@
 {% set totalWeight = 0 %}
+{% set totalPrice = 0 %}
 {% for product in shopCartProducts %}
+  {% set totalPrice = totalPrice + product.price * product.count %}
   {% if product.type is not defined %}
     {% set totalWeight = totalWeight + product.weight %}
   {% endif %}
 {% endfor %}
-{% set numberOfPayedBags = 0 %}
-{% set numberOfFreeBags = totalWeight/25 %}
+{% set numberOfPayedBags = (totalWeight/25)|round(0, 'ceil') %}
+{% set numberOfFreeBags = (totalPrice/100)|round(0, 'floor') %}
+{% if not shopCartBags %}
+  {% set shopCartBags = {
+    numberOfPayedBags: 0,
+    numberOfFreeBags: 0,
+  } %}
+{% endif %}
 <div id="cartPreviewModal" class="modal fade">
-    <div class="modal-dialog modal-lg mt-0">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="shop-cart-product-list-section conceptos-add-scroll">
-                    <div id="products-summary" class="d-flex flex-column m-3">
-                        {{ render(controller('AppBundle:Site:productsSummary')) }}
+  <div class="modal-dialog modal-lg mt-0">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="shop-cart-product-list-section conceptos-add-scroll">
+          <div id="products-summary" class="d-flex flex-column m-3">
+            {{ render(controller('AppBundle:Site:productsSummary')) }}
+          </div>
+          <div class="d-flex align-items-center conceptos-badge">
+            <div class="d-flex flex-column w-100">
+              <div id="shop-cart-bags-badge">
+                {% if numberOfPayedBags != shopCartBags.numberOfPayedBags or numberOfFreeBags != shopCartBags.numberOfFreeBags %}
+                  <div class="d-flex align-items-center justify-content-between conceptos-yellow-background p-1">
+                    <div class="d-flex align-items-center col-10 pl-0">
+                      <img class="bag-icon ml-1" src="{{ asset('bundles/conceptos/images/home/bag.png') }}" alt="Bolsa IKEA">
+                      {% if numberOfFreeBags >= numberOfPayedBags %}
+                        <span class="bag-text ml-2">Hemos añadido {{numberOfPayedBags}} {% if numberOfPayedBags == 1 %} bolsa {% else %} bolsas {% endif %} gratis en su compra!</span>
+                      {% elseif numberOfFreeBags > 0 %}
+                        <div class="d-flex flex-column">
+                          <span class="bag-text ml-2">Tiene {{numberOfFreeBags}} {% if numberOfFreeBags == 1 %} bolsa {% else %} bolsas {% endif %} GRATIS</span>
+                          <span class="bag-text bag-text-short ml-2">Recomendamos {{numberOfPayedBags - numberOfFreeBags}} {% if numberOfPayedBags - numberOfFreeBags == 1 %} bolsa adicional {% else %} bolsas adicionales {% endif %}</span>
+                        </div>
+                      {% else %}
+                        <span class="bag-text ml-2">Le recomendamos {{numberOfPayedBags}} {% if numberOfPayedBags == 1 %} bolsa {% else %} bolsas {% endif %}</span>
+                      {% endif %}
                     </div>
-                    {% if not shopCartBags %}
-                      <div id="shop-cart-bags-badge">
-                        <div class="d-flex align-items-center justify-content-between conceptos-yellow-background p-1">
-                          <div class="d-flex align-items-center col-10 pl-0">
-                            <img class="bag-icon ml-1" src="{{ asset('bundles/conceptos/images/home/bag.png') }}" alt="Bolsa IKEA">
-                            <span class="bag-text ml-2">Hemos añadido {{numberOfFreeBags|round(0, 'ceil') }} bolsa gratis en su compra!</span>
-                          </div>
-                          <button class="add-bag-icon" data-path="{{ path('add_bags', {numberOfPayedBags: numberOfPayedBags, numberOfFreeBags: numberOfFreeBags}) }}">
-                            <img src="{{ asset('bundles/conceptos/images/home/cart-black.png') }}">
-                          </button>
-                        </div>
-                      </div>
-                    {% endif %}
-                    <div class="d-flex justify-content-between align-items-center conceptos-badge">
-                        <div class="d-flex flex-column m-2">
-                            <span class="conceptos-badge-text">CANTIDAD</span>
-                            <span class="conceptos-badge-text shop-cart-products-count">{{count}} {% if count == 1 %}PRODUCTO{% else %}PRODUCTOS{% endif %}</span>
-                        </div>
-                        <div class="d-flex flex-column m-2">
-                            <span class="conceptos-badge-text">PRECIO</span>
-                            <span class="conceptos-badge-text shop-cart-total-price"></span>
-                        </div>
-                        <div class="d-flex flex-column justify-content-center align-items-center mr-2">
-                            <a class="conceptos-go-to-cart p-1 p-lg-3" href="{{ path('shop-cart') }}">COMPRAR</a>
-                        </div>
-                    </div>
+                    <button class="add-bag-icon" data-path="{{ path('add_bags', {numberOfPayedBags: numberOfPayedBags, numberOfFreeBags: numberOfFreeBags}) }}">
+                      <img src="{{ asset('bundles/conceptos/images/home/cart-black.png') }}">
+                    </button>
+                  </div>
+                {% endif %}
+              </div>
+              <div class="d-flex justify-content-between">
+                <div class="d-flex flex-column m-2">
+                  <span class="conceptos-badge-text">CANTIDAD</span>
+                  <span class="conceptos-badge-text shop-cart-products-count">{{count}} {% if count == 1 %}PRODUCTO{% else %}PRODUCTOS{% endif %}</span>
                 </div>
+                <div class="d-flex flex-column m-2">
+                    <span class="conceptos-badge-text">PRECIO</span>
+                    <span class="conceptos-badge-text shop-cart-total-price"></span>
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center mr-2">
+                    <a class="conceptos-go-to-cart p-1 p-lg-3" href="{{ path('shop-cart') }}">COMPRAR</a>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

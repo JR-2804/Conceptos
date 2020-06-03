@@ -1180,6 +1180,10 @@ a.conceptos-category-subtitle:focus {
   color: #282827;
 }
 
+.bag-text-short {
+  font-size: 12px;
+}
+
 .bag-icon {
   width: 2em;
   height: auto;
