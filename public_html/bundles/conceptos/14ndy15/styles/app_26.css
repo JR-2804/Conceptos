@@ -12,7 +12,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
   z-index: 3;
   padding: .5em;
   display: grid;
-  grid-template-areas: "logo logo user favorite cart" "menu search search search search";
+  grid-template-areas: "logo logo user favorite cart" "menu search search search search";
   grid-template-columns: 13% 45% 12% 12% 12%;
   grid-template-rows: 3em 3em;
   width: 100%;
@@ -24,10 +24,8 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 
 .new_navbar__logo {
     width: 100%;
-    display: -webkit-box;
     display: flex;
-    -webkit-box-align: center;
-            align-items: center; }
+    align-items: center; }
 
 .new_navbar__logo img {
       width: auto;
@@ -40,10 +38,8 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     height: 1.75em;
     top: .625em;
     margin-left: .5em;
-    display: -webkit-box;
     display: flex;
-    -webkit-box-align: center;
-            align-items: center; }
+    align-items: center; }
 
 .new_navbar__content__menu:before, .new_navbar__content__menu:after {
       position: absolute;
@@ -66,12 +62,9 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 
 .new_navbar__content__search {
     grid-area: search;
-    display: -webkit-box;
     display: flex;
-    -webkit-box-pack: center;
-            justify-content: center;
-    -webkit-box-align: center;
-            align-items: center;
+    justify-content: center;
+    align-items: center;
     position: relative; }
 
 .new_navbar__content__search form {
@@ -100,8 +93,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
         position: absolute;
         z-index: 4;
         right: 0;
-        -webkit-transform: scale(0.8);
-                transform: scale(0.8);
+        transform: scale(0.8);
         outline: 0;
         cursor: pointer; }
 
@@ -122,17 +114,13 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
           height: 1px;
           border: 1px #282827 solid;
           background: #282827;
-          -webkit-transform: rotate(48deg) translateX(-50%);
-                  transform: rotate(48deg) translateX(-50%);
+          transform: rotate(48deg) translateX(-50%);
           bottom: 25%; }
 
 .new_navbar__content__user, .new_navbar__content__cart, .new_navbar__content__favorite {
-    display: -webkit-box;
     display: flex;
-    -webkit-box-pack: center;
-            justify-content: center;
-    -webkit-box-align: center;
-            align-items: center; }
+    justify-content: center;
+    align-items: center; }
 
 .new_navbar__content__user img, .new_navbar__content__cart img, .new_navbar__content__favorite img {
       width: 90%;
@@ -153,12 +141,9 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     position: relative; }
 
 .new_navbar__content__cart span {
-      display: -webkit-box;
       display: flex;
-      -webkit-box-pack: center;
-              justify-content: center;
-      -webkit-box-align: center;
-              align-items: center;
+      justify-content: center;
+      align-items: center;
       position: absolute;
       z-index: 1;
       width: 1.1em;
@@ -177,20 +162,15 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
   top: 6.9em;
   left: 0;
   overflow: hidden;
-  -webkit-transform: translateX(-100%);
-          transform: translateX(-100%);
-  -webkit-transition: -webkit-transform .5s ease-in-out;
-  transition: -webkit-transform .5s ease-in-out;
-  transition: transform .5s ease-in-out;
-  transition: transform .5s ease-in-out, -webkit-transform .5s ease-in-out; }
+  transform: translateX(-100%);
+  transition: transform .5s ease-in-out; }
 
 @media (min-width: 800px) {
     .lateral_menu {
       width: 20%; } }
 
 .lateral_menu--visible {
-    -webkit-transform: translateX(0);
-            transform: translateX(0); }
+    transform: translateX(0); }
 
 .lateral_menu__close {
     position: absolute;
@@ -214,26 +194,19 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
       height: 3px; }
 
 .lateral_menu__close:before {
-      -webkit-transform: translate(-50%, -50%) rotate(45deg);
-              transform: translate(-50%, -50%) rotate(45deg); }
+      transform: translate(-50%, -50%) rotate(45deg); }
 
 .lateral_menu__close:after {
-      -webkit-transform: translate(-50%, -50%) rotate(-45deg);
-              transform: translate(-50%, -50%) rotate(-45deg); }
+      transform: translate(-50%, -50%) rotate(-45deg); }
 
 .lateral_menu__content {
-    -webkit-transition: -webkit-transform .5s ease-in-out;
-    transition: -webkit-transform .5s ease-in-out;
-    transition: transform .5s ease-in-out;
-    transition: transform .5s ease-in-out, -webkit-transform .5s ease-in-out; }
+    transition: transform .5s ease-in-out; }
 
 .lateral_menu__content--level_1 {
-      -webkit-transform: translateX(-105%);
-              transform: translateX(-105%); }
+      transform: translateX(-105%); }
 
 .lateral_menu__content--level_2 {
-      -webkit-transform: translateX(-210%);
-              transform: translateX(-210%); }
+      transform: translateX(-210%); }
 
 .lateral_menu__content ul, .lateral_menu__content ul.sub {
       margin: 0;
@@ -245,7 +218,6 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 .lateral_menu__content ul li, .lateral_menu__content ul.sub li {
         list-style: none;
         margin: .5em .25em;
-        display: -webkit-box;
         display: flex; }
 
 .lateral_menu__content ul li a, .lateral_menu__content ul.sub li a {
@@ -270,8 +242,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 
 .lateral_menu__content ul ul.sub, .lateral_menu__content ul.sub ul.sub {
         position: absolute;
-        -webkit-transform: translateX(100%);
-                transform: translateX(100%);
+        transform: translateX(100%);
         top: 0; }
 
 .lateral_menu__content ul ul.sub li:first-child, .lateral_menu__content ul.sub ul.sub li:first-child {
@@ -288,12 +259,10 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
             top: 50%; }
 
 .lateral_menu__content ul ul.sub li:first-child:before, .lateral_menu__content ul.sub ul.sub li:first-child:before {
-            -webkit-transform: translateY(-100%) rotate(-45deg);
-                    transform: translateY(-100%) rotate(-45deg); }
+            transform: translateY(-100%) rotate(-45deg); }
 
 .lateral_menu__content ul ul.sub li:first-child:after, .lateral_menu__content ul.sub ul.sub li:first-child:after {
-            -webkit-transform: translateY(100%) rotate(45deg);
-                    transform: translateY(100%) rotate(45deg); }
+            transform: translateY(100%) rotate(45deg); }
 
 .lateral_menu__content ul ul.sub li:nth-child(2), .lateral_menu__content ul.sub ul.sub li:nth-child(2) {
           width: 70%; }
@@ -315,18 +284,13 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 
 .headroom {
   will-change: transform;
-  -webkit-transition: -webkit-transform 200ms linear;
-  transition: -webkit-transform 200ms linear;
-  transition: transform 200ms linear;
-  transition: transform 200ms linear, -webkit-transform 200ms linear; }
+  transition: transform 200ms linear; }
 
 .headroom--pinned {
-  -webkit-transform: translateY(0%);
-          transform: translateY(0%); }
+  transform: translateY(0%); }
 
 .headroom--unpinned {
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%); }
+  transform: translateY(-100%); }
 
 .no-scroll {
   overflow-y: hidden; }
@@ -348,10 +312,8 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     display: block !important; }
 
 .login_modal__container__remember {
-    display: -webkit-box;
     display: flex;
-    -webkit-box-pack: justify;
-            justify-content: space-between; }
+    justify-content: space-between; }
 
 .conceptos-header-image {
   height: auto;
@@ -379,20 +341,17 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     background-color: #282827; }
 
 .category-menu-open:before {
-    -webkit-transform: translateY(-102%) rotate(45deg);
-            transform: translateY(-102%) rotate(45deg); }
+    transform: translateY(-102%) rotate(45deg); }
 
 .category-menu-open:after {
-    -webkit-transform: translateY(102%) rotate(-45deg);
-            transform: translateY(102%) rotate(-45deg); }
+    transform: translateY(102%) rotate(-45deg); }
 
 .animation_flash {
   position: absolute;
   width: 10em;
   height: 150%;
   top: -25%;
-  -webkit-transform: rotate(35deg);
-          transform: rotate(35deg);
+  transform: rotate(35deg);
   background-color: rgba(255, 255, 255, 0.5);
   -webkit-animation: zoomIn 2.5s ease-in 10;
           animation: zoomIn 2.5s ease-in 10; }
@@ -403,25 +362,19 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 
 @-webkit-keyframes zoomIn {
   0% {
-    -webkit-transform: translateX(-50) rotate(35deg);
-            transform: translateX(-50) rotate(35deg); }
+    transform: translateX(-50) rotate(35deg); }
   50% {
-    -webkit-transform: translateX(100%) rotate(35deg);
-            transform: translateX(100%) rotate(35deg); }
+    transform: translateX(100%) rotate(35deg); }
   100% {
-    -webkit-transform: translateX(0%) rotate(35deg);
-            transform: translateX(0%) rotate(35deg); } }
+    transform: translateX(0%) rotate(35deg); } }
 
 @keyframes zoomIn {
   0% {
-    -webkit-transform: translateX(-50) rotate(35deg);
-            transform: translateX(-50) rotate(35deg); }
+    transform: translateX(-50) rotate(35deg); }
   50% {
-    -webkit-transform: translateX(100%) rotate(35deg);
-            transform: translateX(100%) rotate(35deg); }
+    transform: translateX(100%) rotate(35deg); }
   100% {
-    -webkit-transform: translateX(0%) rotate(35deg);
-            transform: translateX(0%) rotate(35deg); } }
+    transform: translateX(0%) rotate(35deg); } }
 
 .required {
   position: relative; }
@@ -446,8 +399,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     width: 75%;
     top: 40%;
     left: 25%;
-    -webkit-transform: rotate(45deg);
-            transform: rotate(45deg);
+    transform: rotate(45deg);
     height: 2px;
     background: #282827; }
 
@@ -470,11 +422,13 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     color: #282827;
     font-weight: 700;
     padding: .1em 2em;
-    -webkit-transform: translate(-35%, 50%) rotate(-45deg);
-            transform: translate(-35%, 50%) rotate(-45deg);
-    -webkit-transform-origin: 50% 50%;
+    transform: translate(-35%, 50%) rotate(-45deg);
     transform-origin: 50% 50%;
     font-size: .8em; }
+
+.popular_product_short > div:first-child:before {
+  transform: translate(-25%, 50%) rotate(-45deg);
+  font-size: .6em; }
 
 .carousel-indicators {
   bottom: -5px;
@@ -534,7 +488,6 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
   position: absolute;
   height: 48%;
   width: 100%;
-  background: -webkit-gradient(linear, left bottom, left top, from(transparent), to(#e5e5e5));
   background: linear-gradient(to top, transparent, #e5e5e5);
   top: 65vh; }
 
@@ -555,17 +508,14 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
   background: #282827ba;
   border-radius: 2px;
   z-index: 2;
-  display: -webkit-box;
   display: flex;
-  -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
   bottom: 3em;
   width: 42%;
   flex-wrap: wrap;
   right: 1em;
   height: auto;
   padding: .5em 0;
-  -webkit-transition: all .3s;
   transition: all .3s;
   opacity: 0;
   -webkit-animation: showWhatsappCard 60s ease-in-out 7s;
@@ -576,12 +526,9 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
       width: 12%; } }
 
 .whatsapp_float__close {
-    display: -webkit-box;
     display: flex;
-    -webkit-box-pack: center;
-            justify-content: center;
-    -webkit-box-align: center;
-            align-items: center;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     top: 0;
     right: 0;
@@ -599,12 +546,10 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
       background: #e3e3e3; }
 
 .whatsapp_float__close:before {
-      -webkit-transform: rotate(45deg);
-              transform: rotate(45deg); }
+      transform: rotate(45deg); }
 
 .whatsapp_float__close:after {
-      -webkit-transform: rotate(-45deg);
-              transform: rotate(-45deg); }
+      transform: rotate(-45deg); }
 
 .whatsapp_float__image {
     margin: .5em;
@@ -649,8 +594,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     height: 3.5em;
     bottom: .25em;
     flex-wrap: nowrap;
-    -webkit-box-align: center;
-            align-items: center;
+    align-items: center;
     right: 0; }
 
 @media (min-width: 1200px) {
@@ -684,8 +628,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
       height: 1.5em; }
 
 .whatsapp_float--close {
-    -webkit-transform: translateY(150%);
-            transform: translateY(150%); }
+    transform: translateY(150%); }
 
 .whatsapp_float a > div {
     position: absolute;
