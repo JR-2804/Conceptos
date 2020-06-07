@@ -27,7 +27,7 @@ easy_admin:
                     - {property: 'categoryText', label: 'Categoría'}
                     - {property: 'popular', label: 'Popular', type: 'toggle'}
                     - {property: 'recent', label: 'Novedades', type: 'toggle'}
-                    - {property: 'inStore', label: 'En almacén', type: 'toggle'}
+                    - {property: 'inStore', label: 'Entrega en 24h', type: 'toggle'}
                     - {property: 'storeCount', label: 'Cantidad en almacén'}
                     - {property: 'mainImage', label: 'Imágen Principal', type: 'image', base_path: '/uploads'}
                     - {property: 'material', label: 'Material'}
