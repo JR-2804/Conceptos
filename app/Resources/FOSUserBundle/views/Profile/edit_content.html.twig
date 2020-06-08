@@ -123,6 +123,111 @@
         {% endfor %}
       </div>
     {% endif %}
+    {% if is_granted('ROLE_COMMERCIAL') %}
+      <div class="d-flex flex-column conceptos-badge p-2 mt-2">
+        <span class="conceptos-badge-text">RESUMEN COMERCIAL</span>
+        <div class="d-flex justify-content-between">
+          <span class="conceptos-badge-text">SALDO POR COBRAR</span>
+          <span class="conceptos-badge-text">${{commercialPaymentCharge}}.00</span>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span class="conceptos-badge-text">HISTORIAL DE INGRESOS</span>
+          <span class="conceptos-badge-text">${{commercialPaymentTotal}}.00</span>
+        </div>
+      </div>
+      {% if commercialPreFactures|length > 0 %}
+        <span class="conceptos-title mt-3">PREFACTURAS DEL COMERCIAL</span>
+        <div class="d-flex flex-column">
+          {% for commercialPreFacture in commercialPreFactures %}
+            {% set numberOfProducts = 0 %}
+            {% for product in commercialPreFacture.preFactureProducts %}
+              {% set numberOfProducts = numberOfProducts + product.count %}
+            {% endfor %}
+            <div class="d-flex flex-column profile-product p-2 mt-2">
+              <div class="d-flex justify-content-between align-items-center" data-toggle="modal" data-target="#commercial-prefactures-modal-{{loop.index}}">
+                <div class="d-flex flex-column">
+                  <span class="conceptos-title-strong mb-1">Prefactura: {{commercialPreFacture.id}}-{{commercialPreFacture.date|date('Y')}}</span>
+                  <span class="conceptos-title">Cantidad de artículos: {{numberOfProducts}}</span>
+                  <span class="conceptos-title">Precio total: ${{commercialPreFacture.finalPrice}}.00</span>
+                </div>
+                <button class="view-profile-product-details"></button>
+              </div>
+              <div id="commercial-prefactures-modal-{{loop.index}}" class="modal fade">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-body conceptos-gray-background">
+                      <div class="d-flex flex-wrap">
+                        {% set sizes = '(min-width: 1000px) 12vw, 45vw' %}
+                        {% for commercialPreFactureProduct in commercialPreFacture.preFactureProducts %}
+                          {% set product = commercialPreFactureProduct.product %}
+                          <div class="d-flex col-6 col-lg-3 pl-0">
+                            {{ include('site/product-summary-short.html.twig') }}
+                          </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if commercialFactures|length > 0 %}
+        <span class="conceptos-title mt-3">FACTURAS DEL COMERCIAL</span>
+        <div class="d-flex flex-column">
+          {% for commercialFacture in commercialFactures %}
+            {% set numberOfProducts = 0 %}
+            {% for product in commercialFacture.factureProducts %}
+              {% set numberOfProducts = numberOfProducts + product.count %}
+            {% endfor %}
+            <div class="d-flex flex-column profile-product p-2 mt-2">
+              <div class="d-flex justify-content-between align-items-center" data-toggle="modal" data-target="#commercial-factures-modal-{{loop.index}}">
+                <div class="d-flex flex-column">
+                  <span class="conceptos-title-strong mb-1">Factura: {{commercialFacture.id}}-{{commercialFacture.date|date('Y')}}</span>
+                  <span class="conceptos-title">Cantidad de artículos: {{numberOfProducts}}</span>
+                  <span class="conceptos-title">Precio total: ${{commercialFacture.finalPrice}}.00</span>
+                </div>
+                <button class="view-profile-product-details"></button>
+              </div>
+              <div id="commercial-factures-modal-{{loop.index}}" class="modal fade">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-body conceptos-gray-background">
+                      <div class="d-flex flex-wrap">
+                        {% set sizes = '(min-width: 1000px) 12vw, 45vw' %}
+                        {% for commercialFactureProduct in commercialFacture.factureProducts %}
+                          {% set product = commercialFactureProduct.product %}
+                          <div class="d-flex col-6 col-lg-3 pl-0">
+                            {{ include('site/product-summary-short.html.twig') }}
+                          </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if commercialClients|length > 0 %}
+        <span class="conceptos-title mt-3">CLIENTES DEL COMERCIAL</span>
+        <div class="d-flex flex-column">
+          {% for commercialClient in commercialClients %}
+            <div class="d-flex flex-column profile-product p-2 mt-2">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex flex-column">
+                  <span class="conceptos-title">Correo: {{commercialClient.email}}</span>
+                  <span class="conceptos-title">Nombre: {{commercialClient.firstName}}-{{commercialClient.lastName}}</span>
+                </div>
+                <button class="view-profile-product-details"></button>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endif %}
     <span class="conceptos-title mt-3">HISTORIAL DE COMPRAS</span>
     <div class="d-flex flex-column">
       <div class="d-flex flex-column order-2">

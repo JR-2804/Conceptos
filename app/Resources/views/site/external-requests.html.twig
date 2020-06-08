@@ -9,23 +9,25 @@
         {% for product in externalRequest.externalRequestProducts %}
           {% set productCount = productCount + product.count %}
         {% endfor %}
-        <div class="external-request col-6 col-lg-3 p-2" data-id="{{externalRequest.id}}" style="display: none;"
+        <div class="external-request col-12 col-lg-6 p-2" data-id="{{externalRequest.id}}" style="display: none;"
              data-remaining-days="{{externalRequest.remainingTimeFromCreation|date('%d')}}"
              data-remaining-hours="{{externalRequest.remainingTimeFromCreation|date('%h')}}"
              data-remaining-minutes="{{externalRequest.remainingTimeFromCreation|date('%m')}}">
           <div class="d-flex flex-column conceptos-white-background w-100 p-2">
-            <div class="d-flex flex-column" data-toggle="modal" data-target="#external-request-product-modal-{{loop.index}}">
-              <span class="conceptos-title-strong mt-1">Pedido: {{externalRequest.id}}</span>
-              <span class="conceptos-product-info mt-1">Costo: $&nbsp;{{externalRequest.finalPrice}}</span>
-              <span class="conceptos-product-info mt-1">Peso: {{externalRequest.weight}} Kg</span>
-              <span class="conceptos-product-info mt-1">Cantidad: {{productCount}}</span>
-              <span class="conceptos-product-info mt-1">Presupuesto: $&nbsp;{{externalRequest.budget}}</span>
-              <span class="conceptos-product-info mt-1">Pago: $&nbsp;{{externalRequest.payment}}</span>
-              <span class="conceptos-product-info mt-1">Fecha: {{externalRequest.date|date('d/m/Y')}}</span>
-              <span class="conceptos-product-info remaining-time mt-1"></span>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex flex-column" data-toggle="modal" data-target="#external-request-product-modal-{{loop.index}}">
+                <span class="conceptos-title-strong mt-1">Pedido: {{externalRequest.id}}</span>
+                <span class="conceptos-product-info mt-1">Costo: $&nbsp;{{externalRequest.finalPrice}}</span>
+                <span class="conceptos-product-info mt-1">Peso: {{externalRequest.weight}} Kg</span>
+                <span class="conceptos-product-info mt-1">Cantidad: {{productCount}}</span>
+                <span class="conceptos-product-info mt-1">Presupuesto: $&nbsp;{{externalRequest.budget}}</span>
+                <span class="conceptos-product-info mt-1">Pago: $&nbsp;{{externalRequest.payment}}</span>
+                <span class="conceptos-product-info mt-1">Fecha: {{externalRequest.date|date('d/m/Y')}}</span>
+                <span class="conceptos-product-info remaining-time mt-1"></span>
+              </div>
+              <a class="conceptos-primary-button mt-2" href="{{path('export_external_request', {id: externalRequest.id})}}">EXPORTAR</a>
             </div>
             <a class="conceptos-primary-button accept-external-request-button mt-2" data-path="{{path('accept_external_request', {id: externalRequest.id})}}">ACEPTAR</a>
-            <a class="conceptos-primary-button mt-2" href="{{path('export_external_request', {id: externalRequest.id})}}">EXPORTAR</a>
           </div>
           <div id="external-request-product-modal-{{loop.index}}" class="modal fade">
             <div class="modal-dialog modal-lg">

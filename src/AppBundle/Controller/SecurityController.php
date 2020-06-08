@@ -291,6 +291,62 @@ class SecurityController extends Controller
           }
         }
 
+        $commercialPreFactures = [];
+        $commercialFactures = [];
+        $commercialClients = [];
+        $commercialPaymentCharge = 0;
+        $commercialPaymentTotal = 0;
+        if ($this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+          $commercialPreFactures = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->findBy([
+            'commercial' => $this->getUser()->getId(),
+          ]);
+          $commercialFactures = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Facture')->findBy([
+            'commercial' => $this->getUser()->getId(),
+          ]);
+
+          foreach($commercialPreFactures as $commercialPreFacture) {
+            $client = $commercialPreFacture->getClient();
+            $exists = false;
+            foreach($commercialClients as $commercialClient) {
+              if ($commercialClient->getEmail() == $client->getEmail()) {
+                $exists = true;
+              }
+            }
+            if (!$exists) {
+              $commercialClients[] = $client;
+            }
+
+            foreach($commercialPreFacture->getPreFactureProducts() as $preFactureProducts) {
+              $offerPrice = $this->get('product_service')->findProductOfferPrice($preFactureProducts->getProduct());
+              $preFactureProducts->getProduct()->setPriceOffer($offerPrice);
+            }
+
+            if (count($commercialPreFacture->getFactures()) <= 0) {
+              $commercialPaymentCharge += $commercialPreFacture->getFinalPrice();
+            }
+          }
+
+          foreach($commercialFactures as $commercialFacture) {
+            $client = $commercialFacture->getClient();
+            $exists = false;
+            foreach($commercialClients as $commercialClient) {
+              if ($commercialClient->getEmail() == $client->getEmail()) {
+                $exists = true;
+              }
+            }
+            if (!$exists) {
+              $commercialClients[] = $client;
+            }
+
+            foreach($commercialFacture->getFactureProducts() as $factureProduct) {
+              $offerPrice = $this->get('product_service')->findProductOfferPrice($factureProduct->getProduct());
+              $factureProduct->getProduct()->setPriceOffer($offerPrice);
+            }
+
+            $commercialPaymentTotal += $commercialFacture->getFinalPrice();
+          }
+        }
+
         return $this->render('@FOSUser/Profile/edit.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
@@ -298,6 +354,11 @@ class SecurityController extends Controller
             'requests' => $clientRequests,
             'prefactures' => $clientPrefactures,
             'externalRequests' => $externalRequests,
+            'commercialPreFactures' => $commercialPreFactures,
+            'commercialFactures' => $commercialFactures,
+            'commercialPaymentCharge' => $commercialPaymentCharge,
+            'commercialPaymentTotal' => $commercialPaymentTotal,
+            'commercialClients' => $commercialClients,
             'home' => $home,
             'membership' => $membership,
             'categories' => $this->get('category_service')->getAll(),
