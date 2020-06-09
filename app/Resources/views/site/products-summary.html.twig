@@ -14,7 +14,7 @@
     numberOfFreeBags: 0,
   } %}
 {% endif %}
-<div class="d-flex m-3">
+<div class="d-flex flex-column m-3">
   {% for product in shopCartProducts %}
     <div class="d-flex flex-wrap shop-cart-product align-items-center w-100 p-2{% if loop.index > 1 %} mt-2 {% endif %}"
         data-product="{{product.id}}"
@@ -121,4 +121,25 @@
     </button>
   </div>
 </div>
+{% elseif shopCartBags.numberOfPayedBags > 0 or shopCartBags.numberOfFreeBags > 0 %}
+  <div id="shop-cart-bags-badge">
+    <div class="d-flex align-items-center justify-content-between conceptos-yellow-background p-1">
+      <div class="d-flex align-items-center col-10 pl-0">
+        <img class="bag-icon ml-1" src="{{ asset('bundles/conceptos/images/home/bag.png') }}" alt="Bolsa IKEA">
+        {% if shopCartBags.numberOfPayedBags > shopCartBags.numberOfFreeBags %}
+          <div class="d-flex flex-column">
+            <span class="bag-text ml-2">Posee {{shopCartBags.numberOfPayedBags - shopCartBags.numberOfFreeBags}} {% if shopCartBags.numberOfPayedBags - shopCartBags.numberOfFreeBags == 1 %} bolsa {% else %} bolsas {% endif %} en su compra!</span>
+            <span class="bag-text bag-text-short ml-2">Costo de bolsas ${{shopCartBags.numberOfPayedBags - shopCartBags.numberOfFreeBags}}.00</span>
+          </div>
+        {% else %}
+          <span class="bag-text ml-2">Posee {{shopCartBags.numberOfPayedBags}} {% if shopCartBags.numberOfPayedBags == 1 %} bolsa {% else %} bolsas {% endif %} gratis</span>
+        {% endif %}
+      </div>
+      {% if shopCartBags.numberOfPayedBags > shopCartBags.numberOfFreeBags %}
+        <button class="remove-bag-icon" data-path="{{ path('remove_bags') }}">
+          <img src="{{ asset('bundles/conceptos/images/cart/trash-icon.png') }}">
+        </button>
+      {% endif %}
+    </div>
+  </div>
 {% endif %}

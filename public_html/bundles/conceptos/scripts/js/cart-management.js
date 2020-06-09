@@ -497,6 +497,12 @@ $(document).ready(function() {
           products = response.shopCartProducts;
           $('.shop-cart-product[data-product="' + product + '"]').remove();
           recalculateAllPrices();
+
+          $("#products-summary")
+            .children()
+            .remove();
+          $("#products-summary").append(response.html);
+          CreateCartSummaryActions();
           $.toast({
             text: "Producto eliminado del carrito correctamente",
             showHideTransition: "fade",
@@ -535,8 +541,12 @@ $(document).ready(function() {
         url,
         "POST",
         {},
-        function() {
-          $("#shop-cart-bags-badge").hide();
+        function(response) {
+          $("#products-summary")
+            .children()
+            .remove();
+          $("#products-summary").append(response.html);
+          CreateCartSummaryActions();
           $.toast({
             text: "Bolsas añadidas al carrito correctamente",
             showHideTransition: "fade",
@@ -554,6 +564,50 @@ $(document).ready(function() {
         function() {
           $.toast({
             text: "Ha ocurrido un error añadiendo las bolsas al carrito",
+            showHideTransition: "fade",
+            bgColor: "#c2b930",
+            textColor: "#3f3c03",
+            allowToastClose: true,
+            hideAfter: 3000,
+            stack: 5,
+            textAlign: "center",
+            position: "mid-center",
+            icon: "error",
+            heading: "Error"
+          });
+        }
+      );
+    });
+
+    $(".remove-bag-icon").click(function() {
+      var url = $(this).data("path");
+      ajax(
+        url,
+        "POST",
+        {},
+        function(response) {
+          $("#products-summary")
+            .children()
+            .remove();
+          $("#products-summary").append(response.html);
+          CreateCartSummaryActions();
+          $.toast({
+            text: "Bolsas eliminadas del carrito correctamente",
+            showHideTransition: "fade",
+            bgColor: "#c2b930",
+            textColor: "#3f3c03",
+            allowToastClose: true,
+            hideAfter: 3000,
+            stack: 5,
+            textAlign: "center",
+            position: "mid-center",
+            icon: "success",
+            heading: "Correcto"
+          });
+        },
+        function() {
+          $.toast({
+            text: "Ha ocurrido un error eliminando las bolsas del carrito",
             showHideTransition: "fade",
             bgColor: "#c2b930",
             textColor: "#3f3c03",

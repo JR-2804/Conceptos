@@ -1448,6 +1448,51 @@ class SiteController extends Controller
     }
 
     /**
+     * @Route(name="remove_bags", path="/bags/remove", methods={"POST", "GET"})
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function removeBagsAction(Request $request)
+    {
+        $shopCartBags = $this->getDoctrine()->getManager()->getRepository('AppBundle:ShopCartBags')->findOneBy([
+          'user' => $this->getUser()->getId(),
+        ]);
+
+        if ($shopCartBags != null) {
+          $shopCartBags->setNumberOfPayedBags(0);
+        }
+        $this->getDoctrine()->getManager()->flush();
+
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Membresia',
+        ]);
+
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+        return new JsonResponse([
+          'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+          'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+          'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
+          'html' => $this->renderView(':site:products-summary.html.twig', [
+            'home' => $home,
+            'membership' => $membership,
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
+            'categories' => $this->get('category_service')->getAll(),
+            'terms' => $config->getTermAndConditions(),
+            'privacy' => $config->getPrivacyPolicy(),
+          ])
+        ]);
+    }
+
+    /**
      * @Route(name="remove_from_cart_shop", path="/shop-cart/remove/{id}", methods={"POST"})
      *
      * @param Request $request
@@ -2375,24 +2420,50 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="evaluate_product", path="/product/evaluate/{productId}/{evaluationValue}", methods={"POST"})
+     * @Route(name="evaluate_product", path="/product/evaluate/{productId}", methods={"POST", "GET"})
      *
      * @return JsonResponse
      */
-    public function evaluateProductAction($productId, $evaluationValue)
+    public function evaluateProductAction(Request $request, $productId)
     {
+        $generalOpinion = $request->request->get('generalOpinion');
+        $priceQualityEvaluation = $request->request->get('priceQualityEvaluation');
+        $utilityEvaluation = $request->request->get('utilityEvaluation');
+        $durabilityEvaluation = $request->request->get('durabilityEvaluation');
+        $qualityEvaluation = $request->request->get('qualityEvaluation');
+        $designEvaluation = $request->request->get('designEvaluation');
+        $generalEvaluation = $request->request->get('generalEvaluation');
+        $opinion = $request->request->get('opinion');
+        $recommended = json_decode($request->request->get('recommended'));
+
         $evaluations = $this->getDoctrine()->getManager()->getRepository('AppBundle:Evaluation')->findAll();
-        foreach ($evaluations as $persitedEvaluation) {
-          if ($persitedEvaluation->getUser()->getId() == $this->getUser()->getId() && $persitedEvaluation->getProduct()->getId() == $productId) {
-            $persitedEvaluation->setEvaluationValue($evaluationValue);
-            $this->getDoctrine()->getManager()->persist($persitedEvaluation);
+        foreach ($evaluations as $persistedEvaluation) {
+          if ($persistedEvaluation->getUser()->getId() == $this->getUser()->getId() && $persistedEvaluation->getProduct()->getId() == $productId) {
+            $persistedEvaluation->setGeneralOpinion($generalOpinion);
+            $persistedEvaluation->setPriceQualityValue($priceQualityEvaluation);
+            $persistedEvaluation->setUtilityValue($utilityEvaluation);
+            $persistedEvaluation->setDurabilityValue($durabilityEvaluation);
+            $persistedEvaluation->setQualityValue($qualityEvaluation);
+            $persistedEvaluation->setDesignValue($designEvaluation);
+            $persistedEvaluation->setEvaluationValue($generalEvaluation);
+            $persistedEvaluation->setComment($opinion);
+            $persistedEvaluation->setIsRecommended($recommended);
+            $this->getDoctrine()->getManager()->persist($persistedEvaluation);
             $this->getDoctrine()->getManager()->flush();
             return new JsonResponse();
           }
         }
 
         $evaluation = new Evaluation();
-        $evaluation->setEvaluationValue($evaluationValue);
+        $evaluation->setGeneralOpinion($generalOpinion);
+        $evaluation->setPriceQualityValue($priceQualityEvaluation);
+        $evaluation->setUtilityValue($utilityEvaluation);
+        $evaluation->setDurabilityValue($durabilityEvaluation);
+        $evaluation->setQualityValue($qualityEvaluation);
+        $evaluation->setDesignValue($designEvaluation);
+        $evaluation->setEvaluationValue($generalEvaluation);
+        $evaluation->setComment($opinion);
+        $evaluation->setIsRecommended($recommended);
         $evaluation->setUser($this->getUser());
         $evaluation->setProduct($this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($productId));
         $this->getDoctrine()->getManager()->persist($evaluation);

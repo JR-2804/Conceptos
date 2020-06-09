@@ -69,6 +69,15 @@ textarea {
   height: 100px;
 }
 
+textarea.evaluation-textarea {
+  background-color: #ffffff;
+  border: solid 1px #282827;
+}
+
+textarea.evaluation-textarea:focus {
+  border: solid 1px #c2b930;
+}
+
 .checkbox-container {
   display: block;
   position: relative;
@@ -334,11 +343,20 @@ a.conceptos-title-strong:focus {
   text-transform: none;
 }
 
+.conceptos-title-lowercase {
+  text-transform: none;
+}
+
 .conceptos-subtitle {
   font-family: Montserrat;
   font-size: 12px;
   line-height: 20px;
   color: #282827;
+}
+
+.conceptos-subtitle-short {
+  font-size: 10px;
+  line-height: 12px;
 }
 
 .conceptos-blog-info {
@@ -682,6 +700,10 @@ a.conceptos-category-subtitle:focus {
   width: 100%;
 }
 
+.evaluation-image {
+  width: 75%;
+}
+
 .conceptos-popular-product-image {
   object-fit: cover;
   height: 80%;
@@ -816,6 +838,11 @@ a.conceptos-category-subtitle:focus {
 .conceptos-divider {
   background-color: #c2b930;
   height: 2px;
+}
+
+.conceptos-divider-black {
+  background-color: #282827;
+  height: 1px;
 }
 
 .conceptos-divider-vertical {
@@ -1159,8 +1186,27 @@ a.conceptos-category-subtitle:focus {
   cursor: pointer;
 }
 
+#evaluation-summary {
+  border-radius: 10%;
+  background-color: #c2b930;
+  width: fit-content;
+}
+
 .change-product-evaluation.favorite {
   color: #c2b930 !important;
+}
+
+.change-product-evaluation-short {
+  font-size: 20px;
+  color: #b3aeae !important;
+  cursor: pointer;
+}
+
+#change-product-evaluation i.fa-eye {
+  background-color: #414040;
+  color: #c2b930;
+  padding: 3px;
+  border-radius: 50%;
 }
 
 #successShopRequestModal .modal-body {
@@ -1201,6 +1247,31 @@ a.conceptos-category-subtitle:focus {
   height: 23px;
 }
 
+.remove-bag-icon {
+  border: none;
+  background: none;
+  outline: none !important;
+  cursor: pointer;
+}
+
+.remove-bag-icon img {
+  width: 20px;
+  height: 25px;
+}
+
+.conceptos-evaluation-note {
+  font-family: Montserrat;
+  font-size: 10px;
+  color: #282827;
+  text-decoration: underline;
+  text-decoration-color: #c2b930;
+}
+
+.conceptos-evaluation-note strong {
+  font-size: 11px;
+  font-style: bold;
+}
+
 @media (min-width: 992px) {
   .carousel-indicators li {
     height: 13px;
@@ -1221,6 +1292,10 @@ a.conceptos-category-subtitle:focus {
 
   .conceptos-subtitle {
     font-size: 16px;
+  }
+
+  .conceptos-subtitle-short {
+    font-size: 13px;
   }
 
   .conceptos-badge-text {
