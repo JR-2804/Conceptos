@@ -70,6 +70,18 @@ $(document).ready(function() {
     ).data("quantity");
   }
 
+  function getProductWeightByProductId(productId) {
+    return $('.shop-cart-product[data-product="' + productId + '"]').data(
+      "weight"
+    );
+  }
+
+  function getProductIkeaPriceByProductId(productId) {
+    return $('.shop-cart-product[data-product="' + productId + '"]').data(
+      "ikea-price"
+    );
+  }
+
   function getProductUuid(productId) {
     return $(".shop-cart-product[data-product='" + productId + "']").data(
       "uuid"
@@ -245,15 +257,22 @@ $(document).ready(function() {
 
     CheckIfCanPerformHomeCollect();
 
+    var totalWeight = 0;
+    var totalIkeaPriceWithTaxes = 0;
     var totalPriceBase = 0;
     products.forEach(function(product) {
       var productId = product.id;
       var count = getProductQuantityByProductId(productId);
       var price = getProductPriceByProductId(productId);
+      var weight = getProductWeightByProductId(productId);
+      var ikeaPrice = getProductIkeaPriceByProductId(productId);
 
+      totalWeight += count * weight;
+      totalIkeaPriceWithTaxes += count * ikeaPrice;
       totalPriceBase += count * price;
       PersistCountIfNecessary(productId, count);
     });
+    totalIkeaPriceWithTaxes += totalIkeaPriceWithTaxes * 0.07;
 
     var totalPrice = totalPriceBase;
 
@@ -346,6 +365,10 @@ $(document).ready(function() {
       totalPrice = 0;
     }
 
+    $(".shop-cart-total-weight").text(Number(totalWeight).toFixed(2) + " Kg");
+    $(".shop-cart-ikea-price").text(
+      "$" + Number(totalIkeaPriceWithTaxes).toFixed(2)
+    );
     $(".shop-cart-total-price").text("$" + Number(totalPriceBase).toFixed(2));
     $(".shop-cart-transport-cost").text("$" + transportCost.toFixed(2));
     totalPrice += transportCost;

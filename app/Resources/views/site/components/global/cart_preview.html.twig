@@ -6,6 +6,18 @@
           <div id="products-summary" class="d-flex flex-column">
             {{ render(controller('AppBundle:Site:productsSummary')) }}
           </div>
+          {% if is_granted('ROLE_DIRECTOR_GENERAL') %}
+            <div class="d-flex justify-content-between align-items-center conceptos-badge">
+              <div class="d-flex flex-column m-2">
+                <span class="conceptos-badge-text">PESO</span>
+                <span class="conceptos-badge-text shop-cart-total-weight"></span>
+              </div>
+              <div class="d-flex flex-column m-2">
+                <span class="conceptos-badge-text">PRECIO +TAXES</span>
+                <span class="conceptos-badge-text shop-cart-ikea-price"></span>
+              </div>
+            </div>
+          {% endif %}
           <div class="d-flex justify-content-between align-items-center conceptos-badge">
             <div class="d-flex flex-column m-2">
               <span class="conceptos-badge-text">CANTIDAD</span>

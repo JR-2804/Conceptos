@@ -19,6 +19,8 @@
     <div class="d-flex flex-wrap shop-cart-product align-items-center w-100 p-2{% if loop.index > 1 %} mt-2 {% endif %}"
         data-product="{{product.id}}"
         data-uuid="{{ product.uuid }}"
+        data-weight="{{ product.weight }}"
+        data-ikea-price="{{ product.ikeaPrice }}"
         data-calculate-price-path="{{ path('calculate_product_price') }}"
         data-remove-path="{{ path('remove_from_cart_shop', {id: product.id}) }}">
       {% if product.type is defined %}
