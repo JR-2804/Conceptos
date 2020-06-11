@@ -503,6 +503,10 @@ a.conceptos-subtitle:focus {
   height: 23px;
 }
 
+.conceptos-black-icon {
+  color: #282827;
+}
+
 .conceptos-icon-big {
   width: 35px;
   height: 35px;
