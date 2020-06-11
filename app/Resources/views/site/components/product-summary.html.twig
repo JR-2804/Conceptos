@@ -79,20 +79,22 @@
       <span class="conceptos-product-info">{{product.name}}</span>
       <span class="conceptos-product-info-description">{{product.item}}</span>
       <div class="d-flex align-items-center">
-        {% if product.priceOffer != -1 %}
-          <span class="conceptos-product-info conceptos-product-price mr-2">$&nbsp;{{product.priceOffer}}</span>
-          <span class="conceptos-product-info conceptos-offer-price">$&nbsp;{{product.price}}</span>
-        {% else %}
-          <span class="conceptos-product-info conceptos-product-price">$&nbsp;{{product.price}}</span>
-        {% endif %}
-      </div>
-      <div class="d-flex justify-content-between align-items-center mt-1">
         <div class="d-flex flex-column conceptos-product-badges">
           {% if product.inStore %}
             <span class="conceptos-in-store-product-badge">ENTREGA EN 24H</span>
           {% endif %}
           {% if product.recent %}
             <span class="conceptos-new-product-badge">NUEVO</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-1">
+        <div class="d-flex align-items-center">
+          {% if product.priceOffer != -1 %}
+            <span class="conceptos-product-info conceptos-product-price mr-2">$&nbsp;{{product.priceOffer}}</span>
+            <span class="conceptos-product-info conceptos-offer-price">$&nbsp;{{product.price}}</span>
+          {% else %}
+            <span class="conceptos-product-info conceptos-product-price">$&nbsp;{{product.price}}</span>
           {% endif %}
         </div>
         <button class="conceptos-add-to-cart-icon" data-path="{{ path('add_shop_card', {id: product.id}) }}">
