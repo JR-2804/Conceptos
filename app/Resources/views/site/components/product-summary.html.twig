@@ -10,9 +10,9 @@
       </span>
     {% endif %}
     {% if product.highlightImages|length > 0 %}
-      <img class="conceptos-image conceptos-product-image" src="{{ vich_uploader_asset(product.highlightImages[0], 'imageFile') }}">
+      <img class="conceptos-image conceptos-highlight-product-image" src="{{ vich_uploader_asset(product.highlightImages[0], 'imageFile') }}">
     {% else %}
-      <img class="conceptos-image conceptos-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+      <img class="conceptos-image conceptos-highlight-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
     {% endif %}
   </div>
   <div class="d-flex flex-column conceptos-white-background pl-2 pr-2 pb-2 w-100">

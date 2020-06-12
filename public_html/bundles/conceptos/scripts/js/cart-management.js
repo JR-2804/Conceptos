@@ -183,10 +183,7 @@ $(document).ready(function() {
           var uuid = getProductUuid(product.id);
           var path = $("#persist-count-path").val() + "/" + uuid + "/" + count;
           ajax(path, "POST", {}, function(response) {
-            $("#products-summary")
-              .children()
-              .remove();
-            $("#products-summary").append(response.html);
+            UpdateProductsSummary(response.html);
             CreateCartSummaryActions();
             var count = response.count;
             $(".badge-shop-cart").text(count);
@@ -521,10 +518,7 @@ $(document).ready(function() {
           $('.shop-cart-product[data-product="' + product + '"]').remove();
           recalculateAllPrices();
 
-          $("#products-summary")
-            .children()
-            .remove();
-          $("#products-summary").append(response.html);
+          UpdateProductsSummary(response.html);
           CreateCartSummaryActions();
           $.toast({
             text: "Producto eliminado del carrito correctamente",
@@ -565,10 +559,7 @@ $(document).ready(function() {
         "POST",
         {},
         function(response) {
-          $("#products-summary")
-            .children()
-            .remove();
-          $("#products-summary").append(response.html);
+          UpdateProductsSummary(response.html);
           CreateCartSummaryActions();
           $.toast({
             text: "Bolsas añadidas al carrito correctamente",
@@ -609,10 +600,7 @@ $(document).ready(function() {
         "POST",
         {},
         function(response) {
-          $("#products-summary")
-            .children()
-            .remove();
-          $("#products-summary").append(response.html);
+          UpdateProductsSummary(response.html);
           CreateCartSummaryActions();
           $.toast({
             text: "Bolsas eliminadas del carrito correctamente",
@@ -647,6 +635,18 @@ $(document).ready(function() {
     });
   }
 
+  function UpdateProductsSummary(html) {
+    $("#products-summary")
+      .children()
+      .remove();
+    $("#products-summary").append(html);
+
+    $("#products-summary-shop-cart")
+      .children()
+      .remove();
+    $("#products-summary-shop-cart").append(html);
+  }
+
   function OnCartIconCLick(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -667,10 +667,7 @@ $(document).ready(function() {
           $("#conceptos-shop-cart-count").data("count", response.count);
           $(".shop-cart-products-count").text(response.count);
           products = response.shopCartProducts;
-          $("#products-summary")
-            .children()
-            .remove();
-          $("#products-summary").append(response.html);
+          UpdateProductsSummary(response.html);
           CreateCartSummaryActions();
           recalculateAllPrices();
           $.toast({
@@ -751,10 +748,7 @@ $(document).ready(function() {
         }
         $("#conceptos-shop-cart-count").data("count", response.count);
         products = response.shopCartProducts;
-        $("#products-summary")
-          .children()
-          .remove();
-        $("#products-summary").append(response.html);
+        UpdateProductsSummary(response.html);
         CreateCartSummaryActions();
         recalculateAllPrices();
         $.toast({

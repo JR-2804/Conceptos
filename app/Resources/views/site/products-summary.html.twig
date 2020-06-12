@@ -131,7 +131,7 @@
         {% if shopCartBags.numberOfPayedBags > shopCartBags.numberOfFreeBags %}
           <div class="d-flex flex-column">
             <span class="bag-text ml-2">Posee {{shopCartBags.numberOfPayedBags - shopCartBags.numberOfFreeBags}} {% if shopCartBags.numberOfPayedBags - shopCartBags.numberOfFreeBags == 1 %} bolsa {% else %} bolsas {% endif %} en su compra!</span>
-            <span class="bag-text bag-text-short ml-2">Costo de bolsas ${{shopCartBags.numberOfPayedBags - shopCartBags.numberOfFreeBags}}.00</span>
+            <span class="bag-text bag-text-short ml-2">Costo de bolsas ${{(shopCartBags.numberOfPayedBags - shopCartBags.numberOfFreeBags)*7}}.00</span>
           </div>
         {% else %}
           <span class="bag-text ml-2">Posee {{shopCartBags.numberOfPayedBags}} {% if shopCartBags.numberOfPayedBags == 1 %} bolsa {% else %} bolsas {% endif %} gratis</span>

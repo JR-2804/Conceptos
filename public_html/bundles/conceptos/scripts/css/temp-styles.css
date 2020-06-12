@@ -686,6 +686,8 @@ a.conceptos-category-subtitle:focus {
 }
 
 .conceptos-remove-all-icon {
+  position: absolute;
+  left: 45%;
   border: none;
   width: 37px;
   height: 35px;
@@ -737,6 +739,11 @@ a.conceptos-category-subtitle:focus {
 .conceptos-product-image {
   object-fit: scale-down;
   height: 25vh;
+}
+
+.conceptos-highlight-product-image {
+  object-fit: cover;
+  height: 30vh;
 }
 
 .conceptos-product-summary-image {
