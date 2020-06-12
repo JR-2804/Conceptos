@@ -1069,6 +1069,10 @@ a.conceptos-category-subtitle:focus {
   height: 100px;
 }
 
+#dropzone-profile-image .custom-img {
+  z-index: 0;
+}
+
 .edit-profile-button {
   border: none;
   width: 20px;
@@ -1135,7 +1139,6 @@ a.conceptos-category-subtitle:focus {
   position: absolute;
   bottom: 0;
   left: 20%;
-  z-index: 100;
   padding-left: 10px;
   padding-right: 10px;
 }
