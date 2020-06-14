@@ -1226,6 +1226,10 @@ a.conceptos-category-subtitle:focus {
   cursor: pointer;
 }
 
+.change-product-evaluation-short.favorite {
+  color: #c2b930 !important;
+}
+
 #change-product-evaluation i.fa-eye {
   background-color: #414040;
   color: #c2b930;

@@ -54,6 +54,10 @@ class Evaluation
    */
   private $isRecommended;
   /**
+   * @ORM\Column(type="boolean")
+   */
+  private $isAccepted;
+  /**
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="evaluations")
    * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
    */
@@ -175,6 +179,18 @@ class Evaluation
   public function getIsRecommended()
   {
     return $this->isRecommended;
+  }
+
+  public function setIsAccepted($isAccepted)
+  {
+    $this->isAccepted = $isAccepted;
+
+    return $this;
+  }
+
+  public function getIsAccepted()
+  {
+    return $this->isAccepted;
   }
 
   public function setUser(User $user = null)

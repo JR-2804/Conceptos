@@ -153,66 +153,6 @@ $(document).ready(function() {
     CalculateGeneralEvaluation();
   });
 
-  $("#view-evaluation-button").click(function() {
-    $("#view-product-evaluations").modal("hide");
-    $("#view-product-evaluations").on("hidden.bs.modal", function() {
-      $("#change-product-evaluation-modal").modal("show");
-    });
-  });
-
-  $("#send-evaluation-button").click(function() {
-    generalOpinion = $("#general-opinion").val();
-    opinion = $(".evaluation-textarea").val();
-    recommended = $("#recommended-radio").prop("checked");
-
-    var url = $(this).data("path");
-    ajax(
-      url,
-      "POST",
-      {
-        generalOpinion: generalOpinion,
-        priceQualityEvaluation: priceQualityEvaluation,
-        utilityEvaluation: utilityEvaluation,
-        durabilityEvaluation: durabilityEvaluation,
-        qualityEvaluation: qualityEvaluation,
-        designEvaluation: designEvaluation,
-        generalEvaluation: generalEvaluation,
-        opinion: opinion,
-        recommended: recommended
-      },
-      function() {
-        $.toast({
-          text: "Producto evaluado correctamente",
-          showHideTransition: "fade",
-          bgColor: "#c2b930",
-          textColor: "#3f3c03",
-          allowToastClose: true,
-          hideAfter: 3000,
-          stack: 5,
-          textAlign: "center",
-          position: "mid-center",
-          icon: "success",
-          heading: "Correcto"
-        });
-      },
-      function() {
-        $.toast({
-          text: "Ha ocurrido un error evaluando el producto",
-          showHideTransition: "fade",
-          bgColor: "#c2b930",
-          textColor: "#3f3c03",
-          allowToastClose: true,
-          hideAfter: 3000,
-          stack: 5,
-          textAlign: "center",
-          position: "mid-center",
-          icon: "error",
-          heading: "Error"
-        });
-      }
-    );
-  });
-
   function CalculateGeneralEvaluation() {
     generalEvaluation =
       (priceQualityEvaluation +
@@ -240,4 +180,74 @@ $(document).ready(function() {
 
     $("#general-evaluation").text(generalEvaluation);
   }
+
+  function CreateEvaluationActions() {
+    $("#view-evaluation-button").click(function() {
+      $("#view-product-evaluations").modal("hide");
+      $("#view-product-evaluations").on("hidden.bs.modal", function() {
+        $("#change-product-evaluation-modal").modal("show");
+      });
+    });
+
+    $("#send-evaluation-button").click(function() {
+      generalOpinion = $("#general-opinion").val();
+      opinion = $(".evaluation-textarea").val();
+      recommended = $("#recommended-radio").prop("checked");
+
+      var url = $(this).data("path");
+      ajax(
+        url,
+        "POST",
+        {
+          generalOpinion: generalOpinion,
+          priceQualityEvaluation: priceQualityEvaluation,
+          utilityEvaluation: utilityEvaluation,
+          durabilityEvaluation: durabilityEvaluation,
+          qualityEvaluation: qualityEvaluation,
+          designEvaluation: designEvaluation,
+          generalEvaluation: generalEvaluation,
+          opinion: opinion,
+          recommended: recommended
+        },
+        function(response) {
+          $("#product-evaluation-section")
+            .children()
+            .remove();
+          $("#product-evaluation-section").append(response.html);
+          CreateEvaluationActions();
+
+          $.toast({
+            text: "Producto evaluado correctamente",
+            showHideTransition: "fade",
+            bgColor: "#c2b930",
+            textColor: "#3f3c03",
+            allowToastClose: true,
+            hideAfter: 3000,
+            stack: 5,
+            textAlign: "center",
+            position: "mid-center",
+            icon: "success",
+            heading: "Correcto"
+          });
+        },
+        function() {
+          $.toast({
+            text: "Ha ocurrido un error evaluando el producto",
+            showHideTransition: "fade",
+            bgColor: "#c2b930",
+            textColor: "#3f3c03",
+            allowToastClose: true,
+            hideAfter: 3000,
+            stack: 5,
+            textAlign: "center",
+            position: "mid-center",
+            icon: "error",
+            heading: "Error"
+          });
+        }
+      );
+    });
+  }
+
+  CreateEvaluationActions();
 });

@@ -2422,54 +2422,99 @@ class SiteController extends Controller
     /**
      * @Route(name="evaluate_product", path="/product/evaluate/{productId}", methods={"POST", "GET"})
      *
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function evaluateProductAction(Request $request, $productId)
     {
-        $generalOpinion = $request->request->get('generalOpinion');
-        $priceQualityEvaluation = $request->request->get('priceQualityEvaluation');
-        $utilityEvaluation = $request->request->get('utilityEvaluation');
-        $durabilityEvaluation = $request->request->get('durabilityEvaluation');
-        $qualityEvaluation = $request->request->get('qualityEvaluation');
-        $designEvaluation = $request->request->get('designEvaluation');
-        $generalEvaluation = $request->request->get('generalEvaluation');
-        $opinion = $request->request->get('opinion');
-        $recommended = json_decode($request->request->get('recommended'));
+      $generalOpinion = $request->request->get('generalOpinion');
+      $priceQualityEvaluation = $request->request->get('priceQualityEvaluation');
+      $utilityEvaluation = $request->request->get('utilityEvaluation');
+      $durabilityEvaluation = $request->request->get('durabilityEvaluation');
+      $qualityEvaluation = $request->request->get('qualityEvaluation');
+      $designEvaluation = $request->request->get('designEvaluation');
+      $generalEvaluation = $request->request->get('generalEvaluation');
+      $opinion = $request->request->get('opinion');
+      $recommended = json_decode($request->request->get('recommended'));
+      $product = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($productId);
+      $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
-        $evaluations = $this->getDoctrine()->getManager()->getRepository('AppBundle:Evaluation')->findAll();
-        foreach ($evaluations as $persistedEvaluation) {
-          if ($persistedEvaluation->getUser()->getId() == $this->getUser()->getId() && $persistedEvaluation->getProduct()->getId() == $productId) {
-            $persistedEvaluation->setGeneralOpinion($generalOpinion);
-            $persistedEvaluation->setPriceQualityValue($priceQualityEvaluation);
-            $persistedEvaluation->setUtilityValue($utilityEvaluation);
-            $persistedEvaluation->setDurabilityValue($durabilityEvaluation);
-            $persistedEvaluation->setQualityValue($qualityEvaluation);
-            $persistedEvaluation->setDesignValue($designEvaluation);
-            $persistedEvaluation->setEvaluationValue($generalEvaluation);
-            $persistedEvaluation->setComment($opinion);
-            $persistedEvaluation->setIsRecommended($recommended);
-            $this->getDoctrine()->getManager()->persist($persistedEvaluation);
-            $this->getDoctrine()->getManager()->flush();
-            return new JsonResponse();
+      $evaluations = $this->getDoctrine()->getManager()->getRepository('AppBundle:Evaluation')->findAll();
+      foreach ($evaluations as $persistedEvaluation) {
+        if ($persistedEvaluation->getUser()->getId() == $this->getUser()->getId() && $persistedEvaluation->getProduct()->getId() == $productId) {
+          $persistedEvaluation->setGeneralOpinion($generalOpinion);
+          $persistedEvaluation->setPriceQualityValue($priceQualityEvaluation);
+          $persistedEvaluation->setUtilityValue($utilityEvaluation);
+          $persistedEvaluation->setDurabilityValue($durabilityEvaluation);
+          $persistedEvaluation->setQualityValue($qualityEvaluation);
+          $persistedEvaluation->setDesignValue($designEvaluation);
+          $persistedEvaluation->setEvaluationValue($generalEvaluation);
+          $persistedEvaluation->setComment($opinion);
+          $persistedEvaluation->setIsRecommended($recommended);
+          $persistedEvaluation->setIsAccepted(false);
+          $this->getDoctrine()->getManager()->persist($persistedEvaluation);
+          $this->getDoctrine()->getManager()->flush();
+
+          if ($opinion != null) {
+            $body = $this->renderView(':site:new-evaluation-email.html.twig', [
+              'user' => $this->getUser(),
+              'evaluation' => $persistedEvaluation,
+            ]);
+            $this->get('email_service')->send($config->getEmail(), 'Nueva evaluación', $config->getEmail(), 'Nueva evaluación', $body);
           }
+
+          return new JsonResponse([
+            'html' => $this->renderView(':site/components:change-product-evaluation.html.twig', [
+              'product' => $product,
+            ])
+          ]);
         }
+      }
 
-        $evaluation = new Evaluation();
-        $evaluation->setGeneralOpinion($generalOpinion);
-        $evaluation->setPriceQualityValue($priceQualityEvaluation);
-        $evaluation->setUtilityValue($utilityEvaluation);
-        $evaluation->setDurabilityValue($durabilityEvaluation);
-        $evaluation->setQualityValue($qualityEvaluation);
-        $evaluation->setDesignValue($designEvaluation);
-        $evaluation->setEvaluationValue($generalEvaluation);
-        $evaluation->setComment($opinion);
-        $evaluation->setIsRecommended($recommended);
-        $evaluation->setUser($this->getUser());
-        $evaluation->setProduct($this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($productId));
-        $this->getDoctrine()->getManager()->persist($evaluation);
-        $this->getDoctrine()->getManager()->flush();
+      $evaluation = new Evaluation();
+      $evaluation->setGeneralOpinion($generalOpinion);
+      $evaluation->setPriceQualityValue($priceQualityEvaluation);
+      $evaluation->setUtilityValue($utilityEvaluation);
+      $evaluation->setDurabilityValue($durabilityEvaluation);
+      $evaluation->setQualityValue($qualityEvaluation);
+      $evaluation->setDesignValue($designEvaluation);
+      $evaluation->setEvaluationValue($generalEvaluation);
+      $evaluation->setComment($opinion);
+      $evaluation->setIsRecommended($recommended);
+      $evaluation->setIsAccepted(false);
+      $evaluation->setUser($this->getUser());
+      $evaluation->setProduct($product);
+      $this->getDoctrine()->getManager()->persist($evaluation);
+      $this->getDoctrine()->getManager()->flush();
 
-        return new JsonResponse();
+      if ($opinion != null) {
+        $body = $this->renderView(':site:new-evaluation-email.html.twig', [
+          'user' => $this->getUser(),
+          'evaluation' => $persistedEvaluation,
+        ]);
+        $this->get('email_service')->send($config->getEmail(), 'Nueva evaluación', $config->getEmail(), 'Nueva evaluación', $body);
+      }
+
+      return new JsonResponse([
+        'html' => $this->renderView(':site/components:change-product-evaluation.html.twig', [
+          'product' => $product,
+        ])
+      ]);
+    }
+
+    /**
+     * @Route(name="accept_evaluation", path="/accept-evaluation/{evaluationId}", methods={"POST", "GET"})
+     *
+     * @return JsonResponse
+     */
+    public function acceptEvaluationAction(Request $request, $evaluationId)
+    {
+      $evaluation = $this->getDoctrine()->getManager()->getRepository('AppBundle:Evaluation')->find($evaluationId);
+
+      $evaluation->setIsAccepted(true);
+      $this->getDoctrine()->getManager()->persist($evaluation);
+      $this->getDoctrine()->getManager()->flush();
+
+      return $this->redirectToRoute('site_home');
     }
 
     /**
