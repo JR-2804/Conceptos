@@ -3,6 +3,7 @@
     & > div:first-child{
         position: relative;
         overflow: hidden;
+
         &:before{
             position: absolute;
             background-color: $mainYellow;
@@ -17,4 +18,11 @@
             font-size: .8em;
         }
     }
+}
+
+.shop-cart-product .popular_product  > div:first-child{
+
+  &:before{
+    font-size: .6em;
+  }
 }

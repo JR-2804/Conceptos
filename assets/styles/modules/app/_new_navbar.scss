@@ -5,7 +5,7 @@
     left: 0;
     background: $mainDark;
     z-index: 3;
-    padding: .5em;
+    padding: .25em;
 
     display: grid;
     grid-template-areas: "logo logo user favorite cart"
@@ -16,7 +16,10 @@
     grid-gap: 1%;
 
     @include atLarge{
-        grid-template-columns: 10% 75% 3% 3% 3%;
+      grid-template-areas: "menu logo search user favorite cart";
+      grid-template-columns: 3em 15em auto 3em 3em 3em;
+      grid-template-rows: 3em;
+      grid-gap: .5%;
     }
 
     &__logo{
@@ -37,8 +40,8 @@
 
             position: relative;
             width: 1.75em;
-            height: 1.75em;
-            top: .625em;
+            height: 1.3em;
+            top: .85em;
             margin-left: .5em;
             display: flex;
             align-items: center;
@@ -63,7 +66,7 @@
                 content: '';
                 background: white;
                 width: 100%;
-                height: .25em;
+                height: .2em;
             }
         }
 
@@ -79,7 +82,8 @@
                 width: 100%;
 
                 @include atMedium{
-                    width: 60%;
+                    width: 50%;
+                    transform: translateX(-5%);
                 }
 
                 & input[type='text']{
@@ -187,7 +191,7 @@
     position: absolute;
     background: $mainDark;
     width: 85%;
-    top: 6.9em;
+    top: 6.5em;
     left: 0;
     overflow: hidden;
     transform: translateX(-100%);
@@ -195,6 +199,7 @@
 
     @include atMedium{
         width: 20%;
+        top: 3.5em;
     }
 
     &--visible{
@@ -247,7 +252,7 @@
             margin: 0;
             padding: .75em 1em;
             width: 100%;
-            height: 80vh;
+            height: 90vh;
             padding-bottom: 2em;
 
             & li {
@@ -340,4 +345,13 @@
 
 .no-scroll{
     overflow-y: hidden;
+}
+
+.push_element{
+  position: relative;
+  height: 6.5em;
+
+  @include atLarge{
+    height: 3.5em;
+  }
 }
