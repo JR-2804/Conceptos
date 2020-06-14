@@ -440,6 +440,16 @@ a.conceptos-subtitle:focus {
   font-size: 14px;
 }
 
+.conceptos-product-price-highlighted {
+  font-size: 26px;
+  font-family: Montserrat-ExtraBold !important;
+}
+
+.conceptos-offer-price-highlighted {
+  font-size: 18px;
+  font-family: Montserrat-ExtraBold !important;
+}
+
 .conceptos-product-price-big {
   font-size: 20px !important;
 }
@@ -743,7 +753,7 @@ a.conceptos-category-subtitle:focus {
 
 .conceptos-highlight-product-image {
   object-fit: cover;
-  height: 30vh;
+  height: 40vh;
 }
 
 .conceptos-product-summary-image {
