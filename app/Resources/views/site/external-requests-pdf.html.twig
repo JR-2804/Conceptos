@@ -11,6 +11,11 @@
   <title></title>
 
   <style>
+    @page {
+      size: a4;
+      margin: 0;
+    }
+
     body {
       margin: 0;
     }
@@ -25,26 +30,89 @@
       top: 0;
       width: 100%;
       background-color: #333333;
+      height: 85px;
     }
 
     .header img {
       width: 200px;
-      margin-top: 0.5em;
-      margin-bottom: 0.5em;
       margin-left: 0.5em;
       margin-right: 0.5em;
+      margin-top: 17px;
+    }
+
+    .header span {
+      font-size: 20px;
+      font-weight: bold;
+      color: #FFFFFF;
+      position: absolute;
+      top: 33px;
+      left: 400px;
+    }
+
+    .yellow-badge {
+      background-color: #c2b930;
+      position: absolute;
+      height: 10px;
+      width: 100%;
+      top: 85px;
     }
 
     .content {
-      padding-top: 20px;
+      padding-top: 80px;
+      padding-left: 20px;
+      padding-right: 20px;
     }
 
-    .prefacture-summary {
+    .facture-general-info {
+      margin-top: 40px;
+    }
+
+    .facture-name {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .facture-date {
+      font-size: 15px;
+      margin-left: 125px;
+    }
+
+    .facture-info {
+      margin-top: 20px;
+    }
+
+    .client-address {
+      margin-bottom: 20px;
+    }
+
+    .facture-summary {
       float: right;
     }
 
+    .facture-summary-info {
+      margin-top: 15px;
+    }
+
+    .facture-main-info-top {
+      background-color: #CCCCCC;
+      margin-top: 10px;
+      padding: 5px;
+      width: 250px;
+    }
+
+    .facture-main-info-bottom {
+      background-color: #333333;
+      margin-bottom: 20px;
+      padding: 5px;
+      width: 250px;
+    }
+
+    .facture-main-info-bottom p {
+      color: #FFFFFF;
+    }
+
     .products-table {
-      margin-top: 75px;
+      margin-top: 30px;
     }
 
     .product-image {
@@ -53,49 +121,83 @@
       margin: 5px;
     }
 
-    .product-description {
-      width: 200px;
-    }
-
     .footer {
       position: absolute;
-      bottom: 0;
+      bottom: 15px;
       width: 100%;
-      background-color: #333333;
+      padding-left: 20px;
+      padding-right: 20px;
     }
 
-    .footer span {
-      color: #FFFFFF;
-      font-size: 15px;
+    .client-signature {
+    }
+
+    .commercial-signature {
+      margin-left: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-info {
+      margin-left: 520px;
     }
 
     .table-bordered {
+      width: 100%;
       margin-top: 0.5em;
-      border: 1px solid #000000;
+      border: 1px solid #333333;
       float: left;
+      border-spacing: 0;
     }
 
     .table thead th {
-      border-bottom: 1px solid #000000;
+      text-align: start;
+      border: 1px solid #333333;
+      background-color: #333333;
+      color: #ffffff;
+      padding: 5px;
     }
 
     .table-bordered td, .table-bordered th {
-      border: 0px;
-      border-bottom: 1px solid #000000;
+      border: 1px solid #333333;
+      padding: 5px;
     }
 
-    .table td, .table th {
-      padding: 0;
+    .align-right {
+      float: left;
+    }
+
+    .align-right {
+      float: right;
     }
   </style>
 </head>
 <body>
   {% set cupConversionRate = 25 %}
+  {% set totalWeight = 0 %}
+  {% set generalSubtotal = 0 %}
+  {% for externalRequestProduct in externalRequestProducts %}
+    {% set product = externalRequestProduct.product %}
+    {% set totalWeight = totalWeight + product.weight * externalRequestProduct.count %}
+    {% set generalSubtotal = generalSubtotal + product.ikeaPrice * externalRequestProduct.count %}
+  {% endfor %}
+  {% set taxes = generalSubtotal * 0.07 %}
+  {% set generalTotal = generalSubtotal + taxes %}
   <div class="d-flex flex-column">
-    <div class="d-flex header">
+    <div class="header">
       <img class="pl-5 pt-2 pb-2" src="{{ absolute_url(asset(home.data.logo.image.path)) }}" />
     </div>
     <div class="content">
+      <div class="facture-general-info">
+        <span class="facture-name">PEDIDO-{{externalRequest.id}}</span>
+      </div>
+      <div class="facture-info">
+        <div>
+          <p><strong>Peso total:</strong> {{totalWeight}}</p>
+          <p><strong>Subtotal general:</strong> {{generalSubtotal}}</p>
+          <p><strong>Taxes:</strong> {{taxes}}</p>
+          <p><strong>Total general:</strong> {{generalTotal}}</p>
+        </div>
+      </div>
       <div class="products-table">
         <table class="table table-bordered mt-3">
           <thead>
@@ -105,7 +207,7 @@
             <th class="pl-2">DESCRIPCIÓN</th>
             <th class="pl-2">CANTIDAD</th>
             <th class="pl-2">PRECIO</th>
-            <th class="pl-2">TOTAL</th>
+            <th class="pl-2">SUBTOTAL</th>
           </tr>
           </thead>
           <tbody class="table-members">

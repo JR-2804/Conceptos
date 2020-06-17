@@ -1966,6 +1966,7 @@ class SiteController extends Controller
           $productDB = $product->getProduct();
 
           $productsResponse[] = [
+              'name' => $productDB->getName(),
               'image' => $productDB->getMainImage(),
               'code' => $productDB->getCode(),
               'count' => $product->getCount(),
@@ -2012,14 +2013,15 @@ class SiteController extends Controller
           $productDB = $product->getProduct();
 
           if ($productDB != null) {
-            $airplane = 'MARÍTIMO';
+            $airplane = 'Marítimo';
             if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
-              $airplane = 'AÉREO';
+              $airplane = 'Aéreo';
             }
 
             $numberOfProducts += $product->getCount();
             $subtotal += $product->getCount() * $product->getProductPrice();
             $productsResponse[] = [
+                'name' => $productDB->getName(),
                 'image' => $productDB->getMainImage(),
                 'code' => $productDB->getCode(),
                 'item' => $productDB->getItem(),
@@ -2085,14 +2087,15 @@ class SiteController extends Controller
         $productDB = $product->getProduct();
 
         if ($productDB != null) {
-          $airplane = 'MARÍTIMO';
+          $airplane = 'Marítimo';
           if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
-            $airplane = 'AÉREO';
+            $airplane = 'Aéreo';
           }
 
           $numberOfProducts += $product->getCount();
           $subtotal += $product->getCount() * $product->getProductPrice();
           $productsResponse[] = [
+              'name' => $productDB->getName(),
               'image' => $productDB->getMainImage(),
               'code' => $productDB->getCode(),
               'item' => $productDB->getItem(),
@@ -2348,6 +2351,7 @@ class SiteController extends Controller
       $externalRequest = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\ExternalRequest')->find($id);
 
       $html = $this->renderView(':site:external-requests-pdf.html.twig', [
+        'externalRequest' => $externalRequest,
         'externalRequestProducts' => $externalRequest->getExternalRequestProducts(),
         'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
       ]);
