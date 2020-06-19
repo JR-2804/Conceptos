@@ -138,7 +138,15 @@
     }
 
     .footer-info {
-      margin-left: 520px;
+      margin-left: 420px;
+    }
+
+    .qr-code img {
+      position: absolute;
+      top: 200px;
+      left: 700px;
+      width: 50px;
+      height: 50px;
     }
 
     .table-bordered {
@@ -298,6 +306,9 @@
       </div>
     </div>
     <div class="footer">
+      <div class="qr-code">
+        <img class="conceptos-icon ml-2" src="{{ absolute_url(asset('bundles/conceptos/images/home/qr.png')) }}">
+      </div>
       <div class="footer-info">
         <p>www.tiendaconceptos.com</p>
         <p>comercial@tiendaconceptos.com</p>
