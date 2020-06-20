@@ -8,4 +8,13 @@
       width: 100%;
     }
   }
+
+  .conceptos-popular-product-image-short {
+    height: 25vh;
+
+    @media (min-width: 992px) {
+      height: 40vh;
+      width: 100%;
+    }
+  }
 }

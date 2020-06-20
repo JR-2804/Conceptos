@@ -10,6 +10,10 @@ var template_advertisement =
   '<div class="col-3"><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Propaganda #%6</h3></div><div class="panel-body"><img src="%1" class="img-responsive img-header center-block" height="150" width="150"><p class="video-link">%3</p><p class="video-link">%4</p><p class="video-link">%5</p><p class="video-link"></p><a class="btn btn-link btn-secondary btn-remove-advertisement" data-id="%2">Eliminar</a><a class="btn btn-link btn-secondary btn-edit-advertisement" data-id="%7">Editar</a></div></div></div>';
 
 var social_networks = [];
+var popularProductsStyleDesktop = undefined;
+var popularProductsStyleMobile = undefined;
+var storeProductsStyleDesktop = undefined;
+var storeProductsStyleMobile = undefined;
 var headerImages = undefined;
 var headerImage = undefined;
 var headerImageMobile = undefined;
@@ -45,6 +49,18 @@ fontColorPicker.onChange = function(color) {
 };
 
 $(document).ready(function() {
+  if (data.popularProductsStyleDesktop) {
+    popularProductsStyleDesktop = data.popularProductsStyleDesktop;
+  }
+  if (data.popularProductsStyleMobile) {
+    popularProductsStyleMobile = data.popularProductsStyleMobile;
+  }
+  if (data.storeProductsStyleDesktop) {
+    storeProductsStyleDesktop = data.storeProductsStyleDesktop;
+  }
+  if (data.storeProductsStyleMobile) {
+    storeProductsStyleMobile = data.storeProductsStyleMobile;
+  }
   if (data.top) {
     topImage1 = data.top.image1;
     topImage2 = data.top.image2;
@@ -439,7 +455,9 @@ $(document).ready(function() {
     }
   });
 
-  $("#social-network-select").select2({
+  $(
+    "#social-network-select, #popular-products-style-select-desktop, #store-products-style-select-desktop, #popular-products-style-select-mobile, #store-products-style-select-mobile"
+  ).select2({
     theme: "bootstrap",
     language: "es",
     allowClear: true,
@@ -628,6 +646,24 @@ $(document).ready(function() {
 function init() {
   populateHeaderImages();
   populateAdvertisementsImages();
+  if (data.popularProductsStyleDesktop) {
+    $("#popular-products-style-select-desktop").val(
+      data.popularProductsStyleDesktop
+    );
+  }
+  if (data.popularProductsStyleMobile) {
+    $("#popular-products-style-select-mobile").val(
+      data.popularProductsStyleMobile
+    );
+  }
+  if (data.storeProductsStyleDesktop) {
+    $("#store-products-style-select-desktop").val(
+      data.storeProductsStyleDesktop
+    );
+  }
+  if (data.storeProductsStyleMobile) {
+    $("#store-products-style-select-mobile").val(data.storeProductsStyleMobile);
+  }
   if (data.top.image1Link) {
     $("#top-image-1-link").val(data.top.image1Link);
     $("#top-image-2-link").val(data.top.image2Link);
@@ -738,6 +774,16 @@ function init() {
 function generateData() {
   var data = {
     slides: headerImages,
+    popularProductsStyleDesktop: $(
+      "#popular-products-style-select-desktop"
+    ).val()[0],
+    popularProductsStyleMobile: $(
+      "#popular-products-style-select-mobile"
+    ).val()[0],
+    storeProductsStyleDesktop: $(
+      "#store-products-style-select-desktop"
+    ).val()[0],
+    storeProductsStyleMobile: $("#store-products-style-select-mobile").val()[0],
     prioritizeSlideText: $("#prioritize-slide-text").prop("checked"),
     horizontalPosition: $("#horizontal-position").val(),
     verticalPosition: $("#vertical-position").val(),
@@ -769,7 +815,8 @@ function generateData() {
       subtitle: $("#populars-subtitle").val()
     },
     store: {
-      title: $("#store-title").val() === '' ? 'Almacen' : $("#store-title").val(),
+      title:
+        $("#store-title").val() === "" ? "Almacen" : $("#store-title").val(),
       subtitle: $("#store-subtitle").val()
     },
     cubanBrands: {
@@ -849,7 +896,7 @@ function validateSubmitData() {
     valid = false;
   }
   if (!$("#store-title").val()) {
-      valid = false;
+    valid = false;
   }
   if (!$("#cuban-brands-title").val() || !$("#cuban-brands-subtitle").val()) {
     valid = false;

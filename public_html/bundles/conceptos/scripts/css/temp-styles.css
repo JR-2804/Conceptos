@@ -1300,6 +1300,22 @@ a.conceptos-category-subtitle:focus {
   font-style: bold;
 }
 
+.external-request-card {
+  position: relative;
+}
+
+.print-external-request {
+  position: absolute;
+  right: 0;
+  width: 45%;
+  margin-right: 0.5em;
+}
+
+.close-external-request-modal:before,
+.close-external-request-modal:after {
+  background: #282827 !important;
+}
+
 @media (min-width: 992px) {
   .carousel-indicators li {
     height: 13px;

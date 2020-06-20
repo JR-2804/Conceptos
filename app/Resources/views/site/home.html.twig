@@ -118,16 +118,21 @@
         </div>
       </div>
       <div class="d-flex flex-column align-items-center mb-3 ml-lg-5 mr-lg-5 mt-lg-3 mb-lg-3">
-        {% if inStore and inStore is not empty %}
+        {% if inStoreChunks and inStoreChunks is not empty %}
           <div class="d-flex d-lg-none align-items-center p-2 w-100">
             <div id="carousel-in-store" class="carousel w-100" data-ride="carousel" data-interval="5000">
               <div class="carousel-inner">
-                  {% set sizes = '(min-width: 1000px) 20vw, 95vw' %}
-                {% for product in inStore %}
-                  <div class="container-fluid carousel-item p-0 {% if loop.first %}active{% endif %}">
-                    <div class="d-flex w-100">
-                      {% set bigFont = true %}
-                      {{include('site/product-summary-short.html.twig')}}
+                {% set sizes = '(min-width: 1000px) 20vw, 95vw' %}
+                {% for chunk in inStoreChunks %}
+                  <div class="carousel-item p-0 {% if loop.first %}active{% endif %}">
+                    <div class="d-flex flex-wrap w-100">
+                      {% for product in chunk %}
+                        <div class="d-flex col-{{ 12 / columnsOfStoreProductsInMobile }} pl-0">
+                          {% set storageSection = true %}
+                          {% set imageColumns = 12 / columnsOfStoreProductsInMobile %}
+                          {{ include('site/product-summary-short.html.twig') }}
+                        </div>
+                      {% endfor %}
                     </div>
                   </div>
                 {% endfor %}
@@ -145,13 +150,14 @@
           <div class="d-none d-lg-flex col-12 justify-content-center align-items-center p-2">
             <div class="d-flex carousel w-100" data-ride="carousel" id="carousel-in-store-desktop" data-interval="5000">
               <div class="d-flex carousel-inner w-100">
-                  {% set sizes = '(min-width: 1000px) 20vw, 95vw' %}
-                {% for chunk in inStoreDesktop %}
+                {% set sizes = '(min-width: 1000px) 20vw, 95vw' %}
+                {% for chunk in inStoreChunksDesktop %}
                   <div class="carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
                     <div class="d-flex flex-wrap w-100">
                       {% for product in chunk %}
-                        <div class="d-flex col-3 pl-0">
-                          {% set bigFont = true %}
+                        <div class="d-flex col-{{ 12 / columnsOfStoreProductsInDesktop }} pl-0">
+                          {% set storageSection = true %}
+                          {% set imageColumns = 12 / columnsOfStoreProductsInMobile %}
                           {{ include('site/product-summary-short.html.twig') }}
                         </div>
                       {% endfor %}

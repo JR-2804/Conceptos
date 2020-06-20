@@ -57,7 +57,7 @@ $(document).ready(function() {
       remaining -= remainingDays * 1000 * 60 * 60 * 24;
       var remainingHours = Math.floor(remaining / 1000 / 60 / 60);
 
-      var text = "Restante: ";
+      var text = "Este pedido expira en: ";
       if (remainingDays > 0) {
         text += remainingDays + "d ";
       }

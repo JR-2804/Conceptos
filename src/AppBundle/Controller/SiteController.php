@@ -95,6 +95,38 @@ class SiteController extends Controller
             'inStore' => true,
         ], null, 50);
 
+        $rowsOfPopularProductsInDesktop = 2;
+        $columnsOfPopularProductsInDesktop = 6;
+        if (array_key_exists('popularProductsStyleDesktop', $page->getData())) {
+          $popularProductsStyleDesktop = explode("x", $page->getData()["popularProductsStyleDesktop"]);
+          $rowsOfPopularProductsInDesktop = $popularProductsStyleDesktop[0];
+          $columnsOfPopularProductsInDesktop = $popularProductsStyleDesktop[1];
+        }
+
+        $rowsOfPopularProductsInMobile = 3;
+        $columnsOfPopularProductsInMobile = 2;
+        if (array_key_exists('popularProductsStyleMobile', $page->getData())) {
+          $popularProductsStyleMobile = explode("x", $page->getData()["popularProductsStyleMobile"]);
+          $rowsOfPopularProductsInMobile = $popularProductsStyleMobile[0];
+          $columnsOfPopularProductsInMobile = $popularProductsStyleMobile[1];
+        }
+
+        $rowsOfStoreProductsInDesktop = 1;
+        $columnsOfStoreProductsInDesktop = 4;
+        if (array_key_exists('storeProductsStyleDesktop', $page->getData())) {
+          $storeProductsStyleDesktop = explode("x", $page->getData()["storeProductsStyleDesktop"]);
+          $rowsOfStoreProductsInDesktop = $storeProductsStyleDesktop[0];
+          $columnsOfStoreProductsInDesktop = $storeProductsStyleDesktop[1];
+        }
+
+        $rowsOfStoreProductsInMobile = 1;
+        $columnsOfStoreProductsInMobile = 1;
+        if (array_key_exists('storeProductsStyleMobile', $page->getData())) {
+          $storeProductsStyleMobile = explode("x", $page->getData()["storeProductsStyleMobile"]);
+          $rowsOfStoreProductsInMobile = $storeProductsStyleMobile[0];
+          $columnsOfStoreProductsInMobile = $storeProductsStyleMobile[1];
+        }
+
         #TODO: poner el random del doctrine
         shuffle($inStore);
         $inStore = array_slice($inStore,  0,50);
@@ -187,11 +219,13 @@ class SiteController extends Controller
             'membership' => $membership,
             'home' => $page,
             'lasts' => $lasts,
-            'inStore' => $inStore,
-            'inStoreDesktop' => array_chunk($inStore, 4),
+            'columnsOfStoreProductsInDesktop' => $columnsOfStoreProductsInDesktop,
+            'columnsOfStoreProductsInMobile' => $columnsOfStoreProductsInMobile,
+            'popularChunksDesktop' => array_chunk($populars, $rowsOfPopularProductsInDesktop * $columnsOfPopularProductsInDesktop),
+            'popularChunks' => array_chunk($populars, $rowsOfPopularProductsInMobile * $columnsOfPopularProductsInMobile),
+            'inStoreChunksDesktop' => array_chunk($inStore, $rowsOfStoreProductsInDesktop * $columnsOfStoreProductsInDesktop),
+            'inStoreChunks' => array_chunk($inStore, $rowsOfStoreProductsInMobile * $columnsOfStoreProductsInMobile),
             'inStoreHighlight' => $inStoreHighlight,
-            'popularChunks' => array_chunk($populars, 6),
-            'popularChunksDesktop' => array_chunk($populars, 12),
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
             'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
@@ -838,11 +872,13 @@ class SiteController extends Controller
                 ->getResult();
 
               foreach ($users as $user) {
-                $body = $this->renderView(':site:new-external-request-email.html.twig', [
-                  'username' => $user->getFirstName().' '.$user->getLastName(),
-                  'externalRequest' => $externalRequest,
-                ]);
-                $this->get('email_service')->send($config->getEmail(), 'Nuevo pedido externo', $config->getEmail(), 'Nuevo pedido externo', $body);
+                if ($user->getEmail() != null) {
+                  $body = $this->renderView(':site:new-external-request-email.html.twig', [
+                    'username' => $user->getFirstName().' '.$user->getLastName(),
+                    'externalRequest' => $externalRequest,
+                  ]);
+                  $this->get('email_service')->send($config->getEmail(), 'Nuevo pedido externo', $user->getEmail(), 'Nuevo pedido externo', $body);
+                }
               }
               return $this->redirectToRoute('site_home');
             } else {
@@ -2060,6 +2096,7 @@ class SiteController extends Controller
 
         $dompdf = new Dompdf(array('enable_remote' => true));
         $dompdf->loadHtml($html);
+        $dompdf->set_option('isPhpEnabled', true);
         $dompdf->set_option('isHtml5ParserEnabled', true);
         $dompdf->render();
         return $dompdf->stream(
