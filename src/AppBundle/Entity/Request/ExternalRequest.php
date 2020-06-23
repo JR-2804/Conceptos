@@ -59,6 +59,8 @@ class ExternalRequest
    */
   private $state;
 
+  private $remainingTimeFromCreation;
+
   public function __construct()
   {
     $this->externalRequestProducts = new \Doctrine\Common\Collections\ArrayCollection();
@@ -193,5 +195,17 @@ class ExternalRequest
   public function getState()
   {
     return $this->state;
+  }
+
+  public function setRemainingTimeFromCreation($remainingTimeFromCreation)
+  {
+    $this->remainingTimeFromCreation = $remainingTimeFromCreation;
+
+    return $this;
+  }
+
+  public function getRemainingTimeFromCreation()
+  {
+    return $this->remainingTimeFromCreation;
   }
 }

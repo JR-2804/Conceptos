@@ -1,0 +1,5 @@
+<p>El usuario {{user.username}} ha emitido una evaluación con el siguiente comentario:</p>
+<hr />
+<p>{{evaluation.comment}}</p>
+<hr />
+<a href="{{ absolute_url(path('accept_evaluation', {evaluationId: evaluation.id})) }}">Aceptar Evaluación</a>

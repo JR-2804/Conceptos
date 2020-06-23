@@ -1,38 +1,49 @@
-<a class="d-flex flex-column conceptos-product-card col-6 col-lg-3 p-2 p-lg-3 {% if product.priceOffer != -1 %}popular_product{% endif %}"
+{% if preventHighlight is not defined and product.isHighlight %}
+<a class="d-flex flex-column conceptos-product-card col-12 col-lg-3 p-2 p-lg-3 {% if product.priceOffer != -1 %}popular_product{% endif %}"
    href="{{ path('product_details', {id: product.id, name: product.name}) }}">
-  <div class="d-flex align-items-center conceptos-white-background p-2">
+   <div class="d-flex align-items-center conceptos-white-background pb-2">
     {% if app.user|default %}
       <span data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"
-         data-path-remove="{{ path('remove_from_favorite', {id: product.id}) }}"
-         class="favorite-product {% if product.favorite %}favorite{% endif %}">
-         <i class="fa fa-heart"></i>
+        data-path-remove="{{ path('remove_from_favorite', {id: product.id}) }}"
+        class="favorite-product {% if product.favorite %}favorite{% endif %}">
+        <i class="fa fa-heart"></i>
       </span>
     {% endif %}
-    <img class="conceptos-image conceptos-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+    {% if product.highlightImages|length > 0 %}
+      <img class="conceptos-image conceptos-highlight-product-image" src="{{ vich_uploader_asset(product.highlightImages[0], 'imageFile') }}">
+    {% else %}
+      <img class="conceptos-image conceptos-highlight-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+    {% endif %}
   </div>
-  <div class="d-flex flex-column conceptos-white-background pl-2 pr-2 pb-3 w-100">
-    <span class="conceptos-product-info">{{product.name}}</span>
-    <span class="conceptos-product-info-description">{{product.item}}</span>
-    <div class="d-flex align-items-center">
-      {% if product.priceOffer != -1 %}
-        <span class="conceptos-product-info conceptos-product-price mr-2">$&nbsp;{{product.priceOffer}}</span>
-        <span class="conceptos-product-info conceptos-offer-price">$&nbsp;{{product.price}}</span>
-      {% else %}
-        <span class="conceptos-product-info conceptos-product-price">$&nbsp;{{product.price}}</span>
-      {% endif %}
-    </div>
-    <div class="d-flex justify-content-between align-items-center mt-1">
-      <div class="d-flex flex-column conceptos-product-badges">
-        {% if product.inStore %}
-          <span class="conceptos-in-store-product-badge">ALMACÉN</span>
-        {% endif %}
-        {% if product.recent %}
-          <span class="conceptos-new-product-badge">NUEVO</span>
+  <div class="d-flex flex-column conceptos-white-background pl-2 pr-2 pb-2 w-100">
+    <div class="d-flex justify-content-between">
+      <div class="d-flex flex-column col-6 pl-0">
+        <span class="conceptos-product-info">{{product.name}}</span>
+        <span class="conceptos-product-info-description">{{product.item}}</span>
+        {% if product.inStore or product.recent %}
+          <div class="d-flex flex-column conceptos-product-badges">
+            {% if product.inStore %}
+              <span class="conceptos-in-store-product-badge">ENTREGA EN 24H</span>
+            {% endif %}
+            {% if product.recent %}
+              <span class="conceptos-new-product-badge">NUEVO</span>
+            {% endif %}
+          </div>
         {% endif %}
       </div>
-      <button class="conceptos-add-to-cart-icon" data-path="{{ path('add_shop_card', {id: product.id}) }}">
-        <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
-      </button>
+      <div class="d-flex">
+        <div class="d-flex align-items-center mr-3">
+          {% if product.priceOffer != -1 %}
+            <span class="conceptos-product-info conceptos-product-price-highlighted mr-2">$&nbsp;{{product.priceOffer}}</span>
+            <span class="conceptos-product-info conceptos-offer-price conceptos-offer-price-highlighted">$&nbsp;{{product.price}}</span>
+          {% else %}
+            <span class="conceptos-product-info conceptos-product-price">$&nbsp;{{product.price}}</span>
+          {% endif %}
+        </div>
+        <button class="conceptos-add-to-cart-icon conceptos-add-to-cart-icon-big" data-path="{{ path('add_shop_card', {id: product.id}) }}">
+          <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
+        </button>
+      </div>
     </div>
     {% if app.user|default %}
       {% if is_granted('ROLE_COMMERCIAL') %}
@@ -40,6 +51,8 @@
       <span class="conceptos-product-info">{{product.code}}</span>
       {% if product.inStore and product.storeCount and product.storeCount > 0 %}
         <span class="conceptos-product-info-admin">Cant Almacén: {{product.storeCount}}</span>
+      {% else %}
+        <span class="conceptos-product-info-admin">Cant Almacén: 0</span>
       {% endif %}
       <span class="conceptos-product-info-admin">Material: {{product.material.name}}</span>
       <span class="conceptos-product-info-admin">Color: {{product.color.name}}</span>
@@ -49,3 +62,60 @@
     {% endif %}
   </div>
 </a>
+{% else %}
+  <a class="d-flex flex-column conceptos-product-card col-6 col-lg-3 p-2 p-lg-3 {% if product.priceOffer != -1 %}popular_product{% endif %}"
+    href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+    <div class="d-flex align-items-center conceptos-white-background p-2">
+      {% if app.user|default %}
+        <span data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"
+          data-path-remove="{{ path('remove_from_favorite', {id: product.id}) }}"
+          class="favorite-product {% if product.favorite %}favorite{% endif %}">
+          <i class="fa fa-heart"></i>
+        </span>
+      {% endif %}
+      <img class="conceptos-image conceptos-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+    </div>
+    <div class="d-flex flex-column conceptos-white-background pl-2 pr-2 pb-3 w-100">
+      <span class="conceptos-product-info">{{product.name}}</span>
+      <span class="conceptos-product-info-description">{{product.item}}</span>
+      <div class="d-flex align-items-center">
+        <div class="d-flex flex-column conceptos-product-badges">
+          {% if product.inStore %}
+            <span class="conceptos-in-store-product-badge">ENTREGA EN 24H</span>
+          {% endif %}
+          {% if product.recent %}
+            <span class="conceptos-new-product-badge">NUEVO</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mt-1">
+        <div class="d-flex align-items-center">
+          {% if product.priceOffer != -1 %}
+            <span class="conceptos-product-info conceptos-product-price mr-2">$&nbsp;{{product.priceOffer}}</span>
+            <span class="conceptos-product-info conceptos-offer-price">$&nbsp;{{product.price}}</span>
+          {% else %}
+            <span class="conceptos-product-info conceptos-product-price">$&nbsp;{{product.price}}</span>
+          {% endif %}
+        </div>
+        <button class="conceptos-add-to-cart-icon" data-path="{{ path('add_shop_card', {id: product.id}) }}">
+          <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
+        </button>
+      </div>
+      {% if app.user|default %}
+        {% if is_granted('ROLE_COMMERCIAL') %}
+        <div class="conceptos-divider mt-2 mb-2"></div>
+        <span class="conceptos-product-info">{{product.code}}</span>
+        {% if product.inStore and product.storeCount and product.storeCount > 0 %}
+          <span class="conceptos-product-info-admin">Cant Almacén: {{product.storeCount}}</span>
+        {% else %}
+          <span class="conceptos-product-info-admin">Cant Almacén: 0</span>
+        {% endif %}
+        <span class="conceptos-product-info-admin">Material: {{product.material.name}}</span>
+        <span class="conceptos-product-info-admin">Color: {{product.color.name}}</span>
+        <span class="conceptos-product-info-admin">Peso: {{product.weight}}</span>
+        <span class="conceptos-product-info-admin">Precio Ikea: ${{product.ikeaPrice}}.</span>
+        {% endif %}
+      {% endif %}
+    </div>
+  </a>
+{% endif %}

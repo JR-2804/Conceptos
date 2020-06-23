@@ -26,19 +26,15 @@
 
       <div class="d-flex flex-wrap align-items-end conceptos-white-background">
         <div class="col-12 col-lg-6 pl-0 shop-cart-product-list-section conceptos-add-scroll">
-          <div class="d-flex flex-column mt-3 ml-3 mr-3">
+          <div id="products-summary-shop-cart" class="d-flex flex-column">
               {{ render(controller('AppBundle:Site:productsSummary')) }}
-          </div>
-          <div class="d-flex justify-content-center">
-            <div class="d-flex flex-column justify-content-center align-items-center m-2">
-              <a class="conceptos-remove-all-icon" href="{{ path('empty_shop_cart') }}"></a>
-            </div>
           </div>
           <div class="d-flex justify-content-between align-items-center conceptos-badge">
             <div class="d-flex flex-column m-2">
               <span class="conceptos-badge-text">CANTIDAD</span>
               <span class="conceptos-badge-text shop-cart-products-count">{{count}} {% if count == 1 %}PRODUCTO{% else %}PRODUCTOS{% endif %}</span>
             </div>
+            <a class="conceptos-remove-all-icon" href="{{ path('empty_shop_cart') }}"></a>
             <div class="d-flex flex-column m-2">
               <span class="conceptos-badge-text">PRECIO</span>
               <span class="conceptos-badge-text shop-cart-total-price"></span>
@@ -77,21 +73,6 @@
                 <span class="conceptos-subtitle">{{home.data.shopCart.paymentTypeText|raw}}</span>
               {% endif %}
             </div>
-            {# <div class="d-flex flex-column mt-3">
-              <span class="conceptos-title">ENTREGA A DOMICILIO</span>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="switch m-0" id="home-delivery">
-                  <input type="radio" class="switch-input" name="home-delivery" value="no" id="no" checked>
-                  <label for="no" class="switch-label switch-label-off">NO</label>
-                  <input type="radio" class="switch-input" name="home-delivery" value="yes" id="yes">
-                  <label for="yes" class="switch-label switch-label-on">SI</label>
-                  <span class="switch-selection"></span>
-                </div>
-              </div>
-              {% if home.data.shopCart.homeDeliveryText is defined %}
-                <span class="conceptos-subtitle">{{home.data.shopCart.homeDeliveryText|raw}}</span>
-              {% endif %}
-            </div> #}
             <div class="d-flex flex-column mt-3">
               <span class="conceptos-title">MEMBRESÍA</span>
               <div class="d-flex conceptos-relative">
@@ -138,6 +119,12 @@
               <span class="conceptos-badge-text">PAGO PRIMER PLAZO</span>
               <span class="conceptos-badge-text first-payment"></span>
             </div>
+            {% if shopCartBags is defined and shopCartBags %}
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="conceptos-badge-text">COSTO DE BOLSAS</span>
+                <span class="conceptos-badge-text shop-cart-bag-cost" data-bags="{{shopCartBags.numberOfPayedBags - shopCartBags.numberOfFreeBags}}"></span>
+              </div>
+            {% endif %}
             <div class="d-flex justify-content-between align-items-center">
               <span class="conceptos-badge-text">COSTO DE TRANSPORTE</span>
               <span class="conceptos-badge-text shop-cart-transport-cost"></span>

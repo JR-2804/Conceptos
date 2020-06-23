@@ -98,7 +98,17 @@
             <span class="conceptos-subtitle">Lo componen {{product.comboProducts|length}} productos</span>
           {% endif %}
           <span class="conceptos-subtitle">{{product.item}}</span>
-          <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex justify-content-start align-items-center">
+            <div class="d-flex flex-column">
+              {% if product.inStore %}
+                <span class="conceptos-in-store-product-badge">ENTREGA EN 24H</span>
+              {% endif %}
+              {% if product.recent %}
+                <span class="conceptos-new-product-badge">NUEVO</span>
+              {% endif %}
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mt-1">
             <div class="d-flex align-items-center">
               {% if product.priceOffer != -1 %}
                 <span class="conceptos-product-info conceptos-product-price-big mr-2">${{product.priceOffer}}</span>
@@ -111,18 +121,8 @@
               <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
             </button>
           </div>
-          <div class="d-flex justify-content-start align-items-center mt-1">
-            <div class="d-flex flex-column">
-              {% if product.inStore %}
-                <span class="conceptos-in-store-product-badge">ALMACÉN</span>
-              {% endif %}
-              {% if product.recent %}
-                <span class="conceptos-new-product-badge">NUEVO</span>
-              {% endif %}
-            </div>
-          </div>
         </div>
-        <div class="d-flex pl-2 pl-lg-5">
+        <div id="product-evaluation-section" class="d-flex pl-2 pl-lg-5">
           {{include('site/components/change-product-evaluation.html.twig')}}
         </div>
         <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3">

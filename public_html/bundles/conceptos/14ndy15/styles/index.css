@@ -49,3 +49,9 @@
     .storage .conceptos-popular-product-image {
       height: 40vh;
       width: 100%; } }
+  .storage .conceptos-popular-product-image-short {
+  height: 25vh; }
+  @media (min-width: 992px) {
+    .storage .conceptos-popular-product-image-short {
+      height: 40vh;
+      width: 100%; } }

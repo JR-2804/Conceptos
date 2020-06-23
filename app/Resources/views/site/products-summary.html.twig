@@ -1,84 +1,147 @@
+{% set totalWeight = 0 %}
+{% set totalPrice = 0 %}
 {% for product in shopCartProducts %}
-  <div class="d-flex flex-wrap shop-cart-product align-items-center p-2 {% if loop.index > 1 %}mt-2{% endif %}"
-      data-product="{{product.id}}"
-      data-uuid="{{ product.uuid }}"
-      data-calculate-price-path="{{ path('calculate_product_price') }}"
-      data-remove-path="{{ path('remove_from_cart_shop', {id: product.id}) }}">
-    {% if product.type is defined %}
-      {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
-      {% set productName = "TARJETA DE REGALO" %}
-      {% set productPrice = product.price %}
-      {% if product.price == 25 %}
-          {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
-      {% elseif product.price == 50 %}
-          {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
-      {% elseif product.price == 100 %}
-          {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
+  {% set totalPrice = totalPrice + product.price * product.count %}
+  {% if product.type is not defined %}
+    {% set totalWeight = totalWeight + product.weight * product.count %}
+  {% endif %}
+{% endfor %}
+{% set numberOfPayedBags = (totalWeight/25)|round(0, 'ceil') %}
+{% set numberOfFreeBags = (totalPrice/100)|round(0, 'floor') %}
+{% if not shopCartBags %}
+  {% set shopCartBags = {
+    numberOfPayedBags: 0,
+    numberOfFreeBags: 0,
+  } %}
+{% endif %}
+<div class="d-flex flex-column m-3">
+  {% for product in shopCartProducts %}
+    <div class="d-flex flex-wrap shop-cart-product align-items-center w-100 p-2{% if loop.index > 1 %} mt-2 {% endif %}"
+        data-product="{{product.id}}"
+        data-uuid="{{ product.uuid }}"
+        data-weight="{{ product.weight }}"
+        data-ikea-price="{{ product.ikeaPrice }}"
+        data-calculate-price-path="{{ path('calculate_product_price') }}"
+        data-remove-path="{{ path('remove_from_cart_shop', {id: product.id}) }}">
+      {% if product.type is defined %}
+        {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
+        {% set productName = "TARJETA DE REGALO" %}
+        {% set productPrice = product.price %}
+        {% if product.price == 25 %}
+            {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
+        {% elseif product.price == 50 %}
+            {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
+        {% elseif product.price == 100 %}
+            {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
+        {% endif %}
+      {% else %}
+        {% set imagePath = vich_uploader_asset(product.image, 'imageFile') %}
+        {% set productName = product.name %}
+        {% set productPrice = product.price %}
       {% endif %}
-    {% else %}
-      {% set imagePath = vich_uploader_asset(product.image, 'imageFile') %}
-      {% set productName = product.name %}
-      {% set productPrice = product.price %}
-    {% endif %}
-    {% if product.comboProducts|length > 0 %}
-      <div class="d-flex justify-content-center col-1 pl-0">
-        <span class="conceptos-product-info combo-product-toggle" data-uuid="{{ product.uuid }}">>></span>
+      {% if product.comboProducts is defined and product.comboProducts|length > 0 %}
+        <div class="d-flex justify-content-center col-1 pl-0">
+          <span class="conceptos-product-info combo-product-toggle" data-uuid="{{ product.uuid }}">>></span>
+        </div>
+      {% endif %}
+      <div class="d-flex {% if product.comboProducts is defined and product.comboProducts|length > 0 %} col-4 col-lg-2 {% else %} col-5 col-lg-3 {% endif %} conceptos-white-background justify-content-center align-items-center p-0 {% if product.offerExists is defined and product.offerExists %}popular_product{% endif %}">
+        <div class="d-flex pl-1">
+          <a href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+            <img class="conceptos-image conceptos-product-summary-image" src="{{imagePath}}" alt="{{productName}}">
+          </a>
+        </div>
       </div>
-    {% endif %}
-    <div class="d-flex {% if product.comboProducts|length > 0 %} col-4 col-lg-2 {% else %} col-5 col-lg-3 {% endif %} conceptos-white-background justify-content-center align-items-center p-0 {% if product.offerExists is defined and product.offerExists %}popular_product{% endif %}">
-      <div class="d-flex pl-1">
-        <a href="{{ path('product_details', {id: product.id, name: product.name}) }}">
-          <img class="conceptos-image conceptos-product-summary-image" src="{{imagePath}}" alt="{{productName}}">
-        </a>
-      </div>
-    </div>
-    <div class="d-flex flex-column {% if product.comboProducts|length > 0 %} col-7 col-lg-9 {% else %} col-7 col-lg-9 {% endif %} pl-2">
-      <div class="d-flex flex-column">
-        <span class="conceptos-product-info">{{productName}}</span>
-        <span class="conceptos-product-info" data-price="{{productPrice}}">${{productPrice}}.00</span>
-      </div>
-      <div class="d-flex flex-column justify-content-center h-100">
-        <div class="d-flex justify-content-between align-items-center">
-          <div class="d-flex align-items-center">
-            <button type="button" class="cart-quantity-up" src="{{ asset('bundles/conceptos/images/cart/plus.png') }}"></button>
-            <button type="button" class="cart-quantity-down ml-1" src="{{ asset('bundles/conceptos/images/cart/minus.png') }}"></button>
-            <input type="number" class="conceptos-product-info cart-quantity-input ml-2" data-quantity="{{product.count}}" value="{{product.count}}">
+      <div class="d-flex flex-column {% if product.comboProducts is defined and product.comboProducts|length > 0 %} col-7 col-lg-9 {% else %} col-7 col-lg-9 {% endif %} pl-2">
+        <div class="d-flex flex-column">
+          <span class="conceptos-product-info">{{productName}}</span>
+          <span class="conceptos-product-info" data-price="{{productPrice}}">${{productPrice}}.00</span>
+        </div>
+        <div class="d-flex flex-column justify-content-center h-100">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <button type="button" class="cart-quantity-up" src="{{ asset('bundles/conceptos/images/cart/plus.png') }}"></button>
+              <button type="button" class="cart-quantity-down ml-1" src="{{ asset('bundles/conceptos/images/cart/minus.png') }}"></button>
+              <input type="number" class="conceptos-product-info cart-quantity-input ml-2" data-quantity="{{product.count}}" value="{{product.count}}">
+            </div>
+            <button type="button" class="shop-cart-trash mr-1"></button>
           </div>
-          <button type="button" class="shop-cart-trash mr-1"></button>
+          <div class="d-flex align-items-center product-delivery mt-1">
+            <span class="conceptos-product-info delivery-text">ENVÍO:</span>
+            <button type="button" class="conceptos-icon airplane-delivery ml-2"></button>
+            <button type="button" class="conceptos-icon ship-delivery ml-1"></button>
+          </div>
+          <span class="conceptos-in-store-product-badge" style="display: none;">ENTREGA EN 24H</span>
         </div>
-        <div class="d-flex align-items-center product-delivery mt-1">
-          <span class="conceptos-product-info delivery-text">ENVÍO:</span>
-          <button type="button" class="conceptos-icon airplane-delivery ml-2"></button>
-          <button type="button" class="conceptos-icon ship-delivery ml-1"></button>
-        </div>
-        <span class="conceptos-in-store-product-badge" style="display: none;">ALMACÉN</span>
       </div>
-    </div>
-    {% if product.comboProducts|length > 0 %}
-      {% for comboProduct in product.comboProducts %}
-        <div class="combo-product-summary w-100">
-          <div class="d-flex col-12 align-items-center p-0 mt-2">
-            <div class="d-flex justify-content-center col-1 pl-0">
-              <span class="conceptos-product-info">{{comboProduct.count}}x</span>
-            </div>
-            <div class="d-flex col-4 col-lg-2 pl-0">
-              <a href="{{ path('product_details', {id: comboProduct.product.id, name: comboProduct.product.name}) }}">
-                <img class="conceptos-image conceptos-product-summary-image" src="{{vich_uploader_asset(comboProduct.product.mainImage, 'imageFile')}}" alt="{{comboProduct.product.name}}">
-              </a>
-            </div>
-            <div class="d-flex col-7 col-lg-9 pl-2">
-              <div class="d-flex flex-column">
-                <span class="conceptos-product-info">{{comboProduct.product.name}}</span>
-                <span class="conceptos-product-info" data-price="{{comboProduct.product.price}}">${{comboProduct.product.price}}.00</span>
+      {% if product.comboProducts is defined and product.comboProducts|length > 0 %}
+        {% for comboProduct in product.comboProducts %}
+          <div class="combo-product-summary w-100">
+            <div class="d-flex col-12 align-items-center p-0 mt-2">
+              <div class="d-flex justify-content-center col-1 pl-0">
+                <span class="conceptos-product-info">{{comboProduct.count}}x</span>
+              </div>
+              <div class="d-flex col-4 col-lg-2 pl-0">
+                <a href="{{ path('product_details', {id: comboProduct.product.id, name: comboProduct.product.name}) }}">
+                  <img class="conceptos-image conceptos-product-summary-image" src="{{vich_uploader_asset(comboProduct.product.mainImage, 'imageFile')}}" alt="{{comboProduct.product.name}}">
+                </a>
+              </div>
+              <div class="d-flex col-7 col-lg-9 pl-2">
+                <div class="d-flex flex-column">
+                  <span class="conceptos-product-info">{{comboProduct.product.name}}</span>
+                  <span class="conceptos-product-info" data-price="{{comboProduct.product.price}}">${{comboProduct.product.price}}.00</span>
+                </div>
               </div>
             </div>
           </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="d-flex justify-content-center w-100">
+      <span class="conceptos-title m-4">SIN PRODUCTOS EN EL CARRITO</span>
+    </div>
+  {% endfor %}
+</div>
+{% if numberOfPayedBags > 0 and (numberOfPayedBags != shopCartBags.numberOfPayedBags or numberOfFreeBags != shopCartBags.numberOfFreeBags) %}
+<div id="shop-cart-bags-badge">
+  <div class="d-flex align-items-center justify-content-between conceptos-yellow-background p-1">
+    <div class="d-flex align-items-center col-10 pl-0">
+      <img class="bag-icon ml-1" src="{{ asset('bundles/conceptos/images/home/bag.png') }}" alt="Bolsa IKEA">
+      {% if numberOfFreeBags >= numberOfPayedBags %}
+        <span class="bag-text ml-2">Hemos añadido {{numberOfPayedBags}} {% if numberOfPayedBags == 1 %} bolsa {% else %} bolsas {% endif %} gratis en su compra!</span>
+      {% elseif numberOfFreeBags > 0 %}
+        <div class="d-flex flex-column">
+          <span class="bag-text ml-2">Tiene {{numberOfFreeBags}} {% if numberOfFreeBags == 1 %} bolsa {% else %} bolsas {% endif %} GRATIS</span>
+          <span class="bag-text bag-text-short ml-2">Recomendamos {{numberOfPayedBags - numberOfFreeBags}} {% if numberOfPayedBags - numberOfFreeBags == 1 %} bolsa adicional {% else %} bolsas adicionales {% endif %}</span>
         </div>
-      {% endfor %}
-    {% endif %}
+      {% else %}
+        <span class="bag-text ml-2">Le recomendamos {{numberOfPayedBags}} {% if numberOfPayedBags == 1 %} bolsa {% else %} bolsas {% endif %}</span>
+      {% endif %}
+    </div>
+    <button class="add-bag-icon" data-path="{{ path('add_bags', {numberOfPayedBags: numberOfPayedBags, numberOfFreeBags: numberOfFreeBags}) }}">
+      <img src="{{ asset('bundles/conceptos/images/home/cart-black.png') }}">
+    </button>
   </div>
-{% else %}
-  <div class="d-flex justify-content-center">
-    <span class="conceptos-title m-4">SIN PRODUCTOS EN EL CARRITO</span>
+</div>
+{% elseif shopCartBags.numberOfPayedBags > 0 or shopCartBags.numberOfFreeBags > 0 %}
+  <div id="shop-cart-bags-badge">
+    <div class="d-flex align-items-center justify-content-between conceptos-yellow-background p-1">
+      <div class="d-flex align-items-center col-10 pl-0">
+        <img class="bag-icon ml-1" src="{{ asset('bundles/conceptos/images/home/bag.png') }}" alt="Bolsa IKEA">
+        {% if shopCartBags.numberOfPayedBags > shopCartBags.numberOfFreeBags %}
+          <div class="d-flex flex-column">
+            <span class="bag-text ml-2">Posee {{shopCartBags.numberOfPayedBags - shopCartBags.numberOfFreeBags}} {% if shopCartBags.numberOfPayedBags - shopCartBags.numberOfFreeBags == 1 %} bolsa {% else %} bolsas {% endif %} en su compra!</span>
+            <span class="bag-text bag-text-short ml-2">Costo de bolsas ${{(shopCartBags.numberOfPayedBags - shopCartBags.numberOfFreeBags)*7}}.00</span>
+          </div>
+        {% else %}
+          <span class="bag-text ml-2">Posee {{shopCartBags.numberOfPayedBags}} {% if shopCartBags.numberOfPayedBags == 1 %} bolsa {% else %} bolsas {% endif %} gratis</span>
+        {% endif %}
+      </div>
+      {% if shopCartBags.numberOfPayedBags > shopCartBags.numberOfFreeBags %}
+        <button class="remove-bag-icon" data-path="{{ path('remove_bags') }}">
+          <img src="{{ asset('bundles/conceptos/images/cart/trash-icon.png') }}">
+        </button>
+      {% endif %}
+    </div>
   </div>
-{% endfor %}
+{% endif %}

@@ -69,6 +69,15 @@ textarea {
   height: 100px;
 }
 
+textarea.evaluation-textarea {
+  background-color: #ffffff;
+  border: solid 1px #282827;
+}
+
+textarea.evaluation-textarea:focus {
+  border: solid 1px #c2b930;
+}
+
 .checkbox-container {
   display: block;
   position: relative;
@@ -334,11 +343,20 @@ a.conceptos-title-strong:focus {
   text-transform: none;
 }
 
+.conceptos-title-lowercase {
+  text-transform: none;
+}
+
 .conceptos-subtitle {
   font-family: Montserrat;
   font-size: 12px;
   line-height: 20px;
   color: #282827;
+}
+
+.conceptos-subtitle-short {
+  font-size: 10px;
+  line-height: 12px;
 }
 
 .conceptos-blog-info {
@@ -399,6 +417,10 @@ a.conceptos-subtitle:focus {
   position: relative;
 }
 
+.conceptos-yellow-background {
+  background-color: #c2b930;
+}
+
 .conceptos-gray-background {
   background-color: #e5e5e5;
 }
@@ -416,6 +438,16 @@ a.conceptos-subtitle:focus {
 
 .conceptos-product-price {
   font-size: 14px;
+}
+
+.conceptos-product-price-highlighted {
+  font-size: 26px;
+  font-family: Montserrat-ExtraBold !important;
+}
+
+.conceptos-offer-price-highlighted {
+  font-size: 18px;
+  font-family: Montserrat-ExtraBold !important;
 }
 
 .conceptos-product-price-big {
@@ -479,6 +511,10 @@ a.conceptos-subtitle:focus {
 .conceptos-icon {
   width: 23px;
   height: 23px;
+}
+
+.conceptos-black-icon {
+  color: #282827;
 }
 
 .conceptos-icon-big {
@@ -660,11 +696,13 @@ a.conceptos-category-subtitle:focus {
 }
 
 .conceptos-remove-all-icon {
+  position: absolute;
+  left: 45%;
   border: none;
   width: 37px;
   height: 35px;
   background-color: transparent;
-  background-image: url("../../images/home/remove-all-icon.png");
+  background-image: url("../../images/home/remove-all-icon-active.png");
   background-size: cover;
 }
 
@@ -676,6 +714,10 @@ a.conceptos-category-subtitle:focus {
 
 .conceptos-image {
   width: 100%;
+}
+
+.evaluation-image {
+  width: 75%;
 }
 
 .conceptos-popular-product-image {
@@ -707,6 +749,11 @@ a.conceptos-category-subtitle:focus {
 .conceptos-product-image {
   object-fit: scale-down;
   height: 25vh;
+}
+
+.conceptos-highlight-product-image {
+  object-fit: cover;
+  height: 40vh;
 }
 
 .conceptos-product-summary-image {
@@ -750,6 +797,7 @@ a.conceptos-category-subtitle:focus {
   color: #282827;
   outline: none;
   min-width: 100px;
+  text-align: center;
 }
 
 .conceptos-primary-button:focus,
@@ -778,6 +826,7 @@ a.conceptos-category-subtitle:focus {
   font-size: 14px;
   color: #282827;
   outline: none;
+  text-align: center;
 }
 
 .conceptos-primary-button-gray:focus,
@@ -810,6 +859,11 @@ a.conceptos-category-subtitle:focus {
 .conceptos-divider {
   background-color: #c2b930;
   height: 2px;
+}
+
+.conceptos-divider-black {
+  background-color: #282827;
+  height: 1px;
 }
 
 .conceptos-divider-vertical {
@@ -1025,6 +1079,10 @@ a.conceptos-category-subtitle:focus {
   height: 100px;
 }
 
+#dropzone-profile-image .custom-img {
+  z-index: 0;
+}
+
 .edit-profile-button {
   border: none;
   width: 20px;
@@ -1091,7 +1149,6 @@ a.conceptos-category-subtitle:focus {
   position: absolute;
   bottom: 0;
   left: 20%;
-  z-index: 100;
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -1153,8 +1210,31 @@ a.conceptos-category-subtitle:focus {
   cursor: pointer;
 }
 
+#evaluation-summary {
+  border-radius: 10%;
+  background-color: #c2b930;
+  width: fit-content;
+}
+
 .change-product-evaluation.favorite {
   color: #c2b930 !important;
+}
+
+.change-product-evaluation-short {
+  font-size: 20px;
+  color: #b3aeae !important;
+  cursor: pointer;
+}
+
+.change-product-evaluation-short.favorite {
+  color: #c2b930 !important;
+}
+
+#change-product-evaluation i.fa-eye {
+  background-color: #414040;
+  color: #c2b930;
+  padding: 3px;
+  border-radius: 50%;
 }
 
 #successShopRequestModal .modal-body {
@@ -1164,6 +1244,76 @@ a.conceptos-category-subtitle:focus {
 #slide-preview {
   width: 100%;
   height: 50vh;
+}
+
+.bag-text {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 15px;
+  color: #282827;
+}
+
+.bag-text-short {
+  font-size: 12px;
+}
+
+.bag-icon {
+  width: 30px;
+  height: auto;
+}
+
+.add-bag-icon {
+  border: none;
+  background: none;
+  outline: none !important;
+  cursor: pointer;
+}
+
+.add-bag-icon img {
+  width: 30px;
+  height: 23px;
+}
+
+.remove-bag-icon {
+  border: none;
+  background: none;
+  outline: none !important;
+  cursor: pointer;
+}
+
+.remove-bag-icon img {
+  width: 20px;
+  height: 25px;
+}
+
+.conceptos-evaluation-note {
+  font-family: Montserrat;
+  font-size: 10px;
+  color: #282827;
+  text-decoration: underline;
+  text-decoration-color: #c2b930;
+}
+
+.conceptos-evaluation-note strong {
+  font-size: 11px;
+  font-style: bold;
+}
+
+.external-request-card {
+  position: relative;
+}
+
+.print-external-request {
+  position: absolute;
+  right: 0;
+  width: 45%;
+  margin-right: 0.5em;
+}
+
+.close-external-request-modal:before,
+.close-external-request-modal:after {
+  background: #282827 !important;
 }
 
 @media (min-width: 992px) {
@@ -1186,6 +1336,10 @@ a.conceptos-category-subtitle:focus {
 
   .conceptos-subtitle {
     font-size: 16px;
+  }
+
+  .conceptos-subtitle-short {
+    font-size: 13px;
   }
 
   .conceptos-badge-text {

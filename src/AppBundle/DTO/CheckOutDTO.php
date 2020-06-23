@@ -19,6 +19,7 @@ class CheckOutDTO
     private $payment;
     private $date;
     private $ignoreTransport;
+    private $numberOfBags;
 
     public function getFirstName()
     {
@@ -168,5 +169,17 @@ class CheckOutDTO
     public function setIgnoreTransport($ignoreTransport)
     {
         $this->ignoreTransport = $ignoreTransport;
+    }
+
+    public function setNumberOfBags($numberOfBags)
+    {
+      $this->numberOfBags = $numberOfBags;
+
+      return $this;
+    }
+
+    public function getNumberOfBags()
+    {
+      return $this->numberOfBags;
     }
 }

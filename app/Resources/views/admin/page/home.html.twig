@@ -2,8 +2,10 @@
   <link rel="stylesheet" href="{{ asset('bundles/conceptos/home/css/home.css') }}">
   <style>
     #slide-preview {
-      width: 100%;
-      height: 100vh;
+      transform: scale(0.25);
+      position: relative;
+      width: calc(4 * 313px);
+      left: -470px;
     }
   </style>
 {% endblock %}
@@ -164,7 +166,7 @@
                             data-path="{{ path('update_slide') }}">
                       Actualizar
                     </button>
-                    <iframe id="slide-preview" data-path="{{ path('site_home', {onlySlide: true}) }}">
+                    <iframe id="slide-preview" data-path="{{ path('site_home', {onlySlide: true}) }}" width="1920" height="auto">
                     </iframe>
                   </div>
                 </div>
@@ -206,6 +208,67 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Estilos de productos populares y almacén</h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-6">
+            <label class="control-label">Estilo de productos populares (Escritorio)</label>
+            <select id="popular-products-style-select-desktop" class="control-label" multiple>
+              <option value="2x6">2x6</option>
+              <option value="3x6">3x6</option>
+              <option value="4x6">4x6</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <label class="control-label">Estilo de productos en almacén (Escritorio)</label>
+            <select id="store-products-style-select-desktop" class="control-label" multiple>
+              <option value="1x2">1x2</option>
+              <option value="1x3">1x3</option>
+              <option value="1x4">1x4</option>
+              <option value="2x2">2x2</option>
+              <option value="3x2">3x2</option>
+              <option value="4x2">4x2</option>
+              <option value="2x3">2x3</option>
+              <option value="3x3">3x3</option>
+              <option value="4x3">4x3</option>
+            </select>
+          </div>
+          <div class="col-6" style="margin-top: 10px;">
+            <label class="control-label">Estilo de productos populares (Movil)</label>
+            <select id="popular-products-style-select-mobile" class="control-label" multiple>
+              <option value="2x2">2x2</option>
+              <option value="3x2">3x2</option>
+              <option value="4x2">4x2</option>
+              <option value="2x3">2x3</option>
+              <option value="3x3">3x3</option>
+              <option value="4x3">4x3</option>
+            </select>
+          </div>
+          <div class="col-6" style="margin-top: 10px;">
+            <label class="control-label">Estilo de productos en almacén (Movil)</label>
+            <select id="store-products-style-select-mobile" class="control-label" multiple>
+              <option value="1x1">1x1</option>
+              <option value="1x2">1x2</option>
+              <option value="2x2">2x2</option>
+              <option value="3x2">3x2</option>
+              <option value="4x2">4x2</option>
+              <option value="2x3">2x3</option>
+              <option value="3x3">3x3</option>
+              <option value="4x3">4x3</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="row">
     <div class="col-12">
         <div class="panel panel-primary">

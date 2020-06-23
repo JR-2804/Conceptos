@@ -31,6 +31,15 @@ class ShopCartService
       $this->entityManager->flush();
     }
 
+    public function emptyShopCartBags($user)
+    {
+      $shopCartBags = $this->entityManager->getRepository('AppBundle:ShopCartBags')->findOneBy([
+        'user' => $user->getId(),
+      ]);
+      $this->entityManager->remove($shopCartBags);
+      $this->entityManager->flush();
+    }
+
     public function getShopCartProducts($user)
     {
       if (!$user) {
@@ -121,6 +130,17 @@ class ShopCartService
         }
       }
       return $productsDB;
+    }
+
+    public function getShopCartBags($user)
+    {
+      if ($user == null) {
+        return null;
+      }
+
+      return $this->entityManager->getRepository('AppBundle:ShopCartBags')->findOneBy([
+        'user' => $user->getId(),
+      ]);
     }
 
     public function countShopCart($user)

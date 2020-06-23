@@ -27,7 +27,7 @@ easy_admin:
                     - {property: 'categoryText', label: 'Categoría'}
                     - {property: 'popular', label: 'Popular', type: 'toggle'}
                     - {property: 'recent', label: 'Novedades', type: 'toggle'}
-                    - {property: 'inStore', label: 'En almacén', type: 'toggle'}
+                    - {property: 'inStore', label: 'Entrega en 24h', type: 'toggle'}
                     - {property: 'storeCount', label: 'Cantidad en almacén'}
                     - {property: 'mainImage', label: 'Imágen Principal', type: 'image', base_path: '/uploads'}
                     - {property: 'material', label: 'Material'}
@@ -149,6 +149,7 @@ easy_admin:
                     - {property: 'requestCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
@@ -159,6 +160,7 @@ easy_admin:
                     - {property: 'client', label: 'Cliente'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
@@ -196,6 +198,7 @@ easy_admin:
                     - {property: 'preFactureCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
@@ -206,6 +209,7 @@ easy_admin:
                     - {property: 'client', label: 'Cliente'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
@@ -220,8 +224,9 @@ easy_admin:
             list:
                 title: Facturas realizadas
                 actions:
-                    - {name: 'show'}
                     - {name: 'new', label: 'Nueva Factura'}
+                    - {name: 'print_facture', type: 'route', label: 'Exportar' }
+                    - {name: 'show'}
                 fields:
                     - id
                     - {property: 'date', label: 'Fecha', format: 'd/m/Y'}
@@ -241,6 +246,7 @@ easy_admin:
                     - {property: 'factureCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
@@ -251,6 +257,7 @@ easy_admin:
                     - {property: 'client', label: 'Cliente'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}

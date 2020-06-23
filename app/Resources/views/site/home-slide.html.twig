@@ -54,8 +54,8 @@
       </div>
     {% elseif page.data.slides and page.data.slides is not empty %}
       {% set slide = page.data.slides[0] %}
-      <div class="d-flex flex-column home__hero__content__title"
-           style="{% if page.data.slideTopMargin is defined %}padding-top: {{page.data.slideTopMargin}}px;{% endif %}{% if page.data.slideBottomMargin is defined %}padding-bottom: {{page.data.slideBottomMargin}}px;{% endif %}{% if page.data.slideLeftMargin is defined %}padding-left: {{page.data.slideLeftMargin}}px;{% endif %}{% if page.data.slideRightMargin is defined %}padding-right: {{page.data.slideRightMargin}}px;{% endif %}">
+      <div class="d-flex flex-column home__hero__content__title p-2"
+           style="{% if page.data.slideTopMargin is defined %}margin-top: {{page.data.slideTopMargin}}em;{% endif %}{% if page.data.slideBottomMargin is defined %}margin-bottom: {{page.data.slideBottomMargin}}em;{% endif %}{% if page.data.slideLeftMargin is defined %}margin-left: {{page.data.slideLeftMargin}}em;{% endif %}{% if page.data.slideRightMargin is defined %}margin-right: {{page.data.slideRightMargin}}em;{% endif %}">
         {% if slide.main is defined %}
           <h1 class="d-flex" style="{% if page.data.slideFontSize %}font-size: {{page.data.slideFontSize + 0.75}}em;{% endif %}{% if page.data.slideFontColor %}color: {{page.data.slideFontColor}};{% endif %}">{{ slide.main }}</h1>
         {% endif %}
