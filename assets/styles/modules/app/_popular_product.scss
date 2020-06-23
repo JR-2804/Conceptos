@@ -3,6 +3,7 @@
     & > div:first-child{
         position: relative;
         overflow: hidden;
+
         &:before{
             position: absolute;
             background-color: $mainYellow;
@@ -19,7 +20,9 @@
     }
 }
 
-.popular_product_short > div:first-child:before {
-  transform: translate(-25%, 50%) rotate(-45deg);
+.shop-cart-product .popular_product  > div:first-child{
+
+  &:before{
     font-size: .6em;
+  }
 }

@@ -14,6 +14,7 @@
         <button class="lateral_menu__close"></button>
         <nav class="lateral_menu__content">
             <ul>
+                <li><a href="{{ path('site_home') }}">Inicio</a></li>
                 <li><a data-next="next" href="#">Productos</a>
 {#                    <li><a data-next="true" href="{{ path('products') }}">Productos</a>#}
 
@@ -144,7 +145,7 @@
     <div class="new_navbar__content__search">
         <form id="home-search-form" action="{{ path('products') }}" method="get">
             <label for="search_bar_products" class="sr-only">Buscar</label>
-            <input name="term" id="search_bar_products" type="text" placeholder="Lámparas">
+            <input name="term" id="search_bar_products" type="text" placeholder="buscar">
 
             <button type="submit" value="buscar"></button>
         </form>
@@ -174,4 +175,5 @@
         </div>
 
 </div>
-<div style="position: relative; height: 7em;"></div>
+
+<div class="push_element"></div>
