@@ -655,7 +655,14 @@ $(document).ready(function() {
     $("#cartPreviewModal .conceptos-badge")
       .children()
       .remove("#shop-cart-bags-badge");
-    $("#shop-cart-bags-badge").prependTo("#cartPreviewModal .conceptos-badge");
+    $("#cartPreviewModal #shop-cart-bags-badge").prependTo(
+      "#cartPreviewModal .conceptos-badge"
+    );
+
+    $("form .conceptos-badge")
+      .children()
+      .remove("#shop-cart-bags-badge");
+    $("form #shop-cart-bags-badge").prependTo("form .conceptos-badge");
   }
 
   function OnCartIconCLick(e) {
