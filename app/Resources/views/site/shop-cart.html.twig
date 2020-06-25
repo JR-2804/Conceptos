@@ -25,7 +25,7 @@
       <h2 class="conceptos-subtitle">{{home.data.shopCart.secondaryText|raw}}</h2>
 
       <div class="d-flex flex-wrap align-items-end conceptos-white-background">
-        <div class="col-12 col-lg-6 pl-0 shop-cart-product-list-section conceptos-add-scroll">
+        <div id="shop-cart-summary" class="col-12 col-lg-6 pl-0 shop-cart-product-list-section conceptos-add-scroll">
           <div id="products-summary-shop-cart" class="d-flex flex-column">
               {{ render(controller('AppBundle:Site:productsSummary')) }}
           </div>

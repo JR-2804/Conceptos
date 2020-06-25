@@ -659,10 +659,12 @@ $(document).ready(function() {
       "#cartPreviewModal .conceptos-badge"
     );
 
-    $("form .conceptos-badge")
+    $("#shop-cart-summary .conceptos-badge")
       .children()
       .remove("#shop-cart-bags-badge");
-    $("form #shop-cart-bags-badge").prependTo("form .conceptos-badge");
+    $("#shop-cart-summary #shop-cart-bags-badge").prependTo(
+      "#shop-cart-summary .conceptos-badge"
+    );
   }
 
   function OnCartIconCLick(e) {
