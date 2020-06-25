@@ -829,8 +829,8 @@ class SiteController extends Controller
               foreach ($requestProducts as $product) {
                 $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['id']);
 
-                $finalPrice += $productDB->getIkeaPrice();
-                $weight += $productDB->getWeight();
+                $finalPrice += $productDB->getIkeaPrice() * $product["count"];
+                $weight += $productDB->getWeight() * $product["count"];
               }
 
               $externalRequest->setFinalPrice($finalPrice);
