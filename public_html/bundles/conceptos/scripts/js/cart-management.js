@@ -373,6 +373,8 @@ $(document).ready(function() {
       "$" + Number(totalPrice).toFixed(2)
     );
     firstPaymentSection.text("$" + Math.ceil(totalPrice / 1.8).toFixed(2));
+
+    MoveBagsBadge();
   }
 
   function DisplayMembershipSuccess() {
@@ -645,6 +647,15 @@ $(document).ready(function() {
       .children()
       .remove();
     $("#products-summary-shop-cart").append(html);
+
+    MoveBagsBadge();
+  }
+
+  function MoveBagsBadge() {
+    $("#cartPreviewModal .conceptos-badge")
+      .children()
+      .remove("#shop-cart-bags-badge");
+    $("#shop-cart-bags-badge").prependTo("#cartPreviewModal .conceptos-badge");
   }
 
   function OnCartIconCLick(e) {

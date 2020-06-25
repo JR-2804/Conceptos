@@ -19,8 +19,24 @@
     <div class="d-flex flex-wrap shop-cart-product align-items-center w-100 p-2{% if loop.index > 1 %} mt-2 {% endif %}"
         data-product="{{product.id}}"
         data-uuid="{{ product.uuid }}"
-        data-weight="{{ product.weight }}"
-        data-ikea-price="{{ product.ikeaPrice }}"
+        {% if product.comboProducts is defined and product.comboProducts|length > 0 %}
+          {% set weight = 0 %}
+          {% for comboProduct in product.comboProducts %}
+            {% set weight = weight + comboProduct.product.weight * comboProduct.count %}
+          {% endfor %}
+          data-weight="{{ weight }}"
+        {% else %}
+          data-weight="{{ product.weight }}"
+        {% endif %}
+        {% if product.comboProducts is defined and product.comboProducts|length > 0 %}
+          {% set ikeaPrice = 0 %}
+          {% for comboProduct in product.comboProducts %}
+            {% set ikeaPrice = ikeaPrice + comboProduct.product.ikeaPrice * comboProduct.count %}
+          {% endfor %}
+          data-ikea-price="{{ ikeaPrice }}"
+        {% else %}
+          data-ikea-price="{{ product.ikeaPrice }}"
+        {% endif %}
         data-calculate-price-path="{{ path('calculate_product_price') }}"
         data-remove-path="{{ path('remove_from_cart_shop', {id: product.id}) }}">
       {% if product.type is defined %}
