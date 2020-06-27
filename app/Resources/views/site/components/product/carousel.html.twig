@@ -1,0 +1,47 @@
+<div class="product_images carousel">
+	{% for imageSet in imageSets %}
+		{% for image in imageSet %}
+			<div class="carousel__cell">
+{#				<img class="image-viewer" src="{{ vich_uploader_asset(image, 'imageFile') }}">#}
+				{{  vich_uploader_asset(image, 'imageFile') | imgTag(sizes = '100vw') | raw }}
+
+			</div>
+		{% endfor %}
+	{% endfor %}
+</div>
+
+<div class="product_images__small carousel carousel--small">
+	{% for imageSet in imageSets %}
+		{% for image in imageSet %}
+			<div class="carousel__cell">
+{#				<img class="image-viewer" src="{{ vich_uploader_asset(image, 'imageFile') }}">#}
+				{{  vich_uploader_asset(image, 'imageFile') | imgTag(sizes = '28vw') | raw }}
+
+			</div>
+		{% endfor %}
+	{% endfor %}
+</div>
+
+{#	      <div class="carousel-inner pl-lg-5 pr-lg-5">#}
+{#          {% set count = 0 %}#}
+{#          {% for imageSet in imageSets %}#}
+{#            {% for image in imageSet %}#}
+{#              <div class="carousel-item {% if count == 0 %}active{% endif %} pl-lg-5 pr-lg-5">#}
+{#                <div class="d-flex justify-content-center w-100">#}
+{#                  <img class="image-viewer" src="{{ vich_uploader_asset(image, 'imageFile') }}">#}
+{#                </div>#}
+{#              </div>#}
+{#              {% set count = count + 1 %}#}
+{#            {% endfor %}#}
+{#          {% endfor %}#}
+{#        </div>#}
+{#        {% if count > 1 %}#}
+{#          <div class="d-flex">#}
+{#            <a class="carousel-control carousel-control-prev ml-lg-5" role="button" data-slide="prev" href="#carousel-product-details">#}
+{#              <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>#}
+{#            </a>#}
+{#            <a class="carousel-control carousel-control-next mr-lg-5" role="button" data-slide="next" href="#carousel-product-details">#}
+{#              <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>#}
+{#            </a>#}
+{#          </div>#}
+{#        {% endif %}#}

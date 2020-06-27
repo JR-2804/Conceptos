@@ -38,6 +38,8 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "flickity": "^2.2.1",
+    "flickity-as-nav-for": "^2.0.1",
     "headroom.js": "^0.10.4",
     "lazysizes": "^5.1",
     "normalize.css": "^8.0",

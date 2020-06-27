@@ -3,7 +3,7 @@ class SimilarProducts{
         this.expandLink = document.querySelector('.similar_products__show_button button');
         this.similarProductContainer = document.querySelector('.similar_products__container');
         this.similarProductModal = document.querySelector('.similar_products__container__modal');
-        this.btnClose = document.querySelector('similar_products__container__modal__close');9
+        this.btnClose = document.querySelector('.similar_products__container__modal__header__close');
         this.body = document.querySelector('body');
         this.events();
     }
