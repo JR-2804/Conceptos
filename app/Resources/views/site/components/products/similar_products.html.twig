@@ -1,0 +1,26 @@
+{% if product.isParent %}
+
+	<div class="similar_products">
+
+		<div class="similar_products__container similar_products__container--hide">
+
+			<div class="similar_products__container__modal">
+
+				<div class="similar_products__container__modal__header">
+					<h5>Otras variantes</h5>
+
+					<button class="similar_products__container__modal__header__close"></button>
+				</div>
+
+				{% for similarProduct in product.similarProducts %}
+					{% set product = similarProduct.getProduct %}
+					{% set sizes = '(min-width: 1000px) 12vw, 50vw' %}
+
+					{{ include('site/components/products/row_product.html.twig') }}
+
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+{% endif %}

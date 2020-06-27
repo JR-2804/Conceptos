@@ -1,0 +1,33 @@
+<div class="row_product">
+	<div class="row_product__image">
+		{{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes, null, 'conceptos-image conceptos-popular-product-image') | raw }}
+	</div>
+
+	<div class="row_product__content">
+
+		<div class="row_product__content__info">
+			<div class="conceptos-product-info">{{product.name}}</div>
+			<div class="conceptos-product-info-description">{{product.item}}</div>
+		</div>
+
+		<div class="row_product__content__actions">
+
+			<div class="row_product__content__actions__price">
+				{% if product.priceOffer != -1 %}
+					<span class="conceptos-product-info conceptos-product-price mr-2">$ {{product.priceOffer}}</span>
+					<span class="conceptos-product-info conceptos-offer-price">$ {{product.price}}</span>
+				{% else %}
+					<span class="conceptos-product-info conceptos-product-price">$ {{product.price}}</span>
+				{% endif %}
+			</div>
+
+			<div class="row_product__content__actions__cart">
+				<button class="conceptos-add-to-cart-icon" data-path="{{ path('add_shop_card', {id: product.id}) }}">
+					<img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
+				</button>
+			</div>
+
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,1 @@
+ALTER TABLE product ADD is_parent TINYINT(1) DEFAULT NULL;

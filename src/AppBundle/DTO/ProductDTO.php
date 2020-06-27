@@ -23,6 +23,8 @@ class ProductDTO
     private $material;
     private $favoritesCategories;
     private $comboProduct;
+    private $isParent;
+    private $similarProducts;
     private $complementaryProducts;
     private $weight;
     private $shippingLimit;
@@ -215,6 +217,25 @@ class ProductDTO
     public function setComboProducts($comboProduct)
     {
         $this->comboProduct = $comboProduct;
+    }
+
+    public function getIsParent(){
+        return $this->isParent;
+    }
+
+    public function setIsParent($isParent)
+    {
+        $this->isParent = $isParent;
+    }
+
+    public function getSimilarProducts()
+    {
+        return $this->similarProducts;
+    }
+
+    public function setSimilarProducts($similarProducts)
+    {
+        $this->similarProducts = $similarProducts;
     }
 
     public function getComplementaryProducts()

@@ -397,9 +397,9 @@ class ProductService
         }
 
         $_products = $qbProduct
-            ->orderBy('o.price', 'DESC')
+            ->orderBy('p.name', 'ASC')
+            ->addOrderBy('o.price', 'DESC')
             ->addOrderBy('p.inStore', 'DESC')
-            ->addOrderBy('p.name', 'ASC')
             ->addOrderBy('p.price', 'ASC')
             ->setFirstResult($firstResult)
             ->setMaxResults(50)

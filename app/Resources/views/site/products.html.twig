@@ -6,6 +6,8 @@
     <link href="{{ asset('bundles/conceptos/libs/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/home/css/component.css') }}">
     <link href="{{ asset('bundles/conceptos/products/css/products.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('bundles/conceptos/products/css/products.css') }}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/styles/products.css') }}" type="text/css">
 {% endblock %}
 
 {% block meta %}
@@ -143,32 +145,10 @@
           <img class="conceptos-icon ml-2 mr-2" src="{{ asset('bundles/conceptos/images/home/forward.png') }}">
         </div>
       </div>
-      <div class="d-flex justify-content-between align-items-center ml-2 mr-2 mt-3 mb-3">
-        <div class="d-flex flex-column ml-lg-5">
-          {% if mainCategory %}
-            {% set subCategories = '' %}
-            {% for subCategory in mainCategory.subCategories %}
-                {% set subCategories = subCategory.id ~ ', '~ subCategories %}
-            {% endfor %}
-            <span>
-              <span><a class="conceptos-title-strong" href="{{ path('products') }}">PRODUCTOS</a></span>
-              <a class="conceptos-title" href="{{ path('products', {categories:subCategories}) }}">/ {{mainCategory.name}}</a>
-            </span>
-          {% else %}
-            <span>
-              <span><a class="conceptos-title-strong" href="{{ path('products') }}">PRODUCTOS</a></span>
-              <a class="conceptos-title" href="{{ path('products') }}">/ TODOS</a>
-            </span>
-          {% endif %}
-          {% if mainSubcategory %}
-            <span class="conceptos-title mt-1">{{mainSubcategory.name}}</span>
-          {% endif %}
-        </div>
-        <div class="d-flex" data-toggle="modal" data-target="#filterProductsModal">
-          <img class="conceptos-icon d-flex d-lg-none" src="{{ asset('bundles/conceptos/images/products/filter.png') }}">
-          <img class="conceptos-icon-big d-none d-lg-flex" src="{{ asset('bundles/conceptos/images/products/filter.png') }}">
-        </div>
-      </div>
+
+        {{ include('site/components/products/breadcrumbs.html.twig') }}
+
+
       <div class="d-flex pl-lg-5 pr-lg-5">
         <div class="d-none d-lg-flex pr-5">
           {{include('site/categories-menu.html.twig')}}

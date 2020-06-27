@@ -26,6 +26,7 @@ easy_admin:
                     - {property: 'price', label: 'Precio'}
                     - {property: 'categoryText', label: 'Categoría'}
                     - {property: 'popular', label: 'Popular', type: 'toggle'}
+                    - {property: 'isParent', label: 'Es producto representate', type: 'toggle'}
                     - {property: 'recent', label: 'Novedades', type: 'toggle'}
                     - {property: 'inStore', label: 'En almacén', type: 'toggle'}
                     - {property: 'storeCount', label: 'Cantidad en almacén'}

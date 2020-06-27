@@ -30,6 +30,8 @@ class ProductType extends AbstractType
             ->add('countStore', HiddenType::class)
             ->add('favoritesCategories', HiddenType::class)
             ->add('comboProducts', HiddenType::class)
+            ->add('isParent', HiddenType::class)
+            ->add('similarProducts', HiddenType::class)
             ->add('complementaryProducts', HiddenType::class)
             ->add('weight', HiddenType::class)
             ->add('shippingLimit', HiddenType::class)

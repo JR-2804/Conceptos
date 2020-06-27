@@ -123,11 +123,13 @@ class Product
     /**
      * @ORM\Column(type="integer")
      */
+
     private $shippingLimit;
     /**
      * @ORM\Column(type="float")
      */
     private $calculatePrice;
+
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\FavoriteProduct", mappedBy="product")
      */
@@ -145,6 +147,8 @@ class Product
     private $priceOffer;
 
     private $favorite;
+
+    
 
     /**
      * @ORM\Column(type="boolean")
@@ -228,6 +232,18 @@ class Product
     private $complementaryProducts;
 
     /**
+     * @var bool
+     * @ORM\Column(name="is_parent", type="boolean", nullable=true)
+     */
+    private $isParent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\SimilarProduct", mappedBy="parentProduct")
+     */
+    private $similarProducts;
+
+
+    /**
      * Product constructor.
      */
     public function __construct()
@@ -243,6 +259,7 @@ class Product
         $this->evaluations = new ArrayCollection();
         $this->comboProducts = new ArrayCollection();
         $this->complementaryProducts = new ArrayCollection();
+        $this->similarProducts = new ArrayCollection();
     }
 
     public function __toString()
@@ -884,6 +901,7 @@ class Product
         return $this->complementaryProducts;
     }
 
+
     public function getLabels()
     {
       $labels = "";
@@ -935,5 +953,46 @@ class Product
       }
 
       return $labels;
+    }
+
+    /**
+     * Get isParent
+     *
+     * @return bool
+     */
+    public function getIsParent(){
+        return $this->isParent;
+    }
+
+    /**
+     * Set isParent
+     *
+     * @param bool $isParent
+     *
+     * @return Product
+     */
+    public function setIsParent($isParent)
+    {
+        $this->isParent = $isParent;
+
+        return $this;
+    }
+
+    public function addSimilarProduct(SimilarProduct $similarProduct)
+    {
+        $this->similarProducts[] = $similarProduct;
+
+        return $this;
+    }
+
+    public function removeSimilarProduct(SimilarProduct $similarProduct)
+    {
+        $this->similarProducts->removeElement($similarProduct);
+    }
+
+
+    public function getSimilarProducts()
+    {
+        return $this->similarProducts;
     }
 }

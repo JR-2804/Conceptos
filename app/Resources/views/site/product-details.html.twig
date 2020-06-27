@@ -54,6 +54,7 @@
 {% block css %}
   <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/product-details.css') }}">
   <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/products.css') }}">
+  <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/styles/product.css') }}" type="text/css">
 {% endblock %}
 {% block body %}
 
@@ -125,6 +126,17 @@
         <div class="d-flex pl-2 pl-lg-5">
           {{include('site/components/change-product-evaluation.html.twig')}}
         </div>
+
+	      {% if product.isParent %}
+		      <div class="similar_products d-flex flex-column p-2 pl-lg-5 pr-lg-5">
+			      <div class="similar_products__show_button">
+				      <button class="conceptos-primary-button">Otras variantes
+					      <img src="{{ asset('bundles/conceptos/images/arrow.svg') }}" alt="">
+				      </button>
+			      </div>
+		      </div>
+	      {% endif %}
+
         <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3">
           <span class="conceptos-title">DETALLES DEL PRODUCTO</span>
           <span class="conceptos-subtitle">CÓDIGO: {{product.code}}</span>
@@ -219,8 +231,13 @@
             </div>
           </div>
         {% endif %}
+
       </div>
+      {{ include('site/components/products/similar_products.html.twig') }}
     </div>
+
+{#    {{ dump(product) }}#}
+
     <div class="d-flex flex-column mt-3">
       <span class="conceptos-title">PRODUCTOS RELACIONADOS</span>
       <div class="d-flex flex-wrap">
@@ -236,4 +253,5 @@
 {% endblock %}
 {% block js %}
   <script src="{{ asset('bundles/conceptos/products/js/product-details.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/14ndy15/scripts/product.js') }}"></script>
 {% endblock %}

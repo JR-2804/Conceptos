@@ -370,14 +370,14 @@ class SiteController extends Controller
           $filterParameter[] = $comboProduct->getProduct()->getId();
         }
 
-        $related = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->createQueryBuilder('p')
-            ->where('p.name = :name AND p.id NOT IN (:current)')
-            ->setParameter('name', $product->getName())
-            ->setParameter('current', $filterParameter)
-            ->orderBy('p.name', 'ASC')
-            ->setMaxResults(12)
-            ->getQuery()->getResult();
-
+//        $related = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->createQueryBuilder('p')
+//            ->where('p.name = :name AND p.id NOT IN (:current)')
+//            ->setParameter('name', $product->getName())
+//            ->setParameter('current', $filterParameter)
+//            ->orderBy('p.name', 'ASC')
+//            ->setMaxResults(12)
+//            ->getQuery()->getResult();
+            $related = [];
         if (count($related) < 12) {
             $categories = [];
             foreach ($product->getCategories() as $category) {
@@ -392,7 +392,8 @@ class SiteController extends Controller
                 ->setMaxResults(12 - count($related))
                 ->getQuery()->getResult();
 
-            $related = array_merge($related, $otherRelated);
+//            $related = array_merge($related, $otherRelated);
+            $related = $otherRelated;
         }
         foreach ($related as $productR) {
             if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {

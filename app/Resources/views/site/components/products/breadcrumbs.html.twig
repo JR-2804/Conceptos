@@ -1,0 +1,67 @@
+<nav class="products_breadcrumbs">
+    <ul>
+        <li>Productos</li>
+        <li class="my_dropdown"> {{mainCategory.name}}
+            <img src="{{ asset('bundles/conceptos/images/arrow.svg') }}" alt="">
+            <ul class="my_dropdown__content">
+                {% for category in categories %}
+
+                    {% set subCategories = '' %}
+                    {% for subCategory in category.subCategories %}
+                        {% set subCategories = subCategory.id ~ ', '~ subCategories %}
+                    {% endfor %}
+
+                    {% if category.parents | length == 0 %}
+                        <li><a href="{{ path('products', {categories:subCategories}) }}">{{ category.name }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </li>
+
+        <li class="my_dropdown">
+            {% if mainSubcategory %}{{ mainSubcategory.name}} {% else %} Todos {% endif %}
+            <img src="{{ asset('bundles/conceptos/images/arrow.svg') }}" alt="">
+            <ul class="my_dropdown__content">
+                {% for subCategory in mainCategory.subcategories %}
+                    <li><a href="{{ path('products', {categories:subCategory.id}) }}"> {{ subCategory }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+
+{#<div class="d-flex justify-content-between align-items-center ml-2 mr-2 mt-3 mb-3">#}
+{#    <div class="d-flex flex-column ml-lg-5">#}
+{#        {% if mainCategory %}#}
+{#            {% set subCategories = '' %}#}
+{#            {% for subCategory in mainCategory.subCategories %}#}
+{#                {% set subCategories = subCategory.id ~ ', '~ subCategories %}#}
+{#            {% endfor %}#}
+{#            <span>#}
+{#              <span><a class="conceptos-title-strong" href="{{ path('products') }}">PRODUCTOS</a></span>#}
+{#              <a class="conceptos-title" href="{{ path('products', {categories:subCategories}) }}">/ {{mainCategory.name}}</a>#}
+{#            </span>#}
+{#        {% else %}#}
+{#            <span>#}
+{#              <span><a class="conceptos-title-strong" href="{{ path('products') }}">PRODUCTOS</a></span>#}
+{#              <a class="conceptos-title" href="{{ path('products') }}">/ TODOS</a>#}
+{#            </span>#}
+{#        {% endif %}#}
+{#        {% if mainSubcategory %}#}
+{#            <select class="conceptos-title mt-1" name="" id="" style="padding: 0;">#}
+{#                {% for subCategory in mainCategory.subcategories %}#}
+{#                    {% set selected = subCategory.id == mainSubcategory.id %}#}
+{#                    <option value="{{ subCategory }}" {% if selected %}selected{% endif %}><a href="#"> {{ subCategory }}</a></option>#}
+{#                {% endfor %}#}
+{#            </select>#}
+
+{#            <span class="conceptos-title mt-1">{{mainSubcategory.name}}</span>#}
+
+{#        {% endif %}#}
+{#    </div>#}
+{#    <div class="d-flex" data-toggle="modal" data-target="#filterProductsModal">#}
+{#        <img class="conceptos-icon d-flex d-lg-none" src="{{ asset('bundles/conceptos/images/products/filter.png') }}">#}
+{#        <img class="conceptos-icon-big d-none d-lg-flex" src="{{ asset('bundles/conceptos/images/products/filter.png') }}">#}
+{#    </div>#}
+{#</div>#}

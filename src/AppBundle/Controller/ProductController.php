@@ -9,6 +9,7 @@ use AppBundle\Entity\Material;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\ComboProduct;
 use AppBundle\Entity\ComplementaryProduct;
+use AppBundle\Entity\SimilarProduct;
 use AppBundle\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -409,6 +410,15 @@ class ProductController extends Controller
         if ($product->getInStore()) {
             $dto->setCountStore($product->getStoreCount());
         }
+
+        $dto->setIsParent($product->getIsParent());
+        $similarProducts = [];
+        foreach ($product->getSimilarProducts() as $similarProduct) {
+            $similarProducts[] = $similarProduct->getProduct()->getId();
+        }
+        $dto->setSimilarProducts(json_encode($similarProducts));
+
+
         $favorites = [];
         foreach ($product->getFavoritesCategory() as $favorite) {
             $favorites[] = $favorite->getId();
@@ -712,6 +722,30 @@ class ProductController extends Controller
             if (boolval($form->get('inStore')->getData())) {
                 $product->setStoreCount($form->get('countStore')->getData());
             }
+
+            $productDB->setIsParent($form->get('isParent')->getData());
+
+            $similarProducts = json_decode($form->get('similarProducts')->getData(), true);
+            foreach ($product->getSimilarProducts() as $similarProduct) {
+                $product->removeSimilarProduct($similarProduct);
+                $this->getDoctrine()->getManager()->remove($similarProduct);
+            }
+            $product->getSimilarProducts()->clear();
+            if ($similarProducts != null) {
+                foreach ($similarProducts as $similarProductId) {
+                    $productDB = $this->getDoctrine()->getRepository('AppBundle:Product')->find($similarProductId);
+                    if (null != $productDB) {
+                        $similarProduct = new SimilarProduct();
+                        $similarProduct->setParentProduct($product);
+                        $similarProduct->setProduct($productDB);
+                        $this->getDoctrine()->getManager()->persist($similarProduct);
+
+                        $product->addSimilarProduct($similarProduct);
+                    }
+                }
+            }
+
+
 
             $color = $form->get('color')->getData();
             if (is_array($color)) {
