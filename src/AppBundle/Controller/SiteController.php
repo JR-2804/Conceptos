@@ -835,7 +835,10 @@ class SiteController extends Controller
 
               $externalRequest->setFinalPrice($finalPrice);
               $externalRequest->setWeight($weight);
+              $externalRequest->setSellPrice($data->getSellPrice());
               $externalRequest->setBudget($data->getBudget());
+              $externalRequest->setTicketPrice($data->getTicketPrice());
+              $externalRequest->setProviderProfit($data->getProviderProfit());
               $externalRequest->setPayment($data->getPayment());
               $externalRequest->setCreationDate(new \DateTime('now'));
               $externalRequest->setDate(new \DateTime($data->getDate()));

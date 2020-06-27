@@ -56,15 +56,16 @@ $(document).ready(function() {
       var remainingDays = Math.floor(remaining / 1000 / 60 / 60 / 24);
       remaining -= remainingDays * 1000 * 60 * 60 * 24;
       var remainingHours = Math.floor(remaining / 1000 / 60 / 60);
+      remaining -= remainingHours * 1000 * 60 * 60;
+      var remainingMinutes = Math.floor(remaining / 1000 / 60);
 
-      var text = "Este pedido expira en: ";
       if (remainingDays > 0) {
-        text += remainingDays + "d ";
+        remainingHours += remainingDays * 24;
       }
-      text += remainingHours + "h";
-
       $(".external-request[data-id='" + id + "']").show();
-      $(".external-request[data-id='" + id + "'] .remaining-time").text(text);
+      $(".external-request[data-id='" + id + "'] .remaining-time").text(
+        "Este pedido expira en: " + remainingHours + ":" + remainingMinutes
+      );
     });
   }
 });

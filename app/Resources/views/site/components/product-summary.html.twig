@@ -20,16 +20,24 @@
       <div class="d-flex flex-column col-6 pl-0">
         <span class="conceptos-product-info">{{product.name}}</span>
         <span class="conceptos-product-info-description">{{product.item}}</span>
-        {% if product.inStore or product.recent %}
-          <div class="d-flex flex-column conceptos-product-badges">
-            {% if product.inStore %}
-              <span class="conceptos-in-store-product-badge">ENTREGA EN 24H</span>
-            {% endif %}
-            {% if product.recent %}
-              <span class="conceptos-new-product-badge">NUEVO</span>
-            {% endif %}
-          </div>
-        {% endif %}
+        <div class="d-flex flex-column conceptos-product-badges">
+          {% if product.recent %}
+            <span class="conceptos-new-product-badge">NUEVO</span>
+          {% endif %}
+          {% if product.inStore %}
+            <span class="conceptos-in-store-product-badge">ENTREGA EN 24H</span>
+          {% elseif product.isAriplaneForniture or product.isAriplaneMattress %}
+            <div class="d-flex align-items-center mr-2">
+              <div class="product-airplane-delivery"></div>
+              <span class="conceptos-product-delivery-text">Entrega de 3 a 5 semanas</span>
+            </div>
+          {% else %}
+            <div class="d-flex align-items-center">
+              <div class="product-ship-delivery mr-2"></div>
+              <span class="conceptos-product-delivery-text">Entrega de 6 a 12 semanas</span>
+            </div>
+          {% endif %}
+        </div>
       </div>
       <div class="d-flex">
         <div class="d-flex align-items-center mr-3">
@@ -80,11 +88,21 @@
       <span class="conceptos-product-info-description">{{product.item}}</span>
       <div class="d-flex align-items-center">
         <div class="d-flex flex-column conceptos-product-badges">
-          {% if product.inStore %}
-            <span class="conceptos-in-store-product-badge">ENTREGA EN 24H</span>
-          {% endif %}
           {% if product.recent %}
             <span class="conceptos-new-product-badge">NUEVO</span>
+          {% endif %}
+          {% if product.inStore %}
+            <span class="conceptos-in-store-product-badge">ENTREGA EN 24H</span>
+          {% elseif product.isAriplaneForniture or product.isAriplaneMattress %}
+            <div class="d-flex align-items-center mr-2">
+              <div class="product-airplane-delivery"></div>
+              <span class="conceptos-product-delivery-text">Entrega de 3 a 5 semanas</span>
+            </div>
+          {% else %}
+            <div class="d-flex align-items-center">
+              <div class="product-ship-delivery mr-2"></div>
+              <span class="conceptos-product-delivery-text">Entrega de 6 a 12 semanas</span>
+            </div>
           {% endif %}
         </div>
       </div>

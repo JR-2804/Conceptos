@@ -436,6 +436,31 @@ a.conceptos-subtitle:focus {
   color: #282827;
 }
 
+.conceptos-product-delivery-text {
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 12px;
+  color: #282827;
+}
+
+.product-airplane-delivery {
+  border: none;
+  width: 25px;
+  height: 24px;
+  background-color: transparent;
+  background-image: url("../../images/cart/airplane-simple.png");
+  background-size: cover;
+}
+
+.product-ship-delivery {
+  border: none;
+  width: 25px;
+  height: 24px;
+  background-color: transparent;
+  background-image: url("../../images/cart/ship-simple.png");
+  background-size: cover;
+}
+
 .conceptos-product-price {
   font-size: 14px;
 }

@@ -5,6 +5,8 @@ var homeDelivery = undefined;
 var paymentType = undefined;
 var paymentCurrency = undefined;
 var homeCollect = false;
+var totalIkeaPriceWithTaxes = 0;
+var totalPriceBase = 0;
 
 $(document).ready(function() {
   function getProductIdByElement(element) {
@@ -255,8 +257,8 @@ $(document).ready(function() {
     CheckIfCanPerformHomeCollect();
 
     var totalWeight = 0;
-    var totalIkeaPriceWithTaxes = 0;
-    var totalPriceBase = 0;
+    totalIkeaPriceWithTaxes = 0;
+    totalPriceBase = 0;
     products.forEach(function(product) {
       var productId = product.id;
       var count = getProductQuantityByProductId(productId);
@@ -375,6 +377,7 @@ $(document).ready(function() {
     firstPaymentSection.text("$" + Math.ceil(totalPrice / 1.8).toFixed(2));
 
     MoveBagsBadge();
+    CalculateExternalRequestTotalPrice();
   }
 
   function DisplayMembershipSuccess() {
@@ -884,27 +887,47 @@ $(document).ready(function() {
       $("#request-select").show();
       $("#prefactures-select").show();
       $("#budget").hide();
+      $("#ticket-price").hide();
+      $("#provider-profit").hide();
       $("#payment").hide();
       $("#date").hide();
     } else if ($(this).val() === "prefacture") {
       $("#request-select").show();
       $("#prefactures-select").hide();
       $("#budget").hide();
+      $("#ticket-price").hide();
+      $("#provider-profit").hide();
       $("#payment").hide();
       $("#date").hide();
     } else if ($(this).val() === "external-request") {
       $("#request-select").hide();
       $("#prefactures-select").hide();
       $("#budget").show();
+      $("#ticket-price").show();
+      $("#provider-profit").show();
       $("#payment").show();
       $("#date").show();
     } else {
       $("#request-select").hide();
       $("#prefactures-select").hide();
       $("#budget").hide();
+      $("#ticket-price").hide();
+      $("#provider-profit").hide();
       $("#payment").hide();
       $("#date").hide();
     }
+  });
+
+  $("#budget").change(function() {
+    CalculateExternalRequestTotalPrice();
+  });
+
+  $("#ticket-price").change(function() {
+    CalculateExternalRequestTotalPrice();
+  });
+
+  $("#provider-profit").change(function() {
+    CalculateExternalRequestTotalPrice();
   });
 
   $(".combo-product-toggle").click(function() {
@@ -934,12 +957,17 @@ $(document).ready(function() {
       }
       if ($("#type-select").val() === "external-request") {
         var budget = $("#budget input").val();
+        var ticketPrice = $("#ticket-price input").val();
+        var providerProfit = $("#provider-profit input").val();
         var payment = $("#payment input").val();
         var date = $("#date input").val();
-        if (!budget || !payment || !date) {
+        if (!budget || !ticketPrice || !providerProfit || !payment || !date) {
           e.preventDefault();
         } else {
+          $("#check_out_sellPrice").val(totalPriceBase);
           $("#check_out_budget").val(budget);
+          $("#check_out_ticketPrice").val(ticketPrice);
+          $("#check_out_providerProfit").val(providerProfit);
           $("#check_out_payment").val(payment);
           $("#check_out_date").val(date);
         }
@@ -948,6 +976,25 @@ $(document).ready(function() {
       e.preventDefault();
     }
   });
+
+  function CalculateExternalRequestTotalPrice() {
+    if (!$("#provider-profit input").val()) {
+      var providerProfit = Number(0.135 * totalPriceBase).toFixed(2);
+      if (providerProfit < 250) {
+        providerProfit = 250;
+      }
+
+      $("#provider-profit input").val(providerProfit);
+    }
+
+    var payment = totalIkeaPriceWithTaxes;
+    payment += Number($("#budget input").val());
+    payment += Number($("#ticket-price input").val());
+    payment += Number($("#provider-profit input").val());
+
+    $("#payment input").val(Number(payment).toFixed(2));
+    $("#ikea-price-info").text(Number(totalIkeaPriceWithTaxes).toFixed(2));
+  }
 
   CreateCartSummaryActions();
   UpdateDeliveryIconsState();
