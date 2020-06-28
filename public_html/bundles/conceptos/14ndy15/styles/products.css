@@ -232,6 +232,7 @@ https://flickity.metafizzy.co
   width: 95%;
   margin: 0 auto 2.5em; }
   .carousel .carousel__cell {
+    height: 11vh;
     width: 28%;
     margin: 0 .25em; }
   .carousel .carousel__cell img {
