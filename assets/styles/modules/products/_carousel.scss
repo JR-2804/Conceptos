@@ -11,7 +11,7 @@
 	height: 11vh;
 	min-height: 11vh;
 	width: 95%;
-	margin: 0 auto 2.5em;
+	margin: 0 auto 1em;
 
 	& .carousel__cell{
 		height: 11vh;
@@ -30,8 +30,4 @@
 .flickity-prev-next-button{
 	width: 22px;
 	height: 22px;
-}
-
-.flickity-page-dots{
-	bottom: -35px;
 }

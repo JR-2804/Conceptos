@@ -224,6 +224,7 @@ https://flickity.metafizzy.co
     width: 95%;
     margin: .25em auto 1em; }
   .carousel--small .carousel__cell {
+      height: 11vh;
       width: 28%;
       margin: 0 .25em; }
   .carousel__cell {

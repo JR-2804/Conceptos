@@ -3,7 +3,6 @@
   display: inline-block; }
   .my_dropdown__content {
     display: none;
-    right: 0;
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
@@ -19,10 +18,14 @@
   @media (min-width: 1200px) {
       .my_dropdown__content {
         width: 20vw; } }
+  .my_dropdown__content--left {
+      left: 0; }
+  .my_dropdown__content--right {
+      right: 0; }
   .my_dropdown:hover .my_dropdown__content {
     display: block;
-    -webkit-animation: swing-in-top-bck 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-            animation: swing-in-top-bck 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
+    -webkit-animation: swing-in-top-bck 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+            animation: swing-in-top-bck 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
   .my_dropdown img {
     height: 1em;
     width: auto; }
@@ -233,7 +236,7 @@ https://flickity.metafizzy.co
   height: 11vh;
   min-height: 11vh;
   width: 95%;
-  margin: 0 auto 2.5em; }
+  margin: 0 auto 1em; }
   .carousel .carousel__cell {
     height: 11vh;
     width: 28%;
@@ -246,8 +249,6 @@ https://flickity.metafizzy.co
   .flickity-prev-next-button {
   width: 22px;
   height: 22px; }
-  .flickity-page-dots {
-  bottom: -35px; }
   .conceptos-product-card .product-similar {
   font-size: 11px;
   font-weight: bold;

@@ -5,7 +5,6 @@
 
 	&__content {
 		display: none;
-		right: 0;
 		position: absolute;
 		background-color: #f9f9f9;
 		min-width: 160px;
@@ -21,16 +20,25 @@
 
 		animation: swing-out-top-bck .25s cubic-bezier(0.600, -0.280, 0.735, 0.045) both;
 
-
 		@include atLarge{
 			width: 20vw;
 		}
+
+		&--left{
+			left: 0;
+		}
+
+		&--right{
+			right: 0;
+		}
 	}
+
+
 
 	&:hover .my_dropdown__content {
 		display: block;
 
-		animation: swing-in-top-bck .2s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+		animation: swing-in-top-bck .9s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
 	}
 
 	& img{

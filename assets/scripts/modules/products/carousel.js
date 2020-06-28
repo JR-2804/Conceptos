@@ -14,6 +14,7 @@ class Carousel{
             contain: true,
             autoPlay: 5000,
             pauseAutoPlayOnHover: false,
+            pageDots: false,
             groupCells: true,
         });
     }
