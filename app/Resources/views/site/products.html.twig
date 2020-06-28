@@ -146,7 +146,8 @@
         </div>
       </div>
 
-        {{ include('site/components/products/breadcrumbs.html.twig') }}
+
+      {{ include('site/components/products/breadcrumbs.html.twig') }}
 
 	    {{ include('site/components/products/popular_products.html.twig') }}
 
@@ -155,7 +156,7 @@
           {{include('site/categories-menu.html.twig')}}
         </div>
 
-        <div class="d-flex flex-wrap">
+        <div class="d-flex flex-wrap w-100">
           {% for product in products %}
             {{include('site/components/product-summary.html.twig')}}
           {% else %}
