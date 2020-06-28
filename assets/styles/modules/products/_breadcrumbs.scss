@@ -112,6 +112,10 @@
 						width: 100%;
 					}
 				}
+
+				&:last-child:after{
+					display: none;
+				}
 			}
 		}
 	}
