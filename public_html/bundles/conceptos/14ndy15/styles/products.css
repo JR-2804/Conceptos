@@ -19,9 +19,9 @@
       .my_dropdown__content {
         width: 20vw; } }
   .my_dropdown__content--left {
-      left: 0; }
+      left: 1em; }
   .my_dropdown__content--right {
-      right: 0; }
+      right: 1em; }
   .my_dropdown:hover .my_dropdown__content {
     display: block;
     -webkit-animation: swing-in-top-bck 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
