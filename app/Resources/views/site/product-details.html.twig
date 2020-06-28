@@ -54,43 +54,29 @@
 {% block css %}
   <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/product-details.css') }}">
   <link rel="stylesheet" href="{{ asset('bundles/conceptos/products/css/products.css') }}">
+  <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/styles/product.css') }}" type="text/css">
 {% endblock %}
 {% block body %}
 
   <div class="d-flex flex-column m-2 p-2 pt-lg-3 pl-lg-5 pr-lg-5">
     <div class="d-flex flex-wrap conceptos-white-background">
-      <div class="d-flex col-12 col-lg-6 carousel pl-0 pt-lg-3 pb-lg-2 pl-lg-5 pr-lg-5 pt-2" data-ride="carousel" id="carousel-product-details" data-interval="5000">
-        <div class="carousel-inner pl-lg-5 pr-lg-5">
-          {% if app.user|default %}
-            <span data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"
-              data-path-remove="{{ path('remove_from_favorite', {id: product.id}) }}"
-              class="favorite-product {% if product.favorite %}favorite{% endif %}">
+{#      <div class="d-flex col-12 col-lg-6 carousel pl-0 pt-lg-3 pb-lg-2 pl-lg-5 pr-lg-5 pt-2" data-ride="carousel" id="carousel-product-details" data-interval="5000">#}
+
+{#	      TODO:corazon favorito#}
+	      {% if app.user|default %}
+		      <span data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"
+		            data-path-remove="{{ path('remove_from_favorite', {id: product.id}) }}"
+		            class="favorite-product {% if product.favorite %}favorite{% endif %}">
               <i class="fa fa-heart favorite-icon-big"></i>
             </span>
-          {% endif %}
-          {% set count = 0 %}
-          {% for imageSet in imageSets %}
-            {% for image in imageSet %}
-              <div class="carousel-item {% if count == 0 %}active{% endif %} pl-lg-5 pr-lg-5">
-                <div class="d-flex justify-content-center w-100">
-                  <img class="image-viewer" src="{{ vich_uploader_asset(image, 'imageFile') }}">
-                </div>
-              </div>
-              {% set count = count + 1 %}
-            {% endfor %}
-          {% endfor %}
-        </div>
-        {% if count > 1 %}
-          <div class="d-flex">
-            <a class="carousel-control carousel-control-prev ml-lg-5" role="button" data-slide="prev" href="#carousel-product-details">
-              <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-            </a>
-            <a class="carousel-control carousel-control-next mr-lg-5" role="button" data-slide="next" href="#carousel-product-details">
-              <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-            </a>
-          </div>
-        {% endif %}
-      </div>
+	      {% endif %}
+
+	      {{ include('site/components/product/carousel.html.twig') }}
+
+
+{#      </div>#}
+
+
       <div class="d-flex col-12 col-lg-6 flex-column pl-0 pt-lg-3">
         <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5">
           <span class="conceptos-title-strong">{{product.name}}</span>
@@ -125,6 +111,18 @@
         <div id="product-evaluation-section" class="d-flex pl-2 pl-lg-5">
           {{include('site/components/change-product-evaluation.html.twig')}}
         </div>
+
+	      {% if product.getSimilarProducts | length > 0 %}
+		      <div class="similar_products d-flex flex-column p-2 pl-lg-5 pr-lg-5">
+			      <div class="similar_products__show_button">
+				      <button class="conceptos-primary-button">Otras variantes
+					      <img src="{{ asset('bundles/conceptos/images/arrow.svg') }}" alt="">
+				      </button>
+			      </div>
+		      </div>
+	      {% endif %}
+
+
         <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3">
           <span class="conceptos-title">DETALLES DEL PRODUCTO</span>
           <span class="conceptos-subtitle">CÓDIGO: {{product.code}}</span>
@@ -214,8 +212,13 @@
             </div>
           </div>
         {% endif %}
+
       </div>
+      {{ include('site/components/products/similar_products.html.twig') }}
     </div>
+
+{#    {{ dump(product) }}#}
+
     <div class="d-flex flex-column mt-3">
       <span class="conceptos-title">PRODUCTOS RELACIONADOS</span>
       {% set sizes = '(min-width: 1000px) 12vw, 45vw' %}
@@ -232,4 +235,5 @@
 {% endblock %}
 {% block js %}
   <script src="{{ asset('bundles/conceptos/products/js/product-details.js') }}"></script>
+  <script src="{{ asset('bundles/conceptos/14ndy15/scripts/product.js') }}"></script>
 {% endblock %}

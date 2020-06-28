@@ -40,7 +40,12 @@ $(document).ready(function() {
   if (inStore) {
     $(".store-count-content").show();
   }
-  var colorDB = $("#product_color").val();
+
+    $("#similar-products")
+        .val(JSON.parse($("#product_similarProducts").val()))
+        .trigger("change");
+
+    var colorDB = $("#product_color").val();
   if (colorDB) {
     $("#color")
       .val([colorDB])

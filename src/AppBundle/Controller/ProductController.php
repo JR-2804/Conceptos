@@ -409,6 +409,14 @@ class ProductController extends Controller
         if ($product->getInStore()) {
             $dto->setCountStore($product->getStoreCount());
         }
+
+        $similarProducts = [];
+        foreach ($product->getSimilarProducts() as $similarProduct) {
+            $similarProducts[] = $similarProduct->getId();
+        }
+        $dto->setSimilarProducts(json_encode($similarProducts));
+
+
         $favorites = [];
         foreach ($product->getFavoritesCategory() as $favorite) {
             $favorites[] = $favorite->getId();
@@ -713,6 +721,44 @@ class ProductController extends Controller
                 $product->setStoreCount($form->get('countStore')->getData());
             }
 
+
+
+            $similarProductIds = json_decode($form->get('similarProducts')->getData(), true);
+            $previousSimilarProductIds = [];
+
+            foreach ($product->getSimilarProducts() as $similarProduct) {
+                $previousSimilarProductIds[] = $similarProduct->getid();
+                $product->removeSimilarProduct($similarProduct);
+            }
+
+            foreach ($previousSimilarProductIds as $previousSimilarProductId){
+                $previousSimilarProduct = $this->getDoctrine()->getRepository('AppBundle:Product')->find($previousSimilarProductId);
+                foreach ($previousSimilarProduct->getSimilarProducts() as $previousSimilarProductSimilarProduct)
+                    $previousSimilarProduct->removeSimilarProduct($previousSimilarProductSimilarProduct);
+            }
+
+            if ($similarProductIds != null) {
+                foreach ($similarProductIds as $similarProductId) {
+                    $similarProduct = $this->getDoctrine()->getRepository('AppBundle:Product')->find($similarProductId);
+
+                    $product->addSimilarProduct($similarProduct);
+                    $similarProduct->addSimilarProduct($product);
+
+                    foreach ($similarProductIds as $similarProductOtherId) {
+                        if ($similarProductOtherId == $similarProductId)
+                            continue;
+
+                        $similarProductOther = $this->getDoctrine()->getRepository('AppBundle:Product')->find($similarProductOtherId);
+                        $similarProduct->addSimilarProduct($similarProductOther);
+                    }
+
+                    $this->getDoctrine()->getManager()->persist($similarProduct);
+                }
+
+                $this->getDoctrine()->getManager()->persist($product);
+            }
+
+
             $color = $form->get('color')->getData();
             if (is_array($color)) {
                 $color = $color[0];
@@ -810,6 +856,7 @@ class ProductController extends Controller
             ->where('c.subCategories IS NOT EMPTY')->getQuery()->getResult();
 
         return $this->render('::new_edit_product.html.twig', [
+            'product'=>$product,
             'action' => 'edit',
             'categories' => $categories,
             'products' => $this->getDoctrine()->getRepository('AppBundle:Product')->findAll(),

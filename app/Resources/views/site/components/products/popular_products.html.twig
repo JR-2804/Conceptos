@@ -1,0 +1,16 @@
+{% if popularProducts | length > 0 %}
+	<div class="popular_products__container">
+
+		<h4 class="pl-2 conceptos-title-strong">Lo más vendido</h4>
+
+		<div class="popular_products carousel">
+			{% for product in popularProducts %}
+				<div class="carousel__cell">
+					<a href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+						{{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes = '28vw') | raw }}
+					</a>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endif %}

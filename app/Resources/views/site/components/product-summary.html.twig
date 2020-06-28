@@ -15,11 +15,15 @@
       <img class="conceptos-image conceptos-highlight-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
     {% endif %}
   </div>
+
   <div class="d-flex flex-column conceptos-white-background pl-2 pr-2 pb-2 w-100">
     <div class="d-flex justify-content-between">
       <div class="d-flex flex-column col-6 pl-0">
         <span class="conceptos-product-info">{{product.name}}</span>
         <span class="conceptos-product-info-description">{{product.item}}</span>
+        {% if product.similarProducts | length > 0 %}
+          <span class="product-similar">Más Variantes</span>
+        {% endif %}
         <div class="d-flex flex-column conceptos-product-badges">
           {% if product.recent %}
             <span class="conceptos-new-product-badge">NUEVO</span>
@@ -87,6 +91,9 @@
       <span class="conceptos-product-info">{{product.name}}</span>
       <span class="conceptos-product-info-description">{{product.item}}</span>
       <div class="d-flex align-items-center">
+        {% if product.similarProducts | length > 0 %}
+          <span class="product-similar">Más Variantes</span>
+        {% endif %}
         <div class="d-flex flex-column conceptos-product-badges">
           {% if product.recent %}
             <span class="conceptos-new-product-badge">NUEVO</span>

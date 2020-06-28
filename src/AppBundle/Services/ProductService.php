@@ -217,7 +217,7 @@ class ProductService
 
         $populars = $request->query->get('populars', -1);
         $inStore = $request->query->get('inStore', -1);
-        $category = $request->query->get('categories', -1);
+        $categories = $request->query->get('categories', -1);
         $priceMin = $request->query->get('priceMin', -1);
         $priceMax = $request->query->get('priceMax', -1);
         $color = $request->query->get('color', -1);
@@ -291,22 +291,22 @@ class ProductService
             if ($hasWhere) {
                 $qbProduct->andWhere('p.name LIKE :term OR p.description LIKE :term OR p.item LIKE :term OR p.code LIKE :term')
                     ->setParameter('term', '%'.$term.'%')
-                  ;
+                ;
                 $qbProductCount->andWhere('p.name LIKE :term OR p.description LIKE :term OR p.item LIKE :term OR p.code LIKE :term')
                     ->setParameter('term', '%'.$term.'%')
-                  ;
+                ;
             } else {
                 $qbProduct->where('p.name LIKE :term OR p.description LIKE :term OR p.item LIKE :term OR p.code LIKE :term')
                     ->setParameter('term', '%'.$term.'%')
-                  ;
+                ;
                 $qbProductCount->where('p.name LIKE :term OR p.description LIKE :term OR p.item LIKE :term OR p.code LIKE :term')
                     ->setParameter('term', '%'.$term.'%')
-                  ;
+                ;
                 $hasWhere = true;
             }
         }
-        if (-1 != $category && '' != $category) {
-            $category = explode(',', $category);
+        if (-1 != $categories && '' != $categories) {
+            $categories = explode(',', $categories);
             $qbProduct->join('p.categories', 'ca');
             $qbProductCount->join('p.categories', 'ca');
             if ($hasWhere) {
@@ -317,30 +317,30 @@ class ProductService
                 $qbProductCount->where('ca.id IN (:categories)');
                 $hasWhere = true;
             }
-            $qbProduct->setParameter('categories', $category);
-            $qbProductCount->setParameter('categories', $category);
+            $qbProduct->setParameter('categories', $categories);
+            $qbProductCount->setParameter('categories', $categories);
 
             $count = 0;
-            foreach ($category as $c) {
-              $count = $count + 1;
+            foreach ($categories as $c) {
+                $count = $count + 1;
             }
 
             if ($count > 1) {
-              $mainCategory = $this->categoryRepository->find($category[0])->getParents()[0];
+                $mainCategory = $this->categoryRepository->find($categories[0])->getParents()[0];
             } else {
-              $mainSubcategory = $this->categoryRepository->find($category[0]);
-              $mainCategory = $mainSubcategory->getParents()[0];
+                $mainSubcategory = $this->categoryRepository->find($categories[0]);
+                $mainCategory = $mainSubcategory->getParents()[0];
             }
         }
         if (-1 != $populars) {
-          if ($hasWhere) {
-              $qbProduct->andWhere('p.popular = true');
-              $qbProductCount->andWhere('p.popular = true');
-          } else {
-              $qbProduct->where('p.popular = true');
-              $qbProductCount->where('p.popular = true');
-              $hasWhere = true;
-          }
+            if ($hasWhere) {
+                $qbProduct->andWhere('p.popular = true');
+                $qbProductCount->andWhere('p.popular = true');
+            } else {
+                $qbProduct->where('p.popular = true');
+                $qbProductCount->where('p.popular = true');
+                $hasWhere = true;
+            }
         }
         if (-1 != $recent) {
             if ($hasWhere) {
@@ -370,8 +370,8 @@ class ProductService
             $activeOffers = $activeOfferQB->getQuery()->getResult();
 
             foreach ($activeOffers as $activeOffer)
-                foreach ($activeOffer->getCategories() as $category)
-                    foreach ($category->getProducts() as $product)
+                foreach ($activeOffer->getCategories() as $categories)
+                    foreach ($categories->getProducts() as $product)
                         array_push($products, $product);
 
             $qbProduct->leftJoin('p.offers', 'o');
@@ -387,8 +387,8 @@ class ProductService
             $qbProductCount->setParameter('current', new \DateTime(), Type::DATE);
 
         } else {
-          $qbProduct->leftJoin('p.offers', 'o');
-          $qbProductCount->leftJoin('p.offers', 'o');
+            $qbProduct->leftJoin('p.offers', 'o');
+            $qbProductCount->leftJoin('p.offers', 'o');
         }
 
         $firstResult = 0;
@@ -397,17 +397,24 @@ class ProductService
         }
 
         $_products = $qbProduct
-            ->orderBy('o.price', 'DESC')
+            ->orderBy('p.name', 'ASC')
+            ->addOrderBy('o.price', 'DESC')
             ->addOrderBy('p.inStore', 'DESC')
-            ->addOrderBy('p.name', 'ASC')
             ->addOrderBy('p.price', 'ASC')
             ->setFirstResult($firstResult)
             ->setMaxResults(50)
             ->getQuery()
             ->getResult();
 
-        foreach ($_products as $product)
-            array_push($products, $product);
+        $similars = [];
+        foreach ($_products as $product){
+            foreach ($product->getSimilarProducts() as $similarProduct)
+                $similars[] = $similarProduct->getId();
+
+            if (!in_array($product->getId(), $similars))
+                $products[] = $product;
+        }
+
 
         $countProducts = $qbProductCount->getQuery()->getSingleScalarResult();
 
@@ -424,23 +431,52 @@ class ProductService
         $recentHeader = false;
         $generalHeader = false;
         if (null == $mainCategory) {
-          if (-1 != $inOffer) {
-            $inOfferHeader = true;
-          }
-          elseif (-1 != $inStore) {
-            $inStoreHeader = true;
-          }
-          elseif (-1 != $recent) {
-            $recentHeader = true;
-          }
-          else {
-            $generalHeader = true;
-          }
+            if (-1 != $inOffer) {
+                $inOfferHeader = true;
+            }
+            elseif (-1 != $inStore) {
+                $inStoreHeader = true;
+            }
+            elseif (-1 != $recent) {
+                $recentHeader = true;
+            }
+            else {
+                $generalHeader = true;
+            }
         }
+
+
+
+
+        $popularProducts = [];
+        if ($categories != -1) {
+            $popularProductsCount = 15;
+            $categoriesPopularProducts = [];
+
+            foreach ($categories as $category) {
+                $categoryId = intval($category);
+                $category = $this->categoryRepository->find($categoryId);
+                if ($category == null)
+                    continue;
+                foreach ($category->getProducts() as $product)
+                    if ($product->getPopular()) {
+                        $categoriesPopularProducts[] = $product;
+                    }
+            }
+
+            if (count($categoriesPopularProducts) >= 3) {
+                $randomIndexes = array_rand($categoriesPopularProducts,
+                    min(count($categoriesPopularProducts), $popularProductsCount));
+                foreach ($randomIndexes as $randomIndex)
+                    $popularProducts[] = $categoriesPopularProducts[$randomIndex];
+            }
+        }
+
 
         return [
             'products' => $products,
             'countProducts' => $countProducts,
+            'popularProducts'=>$popularProducts,
             'mainCategory' => $mainCategory,
             'mainSubcategory' => $mainSubcategory,
             'inOfferHeader' => $inOfferHeader,

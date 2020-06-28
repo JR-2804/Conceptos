@@ -12,7 +12,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
   z-index: 3;
   padding: .25em;
   display: grid;
-  grid-template-areas: "logo logo user favorite cart" "menu search search search search";
+  grid-template-areas: "logo logo user favorite cart" "menu search search search search";
   grid-template-columns: 13% 45% 12% 12% 12%;
   grid-template-rows: 3em 3em;
   width: 100%;
@@ -70,6 +70,10 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     align-items: center;
     position: relative; }
 
+@media (min-width: 1200px) {
+      .new_navbar__content__search {
+        justify-content: flex-end; } }
+
 .new_navbar__content__search form {
       position: relative;
       width: 100%; }
@@ -99,7 +103,8 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
         right: 0;
         transform: scale(0.8);
         outline: 0;
-        cursor: pointer; }
+        cursor: pointer;
+        top: 0; }
 
 .new_navbar__content__search form button[type='submit']:before {
           position: absolute;

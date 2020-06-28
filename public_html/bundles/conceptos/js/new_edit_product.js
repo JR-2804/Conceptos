@@ -122,7 +122,7 @@ $(document).ready(function() {
     }
   });
 
-  $("#category, #combo-product, #complementary-products").select2({
+  $("#category, #combo-product, #complementary-products, #similar-products").select2({
     theme: "bootstrap",
     language: "es",
     allowClear: true
@@ -271,6 +271,11 @@ $(document).ready(function() {
       $("#product_complementaryProducts").val(
         JSON.stringify($("#complementary-products").val())
       );
+
+      $("#product_similarProducts").val(
+          JSON.stringify($("#similar-products").val())
+      );
+
       $("#product_weight").val(weight);
       $("#product_shippingLimit").val($("#shipping-limit").val());
       $("#product_ikeaPrice").val($("#ikea-price").val());

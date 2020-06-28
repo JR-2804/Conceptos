@@ -123,11 +123,13 @@ class Product
     /**
      * @ORM\Column(type="integer")
      */
+
     private $shippingLimit;
     /**
      * @ORM\Column(type="float")
      */
     private $calculatePrice;
+
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\FavoriteProduct", mappedBy="product")
      */
@@ -145,6 +147,8 @@ class Product
     private $priceOffer;
 
     private $favorite;
+
+    
 
     /**
      * @ORM\Column(type="boolean")
@@ -228,6 +232,11 @@ class Product
     private $complementaryProducts;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product")
+     */
+    private $similarProducts;
+
+    /**
      * Product constructor.
      */
     public function __construct()
@@ -243,6 +252,7 @@ class Product
         $this->evaluations = new ArrayCollection();
         $this->comboProducts = new ArrayCollection();
         $this->complementaryProducts = new ArrayCollection();
+        $this->similarProducts = new ArrayCollection();
     }
 
     public function __toString()
@@ -884,6 +894,7 @@ class Product
         return $this->complementaryProducts;
     }
 
+
     public function getLabels()
     {
       $labels = "";
@@ -936,4 +947,24 @@ class Product
 
       return $labels;
     }
+
+    public function addSimilarProduct(Product $similarProduct)
+    {
+        $this->similarProducts[] = $similarProduct;
+
+        return $this;
+    }
+
+    public function removeSimilarProduct(Product $similarProduct)
+    {
+        $this->similarProducts->removeElement($similarProduct);
+    }
+
+
+    //Poner explicacions
+    public function getSimilarProducts()
+    {
+        return $this->similarProducts;
+    }
+
 }
