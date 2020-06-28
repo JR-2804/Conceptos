@@ -1,1 +1,3 @@
-ALTER TABLE `product` CHANGE `price` `price` DECIMAL(11,2) NOT NULL;
+ALTER TABLE `request` ADD COLUMN `combo_discount` double NULL AFTER `first_client_discount`;
+ALTER TABLE `pre_facture` ADD COLUMN `combo_discount` double NULL AFTER `first_client_discount`;
+ALTER TABLE `facture` ADD COLUMN `combo_discount` double NULL AFTER `first_client_discount`;

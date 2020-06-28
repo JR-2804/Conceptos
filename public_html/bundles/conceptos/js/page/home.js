@@ -10,8 +10,13 @@ var template_advertisement =
   '<div class="col-3"><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Propaganda #%6</h3></div><div class="panel-body"><img src="%1" class="img-responsive img-header center-block" height="150" width="150"><p class="video-link">%3</p><p class="video-link">%4</p><p class="video-link">%5</p><p class="video-link"></p><a class="btn btn-link btn-secondary btn-remove-advertisement" data-id="%2">Eliminar</a><a class="btn btn-link btn-secondary btn-edit-advertisement" data-id="%7">Editar</a></div></div></div>';
 
 var social_networks = [];
+var popularProductsStyleDesktop = undefined;
+var popularProductsStyleMobile = undefined;
+var storeProductsStyleDesktop = undefined;
+var storeProductsStyleMobile = undefined;
 var headerImages = undefined;
 var headerImage = undefined;
+var headerImageMobile = undefined;
 var topImage1 = undefined;
 var topImage2 = undefined;
 var servicesImage = undefined;
@@ -27,7 +32,35 @@ var logoImage = undefined;
 
 var editingAdvertisement = undefined;
 
+var hoverColorParent = document.querySelector("#hover-color");
+var hoverColorPicker = new Picker(hoverColorParent);
+var hoverColor = undefined;
+hoverColorPicker.onChange = function(color) {
+  hoverColor = color.rgbaString;
+  hoverColorParent.style.background = hoverColor;
+};
+
+var fontColorParent = document.querySelector("#slide-font-color");
+var fontColorPicker = new Picker(fontColorParent);
+var fontColor = undefined;
+fontColorPicker.onChange = function(color) {
+  fontColor = color.rgbaString;
+  fontColorParent.style.background = fontColor;
+};
+
 $(document).ready(function() {
+  if (data.popularProductsStyleDesktop) {
+    popularProductsStyleDesktop = data.popularProductsStyleDesktop;
+  }
+  if (data.popularProductsStyleMobile) {
+    popularProductsStyleMobile = data.popularProductsStyleMobile;
+  }
+  if (data.storeProductsStyleDesktop) {
+    storeProductsStyleDesktop = data.storeProductsStyleDesktop;
+  }
+  if (data.storeProductsStyleMobile) {
+    storeProductsStyleMobile = data.storeProductsStyleMobile;
+  }
   if (data.top) {
     topImage1 = data.top.image1;
     topImage2 = data.top.image2;
@@ -82,6 +115,30 @@ $(document).ready(function() {
     },
     success: function(e, r) {
       headerImage = r;
+    }
+  });
+  dropzoneMobile = new Dropzone("form#picture-dropzone-header-mobile", {
+    url: $("#picture-dropzone-header-mobile").attr("action"),
+    maxFiles: 1,
+    thumbnailWidth: 100,
+    thumbnailHeight: 100,
+    addRemoveLinks: true,
+    dictCancelUpload: "Cancelar",
+    dictRemoveFile: "Eliminar",
+    previewTemplate: document.querySelector("#preview-template").innerHTML,
+    acceptedFiles: ".jpg,.jpeg,.png,.gif",
+    init: function() {
+      dropzoneMobile = this;
+      dropzoneMobile.on("removedfile", function() {
+        if (headerImageMobile != undefined) {
+          var path = $(".remove-path-image").val() + "/" + headerImageMobile.id;
+          headerImageMobile = undefined;
+          dropzoneMobile.options.maxFiles = 1;
+        }
+      });
+    },
+    success: function(e, r) {
+      headerImageMobile = r;
     }
   });
   dropzoneTop1 = new Dropzone("form#picture-dropzone-top-1", {
@@ -398,7 +455,9 @@ $(document).ready(function() {
     }
   });
 
-  $("#social-network-select").select2({
+  $(
+    "#social-network-select, #popular-products-style-select-desktop, #store-products-style-select-desktop, #popular-products-style-select-mobile, #store-products-style-select-mobile"
+  ).select2({
     theme: "bootstrap",
     language: "es",
     allowClear: true,
@@ -436,10 +495,13 @@ $(document).ready(function() {
       }
       headerImage.main = $("#header-main").val();
       headerImage.secondary = $("#header-secondary").val();
+      headerImage.mobileImage = headerImageMobile;
       headerImages.push(headerImage);
       headerImage = undefined;
-      var dropzoneHeader = Dropzone.forElement("form#picture-dropzone-header");
-      dropzoneHeader.removeAllFiles(true);
+      Dropzone.forElement("form#picture-dropzone-header").removeAllFiles(true);
+      Dropzone.forElement("form#picture-dropzone-header-mobile").removeAllFiles(
+        true
+      );
       $("#slide-link").val("");
       $("#header-main").val("");
       $("#header-secondary").val("");
@@ -532,11 +594,76 @@ $(document).ready(function() {
     $("#btn-edit-advertisement").hide();
     $("#btn-cancel-edit-advertisement").hide();
   });
+
+  $("#show-slide-preview").change(function() {
+    if ($("#show-slide-preview").prop("checked")) {
+      $("#slide-section").show();
+    } else {
+      $("#slide-section").hide();
+    }
+  });
+
+  $("#update-slide-preview").click(function() {
+    ajax(
+      $(this).data("path"),
+      "POST",
+      {
+        data: JSON.stringify(generateData())
+      },
+      function() {
+        document
+          .getElementById("slide-preview")
+          .contentWindow.location.reload(true);
+      },
+      function() {
+        alert("Ha ocurrido un error actualizando la vista previa");
+      }
+    );
+  });
+
+  $("#slide-preview").on("load", function() {
+    $(this)
+      .contents()
+      .find("head")
+      .append("<style>.home__hero:after {}</style>");
+  });
+
+  ajax(
+    $("#update-slide-preview").data("path"),
+    "POST",
+    {
+      data: JSON.stringify(generateData())
+    },
+    function() {
+      $("#slide-preview").attr("src", $("#slide-preview").data("path"));
+    },
+    function() {
+      alert("Ha ocurrido un error actualizando la vista previa");
+    }
+  );
 });
 
 function init() {
   populateHeaderImages();
   populateAdvertisementsImages();
+  if (data.popularProductsStyleDesktop) {
+    $("#popular-products-style-select-desktop").val(
+      data.popularProductsStyleDesktop
+    );
+  }
+  if (data.popularProductsStyleMobile) {
+    $("#popular-products-style-select-mobile").val(
+      data.popularProductsStyleMobile
+    );
+  }
+  if (data.storeProductsStyleDesktop) {
+    $("#store-products-style-select-desktop").val(
+      data.storeProductsStyleDesktop
+    );
+  }
+  if (data.storeProductsStyleMobile) {
+    $("#store-products-style-select-mobile").val(data.storeProductsStyleMobile);
+  }
   if (data.top.image1Link) {
     $("#top-image-1-link").val(data.top.image1Link);
     $("#top-image-2-link").val(data.top.image2Link);
@@ -586,17 +713,35 @@ function init() {
   if (data.prioritizeSlideText) {
     $("#prioritize-slide-text").prop("checked", data.prioritizeSlideText);
   }
+  if (data.horizontalPosition) {
+    $("#horizontal-position").val(data.horizontalPosition);
+  }
+  if (data.verticalPosition) {
+    $("#vertical-position").val(data.verticalPosition);
+  }
+  if (data.hoverStyle) {
+    $("#hover-style").val(data.hoverStyle);
+  }
+  if (data.hoverColor) {
+    hoverColorPicker.setColor(data.hoverColor);
+  }
   if (data.slideTopMargin) {
     $("#slide-top-margin").val(data.slideTopMargin);
   }
+  if (data.slideBottomMargin) {
+    $("#slide-bottom-margin").val(data.slideBottomMargin);
+  }
   if (data.slideLeftMargin) {
     $("#slide-left-margin").val(data.slideLeftMargin);
+  }
+  if (data.slideRightMargin) {
+    $("#slide-right-margin").val(data.slideRightMargin);
   }
   if (data.slideFontSize) {
     $("#slide-font-size").val(data.slideFontSize);
   }
   if (data.slideFontColor) {
-    $("#slide-font-color").val(data.slideFontColor);
+    fontColorPicker.setColor(data.slideFontColor);
   }
 
   $("#app-app").val(data.app.app);
@@ -629,11 +774,27 @@ function init() {
 function generateData() {
   var data = {
     slides: headerImages,
+    popularProductsStyleDesktop: $(
+      "#popular-products-style-select-desktop"
+    ).val()[0],
+    popularProductsStyleMobile: $(
+      "#popular-products-style-select-mobile"
+    ).val()[0],
+    storeProductsStyleDesktop: $(
+      "#store-products-style-select-desktop"
+    ).val()[0],
+    storeProductsStyleMobile: $("#store-products-style-select-mobile").val()[0],
     prioritizeSlideText: $("#prioritize-slide-text").prop("checked"),
+    horizontalPosition: $("#horizontal-position").val(),
+    verticalPosition: $("#vertical-position").val(),
+    hoverStyle: $("#hover-style").val(),
+    hoverColor: hoverColor,
     slideTopMargin: $("#slide-top-margin").val(),
+    slideBottomMargin: $("#slide-bottom-margin").val(),
     slideLeftMargin: $("#slide-left-margin").val(),
+    slideRightMargin: $("#slide-right-margin").val(),
     slideFontSize: $("#slide-font-size").val(),
-    slideFontColor: $("#slide-font-color").val(),
+    slideFontColor: fontColor,
     top: {
       image1: topImage1,
       image2: topImage2,
@@ -654,7 +815,8 @@ function generateData() {
       subtitle: $("#populars-subtitle").val()
     },
     store: {
-      title: $("#store-title").val() === '' ? 'Almacen' : $("#store-title").val(),
+      title:
+        $("#store-title").val() === "" ? "Almacen" : $("#store-title").val(),
       subtitle: $("#store-subtitle").val()
     },
     cubanBrands: {
@@ -734,7 +896,7 @@ function validateSubmitData() {
     valid = false;
   }
   if (!$("#store-title").val()) {
-      valid = false;
+    valid = false;
   }
   if (!$("#cuban-brands-title").val() || !$("#cuban-brands-subtitle").val()) {
     valid = false;

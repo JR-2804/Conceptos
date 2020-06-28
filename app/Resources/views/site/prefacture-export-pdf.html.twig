@@ -9,135 +9,333 @@
   <meta content="width=device-width" name="viewport" />
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
   <title></title>
-  <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap-grid.min.css') }}">
 
   <style>
-    .header {
-      position: absolute;
-      top: 0;
-      width: 100%;
-      background-color: #333333;
-    }
-    .header img {
-      width: 250px;
-    }
-    .content {
-      padding-top: 80px;
-    }
-    .product-image {
-      height: 100px;
-      width: 100px;
-    }
-    .product-description {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 4;
-      -webkit-box-orient: vertical;
-    }
-    .footer {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      background-color: #333333;
-    }
-    .footer span {
-      color: #FFFFFF;
-      font-size: 15px;
+    @font-face {
+      font-family: "Gotham_Bold";
+      src: url('{{ absolute_url("/bundles/conceptos/fonts/Gotham/Gotham Bold.otf") }}' );
     }
 
-    .table-striped tbody tr:nth-of-type(odd) {
-      background-color: #FFFFFF;
+    @font-face {
+      font-family: "Gotham_Rounded";
+      src: url('{{ absolute_url("/bundles/conceptos/fonts/Gotham/Gotham Rounded Bold.otf") }}' );
     }
+
+    @page {
+      size: a4;
+      margin: 0;
+      margin-top: 180px;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    p {
+      font-family: Gotham_Rounded;
+      margin-top: 0.3em;
+      margin-bottom: 0;
+    }
+
+    span {
+      font-family: Gotham_Rounded;
+    }
+
+    header {
+      position: fixed;
+      top: -180px;
+      width: 100%;
+      background-color: #333333;
+      height: 85px;
+    }
+
+    header img {
+      width: 200px;
+      margin-left: 40px;
+      margin-top: 17px;
+    }
+
+    header .document-info {
+      padding-top: -40px;
+      margin-left: 490px;
+    }
+
+    .document-info p {
+      color: #FFFFFF;
+      font-weight: normal;
+      font-size: 9pt;
+    }
+
+    .yellow-badge {
+      background-color: #c2b930;
+      position: absolute;
+      height: 10px;
+      width: 100%;
+      top: 85px;
+    }
+
+    .prefacture-general-info {
+      margin-top: 50px;
+      padding-left: 40px;
+    }
+
+    .content {
+      padding-top: 40px;
+      padding-left: 40px;
+      padding-right: 40px;
+      margin-bottom: 120px;
+    }
+
+    .prefacture-name {
+      font-family: Gotham_Bold;
+      font-size: 18.2pt;
+    }
+
+    .prefacture-date {
+      font-family: Gotham_Rounded;
+      font-size: 9pt;
+      margin-left: 175px;
+    }
+
+    .prefacture-info {
+      padding-top: -50px;
+    }
+
+    .client-summary p {
+      font-family: Gotham_Rounded;
+      font-size: 9pt;
+    }
+
+    .client-summary strong {
+      font-family: Gotham_Bold;
+      font-size: 9pt;
+    }
+
+    .client-address {
+      margin-bottom: 20px;
+    }
+
+    .prefacture-summary {
+      float: right;
+    }
+
+    .prefacture-summary-info {
+      margin-top: 15px;
+    }
+
+    .prefacture-main-info-top {
+      background-color: #CCCCCC;
+      margin-top: 10px;
+      padding: 5px;
+      width: 250px;
+    }
+
+    .prefacture-main-info-top > p:nth-child(1) {
+      margin-top: 0;
+    }
+
+    .prefacture-main-info-bottom {
+      background-color: #333333;
+      margin-bottom: 20px;
+      padding: 5px;
+      width: 250px;
+    }
+
+    .prefacture-main-info-bottom > p:nth-child(1) {
+      margin-top: 0;
+    }
+
+    .prefacture-main-info-bottom p {
+      color: #FFFFFF;
+    }
+
+    .products-table {
+      margin-top: {% if prefacture.commercial %}265px{% else %}250px{% endif %};
+    }
+
+    .products-table th {
+      font-family: Gotham_Rounded;
+      font-size: 9pt;
+    }
+
+    .products-table td {
+      font-family: Gotham_Rounded;
+      font-size: 9pt;
+    }
+
+    .product-image {
+      height: 80px;
+      width: 80px;
+      margin: 5px;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 60px;
+      left: 40px;
+      height: 50px;
+    }
+
+    .footer-signatures {
+      display: inline-block;
+    }
+
+    .commercial-signature {
+      margin-left: 40px;
+    }
+
+    .footer-info {
+      display: inline-block;
+      margin-left: 130px;
+    }
+
+    .qr-code {
+      display: inline-block;
+      padding-bottom: -12px;
+    }
+
+    footer img {
+      width: 125px;
+      height: 125px;
+    }
+
     .table-bordered {
-      border: 1px solid #000000;
+      width: 100%;
+      margin-top: 0.5em;
+      border: 1px solid #333333;
+      float: left;
+      border-spacing: 0;
     }
+
     .table thead th {
-      border-bottom: 1px solid #000000;
+      text-align: start;
+      border: 1px solid #333333;
+      background-color: #333333;
+      color: #ffffff;
+      padding: 5px;
     }
+
     .table-bordered td, .table-bordered th {
-      border: 0px;
-      border-bottom: 1px solid #000000;
+      border: 1px solid #333333;
+      padding: 5px;
     }
-    .table td, .table th {
-      padding: 0;
+
+    .align-right {
+      float: left;
+    }
+
+    .align-right {
+      float: right;
     }
   </style>
 </head>
 <body>
-  {% set cupConversionRate = 25 %}
-  <div class="d-flex flex-column">
-    <div class="d-flex header">
-      <img class="pl-5 pt-2 pb-2" src="{{ home.data.logo.image.path }}" />
+  <script type="text/php">
+    if (isset($pdf)) {
+      $pdf->page_text(496, 90, "{PAGE_NUM} páginas de {PAGE_COUNT}", $fontMetrics->get_font("Times New Roman"), 12);
+    }
+  </script>
+
+  <header>
+    <div>
+      <img class="pl-5 pt-2 pb-2" src="{{ absolute_url(asset(home.data.logo.image.path)) }}" />
+      <div class="document-info">
+        <p>No. de Orden: {% if prefacture.request %}{{prefacture.request.id}}{% else %}-{% endif %}</p>
+        <p>No. de Prefactura: {{prefacture.id}}-{{prefacture.date|date('Y')}}</p>
+      </div>
     </div>
-    <div class="ml-5 mr-5 content">
-      <div class="d-flex justify-content-end">
-        <div class="col-3 pl-0">
-          <div class="d-flex flex-column align-items-end">
-            <span><strong>PREFACTURA:</strong> {{prefacture.id}}-{{prefacture.date|date('Y')}}</span>
-            <span><strong>FECHA:</strong> {{prefacture.date|date('d/m/Y')}}</span>
+    <div class="yellow-badge"></div>
+    <div class="prefacture-general-info">
+      <span class="prefacture-name">PREFACTURA</span>
+      <span class="prefacture-date">{{prefacture.date|date('d/m/Y')}}</span>
+    </div>
+  </header>
+  <footer>
+    <div class="footer-signatures">
+      <span>Firma del cliente</span>
+      <span class="commercial-signature">Firma del comercial</span>
+    </div>
+    <div class="footer-info">
+      <p>www.tiendaconceptos.com</p>
+      <p>comercial@tiendaconceptos.com</p>
+      <p>Teléfono comercial: +5352458380</p>
+    </div>
+    <div class="qr-code">
+      <img src="{{ absolute_url(asset('bundles/conceptos/images/home/qr.png')) }}">
+    </div>
+  </footer>
+  <main class="content">
+    <div class="prefacture-info">
+      <div class="prefacture-summary">
+        {% if prefacture.commercial %}
+          <p><strong>Comercial:</strong> {{prefacture.commercial.firstName}} {{prefacture.commercial.lastName}}</p>
+          {% if prefacture.commercial.mobileNumber %}
+            <p><strong>Teléfono movil:</strong> {{prefacture.commercial.mobileNumber}}</p>
+          {% endif %}
+          <p><strong>Correo:</strong> {{prefacture.commercial.email}}</p>
+        {% endif %}
+        <div class="prefacture-main-info">
+          <div class="prefacture-main-info-top">
+            <p><span class="align-left">Cantidad de items: </span><span class="align-right">{{products|length}}</span></p>
+            <p><span class="align-left">Cantidad de productos: </span><span class="align-right">{{numberOfProducts}}</span></p>
+            <p><span class="align-left">Tipo de moneda: </span><span class="align-right">{% if prefacture.cucExtra %}CUC{% else %}USD{% endif %}</span></p>
+            <p><span class="align-left">Tipo de pago: </span><span class="align-right">{% if prefacture.twoStepExtra %}2 Plazos{% else %}1 Plazo{% endif %}</span></p>
+            {% if prefacture.discount %}
+              <p><span class="align-left">Descuento de miembro: </span><span class="align-right">${{prefacture.discount}}</span></p>
+            {% endif %}
+            {% if prefacture.cucExtra %}
+              <p><span class="align-left">Extra por CUC: </span><span class="align-right">${{prefacture.cucExtra}}</span></p>
+            {% endif %}
+            {% if prefacture.twoStepExtra %}
+              <p><span class="align-left">Extra por 2 plazos: </span><span class="align-right">${{prefacture.twoStepExtra}}</span></p>
+            {% endif %}
+            {% if prefacture.bagsExtra %}
+              <p><span class="align-left">Extra por bolsas: </span><span class="align-right">${{prefacture.bagsExtra}}</span></p>
+            {% endif %}
+            <p><span class="align-left">Costo de transporte: </span><span class="align-right">${{prefacture.transportCost}}</span></p>
+          </div>
+          <div class="prefacture-main-info-bottom">
+            <p><span class="align-left">Total a pagar: </span><span class="align-right">${{prefacture.finalPrice}}</span></p>
+            {% if prefacture.twoStepExtra %}
+            <p><span class="align-left">Pago anticipado: </span><span class="align-right">${{firstPayment}}</span></p>
+            {% endif %}
+            <p><span class="align-left">Por pagar: </span><span class="align-right">{% if prefacture.twoStepExtra %}{{prefacture.finalPrice - firstPayment}}{% else %}${{prefacture.finalPrice}}{% endif %}</span></p>
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-between mt-3">
-        <div class="d-flex flex-column">
-          <span><strong>NOMBRE Y APELLIDOS:</strong> {{prefacture.client.firstName}} {{prefacture.client.lastName}}</span>
-          <span><strong>CORREO:</strong> {{prefacture.client.email}}</span>
-          <span><strong>DIRECCIÓN PARTICULAR:</strong> {{prefacture.client.address}}</span>
-          {% if prefacture.client.phone %}
-            <span><strong>TELÉFONO FIJO:</strong> {{prefacture.client.phone}}</span>
-          {% endif %}
-          {% if prefacture.client.movil %}
-            <span><strong>TELÉFONO MÓVIL:</strong> {{prefacture.client.movil}}</span>
-          {% endif %}
-          {% if prefacture.client.memberNumber %}
-            <span><strong>NÚMERO DE MIEMBRO:</strong> {{prefacture.client.memberNumber}}</span>
-          {% endif %}
-          <div class="d-flex justify-content-between mt-3">
-            <strong>FIRMA DEL CLIENTE:</strong>
-            <span class="ml-2">____________________________</span>
-          </div>
-          <div class="d-flex justify-content-between mt-2">
-            <strong>FIRMA DEL COMERCIAL:</strong>
-            <span class="ml-2">____________________________</span>
-          </div>
-        </div>
-        <div class="d-flex flex-column">
-          <span><strong>CANTIDAD DE ARTÍCULOS:</strong> {{numberOfProducts}}</span>
-          <span><strong>SUBTOTAL DE COMPRA:</strong> ${{subtotal}}.00</span>
-          <span><strong>TIPO DE MONEDA:</strong> {% if prefacture.cucExtra %}CUC{% else %}USD{% endif %}</span>
-          {% if prefacture.cucExtra %}
-            <span><strong>EXTRA POR CUC:</strong> ${{prefacture.cucExtra}}.00</span>
-          {% endif %}
-            <span><strong>PLAZOS DE PAGO:</strong> {% if prefacture.twoStepExtra %}2{% else %}1{% endif %}</span>
-          {% if prefacture.twoStepExtra %}
-            <span><strong>EXTRA POR 2 PLAZOS:</strong> ${{prefacture.twoStepExtra}}.00</span>
-            <span><strong>PAGO ANTICIPADO:</strong> ${{firstPayment}}.00</span>
-          {% endif %}
-          {% if prefacture.discount %}
-            <span><strong>DESCUENTO DE MIEMBRO:</strong> ${{prefacture.discount}}.00</span>
-          {% endif %}
-          <span><strong>COSTO DE TRANSPORTE:</strong> ${{prefacture.transportCost}}.00</span>
-          <span><strong>TOTAL A PAGAR:</strong> ${{prefacture.finalPrice}}.00</span>
-        </div>
+      <div class="client-summary">
+        <p><strong>Cliente:</strong> {{prefacture.client.firstName}} {{prefacture.client.lastName}}</p>
+        <p class="client-address"><strong>Dirección de entrega:</strong> {{prefacture.client.address}}</p>
+        {% if prefacture.client.movil %}
+          <p><strong>Teléfono móvil:</strong> {{prefacture.client.movil}}</p>
+        {% endif %}
+        {% if prefacture.client.phone %}
+          <p><strong>Teléfono fijo:</strong> {{prefacture.client.phone}}</p>
+        {% endif %}
+        <p><strong>Correo:</strong> {{prefacture.client.email}}</p>
+        {% if prefacture.client.memberNumber %}
+          <p><strong>Número de miembro:</strong> {{prefacture.client.memberNumber}}</p>
+        {% endif %}
       </div>
+    </div>
+    <div class="products-table">
       <table class="table table-bordered mt-3">
         <thead>
         <tr>
-          <th class="pl-2">CÓDIGO</th>
-          <th class="pl-2">FOTO</th>
-          <th class="pl-2">DESCRIPCIÓN</th>
-          <th class="pl-2">CANTIDAD</th>
-          <th class="pl-2">PRECIO</th>
-          <th class="pl-2">TOTAL</th>
-          <th class="pl-2" style="min-width: 150px;">TIPO DE ENVÍO</th>
+          <th>Código</th>
+          <th>Imágen</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Envío</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
         </tr>
         </thead>
         <tbody class="table-members">
           {% for product in products %}
             <tr>
-              <td class="pl-2 pt-2">
+              <td>
                 <span>{{product.code}}</span>
               </td>
               <td>
@@ -153,50 +351,32 @@
                   {% else %}
                     {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
                   {% endif %}
-                  <img class="ml-5 mt-2 mb-2 product-image" src="{{imagePath}}" />
+                  <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(asset(imagePath)) }}" />
                 {% endif %}
               </td>
-              <td class="pl-3 pt-2">
-                <span class="product-description">{{product.description}}</span>
+              <td>
+                <span>{{product.name}}</span>
               </td>
-              <td class="pl-2 pt-2">
+              <td>
+                <span class="product-description">{{product.item}}</span>
+              </td>
+              <td>
+                <span>{{product.airplane}}</span>
+              </td>
+              <td>
+                <span>{{product.price }}</span>
+              </td>
+              <td>
                 <span>{{product.count}}</span>
               </td>
-              <td class="pl-2 pt-2">
-                <span>{{product.price}}</span>
-              </td>
-              <td class="pl-2 pt-2">
+              <td>
                 <span>{{product.price * product.count}}</span>
-              </td>
-              <td class="pl-2 pt-2" style="min-width: 150px;">
-                <span>{{product.airplane}}</span>
               </td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
-  </div>
+  </main>
 </body>
-<script src="{{ asset('bundles/conceptos/assets/html2canvas/html2canvas.min.js') }}"></script>
-<script src="{{ asset('bundles/conceptos/assets/jspdf/jspdf.min.js') }}"></script>
-<script>
-  // var pdf = new jsPDF('p', 'pt', 'a4');
-  // pdf.fromHTML(document.body, 15, 15, {}, function(dispose) {
-  //   pdf.save('Test.pdf')
-  // });
-
-  // var pdf = new jsPDF('p', 'pt', 'a4');
-  // pdf.addHTML(document.body, function() {
-  //   console.log(1);
-  //   pdf.save('Test.pdf');
-  // });
-
-  // html2canvas(document.body).then(function(canvas) {
-  //   var img = canvas.toDataURL("image/png")
-  //   var pdf = new jsPDF('p', 'pt', 'a4');
-  //   pdf.addImage(img, 'JPEG', 0, 0);
-  //   pdf.save('Test.pdf');
-  // });
-</script>
 </html>

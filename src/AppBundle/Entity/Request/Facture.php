@@ -51,6 +51,10 @@ class Facture
      */
     private $firstClientDiscount;
     /**
+     * @ORM\Column(type="float")
+     */
+    private $comboDiscount;
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Request\Request", inversedBy="factures")
      * @ORM\JoinColumn(name="request_id", referencedColumnName="id")
      */
@@ -68,6 +72,15 @@ class Facture
      * @ORM\Column(type="float")
      */
     private $cucExtra;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $bagsExtra;
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="commercial_id", referencedColumnName="id")
+     */
+    private $commercial;
 
     public function __construct()
     {
@@ -192,6 +205,18 @@ class Facture
         return $this->firstClientDiscount;
     }
 
+    public function setComboDiscount($comboDiscount)
+    {
+        $this->comboDiscount = $comboDiscount;
+
+        return $this;
+    }
+
+    public function getComboDiscount()
+    {
+        return $this->comboDiscount;
+    }
+
     public function setRequest(Request $request = null)
     {
         $this->request = $request;
@@ -303,6 +328,30 @@ class Facture
     public function getCucExtra()
     {
         return $this->cucExtra;
+    }
+
+    public function setBagsExtra($bagsExtra)
+    {
+        $this->bagsExtra = $bagsExtra;
+
+        return $this;
+    }
+
+    public function getBagsExtra()
+    {
+        return $this->bagsExtra;
+    }
+
+    public function setCommercial($commercial)
+    {
+        $this->commercial = $commercial;
+
+        return $this;
+    }
+
+    public function getCommercial()
+    {
+        return $this->commercial;
     }
 
     function __toString()

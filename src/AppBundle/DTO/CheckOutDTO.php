@@ -13,8 +13,13 @@ class CheckOutDTO
     private $products;
     private $memberNumber;
     private $type;
+    private $request;
     private $prefacture;
+    private $budget;
+    private $payment;
+    private $date;
     private $ignoreTransport;
+    private $numberOfBags;
 
     public function getFirstName()
     {
@@ -106,6 +111,16 @@ class CheckOutDTO
         $this->type = $type;
     }
 
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
+
     public function getPrefacture()
     {
         return $this->prefacture;
@@ -121,8 +136,50 @@ class CheckOutDTO
         return $this->ignoreTransport;
     }
 
+    public function getBudget()
+    {
+        return $this->budget;
+    }
+
+    public function setBudget($budget)
+    {
+        $this->budget = $budget;
+    }
+
+    public function getPayment()
+    {
+        return $this->payment;
+    }
+
+    public function setPayment($payment)
+    {
+        $this->payment = $payment;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
     public function setIgnoreTransport($ignoreTransport)
     {
         $this->ignoreTransport = $ignoreTransport;
+    }
+
+    public function setNumberOfBags($numberOfBags)
+    {
+      $this->numberOfBags = $numberOfBags;
+
+      return $this;
+    }
+
+    public function getNumberOfBags()
+    {
+      return $this->numberOfBags;
     }
 }

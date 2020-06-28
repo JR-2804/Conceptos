@@ -4,7 +4,6 @@
 
 {% block css %}
     <link rel="stylesheet" href="{{ asset('bundles/conceptos/home/css/home.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/styles/index.css') }}" type="text/css">
 {% endblock %}
 
 {% block meta %}
@@ -33,271 +32,233 @@
     </div>
   </div>
 
-  <div id="home-header" class="d-flex justify-content-center home__hero align-items-start">
+  {{ render(controller('AppBundle:Site:homeSlide', {onlySlide: onlySlide})) }}
 
-    {% if page.data.slides and page.data.slides is not empty %}
-        {#<img class="conceptos-image" src="{{  page.data.slides[0].path }}">#}
-        {{  page.data.slides[0].path | imgTag(sizes = '100vw') | raw }}
-    {% endif %}
-
-    <div class="home__hero__content col-7 col-lg-4 pl-0">
-      {% set offer = offers | last %}
-      {% if offer and not page.data.prioritizeSlideText %}
-        <div class="home__hero__content__title">
-          {% if offer.name %}
-            <h1>{{ offer.name }}</h1>
-          {% endif %}
-          {% if offer.description %}
-            <h2>{{ offer.description }}</h2>
-          {% endif %}
-        </div>
-        <div class="home__hero__content__btn">
-          <a href="{{path('products', {inOffer:true})}}">VER OFERTAS</a>
-        </div>
-      {% elseif page.data.slides and page.data.slides is not empty %}
-        {% set slide = page.data.slides[0] %}
-        <div class="home__hero__content__title" style="{% if page.data.slideTopMargin %}padding-top: {{page.data.slideTopMargin}}px;{% endif %}{% if page.data.slideLeftMargin %}padding-left: {{page.data.slideLeftMargin}}px;{% endif %}">
-          {% if slide.main is defined %}
-            <h1 style="{% if page.data.slideFontSize %}font-size: {{page.data.slideFontSize + 0.75}}em;{% endif %}{% if page.data.slideFontColor %}color: {{page.data.slideFontColor}};{% endif %}">{{ slide.main }}</h1>
-          {% endif %}
-          {% if slide.secondary is defined %}
-            <h2 style="{% if page.data.slideFontSize %}font-size: {{page.data.slideFontSize}}em;{% endif %}{% if page.data.slideFontColor %}color: {{page.data.slideFontColor}};{% endif %}">{{ slide.secondary }}</h2>
-          {% endif %}
-        </div>
-        {% if slide.link is defined %}
-          <div class="home__hero__content__btn">
-            <a href="{{slide.link}}">VER MÁS</a>
-          </div>
-        {% endif %}
-      {% else %}
-        <div class="home__hero__content__title">
-          <h1>Bienvenidos a Conceptos</h1>
-        </div>
-      {% endif %}
-    </div>
-  </div>
-
-  {% if popularChunks is not empty %}
-    <div class="d-flex d-lg-none flex-column p-3">
-      <span class="pl-2 conceptos-title-strong">{{page.data.populars.title|raw}}</span>
-      <span class="pl-2 conceptos-subtitle-strong">{{page.data.populars.subtitle|raw}}</span>
-      <div class="d-flex flex-wrap mt-3">
-        <div class="carousel" data-ride="carousel" id="carousel-populars-short" data-interval="10000">
-          <ol class="carousel-indicators">
-            {% for chunk in popularChunks %}
-                <li data-app-prevent-settings="" data-target="#slider1-28"
-                    class="{% if loop.first %}active{% endif %}"
-                    data-slide-to="{{ loop.index }}"></li>
-            {% endfor %}
-          </ol>
-
-          <div class="carousel-inner">
-              {% set sizes = '(min-width: 1000px) 12vw, 45vw' %}
+  {% if onlySlide is not defined or not onlySlide %}
+    {% if popularChunks is not empty %}
+      <div class="d-flex d-lg-none flex-column p-3">
+        <span class="pl-2 conceptos-title-strong">{{page.data.populars.title|raw}}</span>
+        <span class="pl-2 conceptos-subtitle-strong">{{page.data.populars.subtitle|raw}}</span>
+        <div class="d-flex flex-wrap mt-3">
+          <div class="carousel w-100" data-ride="carousel" id="carousel-populars-short" data-interval="10000">
+            <ol class="carousel-indicators">
               {% for chunk in popularChunks %}
-                <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
-                  <div class="d-flex flex-wrap">
-                      {% for product in chunk %}
-                        <div class="d-flex col-6 pl-0">
-                            {{ include('site/product-summary-short.html.twig') }}
-                        </div>
-                      {% endfor %}
-                  </div>
-                </div>
+                  <li data-app-prevent-settings="" data-target="#slider1-28"
+                      class="{% if loop.first %}active{% endif %}"
+                      data-slide-to="{{ loop.index }}"></li>
               {% endfor %}
-          </div>
-        </div>
-      </div>
-      <div class="d-flex justify-content-center mt-3">
-        <a class="conceptos-primary-button-gray" href="{{ path('products', {populars: true, page: 1}) }}">
-          <span class="pl-2 pr-2 w-100">VER MÁS</span>
-        </a>
-      </div>
-    </div>
-  {% endif %}
+            </ol>
 
-  {% if popularChunksDesktop is not empty %}
-    <div class="d-none d-lg-flex flex-column p-3 ml-5 mr-5">
-      <span class="pl-2 conceptos-title-strong">{{page.data.populars.title|raw}}</span>
-      <span class="pl-2 conceptos-subtitle-strong">{{page.data.populars.subtitle|raw}}</span>
-      <div class="d-flex flex-wrap mt-3 mb-3">
-        <div class="carousel pb-3" data-ride="carousel" id="carousel-populars-short" data-interval="10000">
-          <ol class="carousel-indicators carousel-indicators">
-            {% for chunk in popularChunksDesktop %}
-                <li data-app-prevent-settings="" data-target="#slider1-28"
-                    class="{% if loop.first %}active{% endif %}"
-                    data-slide-to="{{ loop.index }}"></li>
-            {% endfor %}
-          </ol>
-          <div class="carousel-inner">
-              {% set sizes = '(min-width: 1000px) 16vw, 45vw' %}
-              {% for chunk in popularChunksDesktop %}
-                <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
-                  <div class="d-flex flex-wrap">
-                      {% for product in chunk %}
-                        <div class="d-flex col-2 pl-0">
-                          {{include('site/product-summary-short.html.twig')}}
-                        </div>
-                      {% endfor %}
-                  </div>
-                </div>
-              {% endfor %}
-          </div>
-        </div>
-      </div>
-      <div class="d-flex justify-content-center mt-3">
-        <a class="conceptos-primary-button-gray" href="{{ path('products', {populars: true, page: 1}) }}">
-          <span class="pl-2 pr-2 w-100">VER MÁS</span>
-        </a>
-      </div>
-    </div>
-  {% endif %}
-
-  <div class="d-flex flex-column storage">
-    <div class="d-flex conceptos-badge p-2">
-      <div class="d-flex flex-column justify-content-center m-2 ml-lg-5">
-        <span class="conceptos-badge-text">{{ page.data.store.title | raw | upper }}</span>
-        <span class="conceptos-badge-subtitle">{{page.data.store.subtitle | raw }}</span>
-      </div>
-    </div>
-    <div class="d-flex flex-column align-items-center mb-3 ml-lg-5 mr-lg-5 mt-lg-3 mb-lg-3">
-      {% if inStore and inStore is not empty %}
-        <div class="d-flex d-lg-none align-items-center p-2 w-100">
-          <div id="carousel-in-store" class="carousel w-100" data-ride="carousel" data-interval="5000">
             <div class="carousel-inner">
-                {% set sizes = '(min-width: 1000px) 20vw, 95vw' %}
-              {% for product in inStore %}
-                <div class="container-fluid carousel-item p-0 {% if loop.first %}active{% endif %}">
-                  <div class="d-flex w-100">
-                    {% set bigFont = true %}
-                    {{include('site/product-summary-short.html.twig')}}
+                {% set sizes = '(min-width: 1000px) 12vw, 45vw' %}
+                {% for chunk in popularChunks %}
+                  <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
+                    <div class="d-flex flex-wrap w-100">
+                        {% for product in chunk %}
+                          <div class="d-flex col-{{ 12 / columnsOfPopularProductsInMobile }} pl-0">
+                              {{ include('site/product-summary-short.html.twig') }}
+                          </div>
+                        {% endfor %}
+                    </div>
                   </div>
-                </div>
-              {% endfor %}
-            </div>
-            <div class="d-flex ">
-              <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" href="#carousel-in-store">
-                <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-              </a>
-              <a class="carousel-control carousel-control-next" role="button" data-slide="next" href="#carousel-in-store">
-                <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-              </a>
+                {% endfor %}
             </div>
           </div>
         </div>
-        <div class="d-none d-lg-flex col-12 justify-content-center align-items-center p-2">
-          <div class="d-flex carousel w-100" data-ride="carousel" id="carousel-in-store-desktop" data-interval="5000">
-            <div class="d-flex carousel-inner w-100">
-                {% set sizes = '(min-width: 1000px) 20vw, 95vw' %}
-              {% for chunk in inStoreDesktop %}
-                <div class="carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
-                  <div class="d-flex flex-wrap w-100">
-                    {% for product in chunk %}
-                      <div class="d-flex col-3 pl-0">
-                        {% set bigFont = true %}
-                        {{ include('site/product-summary-short.html.twig') }}
-                      </div>
-                    {% endfor %}
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
-            <div class="d-flex">
-              <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" href="#carousel-in-store-desktop">
-                <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-              </a>
-              <a class="carousel-control carousel-control-next" role="button" data-slide="next" href="#carousel-in-store-desktop">
-                <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-              </a>
-            </div>
-          </div>
-        </div>
-      {% endif %}
-      <a href="{{ path('products', {inStore:true}) }}" class="conceptos-primary-button-gray mt-3">
-        <span class="pl-2 pr-2">VER MÁS</span>
-      </a>
-    </div>
-  </div>
-
-  <div class="d-flex flex-column">
-    <div class="d-flex conceptos-badge p-2 pl-lg-0">
-      <div class="d-flex align-items-center m-2 ml-lg-5">
-        <span class="conceptos-badge-text">SERVICIOS</span>
-      </div>
-    </div>
-    <div class="d-flex d-lg-none flex-column align-items-center m-3">
-      {% if page.data.services.image is defined %}
-        <div class="d-flex align-items-center conceptos-white-background p-2">
-          <a href="{{ path('services') }}">
-              {% set sizes = '(min-width: 1000px) 50vw, 95vw' %}
-{#            <img class="conceptos-image" src="{{ page.data.services.image.path }}">#}
-            {{ page.data.services.image.path | imgTag(sizes=sizes) | raw }}
+        <div class="d-flex justify-content-center mt-3">
+          <a class="conceptos-primary-button-gray" href="{{ path('products', {populars: true, page: 1}) }}">
+            <span class="pl-2 pr-2 w-100">VER MÁS</span>
           </a>
         </div>
-      {% endif %}
-      {% if page.data.services.title is defined %}
-        <span class="conceptos-title align-self-start mt-3">{{page.data.services.title}}</span>
-      {% endif %}
-      {% if page.data.services.subtitle is defined %}
-        <span class="conceptos-subtitle align-self-start mt-2">{{page.data.services.subtitle}}</span>
-      {% endif %}
-      <a href="{{ path('services') }}" class="conceptos-primary-button-gray mt-3">
-        <span class="pl-2 pr-2">VER MÁS</span>
-      </a>
-    </div>
-    <div class="d-none d-lg-flex flex-column align-items-center ml-5 mr-5 mt-3 mb-3">
-      <div class="d-flex justify-content-center">
-        {% if page.data.services.image is defined %}
-          <div class="d-flex col-4 align-items-center conceptos-white-background p-2">
-              {% set sizes = '(min-width: 1000px) 50vw, 95vw' %}
-              {{ page.data.services.image.path | imgTag(sizes=sizes, class='conceptos-image') | raw }}
-{#            <img class="conceptos-image" src="{{ page.data.services.image.path }}">#}
+      </div>
+    {% endif %}
+
+    {% if popularChunksDesktop is not empty %}
+      <div class="d-none d-lg-flex flex-column p-3 ml-5 mr-5">
+        <span class="pl-2 conceptos-title-strong">{{page.data.populars.title|raw}}</span>
+        <span class="pl-2 conceptos-subtitle-strong">{{page.data.populars.subtitle|raw}}</span>
+        <div class="d-flex flex-wrap mt-3 mb-3">
+          <div class="carousel pb-3 w-100" data-ride="carousel" id="carousel-populars-short" data-interval="10000">
+            <ol class="carousel-indicators carousel-indicators">
+              {% for chunk in popularChunksDesktop %}
+                  <li data-app-prevent-settings="" data-target="#slider1-28"
+                      class="{% if loop.first %}active{% endif %}"
+                      data-slide-to="{{ loop.index }}"></li>
+              {% endfor %}
+            </ol>
+            <div class="carousel-inner">
+                {% set sizes = '(min-width: 1000px) 16vw, 45vw' %}
+                {% for chunk in popularChunksDesktop %}
+                  <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
+                    <div class="d-flex flex-wrap w-100">
+                        {% for product in chunk %}
+                          <div class="d-flex col-{{ 12 / columnsOfPopularProductsInDesktop }} pl-0">
+                            {{include('site/product-summary-short.html.twig')}}
+                          </div>
+                        {% endfor %}
+                    </div>
+                  </div>
+                {% endfor %}
+            </div>
           </div>
-        {% endif %}
-        <div class="d-flex flex-column col-5 justify-content-center ml-lg-5 pl-lg-5">
-          {% if page.data.services.title is defined %}
-            <span class="conceptos-title align-self-start">{{page.data.services.title}}</span>
-          {% endif %}
-          {% if page.data.services.subtitle is defined %}
-            <span class="conceptos-subtitle align-self-start mt-2">{{page.data.services.subtitle}}</span>
-          {% endif %}
+        </div>
+        <div class="d-flex justify-content-center mt-3">
+          <a class="conceptos-primary-button-gray" href="{{ path('products', {populars: true, page: 1}) }}">
+            <span class="pl-2 pr-2 w-100">VER MÁS</span>
+          </a>
         </div>
       </div>
-      <a href="{{ path('services') }}" class="conceptos-primary-button-gray mt-3">
-        <span class="pl-2 pr-2">VER MÁS</span>
-      </a>
-    </div>
-  </div>
+    {% endif %}
 
-  {% if lasts is not empty %}
-    <div class="d-flex flex-column">
-      <div class="d-flex conceptos-badge p-2 pl-lg-0">
-        <div class="d-flex align-items-center m-2 ml-lg-5">
-          <span class="conceptos-badge-text">INSPIRACIÓN</span>
+    <div class="d-flex flex-column storage">
+      <div class="d-flex conceptos-badge p-2">
+        <div class="d-flex flex-column justify-content-center m-2 ml-lg-5">
+          <span class="conceptos-badge-text">{% if page.data.store.title is defined %}{{ page.data.store.title | raw | upper }}{% else %}ENTREGA EN 24H{% endif %}</span>
+          <span class="conceptos-badge-subtitle">{% if page.data.store.subtitle is defined %}{{page.data.store.subtitle | raw }}{% else %}Entrega en 24h{% endif %}</span>
         </div>
       </div>
-      <div class="d-flex flex-wrap m-3 ml-lg-5 mr-lg-5 mt-lg-3 mb-lg-3">
-        {% for post in lasts %}
-          {% if loop.index <= 2 %}
-            <div class="d-flex flex-column col-12 col-lg-6 align-self-center pl-0 pr-3 pb-3">
-              <div class="d-flex align-items-center">
-{#                <img class="conceptos-image conceptos-blog-image" src="{{ vich_uploader_asset(post, 'imageFile') }}">#}
-                  {% set sizes = '(min-width: 1000px) 50vw, 95vw' %}
-                  {{  vich_uploader_asset(post, 'imageFile') | imgTag(sizes, null, 'conceptos-image conceptos-blog-image') | raw }}
+      <div class="d-flex flex-column align-items-center mb-3 ml-lg-5 mr-lg-5 mt-lg-3 mb-lg-3">
+        {% if inStoreChunks and inStoreChunks is not empty %}
+          <div class="d-flex d-lg-none align-items-center p-2 w-100">
+            <div id="carousel-in-store" class="carousel w-100" data-ride="carousel" data-interval="5000">
+              <div class="carousel-inner">
+                {% set sizes = '(min-width: 1000px) 20vw, 95vw' %}
+                {% for chunk in inStoreChunks %}
+                  <div class="carousel-item p-0 {% if loop.first %}active{% endif %}">
+                    <div class="d-flex flex-wrap w-100">
+                      {% for product in chunk %}
+                        <div class="d-flex col-{{ 12 / columnsOfStoreProductsInMobile }} pl-0">
+                          {% set storageSection = true %}
+                          {% set imageColumns = 12 / columnsOfStoreProductsInMobile %}
+                          {{ include('site/product-summary-short.html.twig') }}
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endfor %}
               </div>
-              <div class="d-flex flex-column conceptos-white-background p-3">
-                <span class="conceptos-title">{{post.title}}</span>
-                <span class="conceptos-subtitle conceptos-blog-summary mt-2">{{post.summary}}</span>
-                <a href="{{ path('blog_details', {id: post.id, title: post.path}) }}" class="d-flex align-items-center align-self-end home-view-more-link mt-2">
-                  LEER MÁS
-                  <img class="conceptos-icon ml-2" src="{{ asset('bundles/conceptos/images/home/forward.png') }}">
-
+              <div class="d-flex ">
+                <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" href="#carousel-in-store">
+                  <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+                </a>
+                <a class="carousel-control carousel-control-next" role="button" data-slide="next" href="#carousel-in-store">
+                  <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
                 </a>
               </div>
             </div>
-          {% endif %}
-        {% endfor %}
+          </div>
+          <div class="d-none d-lg-flex col-12 justify-content-center align-items-center p-2">
+            <div class="d-flex carousel w-100" data-ride="carousel" id="carousel-in-store-desktop" data-interval="5000">
+              <div class="d-flex carousel-inner w-100">
+                {% set sizes = '(min-width: 1000px) 20vw, 95vw' %}
+                {% for chunk in inStoreChunksDesktop %}
+                  <div class="carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
+                    <div class="d-flex flex-wrap w-100">
+                      {% for product in chunk %}
+                        <div class="d-flex col-{{ 12 / columnsOfStoreProductsInDesktop }} pl-0">
+                          {% set storageSection = true %}
+                          {% set imageColumns = 12 / columnsOfStoreProductsInMobile %}
+                          {{ include('site/product-summary-short.html.twig') }}
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+              <div class="d-flex">
+                <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" href="#carousel-in-store-desktop">
+                  <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
+                </a>
+                <a class="carousel-control carousel-control-next" role="button" data-slide="next" href="#carousel-in-store-desktop">
+                  <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        <a href="{{ path('products', {inStore:true}) }}" class="conceptos-primary-button-gray mt-3">
+          <span class="pl-2 pr-2">VER MÁS</span>
+        </a>
       </div>
     </div>
+
+    <div class="d-flex flex-column">
+      <div class="d-flex conceptos-badge p-2 pl-lg-0">
+        <div class="d-flex align-items-center m-2 ml-lg-5">
+          <span class="conceptos-badge-text">SERVICIOS</span>
+        </div>
+      </div>
+      <div class="d-flex d-lg-none flex-column align-items-center m-3">
+        {% if page.data.services.image is defined %}
+          <div class="d-flex align-items-center conceptos-white-background p-2">
+            <a href="{{ path('services') }}">
+                {% set sizes = '(min-width: 1000px) 50vw, 95vw' %}
+              {{ page.data.services.image.path | imgTag(sizes=sizes) | raw }}
+            </a>
+          </div>
+        {% endif %}
+        {% if page.data.services.title is defined %}
+          <span class="conceptos-title align-self-start mt-3">{{page.data.services.title}}</span>
+        {% endif %}
+        {% if page.data.services.subtitle is defined %}
+          <span class="conceptos-subtitle align-self-start mt-2">{{page.data.services.subtitle}}</span>
+        {% endif %}
+        <a href="{{ path('services') }}" class="conceptos-primary-button-gray mt-3">
+          <span class="pl-2 pr-2">VER MÁS</span>
+        </a>
+      </div>
+      <div class="d-none d-lg-flex flex-column align-items-center ml-5 mr-5 mt-3 mb-3">
+        <div class="d-flex justify-content-center">
+          {% if page.data.services.image is defined %}
+            <div class="d-flex col-4 align-items-center conceptos-white-background p-2">
+                {% set sizes = '(min-width: 1000px) 50vw, 95vw' %}
+                {{ page.data.services.image.path | imgTag(sizes=sizes, class='conceptos-image') | raw }}
+            </div>
+          {% endif %}
+          <div class="d-flex flex-column col-5 justify-content-center ml-lg-5 pl-lg-5">
+            {% if page.data.services.title is defined %}
+              <span class="conceptos-title align-self-start">{{page.data.services.title}}</span>
+            {% endif %}
+            {% if page.data.services.subtitle is defined %}
+              <span class="conceptos-subtitle align-self-start mt-2">{{page.data.services.subtitle}}</span>
+            {% endif %}
+          </div>
+        </div>
+        <a href="{{ path('services') }}" class="conceptos-primary-button-gray mt-3">
+          <span class="pl-2 pr-2">VER MÁS</span>
+        </a>
+      </div>
+    </div>
+
+    {% if lasts is not empty %}
+      <div class="d-flex flex-column">
+        <div class="d-flex conceptos-badge p-2 pl-lg-0">
+          <div class="d-flex align-items-center m-2 ml-lg-5">
+            <span class="conceptos-badge-text">INSPIRACIÓN</span>
+          </div>
+        </div>
+        <div class="d-flex flex-wrap m-3 ml-lg-5 mr-lg-5 mt-lg-3 mb-lg-3">
+          {% for post in lasts %}
+            {% if loop.index <= 2 %}
+              <div class="d-flex flex-column col-12 col-lg-6 align-self-center pl-0 pr-3 pb-3">
+                <div class="d-flex align-items-center">
+                    {% set sizes = '(min-width: 1000px) 50vw, 95vw' %}
+                    {{  vich_uploader_asset(post, 'imageFile') | imgTag(sizes, null, 'conceptos-image conceptos-blog-image') | raw }}
+                </div>
+                <div class="d-flex flex-column conceptos-white-background p-3">
+                  <span class="conceptos-title">{{post.title}}</span>
+                  <span class="conceptos-subtitle conceptos-blog-summary mt-2">{{post.summary}}</span>
+                  <a href="{{ path('blog_details', {id: post.id, title: post.path}) }}" class="d-flex align-items-center align-self-end home-view-more-link mt-2">
+                    LEER MÁS
+                    <img class="conceptos-icon ml-2" src="{{ asset('bundles/conceptos/images/home/forward.png') }}">
+                  </a>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
   {% endif %}
 {% endblock %}
 

@@ -49,7 +49,15 @@ class Request
     /**
      * @ORM\Column(type="float")
      */
+    private $balanceDiscount;
+    /**
+     * @ORM\Column(type="float")
+     */
     private $firstClientDiscount;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $comboDiscount;
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Request\PreFacture", mappedBy="request")
      */
@@ -66,6 +74,10 @@ class Request
      * @ORM\Column(type="float")
      */
     private $cucExtra;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $bagsExtra;
 
     public function __construct()
     {
@@ -180,6 +192,18 @@ class Request
         return $this->discount;
     }
 
+    public function setBalanceDiscount($balanceDiscount)
+    {
+        $this->balanceDiscount = $balanceDiscount;
+
+        return $this;
+    }
+
+    public function getBalanceDiscount()
+    {
+        return $this->balanceDiscount;
+    }
+
     public function setFirstClientDiscount($firstClientDiscount)
     {
         $this->firstClientDiscount = $firstClientDiscount;
@@ -190,6 +214,18 @@ class Request
     public function getFirstClientDiscount()
     {
         return $this->firstClientDiscount;
+    }
+
+    public function setComboDiscount($comboDiscount)
+    {
+        $this->comboDiscount = $comboDiscount;
+
+        return $this;
+    }
+
+    public function getComboDiscount()
+    {
+        return $this->comboDiscount;
     }
 
     public function addPreFacture(PreFacture $preFacture)
@@ -307,6 +343,18 @@ class Request
     public function getCucExtra()
     {
         return $this->cucExtra;
+    }
+
+    public function setBagsExtra($bagsExtra)
+    {
+        $this->bagsExtra = $bagsExtra;
+
+        return $this;
+    }
+
+    public function getBagsExtra()
+    {
+        return $this->bagsExtra;
     }
 
     function __toString()

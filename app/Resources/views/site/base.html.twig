@@ -104,28 +104,17 @@
 
 {{ include('site/components/global/cart_preview.html.twig') }}
 
-<div id="imageViewerModal" class="modal fade">
-  <div class="modal-dialog modal-lg mt-0">
-    <div class="modal-content">
-      <div class="modal-body p-0">
-        <img class="conceptos-image">
+{% if onlySlide is not defined or not onlySlide %}
+  <div id="imageViewerModal" class="modal fade">
+    <div class="modal-dialog modal-lg mt-0">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <img class="conceptos-image">
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-{#<button id="open-categories-menu" class="category-menu-open d-flex justify-content-end p-2">#}
-{#    <div class="animation_flash"></div>#}
-{#  <img class="conceptos-icon" src="{{ asset('bundles/conceptos/images/home/forward.png') }}">#}
-{#</button>#}
-
-{#<div id="categories-menu" class="conceptos-add-scroll">#}
-{#  {{include('site/categories-menu.html.twig')}}#}
-{#</div>#}
-
-{#<div id="close-categories-menu">#}
-{#  <img class="close-categories-menu-icon mr-2 d-flex d-lg-none" src="{{ asset('bundles/conceptos/images/home/close-categories-menu.png') }}">#}
-{#</div>#}
+{% endif %}
 
 {{ include('site/components/global/navbar.html.twig') }}
 
@@ -134,10 +123,14 @@
 {{ include('site/components/global/whatsapp_float.html.twig') }}
 
 {% block login %}
-  {{ render(controller('AppBundle:Security:login')) }}
+  {% if onlySlide is not defined or not onlySlide %}
+    {{ render(controller('AppBundle:Security:login')) }}
+  {% endif %}
 {% endblock %}
 {% block contact %}
-  {{ render(controller('AppBundle:Site:handleEmailNotification')) }}
+  {% if onlySlide is not defined or not onlySlide %}
+    {{ render(controller('AppBundle:Site:handleEmailNotification')) }}
+  {% endif %}
 {% endblock %}
 {% block javascript %}
   <script src="{{ asset('bundles/conceptos/14ndy15/scripts/app_1.js') }}"></script>
@@ -145,7 +138,6 @@
   <script src="{{ asset('bundles/conceptos/assets/popper/popper.min.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/assets/tether/tether.min.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/assets/bootstrap/js/bootstrap.min.js') }}"></script>
-{#  <script src="{{ asset('bundles/conceptos/assets/smoothscroll/smooth-scroll.js') }}"></script>#}
   <script src="{{ asset('bundles/conceptos/assets/dropdown/js/script.min.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/assets/touchswipe/jquery.touch-swipe.min.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/assets/viewportchecker/jquery.viewportchecker.js') }}"></script>

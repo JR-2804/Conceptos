@@ -103,14 +103,14 @@ class MemberController extends Controller
     }
 
     /**
-     * @Route(name="is_valid_membership_number", path="/validate-membership-number/{membershipNumber}", methods={"POST"})
+     * @Route(name="is_valid_membership_number", path="/validate-membership-number/{membershipNumber}", methods={"POST", "GET"})
      *
      * @param Request $request
      * @param mixed   $membershipNumber
      *
      * @return JsonResponse
      */
-    public function calculatePriceAction(Request $request, $membershipNumber)
+    public function isValidMembershipNumberAction(Request $request, $membershipNumber)
     {
         $member = $this->getDoctrine()->getManager()->getRepository('AppBundle:Member')->createQueryBuilder('m')
             ->where('m.number = :membershipNumber')

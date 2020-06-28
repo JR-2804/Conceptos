@@ -1,28 +1,431 @@
 {% if app.user|default %}
-  {% set userEvaluation = 0 %}
-  {% set totalEvaluationPoints = 0 %}
+  {% set userEvaluation = {
+    evaluationValue: 0,
+    priceQualityValue: 0,
+    utilityValue: 0,
+    durabilityValue: 0,
+    qualityValue: 0,
+    designValue: 0,
+    evaluationValue: 0,
+    generalOpinion: "",
+    comment: "",
+  } %}
+  {% set totalEvaluationGeneral = 0 %}
+  {% set priceQualityEvaluationGeneral = 0 %}
+  {% set utilityEvaluationGeneral = 0 %}
+  {% set utilityEvaluationGeneral = 0 %}
+  {% set durabilityEvaluationGeneral = 0 %}
+  {% set qualityEvaluationGeneral = 0 %}
+  {% set designEvaluationGeneral = 0 %}
+
   {% set numberOfEvaluations = 0 %}
+  {% set numberOfVeryGoodEvaluations = 0 %}
+  {% set numberOfGoodEvaluations = 0 %}
+  {% set numberOfRegularEvaluations = 0 %}
+  {% set numberOfBadEvaluations = 0 %}
+  {% set numberOfVeryBadEvaluations = 0 %}
+
   {% for evaluation in product.evaluations %}
     {% if app.user.id == evaluation.user.id %}
-      {% set userEvaluation = evaluation.evaluationValue %}
+      {% set userEvaluation = evaluation %}
     {% endif %}
 
-    {% set totalEvaluationPoints = totalEvaluationPoints + evaluation.evaluationValue %}
+    {% if evaluation.generalOpinion == "Muy buena" %}
+      {% set numberOfVeryGoodEvaluations = numberOfVeryGoodEvaluations + 1 %}
+    {% elseif evaluation.generalOpinion == "Buena" %}
+      {% set numberOfGoodEvaluations = numberOfGoodEvaluations + 1 %}
+    {% elseif evaluation.generalOpinion == "Regular" %}
+      {% set numberOfRegularEvaluations = numberOfRegularEvaluations + 1 %}
+    {% elseif evaluation.generalOpinion == "Mala" %}
+      {% set numberOfBadEvaluations = numberOfBadEvaluations + 1 %}
+    {% elseif evaluation.generalOpinion == "Muy mala" %}
+      {% set numberOfVeryBadEvaluations = numberOfVeryBadEvaluations + 1 %}
+    {% endif %}
+
+    {% set totalEvaluationGeneral = totalEvaluationGeneral + evaluation.evaluationValue %}
+    {% set priceQualityEvaluationGeneral = priceQualityEvaluationGeneral + evaluation.priceQualityValue %}
+    {% set utilityEvaluationGeneral = utilityEvaluationGeneral + evaluation.utilityValue %}
+    {% set durabilityEvaluationGeneral = durabilityEvaluationGeneral + evaluation.durabilityValue %}
+    {% set qualityEvaluationGeneral = qualityEvaluationGeneral + evaluation.qualityValue %}
+    {% set designEvaluationGeneral = designEvaluationGeneral + evaluation.designValue %}
     {% set numberOfEvaluations = numberOfEvaluations + 1 %}
   {% endfor %}
   {% if numberOfEvaluations > 0 %}
-    {% set productEvaluation = totalEvaluationPoints / numberOfEvaluations %}
+    {% set totalEvaluationGeneral = totalEvaluationGeneral / numberOfEvaluations %}
+    {% set priceQualityEvaluationGeneral = priceQualityEvaluationGeneral / numberOfEvaluations %}
+    {% set utilityEvaluationGeneral = utilityEvaluationGeneral / numberOfEvaluations %}
+    {% set durabilityEvaluationGeneral = durabilityEvaluationGeneral / numberOfEvaluations %}
+    {% set qualityEvaluationGeneral = qualityEvaluationGeneral / numberOfEvaluations %}
+    {% set designEvaluationGeneral = designEvaluationGeneral / numberOfEvaluations %}
   {% else %}
-    {% set productEvaluation = 0 %}
+    {% set totalEvaluationGeneral = 0 %}
   {% endif %}
-  <div id="change-product-evaluation" class="d-flex align-self-start" data-evaluation="{{userEvaluation}}">
-    <div class="d-flex align-items-center">
-      <i data-evaluate-path="{{ path('evaluate_product', {productId: product.id, evaluationValue: 1}) }}" data-star="1" class="{% if userEvaluation > 0 %}favorite{% endif %} change-product-evaluation fa fa-star"></i>
-      <i data-evaluate-path="{{ path('evaluate_product', {productId: product.id, evaluationValue: 2}) }}" data-star="2" class="{% if userEvaluation > 1 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></i>
-      <i data-evaluate-path="{{ path('evaluate_product', {productId: product.id, evaluationValue: 3}) }}" data-star="3" class="{% if userEvaluation > 2 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></i>
-      <i data-evaluate-path="{{ path('evaluate_product', {productId: product.id, evaluationValue: 4}) }}" data-star="4" class="{% if userEvaluation > 3 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></i>
-      <i data-evaluate-path="{{ path('evaluate_product', {productId: product.id, evaluationValue: 5}) }}" data-star="5" class="{% if userEvaluation > 4 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></i>
-      <span class="conceptos-title ml-2">({{productEvaluation}})</span>
+  <div id="change-product-evaluation" class="d-flex flex-column align-self-start" data-evaluation="{{userEvaluation.evaluationValue}}"
+       data-toggle="modal" data-target="#view-product-evaluations">
+    <div class="d-flex">
+      <div class="d-flex align-items-center">
+        <i class="{% if userEvaluation.evaluationValue > 0 %}favorite{% endif %} change-product-evaluation fa fa-star"></i>
+        <i class="{% if userEvaluation.evaluationValue > 1 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></i>
+        <i class="{% if userEvaluation.evaluationValue > 2 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></i>
+        <i class="{% if userEvaluation.evaluationValue > 3 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></i>
+        <i class="{% if userEvaluation.evaluationValue > 4 %}favorite{% endif %} change-product-evaluation fa fa-star ml-1"></i>
+        <span class="conceptos-title ml-2">{{totalEvaluationGeneral}}</span>
+      </div>
+      <div class="d-flex align-items-center ml-4">
+        <i class="fa fa-eye"></i>
+        <span class="conceptos-title ml-2">{{numberOfEvaluations}}</span>
+      </div>
+    </div>
+    <span class="conceptos-subtitle conceptos-subtitle-short mt-1">Puedes ver comentarios, la evaluación de otros y emitir la suya sobre este producto.</span>
+  </div>
+  <div id="change-product-evaluation-modal" class="modal fade"
+      data-price-quality-evaluation="{{userEvaluation.priceQualityValue}}"
+      data-utility-evaluation="{{userEvaluation.utilityValue}}"
+      data-durability-evaluation="{{userEvaluation.durabilityValue}}"
+      data-quality-evaluation="{{userEvaluation.qualityValue}}"
+      data-design-evaluation="{{userEvaluation.designValue}}"
+      data-general-evaluation="{{userEvaluation.evaluationValue}}">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body conceptos-white-background">
+          <div class="d-flex flex-column">
+            <span class="conceptos-title-strong">Evaluar y Comentar</span>
+            <img class="evaluation-image align-self-center" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+            <div class="d-flex align-items-center">
+              <span class="conceptos-title conceptos-title-lowercase">Su opinión general la clasifica como</span>
+              <select id="general-opinion" class="ml-2">
+                <option value="Muy buena" {% if userEvaluation.generalOpinion == "Muy buena" %}selected{% endif %}>Muy buena</option>
+                <option value="Buena" {% if userEvaluation.generalOpinion == "Buena" %}selected{% endif %}>Buena</option>
+                <option value="Regular" {% if userEvaluation.generalOpinion == "Regular" %}selected{% endif %}>Regular</option>
+                <option value="Mala" {% if userEvaluation.generalOpinion == "Mala" %}selected{% endif %}>Mala</option>
+                <option value="Muy mala" {% if userEvaluation.generalOpinion == "Muy mala" %}selected{% endif %}>Muy mala</option>
+              </select>
+            </div>
+            <span class="conceptos-title conceptos-title-lowercase mt-3">Relacione a cada parámetro un valor</span>
+            <div class="d-flex justify-content-between mt-2">
+              <div class="d-flex align-items-center">
+                <span class="conceptos-subtitle">Relación calidad/precio</span>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="change-product-evaluation change-product-evaluation-short price-quality {% if userEvaluation.priceQualityValue > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                <i class="change-product-evaluation change-product-evaluation-short price-quality {% if userEvaluation.priceQualityValue > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                <i class="change-product-evaluation change-product-evaluation-short price-quality {% if userEvaluation.priceQualityValue > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                <i class="change-product-evaluation change-product-evaluation-short price-quality {% if userEvaluation.priceQualityValue > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                <i class="change-product-evaluation change-product-evaluation-short price-quality {% if userEvaluation.priceQualityValue > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mt-2">
+              <div class="d-flex align-items-center">
+                <span class="conceptos-subtitle">Utilidad del producto</span>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="change-product-evaluation change-product-evaluation-short utility {% if userEvaluation.utilityValue > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                <i class="change-product-evaluation change-product-evaluation-short utility {% if userEvaluation.utilityValue > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                <i class="change-product-evaluation change-product-evaluation-short utility {% if userEvaluation.utilityValue > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                <i class="change-product-evaluation change-product-evaluation-short utility {% if userEvaluation.utilityValue > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                <i class="change-product-evaluation change-product-evaluation-short utility {% if userEvaluation.utilityValue > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mt-2">
+              <div class="d-flex align-items-center">
+                <span class="conceptos-subtitle">Durabilidad del producto</span>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="change-product-evaluation change-product-evaluation-short durability {% if userEvaluation.durabilityValue > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                <i class="change-product-evaluation change-product-evaluation-short durability {% if userEvaluation.durabilityValue > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                <i class="change-product-evaluation change-product-evaluation-short durability {% if userEvaluation.durabilityValue > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                <i class="change-product-evaluation change-product-evaluation-short durability {% if userEvaluation.durabilityValue > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                <i class="change-product-evaluation change-product-evaluation-short durability {% if userEvaluation.durabilityValue > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mt-2">
+              <div class="d-flex align-items-center">
+                <span class="conceptos-subtitle">Calidad del producto</span>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="change-product-evaluation change-product-evaluation-short quality {% if userEvaluation.qualityValue > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                <i class="change-product-evaluation change-product-evaluation-short quality {% if userEvaluation.qualityValue > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                <i class="change-product-evaluation change-product-evaluation-short quality {% if userEvaluation.qualityValue > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                <i class="change-product-evaluation change-product-evaluation-short quality {% if userEvaluation.qualityValue > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                <i class="change-product-evaluation change-product-evaluation-short quality {% if userEvaluation.qualityValue > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mt-2">
+              <div class="d-flex align-items-center">
+                <span class="conceptos-subtitle">Diseño y estética</span>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="change-product-evaluation change-product-evaluation-short design {% if userEvaluation.designValue > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                <i class="change-product-evaluation change-product-evaluation-short design {% if userEvaluation.designValue > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                <i class="change-product-evaluation change-product-evaluation-short design {% if userEvaluation.designValue > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                <i class="change-product-evaluation change-product-evaluation-short design {% if userEvaluation.designValue > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                <i class="change-product-evaluation change-product-evaluation-short design {% if userEvaluation.designValue > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+              <div class="d-flex align-items-center">
+                <span class="conceptos-subtitle">General</span>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="change-product-evaluation general {% if userEvaluation.evaluationValue > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                <i class="change-product-evaluation general {% if userEvaluation.evaluationValue > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                <i class="change-product-evaluation general {% if userEvaluation.evaluationValue > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                <i class="change-product-evaluation general {% if userEvaluation.evaluationValue > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                <i class="change-product-evaluation general {% if userEvaluation.evaluationValue > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+              </div>
+              <div class="d-flex align-items-center">
+                <span id="general-evaluation" class="conceptos-title">{{userEvaluation.evaluationValue}}</span>
+              </div>
+            </div>
+            <span class="conceptos-title conceptos-title-lowercase mt-4">Déjenos su opinión acerca del producto</span>
+            <textarea class="evaluation-textarea mt-2" rows="6">{{userEvaluation.comment}}</textarea>
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <span class="conceptos-subtitle mt-2">¿Recomienda usted este producto?</span>
+              <div class="d-flex justify-content-between align-items-center col-4 pl-0 mt-2">
+                <div class="d-flex align-items-center">
+                  <input id="recommended-radio" type="radio" name="recommended" {% if userEvaluation.isRecommended is defined and userEvaluation.isRecommended %}checked{% endif %}>
+                  <span class="conceptos-subtitle ml-1">Si</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <input type="radio" name="recommended" {% if userEvaluation.isRecommended is defined and not userEvaluation.isRecommended %}checked{% endif %}>
+                  <span class="conceptos-subtitle ml-1">No</span>
+                </div>
+              </div>
+              <span class="conceptos-title conceptos-title-lowercase mt-4">¡Muchas Gracias!</span>
+              <div class="d-flex mt-3">
+                <button id="send-evaluation-button" class="conceptos-primary-button mr-2"
+                      data-path="{{ path('evaluate_product', {productId: product.id}) }}" data-dismiss="modal">
+                  ENVIAR
+                </button>
+                <button class="conceptos-primary-button ml-2" data-dismiss="modal">CANCELAR</button>
+              </div>
+              <span class="conceptos-evaluation-note mt-2"><strong>Nota: </strong>No se publicarán los comentarios ofensivos o lascivos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="view-product-evaluations" class="modal fade">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body conceptos-white-background">
+          <div class="d-flex flex-column">
+            <span class="conceptos-title-strong">Reseñas de clientes</span>
+            <button id="view-evaluation-button" class="conceptos-primary-button align-self-start mt-2 mr-2">
+              Evaluar y comentar
+            </button>
+            <div class="d-flex justify-content-between">
+              <div class="d-flex flex-column justify-content-center col-6 pl-0">
+                <img class="evaluation-image align-self-center" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+                <span class="conceptos-title-strong">{{product.name}}</span>
+              </div>
+              <div class="d-flex flex-column align-items-center col-6 pl-0">
+                <div id="evaluation-summary" class="p-2">
+                  <div class="d-flex justify-content-center">
+                    <span class="conceptos-title">Opiniones</span>
+                  </div>
+                  <div class="d-flex justify-content-between mt-1 mb-1">
+                    <span class="conceptos-title">Total</span>
+                    <span class="conceptos-title ml-3">{{numberOfEvaluations}}</span>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <span class="conceptos-subtitle">Muy buena</span>
+                    <span class="conceptos-subtitle ml-3">{{numberOfVeryGoodEvaluations}}</span>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <span class="conceptos-subtitle">Buena</span>
+                    <span class="conceptos-subtitle ml-3">{{numberOfGoodEvaluations}}</span>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <span class="conceptos-subtitle">Regular</span>
+                    <span class="conceptos-subtitle ml-3">{{numberOfRegularEvaluations}}</span>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <span class="conceptos-subtitle">Mala</span>
+                    <span class="conceptos-subtitle ml-3">{{numberOfBadEvaluations}}</span>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <span class="conceptos-subtitle">Muy mala</span>
+                    <span class="conceptos-subtitle ml-3">{{numberOfVeryBadEvaluations}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex flex-column">
+              <div class="d-flex justify-content-between mt-4 mb-2">
+                <div class="d-flex align-items-center">
+                  <span class="conceptos-subtitle">General</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="change-product-evaluation-short {% if totalEvaluationGeneral > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                  <i class="change-product-evaluation-short {% if totalEvaluationGeneral > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                  <i class="change-product-evaluation-short {% if totalEvaluationGeneral > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                  <i class="change-product-evaluation-short {% if totalEvaluationGeneral > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                  <i class="change-product-evaluation-short {% if totalEvaluationGeneral > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+                  <span class="conceptos-subtitle ml-2">{{totalEvaluationGeneral}}</span>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between mt-2">
+                <div class="d-flex align-items-center">
+                  <span class="conceptos-subtitle">Relación calidad/precio</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="change-product-evaluation-short {% if priceQualityEvaluationGeneral > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                  <i class="change-product-evaluation-short {% if priceQualityEvaluationGeneral > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                  <i class="change-product-evaluation-short {% if priceQualityEvaluationGeneral > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                  <i class="change-product-evaluation-short {% if priceQualityEvaluationGeneral > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                  <i class="change-product-evaluation-short {% if priceQualityEvaluationGeneral > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+                  <span class="conceptos-subtitle ml-2">{{priceQualityEvaluationGeneral}}</span>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between mt-2">
+                <div class="d-flex align-items-center">
+                  <span class="conceptos-subtitle">Utilidad del producto</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="change-product-evaluation-short {% if utilityEvaluationGeneral > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                  <i class="change-product-evaluation-short {% if utilityEvaluationGeneral > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                  <i class="change-product-evaluation-short {% if utilityEvaluationGeneral > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                  <i class="change-product-evaluation-short {% if utilityEvaluationGeneral > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                  <i class="change-product-evaluation-short {% if utilityEvaluationGeneral > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+                  <span class="conceptos-subtitle ml-2">{{utilityEvaluationGeneral}}</span>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between mt-2">
+                <div class="d-flex align-items-center">
+                  <span class="conceptos-subtitle">Durabilidad del producto</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="change-product-evaluation-short {% if durabilityEvaluationGeneral > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                  <i class="change-product-evaluation-short {% if durabilityEvaluationGeneral > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                  <i class="change-product-evaluation-short {% if durabilityEvaluationGeneral > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                  <i class="change-product-evaluation-short {% if durabilityEvaluationGeneral > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                  <i class="change-product-evaluation-short {% if durabilityEvaluationGeneral > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+                  <span class="conceptos-subtitle ml-2">{{durabilityEvaluationGeneral}}</span>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between mt-2">
+                <div class="d-flex align-items-center">
+                  <span class="conceptos-subtitle">Calidad del producto</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="change-product-evaluation-short {% if qualityEvaluationGeneral > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                  <i class="change-product-evaluation-short {% if qualityEvaluationGeneral > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                  <i class="change-product-evaluation-short {% if qualityEvaluationGeneral > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                  <i class="change-product-evaluation-short {% if qualityEvaluationGeneral > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                  <i class="change-product-evaluation-short {% if qualityEvaluationGeneral > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+                  <span class="conceptos-subtitle ml-2">{{qualityEvaluationGeneral}}</span>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between mt-2">
+                <div class="d-flex align-items-center">
+                  <span class="conceptos-subtitle">Diseño y estética</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="change-product-evaluation-short {% if designEvaluationGeneral > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                  <i class="change-product-evaluation-short {% if designEvaluationGeneral > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                  <i class="change-product-evaluation-short {% if designEvaluationGeneral > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                  <i class="change-product-evaluation-short {% if designEvaluationGeneral > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                  <i class="change-product-evaluation-short {% if designEvaluationGeneral > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+                  <span class="conceptos-subtitle ml-2">{{designEvaluationGeneral}}</span>
+                </div>
+              </div>
+            </div>
+            {% for evaluation in product.evaluations %}
+              <div class="conceptos-divider-black mt-4 mb-2"></div>
+              <div class="d-flex flex-column">
+                <span class="conceptos-title">{{evaluation.user.firstName}} {{evaluation.user.lastName}}</span>
+                <div class="d-flex align-items-center">
+                  <i class="change-product-evaluation-short {% if evaluation.evaluationValue > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                  <i class="change-product-evaluation-short {% if evaluation.evaluationValue > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                  <i class="change-product-evaluation-short {% if evaluation.evaluationValue > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                  <i class="change-product-evaluation-short {% if evaluation.evaluationValue > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                  <i class="change-product-evaluation-short {% if evaluation.evaluationValue > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+                  <span class="conceptos-subtitle ml-2">{{evaluation.evaluationValue}}</span>
+                </div>
+                {% if evaluation.generalOpinion %}
+                  <span class="conceptos-subtitle mt-1">{{evaluation.generalOpinion}}</span>
+                {% endif %}
+                {% if evaluation.comment and evaluation.isAccepted %}
+                  <p class="conceptos-subtitle mt-1">{{evaluation.comment}}</p>
+                {% endif %}
+                <div class="d-flex justify-content-between mt-2">
+                  <div class="d-flex align-items-center">
+                    <span class="conceptos-subtitle">Relación calidad/precio</span>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <i class="change-product-evaluation-short {% if evaluation.priceQualityValue > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.priceQualityValue > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.priceQualityValue > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.priceQualityValue > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.priceQualityValue > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+                    <span class="conceptos-subtitle ml-2">{{evaluation.priceQualityValue}}</span>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                  <div class="d-flex align-items-center">
+                    <span class="conceptos-subtitle">Utilidad del producto</span>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <i class="change-product-evaluation-short {% if evaluation.utilityValue > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.utilityValue > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.utilityValue > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.utilityValue > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.utilityValue > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+                    <span class="conceptos-subtitle ml-2">{{evaluation.utilityValue}}</span>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                  <div class="d-flex align-items-center">
+                    <span class="conceptos-subtitle">Durabilidad del producto</span>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <i class="change-product-evaluation-short durability {% if evaluation.durabilityValue > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                    <i class="change-product-evaluation-short durability {% if evaluation.durabilityValue > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                    <i class="change-product-evaluation-short durability {% if evaluation.durabilityValue > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                    <i class="change-product-evaluation-short durability {% if evaluation.durabilityValue > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                    <i class="change-product-evaluation-short durability {% if evaluation.durabilityValue > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+                    <span class="conceptos-subtitle ml-2">{{evaluation.durabilityValue}}</span>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                  <div class="d-flex align-items-center">
+                    <span class="conceptos-subtitle">Calidad del producto</span>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <i class="change-product-evaluation-short {% if evaluation.qualityValue > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.qualityValue > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.qualityValue > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.qualityValue > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.qualityValue > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+                    <span class="conceptos-subtitle ml-2">{{evaluation.qualityValue}}</span>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                  <div class="d-flex align-items-center">
+                    <span class="conceptos-subtitle">Diseño y estética</span>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <i class="change-product-evaluation-short {% if evaluation.designValue > 0 %}favorite{% endif %} fa fa-star" data-star="1"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.designValue > 1 %}favorite{% endif %} fa fa-star ml-1" data-star="2"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.designValue > 2 %}favorite{% endif %} fa fa-star ml-1" data-star="3"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.designValue > 3 %}favorite{% endif %} fa fa-star ml-1" data-star="4"></i>
+                    <i class="change-product-evaluation-short {% if evaluation.designValue > 4 %}favorite{% endif %} fa fa-star ml-1" data-star="5"></i>
+                    <span class="conceptos-subtitle ml-2">{{evaluation.designValue}}</span>
+                  </div>
+                </div>
+                {% if evaluation.isRecommended %}
+                  <span class="conceptos-subtitle mt-1">Si, recomiendo este producto</span>
+                {% endif %}
+              </div>
+            {% endfor %}
+            <div class="d-flex justify-content-center">
+              <button class="conceptos-primary-button mt-2" data-dismiss="modal">ACEPTAR</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 {% endif %}

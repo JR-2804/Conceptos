@@ -31,6 +31,15 @@ class ShopCartService
       $this->entityManager->flush();
     }
 
+    public function emptyShopCartBags($user)
+    {
+      $shopCartBags = $this->entityManager->getRepository('AppBundle:ShopCartBags')->findOneBy([
+        'user' => $user->getId(),
+      ]);
+      $this->entityManager->remove($shopCartBags);
+      $this->entityManager->flush();
+    }
+
     public function getShopCartProducts($user)
     {
       if (!$user) {
@@ -47,7 +56,7 @@ class ShopCartService
         if (
             $shopCartProduct->getProductId() == 'target15' ||
             $shopCartProduct->getProductId() == 'target25' ||
-            $shopCartProduct->getProductId() == 'target5' ||
+            $shopCartProduct->getProductId() == 'target50' ||
             $shopCartProduct->getProductId() == 'target100') {
           $name = 'Tarjeta de 15 CUC';
           switch ($shopCartProduct->getProductId()) {
@@ -114,12 +123,24 @@ class ShopCartService
               'isBookcase' => $productDB->getIsBookcase(),
               'isComoda' => $productDB->getIsComoda(),
               'isRepisa' => $productDB->getIsRepisa(),
+              'comboProducts' => $productDB->getComboProducts(),
               'categories' => json_encode($categories),
             ];
           }
         }
       }
       return $productsDB;
+    }
+
+    public function getShopCartBags($user)
+    {
+      if ($user == null) {
+        return null;
+      }
+
+      return $this->entityManager->getRepository('AppBundle:ShopCartBags')->findOneBy([
+        'user' => $user->getId(),
+      ]);
     }
 
     public function countShopCart($user)

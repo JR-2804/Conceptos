@@ -1132,6 +1132,18 @@
                                     <td style="text-align: right; font-size: 18px; line-height: 150%;">${{ request.discount }}.00</td>
                                   </tr>
                                   {% endif %}
+                                  {% if request.balanceDiscount and request.balanceDiscount > 0 %}
+                                  <tr>
+                                    <td style="text-align: right; font-size: 18px; line-height: 150%;">Descuento de saldo de miembro:</td>
+                                    <td style="text-align: right; font-size: 18px; line-height: 150%;">${{ request.balanceDiscount }}.00</td>
+                                  </tr>
+                                  {% endif %}
+                                  {% if request.comboDiscount and request.comboDiscount > 0 %}
+                                  <tr>
+                                    <td style="text-align: right; font-size: 18px; line-height: 150%;">Descuento de combo</td>
+                                    <td style="text-align: right; font-size: 18px; line-height: 150%;">${{ request.comboDiscount }}.00</td>
+                                  </tr>
+                                  {% endif %}
                                   {% if request.cucExtra %}
                                     <tr>
                                       <td style="text-align: right; font-size: 18px; line-height: 150%;">Extra CUC:</td>

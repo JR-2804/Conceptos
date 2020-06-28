@@ -27,7 +27,7 @@ easy_admin:
                     - {property: 'categoryText', label: 'Categoría'}
                     - {property: 'popular', label: 'Popular', type: 'toggle'}
                     - {property: 'recent', label: 'Novedades', type: 'toggle'}
-                    - {property: 'inStore', label: 'En almacén', type: 'toggle'}
+                    - {property: 'inStore', label: 'Entrega en 24h', type: 'toggle'}
                     - {property: 'storeCount', label: 'Cantidad en almacén'}
                     - {property: 'mainImage', label: 'Imágen Principal', type: 'image', base_path: '/uploads'}
                     - {property: 'material', label: 'Material'}
@@ -138,7 +138,7 @@ easy_admin:
                     - {property: 'requestCards', label: 'Tarjetas de Regalo'}
                     - {property: 'transportCost', label: 'Costo de Transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
-                    - {property: 'firstClientDiscount', label: 'Descuento de primera compra'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             show:
                 title: Detalles del pedido
@@ -149,8 +149,10 @@ easy_admin:
                     - {property: 'requestCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             form:
                 fields:
@@ -158,8 +160,10 @@ easy_admin:
                     - {property: 'client', label: 'Cliente'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             new:
                 title: 'Nuevo pedido'
@@ -183,7 +187,7 @@ easy_admin:
                     - {property: 'preFactureCards', label: 'Tarjetas de Regalo'}
                     - {property: 'transportCost', label: 'Costo de Transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
-                    - {property: 'firstClientDiscount', label: 'Descuento de primera compra'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             show:
                 title: Detalles de la prefactura
@@ -194,8 +198,10 @@ easy_admin:
                     - {property: 'preFactureCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             form:
                 fields:
@@ -203,8 +209,10 @@ easy_admin:
                     - {property: 'client', label: 'Cliente'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             new:
                 title: 'Nueva prefactura'
@@ -216,8 +224,9 @@ easy_admin:
             list:
                 title: Facturas realizadas
                 actions:
-                    - {name: 'show'}
                     - {name: 'new', label: 'Nueva Factura'}
+                    - {name: 'print_facture', type: 'route', label: 'Exportar' }
+                    - {name: 'show'}
                 fields:
                     - id
                     - {property: 'date', label: 'Fecha', format: 'd/m/Y'}
@@ -226,7 +235,7 @@ easy_admin:
                     - {property: 'factureCards', label: 'Tarjetas de Regalo'}
                     - {property: 'transportCost', label: 'Costo de Transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
-                    - {property: 'firstClientDiscount', label: 'Descuento de primera compra'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             show:
                 title: Detalles de la factura
@@ -237,8 +246,10 @@ easy_admin:
                     - {property: 'factureCards', label: 'Tarjetas', template: 'show_cards.html.twig'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             form:
                 fields:
@@ -246,13 +257,55 @@ easy_admin:
                     - {property: 'client', label: 'Cliente'}
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
+                    - {property: 'bagsExtra', label: 'Extra bolsas'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
                     - {property: 'discount', label: 'Descuento de miembro'}
+                    - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
             new:
                 title: 'Nueva factura'
             edit:
                 title: 'Editar factura'
+        ExternalRequest:
+            class: AppBundle\Entity\Request\ExternalRequest
+            label: Pedido Externo
+            list:
+                title: Pedido externos
+                actions:
+                    - {name: 'show'}
+                    - {name: 'new', label: 'Nuevo pedido externo'}
+                fields:
+                    - id
+                    - {property: 'finalPrice', label: 'Costo de la compra'}
+                    - {property: 'weight', label: 'Peso de los productos'}
+                    - {property: 'budget', label: 'Presupuesto para embalaje o sobrepeso'}
+                    - {property: 'payment', label: 'Pago total'}
+                    - {property: 'state', label: 'Estado'}
+                    - {property: 'user', label: 'Usuario'}
+                    - {property: 'date', label: 'Fecha tope', format: 'd/m/Y'}
+            show:
+                title: Detalles del pedido externo
+                fields:
+                    - {property: 'finalPrice', label: 'Costo de la compra'}
+                    - {property: 'weight', label: 'Peso de los productos'}
+                    - {property: 'budget', label: 'Presupuesto para embalaje o sobrepeso'}
+                    - {property: 'payment', label: 'Pago total'}
+                    - {property: 'state', label: 'Estado'}
+                    - {property: 'user', label: 'Usuario'}
+                    - {property: 'date', label: 'Fecha tope', format: 'd/m/Y'}
+            form:
+                fields:
+                    - {property: 'finalPrice', label: 'Costo de la compra'}
+                    - {property: 'weight', label: 'Peso de los productos'}
+                    - {property: 'budget', label: 'Presupuesto para embalaje o sobrepeso'}
+                    - {property: 'payment', label: 'Pago total'}
+                    - {property: 'state', label: 'Estado', type: choice, type_options: { choices: {'Sin estado':'Sin estado', 'Comprado': 'Comprado', 'Montado': 'Montado', 'Entregado': 'Entregado', 'Pagado': 'Pagado' }}}
+                    - {property: 'user', label: 'Usuario'}
+                    - {property: 'date', label: 'Fecha tope', format: 'd/m/Y'}
+            new:
+                title: 'Nueva pedido externo'
+            edit:
+                title: 'Editar pedido externo'
         Client:
             class: AppBundle\Entity\Request\Client
             label: Clientes
@@ -480,6 +533,7 @@ easy_admin:
                     - {property: 'enabled', label: 'Habilitado', type: 'toggle'}
                     - {property: 'lastLogin', label: 'Último acceso'}
                     - {property: 'ProductsInCartCount', label: 'Cantidad en Carrito', type: 'integer'}
+                    - {property: 'FavoritesCount', label: 'Cantidad de Favoritos', type: 'integer'}
             edit:
                 fields:
                     - { property: 'plainPassword', type_options: { required: false} }

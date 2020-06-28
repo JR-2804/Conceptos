@@ -245,6 +245,7 @@ class SecurityController extends Controller
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
         $userMail = $this->getUser()->getEmail();
+
         $clientPrefactures = [];
         $persistedPrefactures = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->findAll();
         foreach ($persistedPrefactures as $persistedPrefacture) {
@@ -258,11 +259,106 @@ class SecurityController extends Controller
           }
         }
 
+        $clientRequests = [];
+        if (count($clientPrefactures) == 0) {
+          $persistedRequests = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->findAll();
+          foreach ($persistedRequests as $persistedRequest) {
+            if ($persistedRequest->getClient()->getEmail() == $userMail and count($persistedRequest->getPreFactures()) == 0) {
+              $exists = false;
+              foreach ($persistedPrefactures as $persistedPrefacture) {
+                if ($persistedPrefacture->getRequest() && $persistedPrefacture->getRequest()->getId() == $clientRequest->getId()) {
+                  $exists = true;
+                }
+              }
+
+              if ($exists == false) {
+                foreach ($persistedRequest->getRequestProducts() as $requestProduct) {
+                  if (!$this->IsEntityDefined($requestProduct)) {
+                    $requestProduct->setProduct(null);
+                  }
+                }
+                $clientRequests[] = $persistedRequest;
+              }
+            }
+          }
+        }
+
+        $externalRequests = $user->getExternalRequests();
+        foreach($externalRequests as $externalRequest) {
+          foreach($externalRequest->getExternalRequestProducts() as $externalRequestProduct) {
+            $offerPrice = $this->get('product_service')->findProductOfferPrice($externalRequestProduct->getProduct());
+            $externalRequestProduct->getProduct()->setPriceOffer($offerPrice);
+          }
+        }
+
+        $commercialPreFactures = [];
+        $commercialFactures = [];
+        $commercialClients = [];
+        $commercialPaymentCharge = 0;
+        $commercialPaymentTotal = 0;
+        if ($this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+          $commercialPreFactures = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->findBy([
+            'commercial' => $this->getUser()->getId(),
+          ]);
+          $commercialFactures = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Facture')->findBy([
+            'commercial' => $this->getUser()->getId(),
+          ]);
+
+          foreach($commercialPreFactures as $commercialPreFacture) {
+            $client = $commercialPreFacture->getClient();
+            $exists = false;
+            foreach($commercialClients as $commercialClient) {
+              if ($commercialClient->getEmail() == $client->getEmail()) {
+                $exists = true;
+              }
+            }
+            if (!$exists) {
+              $commercialClients[] = $client;
+            }
+
+            foreach($commercialPreFacture->getPreFactureProducts() as $preFactureProducts) {
+              $offerPrice = $this->get('product_service')->findProductOfferPrice($preFactureProducts->getProduct());
+              $preFactureProducts->getProduct()->setPriceOffer($offerPrice);
+            }
+
+            if (count($commercialPreFacture->getFactures()) <= 0) {
+              $commercialPaymentCharge += $commercialPreFacture->getFinalPrice();
+            }
+          }
+
+          foreach($commercialFactures as $commercialFacture) {
+            $client = $commercialFacture->getClient();
+            $exists = false;
+            foreach($commercialClients as $commercialClient) {
+              if ($commercialClient->getEmail() == $client->getEmail()) {
+                $exists = true;
+              }
+            }
+            if (!$exists) {
+              $commercialClients[] = $client;
+            }
+
+            foreach($commercialFacture->getFactureProducts() as $factureProduct) {
+              $offerPrice = $this->get('product_service')->findProductOfferPrice($factureProduct->getProduct());
+              $factureProduct->getProduct()->setPriceOffer($offerPrice);
+            }
+
+            $commercialPaymentTotal += $commercialFacture->getFinalPrice();
+          }
+        }
+
         return $this->render('@FOSUser/Profile/edit.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
             'showSuccessToast' => $showSuccessToast,
+            'requests' => $clientRequests,
             'prefactures' => $clientPrefactures,
+            'externalRequests' => $externalRequests,
+            'commercialPreFactures' => $commercialPreFactures,
+            'commercialFactures' => $commercialFactures,
+            'commercialPaymentCharge' => $commercialPaymentCharge,
+            'commercialPaymentTotal' => $commercialPaymentTotal,
+            'commercialClients' => $commercialClients,
             'home' => $home,
             'membership' => $membership,
             'categories' => $this->get('category_service')->getAll(),
@@ -270,13 +366,16 @@ class SecurityController extends Controller
             'privacy' => $config->getPrivacyPolicy(),
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
         ]);
     }
 
     public function IsEntityDefined($prefactureProduct) {
       try {
-        if ($prefactureProduct->getProduct()->getName() != null) {
+        if ($prefactureProduct->getProduct() != null && $prefactureProduct->getProduct()->getName() != null) {
           return true;
+        } else {
+          return false;
         }
       } catch (EntityNotFoundException $e) {
         return false;

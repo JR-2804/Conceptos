@@ -1,0 +1,77 @@
+{% block css %}
+  <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/styles/index.css') }}" type="text/css">
+
+  {% if page.data.hoverStyle is defined and page.data.hoverStyle != "full" %}
+    <style>
+      .home__hero:before {
+        background: transparent;
+      }
+    </style>
+  {% endif %}
+  {% if page.data.hoverStyle is defined and page.data.hoverStyle == "text" %}
+    <style>
+      .home__hero__content__title {
+        {% if page.data.hoverColor %}
+          background: {{page.data.hoverColor}};
+        {% else %}
+          background: rgba(255, 255, 255, 0.3);
+        {% endif %}
+      }
+    </style>
+  {% endif %}
+  {% if page.data.hoverStyle is defined and page.data.hoverStyle == "full" %}
+    <style>
+      .home__hero:before {
+        {% if page.data.hoverColor %}
+          background: {{page.data.hoverColor}};
+        {% else %}
+          background: rgba(255, 255, 255, 0.3);
+        {% endif %}
+      }
+    </style>
+  {% endif %}
+{% endblock %}
+
+<div id="home-header" class="d-flex flex-column justify-content-center home__hero align-items-start">
+  {% if page.data.slides and page.data.slides is not empty %}
+    <img class="conceptos-image d-none d-lg-flex" src="{{page.data.slides[0].path}}">
+    <img class="conceptos-image d-flex d-lg-none" src="{% if page.data.slides[0].mobileImage is defined %}{{page.data.slides[0].mobileImage.path}}{% else %}{{page.data.slides[0].path}}{% endif %}">
+  {% endif %}
+
+  <div class="d-flex home__hero__content pl-0 h-100 {% if page.data.verticalPosition %}align-items-{{page.data.verticalPosition}}{% endif %} {% if page.data.horizontalPosition is defined %}justify-content-{{page.data.horizontalPosition}}{% endif %}">
+    {% set offer = offers | last %}
+    {% if offer and not page.data.prioritizeSlideText %}
+      <div class="home__hero__content__title">
+        {% if offer.name %}
+          <h1>{{ offer.name }}</h1>
+        {% endif %}
+        {% if offer.description %}
+          <h2>{{ offer.description }}</h2>
+        {% endif %}
+      </div>
+      <div class="home__hero__content__btn">
+        <a href="{{path('products', {inOffer:true})}}">VER OFERTAS</a>
+      </div>
+    {% elseif page.data.slides and page.data.slides is not empty %}
+      {% set slide = page.data.slides[0] %}
+      <div class="d-flex flex-column home__hero__content__title p-2"
+           style="{% if page.data.slideTopMargin is defined %}margin-top: {{page.data.slideTopMargin}}em;{% endif %}{% if page.data.slideBottomMargin is defined %}margin-bottom: {{page.data.slideBottomMargin}}em;{% endif %}{% if page.data.slideLeftMargin is defined %}margin-left: {{page.data.slideLeftMargin}}em;{% endif %}{% if page.data.slideRightMargin is defined %}margin-right: {{page.data.slideRightMargin}}em;{% endif %}">
+        {% if slide.main is defined %}
+          <h1 class="d-flex" style="{% if page.data.slideFontSize %}font-size: {{page.data.slideFontSize + 0.75}}em;{% endif %}{% if page.data.slideFontColor %}color: {{page.data.slideFontColor}};{% endif %}">{{ slide.main }}</h1>
+        {% endif %}
+        {% if slide.secondary is defined %}
+          <h2 class="d-flex" style="{% if page.data.slideFontSize %}font-size: {{page.data.slideFontSize}}em;{% endif %}{% if page.data.slideFontColor %}color: {{page.data.slideFontColor}};{% endif %}">{{ slide.secondary }}</h2>
+        {% endif %}
+        {% if slide.link is defined %}
+          <div class="d-flex home__hero__content__btn">
+            <a href="{{slide.link}}">VER MÁS</a>
+          </div>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="home__hero__content__title">
+        <h1>Bienvenidos a Conceptos</h1>
+      </div>
+    {% endif %}
+  </div>
+</div>

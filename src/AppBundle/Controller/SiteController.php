@@ -8,9 +8,12 @@ use AppBundle\DTO\MembershipRequestDTO;
 use AppBundle\Entity\Evaluation;
 use AppBundle\Entity\FavoriteProduct;
 use AppBundle\Entity\ShopCartProduct;
+use AppBundle\Entity\ShopCartBags;
 use AppBundle\Entity\Request\Client;
 use AppBundle\Entity\Request\Request as ProductRequest;
 use AppBundle\Entity\Request\Facture;
+use AppBundle\Entity\Request\ExternalRequest;
+use AppBundle\Entity\Request\ExternalRequestProduct;
 use AppBundle\Entity\Request\PreFacture;
 use AppBundle\Entity\Request\RequestCard;
 use AppBundle\Entity\Request\FactureCard;
@@ -30,6 +33,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class SiteController extends Controller
 {
@@ -44,6 +49,8 @@ class SiteController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $onlySlide = $request->query->get('onlySlide');
+
         $offers = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')
             ->createQueryBuilder('o')
             ->where('o.startDate <= :date AND o.endDate >= :date')
@@ -87,6 +94,38 @@ class SiteController extends Controller
         $inStore = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findBy([
             'inStore' => true,
         ], null, 50);
+
+        $rowsOfPopularProductsInDesktop = 2;
+        $columnsOfPopularProductsInDesktop = 6;
+        if (array_key_exists('popularProductsStyleDesktop', $page->getData())) {
+          $popularProductsStyleDesktop = explode("x", $page->getData()["popularProductsStyleDesktop"]);
+          $rowsOfPopularProductsInDesktop = $popularProductsStyleDesktop[0];
+          $columnsOfPopularProductsInDesktop = $popularProductsStyleDesktop[1];
+        }
+
+        $rowsOfPopularProductsInMobile = 3;
+        $columnsOfPopularProductsInMobile = 2;
+        if (array_key_exists('popularProductsStyleMobile', $page->getData())) {
+          $popularProductsStyleMobile = explode("x", $page->getData()["popularProductsStyleMobile"]);
+          $rowsOfPopularProductsInMobile = $popularProductsStyleMobile[0];
+          $columnsOfPopularProductsInMobile = $popularProductsStyleMobile[1];
+        }
+
+        $rowsOfStoreProductsInDesktop = 1;
+        $columnsOfStoreProductsInDesktop = 4;
+        if (array_key_exists('storeProductsStyleDesktop', $page->getData())) {
+          $storeProductsStyleDesktop = explode("x", $page->getData()["storeProductsStyleDesktop"]);
+          $rowsOfStoreProductsInDesktop = $storeProductsStyleDesktop[0];
+          $columnsOfStoreProductsInDesktop = $storeProductsStyleDesktop[1];
+        }
+
+        $rowsOfStoreProductsInMobile = 1;
+        $columnsOfStoreProductsInMobile = 1;
+        if (array_key_exists('storeProductsStyleMobile', $page->getData())) {
+          $storeProductsStyleMobile = explode("x", $page->getData()["storeProductsStyleMobile"]);
+          $rowsOfStoreProductsInMobile = $storeProductsStyleMobile[0];
+          $columnsOfStoreProductsInMobile = $storeProductsStyleMobile[1];
+        }
 
         #TODO: poner el random del doctrine
         shuffle($inStore);
@@ -169,6 +208,7 @@ class SiteController extends Controller
         }
 
         return $this->render(':site:home.html.twig', [
+            'onlySlide' => $onlySlide,
             'showSuccessToast' => $showSuccessToast,
             'loginError' => $loginError,
             'offers' => $offers,
@@ -179,13 +219,18 @@ class SiteController extends Controller
             'membership' => $membership,
             'home' => $page,
             'lasts' => $lasts,
-            'inStore' => $inStore,
-            'inStoreDesktop' => array_chunk($inStore, 4),
+            'columnsOfPopularProductsInDesktop' => $columnsOfPopularProductsInDesktop,
+            'columnsOfPopularProductsInMobile' => $columnsOfPopularProductsInMobile,
+            'columnsOfStoreProductsInDesktop' => $columnsOfStoreProductsInDesktop,
+            'columnsOfStoreProductsInMobile' => $columnsOfStoreProductsInMobile,
+            'popularChunksDesktop' => array_chunk($populars, $rowsOfPopularProductsInDesktop * $columnsOfPopularProductsInDesktop),
+            'popularChunks' => array_chunk($populars, $rowsOfPopularProductsInMobile * $columnsOfPopularProductsInMobile),
+            'inStoreChunksDesktop' => array_chunk($inStore, $rowsOfStoreProductsInDesktop * $columnsOfStoreProductsInDesktop),
+            'inStoreChunks' => array_chunk($inStore, $rowsOfStoreProductsInMobile * $columnsOfStoreProductsInMobile),
             'inStoreHighlight' => $inStoreHighlight,
-            'popularChunks' => array_chunk($populars, 6),
-            'popularChunksDesktop' => array_chunk($populars, 12),
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'config' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1),
             'brands' => array_chunk($brands, 4),
             'currentDate' => new \DateTime(),
@@ -193,6 +238,36 @@ class SiteController extends Controller
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
         ]);
+    }
+
+    /**
+     * @Route(name="home_slide", path="/home/slide")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function homeSlideAction(Request $request, $onlySlide)
+    {
+      $offers = $this->getDoctrine()->getManager()->getRepository('AppBundle:Offer')
+        ->createQueryBuilder('o')
+        ->where('o.startDate <= :date AND o.endDate >= :date')
+        ->setParameter('date', new \DateTime(), Type::DATE)
+        ->getQuery()->getResult();
+
+      if ($onlySlide) {
+        $slidePreview = $this->getDoctrine()->getManager()->getRepository('AppBundle:SlidePreview')->find(1);
+        $page = $slidePreview;
+      } else {
+        $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Home',
+        ]);
+      }
+
+      return $this->render(':site:home-slide.html.twig', [
+        'offers' => $offers,
+        'page' => $page,
+      ]);
     }
 
     /**
@@ -222,6 +297,7 @@ class SiteController extends Controller
             'page' => $page,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -255,6 +331,7 @@ class SiteController extends Controller
             'page' => $page,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'config' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -314,6 +391,7 @@ class SiteController extends Controller
         $result += ['membership' => $membership];
         $result += ['count' => $this->get('shop_cart_service')->countShopCart($this->getUser())];
         $result += ['shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser())];
+        $result += ['shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser())];
 
         return $this->render(':site:products.html.twig', $result);
     }
@@ -352,6 +430,7 @@ class SiteController extends Controller
                 'related' => null,
                 'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
                 'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+                'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
                 'categories' => $this->get('category_service')->getAll(),
                 'terms' => $config->getTermAndConditions(),
                 'privacy' => $config->getPrivacyPolicy(),
@@ -432,6 +511,7 @@ class SiteController extends Controller
             'related' => $related,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -465,6 +545,7 @@ class SiteController extends Controller
         }
 
         $productsDB = $this->get('shop_cart_service')->getShopCartProducts($this->getUser());
+        $shopCartBags = $this->get('shop_cart_service')->getShopCartBags($this->getUser());
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
@@ -487,6 +568,8 @@ class SiteController extends Controller
             $productsResponse = [];
             $totalPriceBase = 0;
             $cucExtra = 0;
+            $bagsExtra = 0;
+            $memberBalance = 0;
             foreach ($requestProducts as $product) {
                 if (!array_key_exists('type', $product)) {
                     $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['id']);
@@ -513,9 +596,13 @@ class SiteController extends Controller
             $totalPrice = $totalPriceBase;
 
             $discount = 0;
+            $balanceDiscount = 0;
+            $remainingBalance = 0;
             if ($memberNumber) {
               $discount = ceil($totalPriceBase * 0.1);
+              $balanceDiscount = ceil($this->getUser()->getMember()->getBalance());
               $totalPrice -= $discount;
+              $totalPrice -= $balanceDiscount;
             }
 
             $twoStepExtra = 0;
@@ -524,10 +611,25 @@ class SiteController extends Controller
               $totalPrice += $twoStepExtra;
             }
 
-            $cucExtra = 0;
             if ($paymentCurrency == 'cuc') {
               $cucExtra = ceil($totalPriceBase * 0.15);
               $totalPrice += $cucExtra;
+            }
+
+            if ($shopCartBags != null) {
+              $bagsExtra = $shopCartBags->getNumberOfPayedBags() - $shopCartBags->getNumberOfFreeBags() * 7;
+              if ($bagsExtra > 0) {
+                $totalPrice += $bagsExtra;
+              }
+            }
+
+            if ($totalPrice < 0) {
+              $remainingBalance = 0 - $totalPrice;
+              $totalPrice = 0;
+            }
+
+            if ($memberNumber) {
+              $memberBalance = ceil($totalPrice * 0.05);
             }
 
             $totalPrice += $transportCost;
@@ -553,70 +655,109 @@ class SiteController extends Controller
             $client->setPhone($data->getPhone());
             $this->getDoctrine()->getManager()->persist($client);
 
-            if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
-              if ($data->getType() == "facture") {
-                $facture = new Facture();
-                $facture->setClient($client);
-                if ($data->getPrefacture() != "0") {
-                  $prefacture = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->find((int) $data->getPrefacture());
-                  $facture->setPreFacture($prefacture);
-                }
+            $comboDiscount = 0;
+            if ($data->getType() == "facture" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              $facture = new Facture();
+              $facture->setClient($client);
+              if ($data->getRequest() != "0") {
+                $req = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->find((int) $data->getRequest());
+                $facture->setRequest($req);
+              }
+              if ($data->getPrefacture() != "0") {
+                $prefacture = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->find((int) $data->getPrefacture());
+                $facture->setPreFacture($prefacture);
+              }
 
-                foreach ($productsResponse as $productR) {
-                  if (array_key_exists('type', $productR)) {
-                      $factureCard = new FactureCard();
-                      $factureCard->setCount($productR['count']);
-                      $factureCard->setFacture($facture);
-                      $factureCard->setPrice($productR['price']);
-                      $this->getDoctrine()->getManager()->persist($factureCard);
-                      $facture->addFactureCard($factureCard);
+              foreach ($productsResponse as $productR) {
+                if (array_key_exists('type', $productR)) {
+                  $factureCard = new FactureCard();
+                  $factureCard->setCount($productR['count']);
+                  $factureCard->setFacture($facture);
+                  $factureCard->setPrice($productR['price']);
+                  $this->getDoctrine()->getManager()->persist($factureCard);
+                  $facture->addFactureCard($factureCard);
+                } else {
+                  $product = $productR['product'];
+
+                  if (count($product->getComboProducts()) > 0) {
+                    foreach ($product->getComboProducts() as $comboProduct) {
+                      $this->CreateProduct(
+                        3,
+                        new FactureProduct(),
+                        $facture,
+                        $comboProduct->getProduct(),
+                        $comboProduct->getProduct()->getPrice(),
+                        $comboProduct->getCount() * $productR['count']
+                      );
+                      $comboDiscount += $comboProduct->getProduct()->getPrice() * $comboProduct->getCount() * $productR['count'];
+                    }
+                    $comboDiscount -= $productR['price'];
                   } else {
-                      $factureProduct = new FactureProduct();
-                      $factureProduct->setCount($productR['count']);
-                      $factureProduct->setFacture($facture);
-                      $factureProduct->setProduct($productR['product']);
-                      $factureProduct->setProductPrice($productR['price']);
-                      if ($productR['price'] > $productR['product']->getPrice()){
-                        $factureProduct->setIsAriplaneForniture(true);
-                        $factureProduct->setIsAriplaneMattress(true);
-                      } else {
-                        $factureProduct->setIsAriplaneForniture(false);
-                        $factureProduct->setIsAriplaneMattress(false);
-                      }
-
-                      $this->getDoctrine()->getManager()->persist($factureProduct);
-                      $facture->addFactureProduct($factureProduct);
+                    $this->CreateProduct(
+                      3,
+                      new FactureProduct(),
+                      $facture,
+                      $product,
+                      $productR['price'],
+                      $productR['count']
+                    );
                   }
                 }
-              } else {
-                $prefacture = new PreFacture();
-                $prefacture->setClient($client);
+              }
+            } elseif ($data->getType() == "prefacture" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              $prefacture = new PreFacture();
+              $prefacture->setClient($client);
+              if ($data->getRequest() != "0") {
+                $req = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->find((int) $data->getRequest());
+                $prefacture->setRequest($req);
+              }
 
-                foreach ($productsResponse as $productR) {
-                  if (array_key_exists('type', $productR)) {
-                      $prefactureCard = new PreFactureCard();
-                      $prefactureCard->setCount($productR['count']);
-                      $prefactureCard->setPreFacture($prefacture);
-                      $prefactureCard->setPrice($productR['price']);
-                      $this->getDoctrine()->getManager()->persist($prefactureCard);
-                      $prefacture->addPreFactureCard($prefactureCard);
+              foreach ($productsResponse as $productR) {
+                if (array_key_exists('type', $productR)) {
+                  $prefactureCard = new PreFactureCard();
+                  $prefactureCard->setCount($productR['count']);
+                  $prefactureCard->setPreFacture($prefacture);
+                  $prefactureCard->setPrice($productR['price']);
+                  $this->getDoctrine()->getManager()->persist($prefactureCard);
+                  $prefacture->addPreFactureCard($prefactureCard);
+                } else {
+                  $product = $productR['product'];
+
+                  if (count($product->getComboProducts()) > 0) {
+                    foreach ($product->getComboProducts() as $comboProduct) {
+                      $this->CreateProduct(
+                        2,
+                        new PreFactureProduct(),
+                        $prefacture,
+                        $comboProduct->getProduct(),
+                        $comboProduct->getProduct()->getPrice(),
+                        $comboProduct->getCount() * $productR['count']
+                      );
+                      $comboDiscount += $comboProduct->getProduct()->getPrice() * $comboProduct->getCount() * $productR['count'];
+                    }
+                    $comboDiscount -= $productR['price'];
                   } else {
-                      $preFactureProduct = new PreFactureProduct();
-                      $preFactureProduct->setCount($productR['count']);
-                      $preFactureProduct->setPreFacture($prefacture);
-                      $preFactureProduct->setProduct($productR['product']);
-                      $preFactureProduct->setProductPrice($productR['price']);
-                      if ($productR['price'] > $productR['product']->getPrice()){
-                        $preFactureProduct->setIsAriplaneForniture(true);
-                        $preFactureProduct->setIsAriplaneMattress(true);
-                      } else {
-                        $preFactureProduct->setIsAriplaneForniture(false);
-                        $preFactureProduct->setIsAriplaneMattress(false);
-                      }
-
-                      $this->getDoctrine()->getManager()->persist($preFactureProduct);
-                      $prefacture->addPreFactureProduct($preFactureProduct);
+                    $this->CreateProduct(
+                      2,
+                      new PreFactureProduct(),
+                      $prefacture,
+                      $product,
+                      $productR['price'],
+                      $productR['count']
+                    );
                   }
+                }
+              }
+            } elseif ($data->getType() == "external-request" && $this->getUser() && $this->getUser()->hasRole("ROLE_EXTERNAL")) {
+              $externalRequest = new ExternalRequest();
+              foreach ($productsResponse as $productR) {
+                if (!array_key_exists('type', $productR)) {
+                  $externalRequestProduct = new ExternalRequestProduct();
+                  $externalRequestProduct->setExternalRequest($externalRequest);
+                  $externalRequestProduct->setCount($productR['count']);
+                  $externalRequestProduct->setProduct($productR['product']);
+                  $this->getDoctrine()->getManager()->persist($externalRequestProduct);
+                  $externalRequest->addExternalRequestProduct($externalRequestProduct);
                 }
               }
             } else {
@@ -625,63 +766,123 @@ class SiteController extends Controller
 
               foreach ($productsResponse as $productR) {
                 if (array_key_exists('type', $productR)) {
-                    $requestCard = new RequestCard();
-                    $requestCard->setCount($productR['count']);
-                    $requestCard->setRequest($requestDB);
-                    $requestCard->setPrice($productR['price']);
-                    $this->getDoctrine()->getManager()->persist($requestCard);
-                    $requestDB->addRequestCard($requestCard);
+                  $requestCard = new RequestCard();
+                  $requestCard->setCount($productR['count']);
+                  $requestCard->setRequest($requestDB);
+                  $requestCard->setPrice($productR['price']);
+                  $this->getDoctrine()->getManager()->persist($requestCard);
+                  $requestDB->addRequestCard($requestCard);
                 } else {
-                    $requestProd = new RequestProduct();
-                    $requestProd->setCount($productR['count']);
-                    $requestProd->setRequest($requestDB);
-                    $requestProd->setProduct($productR['product']);
-                    $requestProd->setProductPrice($productR['price']);
-                    if ($productR['price'] > $productR['product']->getPrice()){
-                      $requestProd->setIsAriplaneForniture(true);
-                      $requestProd->setIsAriplaneMattress(true);
-                    } else {
-                      $requestProd->setIsAriplaneForniture(false);
-                      $requestProd->setIsAriplaneMattress(false);
-                    }
+                  $product = $productR['product'];
 
-                    $this->getDoctrine()->getManager()->persist($requestProd);
-                    $requestDB->addRequestProduct($requestProd);
+                  if (count($product->getComboProducts()) > 0) {
+                    foreach ($product->getComboProducts() as $comboProduct) {
+                      $this->CreateProduct(
+                        1,
+                        new RequestProduct(),
+                        $requestDB,
+                        $comboProduct->getProduct(),
+                        $comboProduct->getProduct()->getPrice(),
+                        $comboProduct->getCount() * $productR['count']
+                      );
+                      $comboDiscount += $comboProduct->getProduct()->getPrice() * $comboProduct->getCount() * $productR['count'];
+                    }
+                    $comboDiscount -= $productR['price'];
+                  } else {
+                    $this->CreateProduct(
+                      1,
+                      new RequestProduct(),
+                      $requestDB,
+                      $product,
+                      $productR['price'],
+                      $productR['count']
+                    );
+                  }
                 }
               }
             }
 
-            if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
-              if ($data->getType() == "facture") {
-                $facture->setDiscount($discount);
-                $facture->setTwoStepExtra($twoStepExtra);
-                $facture->setCucExtra($cucExtra);
-                $facture->setFirstClientDiscount(0);
-                $facture->setTransportCost($transportCost);
-                $facture->setFinalPrice($totalPrice);
-                $this->getDoctrine()->getManager()->persist($facture);
-              } else {
-                $prefacture->setDiscount($discount);
-                $prefacture->setTwoStepExtra($twoStepExtra);
-                $prefacture->setCucExtra($cucExtra);
-                $prefacture->setFirstClientDiscount(0);
-                $prefacture->setTransportCost($transportCost);
-                $prefacture->setFinalPrice($totalPrice);
-                $this->getDoctrine()->getManager()->persist($prefacture);
+            if ($data->getType() == "facture" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              $facture->setDiscount($discount);
+              $facture->setTwoStepExtra($twoStepExtra);
+              $facture->setCucExtra($cucExtra);
+              $facture->setBagsExtra($bagsExtra);
+              $facture->setFirstClientDiscount(0);
+              $facture->setComboDiscount($comboDiscount);
+              $facture->setTransportCost($transportCost);
+              $facture->setFinalPrice($totalPrice);
+              $facture->setCommercial($this->getUser());
+              $this->getDoctrine()->getManager()->persist($facture);
+            } elseif ($data->getType() == "prefacture" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              $prefacture->setDiscount($discount);
+              $prefacture->setTwoStepExtra($twoStepExtra);
+              $prefacture->setCucExtra($cucExtra);
+              $prefacture->setBagsExtra($bagsExtra);
+              $prefacture->setFirstClientDiscount(0);
+              $prefacture->setComboDiscount($comboDiscount);
+              $prefacture->setTransportCost($transportCost);
+              $prefacture->setFinalPrice($totalPrice);
+              $prefacture->setCommercial($this->getUser());
+              $this->getDoctrine()->getManager()->persist($prefacture);
+            } elseif ($data->getType() == "external-request" && $this->getUser() && $this->getUser()->hasRole("ROLE_EXTERNAL")) {
+              $finalPrice = 0;
+              $weight = 0;
+              foreach ($requestProducts as $product) {
+                $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['id']);
+
+                $finalPrice += $productDB->getIkeaPrice();
+                $weight += $productDB->getWeight();
               }
+
+              $externalRequest->setFinalPrice($finalPrice);
+              $externalRequest->setWeight($weight);
+              $externalRequest->setBudget($data->getBudget());
+              $externalRequest->setPayment($data->getPayment());
+              $externalRequest->setCreationDate(new \DateTime('now'));
+              $externalRequest->setDate(new \DateTime($data->getDate()));
+              $externalRequest->setState("Sin estado");
+              $this->getDoctrine()->getManager()->persist($externalRequest);
             } else {
               $requestDB->setDiscount($discount);
+              $requestDB->setBalanceDiscount($balanceDiscount);
               $requestDB->setTwoStepExtra($twoStepExtra);
               $requestDB->setCucExtra($cucExtra);
+              $requestDB->setBagsExtra($bagsExtra);
               $requestDB->setFirstClientDiscount(0);
+              $requestDB->setComboDiscount($comboDiscount);
               $requestDB->setTransportCost($transportCost);
               $requestDB->setFinalPrice($totalPrice);
               $this->getDoctrine()->getManager()->persist($requestDB);
+
+              if ($memberNumber) {
+                $this->getUser()->getMember()->setBalance($remainingBalance + $memberBalance);
+              }
             }
 
             $this->getDoctrine()->getManager()->flush();
 
-            if ($data->getType() != "request" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+            if ($data->getType() == "facture" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              return $this->redirectToRoute('site_home');
+            } elseif ($data->getType() == "prefacture" && $this->getUser() && $this->getUser()->hasRole("ROLE_COMMERCIAL")) {
+              return $this->redirectToRoute('site_home');
+            } elseif ($data->getType() == "external-request" && $this->getUser() && $this->getUser()->hasRole("ROLE_EXTERNAL")) {
+              $users = $this->getDoctrine()->getManager()->createQueryBuilder()
+                ->select("u")
+                ->from("AppBundle\Entity\User", "u")
+                ->where("u.roles like :roles")
+                ->setParameter("roles", "%ROLE_EXTERNAL%")
+                ->getQuery()
+                ->getResult();
+
+              foreach ($users as $user) {
+                if ($user->getEmail() != null) {
+                  $body = $this->renderView(':site:new-external-request-email.html.twig', [
+                    'username' => $user->getFirstName().' '.$user->getLastName(),
+                    'externalRequest' => $externalRequest,
+                  ]);
+                  $this->get('email_service')->send($config->getEmail(), 'Nuevo pedido externo', $user->getEmail(), 'Nuevo pedido externo', $body);
+                }
+              }
               return $this->redirectToRoute('site_home');
             } else {
               return $this->redirectToRoute('success_request', ['id' => $requestDB->getId()]);
@@ -689,12 +890,14 @@ class SiteController extends Controller
         }
 
         return $this->render(':site:shop-cart.html.twig', [
+          'requests' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Request')->findAll(),
           'prefactures' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\PreFacture')->findAll(),
           'form' => $form->createView(),
           'home' => $home,
           'membership' => $membership,
           'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
           'shopCartProducts' => $productsDB,
+          'shopCartBags' => $shopCartBags,
           'terms' => $config->getTermAndConditions(),
           'privacy' => $config->getPrivacyPolicy(),
           'currentDate' => new \DateTime(),
@@ -726,8 +929,28 @@ class SiteController extends Controller
         }
       }
 
+      $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+        'name' => 'Home',
+      ]);
+
+      $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+        'name' => 'Membresia',
+      ]);
+
+      $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
       return new JsonResponse([
         'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+        'html' => $this->renderView(':site:products-summary.html.twig', [
+          'home' => $home,
+          'membership' => $membership,
+          'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+          'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+          'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
+          'categories' => $this->get('category_service')->getAll(),
+          'terms' => $config->getTermAndConditions(),
+          'privacy' => $config->getPrivacyPolicy(),
+        ])
       ]);
     }
 
@@ -776,6 +999,7 @@ class SiteController extends Controller
             'inward' => $inward,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -808,6 +1032,7 @@ class SiteController extends Controller
             'membership' => $membership,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'page' => $page,
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -846,6 +1071,7 @@ class SiteController extends Controller
             'home' => $home,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'page' => $page,
             'membership' => $page,
             'terms' => $config->getTermAndConditions(),
@@ -882,6 +1108,7 @@ class SiteController extends Controller
             'membership' => $membership,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'page' => $page,
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -955,6 +1182,7 @@ class SiteController extends Controller
             'membership' => $membership,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'project' => $project,
             'imageSets' => array_chunk($project['images'], 3),
             'products' => $products,
@@ -1027,6 +1255,7 @@ class SiteController extends Controller
             'membership' => $membership,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'service' => $service,
             'imageSets' => array_chunk($service['images'], 3),
             'products' => $products,
@@ -1074,6 +1303,7 @@ class SiteController extends Controller
             'form' => $form->createView(),
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -1129,6 +1359,7 @@ class SiteController extends Controller
               'home' => $home,
               'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
               'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+              'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
               'page' => $membership,
               'terms' => $config->getTermAndConditions(),
               'privacy' => $config->getPrivacyPolicy(),
@@ -1146,6 +1377,7 @@ class SiteController extends Controller
             'form' => $form->createView(),
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -1165,24 +1397,15 @@ class SiteController extends Controller
         $shopCartProducts = $this->getDoctrine()->getManager()->getRepository('AppBundle:ShopCartProduct')->findBy([
           'user' => $this->getUser()->getId(),
         ]);
+        $product = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($id);
 
-        $exist = false;
-        foreach ($shopCartProducts as $shopCartProduct) {
-          if ($shopCartProduct->getProductId() == $id) {
-            $exist = true;
-            $shopCartProduct->setCount($shopCartProduct->getCount() + 1);
-            $this->getDoctrine()->getManager()->persist($shopCartProduct);
-            $this->getDoctrine()->getManager()->flush();
+        if ($request->query->get('complementary')) {
+          foreach ($product->getComplementaryProducts() as $complementaryProduct) {
+            $this->addShopCartProduct($complementaryProduct->getProduct()->getId(), $shopCartProducts);
           }
-        }
-        if (!$exist) {
-          $shopCartProduct = new ShopCartProduct();
-          $shopCartProduct->setProductId($id);
-          $shopCartProduct->setCount(1);
-          $shopCartProduct->setUuid(uniqid());
-          $shopCartProduct->setUser($this->getUser());
-          $this->getDoctrine()->getManager()->persist($shopCartProduct);
-          $this->getDoctrine()->getManager()->flush();
+          $this->addShopCartProduct($id, $shopCartProducts);
+        } else {
+          $this->addShopCartProduct($id, $shopCartProducts);
         }
 
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
@@ -1195,14 +1418,112 @@ class SiteController extends Controller
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
         return new JsonResponse([
-          'exist' => $exist,
           'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
           'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+          'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
           'html' => $this->renderView(':site:products-summary.html.twig', [
             'home' => $home,
             'membership' => $membership,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
+            'categories' => $this->get('category_service')->getAll(),
+            'terms' => $config->getTermAndConditions(),
+            'privacy' => $config->getPrivacyPolicy(),
+          ])
+        ]);
+    }
+
+    /**
+     * @Route(name="add_bags", path="/bags/add/{numberOfPayedBags}/{numberOfFreeBags}", methods={"POST", "GET"})
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function addBagsAction(Request $request, $numberOfPayedBags, $numberOfFreeBags)
+    {
+        $shopCartBags = $this->getDoctrine()->getManager()->getRepository('AppBundle:ShopCartBags')->findOneBy([
+          'user' => $this->getUser()->getId(),
+        ]);
+
+        if ($shopCartBags == null) {
+          $shopCartBags = new ShopCartBags();
+          $shopCartBags->setUser($this->getUser());
+          $shopCartBags->setNumberOfPayedBags($numberOfPayedBags);
+          $shopCartBags->setNumberOfFreeBags($numberOfFreeBags);
+          $this->getDoctrine()->getManager()->persist($shopCartBags);
+        } else {
+          $shopCartBags->setNumberOfPayedBags($numberOfPayedBags);
+          $shopCartBags->setNumberOfFreeBags($numberOfFreeBags);
+        }
+        $this->getDoctrine()->getManager()->flush();
+
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Membresia',
+        ]);
+
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+        return new JsonResponse([
+          'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+          'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+          'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
+          'html' => $this->renderView(':site:products-summary.html.twig', [
+            'home' => $home,
+            'membership' => $membership,
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
+            'categories' => $this->get('category_service')->getAll(),
+            'terms' => $config->getTermAndConditions(),
+            'privacy' => $config->getPrivacyPolicy(),
+          ])
+        ]);
+    }
+
+    /**
+     * @Route(name="remove_bags", path="/bags/remove", methods={"POST", "GET"})
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function removeBagsAction(Request $request)
+    {
+        $shopCartBags = $this->getDoctrine()->getManager()->getRepository('AppBundle:ShopCartBags')->findOneBy([
+          'user' => $this->getUser()->getId(),
+        ]);
+
+        if ($shopCartBags != null) {
+          $shopCartBags->setNumberOfPayedBags(0);
+        }
+        $this->getDoctrine()->getManager()->flush();
+
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+          'name' => 'Membresia',
+        ]);
+
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+        return new JsonResponse([
+          'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+          'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+          'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
+          'html' => $this->renderView(':site:products-summary.html.twig', [
+            'home' => $home,
+            'membership' => $membership,
+            'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+            'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
@@ -1242,11 +1563,13 @@ class SiteController extends Controller
       return new JsonResponse([
         'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
         'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+        'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
         'html' => $this->renderView(':site:products-summary.html.twig', [
           'home' => $home,
           'membership' => $membership,
           'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
           'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+          'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
           'categories' => $this->get('category_service')->getAll(),
           'terms' => $config->getTermAndConditions(),
           'privacy' => $config->getPrivacyPolicy(),
@@ -1659,6 +1982,7 @@ class SiteController extends Controller
         $this->get('email_service')->send($config->getEmail(), 'Equipo comercial Conceptos', $client->getEmail(), 'Pedido realizado a través de la WEB', $bodyClient);
 
         $this->get('shop_cart_service')->emptyShopCart($this->getUser());
+        $this->get('shop_cart_service')->emptyShopCartBags($this->getUser());
 
         $request->getSession()->set('successRequestToast', true);
         return $this->redirectToRoute('site_home');
@@ -1681,6 +2005,7 @@ class SiteController extends Controller
           $productDB = $product->getProduct();
 
           $productsResponse[] = [
+              'name' => $productDB->getName(),
               'image' => $productDB->getMainImage(),
               'code' => $productDB->getCode(),
               'count' => $product->getCount(),
@@ -1726,22 +2051,25 @@ class SiteController extends Controller
         foreach ($prefactureDB->getPreFactureProducts() as $product) {
           $productDB = $product->getProduct();
 
-          $airplane = 'MARÍTIMO';
-          if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
-            $airplane = 'AÉREO';
-          }
+          if ($productDB != null) {
+            $airplane = 'Marítimo';
+            if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
+              $airplane = 'Aéreo';
+            }
 
-          $numberOfProducts += $product->getCount();
-          $subtotal += $product->getCount() * $product->getProductPrice();
-          $productsResponse[] = [
-              'image' => $productDB->getMainImage(),
-              'code' => $productDB->getCode(),
-              'description' => $productDB->getDescription(),
-              'count' => $product->getCount(),
-              'price' => $product->getProductPrice(),
-              'product' => $productDB,
-              'airplane' => $airplane,
-          ];
+            $numberOfProducts += $product->getCount();
+            $subtotal += $product->getCount() * $product->getProductPrice();
+            $productsResponse[] = [
+                'name' => $productDB->getName(),
+                'image' => $productDB->getMainImage(),
+                'code' => $productDB->getCode(),
+                'item' => $productDB->getItem(),
+                'count' => $product->getCount(),
+                'price' => $product->getProductPrice(),
+                'product' => $productDB,
+                'airplane' => $airplane,
+            ];
+          }
         }
 
         foreach ($prefactureDB->getPreFactureCards() as $card) {
@@ -1751,7 +2079,7 @@ class SiteController extends Controller
           $subtotal += $card->getCount() * $price;
           $productsResponse[] = [
               'name' => 'Tarjeta de $'.$price,
-              'description' => 'Tarjeta de $'.$price,
+              'item' => 'Tarjeta de $'.$price,
               'code' => $price,
               'count' => $card->getCount(),
               'price' => $price,
@@ -1759,7 +2087,7 @@ class SiteController extends Controller
           ];
         }
 
-        return $this->render(':site:prefacture-export-pdf.html.twig', [
+        $html = $this->renderView(':site:prefacture-export-pdf.html.twig', [
             'prefacture' => $prefactureDB,
             'products' => $productsResponse,
             'numberOfProducts' => $numberOfProducts,
@@ -1768,6 +2096,16 @@ class SiteController extends Controller
             'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
             'membership' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Membresia']),
         ]);
+
+        $dompdf = new Dompdf(array('enable_remote' => true));
+        $dompdf->loadHtml($html);
+        $dompdf->set_option('isPhpEnabled', true);
+        $dompdf->set_option('isHtml5ParserEnabled', true);
+        $dompdf->render();
+        return $dompdf->stream(
+          "Prefactura-".$prefactureDB->getId()."-".date_format($prefactureDB->getDate(), "Y").".pdf",
+          ["Attachment" => true]
+        );
     }
 
     /**
@@ -1780,38 +2118,68 @@ class SiteController extends Controller
      */
     public function printFactureAction(Request $request, $id)
     {
-        $factureDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Facture')->find($id);
+      $factureDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Facture')->find($id);
 
-        $productsResponse = [];
-        foreach ($factureDB->getFactureProducts() as $product) {
-          $productDB = $product->getProduct();
+      $numberOfProducts = 0;
+      $subtotal = 0;
+      $productsResponse = [];
+      foreach ($factureDB->getFactureProducts() as $product) {
+        $productDB = $product->getProduct();
 
+        if ($productDB != null) {
+          $airplane = 'Marítimo';
+          if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
+            $airplane = 'Aéreo';
+          }
+
+          $numberOfProducts += $product->getCount();
+          $subtotal += $product->getCount() * $product->getProductPrice();
           $productsResponse[] = [
+              'name' => $productDB->getName(),
               'image' => $productDB->getMainImage(),
               'code' => $productDB->getCode(),
+              'item' => $productDB->getItem(),
               'count' => $product->getCount(),
               'price' => $product->getProductPrice(),
               'product' => $productDB,
+              'airplane' => $airplane,
           ];
         }
+      }
 
-        foreach ($factureDB->getFactureCards() as $card) {
-          $price = $card->getPrice();
+      foreach ($factureDB->getFactureCards() as $card) {
+        $price = $card->getPrice();
 
-          $productsResponse[] = [
-              'name' => 'Tarjeta de $'.$price,
-              'code' => $price,
-              'count' => $card->getCount(),
-              'price' => $price,
-          ];
-        }
+        $numberOfProducts += $card->getCount();
+        $subtotal += $card->getCount() * $price;
+        $productsResponse[] = [
+            'name' => 'Tarjeta de $'.$price,
+            'item' => 'Tarjeta de $'.$price,
+            'code' => $price,
+            'count' => $card->getCount(),
+            'price' => $price,
+            'airplane' => 'NINGUNO',
+        ];
+      }
 
-        return $this->render(':site:facture-export-pdf.html.twig', [
-            'facture' => $factureDB,
-            'products' => $productsResponse,
-            'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
-            'membership' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Membresia']),
-        ]);
+      $html = $this->renderView(':site:facture-export-pdf.html.twig', [
+          'facture' => $factureDB,
+          'products' => $productsResponse,
+          'numberOfProducts' => $numberOfProducts,
+          'subtotal' => $subtotal,
+          'firstPayment' => ceil($factureDB->getFinalPrice() / 1.8),
+          'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
+          'membership' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Membresia']),
+      ]);
+
+      $dompdf = new Dompdf(array('enable_remote' => true));
+      $dompdf->loadHtml($html);
+      $dompdf->set_option('isHtml5ParserEnabled', true);
+      $dompdf->render();
+      return $dompdf->stream(
+        "Factura-".$factureDB->getId()."-".date_format($factureDB->getDate(), "Y").".pdf",
+        ["Attachment" => true]
+      );
     }
 
     /**
@@ -1936,12 +2304,126 @@ class SiteController extends Controller
         'home' => $home,
         'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
         'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+        'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
         'products' => $products,
         'categories' => $this->get('category_service')->getAll(),
         'terms' => $config->getTermAndConditions(),
         'privacy' => $config->getPrivacyPolicy(),
         'currentDate' => new \DateTime(),
       ]);
+    }
+
+    /**
+     * @Route(name="external_requests", path="/pedidos-externos")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function externalRequestsAction(Request $request)
+    {
+      $externalRequests = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\ExternalRequest')->findBy([
+        'user' => null,
+      ]);
+      foreach($externalRequests as $externalRequest) {
+        $remainingTimeFromCreation = $externalRequest->getCreationDate()->diff(new \DateTime('now'));
+        $externalRequest->setRemainingTimeFromCreation($remainingTimeFromCreation);
+
+        foreach($externalRequest->getExternalRequestProducts() as $externalRequestProduct) {
+          $offerPrice = $this->get('product_service')->findProductOfferPrice($externalRequestProduct->getProduct());
+          $externalRequestProduct->getProduct()->setPriceOffer($offerPrice);
+        }
+      }
+
+      $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+        'name' => 'Home',
+      ]);
+
+      $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+      return $this->render(':site:external-requests.html.twig', [
+        'externalRequests' => $externalRequests,
+        'home' => $home,
+        'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+        'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+        'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
+        'categories' => $this->get('category_service')->getAll(),
+        'terms' => $config->getTermAndConditions(),
+        'privacy' => $config->getPrivacyPolicy(),
+        'currentDate' => new \DateTime(),
+      ]);
+    }
+
+    /**
+     * @Route(name="accept_external_request", path="/accept-external-request/{id}", methods={"POST", "GET"})
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function acceptExternalRequestAction(Request $request, $id)
+    {
+      $user = $this->getUser();
+      $externalRequest = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\ExternalRequest')->find($id);
+
+      if ($externalRequest->getUser() != null) {
+        return new JsonResponse(-1);
+      } else {
+        $externalRequest->setUser($user);
+        $externalRequest->setAcceptDate(new \DateTime());
+        $this->getDoctrine()->getManager()->flush();
+        return new JsonResponse($id);
+      }
+    }
+
+    /**
+     * @Route(name="export_external_request", path="/export-external-request/{id}", methods={"POST", "GET"})
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function exportExternalRequestAction(Request $request, $id)
+    {
+      $user = $this->getUser();
+      $externalRequest = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\ExternalRequest')->find($id);
+
+      $html = $this->renderView(':site:external-requests-pdf.html.twig', [
+        'externalRequest' => $externalRequest,
+        'externalRequestProducts' => $externalRequest->getExternalRequestProducts(),
+        'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy(['name' => 'Home']),
+      ]);
+
+      $dompdf = new Dompdf(array('enable_remote' => true));
+      $dompdf->loadHtml($html);
+      $dompdf->set_option('isHtml5ParserEnabled', true);
+      $dompdf->render();
+      return $dompdf->stream(
+        "Pedido-".$externalRequest->getId().".pdf",
+        ["Attachment" => true]
+      );
+    }
+
+    /**
+     * @Route(name="update_external_request_state", path="/update-external-request-state/{id}", methods={"POST", "GET"})
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function updateExternalRequestStateAction(Request $request, $id)
+    {
+      $state = $request->request->get('state');
+
+      $user = $this->getUser();
+      $externalRequest = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\ExternalRequest')->find($id);
+      $externalRequest->setState($state);
+      $this->getDoctrine()->getManager()->flush();
+
+      return new JsonResponse($state);
     }
 
     /**
@@ -1972,6 +2454,7 @@ class SiteController extends Controller
             'home' => $home,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'requests' => $clientRequests,
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
@@ -1981,30 +2464,101 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="evaluate_product", path="/product/evaluate/{productId}/{evaluationValue}", methods={"POST"})
+     * @Route(name="evaluate_product", path="/product/evaluate/{productId}", methods={"POST", "GET"})
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function evaluateProductAction(Request $request, $productId)
+    {
+      $generalOpinion = $request->request->get('generalOpinion');
+      $priceQualityEvaluation = $request->request->get('priceQualityEvaluation');
+      $utilityEvaluation = $request->request->get('utilityEvaluation');
+      $durabilityEvaluation = $request->request->get('durabilityEvaluation');
+      $qualityEvaluation = $request->request->get('qualityEvaluation');
+      $designEvaluation = $request->request->get('designEvaluation');
+      $generalEvaluation = $request->request->get('generalEvaluation');
+      $opinion = $request->request->get('opinion');
+      $recommended = json_decode($request->request->get('recommended'));
+      $product = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($productId);
+      $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+      $evaluations = $this->getDoctrine()->getManager()->getRepository('AppBundle:Evaluation')->findAll();
+      foreach ($evaluations as $persistedEvaluation) {
+        if ($persistedEvaluation->getUser()->getId() == $this->getUser()->getId() && $persistedEvaluation->getProduct()->getId() == $productId) {
+          $persistedEvaluation->setGeneralOpinion($generalOpinion);
+          $persistedEvaluation->setPriceQualityValue($priceQualityEvaluation);
+          $persistedEvaluation->setUtilityValue($utilityEvaluation);
+          $persistedEvaluation->setDurabilityValue($durabilityEvaluation);
+          $persistedEvaluation->setQualityValue($qualityEvaluation);
+          $persistedEvaluation->setDesignValue($designEvaluation);
+          $persistedEvaluation->setEvaluationValue($generalEvaluation);
+          $persistedEvaluation->setComment($opinion);
+          $persistedEvaluation->setIsRecommended($recommended);
+          $persistedEvaluation->setIsAccepted(false);
+          $this->getDoctrine()->getManager()->persist($persistedEvaluation);
+          $this->getDoctrine()->getManager()->flush();
+
+          if ($opinion != null) {
+            $body = $this->renderView(':site:new-evaluation-email.html.twig', [
+              'user' => $this->getUser(),
+              'evaluation' => $persistedEvaluation,
+            ]);
+            $this->get('email_service')->send($config->getEmail(), 'Nueva evaluación', $config->getEmail(), 'Nueva evaluación', $body);
+          }
+
+          return new JsonResponse([
+            'html' => $this->renderView(':site/components:change-product-evaluation.html.twig', [
+              'product' => $product,
+            ])
+          ]);
+        }
+      }
+
+      $evaluation = new Evaluation();
+      $evaluation->setGeneralOpinion($generalOpinion);
+      $evaluation->setPriceQualityValue($priceQualityEvaluation);
+      $evaluation->setUtilityValue($utilityEvaluation);
+      $evaluation->setDurabilityValue($durabilityEvaluation);
+      $evaluation->setQualityValue($qualityEvaluation);
+      $evaluation->setDesignValue($designEvaluation);
+      $evaluation->setEvaluationValue($generalEvaluation);
+      $evaluation->setComment($opinion);
+      $evaluation->setIsRecommended($recommended);
+      $evaluation->setIsAccepted(false);
+      $evaluation->setUser($this->getUser());
+      $evaluation->setProduct($product);
+      $this->getDoctrine()->getManager()->persist($evaluation);
+      $this->getDoctrine()->getManager()->flush();
+
+      if ($opinion != null) {
+        $body = $this->renderView(':site:new-evaluation-email.html.twig', [
+          'user' => $this->getUser(),
+          'evaluation' => $persistedEvaluation,
+        ]);
+        $this->get('email_service')->send($config->getEmail(), 'Nueva evaluación', $config->getEmail(), 'Nueva evaluación', $body);
+      }
+
+      return new JsonResponse([
+        'html' => $this->renderView(':site/components:change-product-evaluation.html.twig', [
+          'product' => $product,
+        ])
+      ]);
+    }
+
+    /**
+     * @Route(name="accept_evaluation", path="/accept-evaluation/{evaluationId}", methods={"POST", "GET"})
      *
      * @return JsonResponse
      */
-    public function evaluateProductAction($productId, $evaluationValue)
+    public function acceptEvaluationAction(Request $request, $evaluationId)
     {
-        $evaluations = $this->getDoctrine()->getManager()->getRepository('AppBundle:Evaluation')->findAll();
-        foreach ($evaluations as $persitedEvaluation) {
-          if ($persitedEvaluation->getUser()->getId() == $this->getUser()->getId() && $persitedEvaluation->getProduct()->getId() == $productId) {
-            $persitedEvaluation->setEvaluationValue($evaluationValue);
-            $this->getDoctrine()->getManager()->persist($persitedEvaluation);
-            $this->getDoctrine()->getManager()->flush();
-            return new JsonResponse();
-          }
-        }
+      $evaluation = $this->getDoctrine()->getManager()->getRepository('AppBundle:Evaluation')->find($evaluationId);
 
-        $evaluation = new Evaluation();
-        $evaluation->setEvaluationValue($evaluationValue);
-        $evaluation->setUser($this->getUser());
-        $evaluation->setProduct($this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($productId));
-        $this->getDoctrine()->getManager()->persist($evaluation);
-        $this->getDoctrine()->getManager()->flush();
+      $evaluation->setIsAccepted(true);
+      $this->getDoctrine()->getManager()->persist($evaluation);
+      $this->getDoctrine()->getManager()->flush();
 
-        return new JsonResponse();
+      return $this->redirectToRoute('site_home');
     }
 
     /**
@@ -2030,9 +2584,66 @@ class SiteController extends Controller
             'membership' => $membership,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+            'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
         ]);
+    }
+
+    private function addShopCartProduct($id, $shopCartProducts, $count = 1)
+    {
+      $exist = false;
+      foreach ($shopCartProducts as $shopCartProduct) {
+        if ($shopCartProduct->getProductId() == $id) {
+          $exist = true;
+          $shopCartProduct->setCount($shopCartProduct->getCount() + $count);
+          $this->getDoctrine()->getManager()->persist($shopCartProduct);
+          $this->getDoctrine()->getManager()->flush();
+        }
+      }
+      if (!$exist) {
+        $shopCartProduct = new ShopCartProduct();
+        $shopCartProduct->setProductId($id);
+        $shopCartProduct->setCount($count);
+        $shopCartProduct->setUuid(uniqid());
+        $shopCartProduct->setUser($this->getUser());
+        $shopCartProducts[] = $shopCartProduct;
+        $this->getDoctrine()->getManager()->persist($shopCartProduct);
+        $this->getDoctrine()->getManager()->flush();
+      }
+    }
+
+    private function CreateProduct($type, $requestProd, $requestDB, $product, $productPrice, $count)
+    {
+      if ($type == 1) {
+        $requestProd->setRequest($requestDB);
+      } elseif ($type == 2) {
+        $requestProd->setPrefacture($requestDB);
+      } else {
+        $requestProd->setFacture($requestDB);
+      }
+
+
+      $requestProd->setCount($count);
+      $requestProd->setProduct($product);
+      $requestProd->setProductPrice($productPrice);
+      if ($productPrice > $product->getPrice()){
+        $requestProd->setIsAriplaneForniture(true);
+        $requestProd->setIsAriplaneMattress(true);
+      } else {
+        $requestProd->setIsAriplaneForniture(false);
+        $requestProd->setIsAriplaneMattress(false);
+      }
+
+      $this->getDoctrine()->getManager()->persist($requestProd);
+
+      if ($type == 1) {
+        $requestDB->addRequestProduct($requestProd);
+      } elseif ($type == 2) {
+        $requestDB->addPreFactureProduct($requestProd);
+      } else {
+        $requestDB->addFactureProduct($requestProd);
+      }
     }
 }

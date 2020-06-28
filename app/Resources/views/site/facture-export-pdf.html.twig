@@ -9,117 +9,253 @@
   <meta content="width=device-width" name="viewport" />
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
   <title></title>
-  <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('bundles/conceptos/assets/bootstrap/css/bootstrap-grid.min.css') }}">
 
   <style>
+    @page {
+      size: a4;
+      margin: 0;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    p {
+      margin-top: 0.3em;
+      margin-bottom: 0;
+    }
+
     .header {
       position: absolute;
       top: 0;
       width: 100%;
       background-color: #333333;
-    }
-    .header img {
-      width: 250px;
-    }
-    .content {
-      padding-top: 80px;
-    }
-    .product-image {
-      height: 50px;
-      width: 50px;
-    }
-    .footer {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      background-color: #333333;
-    }
-    .footer span {
-      color: #FFFFFF;
-      font-size: 15px;
+      height: 85px;
     }
 
-    .table-striped tbody tr:nth-of-type(odd) {
-      background-color: #FFFFFF;
+    .header img {
+      width: 200px;
+      margin-left: 40px;
+      margin-top: 17px;
     }
+
+    .header span {
+      font-size: 20px;
+      font-weight: bold;
+      color: #FFFFFF;
+      position: absolute;
+      top: 33px;
+      right: 40px;
+    }
+
+    .yellow-badge {
+      background-color: #c2b930;
+      position: absolute;
+      height: 10px;
+      width: 100%;
+      top: 85px;
+    }
+
+    .content {
+      padding-top: 80px;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    .facture-general-info {
+      margin-top: 40px;
+    }
+
+    .facture-name {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .facture-date {
+      font-size: 15px;
+      margin-left: 125px;
+    }
+
+    .facture-info {
+      margin-top: 40px;
+    }
+
+    .client-address {
+      margin-bottom: 20px;
+    }
+
+    .facture-summary {
+      float: right;
+    }
+
+    .facture-summary-info {
+      margin-top: 15px;
+    }
+
+    .facture-main-info-top {
+      background-color: #CCCCCC;
+      margin-top: 10px;
+      padding: 5px;
+      width: 250px;
+    }
+
+    .facture-main-info-bottom {
+      background-color: #333333;
+      margin-bottom: 20px;
+      padding: 5px;
+      width: 250px;
+    }
+
+    .facture-main-info-bottom p {
+      color: #FFFFFF;
+    }
+
+    .products-table {
+      margin-top: 250px;
+    }
+
+    .product-image {
+      height: 80px;
+      width: 80px;
+      margin: 5px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 15px;
+      width: 100%;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .client-signature {
+    }
+
+    .commercial-signature {
+      margin-left: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-info {
+      margin-left: 420px;
+    }
+
     .table-bordered {
-      border: 1px solid #000000;
+      width: 100%;
+      margin-top: 0.5em;
+      border: 1px solid #333333;
+      float: left;
+      border-spacing: 0;
     }
+
     .table thead th {
-      border-bottom: 1px solid #000000;
+      text-align: start;
+      border: 1px solid #333333;
+      background-color: #333333;
+      color: #ffffff;
+      padding: 5px;
     }
+
     .table-bordered td, .table-bordered th {
-      border: 0px;
-      border-bottom: 1px solid #000000;
+      border: 1px solid #333333;
+      padding: 5px;
     }
-    .table td, .table th {
-      padding: 0;
+
+    .align-right {
+      float: left;
+    }
+
+    .align-right {
+      float: right;
     }
   </style>
 </head>
 <body>
   {% set cupConversionRate = 25 %}
-  <div class="container-fluid p-0">
-    <div class="d-flex header">
-      <img class="pl-5 pt-2 pb-2" src="{{ home.data.logo.image.path }}" />
+  <div class="flex-column">
+    <div class="header">
+      <img class="pl-5 pt-2 pb-2" src="{{ absolute_url(asset(home.data.logo.image.path)) }}" />
+      <span>No. de Factura: {{facture.id}}</span>
     </div>
-    <div class="ml-5 mr-5 content">
-      <div class="row justify-content-end">
-        <div class="col-3 pl-0">
-          <div class="d-flex flex-column align-items-end">
-            <strong>FACTURA</strong>
-            <span>{{facture.id}}-{{facture.date|date('Y')}}</span>
-          </div>
-        </div>
+    <div class="yellow-badge"></div>
+    <div class="content">
+      <div class="facture-general-info">
+        <span class="facture-name">FACTURA</span>
+        <span class="facture-date">{{facture.date|date('d/m/Y')}}</span>
       </div>
-      <div class="row">
-        <div class="col-12 pl-0">
-          <span>FECHA: {{facture.date|date('d/m/Y')}}</span>
-        </div>
-      </div>
-      <div class="row pt-3">
-        <div class="col-6 pl-0">
-          <span>NOMBRE Y APELLIDOS: {{facture.client.name}}</span>
-        </div>
-        <div class="col-6">
-          <span>DIRECCIÓN: {{facture.client.address}}</span>
-        </div>
-      </div>
-      <div class="row pt-1">
-        <div class="col-6 pl-0">
-          <span>TELÉFONO: {{facture.client.movil ? facture.client.movil : facture.client.phone}}</span>
-        </div>
-        <div class="col-6">
-          <span>EMAIL: {{facture.client.email}}</span>
-        </div>
-      </div>
-      <div class="row pt-3">
-        <div class="col-6 pl-0">
-          <div class="col-12 pl-0">
-            <span>Miembro Comunidad Conceptos: {% if facture.client.memberNumber %}Si{% else %}No{% endif %}</span>
-          </div>
-          {% if facture.client.memberNumber %}
-            <div class="col-12 pl-0 pt-1">
-              <span>No. de miembro: {{facture.client.memberNumber}}</span>
+      <div class="facture-info">
+        <div class="facture-summary">
+          {% if facture.commercial %}
+            <p><strong>Comercial:</strong> {{facture.commercial.firstName}} {{facture.commercial.lastName}}</p>
+            {% if facture.commercial.mobileNumber %}
+              <p><strong>Teléfono movil:</strong> {{facture.commercial.mobileNumber}}</p>
+            {% endif %}
+            <p><strong>Correo:</strong> {{facture.commercial.email}}</p>
+          {% endif %}
+          <div class="facture-main-info">
+            <div class="facture-main-info-top">
+              <p><span class="align-left">Cantidad de items: </span><span class="align-right">{{products|length}}</span></p>
+              <p><span class="align-left">Cantidad de productos: </span><span class="align-right">{{numberOfProducts}}</span></p>
+              <p><span class="align-left">Tipo de moneda: </span><span class="align-right">{% if facture.cucExtra %}CUC{% else %}USD{% endif %}</span></p>
+              <p><span class="align-left">Tipo de pago: </span><span class="align-right">{% if facture.twoStepExtra %}2 Plazos{% else %}1 Plazo{% endif %}</span></p>
+              {% if facture.discount %}
+                <p><span class="align-left">Descuento de miembro: </span><span class="align-right">${{facture.discount}}</span></p>
+              {% endif %}
+              {% if facture.cucExtra %}
+                <p><span class="align-left">Extra por CUC: </span><span class="align-right">${{facture.cucExtra}}</span></p>
+              {% endif %}
+              {% if facture.twoStepExtra %}
+                <p><span class="align-left">Extra por 2 plazos: </span><span class="align-right">${{facture.twoStepExtra}}</span></p>
+              {% endif %}
+              {% if facture.bagsExtra %}
+                <p><span class="align-left">Extra por bolsas: </span><span class="align-right">${{facture.bagsExtra}}</span></p>
+              {% endif %}
+              <p><span class="align-left">Costo de transporte: </span><span class="align-right">${{facture.transportCost}}</span></p>
             </div>
+            <div class="facture-main-info-bottom">
+              <p><span class="align-left">Total a pagar: </span><span class="align-right">${{facture.finalPrice}}</span></p>
+              {% if facture.twoStepExtra %}
+              <p><span class="align-left">Pago anticipado: </span><span class="align-right">${{firstPayment}}</span></p>
+              {% endif %}
+              <p><span class="align-left">Por pagar: </span><span class="align-right">{% if facture.twoStepExtra %}{{facture.finalPrice - firstPayment}}{% else %}${{facture.finalPrice}}{% endif %}</span></p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p><strong>Cliente:</strong> {{facture.client.firstName}} {{facture.client.lastName}}</p>
+          <p class="client-address"><strong>Dirección de entrega:</strong> {{facture.client.address}}</p>
+          {% if facture.client.movil %}
+            <p><strong>Teléfono móvil:</strong> {{facture.client.movil}}</p>
+          {% endif %}
+          {% if facture.client.phone %}
+            <p><strong>Teléfono fijo:</strong> {{facture.client.phone}}</p>
+          {% endif %}
+          <p><strong>Correo:</strong> {{facture.client.email}}</p>
+          {% if facture.client.memberNumber %}
+            <p><strong>Número de miembro:</strong> {{facture.client.memberNumber}}</p>
           {% endif %}
         </div>
       </div>
-      <div class="row pt-3">
-        <table class="table table-bordered">
+      <div class="products-table">
+        <table class="table table-bordered mt-3">
           <thead>
           <tr>
-            <th class="pl-2">PRODUCTOS</th>
-            <th class="pl-2">CÓDIGO</th>
-            <th class="pl-2">CANTIDAD</th>
-            <th class="pl-2">PRECIO UNIDAD</th>
-            <th class="pl-2">PRECIO SUBTOTAL</th>
+            <th>Código</th>
+            <th>Imágen</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Envío</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
           </tr>
           </thead>
           <tbody class="table-members">
             {% for product in products %}
               <tr>
+                <td>
+                  <span>{{product.code}}</span>
+                </td>
                 <td>
                   {% if product.image is defined %}
                     <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.image, 'imageFile')) }}" />
@@ -133,68 +269,41 @@
                     {% else %}
                       {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
                     {% endif %}
-                    <img class="ml-5 mt-2 mb-2 product-image" src="{{imagePath}}" />
+                    <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(asset(imagePath)) }}" />
                   {% endif %}
                 </td>
-                <td class="pl-2">{{product.code}}</td>
-                <td class="pl-2">{{product.count}}</td>
-                <td class="pl-2">{{product.price}}</td>
-                <td class="pl-2">{{product.price * product.count}}</td>
+                <td>
+                  <span>{{product.name}}</span>
+                </td>
+                <td>
+                  <span class="product-description">{{product.item}}</span>
+                </td>
+                <td>
+                  <span>{{product.airplane}}</span>
+                </td>
+                <td>
+                  <span>{{product.price }}</span>
+                </td>
+                <td>
+                  <span>{{product.count}}</span>
+                </td>
+                <td>
+                  <span>{{product.price * product.count}}</span>
+                </td>
               </tr>
             {% endfor %}
-            <tr>
-              <td class="pl-2">Total (cuc): ${{facture.finalPrice}}.00</td>
-              <td class="pl-2">Total (cup): ${{facture.finalPrice * cupConversionRate}}.00</td>
-              <td class="pl-2">
-                <div class="d-flex flex-column">
-                  <span>Descuento por membresía:</span>
-                  <div class="d-flex">
-                    <div>
-                      <span>CUC: ${{facture.discount}}.00</span>
-                    </div>
-                    <div class="pl-5">
-                      <span>CUP: ${{facture.discount * cupConversionRate}}.00</span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="pl-2">
-                <div class="d-flex flex-column">
-                  <span>Descuento por primera compra:</span>
-                  <div class="d-flex">
-                    <div>
-                      <span>CUC: ${{facture.firstClientDiscount}}.00</span>
-                    </div>
-                    <div class="pl-5">
-                      <span>CUP: ${{facture.firstClientDiscount * cupConversionRate}}.00</span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="pl-2">
-                <div class="d-flex flex-column">
-                  <span>Entrega a domicilio:</span>
-                  <div class="d-flex">
-                    <div>
-                      <span>CUC: ${{facture.transportCost}}.00</span>
-                    </div>
-                    <div class="pl-5">
-                      <span>CUP: ${{facture.transportCost * cupConversionRate}}.00</span>
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <div class="d-flex justify-content-end footer">
-      <div class="d-flex flex-column pr-5 align-items-end">
-        <span>www.tiendaconceptos.com</span>
-        <span>comercial@tiendaconceptos.com</span>
-        <span>Teléfono comercial: +5352458380</span>
+    <div class="footer">
+      <div class="footer-info">
+        <p>www.tiendaconceptos.com</p>
+        <p>comercial@tiendaconceptos.com</p>
+        <p>Teléfono comercial: +5352458380</p>
       </div>
+      <span class="client-signature">Firma del cliente</span>
+      <span class="commercial-signature">Firma del comercial</span>
     </div>
   </div>
 </body>

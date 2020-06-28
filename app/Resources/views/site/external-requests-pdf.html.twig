@@ -1,0 +1,249 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:v="urn:schemas-microsoft-com:vml">
+
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta content="width=device-width" name="viewport" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <title></title>
+
+  <style>
+    @page {
+      size: a4;
+      margin: 0;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    p {
+      margin-top: 0.3em;
+      margin-bottom: 0;
+    }
+
+    .header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      background-color: #333333;
+      height: 85px;
+    }
+
+    .header img {
+      width: 200px;
+      margin-left: 40px;
+      margin-top: 17px;
+    }
+
+    .header span {
+      font-size: 20px;
+      font-weight: bold;
+      color: #FFFFFF;
+      position: absolute;
+      top: 33px;
+      right: 40px;
+    }
+
+    .yellow-badge {
+      background-color: #c2b930;
+      position: absolute;
+      height: 10px;
+      width: 100%;
+      top: 85px;
+    }
+
+    .content {
+      padding-top: 80px;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    .facture-general-info {
+      margin-top: 40px;
+    }
+
+    .facture-name {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .facture-date {
+      font-size: 15px;
+      margin-left: 125px;
+    }
+
+    .facture-info {
+      margin-top: 20px;
+    }
+
+    .client-address {
+      margin-bottom: 20px;
+    }
+
+    .facture-summary {
+      float: right;
+    }
+
+    .facture-summary-info {
+      margin-top: 15px;
+    }
+
+    .facture-main-info-top {
+      background-color: #CCCCCC;
+      margin-top: 10px;
+      padding: 5px;
+      width: 250px;
+    }
+
+    .facture-main-info-bottom {
+      background-color: #333333;
+      margin-bottom: 20px;
+      padding: 5px;
+      width: 250px;
+    }
+
+    .facture-main-info-bottom p {
+      color: #FFFFFF;
+    }
+
+    .products-table {
+      margin-top: 30px;
+    }
+
+    .product-image {
+      height: 80px;
+      width: 80px;
+      margin: 5px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 15px;
+      width: 100%;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .client-signature {
+    }
+
+    .commercial-signature {
+      margin-left: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-info {
+      margin-left: 520px;
+    }
+
+    .table-bordered {
+      width: 100%;
+      margin-top: 0.5em;
+      border: 1px solid #333333;
+      float: left;
+      border-spacing: 0;
+    }
+
+    .table thead th {
+      text-align: start;
+      border: 1px solid #333333;
+      background-color: #333333;
+      color: #ffffff;
+      padding: 5px;
+    }
+
+    .table-bordered td, .table-bordered th {
+      border: 1px solid #333333;
+      padding: 5px;
+    }
+
+    .align-right {
+      float: left;
+    }
+
+    .align-right {
+      float: right;
+    }
+  </style>
+</head>
+<body>
+  {% set cupConversionRate = 25 %}
+  {% set totalWeight = 0 %}
+  {% set generalSubtotal = 0 %}
+  {% set productCount = 0 %}
+  {% for externalRequestProduct in externalRequestProducts %}
+    {% set product = externalRequestProduct.product %}
+    {% set totalWeight = totalWeight + product.weight * externalRequestProduct.count %}
+    {% set generalSubtotal = generalSubtotal + product.ikeaPrice * externalRequestProduct.count %}
+    {% set productCount = productCount + externalRequestProduct.count %}
+  {% endfor %}
+  {% set taxes = generalSubtotal * 0.07 %}
+  {% set generalTotal = generalSubtotal + taxes %}
+  <div class="d-flex flex-column">
+    <div class="header">
+      <img class="pl-5 pt-2 pb-2" src="{{ absolute_url(asset(home.data.logo.image.path)) }}" />
+      <span>No. de Pedido: {{externalRequest.id}}</span>
+    </div>
+    <div class="yellow-badge"></div>
+    <div class="content">
+      <div class="facture-general-info">
+        <span class="facture-name">PEDIDO EXTERNO</span>
+      </div>
+      <div class="facture-info">
+        <div>
+          <p><strong>Precio IKEA:</strong> {{externalRequest.finalPrice}}</p>
+          <p><strong>Taxes:</strong> {{taxes}}</p>
+          <p><strong>Peso:</strong> {{totalWeight}}</p>
+          <p><strong>Cant. productos:</strong> {{productCount}}</p>
+          <p><strong>Costos extra:</strong> {{externalRequest.budget}}</p>
+          <p><strong>Pago a proveedor:</strong> {{externalRequest.payment}}</p>
+          <p><strong>Fecha de entrega:</strong> {{externalRequest.date|date('d/m/Y')}}</p>
+        </div>
+      </div>
+      <div class="products-table">
+        <table class="table table-bordered mt-3">
+          <thead>
+          <tr>
+            <th class="pl-2">CÓDIGO</th>
+            <th class="pl-2">FOTO</th>
+            <th class="pl-2">DESCRIPCIÓN</th>
+            <th class="pl-2">CANTIDAD</th>
+            <th class="pl-2">PRECIO</th>
+            <th class="pl-2">SUBTOTAL</th>
+          </tr>
+          </thead>
+          <tbody class="table-members">
+            {% for externalRequestProduct in externalRequestProducts %}
+              {% set product = externalRequestProduct.product %}
+              <tr>
+                <td class="pl-2 pt-2">
+                  <span>{{product.code}}</span>
+                </td>
+                <td>
+                  <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.mainImage, 'imageFile')) }}" />
+                </td>
+                <td class="pl-3 pt-2">
+                  <span class="product-description">{{product.item}}</span>
+                </td>
+                <td class="pl-2 pt-2">
+                  <span>{{externalRequestProduct.count}}</span>
+                </td>
+                <td class="pl-2 pt-2">
+                  <span>{{product.ikeaPrice}}</span>
+                </td>
+                <td class="pl-2 pt-2">
+                  <span>{{product.ikeaPrice * externalRequestProduct.count}}</span>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
