@@ -6,7 +6,9 @@
 		<div class="popular_products carousel">
 			{% for product in popularProducts %}
 				<div class="carousel__cell">
-					{{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes = '28vw') | raw }}
+					<a href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+						{{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes = '28vw') | raw }}
+					</a>
 				</div>
 			{% endfor %}
 		</div>
