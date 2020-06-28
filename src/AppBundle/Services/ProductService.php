@@ -406,9 +406,15 @@ class ProductService
             ->getQuery()
             ->getResult();
 
+        $similars = [];
+        foreach ($_products as $product){
+            foreach ($product->getSimilarProducts() as $similarProduct)
+                $similars[] = $similarProduct->getId();
 
-        foreach ($_products as $product)
-            array_push($products, $product);
+            if (!in_array($product->getId(), $similars))
+                $products[] = $product;
+        }
+
 
         $countProducts = $qbProductCount->getQuery()->getSingleScalarResult();
 
@@ -452,7 +458,7 @@ class ProductService
                 continue;
             foreach ($category->getProducts() as $product)
                 if ($product->getPopular()) {
-                    array_push($categoriesPopularProducts, $product);
+                    $categoriesPopularProducts[] = $product;
                 }
         }
 
@@ -460,7 +466,7 @@ class ProductService
             $randomIndexes = array_rand($categoriesPopularProducts,
                 min(count($categoriesPopularProducts), $popularProductsCount));
             foreach ($randomIndexes as $randomIndex)
-                array_push($popularProducts, $categoriesPopularProducts[$randomIndex]);
+                $popularProducts[] = $categoriesPopularProducts[$randomIndex];
         }
 
 

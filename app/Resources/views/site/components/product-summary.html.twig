@@ -24,15 +24,14 @@
 	      {% endif %}
 	    </div>
 
-		<div class="product-similar">
-			{% if product.isParent %}
-			    <span>Más Variantes</span>
-			{% endif %}
-		</div>
 
     </div>
     <div class="d-flex justify-content-between align-items-center mt-1">
       <div class="d-flex flex-column conceptos-product-badges">
+
+	      {% if product.similarProducts | length > 0 %}
+		      <span class="product-similar">Más Variantes</span>
+	      {% endif %}
         {% if product.inStore %}
           <span class="conceptos-in-store-product-badge">ALMACÉN</span>
         {% endif %}

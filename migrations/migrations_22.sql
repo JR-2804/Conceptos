@@ -1,6 +1,3 @@
-ALTER TABLE product ADD is_parent TINYINT(1) DEFAULT NULL;
-
-CREATE TABLE similar_product (id INT AUTO_INCREMENT NOT NULL, parent_product_id INT DEFAULT NULL, product_id INT DEFAULT NULL, INDEX IDX_66C395B92C7E20A (parent_product_id), INDEX IDX_66C395B94584665A (product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-ALTER TABLE similar_product ADD CONSTRAINT FK_66C395B92C7E20A FOREIGN KEY (parent_product_id) REFERENCES product (id);
-ALTER TABLE similar_product ADD CONSTRAINT FK_66C395B94584665A FOREIGN KEY (product_id) REFERENCES product (id);
-
+CREATE TABLE product_product (product_source INT NOT NULL, product_target INT NOT NULL, INDEX IDX_2931F1D3DF63ED7 (product_source), INDEX IDX_2931F1D24136E58 (product_target), PRIMARY KEY(product_source, product_target)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+ALTER TABLE product_product ADD CONSTRAINT FK_2931F1D3DF63ED7 FOREIGN KEY (product_source) REFERENCES product (id) ON DELETE CASCADE;
+ALTER TABLE product_product ADD CONSTRAINT FK_2931F1D24136E58 FOREIGN KEY (product_target) REFERENCES product (id) ON DELETE CASCADE;

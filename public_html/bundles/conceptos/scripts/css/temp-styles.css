@@ -1107,7 +1107,7 @@ a.conceptos-category-subtitle:focus {
   right: 5px;
   font-size: 20px;
   color: #b3aeae !important;
-  z-index: 1;
+  /*z-index: 1;*/
 }
 
 .favorite-product:hover {

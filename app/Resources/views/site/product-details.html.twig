@@ -112,7 +112,7 @@
           {{include('site/components/change-product-evaluation.html.twig')}}
         </div>
 
-	      {% if product.isParent %}
+	      {% if product.getSimilarProducts | length > 0 %}
 		      <div class="similar_products d-flex flex-column p-2 pl-lg-5 pr-lg-5">
 			      <div class="similar_products__show_button">
 				      <button class="conceptos-primary-button">Otras variantes
@@ -121,6 +121,7 @@
 			      </div>
 		      </div>
 	      {% endif %}
+
 
         <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3">
           <span class="conceptos-title">DETALLES DEL PRODUCTO</span>

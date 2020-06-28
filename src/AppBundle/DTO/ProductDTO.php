@@ -236,6 +236,7 @@ class ProductDTO
     public function setSimilarProducts($similarProducts)
     {
         $this->similarProducts = $similarProducts;
+
     }
 
     public function getComplementaryProducts()

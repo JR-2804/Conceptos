@@ -130,29 +130,25 @@
                 </div>
             </div>
         </div>
+
         <hr>
-        <h2 class="title">Productos asociados</h2>
-        <div class="row flex-wrap">
-            <div class="col-12 col-lg-2">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" id="is-parent"> <strong>Es producto representativo</strong>
-                    </label>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-12">
                 <div class="form-group">
-                    <label class="control-label">Productos Similares</label>
+                    <label class="control-label">Variaciones de este producto</label>
                     <select class="form-control" id="similar-products" multiple>
-                        {% for product in products %}
-                            <option value="{{ product.id }}">{{ product.name }} ({{ product.code }} - ${{ product.price }} - {{ product.id }})</option>
+                        {% for otherProduct in products %}
+	                        {% if product.id != otherProduct.id %}
+                            <option value="{{ otherProduct.id }}">{{ otherProduct.name }}
+	                            ({{ otherProduct.code }} - ${{ otherProduct.price }} - {{ otherProduct.id }})
+                            </option>
+	                        {% endif %}
                         {% endfor %}
                     </select>
                 </div>
             </div>
         </div>
+
 
         <hr>
         <div class="row flex-wrap">

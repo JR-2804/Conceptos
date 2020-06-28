@@ -1,4 +1,4 @@
-{% if product.isParent %}
+{% if product.getSimilarProducts | length > 0 %}
 
 	<div class="similar_products">
 
@@ -12,8 +12,8 @@
 					<button class="similar_products__container__modal__header__close"></button>
 				</div>
 
-				{% for similarProduct in product.similarProducts %}
-					{% set product = similarProduct.getProduct %}
+				{% for similarProduct in product.getSimilarProducts %}
+					{% set product = similarProduct %}
 					{% set sizes = '(min-width: 1000px) 12vw, 50vw' %}
 
 					{{ include('site/components/products/row_product.html.twig') }}

@@ -232,16 +232,9 @@ class Product
     private $complementaryProducts;
 
     /**
-     * @var bool
-     * @ORM\Column(name="is_parent", type="boolean", nullable=true)
-     */
-    private $isParent;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\SimilarProduct", mappedBy="parentProduct")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product")
      */
     private $similarProducts;
-
 
     /**
      * Product constructor.
@@ -955,44 +948,23 @@ class Product
       return $labels;
     }
 
-    /**
-     * Get isParent
-     *
-     * @return bool
-     */
-    public function getIsParent(){
-        return $this->isParent;
-    }
-
-    /**
-     * Set isParent
-     *
-     * @param bool $isParent
-     *
-     * @return Product
-     */
-    public function setIsParent($isParent)
-    {
-        $this->isParent = $isParent;
-
-        return $this;
-    }
-
-    public function addSimilarProduct(SimilarProduct $similarProduct)
+    public function addSimilarProduct(Product $similarProduct)
     {
         $this->similarProducts[] = $similarProduct;
 
         return $this;
     }
 
-    public function removeSimilarProduct(SimilarProduct $similarProduct)
+    public function removeSimilarProduct(Product $similarProduct)
     {
         $this->similarProducts->removeElement($similarProduct);
     }
 
 
+    //Poner explicacions
     public function getSimilarProducts()
     {
         return $this->similarProducts;
     }
+
 }

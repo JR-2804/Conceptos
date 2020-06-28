@@ -9,7 +9,6 @@ use AppBundle\Entity\Material;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\ComboProduct;
 use AppBundle\Entity\ComplementaryProduct;
-use AppBundle\Entity\SimilarProduct;
 use AppBundle\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -411,10 +410,9 @@ class ProductController extends Controller
             $dto->setCountStore($product->getStoreCount());
         }
 
-        $dto->setIsParent($product->getIsParent());
         $similarProducts = [];
         foreach ($product->getSimilarProducts() as $similarProduct) {
-            $similarProducts[] = $similarProduct->getProduct()->getId();
+            $similarProducts[] = $similarProduct->getId();
         }
         $dto->setSimilarProducts(json_encode($similarProducts));
 
@@ -723,28 +721,42 @@ class ProductController extends Controller
                 $product->setStoreCount($form->get('countStore')->getData());
             }
 
-            $productDB->setIsParent($form->get('isParent')->getData());
 
-            $similarProducts = json_decode($form->get('similarProducts')->getData(), true);
+
+            $similarProductIds = json_decode($form->get('similarProducts')->getData(), true);
+            $previousSimilarProductIds = [];
+
             foreach ($product->getSimilarProducts() as $similarProduct) {
+                $previousSimilarProductIds[] = $similarProduct->getid();
                 $product->removeSimilarProduct($similarProduct);
-                $this->getDoctrine()->getManager()->remove($similarProduct);
             }
-            $product->getSimilarProducts()->clear();
-            if ($similarProducts != null) {
-                foreach ($similarProducts as $similarProductId) {
-                    $productDB = $this->getDoctrine()->getRepository('AppBundle:Product')->find($similarProductId);
-                    if (null != $productDB) {
-                        $similarProduct = new SimilarProduct();
-                        $similarProduct->setParentProduct($product);
-                        $similarProduct->setProduct($productDB);
-                        $this->getDoctrine()->getManager()->persist($similarProduct);
 
-                        $product->addSimilarProduct($similarProduct);
+            foreach ($previousSimilarProductIds as $previousSimilarProductId){
+                $previousSimilarProduct = $this->getDoctrine()->getRepository('AppBundle:Product')->find($previousSimilarProductId);
+                foreach ($previousSimilarProduct->getSimilarProducts() as $previousSimilarProductSimilarProduct)
+                    $previousSimilarProduct->removeSimilarProduct($previousSimilarProductSimilarProduct);
+            }
+
+            if ($similarProductIds != null) {
+                foreach ($similarProductIds as $similarProductId) {
+                    $similarProduct = $this->getDoctrine()->getRepository('AppBundle:Product')->find($similarProductId);
+
+                    $product->addSimilarProduct($similarProduct);
+                    $similarProduct->addSimilarProduct($product);
+
+                    foreach ($similarProductIds as $similarProductOtherId) {
+                        if ($similarProductOtherId == $similarProductId)
+                            continue;
+
+                        $similarProductOther = $this->getDoctrine()->getRepository('AppBundle:Product')->find($similarProductOtherId);
+                        $similarProduct->addSimilarProduct($similarProductOther);
                     }
-                }
-            }
 
+                    $this->getDoctrine()->getManager()->persist($similarProduct);
+                }
+
+                $this->getDoctrine()->getManager()->persist($product);
+            }
 
 
             $color = $form->get('color')->getData();
@@ -844,6 +856,7 @@ class ProductController extends Controller
             ->where('c.subCategories IS NOT EMPTY')->getQuery()->getResult();
 
         return $this->render('::new_edit_product.html.twig', [
+            'product'=>$product,
             'action' => 'edit',
             'categories' => $categories,
             'products' => $this->getDoctrine()->getRepository('AppBundle:Product')->findAll(),

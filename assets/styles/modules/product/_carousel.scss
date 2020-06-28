@@ -10,7 +10,7 @@
 
 .carousel{
 	width: 100%;
-	min-height: 45vh;
+	min-height: 35vh;
 
 	&--small{
 		height: 11vh;
@@ -20,17 +20,19 @@
 
 		& .carousel__cell{
 			width: 28%;
+			margin: 0 .25em;
 		}
 	}
 
 	&__cell {
+		display: flex;
+		justify-content: center;
 		width: 100%;
 		height: 100%;
 
 		& img{
-			width: 100%;
+			width: auto;
 			height: 100%;
-			object-fit: cover;
 		}
 	}
 
