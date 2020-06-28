@@ -2,7 +2,7 @@
 	{% for imageSet in imageSets %}
 		{% for image in imageSet %}
 			<div class="carousel__cell">
-{#				<img class="image-viewer" src="{{ vich_uploader_asset(image, 'imageFile') }}">#}
+
 				{{  vich_uploader_asset(image, 'imageFile') | imgTag(sizes = '100vw') | raw }}
 
 			</div>
@@ -14,7 +14,7 @@
 	{% for imageSet in imageSets %}
 		{% for image in imageSet %}
 			<div class="carousel__cell">
-{#				<img class="image-viewer" src="{{ vich_uploader_asset(image, 'imageFile') }}">#}
+
 				{{  vich_uploader_asset(image, 'imageFile') | imgTag(sizes = '28vw') | raw }}
 
 			</div>

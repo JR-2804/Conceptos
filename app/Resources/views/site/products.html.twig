@@ -148,11 +148,13 @@
 
         {{ include('site/components/products/breadcrumbs.html.twig') }}
 
+	    {{ include('site/components/products/popular_products.html.twig') }}
 
       <div class="d-flex pl-lg-5 pr-lg-5">
         <div class="d-none d-lg-flex pr-5">
           {{include('site/categories-menu.html.twig')}}
         </div>
+
         <div class="d-flex flex-wrap">
           {% for product in products %}
             {{include('site/components/product-summary.html.twig')}}
@@ -186,6 +188,7 @@
   <script src="{{ asset('bundles/conceptos/libs/slimscroll/jquery.slimscroll.min.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/home/js/classie.js') }}"></script>
   <script src="{{ asset('bundles/conceptos/products/js/products.js') }}"></script>
+	<script src="{{ asset('bundles/conceptos/14ndy15/scripts/products.js') }}"></script>
   <script>
     $(document).ready(function() {
       if (window.screen.width > 992) {
