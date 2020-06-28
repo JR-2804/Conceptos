@@ -19,14 +19,15 @@ class Carousel{
             pauseAutoPlayOnHover: false,
         });
 
-        new Flickity( this.carouselSmall, {
-            // options
-            asNavFor: '.product_images',
-            cellAlign: 'left',
-            contain: true,
-            groupCells: true,
-            prevNextButtons: false,
-        });
+        if (this.carouselSmall != null)
+            new Flickity( this.carouselSmall, {
+                // options
+                asNavFor: '.product_images',
+                cellAlign: 'left',
+                contain: true,
+                groupCells: true,
+                prevNextButtons: false,
+            });
     }
 }
 

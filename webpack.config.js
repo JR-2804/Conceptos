@@ -2,10 +2,9 @@ var path = require("path");
 
 module.exports = {
   entry: {
-    app_1: "./assets/scripts/app.js",
+    app: "./assets/scripts/app.js",
     product: "./assets/scripts/product.js",
     products: "./assets/scripts/products.js",
-    index: "./assets/scripts/index.js",
     shop_cart: "./assets/scripts/shop_cart.js",
     blog: "./assets/scripts/blog.js"
   },

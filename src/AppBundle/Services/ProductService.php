@@ -448,25 +448,28 @@ class ProductService
 
 
 
-        $popularProductsCount = 15;
-        $categoriesPopularProducts = [];
         $popularProducts = [];
-        foreach ($categories as $category){
-            $categoryId = intval($category);
-            $category = $this->categoryRepository->find($categoryId);
-            if ($category == null)
-                continue;
-            foreach ($category->getProducts() as $product)
-                if ($product->getPopular()) {
-                    $categoriesPopularProducts[] = $product;
-                }
-        }
+        if ($categories != -1) {
+            $popularProductsCount = 15;
+            $categoriesPopularProducts = [];
 
-        if (count($categoriesPopularProducts) >= 3) {
-            $randomIndexes = array_rand($categoriesPopularProducts,
-                min(count($categoriesPopularProducts), $popularProductsCount));
-            foreach ($randomIndexes as $randomIndex)
-                $popularProducts[] = $categoriesPopularProducts[$randomIndex];
+            foreach ($categories as $category) {
+                $categoryId = intval($category);
+                $category = $this->categoryRepository->find($categoryId);
+                if ($category == null)
+                    continue;
+                foreach ($category->getProducts() as $product)
+                    if ($product->getPopular()) {
+                        $categoriesPopularProducts[] = $product;
+                    }
+            }
+
+            if (count($categoriesPopularProducts) >= 3) {
+                $randomIndexes = array_rand($categoriesPopularProducts,
+                    min(count($categoriesPopularProducts), $popularProductsCount));
+                foreach ($randomIndexes as $randomIndex)
+                    $popularProducts[] = $categoriesPopularProducts[$randomIndex];
+            }
         }
 
 
