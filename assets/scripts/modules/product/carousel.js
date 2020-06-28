@@ -26,6 +26,7 @@ class Carousel{
                 cellAlign: 'left',
                 contain: true,
                 groupCells: true,
+                pageDots: false,
                 prevNextButtons: false,
             });
     }
