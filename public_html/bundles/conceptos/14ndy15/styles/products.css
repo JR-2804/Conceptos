@@ -49,6 +49,7 @@
       font-weight: bold;
       cursor: pointer; }
   .products_breadcrumbs > ul > li a {
+        display: flex;
         font-size: 1em;
         color: #282827;
         font-weight: bold; }
