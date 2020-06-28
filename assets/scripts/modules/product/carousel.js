@@ -14,7 +14,7 @@ class Carousel{
             // options
             cellAlign: 'left',
             contain: true,
-            autoPlay: 5000,
+            autoPlay: 10000,
             pageDots: false,
             pauseAutoPlayOnHover: false,
         });
