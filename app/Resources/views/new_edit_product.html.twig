@@ -131,23 +131,28 @@
             </div>
         </div>
 
-        <hr>
-        <div class="row">
-            <div class="col-12">
-                <div class="form-group">
-                    <label class="control-label">Variaciones de este producto</label>
-                    <select class="form-control" id="similar-products" multiple>
-                        {% for otherProduct in products %}
-	                        {% if product.id != otherProduct.id %}
-                            <option value="{{ otherProduct.id }}">{{ otherProduct.name }}
-	                            ({{ otherProduct.code }} - ${{ otherProduct.price }} - {{ otherProduct.id }})
-                            </option>
-	                        {% endif %}
-                        {% endfor %}
-                    </select>
+        {% if action == 'edit' %}
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="control-label">Variaciones de este producto</label>
+                        <select class="form-control" id="similar-products" multiple>
+                            {% for otherProduct in products %}
+                                {% if product.id != otherProduct.id %}
+                                <option value="{{ otherProduct.id }}">{{ otherProduct.name }}
+                                    ({{ otherProduct.code }} - ${{ otherProduct.price }} - {{ otherProduct.id }})
+                                </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% else %}
+            <h5>Para añadir variaciones es necesario guardar este producto primero.</h5>
+        {% endif %}
+
 
 
         <hr>
