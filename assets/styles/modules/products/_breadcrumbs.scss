@@ -66,8 +66,6 @@
 			display: inline;
 			list-style: none;
 			margin-right: 1.2em;
-			text-transform: uppercase;
-			font-weight: bold;
 			cursor: pointer;
 
 			& a {
@@ -77,15 +75,26 @@
 				font-weight: bold;
 			}
 
-			&:after{
-				top: 50%;
-				position: absolute;
-				content: '\\';
-				color: $mainYellow;
-				font-size: 1.5em;
-				font-weight: 500;
-				transform: translateY(-50%);
-				margin-left: .25em;
+			& span{
+				position: relative;
+				text-transform: uppercase;
+				font-weight: bold;
+
+				&:before{
+					top: 50%;
+					right: -15px;
+					position: absolute;
+					content: '\\';
+					color: $mainYellow;
+					font-size: 1.5em;
+					font-weight: 500;
+					transform: translateY(-50%);
+					margin-left: .25em;
+				}
+			}
+
+			&:last-child span:before{
+				display: none;
 			}
 
 			&:first-child{
@@ -100,9 +109,7 @@
 				}
 			}
 
-			&:last-child:after{
-				display: none;
-			}
+
 
 			& li {
 				position: relative;

@@ -431,6 +431,39 @@ easy_admin:
                     - {property: 'date', label: 'Fecha'}
             edit:
                 title: 'Editar Miembro'
+        User:
+            class: AppBundle\Entity\User
+            list:
+                title: Usuarios registrados
+                actions:
+                    - { name: 'favorite_products_user', type: 'route', label: 'Productos Favoritos' }
+                    - { name: 'shop_cart_user', type: 'route', label: 'Carrito' }
+                fields:
+                    - id
+                    - {property: 'username', label: 'Usuario'}
+                    - {property: 'email', label: 'Correo'}
+                    - {property: 'enabled', label: 'Habilitado', type: 'toggle'}
+                    - {property: 'lastLogin', label: 'Último acceso'}
+                    - {property: 'ProductsInCartCount', label: 'Cantidad en Carrito', type: 'integer'}
+                    - {property: 'FavoritesCount', label: 'Cantidad de Favoritos', type: 'integer'}
+            edit:
+                fields:
+                    - { property: 'plainPassword', type_options: { required: false} }
+                form_options: { validation_groups: ['Profile'] }
+            new:
+                fields:
+                    - { property: 'plainPassword', type_options: { required: true} }
+                form_options: { validation_groups: ['Registration'] }
+            form:
+                fields:
+                    - {property: 'username', label: 'Usuario'}
+                    - {property: 'email', label: 'Correo'}
+                    - {property: 'plainPassword', type: 'text', type_options: {required: false} }
+                    - {property: 'firstName', label: 'Nombre', type_options: {required: false}}
+                    - {property: 'lastName', label: 'Apellidos', type_options: {required: false}}
+                    - {property: 'mobileNumber', label: 'Teléfono Movil', type_options: {required: false}}
+                    - {property: 'homeNumber', label: 'Teléfono de Casa', type_options: {required: false}}
+                    - {property: 'roles', label: 'Roles'}
         PromotionEmail:
             class: AppBundle\Entity\PromotionEmail
             actions:
@@ -515,40 +548,90 @@ easy_admin:
                     - { type: 'group', label: 'Seccion Footer', icon: 'cogs', columns: 12 }
 
                     - {property: 'footerPictureFile', type: 'file', label: 'Footer imagen'}
-                    - {property: 'footerPictureLink', label: 'enlace de la imagen'}
+                    - {property: 'footerPictureLink', label: 'Enlace de la imagen'}
             edit:
                 title: 'Editar Correo'
-
-        User:
-            class: AppBundle\Entity\User
+        WelcomeEmail:
+            class: AppBundle\Entity\WelcomeEmail
+            actions:
+                - {name: 'new', label: 'Crear Correo'}
             list:
-                title: Usuarios registrados
-                actions:
-                    - { name: 'favorite_products_user', type: 'route', label: 'Productos Favoritos' }
-                    - { name: 'shop_cart_user', type: 'route', label: 'Carrito' }
+                title: 'Correos de Bienvenida'
                 fields:
                     - id
-                    - {property: 'username', label: 'Usuario'}
-                    - {property: 'email', label: 'Correo'}
-                    - {property: 'enabled', label: 'Habilitado', type: 'toggle'}
-                    - {property: 'lastLogin', label: 'Último acceso'}
-                    - {property: 'ProductsInCartCount', label: 'Cantidad en Carrito', type: 'integer'}
-                    - {property: 'FavoritesCount', label: 'Cantidad de Favoritos', type: 'integer'}
-            edit:
-                fields:
-                    - { property: 'plainPassword', type_options: { required: false} }
-                form_options: { validation_groups: ['Profile'] }
-            new:
-                fields:
-                    - { property: 'plainPassword', type_options: { required: true} }
-                form_options: { validation_groups: ['Registration'] }
+                    - {property: 'subject', label: 'Asunto'}
+                    - {property: 'primaryPicture', label: 'Imágen Principal', type: 'image', base_path: '%app.path.email.images%'}
+#                actions:
+#                    - {name: 'preview_promotion_email', type: 'route'}
+#                    - {name: 'send_promotion_email', type: 'route'}
             form:
+                title: 'Nuevo correo de bienvenida'
                 fields:
-                    - {property: 'username', label: 'Usuario'}
-                    - {property: 'email', label: 'Correo'}
-                    - {property: 'plainPassword', type: 'text', type_options: {required: false} }
-                    - {property: 'firstName', label: 'Nombre', type_options: {required: false}}
-                    - {property: 'lastName', label: 'Apellidos', type_options: {required: false}}
-                    - {property: 'mobileNumber', label: 'Teléfono Movil', type_options: {required: false}}
-                    - {property: 'homeNumber', label: 'Teléfono de Casa', type_options: {required: false}}
-                    - {property: 'roles', label: 'Roles'}
+                    - { type: 'group', label: 'Seccion Informacion', icon: 'cogs', columns: 12 }
+
+                    - {property: 'subject', label: 'Asunto'}
+
+                    - { type: 'group', label: 'Imagen Principal', icon: 'cogs', columns: 12 }
+                    - {property: 'primaryPictureFile', type: 'file', label: 'Imágen principal'}
+                    - {property: 'primaryTitle', , label: 'Titulo principal'}
+
+                    - { type: 'group', label: 'Seccion Intro', icon: 'cogs', columns: 12, help: 'Si no se pone ningún título, no se mostrara esta sección' }
+
+                    - {property: 'introTitle1', label: 'Intro titulo 1', help: 'Si no se pone el título, no se mostrara este intro'}
+                    - {property: 'introPicture1File', type: 'file', label: 'Intro Imagen 1'}
+                    - {property: 'introContent1', label: 'Intro content 1', type: 'ckeditor'}
+                    - {property: 'introLink1', label: 'Enlace del intro 1'}
+
+                    - {property: 'introTitle2', label: 'Intro titulo 2'}
+                    - {property: 'introPicture2File', type: 'file', label: 'Intro Imagen 2'}
+                    - {property: 'introContent2', label: 'Intro content 2', type: 'ckeditor'}
+                    - {property: 'introLink2', label: 'Enlace del intro 2'}
+
+                    - {property: 'introTitle3', label: 'Intro titulo 3'}
+                    - {property: 'introPicture3File', type: 'file', label: 'Intro Imagen 3'}
+                    - {property: 'introContent3', label: 'Intro content 3', type: 'ckeditor'}
+                    - {property: 'introLink3', label: 'Enlace del intro 3'}
+
+                    - { type: 'group', label: 'Seccion Ofertas', icon: 'cogs', columns: 12, help: 'Si no hay codigos, no se mostrara esta sección'}
+                    - {property: 'offersTitle', label: 'Titulo seccion ofertas'}
+                    - {property: 'offers', label: 'Ofertas disponibles en el sitio'}
+                    - {property: 'linkOffers', label: 'Enlace para ver más ofertas en el sitio'}
+
+                    - { type: 'group', label: 'Seccion productos', icon: 'cogs', columns: 12, help: 'Si no hay códigos, no se mostrara esta sección' }
+                    - {property: 'productsTitle', label: 'Título sección productos'}
+                    - {property: 'products', label: 'Código de los productos'}
+                    - {property: 'linkProducts', label: 'Enlace para ver más productos en el sitio'}
+
+                    - { type: 'group', label: 'Sección promoción', icon: 'cogs', columns: 12 }
+
+                    - {property: 'promotionTitle', label: 'Titulo promocion', help: 'Si no se añade el titulo, no se mostrara esta sección'}
+                    - {property: 'promotionPictureFile', type: 'file', label: 'Imagen de promocion'}
+                    - {property: 'promotionContent', label: 'contenido de promocion', type: 'ckeditor'}
+                    - {property: 'promotionLink', label: 'Enlace de la promocion'}
+
+                    - { type: 'group', label: 'Seccion Blogs', icon: 'cogs', columns: 12 }
+
+                    - {property: 'blogTitle', label: 'Titulo seccion Blog'}
+                    - {property: 'blogs', label: 'articulos del blog', help: 'Si no se añade ningún artículo, no se mostrará esta sección, recomendamos que sean a lo sumo dos articulos'}
+
+                    - { type: 'group', label: 'Sección Servicios', icon: 'cogs', columns: 12, help: 'Si los servicio no posee títulos no se añadira esta sección.' }
+
+                    - {property: 'servicesTitle', label: 'Titulo seccion Servicios'}
+                    - {property: 'linkServices', label: 'Enlace de los servicios'}
+
+                    - {property: 'serviceTitle1', label: 'Servicio titulo 1', help: 'Si el Servicio no posee título no se añadira.'}
+                    - {property: 'servicePicture1File', type: 'file', label: 'Servicio Imagen 1'}
+                    - {property: 'serviceContent1', label: 'Servicio content 1', type: 'ckeditor'}
+                    - {property: 'serviceLink1', label: 'Enlace del Servicio 1'}
+
+                    - {property: 'serviceTitle2', label: 'Servicio titulo 2', help: 'Si el servicio no posee título no se añadira.'}
+                    - {property: 'servicePicture2File', type: 'file', label: 'Servicio Imagen 2'}
+                    - {property: 'serviceContent2', label: 'Servicio content 2', type: 'ckeditor'}
+                    - {property: 'serviceLink2', label: 'Enlace del Servicio 2'}
+
+                    - { type: 'group', label: 'Seccion Footer', icon: 'cogs', columns: 12 }
+
+                    - {property: 'footerPictureFile', type: 'file', label: 'Footer imagen'}
+                    - {property: 'footerPictureLink', label: 'Enlace de la imagen'}
+            edit:
+                title: 'Editar Correo'
