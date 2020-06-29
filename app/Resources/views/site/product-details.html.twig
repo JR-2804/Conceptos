@@ -63,16 +63,15 @@
 {#      <div class="d-flex col-12 col-lg-6 carousel pl-0 pt-lg-3 pb-lg-2 pl-lg-5 pr-lg-5 pt-2" data-ride="carousel" id="carousel-product-details" data-interval="5000">#}
 
 {#	      TODO:corazon favorito#}
-	      {% if app.user|default %}
-		      <span data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"
-		            data-path-remove="{{ path('remove_from_favorite', {id: product.id}) }}"
-		            class="favorite-product {% if product.favorite %}favorite{% endif %}">
-              <i class="fa fa-heart favorite-icon-big"></i>
-            </span>
-	      {% endif %}
+{#	      {% if app.user|default %}#}
+{#		      <span data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"#}
+{#		            data-path-remove="{{ path('remove_from_favorite', {id: product.id}) }}"#}
+{#		            class="favorite-product {% if product.favorite %}favorite{% endif %}">#}
+{#              <i class="fa fa-heart favorite-icon-big"></i>#}
+{#            </span>#}
+{#	      {% endif %}#}
 
 	      {{ include('site/components/product/carousel.html.twig') }}
-
 
 {#      </div>#}
 
