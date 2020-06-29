@@ -1,10 +1,10 @@
 {% extends ':site:base.html.twig' %}
-{% block title %}Pedidos externos{% endblock %}
+{% block title %}Ordenes de compra{% endblock %}
 {% block body %}
   <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pt-lg-3 pb-lg-3">
-    <span class="conceptos-title-strong mt-2 mb-2">PEDIDOS EXTERNOS</span>
+    <span class="conceptos-title-strong mt-2 mb-2">ORDENES DE COMPRA</span>
     <div class="d-flex flex-wrap">
-      {% for externalRequest in externalRequests %}
+      {% for externalRequest in externalRequests|reverse %}
         {% set productCount = 0 %}
         {% for product in externalRequest.externalRequestProducts %}
           {% set productCount = productCount + product.count %}
@@ -26,6 +26,7 @@
                 <span class="conceptos-product-info mt-1">Ganancia para el proveedor: ${{externalRequest.providerProfit}}</span>
                 <span class="conceptos-product-info mt-1">Pago total: ${{externalRequest.payment}}</span>
                 <span class="conceptos-product-info mt-1">Fecha de entrega: {{externalRequest.date|date('d/m/Y')}}</span>
+                <span class="conceptos-product-info mt-1">Precio de venta: ${{externalRequest.sellPrice}}</span>
                 <span class="conceptos-product-info remaining-time mt-1"></span>
               </div>
               <a class="print-external-request" href="{{path('export_external_request', {id: externalRequest.id})}}">
@@ -64,7 +65,7 @@
         </div>
       {% else %}
         <div class="d-flex justify-content-center w-100">
-          <span class="conceptos-subtitle mt-2 mb-2">No existen pedidos externos</span>
+          <span class="conceptos-subtitle mt-2 mb-2">No existen ordenes de compra</span>
         </div>
       {% endfor %}
     </div>

@@ -268,12 +268,12 @@ easy_admin:
                 title: 'Editar factura'
         ExternalRequest:
             class: AppBundle\Entity\Request\ExternalRequest
-            label: Pedido Externo
+            label: Orden de Compra
             list:
-                title: Pedido externos
+                title: Ordenes de Compra
                 actions:
                     - {name: 'show'}
-                    - {name: 'new', label: 'Nuevo pedido externo'}
+                    - {name: 'new', label: 'Nueva orden de compra'}
                 fields:
                     - id
                     - {property: 'finalPrice', label: 'Costo de la compra'}
@@ -284,7 +284,7 @@ easy_admin:
                     - {property: 'user', label: 'Usuario'}
                     - {property: 'date', label: 'Fecha tope', format: 'd/m/Y'}
             show:
-                title: Detalles del pedido externo
+                title: Detalles de la orden de compra
                 fields:
                     - {property: 'finalPrice', label: 'Costo de la compra'}
                     - {property: 'weight', label: 'Peso de los productos'}
@@ -303,9 +303,9 @@ easy_admin:
                     - {property: 'user', label: 'Usuario'}
                     - {property: 'date', label: 'Fecha tope', format: 'd/m/Y'}
             new:
-                title: 'Nueva pedido externo'
+                title: 'Nuevo orden de compra'
             edit:
-                title: 'Editar pedido externo'
+                title: 'Editar orden de compra'
         Client:
             class: AppBundle\Entity\Request\Client
             label: Clientes

@@ -59,7 +59,9 @@ $(document).ready(function() {
       },
       function() {},
       function() {
-        alert("Ha ocurrido un error actualizando el estado del pedido externo");
+        alert(
+          "Ha ocurrido un error actualizando el estado de la orden de compra"
+        );
       }
     );
   });

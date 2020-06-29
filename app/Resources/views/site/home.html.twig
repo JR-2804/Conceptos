@@ -120,7 +120,14 @@
       <div class="d-flex flex-column align-items-center mb-3 ml-lg-5 mr-lg-5 mt-lg-3 mb-lg-3">
         {% if inStoreChunks and inStoreChunks is not empty %}
           <div class="d-flex d-lg-none align-items-center p-2 w-100">
-            <div id="carousel-in-store" class="carousel w-100" data-ride="carousel" data-interval="5000">
+            <div id="carousel-in-store" class="carousel w-100 pb-3" data-ride="carousel" data-interval="5000">
+              <ol class="carousel-indicators carousel-indicators">
+                {% for chunk in inStoreChunks %}
+                    <li data-app-prevent-settings="" data-target="#slider1-28"
+                        class="{% if loop.first %}active{% endif %}"
+                        data-slide-to="{{ loop.index }}"></li>
+                {% endfor %}
+              </ol>
               <div class="carousel-inner">
                 {% set sizes = '(min-width: 1000px) 20vw, 95vw' %}
                 {% for chunk in inStoreChunks %}
@@ -137,18 +144,17 @@
                   </div>
                 {% endfor %}
               </div>
-              <div class="d-flex ">
-                <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" href="#carousel-in-store">
-                  <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                </a>
-                <a class="carousel-control carousel-control-next" role="button" data-slide="next" href="#carousel-in-store">
-                  <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                </a>
-              </div>
             </div>
           </div>
           <div class="d-none d-lg-flex col-12 justify-content-center align-items-center p-2">
-            <div class="d-flex carousel w-100" data-ride="carousel" id="carousel-in-store-desktop" data-interval="5000">
+            <div class="d-flex carousel w-100 pb-3" data-ride="carousel" id="carousel-in-store-desktop" data-interval="5000">
+              <ol class="carousel-indicators carousel-indicators">
+                {% for chunk in inStoreChunks %}
+                    <li data-app-prevent-settings="" data-target="#slider1-28"
+                        class="{% if loop.first %}active{% endif %}"
+                        data-slide-to="{{ loop.index }}"></li>
+                {% endfor %}
+              </ol>
               <div class="d-flex carousel-inner w-100">
                 {% set sizes = '(min-width: 1000px) 20vw, 95vw' %}
                 {% for chunk in inStoreChunksDesktop %}
@@ -165,18 +171,10 @@
                   </div>
                 {% endfor %}
               </div>
-              <div class="d-flex">
-                <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" href="#carousel-in-store-desktop">
-                  <span aria-hidden="true" class="mbri-left mbr-iconfont"></span>
-                </a>
-                <a class="carousel-control carousel-control-next" role="button" data-slide="next" href="#carousel-in-store-desktop">
-                  <span aria-hidden="true" class="mbri-right mbr-iconfont"></span>
-                </a>
-              </div>
             </div>
           </div>
         {% endif %}
-        <a href="{{ path('products', {inStore:true}) }}" class="conceptos-primary-button-gray mt-3">
+        <a href="{{ path('products', {inStore:true}) }}" class="conceptos-primary-button-gray mt-2">
           <span class="pl-2 pr-2">VER MÁS</span>
         </a>
       </div>

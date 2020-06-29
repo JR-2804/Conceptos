@@ -23,7 +23,7 @@ $(document).ready(function() {
 
   function success() {
     $.toast({
-      text: "Pedido externo aceptado correctamente",
+      text: "Orden de compra aceptada correctamente",
       showHideTransition: "fade",
       bgColor: "#c2b930",
       textColor: "#3f3c03",

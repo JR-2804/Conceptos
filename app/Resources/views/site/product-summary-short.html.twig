@@ -10,14 +10,10 @@
           </span>
         {% endif %}
 
-        {% set class = 'conceptos-image conceptos-popular-product-image' %}
-        {% if imageColumns is defined and imageColumns < 12 %}
-          {% set class = 'conceptos-image conceptos-popular-product-image conceptos-popular-product-image-short' %}
-        {% endif %}
-        {{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes, null, class) | raw }}
+        {{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes, null, 'conceptos-image conceptos-popular-product-image') | raw }}
 
         <div class="d-flex justify-content-between align-items-center">
-          {% if storageSection is defined %}
+          {% if storageSection is defined and imageColumns is defined and imageColumns == 1 %}
             {% set priceClass = "conceptos-product-price-big" %}
             {% set iconClass = "conceptos-add-to-cart-icon-big" %}
           {% else %}

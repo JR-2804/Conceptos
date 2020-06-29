@@ -71,9 +71,9 @@
       {{ form_end(form) }}
     </div>
     {% if is_granted('ROLE_EXTERNAL') %}
-      <span class="conceptos-title mt-3">PEDIDOS EXTERNOS</span>
+      <span class="conceptos-title mt-3">ORDENES DE COMPRA</span>
       <div class="d-flex flex-column">
-        {% for externalRequest in externalRequests %}
+        {% for externalRequest in externalRequests|reverse %}
           {% set productCount = 0 %}
           {% for product in externalRequest.externalRequestProducts %}
             {% set productCount = productCount + product.count %}

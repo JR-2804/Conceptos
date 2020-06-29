@@ -439,25 +439,26 @@ a.conceptos-subtitle:focus {
 .conceptos-product-delivery-text {
   font-family: Montserrat;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 9px;
   color: #282827;
+  font-style: italic;
 }
 
 .product-airplane-delivery {
   border: none;
-  width: 25px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   background-color: transparent;
-  background-image: url("../../images/cart/airplane-simple.png");
+  background-image: url("../../images/cart/airplane-active.png");
   background-size: cover;
 }
 
 .product-ship-delivery {
   border: none;
-  width: 25px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   background-color: transparent;
-  background-image: url("../../images/cart/ship-simple.png");
+  background-image: url("../../images/cart/ship-active.png");
   background-size: cover;
 }
 
@@ -1123,7 +1124,7 @@ a.conceptos-category-subtitle:focus {
 }
 
 .conceptos-product-badges {
-  height: 30px;
+  height: 50px;
 }
 
 .view-profile-product-details {
@@ -1339,6 +1340,18 @@ a.conceptos-category-subtitle:focus {
 .close-external-request-modal:before,
 .close-external-request-modal:after {
   background: #282827 !important;
+}
+
+.membership-badge {
+  background-color: #c2b930;
+}
+
+.membership-badge {
+  background-color: #c2b930;
+}
+
+.membership-badge .conceptos-title {
+  font-size: 14px;
 }
 
 @media (min-width: 992px) {

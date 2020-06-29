@@ -879,11 +879,11 @@ class SiteController extends Controller
 
               foreach ($users as $user) {
                 if ($user->getEmail() != null) {
-                  $body = $this->renderView(':site:new-external-request-email.html.twig', [
+                  return $this->render(':site:new-external-request-email.html.twig', [
                     'username' => $user->getFirstName().' '.$user->getLastName(),
                     'externalRequest' => $externalRequest,
                   ]);
-                  $this->get('email_service')->send($config->getEmail(), 'Nuevo pedido externo', $user->getEmail(), 'Nuevo pedido externo', $body);
+                  $this->get('email_service')->send($config->getEmail(), 'Nueva orden de compra', $user->getEmail(), 'Nueva orden de compra', $body);
                 }
               }
               return $this->redirectToRoute('site_home');
@@ -2317,7 +2317,7 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="external_requests", path="/pedidos-externos")
+     * @Route(name="external_requests", path="/ordenes de compra")
      *
      * @param Request $request
      *
