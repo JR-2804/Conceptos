@@ -21,9 +21,6 @@
       <div class="d-flex flex-column col-6 pl-0">
         <span class="conceptos-product-info">{{product.name}}</span>
         <span class="conceptos-product-info-description">{{product.item}}</span>
-        {% if product.similarProducts | length > 0 %}
-          <span class="product-similar">Más Variantes</span>
-        {% endif %}
         {% if product.inStore or product.recent %}
           <div class="d-flex flex-column conceptos-product-badges">
             {% if product.inStore %}
@@ -33,8 +30,10 @@
               <span class="conceptos-new-product-badge">NUEVO</span>
             {% endif %}
           </div>
-
         {% endif %}
+      {% if product.similarProducts | length > 0 %}
+          <span class="product-similar">Otras Variantes</span>
+      {% endif %}
       </div>
       <div class="d-flex">
         <div class="d-flex align-items-center mr-3">
