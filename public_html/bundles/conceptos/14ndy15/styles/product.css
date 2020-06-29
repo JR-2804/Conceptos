@@ -20,15 +20,15 @@
       transform: translateY(10%);
       z-index: -1; }
   .similar_products__container__modal {
-      top: 10em;
+      top: 8em;
       position: relative;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       align-content: flex-start;
-      width: 80%;
-      margin: 0 10%;
-      padding-bottom: 1em;
+      width: 90%;
+      padding: 1em;
+      margin: 0 5%;
       max-height: 70vh;
       overflow-y: auto;
       background: white;
@@ -217,7 +217,7 @@ https://flickity.metafizzy.co
     width: 100%; }
   .carousel {
   width: 100%;
-  min-height: 35vh; }
+  height: 50vh; }
   .carousel--small {
     height: 11vh;
     min-height: 11vh;

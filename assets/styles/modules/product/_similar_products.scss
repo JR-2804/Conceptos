@@ -29,15 +29,15 @@
 		}
 
 		&__modal{
-			top: 10em;
+			top: 8em;
 			position: relative;
 			display: flex;
 			justify-content: center;
 			flex-wrap: wrap;
 			align-content: flex-start;
-			width: 80%;
-			margin: 0 10%;
-			padding-bottom: 1em;
+			width: 90%;
+			padding: 1em;
+			margin: 0 5%;
 			max-height: 70vh;
 			overflow-y: auto;
 			background: white;
