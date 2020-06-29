@@ -45,23 +45,28 @@
       display: inline;
       list-style: none;
       margin-right: 1.2em;
-      text-transform: uppercase;
-      font-weight: bold;
       cursor: pointer; }
   .products_breadcrumbs > ul > li a {
         display: flex;
         font-size: 1em;
         color: #282827;
         font-weight: bold; }
-  .products_breadcrumbs > ul > li:after {
-        top: 50%;
-        position: absolute;
-        content: '\\';
-        color: #c2b930;
-        font-size: 1.5em;
-        font-weight: 500;
-        transform: translateY(-50%);
-        margin-left: .25em; }
+  .products_breadcrumbs > ul > li span {
+        position: relative;
+        text-transform: uppercase;
+        font-weight: bold; }
+  .products_breadcrumbs > ul > li span:before {
+          top: 50%;
+          right: -15px;
+          position: absolute;
+          content: '\\';
+          color: #c2b930;
+          font-size: 1.5em;
+          font-weight: 500;
+          transform: translateY(-50%);
+          margin-left: .25em; }
+  .products_breadcrumbs > ul > li:last-child span:before {
+        display: none; }
   .products_breadcrumbs > ul > li:first-child {
         width: 100%;
         font-size: 1.1em;
@@ -71,8 +76,6 @@
             width: auto;
             font-size: 1em;
             margin: 0 1.2em 0 0; } }
-  .products_breadcrumbs > ul > li:last-child:after {
-        display: none; }
   .products_breadcrumbs > ul > li li {
         position: relative;
         margin: .25em 0; }
@@ -229,7 +232,7 @@ https://flickity.metafizzy.co
   .flickity-page-dots .dot.is-selected {
   opacity: 1; }
   .popular_products__container {
-  margin: 2em 0;
+  margin: 1em 0;
   width: 100%;
   display: flex;
   flex-wrap: wrap; }
@@ -243,7 +246,7 @@ https://flickity.metafizzy.co
     width: 28%;
     margin: 0 .25em; }
   .carousel .carousel__cell img {
-      width: 100%;
+      width: auto;
       height: 100%;
       -o-object-fit: cover;
          object-fit: cover; }
