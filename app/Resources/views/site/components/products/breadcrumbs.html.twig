@@ -1,9 +1,12 @@
 {% if mainCategory %}
     <nav class="products_breadcrumbs">
         <ul>
-            <li>Productos</li>
-            <li class="my_dropdown"> {{mainCategory.name}}
-                <img src="{{ asset('bundles/conceptos/images/arrow.svg') }}" alt="">
+            <li><span>Productos</span></li>
+            <li class="my_dropdown"> <span>
+                    {{mainCategory.name}}
+                    <img src="{{ asset('bundles/conceptos/images/arrow.svg') }}" alt="">
+                </span>
+
                 <ul class="my_dropdown__content my_dropdown__content--left">
                     {% for category in categories %}
 
@@ -20,9 +23,18 @@
             </li>
 
             <li class="my_dropdown">
-                {% if mainSubcategory %}{{ mainSubcategory.name}} {% else %} Todos {% endif %}
-                <img src="{{ asset('bundles/conceptos/images/arrow.svg') }}" alt="">
-                <ul class="my_dropdown__content my_dropdown__content--right">
+                <span>
+                    {% if mainSubcategory %}{{ mainSubcategory.name}} {% else %} Todos {% endif %}
+                    <img src="{{ asset('bundles/conceptos/images/arrow.svg') }}" alt="">
+                </span>
+
+                <ul class="my_dropdown__content
+                    {% if mainCategory.id == 61 or mainCategory.id == 134 %}
+                        my_dropdown__content--right
+                    {% else %}
+                        my_dropdown__content--left
+                    {% endif %}
+                                                ">
                     {% for subCategory in mainCategory.subcategories %}
                         <li><a href="{{ path('products', {categories:subCategory.id}) }}"> {{ subCategory }}</a></li>
                     {% endfor %}
