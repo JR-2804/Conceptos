@@ -16,6 +16,7 @@ class Carousel{
             contain: true,
             autoPlay: 10000,
             pageDots: false,
+            wrapAround: true,
             pauseAutoPlayOnHover: false,
         });
 
@@ -27,6 +28,7 @@ class Carousel{
                 contain: true,
                 groupCells: true,
                 pageDots: false,
+                wrapAround: true,
                 prevNextButtons: false,
             });
     }
