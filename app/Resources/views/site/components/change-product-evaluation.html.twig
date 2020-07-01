@@ -339,7 +339,7 @@
                   <span class="conceptos-subtitle ml-2">{{evaluation.evaluationValue}}</span>
                 </div>
                 {% if evaluation.generalOpinion %}
-                  <span class="conceptos-subtitle mt-1">{{evaluation.generalOpinion}}</span>
+                  <span class="conceptos-subtitle-strong mt-1">{{evaluation.generalOpinion}}</span>
                 {% endif %}
                 {% if evaluation.comment and evaluation.isAccepted %}
                   <p class="conceptos-subtitle mt-1">{{evaluation.comment}}</p>
@@ -410,7 +410,7 @@
                   </div>
                 </div>
                 {% if evaluation.isRecommended %}
-                  <span class="conceptos-subtitle-strong mt-1">Si, recomiendo este producto</span>
+                  <span class="conceptos-subtitle-strong mt-1 align-self-center">Si, recomiendo este producto</span>
                 {% endif %}
               </div>
             {% endfor %}
