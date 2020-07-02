@@ -475,6 +475,14 @@ a.conceptos-subtitle:focus {
   font-size: 14px;
 }
 
+.small-product .conceptos-product-price {
+  font-size: 10px;
+}
+
+.big-product .conceptos-product-price {
+  font-size: 20px;
+}
+
 .conceptos-product-price-highlighted {
   font-size: 26px;
   font-family: Montserrat-ExtraBold !important;
@@ -633,6 +641,16 @@ a.conceptos-category-subtitle:focus {
 .conceptos-add-to-cart-icon img {
   width: 30px;
   height: 23px;
+}
+
+.small-product .conceptos-add-to-cart-icon img {
+  width: 25px;
+  height: 18px;
+}
+
+.big-product .conceptos-add-to-cart-icon img {
+  width: 40px;
+  height: 33px;
 }
 
 .conceptos-add-to-cart-icon-big img {

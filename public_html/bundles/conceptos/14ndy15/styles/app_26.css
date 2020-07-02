@@ -444,6 +444,12 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     transform-origin: 50% 50%;
     font-size: .8em; }
 
+.popular_product.small-product > div:first-child:before {
+  font-size: .6em; }
+
+.popular_product.big-product > div:first-child:before {
+  font-size: .9em; }
+
 .shop-cart-product .popular_product > div:first-child:before {
   font-size: .6em; }
 

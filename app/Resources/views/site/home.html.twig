@@ -56,6 +56,7 @@
                     <div class="d-flex flex-wrap w-100">
                         {% for product in chunk %}
                           <div class="d-flex col-{{ 12 / columnsOfPopularProductsInMobile }} pl-0">
+                              {% set imageColumns = 12 / columnsOfPopularProductsInMobile %}
                               {{ include('site/product-summary-short.html.twig') }}
                           </div>
                         {% endfor %}
@@ -93,7 +94,8 @@
                     <div class="d-flex flex-wrap w-100">
                         {% for product in chunk %}
                           <div class="d-flex col-{{ 12 / columnsOfPopularProductsInDesktop }} pl-0">
-                            {{include('site/product-summary-short.html.twig')}}
+                            {% set imageColumns = 12 / columnsOfPopularProductsInDesktop %}
+                            {{ include('site/product-summary-short.html.twig') }}
                           </div>
                         {% endfor %}
                     </div>
@@ -135,7 +137,6 @@
                     <div class="d-flex flex-wrap w-100">
                       {% for product in chunk %}
                         <div class="d-flex col-{{ 12 / columnsOfStoreProductsInMobile }} pl-0">
-                          {% set storageSection = true %}
                           {% set imageColumns = 12 / columnsOfStoreProductsInMobile %}
                           {{ include('site/product-summary-short.html.twig') }}
                         </div>
@@ -162,8 +163,7 @@
                     <div class="d-flex flex-wrap w-100">
                       {% for product in chunk %}
                         <div class="d-flex col-{{ 12 / columnsOfStoreProductsInDesktop }} pl-0">
-                          {% set storageSection = true %}
-                          {% set imageColumns = 12 / columnsOfStoreProductsInMobile %}
+                          {% set imageColumns = 12 / columnsOfStoreProductsInDesktop %}
                           {{ include('site/product-summary-short.html.twig') }}
                         </div>
                       {% endfor %}
