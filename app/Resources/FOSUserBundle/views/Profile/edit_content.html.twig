@@ -80,6 +80,7 @@
           {% endfor %}
           <div class="d-flex flex-column external-request profile-product p-2 mt-2"
                data-id="{{externalRequest.id}}"
+               data-is-expired="{{externalRequest.isExpired}}"
                data-remaining-days="{{externalRequest.remainingTimeFromCreation|date('%d')}}"
                data-remaining-hours="{{externalRequest.remainingTimeFromCreation|date('%h')}}"
                data-remaining-minutes="{{externalRequest.remainingTimeFromCreation|date('%i')}}"
@@ -98,6 +99,9 @@
                 <span class="conceptos-title">Fecha de entrega: {{externalRequest.date|date('d/m/Y')}}</span>
               </div>
               <button class="view-profile-product-details"></button>
+            </div>
+            <div class="d-flex justify-content-center remaining-time-badge mt-1 mb-1">
+              <span class="conceptos-title remaining-time"></span>
             </div>
             {% if externalRequest.state == "Pagado" %}
               <span class="conceptos-title-strong">Pagado</span>

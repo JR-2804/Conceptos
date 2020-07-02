@@ -95,10 +95,28 @@ $(document).ready(function () {
   function updateCounters() {
     $(".external-request").each(function () {
       var id = $(this).data("id");
+      var isExpired = $(this).data("is-expired");
       var days = $(this).data("remaining-days");
       var hours = $(this).data("remaining-hours");
       var minutes = $(this).data("remaining-minutes");
       var seconds = $(this).data("remaining-seconds");
+
+      if (isExpired) {
+        $(".external-request[data-id='" + id + "']").show();
+        $(".external-request[data-id='" + id + "'] .remaining-time").text(
+          "Tiempo de entrega expirado"
+        );
+        $(
+          ".external-request[data-id='" + id + "'] .remaining-time-badge"
+        ).addClass("remaining-time-red");
+        $(
+          ".external-request[data-id='" + id + "'] .remaining-time-badge"
+        ).removeClass("remaining-time-yellow");
+        $(
+          ".external-request[data-id='" + id + "'] .remaining-time-badge"
+        ).removeClass("remaining-time-green");
+        return;
+      }
 
       var countdownDate = new Date(
         0,
@@ -110,13 +128,22 @@ $(document).ready(function () {
       );
 
       setInterval(function () {
-        var distance = new Date(0, 0, 0, 72) - countdownDate;
+        var distance = countdownDate - new Date(0, 0, 0, 0);
 
         if (distance < 0) {
           $(".external-request[data-id='" + id + "']").show();
           $(".external-request[data-id='" + id + "'] .remaining-time").text(
             "Tiempo de entrega expirado"
           );
+          $(
+            ".external-request[data-id='" + id + "'] .remaining-time-badge"
+          ).addClass("remaining-time-red");
+          $(
+            ".external-request[data-id='" + id + "'] .remaining-time-badge"
+          ).removeClass("remaining-time-yellow");
+          $(
+            ".external-request[data-id='" + id + "'] .remaining-time-badge"
+          ).removeClass("remaining-time-green");
         }
 
         var remainingDays = Math.floor(distance / 1000 / 60 / 60 / 24);
@@ -152,7 +179,40 @@ $(document).ready(function () {
             ":" +
             remainingSeconds
         );
-        countdownDate.setTime(countdownDate.getTime() + 1000);
+
+        if (remainingDays < 3) {
+          $(
+            ".external-request[data-id='" + id + "'] .remaining-time-badge"
+          ).addClass("remaining-time-red");
+          $(
+            ".external-request[data-id='" + id + "'] .remaining-time-badge"
+          ).removeClass("remaining-time-yellow");
+          $(
+            ".external-request[data-id='" + id + "'] .remaining-time-badge"
+          ).removeClass("remaining-time-green");
+        } else if (remainingDays < 7) {
+          $(
+            ".external-request[data-id='" + id + "'] .remaining-time-badge"
+          ).addClass("remaining-time-yellow");
+          $(
+            ".external-request[data-id='" + id + "'] .remaining-time-badge"
+          ).removeClass("remaining-time-red");
+          $(
+            ".external-request[data-id='" + id + "'] .remaining-time-badge"
+          ).removeClass("remaining-time-green");
+        } else {
+          $(
+            ".external-request[data-id='" + id + "'] .remaining-time-badge"
+          ).addClass("remaining-time-green");
+          $(
+            ".external-request[data-id='" + id + "'] .remaining-time-badge"
+          ).removeClass("remaining-time-red");
+          $(
+            ".external-request[data-id='" + id + "'] .remaining-time-badge"
+          ).removeClass("remaining-time-yellow");
+        }
+
+        countdownDate.setTime(countdownDate.getTime() - 1000);
       }, 1000);
     });
   }

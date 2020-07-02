@@ -103,7 +103,7 @@
               <div class="product-store-delivery mr-2"></div>
               <span class="conceptos-in-store-product-badge">ENTREGA EN 24h</span>
             </div>
-          {% elseif (product.isFurniture and not product.isAriplaneForniture) or (product.isMattress and not product.isAriplaneMattress) %}
+            {% elseif product.isFurniture or product.isMattress %}
             <div class="d-flex align-items-center mt-1 mb-1">
               <div class="product-ship-delivery mr-2"></div>
               <span class="conceptos-product-delivery-text">Entrega de 6 a 12 semanas</span>
