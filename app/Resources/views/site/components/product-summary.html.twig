@@ -30,14 +30,14 @@
               <div class="product-store-delivery mr-2"></div>
               <span class="conceptos-in-store-product-badge">ENTREGA EN 24h</span>
             </div>
-          {% elseif (product.isFurniture and not product.isAriplaneForniture) or (product.isMattress and not product.isAriplaneMattress) %}
+          {% elseif product.isFurniture or product.isMattress %}
             <div class="d-flex align-items-center mt-1 mb-1">
-              <div class="product-airplane-delivery mr-2"></div>
+              <div class="product-ship-delivery mr-2"></div>
               <span class="conceptos-product-delivery-text">Entrega de 6 a 12 semanas</span>
             </div>
           {% else %}
             <div class="d-flex align-items-center mt-1 mb-1">
-              <div class="product-ship-delivery mr-2"></div>
+              <div class="product-airplane-delivery mr-2"></div>
               <span class="conceptos-product-delivery-text">Entrega de 3 a 5 semanas</span>
             </div>
           {% endif %}
@@ -93,9 +93,9 @@
     <div class="d-flex flex-column conceptos-white-background pl-2 pr-2 pb-3 w-100">
       <span class="conceptos-product-info">{{product.name}}</span>
       <span class="conceptos-product-info-description">{{product.item}}</span>
-      <div class="d-flex align-items-center">
+      <div class="d-flex flex-column">
         {% if product.similarProducts | length > 0 %}
-          <span class="product-similar">Más Variantes</span>
+          <span class="product-similar">Otras Variantes</span>
         {% endif %}
         <div class="d-flex flex-column conceptos-product-badges">
           {% if product.inStore %}
@@ -105,12 +105,12 @@
             </div>
           {% elseif (product.isFurniture and not product.isAriplaneForniture) or (product.isMattress and not product.isAriplaneMattress) %}
             <div class="d-flex align-items-center mt-1 mb-1">
-              <div class="product-airplane-delivery mr-2"></div>
+              <div class="product-ship-delivery mr-2"></div>
               <span class="conceptos-product-delivery-text">Entrega de 6 a 12 semanas</span>
             </div>
           {% else %}
             <div class="d-flex align-items-center mt-1 mb-1">
-              <div class="product-ship-delivery mr-2"></div>
+              <div class="product-airplane-delivery mr-2"></div>
               <span class="conceptos-product-delivery-text">Entrega de 3 a 5 semanas</span>
             </div>
           {% endif %}
