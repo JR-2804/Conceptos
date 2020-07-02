@@ -33,8 +33,6 @@
 		}
 	}
 
-
-
 	&:hover .my_dropdown__content {
 		display: block;
 
@@ -79,6 +77,10 @@
 				position: relative;
 				text-transform: uppercase;
 				font-weight: bold;
+<<<<<<< HEAD
+=======
+				font-size: .8em;
+>>>>>>> temp
 
 				&:before{
 					top: 50%;
@@ -99,7 +101,7 @@
 
 			&:first-child{
 				width: 100%;
-				font-size: 1.1em;
+				font-size: 1em;
 				margin: .5em 0;
 
 				@include atLarge{
@@ -109,8 +111,11 @@
 				}
 			}
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> temp
 			& li {
 				position: relative;
 				margin: .25em 0;

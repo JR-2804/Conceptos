@@ -5,6 +5,7 @@
 	align-items: stretch;
 	background: white;
 	margin: 1em 0;
+	padding: 0 1em;
 	width: 100%;
 
 	&:after{
@@ -25,6 +26,7 @@
 		width: 40%;
 		height: 100%;
 		display: flex;
+		justify-content: center;
 		align-items: center;
 
 		& img{

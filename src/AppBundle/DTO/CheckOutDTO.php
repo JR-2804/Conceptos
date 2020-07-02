@@ -15,7 +15,10 @@ class CheckOutDTO
     private $type;
     private $request;
     private $prefacture;
+    private $sellPrice;
     private $budget;
+    private $ticketPrice;
+    private $providerProfit;
     private $payment;
     private $date;
     private $ignoreTransport;
@@ -136,6 +139,18 @@ class CheckOutDTO
         return $this->ignoreTransport;
     }
 
+    public function setSellPrice($sellPrice)
+    {
+      $this->sellPrice = $sellPrice;
+
+      return $this;
+    }
+
+    public function getSellPrice()
+    {
+      return $this->sellPrice;
+    }
+
     public function getBudget()
     {
         return $this->budget;
@@ -144,6 +159,30 @@ class CheckOutDTO
     public function setBudget($budget)
     {
         $this->budget = $budget;
+    }
+
+    public function setTicketPrice($ticketPrice)
+    {
+      $this->ticketPrice = $ticketPrice;
+
+      return $this;
+    }
+
+    public function getTicketPrice()
+    {
+      return $this->ticketPrice;
+    }
+
+    public function setProviderProfit($providerProfit)
+    {
+      $this->providerProfit = $providerProfit;
+
+      return $this;
+    }
+
+    public function getProviderProfit()
+    {
+      return $this->providerProfit;
     }
 
     public function getPayment()

@@ -25,19 +25,33 @@
       <h2 class="conceptos-subtitle">{{home.data.shopCart.secondaryText|raw}}</h2>
 
       <div class="d-flex flex-wrap align-items-end conceptos-white-background">
-        <div class="col-12 col-lg-6 pl-0 shop-cart-product-list-section conceptos-add-scroll">
+        <div id="shop-cart-summary" class="col-12 col-lg-6 pl-0 shop-cart-product-list-section conceptos-add-scroll">
           <div id="products-summary-shop-cart" class="d-flex flex-column">
               {{ render(controller('AppBundle:Site:productsSummary')) }}
           </div>
-          <div class="d-flex justify-content-between align-items-center conceptos-badge">
-            <div class="d-flex flex-column m-2">
-              <span class="conceptos-badge-text">CANTIDAD</span>
-              <span class="conceptos-badge-text shop-cart-products-count">{{count}} {% if count == 1 %}PRODUCTO{% else %}PRODUCTOS{% endif %}</span>
-            </div>
-            <a class="conceptos-remove-all-icon" href="{{ path('empty_shop_cart') }}"></a>
-            <div class="d-flex flex-column m-2">
-              <span class="conceptos-badge-text">PRECIO</span>
-              <span class="conceptos-badge-text shop-cart-total-price"></span>
+          <div class="conceptos-badge">
+            {% if is_granted('ROLE_DIRECTOR_GENERAL') %}
+              <div class="d-flex justify-content-between align-items-center ">
+                <div class="d-flex flex-column m-2">
+                  <span class="conceptos-badge-text">PESO</span>
+                  <span class="conceptos-badge-text shop-cart-total-weight"></span>
+                </div>
+                <div class="d-flex flex-column m-2">
+                  <span class="conceptos-badge-text">PRECIO +TAXES</span>
+                  <span class="conceptos-badge-text shop-cart-ikea-price"></span>
+                </div>
+              </div>
+            {% endif %}
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex flex-column m-2">
+                <span class="conceptos-badge-text">CANTIDAD</span>
+                <span class="conceptos-badge-text shop-cart-products-count">{{count}} {% if count == 1 %}PRODUCTO{% else %}PRODUCTOS{% endif %}</span>
+              </div>
+              <a class="conceptos-remove-all-icon" href="{{ path('empty_shop_cart') }}"></a>
+              <div class="d-flex flex-column m-2">
+                <span class="conceptos-badge-text">PRECIO</span>
+                <span class="conceptos-badge-text shop-cart-total-price"></span>
+              </div>
             </div>
           </div>
         </div>
@@ -182,7 +196,7 @@
                 <option value="request">Pedido</option>
                 <option value="prefacture">Prefactura</option>
                 <option value="facture">Factura</option>
-                <option value="external-request">Pedido Externo</option>
+                <option value="external-request">Orden de Compra</option>
               </select>
               <select id="request-select" class="mb-2" style="display: none;">
                 <option value="0">Ninguna</option>
@@ -200,8 +214,16 @@
                 <span class="conceptos-subtitle pl-2 required">Presupuesto para embalaje o sobrepeso</span>
                 <input type="text" class="w-100">
               </div>
+              <div id="ticket-price" class="flex-column mt-2" style="display: none;">
+                <span class="conceptos-subtitle pl-2 required">Precio del pasaje</span>
+                <input type="text" class="w-100">
+              </div>
+              <div id="provider-profit" class="flex-column mt-2" style="display: none;">
+                <span class="conceptos-subtitle pl-2 required">Ganancia del proveedor</span>
+                <input type="text" class="w-100">
+              </div>
               <div id="payment" class="flex-column mt-2" style="display: none;">
-                <span class="conceptos-subtitle pl-2 required">Pago total</span>
+                <span class="conceptos-subtitle pl-2 required">Pago total (Precio IKEA +Taxes: <span id="ikea-price-info"></span>)</span>
                 <input type="text" class="w-100">
               </div>
               <div id="date" class="flex-column mt-2 mb-2" style="display: none;">

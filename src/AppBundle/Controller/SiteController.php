@@ -408,54 +408,6 @@ class SiteController extends Controller
      */
     public function detailsAction(Request $request, $id)
     {
-        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Home',
-        ]);
-        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Membresia',
-        ]);
-
-        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
-
-
-        $product = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($id);
-        if ($product == null) {
-            #TODO: We should return a better 404 not found template and return the header code
-            return $this->render(':site:product-details.html.twig', [
-                'product' => null,
-                'imageSets' => null,
-                'home' => $home,
-                'membership' => $membership,
-                'currentDate' => new \DateTime(),
-                'related' => null,
-                'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
-                'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
-                'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
-                'categories' => $this->get('category_service')->getAll(),
-                'terms' => $config->getTermAndConditions(),
-                'privacy' => $config->getPrivacyPolicy(),
-            ]);
-        }
-
-        $offerPrice = $this->get('product_service')->findProductOfferPrice($product);
-        $product->setPriceOffer($offerPrice);
-
-        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
-        }
-
-        $filterParameter = [$product->getId()];
-        foreach ($product->getComboProducts() as $comboProduct) {
-          $filterParameter[] = $comboProduct->getProduct()->getId();
-        }
-
-//        $related = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->createQueryBuilder('p')
-//            ->where('p.name = :name AND p.id NOT IN (:current)')
-//            ->setParameter('name', $product->getName())
-//            ->setParameter('current', $filterParameter)
-//            ->orderBy('p.name', 'ASC')
-//            ->setMaxResults(12)
-//            ->getQuery()->getResult();
             $related = [];
         if (count($related) < 12) {
             $categories = [];
@@ -471,7 +423,6 @@ class SiteController extends Controller
                 ->setMaxResults(12 - count($related))
                 ->getQuery()->getResult();
 
-//            $related = array_merge($related, $otherRelated);
             $related = $otherRelated;
         }
         foreach ($related as $productR) {
@@ -517,7 +468,6 @@ class SiteController extends Controller
             'privacy' => $config->getPrivacyPolicy(),
         ]);
     }
-
 
     /**
      * @Route(name="shop-cart", path="/carrito-compras")
@@ -830,13 +780,16 @@ class SiteController extends Controller
               foreach ($requestProducts as $product) {
                 $productDB = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($product['id']);
 
-                $finalPrice += $productDB->getIkeaPrice();
-                $weight += $productDB->getWeight();
+                $finalPrice += $productDB->getIkeaPrice() * $product["count"];
+                $weight += $productDB->getWeight() * $product["count"];
               }
 
               $externalRequest->setFinalPrice($finalPrice);
               $externalRequest->setWeight($weight);
+              $externalRequest->setSellPrice($data->getSellPrice());
               $externalRequest->setBudget($data->getBudget());
+              $externalRequest->setTicketPrice($data->getTicketPrice());
+              $externalRequest->setProviderProfit($data->getProviderProfit());
               $externalRequest->setPayment($data->getPayment());
               $externalRequest->setCreationDate(new \DateTime('now'));
               $externalRequest->setDate(new \DateTime($data->getDate()));
@@ -876,11 +829,11 @@ class SiteController extends Controller
 
               foreach ($users as $user) {
                 if ($user->getEmail() != null) {
-                  $body = $this->renderView(':site:new-external-request-email.html.twig', [
+                  $html = $this->renderView(':site:new-external-request-email.html.twig', [
                     'username' => $user->getFirstName().' '.$user->getLastName(),
                     'externalRequest' => $externalRequest,
                   ]);
-                  $this->get('email_service')->send($config->getEmail(), 'Nuevo pedido externo', $user->getEmail(), 'Nuevo pedido externo', $body);
+                  $this->get('email_service')->send($config->getEmail(), 'Nueva orden de compra', $user->getEmail(), 'Nueva orden de compra', $body);
                 }
               }
               return $this->redirectToRoute('site_home');
@@ -1577,343 +1530,6 @@ class SiteController extends Controller
       ]);
     }
 
-    /**
-     * @Route(name="preview_promotion_email", path="/previewPromotionEmail/{id}")
-     *
-     * @param Request $request
-     * @param $id
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function previewPromotionEmail(Request $request, $id){
-
-        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Home',
-        ]);
-
-        $promEmail = $this->getDoctrine()->getManager()->getRepository('AppBundle:PromotionEmail')->find($id);
-
-        $emails = explode(';', $promEmail->getEmails());
-        $tagUser = $promEmail->getTagUser();
-        if ($tagUser == 'clientes'){
-            $clients = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Client')->findAll();
-            foreach ($clients as $client){
-                $emails[] = $client->getEmail();
-            }
-        }
-        elseif ($tagUser == 'miembros'){
-            $members = $this->getDoctrine()->getManager()->getRepository('AppBundle:Member')->findAll();
-            foreach ($members as $member){
-                $emails[] = $member->getEmail();
-            }
-        }
-
-        echo '<ul style="height: 25vh; overflow-y: auto;">';
-        foreach ($emails as $email)
-            echo '<li>'.$email.'</li>';
-        echo '</ul>';
-
-        $subject = $promEmail->getSubject();
-
-        $primaryPicture = $promEmail->getPrimaryPicture();
-        $primaryTitle = $promEmail->getPrimaryTitle();
-
-        $introTitle1 = $promEmail->getIntroTitle1();
-        $introPicture1 = $promEmail->getIntroPicture1();
-        $introContent1 = $promEmail->getIntroContent1();
-        $introLink1 = $promEmail->getIntroLink1();
-
-        $introTitle2 = $promEmail->getIntroTitle2();
-        $introPicture2 = $promEmail->getIntroPicture2();
-        $introContent2 = $promEmail->getIntroContent2();
-        $introLink2 = $promEmail->getIntroLink2();
-
-        $introTitle3 = $promEmail->getIntroTitle3();
-        $introPicture3 = $promEmail->getIntroPicture3();
-        $introContent3 = $promEmail->getIntroContent3();
-        $introLink3 = $promEmail->getIntroLink3();
-
-        $intros = [];
-        if ($introTitle1 != null)
-            array_push($intros, ['title'=>$introTitle1, 'picture'=>$introPicture1, 'content'=>$introContent1, 'link'=>$introLink1]);
-        if ($introTitle2 != null)
-            array_push($intros, ['title'=>$introTitle2, 'picture'=>$introPicture2, 'content'=>$introContent2, 'link'=>$introLink2]);
-        if ($introTitle3 != null)
-            array_push($intros, ['title'=>$introTitle3, 'picture'=>$introPicture3, 'content'=>$introContent3, 'link'=>$introLink3]);
-
-
-        $offersTitle = $promEmail->getOffersTitle();
-        $offers = $promEmail->getOffers();
-        $linkOffers = $promEmail->getLinkOffers();
-        $offersProducts_ = [];
-        $offersProducts = [];
-        if (count($offers) > 0) {
-
-            foreach ($offers as $offer)
-                foreach ($offer->getProducts() as $product)
-                    $offersProducts_[] = ['product' => $product, 'offerPrice' => $offer->getPrice()];
-
-            $offersProductsIndex = array_rand($offersProducts_, min([count($offersProducts_), 4]));
-            if (is_array($offersProductsIndex))
-                foreach ($offersProductsIndex as $index)
-                    $offersProducts[] = $offersProducts_[$index];
-            else
-                $offersProducts[] = $offersProducts_[$offersProductsIndex];
-        }
-
-        $productsTitle = $promEmail->getProductsTitle();
-        $products = $promEmail->getProducts();
-        $linkProducts = $promEmail->getLinkProducts();
-        $productsOffers = [];
-
-        foreach ($products as $product) {
-            $productsOffers[] = count($product->getOffers()) > 0;
-        }
-
-        $promotionTitle = $promEmail->getPromotionTitle();
-        $promotionPicture = $promEmail->getPromotionPicture();
-        $promotionContent = $promEmail->getPromotionContent();
-        $promotionLink = $promEmail->getPromotionLink();
-
-        $promotion = [  'title'=>$promotionTitle,
-                        'picture'=>$promotionPicture,
-                        'content'=>$promotionContent,
-                        'link'=>$promotionLink];
-
-        $blogTitle = $promEmail->getBlogTitle();
-        $blogs = $promEmail->getBlogs();
-
-        $servicesTitle = $promEmail->getServicesTitle();
-        $linkServices = $promEmail->getLinkServices();
-
-        $serviceTitle1 = $promEmail->getServiceTitle1();
-        $servicePicture1 = $promEmail->getServicePicture1();
-        $serviceContent1 = $promEmail->getServiceContent1();
-        $serviceLink1 = $promEmail->getServiceLink1();
-
-        $serviceTitle2 = $promEmail->getServiceTitle2();
-        $servicePicture2 = $promEmail->getServicePicture2();
-        $serviceContent2 = $promEmail->getServiceContent2();
-        $serviceLink2 = $promEmail->getServiceLink2();
-        $services = [];
-        if ($serviceTitle1 != null) {
-            array_push($services, ['title'=>$serviceTitle1, 'picture'=>$servicePicture1, 'content'=>$serviceContent1, 'link'=>$serviceLink1]);
-        }
-        if ($serviceTitle2 != null) {
-            array_push($services, ['title'=>$serviceTitle2, 'picture'=>$servicePicture2, 'content'=>$serviceContent2, 'link'=>$serviceLink2]);
-        }
-
-        $footerPicture = $promEmail->getFooterPicture();
-        $footerLink = $promEmail->getFooterPictureLink();
-
-        return $this->render('site/promotionEmail/promotionEmail.html.twig', [
-            'subject'=>$subject,
-            'home'=>$home,
-            'primaryPicture'=>$primaryPicture,
-            'primaryTitle'=>$primaryTitle,
-            'intros'=>$intros,
-            'offersTitle'=>$offersTitle,
-            'offers'=>$offersProducts,
-            'linkOffers'=>$linkOffers,
-            'productsTitle'=>$productsTitle,
-            'products'=>$products,
-            'linkProducts'=>$linkProducts,
-            'productsOffers'=>$productsOffers,
-            'promotion'=>$promotion,
-            'blogsTitle'=>$blogTitle,
-            'blogs'=>$blogs,
-            'servicesTitle'=>$servicesTitle,
-            'linkServices'=>$linkServices,
-            'services'=>$services,
-            'footerPicture'=>$footerPicture,
-            'footerLink'=>$footerLink,
-        ]);
-
-    }
-
-    /**
-     * @Route(name="send_promotion_email", path="/sendPromotionEmail/{id}")
-     *
-     * @param Request $request
-     * @param $id
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function sendPromotionEmail(Request $request, $id){
-
-        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
-            'name' => 'Home',
-        ]);
-
-        $promEmail = $this->getDoctrine()->getManager()->getRepository('AppBundle:PromotionEmail')->find($id);
-
-        $emails = explode(';', $promEmail->getEmails());
-
-        $tagUser = $promEmail->getTagUser();
-        if ($tagUser == 'clientes'){
-            $clients = $this->getDoctrine()->getManager()->getRepository('AppBundle:Request\Client')->findAll();
-            foreach ($clients as $client){
-                $emails[] = $client->getEmail();
-            }
-        }
-        elseif ($tagUser == 'miembros'){
-            $members = $this->getDoctrine()->getManager()->getRepository('AppBundle:Member')->findAll();
-            foreach ($members as $member){
-                $emails[] = $member->getEmail();
-            }
-        }
-
-        echo '<ul style="height: 25vh; overflow-y: auto;">';
-        foreach ($emails as $email)
-            echo '<li>'.$email.'</li>';
-        echo '</ul>';
-
-        $subject = $promEmail->getSubject();
-        $primaryPicture = $promEmail->getPrimaryPicture();
-        $primaryTitle = $promEmail->getPrimaryTitle();
-
-        $introTitle1 = $promEmail->getIntroTitle1();
-        $introPicture1 = $promEmail->getIntroPicture1();
-        $introContent1 = $promEmail->getIntroContent1();
-        $introLink1 = $promEmail->getIntroLink1();
-
-        $introTitle2 = $promEmail->getIntroTitle2();
-        $introPicture2 = $promEmail->getIntroPicture2();
-        $introContent2 = $promEmail->getIntroContent2();
-        $introLink2 = $promEmail->getIntroLink2();
-
-        $introTitle3 = $promEmail->getIntroTitle3();
-        $introPicture3 = $promEmail->getIntroPicture3();
-        $introContent3 = $promEmail->getIntroContent3();
-        $introLink3 = $promEmail->getIntroLink3();
-
-        $intros = [];
-        if ($introTitle1 != null)
-            array_push($intros, ['title'=>$introTitle1, 'picture'=>$introPicture1, 'content'=>$introContent1, 'link'=>$introLink1]);
-        if ($introTitle2 != null)
-            array_push($intros, ['title'=>$introTitle2, 'picture'=>$introPicture2, 'content'=>$introContent2, 'link'=>$introLink2]);
-        if ($introTitle3 != null)
-            array_push($intros, ['title'=>$introTitle3, 'picture'=>$introPicture3, 'content'=>$introContent3, 'link'=>$introLink3]);
-
-
-        $offersTitle = $promEmail->getOffersTitle();
-        $offers = $promEmail->getOffers();
-        $linkOffers = $promEmail->getLinkOffers();
-        $offersProducts_ = [];
-        $offersProducts = [];
-        if (count($offers) > 0) {
-            foreach ($offers as $offer)
-                foreach ($offer->getProducts() as $product)
-                    $offersProducts_[] = ['product' => $product, 'offerPrice' => $offer->getPrice()];
-
-            $offersProductsIndex = array_rand($offersProducts_, min([count($offersProducts_), 4]));
-            if (is_array($offersProductsIndex))
-                foreach ($offersProductsIndex as $index)
-                    $offersProducts[] = $offersProducts_[$index];
-            else
-                $offersProducts[] = $offersProducts_[$offersProductsIndex];
-        }
-
-        $productsTitle = $promEmail->getProductsTitle();
-        $products = $promEmail->getProducts();
-        $linkProducts = $promEmail->getLinkProducts();
-        $productsOffers = [];
-
-        foreach ($products as $product) {
-            $productsOffers[] = count($product->getOffers()) > 0;
-        }
-
-        $promotionTitle = $promEmail->getPromotionTitle();
-        $promotionPicture = $promEmail->getPromotionPicture();
-        $promotionContent = $promEmail->getPromotionContent();
-        $promotionLink = $promEmail->getPromotionLink();
-
-        $promotion = [  'title'=>$promotionTitle,
-            'picture'=>$promotionPicture,
-            'content'=>$promotionContent,
-            'link'=>$promotionLink];
-
-        $blogTitle = $promEmail->getBlogTitle();
-        $blogs = $promEmail->getBlogs();
-
-        $servicesTitle = $promEmail->getServicesTitle();
-        $linkServices = $promEmail->getLinkServices();
-
-        $serviceTitle1 = $promEmail->getServiceTitle1();
-        $servicePicture1 = $promEmail->getServicePicture1();
-        $serviceContent1 = $promEmail->getServiceContent1();
-        $serviceLink1 = $promEmail->getServiceLink1();
-
-        $serviceTitle2 = $promEmail->getServiceTitle2();
-        $servicePicture2 = $promEmail->getServicePicture2();
-        $serviceContent2 = $promEmail->getServiceContent2();
-        $serviceLink2 = $promEmail->getServiceLink2();
-        $services = [];
-        if ($serviceTitle1 != null) {
-            array_push($services, ['title'=>$serviceTitle1, 'picture'=>$servicePicture1, 'content'=>$serviceContent1, 'link'=>$serviceLink1]);
-        }
-        if ($serviceTitle2 != null) {
-            array_push($services, ['title'=>$serviceTitle2, 'picture'=>$servicePicture2, 'content'=>$serviceContent2, 'link'=>$serviceLink2]);
-        }
-
-        $footerPicture = $promEmail->getFooterPicture();
-        $footerLink = $promEmail->getFooterPictureLink();
-
-        $body = $this->renderView('site/promotionEmail/promotionEmail.html.twig', [
-            'subject'=>$subject,
-            'home'=>$home,
-            'primaryPicture'=>$primaryPicture,
-            'primaryTitle'=>$primaryTitle,
-            'intros'=>$intros,
-            'offersTitle'=>$offersTitle,
-            'offers'=>$offersProducts,
-            'linkOffers'=>$linkOffers,
-            'productsTitle'=>$productsTitle,
-            'products'=>$products,
-            'linkProducts'=>$linkProducts,
-            'productsOffers'=>$productsOffers,
-            'promotion'=>$promotion,
-            'blogsTitle'=>$blogTitle,
-            'blogs'=>$blogs,
-            'servicesTitle'=>$servicesTitle,
-            'linkServices'=>$linkServices,
-            'services'=>$services,
-            'footerPicture'=>$footerPicture,
-            'footerLink'=>$footerLink,
-        ]);
-
-        $bodyRender = $this->render('site/promotionEmail/promotionEmail.html.twig', [
-            'subject'=>$subject,
-            'home'=>$home,
-            'primaryPicture'=>$primaryPicture,
-            'primaryTitle'=>$primaryTitle,
-            'intros'=>$intros,
-            'offersTitle'=>$offersTitle,
-            'offers'=>$offersProducts,
-            'productsTitle'=>$productsTitle,
-            'products'=>$products,
-            'productsOffers'=>$productsOffers,
-            'linkProducts'=>$linkProducts,
-            'promotion'=>$promotion,
-            'blogsTitle'=>$blogTitle,
-            'blogs'=>$blogs,
-            'servicesTitle'=>$servicesTitle,
-            'linkServices'=>$linkServices,
-            'services'=>$services,
-            'footerPicture'=>$footerPicture,
-            'footerLink'=>$footerLink,
-        ]);
-
-        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
-
-        foreach ($emails as $email){
-            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $this->get('email_service')->send($config->getEmail(), 'Comercial Conceptos', $email, $promEmail->getSubject(), $body);
-            }
-        }
-
-        return $bodyRender;
-    }
 
     /**
      * @Route(name="success_request", path="/pedido-correcto/{id}")
@@ -2314,7 +1930,7 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="external_requests", path="/pedidos-externos")
+     * @Route(name="external_requests", path="/ordenes de compra")
      *
      * @param Request $request
      *

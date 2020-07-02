@@ -71,14 +71,19 @@
       {{ form_end(form) }}
     </div>
     {% if is_granted('ROLE_EXTERNAL') %}
-      <span class="conceptos-title mt-3">PEDIDOS EXTERNOS</span>
+      <span class="conceptos-title mt-3">ORDENES DE COMPRA</span>
       <div class="d-flex flex-column">
-        {% for externalRequest in externalRequests %}
+        {% for externalRequest in externalRequests|reverse %}
           {% set productCount = 0 %}
           {% for product in externalRequest.externalRequestProducts %}
             {% set productCount = productCount + product.count %}
           {% endfor %}
-          <div class="d-flex flex-column profile-product p-2 mt-2">
+          <div class="d-flex flex-column external-request profile-product p-2 mt-2"
+               data-id="{{externalRequest.id}}"
+               data-remaining-days="{{externalRequest.remainingTimeFromCreation|date('%d')}}"
+               data-remaining-hours="{{externalRequest.remainingTimeFromCreation|date('%h')}}"
+               data-remaining-minutes="{{externalRequest.remainingTimeFromCreation|date('%i')}}"
+               data-remaining-seconds="{{externalRequest.remainingTimeFromCreation|date('%s')}}">
             <div class="d-flex justify-content-between align-items-center" data-toggle="modal" data-target="#external-request-modal-{{loop.index}}">
               <div class="d-flex flex-column">
                 <span class="conceptos-title-strong mb-1">Pedido: {{externalRequest.id}}</span>
@@ -87,7 +92,9 @@
                 <span class="conceptos-title">Peso: {{externalRequest.weight}} Kg</span>
                 <span class="conceptos-title">Cant. productos: {{productCount}}</span>
                 <span class="conceptos-title">Costos extra: ${{externalRequest.budget}}</span>
-                <span class="conceptos-title">Pago a proveedor: ${{externalRequest.payment}}</span>
+                <span class="conceptos-title">Precio del pasaje: ${{externalRequest.ticketPrice}}</span>
+                <span class="conceptos-title">Ganancia para el proveedor: ${{externalRequest.providerProfit}}</span>
+                <span class="conceptos-title">Pago total: ${{externalRequest.payment}}</span>
                 <span class="conceptos-title">Fecha de entrega: {{externalRequest.date|date('d/m/Y')}}</span>
               </div>
               <button class="view-profile-product-details"></button>

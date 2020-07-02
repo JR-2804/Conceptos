@@ -325,7 +325,7 @@ class WelcomeEmail
     /**
      * @var string
      *
-     * @ORM\Column(name="introPicture2", type="string", length=255)
+     * @ORM\Column(name="introPicture2", type="string", length=255, nullable=true)
      */
     private $introPicture2;
 
@@ -476,7 +476,7 @@ class WelcomeEmail
     /**
      * @var string
      *
-     * @ORM\Column(name="introPicture3", type="string", length=255)
+     * @ORM\Column(name="introPicture3", type="string", length=255, nullable=true)
      */
     private $introPicture3;
 
