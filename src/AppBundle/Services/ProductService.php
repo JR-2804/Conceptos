@@ -227,6 +227,7 @@ class ProductService
         $inOffer = $request->query->get('inOffer', -1);
         $page = $request->query->get('page', 1);
 
+
         $hasWhere = false;
         if (-1 != $priceMin && '' != $priceMin) {
             $qbProduct->where('p.price >= :minPrice')->setParameter('minPrice', $priceMin);
@@ -305,6 +306,7 @@ class ProductService
                 $hasWhere = true;
             }
         }
+
         if (-1 != $categories && '' != $categories) {
             $categories = explode(',', $categories);
             $qbProduct->join('p.categories', 'ca');
@@ -332,6 +334,7 @@ class ProductService
                 $mainCategory = $mainSubcategory->getParents()[0];
             }
         }
+
         if (-1 != $populars) {
             if ($hasWhere) {
                 $qbProduct->andWhere('p.popular = true');
@@ -362,6 +365,7 @@ class ProductService
                 $hasWhere = true;
             }
         }
+
         if (-1 != $inOffer) {
             $activeOfferQB = $this->offerRepository->createQueryBuilder('o');
             $activeOfferQB->where('o.startDate <= (:now)');
@@ -370,8 +374,8 @@ class ProductService
             $activeOffers = $activeOfferQB->getQuery()->getResult();
 
             foreach ($activeOffers as $activeOffer)
-                foreach ($activeOffer->getCategories() as $categories)
-                    foreach ($categories->getProducts() as $product)
+                foreach ($activeOffer->getCategories() as $_categories)
+                    foreach ($_categories->getProducts() as $product)
                         array_push($products, $product);
 
             $qbProduct->leftJoin('p.offers', 'o');
@@ -395,7 +399,7 @@ class ProductService
         if (1 != $page) {
             $firstResult = (($page - 1) * 50);
         }
-
+        
         $_products = $qbProduct
             ->orderBy('p.name', 'ASC')
             ->addOrderBy('o.price', 'DESC')

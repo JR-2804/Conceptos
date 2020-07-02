@@ -117,6 +117,9 @@
           {% if product.recent %}
             <span class="conceptos-new-product-badge">NUEVO</span>
           {% endif %}
+        {% if product.similarProducts | length > 0 %}
+            <span class="product-similar">Otras Variantes</span>
+        {% endif %}
         </div>
       </div>
       <div class="d-flex justify-content-between align-items-center mt-1">
