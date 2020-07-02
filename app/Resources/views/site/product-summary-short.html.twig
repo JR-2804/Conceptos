@@ -1,5 +1,5 @@
-<div class="d-flex justify-content-center conceptos-product-card p-2 w-100 {% if isExternalRequestProduct is not defined and product.priceOffer != -1 %}popular_product{% endif %}">
-  <div class="d-flex align-items-center conceptos-white-background p-2 w-100">
+<div class="d-flex justify-content-center conceptos-product-card w-100 {% if isExternalRequestProduct is not defined and product.priceOffer != -1 %}popular_product{% endif %} {% if imageColumns is defined and imageColumns == 12 %}big-product p-2{% elseif imageColumns is defined and imageColumns <= 4 %}small-product p-1{% else %}p-2{% endif %}">
+  <div class="d-flex align-items-center conceptos-white-background w-100 {% if imageColumns is defined and imageColumns == 12 %}big-product p-2{% elseif imageColumns is defined and imageColumns <= 4 %}small-product p-1{% else %}p-2{% endif %}">
     <a class="h-100 w-100" href="{{ path('product_details', {id: product.id, name: product.name}) }}">
       <div class="d-flex flex-column justify-content-between h-100">
         {% if isExternalRequestProduct is not defined and app.user|default %}
@@ -10,31 +10,20 @@
           </span>
         {% endif %}
 
-        {% set class = 'conceptos-image conceptos-popular-product-image' %}
-        {% if imageColumns is defined and imageColumns < 12 %}
-          {% set class = 'conceptos-image conceptos-popular-product-image conceptos-popular-product-image-short' %}
-        {% endif %}
-        {{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes, null, class) | raw }}
+        {{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes, null, 'conceptos-image conceptos-popular-product-image') | raw }}
 
         <div class="d-flex justify-content-between align-items-center">
-          {% if storageSection is defined %}
-            {% set priceClass = "conceptos-product-price-big" %}
-            {% set iconClass = "conceptos-add-to-cart-icon-big" %}
-          {% else %}
-            {% set priceClass = "conceptos-product-price" %}
-            {% set iconClass = "" %}
-          {% endif %}
           {% if isExternalRequestProduct is defined %}
-            <span class="conceptos-product-info {{priceClass}} mt-1">$&nbsp;{{product.ikeaPrice}}</span>
+            <span class="conceptos-product-info conceptos-product-price mt-1">$&nbsp;{{product.ikeaPrice}}</span>
           {% elseif product.priceOffer != -1 %}
-            <span class="conceptos-product-info {{priceClass}} mt-1">$&nbsp;{{product.priceOffer}}</span>
+            <span class="conceptos-product-info conceptos-product-price mt-1">$&nbsp;{{product.priceOffer}}</span>
           {% else %}
-            <span class="conceptos-product-info {{priceClass}} mt-1">$&nbsp;{{product.price  }}</span>
+            <span class="conceptos-product-info conceptos-product-price mt-1">$&nbsp;{{product.price  }}</span>
           {% endif %}
           {% if isExternalRequestProduct is defined %}
-            <span class="conceptos-product-info {{priceClass}} mt-1">x {{externalRequestProduct.count}}</span>
+            <span class="conceptos-product-info conceptos-product-price mt-1">x {{externalRequestProduct.count}}</span>
           {% else %}
-            <button class="conceptos-add-to-cart-icon {{iconClass}} pr-0" data-path="{{ path('add_shop_card', {id: product.id}) }}">
+            <button class="conceptos-add-to-cart-icon pr-0" data-path="{{ path('add_shop_card', {id: product.id}) }}">
               <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
             </button>
           {% endif %}

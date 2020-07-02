@@ -32,7 +32,19 @@ class ExternalRequest
   /**
    * @ORM\Column(type="float")
    */
+  private $sellPrice;
+  /**
+   * @ORM\Column(type="float")
+   */
   private $budget;
+  /**
+   * @ORM\Column(type="float")
+   */
+  private $ticketPrice;
+  /**
+   * @ORM\Column(type="float")
+   */
+  private $providerProfit;
   /**
    * @ORM\Column(type="float")
    */
@@ -113,6 +125,18 @@ class ExternalRequest
     return $this->weight;
   }
 
+  public function setSellPrice($sellPrice)
+  {
+    $this->sellPrice = $sellPrice;
+
+    return $this;
+  }
+
+  public function getSellPrice()
+  {
+    return $this->sellPrice;
+  }
+
   public function setBudget($budget)
   {
     $this->budget = $budget;
@@ -123,6 +147,30 @@ class ExternalRequest
   public function getBudget()
   {
     return $this->budget;
+  }
+
+  public function setTicketPrice($ticketPrice)
+  {
+    $this->ticketPrice = $ticketPrice;
+
+    return $this;
+  }
+
+  public function getTicketPrice()
+  {
+    return $this->ticketPrice;
+  }
+
+  public function setProviderProfit($providerProfit)
+  {
+    $this->providerProfit = $providerProfit;
+
+    return $this;
+  }
+
+  public function getProviderProfit()
+  {
+    return $this->providerProfit;
   }
 
   public function setPayment($payment)

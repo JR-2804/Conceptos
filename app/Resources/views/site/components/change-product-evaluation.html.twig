@@ -93,13 +93,7 @@
             <img class="evaluation-image align-self-center" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
             <div class="d-flex align-items-center">
               <span class="conceptos-title conceptos-title-lowercase">Su opinión general la clasifica como</span>
-              <select id="general-opinion" class="ml-2">
-                <option value="Muy buena" {% if userEvaluation.generalOpinion == "Muy buena" %}selected{% endif %}>Muy buena</option>
-                <option value="Buena" {% if userEvaluation.generalOpinion == "Buena" %}selected{% endif %}>Buena</option>
-                <option value="Regular" {% if userEvaluation.generalOpinion == "Regular" %}selected{% endif %}>Regular</option>
-                <option value="Mala" {% if userEvaluation.generalOpinion == "Mala" %}selected{% endif %}>Mala</option>
-                <option value="Muy mala" {% if userEvaluation.generalOpinion == "Muy mala" %}selected{% endif %}>Muy mala</option>
-              </select>
+              <span id="general-opinion" class="conceptos-title-strong ml-1">{{userEvaluation.generalOpinion}}</span>
             </div>
             <span class="conceptos-title conceptos-title-lowercase mt-3">Relacione a cada parámetro un valor</span>
             <div class="d-flex justify-content-between mt-2">
@@ -345,7 +339,7 @@
                   <span class="conceptos-subtitle ml-2">{{evaluation.evaluationValue}}</span>
                 </div>
                 {% if evaluation.generalOpinion %}
-                  <span class="conceptos-subtitle mt-1">{{evaluation.generalOpinion}}</span>
+                  <span class="conceptos-subtitle-strong mt-1">{{evaluation.generalOpinion}}</span>
                 {% endif %}
                 {% if evaluation.comment and evaluation.isAccepted %}
                   <p class="conceptos-subtitle mt-1">{{evaluation.comment}}</p>
@@ -416,7 +410,7 @@
                   </div>
                 </div>
                 {% if evaluation.isRecommended %}
-                  <span class="conceptos-subtitle mt-1">Si, recomiendo este producto</span>
+                  <span class="conceptos-subtitle-strong mt-1 align-self-center">Si, recomiendo este producto</span>
                 {% endif %}
               </div>
             {% endfor %}

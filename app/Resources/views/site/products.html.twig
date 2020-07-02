@@ -157,8 +157,25 @@
         </div>
 
         <div class="d-flex flex-wrap w-100">
+          {% set index = 0 %}
           {% for product in products %}
+            {% if preventHighlight is not defined and product.isHighlight %}
+              {% set index = index + 2 %}
+            {% else %}
+              {% set index = index + 1 %}
+            {% endif %}
             {{include('site/components/product-summary.html.twig')}}
+            {% if index % 10 == 0 and index != 50 %}
+              <a class="d-flex flex-column col-12 pl-0 membership-badge p-1" href="{{ path('membership') }}">
+                <div class="conceptos-divider"></div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <i class="fa fa-star conceptos-black-icon ml-2"></i>
+                  <span class="conceptos-title align-self-center">AHORRE CON NUESTRA MEMBRESÍA</span>
+                  <i class="fa fa-star conceptos-black-icon mr-2"></i>
+                </div>
+                <div class="conceptos-divider"></div>
+              </a>
+            {% endif %}
           {% else %}
             <span class="conceptos-title-strong conceptos-text-align-center">NO EXISTEN PRODUCTOS CON LOS PARÁMETROS SELECCIONADOS</span>
           {% endfor %}

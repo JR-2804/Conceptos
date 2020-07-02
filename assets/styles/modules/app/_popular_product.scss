@@ -20,6 +20,14 @@
     }
 }
 
+.popular_product.small-product > div:first-child:before {
+  font-size: .6em;
+}
+
+.popular_product.big-product > div:first-child:before {
+  font-size: .9em;
+}
+
 .shop-cart-product .popular_product  > div:first-child{
 
   &:before{

@@ -12,7 +12,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
   z-index: 3;
   padding: .25em;
   display: grid;
-  grid-template-areas: "logo logo user favorite cart" "menu search search search search";
+  grid-template-areas: "logo logo user favorite cart" "menu search search search search";
   grid-template-columns: 13% 45% 12% 12% 12%;
   grid-template-rows: 3em 3em;
   width: 100%;
@@ -425,6 +425,12 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     transform: translate(-35%, 50%) rotate(-45deg);
     transform-origin: 50% 50%;
     font-size: .8em; }
+
+.popular_product.small-product > div:first-child:before {
+  font-size: .6em; }
+
+.popular_product.big-product > div:first-child:before {
+  font-size: .9em; }
 
 .shop-cart-product .popular_product > div:first-child:before {
   font-size: .6em; }

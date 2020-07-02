@@ -191,16 +191,18 @@
     <div class="yellow-badge"></div>
     <div class="content">
       <div class="facture-general-info">
-        <span class="facture-name">PEDIDO EXTERNO</span>
+        <span class="facture-name">ORDEN DE COMPRA</span>
       </div>
       <div class="facture-info">
         <div>
-          <p><strong>Precio IKEA:</strong> {{externalRequest.finalPrice}}</p>
-          <p><strong>Taxes:</strong> {{taxes}}</p>
-          <p><strong>Peso:</strong> {{totalWeight}}</p>
+          <p><strong>Precio IKEA:</strong> ${{externalRequest.finalPrice}}</p>
+          <p><strong>Taxes:</strong> ${{taxes}}</p>
+          <p><strong>Peso:</strong> {{totalWeight}}Kg</p>
           <p><strong>Cant. productos:</strong> {{productCount}}</p>
-          <p><strong>Costos extra:</strong> {{externalRequest.budget}}</p>
-          <p><strong>Pago a proveedor:</strong> {{externalRequest.payment}}</p>
+          <p><strong>Costos extra:</strong> ${{externalRequest.budget}}</p>
+          <p><strong>Precio del pasaje:</strong> ${{externalRequest.ticketPrice}}</p>
+          <p><strong>Ganancia para el proveedor:</strong> ${{externalRequest.providerProfit}}</p>
+          <p><strong>Pago total:</strong> ${{externalRequest.payment}}</p>
           <p><strong>Fecha de entrega:</strong> {{externalRequest.date|date('d/m/Y')}}</p>
         </div>
       </div>
