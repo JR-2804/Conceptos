@@ -249,6 +249,10 @@
                     font-size: 1em;
                     text-transform: uppercase;
                     width: 100%;
+
+                    &:active{
+                        color: $mainYellow;
+                    }
                 }
 
                 & img{
