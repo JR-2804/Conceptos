@@ -36,8 +36,10 @@ class ShopCartService
       $shopCartBags = $this->entityManager->getRepository('AppBundle:ShopCartBags')->findOneBy([
         'user' => $user->getId(),
       ]);
-      $this->entityManager->remove($shopCartBags);
-      $this->entityManager->flush();
+      if ($shopCartBags != null) {
+        $this->entityManager->remove($shopCartBags);
+        $this->entityManager->flush();
+      }
     }
 
     public function getShopCartProducts($user)
