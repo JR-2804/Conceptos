@@ -1405,6 +1405,14 @@ a.conceptos-category-subtitle:focus {
   color: #ffffff;
 }
 
+.sell-price-badge {
+  background-color: #282827;
+}
+
+.sell-price-badge span {
+  color: #ffffff;
+}
+
 @media (min-width: 992px) {
   .carousel-indicators li {
     height: 13px;

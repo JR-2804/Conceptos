@@ -877,7 +877,7 @@ class SiteController extends Controller
 
               foreach ($users as $user) {
                 if ($user->getEmail() != null) {
-                  $html = $this->renderView(':site:new-external-request-email.html.twig', [
+                  $body = $this->renderView(':site:new-external-request-email.html.twig', [
                     'username' => $user->getFirstName().' '.$user->getLastName(),
                     'externalRequest' => $externalRequest,
                   ]);
