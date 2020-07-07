@@ -60,16 +60,7 @@
 
   <div class="d-flex flex-column  p-2 pt-lg-3 pl-lg-5 pr-lg-5">
     <div class="d-flex flex-wrap conceptos-white-background">
-{#      <div class="d-flex col-12 col-lg-6 carousel pl-0 pt-lg-3 pb-lg-2 pl-lg-5 pr-lg-5 pt-2" data-ride="carousel" id="carousel-product-details" data-interval="5000">#}
-
-{#	      TODO:corazon favorito#}
-
-
-	      {{ include('site/components/product/carousel.html.twig') }}
-
-{#      </div>#}
-
-
+      {{ include('site/components/product/carousel.html.twig') }}
       <div class="d-flex col-12 col-lg-6 flex-column pl-0 pt-lg-3">
         <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5">
           <span class="conceptos-title-strong">{{product.name}}</span>
@@ -80,7 +71,20 @@
           <div class="d-flex justify-content-start align-items-center">
             <div class="d-flex flex-column">
               {% if product.inStore %}
-                <span class="conceptos-in-store-product-badge">ENTREGA EN 24H</span>
+                <div class="d-flex align-items-center mt-1 mb-1">
+                  <div class="product-store-delivery mr-2"></div>
+                  <span class="conceptos-in-store-product-badge">ENTREGA EN 24h</span>
+                </div>
+              {% elseif product.isFurniture or product.isMattress %}
+                <div class="d-flex align-items-center mt-1 mb-1">
+                  <div class="product-ship-delivery mr-2"></div>
+                  <span class="conceptos-product-delivery-text">Entrega de 6 a 12 semanas</span>
+                </div>
+              {% else %}
+                <div class="d-flex align-items-center mt-1 mb-1">
+                  <div class="product-airplane-delivery mr-2"></div>
+                  <span class="conceptos-product-delivery-text">Entrega de 3 a 5 semanas</span>
+                </div>
               {% endif %}
               {% if product.recent %}
                 <span class="conceptos-new-product-badge">NUEVO</span>
@@ -97,14 +101,6 @@
               {% endif %}
             </div>
 
-{#          {% if app.user|default %}#}
-{#              <button data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"#}
-{#                    data-path-remove="{{ path('remove_from_favorite', {id: product.id}) }}"#}
-{#                    class="favorite-product {% if product.favorite %}favorite{% endif %}">#}
-{#                <i class="fa fa-heart favorite-icon-big"></i>#}
-{#              </button>#}
-{#          {% endif %}#}
-
             <button class="conceptos-add-to-cart-icon conceptos-add-to-cart-icon-big d-lg-none" data-path="{{ path('add_shop_card', {id: product.id}) }}">
               <img src="{{ asset('bundles/conceptos/images/home/cart.png') }}">
             </button>
@@ -114,16 +110,15 @@
           {{include('site/components/change-product-evaluation.html.twig')}}
         </div>
 
-	      {% if product.getSimilarProducts | length > 0 %}
-		      <div class="similar_products d-flex flex-column p-2 pl-lg-5 pr-lg-5">
-			      <div class="similar_products__show_button">
-				      <button class="conceptos-primary-button">Otras variantes
-					      <img src="{{ asset('bundles/conceptos/images/arrow.svg') }}" alt="">
-				      </button>
-			      </div>
-		      </div>
-	      {% endif %}
-
+        {% if product.getSimilarProducts | length > 0 %}
+          <div class="similar_products d-flex flex-column p-2 pl-lg-5 pr-lg-5">
+            <div class="similar_products__show_button">
+              <button class="conceptos-primary-button">Otras variantes
+                <img src="{{ asset('bundles/conceptos/images/arrow.svg') }}" alt="">
+              </button>
+            </div>
+          </div>
+        {% endif %}
 
         <div class="d-flex flex-column p-2 pl-lg-5 pr-lg-5 pb-lg-3">
           <span class="conceptos-title">DETALLES DEL PRODUCTO</span>
@@ -218,8 +213,6 @@
       </div>
       {{ include('site/components/products/similar_products.html.twig') }}
     </div>
-
-{#    {{ dump(product) }}#}
 
     <div class="d-flex flex-column mt-3">
       <span class="conceptos-title">PRODUCTOS RELACIONADOS</span>
