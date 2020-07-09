@@ -449,14 +449,7 @@ class SiteController extends Controller
           $filterParameter[] = $comboProduct->getProduct()->getId();
         }
 
-//        $related = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->createQueryBuilder('p')
-//            ->where('p.name = :name AND p.id NOT IN (:current)')
-//            ->setParameter('name', $product->getName())
-//            ->setParameter('current', $filterParameter)
-//            ->orderBy('p.name', 'ASC')
-//            ->setMaxResults(12)
-//            ->getQuery()->getResult();
-            $related = [];
+        $related = [];
         if (count($related) < 12) {
             $categories = [];
             foreach ($product->getCategories() as $category) {
@@ -877,7 +870,7 @@ class SiteController extends Controller
 
               foreach ($users as $user) {
                 if ($user->getEmail() != null) {
-                  $html = $this->renderView(':site:new-external-request-email.html.twig', [
+                  $body = $this->renderView(':site:new-external-request-email.html.twig', [
                     'username' => $user->getFirstName().' '.$user->getLastName(),
                     'externalRequest' => $externalRequest,
                   ]);

@@ -72,6 +72,7 @@ class ExternalRequest
   private $state;
 
   private $remainingTimeFromCreation;
+  private $isExpired;
 
   public function __construct()
   {
@@ -255,5 +256,17 @@ class ExternalRequest
   public function getRemainingTimeFromCreation()
   {
     return $this->remainingTimeFromCreation;
+  }
+
+  public function setIsExpired($isExpired)
+  {
+    $this->isExpired = $isExpired;
+
+    return $this;
+  }
+
+  public function getIsExpired()
+  {
+    return $this->isExpired;
   }
 }

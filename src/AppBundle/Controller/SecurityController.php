@@ -287,6 +287,11 @@ class SecurityController extends Controller
         foreach($externalRequests as $externalRequest) {
           $remainingTimeFromCreation = $externalRequest->getDate()->diff(new \DateTime('now'));
           $externalRequest->setRemainingTimeFromCreation($remainingTimeFromCreation);
+          if (new \DateTime('now') > $externalRequest->getDate()) {
+            $externalRequest->setIsExpired(true);
+          } else {
+            $externalRequest->setIsExpired(false);
+          }
 
           foreach($externalRequest->getExternalRequestProducts() as $externalRequestProduct) {
             $offerPrice = $this->get('product_service')->findProductOfferPrice($externalRequestProduct->getProduct());
