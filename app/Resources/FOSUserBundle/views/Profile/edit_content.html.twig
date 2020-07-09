@@ -80,24 +80,35 @@
           {% endfor %}
           <div class="d-flex flex-column external-request profile-product p-2 mt-2"
                data-id="{{externalRequest.id}}"
+               data-is-expired="{{externalRequest.isExpired}}"
                data-remaining-days="{{externalRequest.remainingTimeFromCreation|date('%d')}}"
                data-remaining-hours="{{externalRequest.remainingTimeFromCreation|date('%h')}}"
                data-remaining-minutes="{{externalRequest.remainingTimeFromCreation|date('%i')}}"
                data-remaining-seconds="{{externalRequest.remainingTimeFromCreation|date('%s')}}">
-            <div class="d-flex justify-content-between align-items-center" data-toggle="modal" data-target="#external-request-modal-{{loop.index}}">
-              <div class="d-flex flex-column">
-                <span class="conceptos-title-strong mb-1">Pedido: {{externalRequest.id}}</span>
-                <span class="conceptos-title">Precio IKEA: ${{externalRequest.finalPrice}}</span>
-                <span class="conceptos-title">Taxes: ${{externalRequest.finalPrice * 0.07}}</span>
-                <span class="conceptos-title">Peso: {{externalRequest.weight}} Kg</span>
-                <span class="conceptos-title">Cant. productos: {{productCount}}</span>
-                <span class="conceptos-title">Costos extra: ${{externalRequest.budget}}</span>
-                <span class="conceptos-title">Precio del pasaje: ${{externalRequest.ticketPrice}}</span>
-                <span class="conceptos-title">Ganancia para el proveedor: ${{externalRequest.providerProfit}}</span>
-                <span class="conceptos-title">Pago total: ${{externalRequest.payment}}</span>
-                <span class="conceptos-title">Fecha de entrega: {{externalRequest.date|date('d/m/Y')}}</span>
+            <div class="d-flex flex-column" data-toggle="modal" data-target="#external-request-modal-{{loop.index}}">
+              {% if is_granted('ROLE_DIRECTOR_GENERAL') %}
+                <div class="d-flex justify-content-center sell-price-badge mb-1">
+                  <span class="conceptos-product-info mt-1">Precio de venta: ${{externalRequest.sellPrice}}</span>
+                </div>
+              {% endif %}
+              <div  class="d-flex justify-content-between align-items-center">
+                <div class="d-flex flex-column">
+                  <span class="conceptos-title-strong mb-1">Pedido: {{externalRequest.id}}</span>
+                  <span class="conceptos-title">Precio IKEA: ${{externalRequest.finalPrice}}</span>
+                  <span class="conceptos-title">Taxes: ${{externalRequest.finalPrice * 0.07}}</span>
+                  <span class="conceptos-title">Peso: {{externalRequest.weight}} Kg</span>
+                  <span class="conceptos-title">Cant. productos: {{productCount}}</span>
+                  <span class="conceptos-title">Costos extra: ${{externalRequest.budget}}</span>
+                  <span class="conceptos-title">Precio del pasaje: ${{externalRequest.ticketPrice}}</span>
+                  <span class="conceptos-title">Ganancia para el proveedor: ${{externalRequest.providerProfit}}</span>
+                  <span class="conceptos-title">Pago total: ${{externalRequest.payment}}</span>
+                  <span class="conceptos-title">Fecha de entrega: {{externalRequest.date|date('d/m/Y')}}</span>
+                </div>
+                <button class="view-profile-product-details"></button>
               </div>
-              <button class="view-profile-product-details"></button>
+            </div>
+            <div class="d-flex justify-content-center remaining-time-badge mt-1 mb-1">
+              <span class="conceptos-title remaining-time"></span>
             </div>
             {% if externalRequest.state == "Pagado" %}
               <span class="conceptos-title-strong">Pagado</span>
@@ -109,7 +120,7 @@
                 <option value="Entregado" {% if externalRequest.state == "Entregado"%}selected{% endif %}>Entregado</option>
               </select>
             {% endif %}
-            <a class="conceptos-primary-button-gray mt-2" href="{{path('export_external_request', {id: externalRequest.id})}}">EXPORTAR</a>
+            <a class="conceptos-primary-button-gray mt-2" href="{{path('export_external_request', {id: externalRequest.id})}}">EXPORTAR A PDF</a>
             <div id="external-request-modal-{{loop.index}}" class="modal fade">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">

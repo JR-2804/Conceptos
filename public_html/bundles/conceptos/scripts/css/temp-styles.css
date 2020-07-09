@@ -1381,6 +1381,38 @@ a.conceptos-category-subtitle:focus {
   font-size: 13px;
 }
 
+.remaining-time-red {
+  background-color: #bf1111;
+}
+
+.remaining-time-red span {
+  color: #ffffff;
+}
+
+.remaining-time-yellow {
+  background-color: #c2b930;
+}
+
+.remaining-time-yellow span {
+  color: #ffffff;
+}
+
+.remaining-time-green {
+  background-color: #2c702b;
+}
+
+.remaining-time-green span {
+  color: #ffffff;
+}
+
+.sell-price-badge {
+  background-color: #282827;
+}
+
+.sell-price-badge span {
+  color: #ffffff;
+}
+
 @media (min-width: 992px) {
   .carousel-indicators li {
     height: 13px;

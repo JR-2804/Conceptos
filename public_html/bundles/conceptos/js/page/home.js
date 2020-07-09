@@ -433,7 +433,7 @@ $(document).ready(function() {
     dictCancelUpload: "Cancelar",
     dictRemoveFile: "Eliminar",
     previewTemplate: document.querySelector("#preview-template").innerHTML,
-    acceptedFiles: ".jpg,.jpeg,.png,.gif",
+    acceptedFiles: ".jpg,.jpeg,.png,.gif,.svg",
     init: function() {
       dropzoneLogo = this;
       if (logoImage != undefined) {

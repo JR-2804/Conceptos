@@ -408,7 +408,48 @@ class SiteController extends Controller
      */
     public function detailsAction(Request $request, $id)
     {
-            $related = [];
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Home',
+        ]);
+        $membership = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Membresia',
+        ]);
+
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+
+        $product = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($id);
+        if ($product == null) {
+            #TODO: We should return a better 404 not found template and return the header code
+            return $this->render(':site:product-details.html.twig', [
+                'product' => null,
+                'imageSets' => null,
+                'home' => $home,
+                'membership' => $membership,
+                'currentDate' => new \DateTime(),
+                'related' => null,
+                'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
+                'shopCartProducts' => $this->get('shop_cart_service')->getShopCartProducts($this->getUser()),
+                'shopCartBags' => $this->get('shop_cart_service')->getShopCartBags($this->getUser()),
+                'categories' => $this->get('category_service')->getAll(),
+                'terms' => $config->getTermAndConditions(),
+                'privacy' => $config->getPrivacyPolicy(),
+            ]);
+        }
+
+        $offerPrice = $this->get('product_service')->findProductOfferPrice($product);
+        $product->setPriceOffer($offerPrice);
+
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
+        }
+
+        $filterParameter = [$product->getId()];
+        foreach ($product->getComboProducts() as $comboProduct) {
+          $filterParameter[] = $comboProduct->getProduct()->getId();
+        }
+
+        $related = [];
         if (count($related) < 12) {
             $categories = [];
             foreach ($product->getCategories() as $category) {
@@ -829,7 +870,7 @@ class SiteController extends Controller
 
               foreach ($users as $user) {
                 if ($user->getEmail() != null) {
-                  $html = $this->renderView(':site:new-external-request-email.html.twig', [
+                  $body = $this->renderView(':site:new-external-request-email.html.twig', [
                     'username' => $user->getFirstName().' '.$user->getLastName(),
                     'externalRequest' => $externalRequest,
                   ]);
