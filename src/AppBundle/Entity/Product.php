@@ -967,4 +967,9 @@ class Product
         return $this->similarProducts;
     }
 
+    public function getSimilarProductsCount()
+    {
+        return count($this->similarProducts);
+    }
+
 }
