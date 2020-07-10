@@ -561,6 +561,7 @@ easy_admin:
                 fields:
                     - id
                     - {property: 'subject', label: 'Asunto'}
+                    - {property: 'active', label: 'Activo'}
                     - {property: 'primaryPicture', label: 'Imágen Principal', type: 'image', base_path: '%app.path.email.images%'}
                 actions:
                     - {name: 'preview_welcome_email', type: 'route'}
@@ -570,7 +571,7 @@ easy_admin:
                     - { type: 'group', label: 'Seccion Informacion', icon: 'cogs', columns: 12 }
 
                     - {property: 'subject', label: 'Asunto'}
-
+                    - {property: 'active', label: 'Activo'}
                     - { type: 'group', label: 'Imagen Principal', icon: 'cogs', columns: 12 }
                     - {property: 'primaryPictureFile', type: 'file', label: 'Imágen principal'}
                     - {property: 'primaryTitle', , label: 'Titulo principal'}

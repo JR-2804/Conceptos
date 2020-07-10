@@ -24,6 +24,8 @@ serviceContent2 LONGTEXT DEFAULT NULL, footerPicture VARCHAR(255) DEFAULT NULL,
 footerPictureLink VARCHAR(255) DEFAULT NULL,
 PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
+ALTER TABLE welcome_email ADD active TINYINT(1) NOT NULL;
+
 CREATE TABLE welcome_email_offer (welcome_email_id INT NOT NULL, offer_id INT NOT NULL, INDEX IDX_B203EEEE3C3F24B0 (welcome_email_id), INDEX IDX_B203EEEE53C674EE (offer_id), PRIMARY KEY(welcome_email_id, offer_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 CREATE TABLE welcome_email_product (welcome_email_id INT NOT NULL, product_id INT NOT NULL, INDEX IDX_661C839B3C3F24B0 (welcome_email_id), INDEX IDX_661C839B4584665A (product_id), PRIMARY KEY(welcome_email_id, product_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;

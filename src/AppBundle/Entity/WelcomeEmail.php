@@ -77,7 +77,26 @@ class WelcomeEmail
      */
     private $updatedAt;
 
+    /**
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active;
 
+    /**
+     * @param mixed $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
 
     /**
      * @var string
@@ -1133,7 +1152,7 @@ class WelcomeEmail
     /**
      * @var string
      *
-     * @ORM\Column(name="servicePicture1", type="string", length=255)
+     * @ORM\Column(name="servicePicture1", type="string", length=255, nullable=true)
      */
     private $servicePicture1;
 
@@ -1288,7 +1307,7 @@ class WelcomeEmail
     /**
      * @var string
      *
-     * @ORM\Column(name="servicePicture2", type="string", length=255)
+     * @ORM\Column(name="servicePicture2", type="string", length=255, nullable=true)
      */
     private $servicePicture2;
 
@@ -1536,6 +1555,7 @@ class WelcomeEmail
         $this->products = new ArrayCollection();
         $this->offers = new ArrayCollection();
         $this->blogs = new ArrayCollection();
+        $this->active = false;
     }
 
 }

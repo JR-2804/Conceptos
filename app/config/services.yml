@@ -57,3 +57,9 @@ services:
     public: false
     tags:
       - { name: twig.extension }
+
+  app.send_welcome_email:
+    class: AppBundle\EventListener\SendWelcomeEmail
+    autowire: true
+    tags:
+      - { name: kernel.event_subscriber }

@@ -385,14 +385,15 @@ class EmailsController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function previewWelcomeEmail(Request $request, $id)
+    public function previewWelcomeEmail()
     {
 
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
 
-        $email = $this->getDoctrine()->getManager()->getRepository('AppBundle:WelcomeEmail')->find($id);
+        $email = $this->getDoctrine()->getManager()
+                ->getRepository('AppBundle:WelcomeEmail')->findOneBy(['active'=>true]);
 
         $subject = $email->getSubject();
 
@@ -509,6 +510,147 @@ class EmailsController extends Controller
             'footerPicture' => $footerPicture,
             'footerLink' => $footerLink,
         ]);
+
+    }
+
+    /**
+     * @Route(name="preview_welcome_email", path="/previewWelcomeEmail/{id}")
+     *
+     * @param Request $request
+     * @param $id
+     *
+     */
+    public function sendWelcomeEmail($email, $username)
+    {
+
+        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Home',
+        ]);
+
+        $email = $this->getDoctrine()->getManager()
+            ->getRepository('AppBundle:WelcomeEmail')->findOneBy(['active'=>true]);
+
+        $subject = $email->getSubject();
+
+        $primaryPicture = $email->getPrimaryPicture();
+        $primaryTitle = $email->getPrimaryTitle();
+
+        $introTitle1 = $email->getIntroTitle1();
+        $introPicture1 = $email->getIntroPicture1();
+        $introContent1 = $email->getIntroContent1();
+        $introLink1 = $email->getIntroLink1();
+
+        $introTitle2 = $email->getIntroTitle2();
+        $introPicture2 = $email->getIntroPicture2();
+        $introContent2 = $email->getIntroContent2();
+        $introLink2 = $email->getIntroLink2();
+
+        $introTitle3 = $email->getIntroTitle3();
+        $introPicture3 = $email->getIntroPicture3();
+        $introContent3 = $email->getIntroContent3();
+        $introLink3 = $email->getIntroLink3();
+
+        $intros = [];
+        if ($introTitle1 != null)
+            array_push($intros, ['title' => $introTitle1, 'picture' => $introPicture1, 'content' => $introContent1, 'link' => $introLink1]);
+        if ($introTitle2 != null)
+            array_push($intros, ['title' => $introTitle2, 'picture' => $introPicture2, 'content' => $introContent2, 'link' => $introLink2]);
+        if ($introTitle3 != null)
+            array_push($intros, ['title' => $introTitle3, 'picture' => $introPicture3, 'content' => $introContent3, 'link' => $introLink3]);
+
+
+        $offersTitle = $email->getOffersTitle();
+        $offers = $email->getOffers();
+        $linkOffers = $email->getLinkOffers();
+        $offersProducts_ = [];
+        $offersProducts = [];
+        if (count($offers) > 0) {
+
+            foreach ($offers as $offer)
+                foreach ($offer->getProducts() as $product)
+                    $offersProducts_[] = ['product' => $product, 'offerPrice' => $offer->getPrice()];
+
+            $offersProductsIndex = array_rand($offersProducts_, min([count($offersProducts_), 4]));
+            if (is_array($offersProductsIndex))
+                foreach ($offersProductsIndex as $index)
+                    $offersProducts[] = $offersProducts_[$index];
+            else
+                $offersProducts[] = $offersProducts_[$offersProductsIndex];
+        }
+
+        $productsTitle = $email->getProductsTitle();
+        $products = $email->getProducts();
+        $linkProducts = $email->getLinkProducts();
+        $productsOffers = [];
+
+        foreach ($products as $product) {
+            $productsOffers[] = count($product->getOffers()) > 0;
+        }
+
+        $promotionTitle = $email->getPromotionTitle();
+        $promotionPicture = $email->getPromotionPicture();
+        $promotionContent = $email->getPromotionContent();
+        $promotionLink = $email->getPromotionLink();
+
+        $promotion = ['title' => $promotionTitle,
+            'picture' => $promotionPicture,
+            'content' => $promotionContent,
+            'link' => $promotionLink];
+
+        $blogTitle = $email->getBlogTitle();
+        $blogs = $email->getBlogs();
+
+        $servicesTitle = $email->getServicesTitle();
+        $linkServices = $email->getLinkServices();
+
+        $serviceTitle1 = $email->getServiceTitle1();
+        $servicePicture1 = $email->getServicePicture1();
+        $serviceContent1 = $email->getServiceContent1();
+        $serviceLink1 = $email->getServiceLink1();
+
+        $serviceTitle2 = $email->getServiceTitle2();
+        $servicePicture2 = $email->getServicePicture2();
+        $serviceContent2 = $email->getServiceContent2();
+        $serviceLink2 = $email->getServiceLink2();
+        $services = [];
+        if ($serviceTitle1 != null) {
+            array_push($services, ['title' => $serviceTitle1, 'picture' => $servicePicture1, 'content' => $serviceContent1, 'link' => $serviceLink1]);
+        }
+        if ($serviceTitle2 != null) {
+            array_push($services, ['title' => $serviceTitle2, 'picture' => $servicePicture2, 'content' => $serviceContent2, 'link' => $serviceLink2]);
+        }
+
+        $footerPicture = $email->getFooterPicture();
+        $footerLink = $email->getFooterPictureLink();
+
+        $body = $this->renderView('site/promotionEmail/promotionEmail.html.twig', [
+            'subject' => $subject,
+            'home' => $home,
+            'primaryPicture' => $primaryPicture,
+            'primaryTitle' => $primaryTitle,
+            'intros' => $intros,
+            'offersTitle' => $offersTitle,
+            'offers' => $offersProducts,
+            'linkOffers' => $linkOffers,
+            'productsTitle' => $productsTitle,
+            'products' => $products,
+            'linkProducts' => $linkProducts,
+            'productsOffers' => $productsOffers,
+            'promotion' => $promotion,
+            'blogsTitle' => $blogTitle,
+            'blogs' => $blogs,
+            'servicesTitle' => $servicesTitle,
+            'linkServices' => $linkServices,
+            'services' => $services,
+            'footerPicture' => $footerPicture,
+            'footerLink' => $footerLink,
+        ]);
+
+        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->get('email_service')->send($config->getEmail(), 'Comercial Conceptos', $email, $subject, $body);
+        }
 
     }
 
