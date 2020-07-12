@@ -26,6 +26,7 @@ use AppBundle\Form\MembershipRequestType;
 use AppBundle\Form\EmailType;
 use AppBundle\Repository\PromotionEmailRepository;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\EntityManager;
 use http\Message\Body;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -38,6 +39,14 @@ use Dompdf\Options;
 
 class EmailsController extends Controller
 {
+
+    private $entityManager;
+
+    public function __construct(EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     /**
      * @Route(name="preview_promotion_email", path="/previewPromotionEmail/{id}")
      *
@@ -514,21 +523,19 @@ class EmailsController extends Controller
     }
 
     /**
-     * @Route(name="preview_welcome_email", path="/previewWelcomeEmail/{id}")
-     *
      * @param Request $request
      * @param $id
      *
      */
     public function sendWelcomeEmail($email, $username)
     {
-
-        $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+        $home = $this->entityManager->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
 
-        $email = $this->getDoctrine()->getManager()
-            ->getRepository('AppBundle:WelcomeEmail')->findOneBy(['active'=>true]);
+        $email = $this->entityManager->getRepository('AppBundle:WelcomeEmail')->findOneBy(['active'=>true]);
+        if ($email == null)
+            return;
 
         $subject = $email->getSubject();
 
@@ -646,7 +653,7 @@ class EmailsController extends Controller
             'footerLink' => $footerLink,
         ]);
 
-        $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+        $config = $this->entityManager->getRepository('AppBundle:Configuration')->find(1);
 
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->get('email_service')->send($config->getEmail(), 'Comercial Conceptos', $email, $subject, $body);
