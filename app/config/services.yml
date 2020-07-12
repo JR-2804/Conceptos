@@ -61,6 +61,6 @@ services:
   app.send_welcome_email:
     class: AppBundle\EventListener\SendWelcomeEmail
     autowire: true
-    arguments: ["@doctrine.orm.entity_manager"]
+    arguments: ["@doctrine.orm.entity_manager", "@twig"]
     tags:
       - { name: kernel.event_subscriber }

@@ -35,15 +35,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Twig_Environment;
 
 class EmailsController extends Controller
 {
 
     private $entityManager;
+    private $twig;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, Twig_Environment $twig)
     {
         $this->entityManager = $entityManager;
+        $this->twig = $twig;
     }
 
     /**
@@ -631,7 +634,7 @@ class EmailsController extends Controller
 
         $config = $this->entityManager->getRepository('AppBundle:Configuration')->find(1);
 
-        return $this->render('site/promotionEmail/promotionEmail.html.twig', [
+        $body = $this->twig->render('site/promotionEmail/promotionEmail.html.twig', [
             'subject' => $subject,
             'home' => $home,
             'primaryPicture' => $primaryPicture,
@@ -654,9 +657,9 @@ class EmailsController extends Controller
             'footerLink' => $footerLink,
         ]);
 
-//        if (filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
-//            $this->get('email_service')->send($config->getEmail(), 'Comercial Conceptos', $email, $subject, $body);
-//        }
+        if (filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
+            $this->get('email_service')->send($config->getEmail(), 'Comercial Conceptos', $email, $subject, $body);
+        }
 
     }
 
