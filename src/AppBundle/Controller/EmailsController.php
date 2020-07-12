@@ -27,7 +27,6 @@ use AppBundle\Form\EmailType;
 use AppBundle\Repository\PromotionEmailRepository;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
-use http\Message\Body;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -527,7 +526,7 @@ class EmailsController extends Controller
      * @param $id
      *
      */
-    public function sendWelcomeEmail($email, $username)
+    public function sendWelcomeEmail($userEmail, $username)
     {
         $home = $this->entityManager->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
@@ -630,7 +629,9 @@ class EmailsController extends Controller
         $footerPicture = $email->getFooterPicture();
         $footerLink = $email->getFooterPictureLink();
 
-        $body = $this->renderView('site/promotionEmail/promotionEmail.html.twig', [
+        $config = $this->entityManager->getRepository('AppBundle:Configuration')->find(1);
+
+        return $this->render('site/promotionEmail/promotionEmail.html.twig', [
             'subject' => $subject,
             'home' => $home,
             'primaryPicture' => $primaryPicture,
@@ -653,11 +654,9 @@ class EmailsController extends Controller
             'footerLink' => $footerLink,
         ]);
 
-        $config = $this->entityManager->getRepository('AppBundle:Configuration')->find(1);
-
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->get('email_service')->send($config->getEmail(), 'Comercial Conceptos', $email, $subject, $body);
-        }
+//        if (filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
+//            $this->get('email_service')->send($config->getEmail(), 'Comercial Conceptos', $email, $subject, $body);
+//        }
 
     }
 
