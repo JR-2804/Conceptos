@@ -9,7 +9,7 @@
         & input{
             margin: .5em auto;
 
-            &[type=text]{
+            &[type=text], &[type=password]{
                 width: 80%;
                 background: white;
                 border: 1px solid #282827;

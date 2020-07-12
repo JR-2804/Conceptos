@@ -371,7 +371,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 .fos_user_content form input {
     margin: .5em auto; }
 
-.fos_user_content form input[type=text] {
+.fos_user_content form input[type=text], .fos_user_content form input[type=password] {
       width: 80%;
       background: white;
       border: 1px solid #282827; }
