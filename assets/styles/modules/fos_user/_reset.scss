@@ -1,0 +1,41 @@
+.fos_user_content{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: 2em auto;
+
+    & form{
+        & input{
+            margin: .5em auto;
+
+            &[type=text]{
+                width: 80%;
+                background: white;
+                border: 1px solid #282827;
+            }
+
+            &[type=submit]{
+                background-color: transparent;
+                border: 2px solid #c2b930;
+                border-radius: 0 !important;
+                font-family: Montserrat;
+                font-weight: bold;
+                font-size: 14px;
+                color: #282827;
+                outline: none;
+                min-width: 100px;
+                text-align: center;
+            }
+        }
+    }
+
+    & .go_home{
+        width: 100%;
+        margin: 3em 0;
+
+        & .conceptos-primary-button{
+            padding: .5em;
+        }
+    }
+}

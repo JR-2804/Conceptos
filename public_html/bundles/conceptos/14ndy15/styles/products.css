@@ -54,12 +54,8 @@
   .products_breadcrumbs > ul > li span {
         position: relative;
         text-transform: uppercase;
-<<<<<<< HEAD
-        font-weight: bold; }
-=======
         font-weight: bold;
         font-size: .8em; }
->>>>>>> temp
   .products_breadcrumbs > ul > li span:before {
           top: 50%;
           right: -15px;

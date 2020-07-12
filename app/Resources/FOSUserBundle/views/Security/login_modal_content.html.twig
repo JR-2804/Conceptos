@@ -10,7 +10,11 @@
     <input type="text" name="_username" id="username" required autofocus>
     <span class="conceptos-subtitle mt-2 required pl-2">CONTRASEÑA</span>
     <input type="password" name="_password" id="password" required>
-    <button type="submit" class="conceptos-primary-button align-self-start mt-2">ACCEDER</button>
+    <div class="row" style="display: flex; justify-content: space-around;">
+      <button type="submit" class="conceptos-primary-button align-self-start mt-2">ACCEDER</button>
+      <a href="{{ path('fos_user_resetting_request') }}" class="conceptos-primary-button align-self-start mt-2 pl-1 pr-1">OLVIDE LA CONTRASEÑA</a>
+    </div>
+
   </form>
 </div>
 <div id="register-form" style="display: none;">
