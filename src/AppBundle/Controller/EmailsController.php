@@ -25,6 +25,7 @@ use AppBundle\Form\CheckOutType;
 use AppBundle\Form\MembershipRequestType;
 use AppBundle\Form\EmailType;
 use AppBundle\Repository\PromotionEmailRepository;
+use AppBundle\Services\EmailService;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -42,11 +43,13 @@ class EmailsController extends Controller
 
     private $entityManager;
     private $twig;
+    private $emailService;
 
-    public function __construct(EntityManager $entityManager, Twig_Environment $twig)
+    public function __construct(EntityManager $entityManager, Twig_Environment $twig, EmailService $emailService)
     {
         $this->entityManager = $entityManager;
         $this->twig = $twig;
+        $this->emailService = $emailService;
     }
 
     /**
@@ -658,7 +661,7 @@ class EmailsController extends Controller
         ]);
 
         if (filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
-            $this->get('email_service')->send($config->getEmail(), 'Comercial Conceptos', $email, $subject, $body);
+            $this->emailService->send($config->getEmail(), 'Comercial Conceptos', $email, $subject, $body);
         }
 
     }
