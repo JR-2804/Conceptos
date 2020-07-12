@@ -661,7 +661,7 @@ class EmailsController extends Controller
         ]);
 
         if (filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
-            $this->emailService->send($config->getEmail(), 'Comercial Conceptos', $email, $subject, $body);
+            $this->emailService->send($config->getEmail(), 'Comercial Conceptos', $userEmail, $subject, $body);
         }
 
     }
