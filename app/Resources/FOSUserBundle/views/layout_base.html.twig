@@ -1,0 +1,14 @@
+{% extends ':site:base.html.twig' %}
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/home/css/home.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    {% block fos_user_content %}{% endblock %}
+{% endblock %}
+{% block contact %}
+{% endblock %}
+{% block js %}
+    <script src="{{ asset('bundles/conceptos/home/js/home.js') }}"></script>
+{% endblock %}
