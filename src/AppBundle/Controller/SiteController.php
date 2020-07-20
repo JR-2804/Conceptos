@@ -684,6 +684,17 @@ class SiteController extends Controller
                     }
                     $comboDiscount -= $productR['price'];
                   } else {
+
+
+                      if ($product->getInStore()){
+                          $countProductsFacture = $productR['count'];
+                          $countInStore = $product->getStoreCount();
+                          $countProductsFacture = min($countProductsFacture, $countInStore);
+                          $newCount = $countInStore - $countProductsFacture;
+                          $product->setStoreCount($countProductsFacture);
+                      }
+
+
                     $this->CreateProduct(
                       3,
                       new FactureProduct(),
