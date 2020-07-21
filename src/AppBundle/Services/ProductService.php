@@ -65,7 +65,7 @@ class ProductService
             }
           }
         }
-    }
+      }
 
       return -1;
     }
@@ -399,7 +399,7 @@ class ProductService
         if (1 != $page) {
             $firstResult = (($page - 1) * 50);
         }
-        
+
         $_products = $qbProduct
             ->orderBy('p.name', 'ASC')
             ->addOrderBy('o.price', 'DESC')
@@ -449,11 +449,8 @@ class ProductService
             }
         }
 
-
-
-
         $popularProducts = [];
-        if ($categories != -1) {
+        if ($categories != '' && $categories != -1) {
             $popularProductsCount = 15;
             $categoriesPopularProducts = [];
 
