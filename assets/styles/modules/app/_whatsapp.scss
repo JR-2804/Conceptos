@@ -156,7 +156,8 @@
     }
 
     &--close{
-        transform: translateY(150%);
+        transform: translateX(110%) translateY(150%);
+        animation: none;
     }
 
 

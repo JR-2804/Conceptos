@@ -15,8 +15,10 @@ class WhatsappFloat{
     }
 
     events(){
-        if (this.closeBtn != null)
+        if (this.closeBtn != null) {
             this.closeBtn.addEventListener('click', this.small.bind(this));
+            console.log('hola');
+        }
     }
 
     close(){
