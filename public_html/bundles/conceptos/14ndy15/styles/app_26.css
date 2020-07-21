@@ -504,15 +504,19 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 
 @-webkit-keyframes showWhatsappCard {
   0% {
-    opacity: 1; }
+    opacity: 1;
+    transform: translateX(0); }
   100% {
-    opacity: 1; } }
+    opacity: 1;
+    transform: translateX(0); } }
 
 @keyframes showWhatsappCard {
   0% {
-    opacity: 1; }
+    opacity: 1;
+    transform: translateX(0); }
   100% {
-    opacity: 1; } }
+    opacity: 1;
+    transform: translateX(0); } }
 
 .whatsapp_float {
   position: fixed;
@@ -527,8 +531,9 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
   right: 1em;
   height: auto;
   padding: .5em 0;
-  transition: all .3s;
+  transition: all .3s ease-in-out;
   opacity: 0;
+  transform: translateX(110%);
   -webkit-animation: showWhatsappCard 60s ease-in-out 7s;
           animation: showWhatsappCard 60s ease-in-out 7s; }
 
@@ -543,10 +548,9 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
     position: absolute;
     top: 0;
     right: 0;
-    width: 2em;
-    height: 2em;
+    width: 2.5em;
+    height: 2.5em;
     cursor: pointer;
-    padding: .5em;
     z-index: 4; }
 
 .whatsapp_float__close:before, .whatsapp_float__close:after {

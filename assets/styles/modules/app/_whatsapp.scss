@@ -1,9 +1,11 @@
 @keyframes showWhatsappCard {
     0%{
         opacity: 1;
+        transform: translateX(0);
     }
     100%{
         opacity: 1;
+        transform: translateX(0);
     }
 }
 
@@ -21,8 +23,9 @@
     right: 1em;
     height: auto;
     padding: .5em 0;
-    transition: all .3s;
+    transition: all .3s ease-in-out;
     opacity: 0;
+    transform: translateX(110%);
 
     animation: showWhatsappCard 60s ease-in-out 7s;
 
@@ -37,10 +40,9 @@
         position: absolute;
         top: 0;
         right: 0;
-        width: 2em;
-        height: 2em;
+        width: 2.5em;
+        height: 2.5em;
         cursor: pointer;
-        padding: .5em;
         z-index: 4;
 
         &:before,
