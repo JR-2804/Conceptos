@@ -12,13 +12,28 @@
 
   <style>
     @font-face {
-      font-family: "Gotham_Bold";
+      font-family: "Gotham_Rounded_Medium";
+      src: url('{{ absolute_url("/bundles/conceptos/fonts/Gotham/Gotham Rounded Bold.otf") }}' );
+    }
+
+    @font-face {
+      font-family: "Gotham_Rounded_Light";
+      src: url('{{ absolute_url("/bundles/conceptos/fonts/Gotham/Gotham Rounded Bold.otf") }}' );
+    }
+
+    @font-face {
+      font-family: "Gotham_Rounded_Book";
+      src: url('{{ absolute_url("/bundles/conceptos/fonts/Gotham/Gotham Rounded Bold.otf") }}' );
+    }
+
+    @font-face {
+      font-family: "Gotham_Bold_Bold";
       src: url('{{ absolute_url("/bundles/conceptos/fonts/Gotham/Gotham Bold.otf") }}' );
     }
 
     @font-face {
-      font-family: "Gotham_Rounded";
-      src: url('{{ absolute_url("/bundles/conceptos/fonts/Gotham/Gotham Rounded Bold.otf") }}' );
+      font-family: "Gotham_Bold_Regular";
+      src: url('{{ absolute_url("/bundles/conceptos/fonts/Gotham/Gotham Bold.otf") }}' );
     }
 
     @page {
@@ -32,13 +47,8 @@
     }
 
     p {
-      font-family: Gotham_Rounded;
       margin-top: 0.3em;
       margin-bottom: 0;
-    }
-
-    span {
-      font-family: Gotham_Rounded;
     }
 
     header {
@@ -61,8 +71,8 @@
     }
 
     .document-info p {
+      font-family: Gotham_Rounded_Medium;
       color: #FFFFFF;
-      font-weight: normal;
       font-size: 9pt;
     }
 
@@ -87,12 +97,12 @@
     }
 
     .prefacture-name {
-      font-family: Gotham_Bold;
+      font-family: Gotham_Bold_Bold;
       font-size: 18.2pt;
     }
 
     .prefacture-date {
-      font-family: Gotham_Rounded;
+      font-family: Gotham_Rounded_Medium;
       font-size: 9pt;
       margin-left: 175px;
     }
@@ -102,12 +112,12 @@
     }
 
     .client-summary p {
-      font-family: Gotham_Rounded;
+      font-family: Gotham_Rounded_Light;
       font-size: 9pt;
     }
 
     .client-summary strong {
-      font-family: Gotham_Bold;
+      font-family: Gotham_Bold_Regular;
       font-size: 9pt;
     }
 
@@ -121,6 +131,11 @@
 
     .prefacture-summary-info {
       margin-top: 15px;
+    }
+
+    .prefacture-main-info {
+      font-family: Gotham_Rounded_Light;
+      font-size: 9pt;
     }
 
     .prefacture-main-info-top {
@@ -150,16 +165,16 @@
     }
 
     .products-table {
-      margin-top: {% if prefacture.commercial %}265px{% else %}250px{% endif %};
+      margin-top: {% if prefacture.commercial %}215px{% else %}200px{% endif %};
     }
 
     .products-table th {
-      font-family: Gotham_Rounded;
+      font-family: Gotham_Rounded_Medium;
       font-size: 9pt;
     }
 
     .products-table td {
-      font-family: Gotham_Rounded;
+      font-family: Gotham_Rounded_Light;
       font-size: 9pt;
     }
 
@@ -180,13 +195,23 @@
       display: inline-block;
     }
 
+    .footer-signatures span {
+      font-family: Gotham_Rounded_Medium;
+      font-size: 9pt;
+    }
+
+    .footer-info p {
+      font-family: Gotham_Rounded_Book;
+      font-size: 9pt;
+    }
+
     .commercial-signature {
       margin-left: 40px;
     }
 
     .footer-info {
       display: inline-block;
-      margin-left: 130px;
+      margin-left: 245px;
     }
 
     .qr-code {

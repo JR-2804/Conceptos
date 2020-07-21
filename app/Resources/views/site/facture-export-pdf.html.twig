@@ -11,9 +11,35 @@
   <title></title>
 
   <style>
+    @font-face {
+      font-family: "Gotham_Rounded_Medium";
+      src: url('{{ absolute_url("/bundles/conceptos/fonts/Gotham/Gotham Rounded Bold.otf") }}' );
+    }
+
+    @font-face {
+      font-family: "Gotham_Rounded_Light";
+      src: url('{{ absolute_url("/bundles/conceptos/fonts/Gotham/Gotham Rounded Bold.otf") }}' );
+    }
+
+    @font-face {
+      font-family: "Gotham_Rounded_Book";
+      src: url('{{ absolute_url("/bundles/conceptos/fonts/Gotham/Gotham Rounded Bold.otf") }}' );
+    }
+
+    @font-face {
+      font-family: "Gotham_Bold_Bold";
+      src: url('{{ absolute_url("/bundles/conceptos/fonts/Gotham/Gotham Bold.otf") }}' );
+    }
+
+    @font-face {
+      font-family: "Gotham_Bold_Regular";
+      src: url('{{ absolute_url("/bundles/conceptos/fonts/Gotham/Gotham Bold.otf") }}' );
+    }
+
     @page {
       size: a4;
       margin: 0;
+      margin-top: 180px;
     }
 
     body {
@@ -25,27 +51,29 @@
       margin-bottom: 0;
     }
 
-    .header {
-      position: absolute;
-      top: 0;
+    header {
+      position: fixed;
+      top: -180px;
       width: 100%;
       background-color: #333333;
       height: 85px;
     }
 
-    .header img {
+    header img {
       width: 200px;
       margin-left: 40px;
       margin-top: 17px;
     }
 
-    .header span {
-      font-size: 20px;
-      font-weight: bold;
+    header .document-info {
+      padding-top: -50px;
+      margin-left: 490px;
+    }
+
+    .document-info p {
+      font-family: Gotham_Rounded_Medium;
       color: #FFFFFF;
-      position: absolute;
-      top: 33px;
-      right: 40px;
+      font-size: 9pt;
     }
 
     .yellow-badge {
@@ -56,62 +84,98 @@
       top: 85px;
     }
 
+    .prefacture-general-info {
+      margin-top: 50px;
+      padding-left: 40px;
+    }
+
     .content {
-      padding-top: 80px;
+      padding-top: 40px;
       padding-left: 40px;
       padding-right: 40px;
+      margin-bottom: 120px;
     }
 
-    .facture-general-info {
-      margin-top: 40px;
+    .prefacture-name {
+      font-family: Gotham_Bold_Bold;
+      font-size: 18.2pt;
     }
 
-    .facture-name {
-      font-size: 25px;
-      font-weight: bold;
+    .prefacture-date {
+      font-family: Gotham_Rounded_Medium;
+      font-size: 9pt;
+      margin-left: 175px;
     }
 
-    .facture-date {
-      font-size: 15px;
-      margin-left: 125px;
+    .prefacture-info {
+      padding-top: -50px;
     }
 
-    .facture-info {
-      margin-top: 40px;
+    .client-summary p {
+      font-family: Gotham_Rounded_Light;
+      font-size: 9pt;
+    }
+
+    .client-summary strong {
+      font-family: Gotham_Bold_Regular;
+      font-size: 9pt;
     }
 
     .client-address {
       margin-bottom: 20px;
     }
 
-    .facture-summary {
+    .prefacture-summary {
       float: right;
     }
 
-    .facture-summary-info {
+    .prefacture-summary-info {
       margin-top: 15px;
     }
 
-    .facture-main-info-top {
+    .prefacture-main-info {
+      font-family: Gotham_Rounded_Light;
+      font-size: 9pt;
+    }
+
+    .prefacture-main-info-top {
       background-color: #CCCCCC;
       margin-top: 10px;
       padding: 5px;
       width: 250px;
     }
 
-    .facture-main-info-bottom {
+    .prefacture-main-info-top > p:nth-child(1) {
+      margin-top: 0;
+    }
+
+    .prefacture-main-info-bottom {
       background-color: #333333;
       margin-bottom: 20px;
       padding: 5px;
       width: 250px;
     }
 
-    .facture-main-info-bottom p {
+    .prefacture-main-info-bottom > p:nth-child(1) {
+      margin-top: 0;
+    }
+
+    .prefacture-main-info-bottom p {
       color: #FFFFFF;
     }
 
     .products-table {
-      margin-top: 250px;
+      margin-top: {% if facture.commercial %}215px{% else %}200px{% endif %};
+    }
+
+    .products-table th {
+      font-family: Gotham_Rounded_Medium;
+      font-size: 9pt;
+    }
+
+    .products-table td {
+      font-family: Gotham_Rounded_Light;
+      font-size: 9pt;
     }
 
     .product-image {
@@ -120,24 +184,44 @@
       margin: 5px;
     }
 
-    .footer {
-      position: absolute;
-      bottom: 15px;
-      width: 100%;
-      padding-left: 20px;
-      padding-right: 20px;
+    footer {
+      position: fixed;
+      bottom: 60px;
+      left: 40px;
+      height: 50px;
     }
 
-    .client-signature {
+    .footer-signatures {
+      display: inline-block;
+    }
+
+    .footer-signatures span {
+      font-family: Gotham_Rounded_Medium;
+      font-size: 9pt;
+    }
+
+    .footer-info p {
+      font-family: Gotham_Rounded_Book;
+      font-size: 9pt;
     }
 
     .commercial-signature {
       margin-left: 40px;
-      margin-bottom: 40px;
     }
 
     .footer-info {
-      margin-left: 420px;
+      display: inline-block;
+      margin-left: 245px;
+    }
+
+    .qr-code {
+      display: inline-block;
+      padding-bottom: -12px;
+    }
+
+    footer img {
+      width: 125px;
+      height: 125px;
     }
 
     .table-bordered {
@@ -171,140 +255,154 @@
   </style>
 </head>
 <body>
-  {% set cupConversionRate = 25 %}
-  <div class="flex-column">
-    <div class="header">
+  <script type="text/php">
+    if (isset($pdf)) {
+      $pdf->page_text(496, 90, "{PAGE_NUM} páginas de {PAGE_COUNT}", $fontMetrics->get_font("Times New Roman"), 12);
+    }
+  </script>
+
+  <header>
+    <div>
       <img class="pl-5 pt-2 pb-2" src="{{ absolute_url(asset(home.data.logo.image.path)) }}" />
-      <span>No. de Factura: {{facture.id}}</span>
+      <div class="document-info">
+        <p>No. de Orden: {% if facture.request %}{{facture.request.id}}{% else %}-{% endif %}</p>
+        <p>No. de Prefactura: {% if facture.preFacture %}{{facture.preFacture.id}}-{{facture.preFacture.date|date('Y')}}{% else %}-{% endif %}</p>
+        <p>No. de Factura: {{facture.id}}-{{facture.date|date('Y')}}</p>
+      </div>
     </div>
     <div class="yellow-badge"></div>
-    <div class="content">
-      <div class="facture-general-info">
-        <span class="facture-name">FACTURA</span>
-        <span class="facture-date">{{facture.date|date('d/m/Y')}}</span>
-      </div>
-      <div class="facture-info">
-        <div class="facture-summary">
-          {% if facture.commercial %}
-            <p><strong>Comercial:</strong> {{facture.commercial.firstName}} {{facture.commercial.lastName}}</p>
-            {% if facture.commercial.mobileNumber %}
-              <p><strong>Teléfono movil:</strong> {{facture.commercial.mobileNumber}}</p>
-            {% endif %}
-            <p><strong>Correo:</strong> {{facture.commercial.email}}</p>
-          {% endif %}
-          <div class="facture-main-info">
-            <div class="facture-main-info-top">
-              <p><span class="align-left">Cantidad de items: </span><span class="align-right">{{products|length}}</span></p>
-              <p><span class="align-left">Cantidad de productos: </span><span class="align-right">{{numberOfProducts}}</span></p>
-              <p><span class="align-left">Tipo de moneda: </span><span class="align-right">{% if facture.cucExtra %}CUC{% else %}USD{% endif %}</span></p>
-              <p><span class="align-left">Tipo de pago: </span><span class="align-right">{% if facture.twoStepExtra %}2 Plazos{% else %}1 Plazo{% endif %}</span></p>
-              {% if facture.discount %}
-                <p><span class="align-left">Descuento de miembro: </span><span class="align-right">${{facture.discount}}</span></p>
-              {% endif %}
-              {% if facture.cucExtra %}
-                <p><span class="align-left">Extra por CUC: </span><span class="align-right">${{facture.cucExtra}}</span></p>
-              {% endif %}
-              {% if facture.twoStepExtra %}
-                <p><span class="align-left">Extra por 2 plazos: </span><span class="align-right">${{facture.twoStepExtra}}</span></p>
-              {% endif %}
-              {% if facture.bagsExtra %}
-                <p><span class="align-left">Extra por bolsas: </span><span class="align-right">${{facture.bagsExtra}}</span></p>
-              {% endif %}
-              <p><span class="align-left">Costo de transporte: </span><span class="align-right">${{facture.transportCost}}</span></p>
-            </div>
-            <div class="facture-main-info-bottom">
-              <p><span class="align-left">Total a pagar: </span><span class="align-right">${{facture.finalPrice}}</span></p>
-              {% if facture.twoStepExtra %}
-              <p><span class="align-left">Pago anticipado: </span><span class="align-right">${{firstPayment}}</span></p>
-              {% endif %}
-              <p><span class="align-left">Por pagar: </span><span class="align-right">{% if facture.twoStepExtra %}{{facture.finalPrice - firstPayment}}{% else %}${{facture.finalPrice}}{% endif %}</span></p>
-            </div>
-          </div>
-        </div>
-        <div>
-          <p><strong>Cliente:</strong> {{facture.client.firstName}} {{facture.client.lastName}}</p>
-          <p class="client-address"><strong>Dirección de entrega:</strong> {{facture.client.address}}</p>
-          {% if facture.client.movil %}
-            <p><strong>Teléfono móvil:</strong> {{facture.client.movil}}</p>
-          {% endif %}
-          {% if facture.client.phone %}
-            <p><strong>Teléfono fijo:</strong> {{facture.client.phone}}</p>
-          {% endif %}
-          <p><strong>Correo:</strong> {{facture.client.email}}</p>
-          {% if facture.client.memberNumber %}
-            <p><strong>Número de miembro:</strong> {{facture.client.memberNumber}}</p>
-          {% endif %}
-        </div>
-      </div>
-      <div class="products-table">
-        <table class="table table-bordered mt-3">
-          <thead>
-          <tr>
-            <th>Código</th>
-            <th>Imágen</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Envío</th>
-            <th>Precio</th>
-            <th>Cantidad</th>
-            <th>Subtotal</th>
-          </tr>
-          </thead>
-          <tbody class="table-members">
-            {% for product in products %}
-              <tr>
-                <td>
-                  <span>{{product.code}}</span>
-                </td>
-                <td>
-                  {% if product.image is defined %}
-                    <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.image, 'imageFile')) }}" />
-                  {% else %}
-                    {% if product.price == 15 %}
-                      {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
-                    {% elseif product.price == 25 %}
-                      {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
-                    {% elseif product.price == 50 %}
-                      {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
-                    {% else %}
-                      {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
-                    {% endif %}
-                    <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(asset(imagePath)) }}" />
-                  {% endif %}
-                </td>
-                <td>
-                  <span>{{product.name}}</span>
-                </td>
-                <td>
-                  <span class="product-description">{{product.item}}</span>
-                </td>
-                <td>
-                  <span>{{product.airplane}}</span>
-                </td>
-                <td>
-                  <span>{{product.price }}</span>
-                </td>
-                <td>
-                  <span>{{product.count}}</span>
-                </td>
-                <td>
-                  <span>{{product.price * product.count}}</span>
-                </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+    <div class="prefacture-general-info">
+      <span class="prefacture-name">FACTURA</span>
+      <span class="prefacture-date">{{facture.date|date('d/m/Y')}}</span>
     </div>
-    <div class="footer">
-      <div class="footer-info">
-        <p>www.tiendaconceptos.com</p>
-        <p>comercial@tiendaconceptos.com</p>
-        <p>Teléfono comercial: +5352458380</p>
-      </div>
-      <span class="client-signature">Firma del cliente</span>
+  </header>
+  <footer>
+    <div class="footer-signatures">
+      <span>Firma del cliente</span>
       <span class="commercial-signature">Firma del comercial</span>
     </div>
-  </div>
+    <div class="footer-info">
+      <p>www.tiendaconceptos.com</p>
+      <p>comercial@tiendaconceptos.com</p>
+      <p>Teléfono comercial: +5352458380</p>
+    </div>
+    <div class="qr-code">
+      <img src="{{ absolute_url(asset('bundles/conceptos/images/home/qr.png')) }}">
+    </div>
+  </footer>
+  <main class="content">
+    <div class="prefacture-info">
+      <div class="prefacture-summary">
+        {% if facture.commercial %}
+          <p><strong>Comercial:</strong> {{facture.commercial.firstName}} {{facture.commercial.lastName}}</p>
+          {% if facture.commercial.mobileNumber %}
+            <p><strong>Teléfono movil:</strong> {{facture.commercial.mobileNumber}}</p>
+          {% endif %}
+          <p><strong>Correo:</strong> {{facture.commercial.email}}</p>
+        {% endif %}
+        <div class="prefacture-main-info">
+          <div class="prefacture-main-info-top">
+            <p><span class="align-left">Cantidad de items: </span><span class="align-right">{{products|length}}</span></p>
+            <p><span class="align-left">Cantidad de productos: </span><span class="align-right">{{numberOfProducts}}</span></p>
+            <p><span class="align-left">Tipo de moneda: </span><span class="align-right">{% if facture.cucExtra %}CUC{% else %}USD{% endif %}</span></p>
+            <p><span class="align-left">Tipo de pago: </span><span class="align-right">{% if facture.twoStepExtra %}2 Plazos{% else %}1 Plazo{% endif %}</span></p>
+            {% if facture.discount %}
+              <p><span class="align-left">Descuento de miembro: </span><span class="align-right">${{facture.discount}}</span></p>
+            {% endif %}
+            {% if facture.cucExtra %}
+              <p><span class="align-left">Extra por CUC: </span><span class="align-right">${{facture.cucExtra}}</span></p>
+            {% endif %}
+            {% if facture.twoStepExtra %}
+              <p><span class="align-left">Extra por 2 plazos: </span><span class="align-right">${{facture.twoStepExtra}}</span></p>
+            {% endif %}
+            {% if facture.bagsExtra %}
+              <p><span class="align-left">Extra por bolsas: </span><span class="align-right">${{facture.bagsExtra}}</span></p>
+            {% endif %}
+            <p><span class="align-left">Costo de transporte: </span><span class="align-right">${{facture.transportCost}}</span></p>
+          </div>
+          <div class="prefacture-main-info-bottom">
+            <p><span class="align-left">Total a pagar: </span><span class="align-right">${{facture.finalPrice}}</span></p>
+            {% if facture.twoStepExtra %}
+            <p><span class="align-left">Pago anticipado: </span><span class="align-right">${{firstPayment}}</span></p>
+            {% endif %}
+            <p><span class="align-left">Por pagar: </span><span class="align-right">{% if facture.twoStepExtra %}{{facture.finalPrice - firstPayment}}{% else %}${{facture.finalPrice}}{% endif %}</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="client-summary">
+        <p><strong>Cliente:</strong> {{facture.client.firstName}} {{facture.client.lastName}}</p>
+        <p class="client-address"><strong>Dirección de entrega:</strong> {{facture.client.address}}</p>
+        {% if facture.client.movil %}
+          <p><strong>Teléfono móvil:</strong> {{facture.client.movil}}</p>
+        {% endif %}
+        {% if facture.client.phone %}
+          <p><strong>Teléfono fijo:</strong> {{facture.client.phone}}</p>
+        {% endif %}
+        <p><strong>Correo:</strong> {{facture.client.email}}</p>
+        {% if facture.client.memberNumber %}
+          <p><strong>Número de miembro:</strong> {{facture.client.memberNumber}}</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="products-table">
+      <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+          <th>Código</th>
+          <th>Imágen</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Envío</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+        </tr>
+        </thead>
+        <tbody class="table-members">
+          {% for product in products %}
+            <tr>
+              <td>
+                <span>{{product.code}}</span>
+              </td>
+              <td>
+                {% if product.image is defined %}
+                  <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.image, 'imageFile')) }}" />
+                {% else %}
+                  {% if product.price == 15 %}
+                    {% set imagePath = membership.data.giftCardSection.giftCard15Image.path %}
+                  {% elseif product.price == 25 %}
+                    {% set imagePath = membership.data.giftCardSection.giftCard25Image.path %}
+                  {% elseif product.price == 50 %}
+                    {% set imagePath = membership.data.giftCardSection.giftCard50Image.path %}
+                  {% else %}
+                    {% set imagePath = membership.data.giftCardSection.giftCard100Image.path %}
+                  {% endif %}
+                  <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(asset(imagePath)) }}" />
+                {% endif %}
+              </td>
+              <td>
+                <span>{{product.name}}</span>
+              </td>
+              <td>
+                <span class="product-description">{{product.item}}</span>
+              </td>
+              <td>
+                <span>{{product.airplane}}</span>
+              </td>
+              <td>
+                <span>{{product.price }}</span>
+              </td>
+              <td>
+                <span>{{product.count}}</span>
+              </td>
+              <td>
+                <span>{{product.price * product.count}}</span>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </main>
 </body>
 </html>
