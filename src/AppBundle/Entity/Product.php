@@ -148,8 +148,6 @@ class Product
 
     private $favorite;
 
-    
-
     /**
      * @ORM\Column(type="boolean")
      */
@@ -235,6 +233,11 @@ class Product
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product")
      */
     private $similarProducts;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $creationDate;
 
     /**
      * Product constructor.
@@ -967,4 +970,15 @@ class Product
         return $this->similarProducts;
     }
 
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
 }

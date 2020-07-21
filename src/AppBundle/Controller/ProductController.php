@@ -246,6 +246,7 @@ class ProductController extends Controller
             }
             $product->setCategoryText(substr($categoryText, 0, strlen($categoryText) - 2));
             $product->setPrice($form->get('price')->getData());
+            $product->setCreationDate(new \DateTime());
             $image = $this->getDoctrine()->getRepository('AppBundle:Image')->find($form->get('image')->getData());
             $product->setMainImage($image);
             $images = json_decode($form->get('images')->getData(), true);
