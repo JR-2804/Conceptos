@@ -639,8 +639,9 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 .whatsapp_float--small .whatsapp_float__close {
       position: relative;
       right: 1em;
-      width: 1.5em;
-      height: 1.5em; }
+      width: 2.5em;
+      height: 2.5em;
+      z-index: 4; }
 
 .whatsapp_float--close {
     transform: translateY(150%); }

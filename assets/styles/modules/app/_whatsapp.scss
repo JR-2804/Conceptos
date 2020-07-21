@@ -149,8 +149,9 @@
         & .whatsapp_float__close {
             position: relative;
             right: 1em;
-            width: 1.5em;
-            height: 1.5em;
+            width: 2.5em;
+            height: 2.5em;
+            z-index: 4;
         }
     }
 
