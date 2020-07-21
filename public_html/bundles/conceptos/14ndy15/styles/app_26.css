@@ -32,7 +32,7 @@ h1, h2, h3, h4, h5, h6, p, span, em, textarea, input {
 
 .new_navbar__logo img {
       width: auto;
-      height: 2.5em; }
+      height: 3em; }
 
 .new_navbar__content__menu {
     grid-area: menu;
