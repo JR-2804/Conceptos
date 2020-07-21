@@ -1,0 +1,9 @@
+.header{
+    background: #282827;
+
+    &__logo{
+        & img {
+            height: 3em;
+        }
+    }
+}

@@ -963,11 +963,15 @@ class Product
         $this->similarProducts->removeElement($similarProduct);
     }
 
-
     //Poner explicacions
     public function getSimilarProducts()
     {
         return $this->similarProducts;
+    }
+
+    public function getSimilarProductsCount()
+    {
+        return count($this->similarProducts);
     }
 
     public function setCreationDate($creationDate)

@@ -57,3 +57,10 @@ services:
     public: false
     tags:
       - { name: twig.extension }
+
+  app.send_welcome_email:
+    class: AppBundle\EventListener\SendWelcomeEmail
+    autowire: true
+    arguments: ["@doctrine.orm.entity_manager", "@twig", "@email_service"]
+    tags:
+      - { name: kernel.event_subscriber }

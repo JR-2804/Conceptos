@@ -5,6 +5,7 @@ class Carousel{
     constructor(){
         this.carousel = document.querySelector('.product_images');
         this.carouselSmall = document.querySelector('.product_images__small');
+        this.carouselSmallCount = document.querySelectorAll('.product_images__small .carousel__cell');
 
         this.initFlickity();
     }
@@ -28,7 +29,7 @@ class Carousel{
                 contain: true,
                 groupCells: true,
                 pageDots: false,
-                wrapAround: true,
+                wrapAround: this.carouselSmallCount.length > 3,
                 prevNextButtons: false,
             });
     }

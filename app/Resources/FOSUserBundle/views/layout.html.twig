@@ -1,12 +1,38 @@
-{% extends ':site:base.html.twig' %}
-{% block css %}
-  <link rel="stylesheet" href="{{ asset('bundles/conceptos/home/css/home.css') }}">
-{% endblock %}
-{% block body %}
-  {% block fos_user_content %}{% endblock %}
-{% endblock %}
-{% block contact %}
-{% endblock %}
-{% block js %}
-  <script src="{{ asset('bundles/conceptos/home/js/home.js') }}"></script>
-{% endblock %}
+<html lang="es">
+<head>
+    <title>Cambiar contraseña</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/styles/fos_user.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/scripts/css/temp-styles.css') }}" type="text/css">
+</head>
+<body>
+<header class="header">
+    <div class="header__logo">
+        <a href="{{ path('site_home') }}">
+            <img src="{{ asset('bundles/conceptos/images/logo.svg') }}" alt="">
+        </a>
+    </div>
+
+</header>
+
+<div class="fos_user_content">
+    {% block fos_user_content %}{% endblock %}
+
+    <div class="go_home">
+        <a href="{{ path('site_home') }}"
+           class="conceptos-primary-button pl-3 pr-3 pt-0 pb-0">
+            Volver a inicio
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>
+
+
+
+
