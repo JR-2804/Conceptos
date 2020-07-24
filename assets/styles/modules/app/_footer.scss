@@ -1,18 +1,126 @@
-#conceptos-contact-form{
-    & .conceptos-image{
-        position: absolute;
-        top: 65vh;
-        height: 75vh;
-        object-fit: cover;
+footer {
+  & .company-info {
+    background-color: $mainDark;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+
+    & .contact-info {
+      display: flex;
+      flex-direction: column;
+
+      & > .logo {
+        max-width: 50%;
+        margin-bottom: 1em;
+      }
+
+      & span {
+        color: $mainWhite;
+        font-size: 0.8em;
+        margin-top: 0.6em;
+
+        & i {
+          font-size: 1.3em;
+          margin-right: 0.4em;
+        }
+      }
     }
 
+    & .social-networks {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
-    &:after{
-        content: '';
-        position: absolute;
-        height: 48%;
+      & a {
+        margin-bottom: 0.2em;
+
+        & img {
+          width: 30px;
+        }
+      }
+
+      & a:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  & .contact-form {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+
+    & .header {
+      font-size: 1.3em;
+      font-weight: bold;
+    }
+
+    & .form {
+      display: flex;
+      flex-direction: column;
+
+      & > input,
+      & > textarea {
+        margin-top: 0.8em;
         width: 100%;
-        background: linear-gradient(to top, transparent, #e5e5e5);
-        top: 65vh;
+        background-color: $mainWhite;
+        outline: none;
+      }
+
+      & > input:focus,
+      & > textarea:focus {
+        border: 1px solid $mainDark;
+      }
+
+      & > input.small-field {
+        width: 50%;
+      }
+
+      & > button {
+        margin-top: 0.8em;
+        padding: 0.2em 0.6em;
+        align-self: center;
+        border: none;
+        color: $mainWhite;
+        background-color: $mainDark;
+        font-family: Montserrat;
+        font-size: 1em;
+        outline: none;
+      }
+
+      & > button:hover {
+        background-color: $mainYellow;
+      }
     }
+  }
+
+  & .additional-info {
+    background-color: $mainDark;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    & .policies {
+      display: flex;
+      flex-direction: column;
+
+      & a {
+        color: $mainWhite;
+        font-size: 1em;
+        margin-top: 0.2em;
+        text-decoration: underline;
+      }
+
+      & a:first-child {
+        margin-top: 0;
+      }
+    }
+
+    & .copyright {
+      color: $mainWhite;
+      font-size: 0.7em;
+      margin-top: 2em;
+    }
+  }
 }

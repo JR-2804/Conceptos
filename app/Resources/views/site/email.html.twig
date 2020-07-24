@@ -1,90 +1,49 @@
-{% if home.data.testimonies.text1 is defined and home.data.testimonies.text1 %}
-  <div class="d-flex flex-column mt-3 ml-2 mr-2 ml-lg-5 mr-lg-5">
-    <div class="d-flex conceptos-divider"></div>
-    <div class="d-flex flex-column col-lg-8 pl-0 align-self-center">
-      <span class="conceptos-testimony-text mt-3">"{{home.data.testimonies.text1}}"</span>
-      <span class="conceptos-testimony-author">{{home.data.testimonies.author1}}</span>
+<footer>
+  <section class="company-info">
+    <div class="contact-info">
+      <img class="logo" src="{{ home.data.logo.image.path }}" alt="">
+      <span><i class="fa fa-envelope"></i>{{home.data.contact.address}}</span>
+      <span><i class="fa fa-envelope"></i>{{home.data.contact.email}}</span>
+      <span><i class="fa fa-envelope"></i>{{home.data.contact.phone}}</span>
+      <span><i class="fa fa-envelope"></i>{{home.data.contact.schedule}}</span>
     </div>
-    {% if home.data.testimonies.text2 is defined and home.data.testimonies.text2 %}
-      <div class="d-flex flex-column col-lg-8 pl-0 align-self-center">
-        <span class="conceptos-testimony-text mt-3">"{{home.data.testimonies.text2}}"</span>
-        <span class="conceptos-testimony-author">{{home.data.testimonies.author2}}</span>
-      </div>
-    {% endif %}
-    {% if home.data.testimonies.text3 is defined and home.data.testimonies.text3 %}
-      <div class="d-flex flex-column col-lg-8 pl-0 align-self-center">
-        <span class="conceptos-testimony-text mt-3">"{{home.data.testimonies.text3}}"</span>
-        <span class="conceptos-testimony-author">{{home.data.testimonies.author3}}</span>
-      </div>
-    {% endif %}
-  </div>
-{% endif %}
-<section id="conceptos-contact-form" class="d-flex flex-column">
-  <img class="conceptos-image" src="{{home.data.contact.image.path}}">
-  {{ form_start(form, {'attr': {'data-form-title': 'Conceptos Formulario de Contacto', 'action': path('email_notification')}}) }}
-    <div class="d-flex flex-column mt-3 ml-2 mr-2 ml-lg-5 mr-lg-5">
-      <div class="d-flex conceptos-divider"></div>
-      <div class="d-flex conceptos-divider mt-2"></div>
-      <span class="conceptos-title mt-2 mb-2 col-lg-8 pl-0 align-self-center">CONTÁCTANOS</span>
-      <div class="d-flex flex-column col-lg-8 pl-0 align-self-center">
-        <div class="d-flex flex-column" data-for="email_name">
-          <span class="conceptos-subtitle">NOMBRE</span>
-          {{ form_widget(form.name, {'attr': {'class': 'conceptos-contact-input w-100', 'data-form-field': 'Nombre'}}) }}
-        </div>
-        <div class="d-flex flex-column mt-2" data-for="email_lastName">
-          <span class="conceptos-subtitle">APELLIDOS</span>
-          {{ form_widget(form.lastName, {'attr': {'class': 'conceptos-contact-input w-100', 'data-form-field': 'Nombre'}}) }}
-        </div>
-        <div class="d-flex flex-column mt-2" data-for="email_email">
-          <span class="conceptos-subtitle">CORREO</span>
-          {{ form_widget(form.email, {'attr': {'class': 'conceptos-contact-input w-100', 'data-form-field':'Correo'}}) }}
-        </div>
-        <div class="d-flex flex-column mt-2" data-for="email_phone">
-          <span class="conceptos-subtitle">TELÉFONO</span>
-          {{ form_widget(form.phone, {'attr': {'class': 'conceptos-contact-input w-100', 'data-form-field': 'Teléfono'}}) }}
-        </div>
-        <div class="d-flex flex-column mt-2" data-for="email_message">
-          <span class="conceptos-subtitle">MENSAJE</span>
-          {{ form_widget(form.text, {'attr': {'class': 'conceptos-contact-input w-100', 'data-form-field': 'Mensaje', 'rows':'7'}}) }}
-        </div>
-        <div class="d-flex align-items-start mt-2">
-          <button id="send-mail-button" class="conceptos-primary-button pl-3 pr-3 pt-0 pb-0" type="submit" href="">ENVIAR</button>
-        </div>
-        <div class="d-flex flex-column mt-2">
-          <a class="conceptos-title conceptos-title-italic mt-2" data-toggle="modal" data-target="#termsAndConditionsModal" href="#">TÉRMINOS Y CONDICIONES</a>
-          <a class="conceptos-title conceptos-title-italic mt-2" data-toggle="modal" data-target="#privacyPolicyModal" href="#">POLÍTICA DE PRIVACIDAD</a>
-        </div>
-      </div>
-      <div class="d-flex justify-content-end mt-3">
-        {% for network in home.data.social_network.networks %}
-          {% if network.network == 'facebook' %}
-            <a href="{{network.link}}" class="mr-2" target="_blank">
-                <img title="whatsapp" src="{{ asset('bundles/conceptos/images/social/facebook.svg') }}"
-                     alt="whatsapp" width="32">
-            </a>
-          {% elseif network.network == 'instagram' %}
-            <a href="{{network.link}}" class="mr-2" target="_blank">
-                <img title="whatsapp" src="{{ asset('bundles/conceptos/images/social/instagram.svg') }}"
-                     alt="whatsapp" width="32">
-            </a>
-          {% endif %}
-        {% endfor %}
-          <a target="_blank" href="http://wa.me/5352458380?text=Estoy%20interesado%20en%20...">
-              <img title="whatsapp" class="mr-2" src="{{ asset('bundles/conceptos/images/social/whatsapp.svg') }}"
-                   alt="whatsapp" width="32">
+    <div class="social-networks">
+      {% for network in home.data.social_network.networks %}
+        {% if network.network == 'facebook' %}
+          <a href="{{network.link}}" target="_blank">
+            <img title="whatsapp" src="{{ asset('bundles/conceptos/images/social/facebook.svg') }}" alt="whatsapp">
           </a>
-          <a target="_blank" href="https://m.me/TiendaConceptos">
-              <img title="whatsapp" class="mr-2" src="{{ asset('bundles/conceptos/images/social/messenger.svg') }}"
-                   alt="whatsapp" width="32">
+        {% elseif network.network == 'instagram' %}
+          <a href="{{network.link}}" target="_blank">
+            <img title="whatsapp" src="{{ asset('bundles/conceptos/images/social/instagram.svg') }}" alt="whatsapp">
           </a>
-
+        {% endif %}
+      {% endfor %}
+      <a target="_blank" href="http://wa.me/5352458380?text=Estoy%20interesado%20en%20...">
+        <img title="whatsapp" src="{{ asset('bundles/conceptos/images/social/whatsapp.svg') }}" alt="whatsapp">
+      </a>
+      <a target="_blank" href="https://m.me/TiendaConceptos">
+        <img title="whatsapp" src="{{ asset('bundles/conceptos/images/social/messenger.svg') }}" alt="whatsapp">
+      </a>
+    </div>
+  </section>
+  <section class="contact-form">
+    {{ form_start(form, {'attr': {'data-form-title': 'Conceptos Formulario de Contacto', 'action': path('email_notification')}}) }}
+      <span class="header">CONTÁCTANOS</span>
+      <div class="form">
+        {{ form_widget(form.name, {'attr': {'placeholder': "Nombre y apellidos"}}) }}
+        {{ form_widget(form.phone, {'attr': {'class': 'small-field', 'placeholder': "Teléfono"}}) }}
+        {{ form_widget(form.email, {'attr': {'class': 'small-field', 'placeholder': "Correo"}}) }}
+        {{ form_widget(form.text, {'attr': {'placeholder': "Mensaje", 'rows':'5'}}) }}
+        <button id="send-mail-button" type="submit" href="">ENVIAR</button>
       </div>
+    {{ form_end(form) }}
+  </section>
+  <section class="additional-info">
+    <div class="policies">
+      <a data-toggle="modal" data-target="#termsAndConditionsModal" href="#">TÉRMINOS Y CONDICIONES</a>
+      <a data-toggle="modal" data-target="#privacyPolicyModal" href="#">POLÍTICA DE PRIVACIDAD</a>
     </div>
-    <div class="d-flex flex-column align-items-end conceptos-contact-section mt-3 pr-2">
-{#      <span class="conceptos-contact-text">{{home.data.contact.phone}}</span>#}
-{#      <span class="conceptos-contact-text">{{home.data.contact.email}}</span>#}
-{#      <span class="conceptos-contact-text">{{home.data.contact.address}}</span>#}
-{#      <span class="conceptos-contact-text">{{home.data.contact.schedule}}</span>#}
-    </div>
-  {{ form_end(form) }}
-</section>
+    <span class="copyright">Conceptos Copyright {{currentDate|date('Y')}}</span>
+  </section>
+</footer>

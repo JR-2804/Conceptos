@@ -17,7 +17,6 @@ class EmailType extends AbstractType
   {
     $builder
       ->add('name', TextType::class)
-      ->add('lastName', TextType::class)
       ->add('email', EmailForm::class)
       ->add('phone', TextType::class)
       ->add('path', HiddenType::class)

@@ -1,16 +1,16 @@
 @font-face {
-  font-family: "Montserrat";
-  src: url("../../fonts/Montserrat/Montserrat-Regular.ttf");
+  font-family: 'Montserrat';
+  src: url('../../fonts/Montserrat/Montserrat-Regular.ttf');
 }
 
 @font-face {
-  font-family: "Montserrat-ExtraBold";
-  src: url("../../fonts/Montserrat/Montserrat-ExtraBold.ttf");
+  font-family: 'Montserrat-ExtraBold';
+  src: url('../../fonts/Montserrat/Montserrat-ExtraBold.ttf');
 }
 
 @font-face {
-  font-family: "Montserrat-SemiBold";
-  src: url("../../fonts/Montserrat/Montserrat-SemiBold.ttf");
+  font-family: 'Montserrat-SemiBold';
+  src: url('../../fonts/Montserrat/Montserrat-SemiBold.ttf');
 }
 
 body {
@@ -29,17 +29,17 @@ body {
 /*  background: #282827;*/
 /*}*/
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   background-color: #ffffff;
 }
 
 select,
 textarea,
-input[type="date"],
-input[type="text"],
-input[type="password"],
-input[type="number"],
-input[type="email"] {
+input[type='date'],
+input[type='text'],
+input[type='password'],
+input[type='number'],
+input[type='email'] {
   background-color: #e5e5e5;
   border: none;
   padding: 5px;
@@ -53,10 +53,10 @@ input[type="email"] {
 
 select:focus,
 textarea:focus,
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="number"]:focus,
-input[type="email"]:focus {
+input[type='text']:focus,
+input[type='password']:focus,
+input[type='number']:focus,
+input[type='email']:focus {
   outline-color: #c2b930;
   border: none;
 }
@@ -111,7 +111,7 @@ textarea.evaluation-textarea:focus {
 }
 
 .checkmark:after {
-  content: "";
+  content: '';
   position: absolute;
   display: none;
 }
@@ -449,7 +449,7 @@ a.conceptos-subtitle:focus {
   width: 20px;
   height: 20px;
   background-color: transparent;
-  background-image: url("../../images/home/category-in-store -active.png");
+  background-image: url('../../images/home/category-in-store -active.png');
   background-size: cover;
 }
 
@@ -458,7 +458,7 @@ a.conceptos-subtitle:focus {
   width: 20px;
   height: 20px;
   background-color: transparent;
-  background-image: url("../../images/cart/airplane-active.png");
+  background-image: url('../../images/cart/airplane-active.png');
   background-size: cover;
 }
 
@@ -467,7 +467,7 @@ a.conceptos-subtitle:focus {
   width: 20px;
   height: 20px;
   background-color: transparent;
-  background-image: url("../../images/cart/ship-active.png");
+  background-image: url('../../images/cart/ship-active.png');
   background-size: cover;
 }
 
@@ -708,13 +708,13 @@ a.conceptos-category-subtitle:focus {
   width: 35px;
   height: 35px;
   background-color: transparent;
-  background-image: url("../../images/home/facebook.png");
+  background-image: url('../../images/home/facebook.png');
   background-size: cover;
 }
 
 .conceptos-social-network-icon-facebook:focus,
 .conceptos-social-network-icon-facebook:hover {
-  background-image: url("../../images/home/facebook-active.png");
+  background-image: url('../../images/home/facebook-active.png');
   outline: none;
 }
 
@@ -722,13 +722,13 @@ a.conceptos-category-subtitle:focus {
   width: 35px;
   height: 35px;
   background-color: transparent;
-  background-image: url("../../images/home/instagram.png");
+  background-image: url('../../images/home/instagram.png');
   background-size: cover;
 }
 
 .conceptos-social-network-icon-instagram:focus,
 .conceptos-social-network-icon-instagram:hover {
-  background-image: url("../../images/home/instagram-active.png");
+  background-image: url('../../images/home/instagram-active.png');
   outline: none;
 }
 
@@ -755,13 +755,13 @@ a.conceptos-category-subtitle:focus {
   width: 37px;
   height: 35px;
   background-color: transparent;
-  background-image: url("../../images/home/remove-all-icon-active.png");
+  background-image: url('../../images/home/remove-all-icon-active.png');
   background-size: cover;
 }
 
 .conceptos-remove-all-icon:focus,
 .conceptos-remove-all-icon:hover {
-  background-image: url("../../images/home/remove-all-icon-active.png");
+  background-image: url('../../images/home/remove-all-icon-active.png');
   outline: none;
 }
 
@@ -860,12 +860,12 @@ a.conceptos-category-subtitle:focus {
   color: #282827;
 }
 
-.conceptos-primary-button[disabled="disabled"] {
+.conceptos-primary-button[disabled='disabled'] {
   border: 1px solid #282827;
 }
 
-.conceptos-primary-button[disabled="disabled"]:focus,
-.conceptos-primary-button[disabled="disabled"]:hover {
+.conceptos-primary-button[disabled='disabled']:focus,
+.conceptos-primary-button[disabled='disabled']:hover {
   background-color: transparent;
   outline: none;
 }
@@ -967,12 +967,6 @@ a.conceptos-category-subtitle:focus {
 
 /* -------------------------------------------------------- */
 
-#conceptos-contact-form form {
-  z-index: 1;
-}
-
-/* -------------------------------------------------------- */
-
 .shop-cart-section {
   background-color: #ffffff;
 }
@@ -1012,19 +1006,19 @@ a.conceptos-category-subtitle:focus {
   width: 25px;
   height: 24px;
   background-color: transparent;
-  background-image: url("../../images/cart/airplane.png");
+  background-image: url('../../images/cart/airplane.png');
   background-size: cover;
 }
 
 .airplane-delivery:focus,
 .airplane-delivery:hover,
 .airplane-delivery-focused {
-  background-image: url("../../images/cart/airplane-active.png");
+  background-image: url('../../images/cart/airplane-active.png');
   outline: none;
 }
 
-.airplane-delivery[disabled="disabled"] {
-  background-image: url("../../images/cart/airplane-disabled.png");
+.airplane-delivery[disabled='disabled'] {
+  background-image: url('../../images/cart/airplane-disabled.png');
 }
 
 .ship-delivery {
@@ -1032,19 +1026,19 @@ a.conceptos-category-subtitle:focus {
   width: 25px;
   height: 24px;
   background-color: transparent;
-  background-image: url("../../images/cart/ship.png");
+  background-image: url('../../images/cart/ship.png');
   background-size: cover;
 }
 
 .ship-delivery:focus,
 .ship-delivery:hover,
 .ship-delivery-focused {
-  background-image: url("../../images/cart/ship-active.png");
+  background-image: url('../../images/cart/ship-active.png');
   outline: none;
 }
 
-.ship-delivery[disabled="disabled"] {
-  background-image: url("../../images/cart/ship-disabled.png");
+.ship-delivery[disabled='disabled'] {
+  background-image: url('../../images/cart/ship-disabled.png');
 }
 
 .cart-quantity-up {
@@ -1052,13 +1046,13 @@ a.conceptos-category-subtitle:focus {
   width: 25px;
   height: 24px;
   background-color: transparent;
-  background-image: url("../../images/cart/plus.png");
+  background-image: url('../../images/cart/plus.png');
   background-size: cover;
 }
 
 .cart-quantity-up:focus,
 .cart-quantity-up:hover {
-  background-image: url("../../images/cart/plus-active.png");
+  background-image: url('../../images/cart/plus-active.png');
   outline: none;
 }
 
@@ -1067,13 +1061,13 @@ a.conceptos-category-subtitle:focus {
   width: 25px;
   height: 24px;
   background-color: transparent;
-  background-image: url("../../images/cart/minus.png");
+  background-image: url('../../images/cart/minus.png');
   background-size: cover;
 }
 
 .cart-quantity-down:focus,
 .cart-quantity-down:hover {
-  background-image: url("../../images/cart/minus-active.png");
+  background-image: url('../../images/cart/minus-active.png');
   outline: none;
 }
 
@@ -1082,13 +1076,13 @@ a.conceptos-category-subtitle:focus {
   width: 15px;
   height: 20px;
   background-color: transparent;
-  background-image: url("../../images/cart/trash-icon.png");
+  background-image: url('../../images/cart/trash-icon.png');
   background-size: cover;
 }
 
 .shop-cart-trash:focus,
 .shop-cart-trash:hover {
-  background-image: url("../../images/cart/trash-icon-active.png");
+  background-image: url('../../images/cart/trash-icon-active.png');
   outline: none;
 }
 
@@ -1105,7 +1099,7 @@ a.conceptos-category-subtitle:focus {
 }
 
 #shop-cart-contact-form:after {
-  content: "";
+  content: '';
   position: absolute;
   height: 48%;
   width: 100%;
@@ -1141,7 +1135,7 @@ a.conceptos-category-subtitle:focus {
   width: 20px;
   height: 20px;
   background-color: transparent;
-  background-image: url("../../images/home/edit-profile.png");
+  background-image: url('../../images/home/edit-profile.png');
   background-size: cover;
 }
 
@@ -1159,7 +1153,7 @@ a.conceptos-category-subtitle:focus {
   width: 22px;
   height: 40px;
   background-color: transparent;
-  background-image: url("../../images/home/view-profile-product-details.png");
+  background-image: url('../../images/home/view-profile-product-details.png');
   background-size: cover;
 }
 

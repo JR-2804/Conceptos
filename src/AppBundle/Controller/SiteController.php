@@ -1046,7 +1046,7 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="membership", path="/membresia")
+     * @Route(name="membership", path="/membresía")
      *
      * @param Request $request
      *
@@ -1316,7 +1316,7 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="request_membership", path="/solicitar-membresia")
+     * @Route(name="request_membership", path="/solicitar-membresía")
      *
      * @param Request $request
      *
@@ -1646,7 +1646,7 @@ class SiteController extends Controller
             'forClient' => true,
         ]);
 
-        $this->get('email_service')->send($client->getEmail(), $client->getFirstName().' '.$client->getLastName(), $config->getEmail(), 'Pedido realizardo a través de la WEB', $body);
+        $this->get('email_service')->send($client->getEmail(), $client->getFirstName().' '.$client->getLastName(), $config->getEmail(), 'Pedido realizado a través de la WEB', $body);
         $this->get('email_service')->send($config->getEmail(), 'Equipo comercial Conceptos', $client->getEmail(), 'Pedido realizado a través de la WEB', $bodyClient);
 
         $this->get('shop_cart_service')->emptyShopCart($this->getUser());
@@ -1868,9 +1868,8 @@ class SiteController extends Controller
             $email = $form->getData();
             $body = $this->renderView(':site:email-body.html.twig', [
                 'name' => $email->getName(),
-                'lastName' => $email->getLastName(),
-                'email' => $email->getEmail(),
                 'phone' => $email->getPhone(),
+                'email' => $email->getEmail(),
                 'description' => $email->getText(),
             ]);
             $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
@@ -1882,6 +1881,7 @@ class SiteController extends Controller
 
         return $this->render(':site:email.html.twig', [
             'form' => $form->createView(),
+            'currentDate' => new \DateTime(),
             'home' => $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
                 'name' => 'Home',
             ]),

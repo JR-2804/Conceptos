@@ -1,11 +1,11 @@
 @font-face {
-  font-family: "Roboto";
-  src: url("../../fonts/roboto/Roboto-Regular.ttf");
+  font-family: 'Roboto';
+  src: url('../../fonts/roboto/Roboto-Regular.ttf');
 }
 
 @font-face {
-  font-family: "Univers LT Std";
-  src: url("../../fonts/univers-lt-std/UniversLTStd-Black.otf");
+  font-family: 'Univers LT Std';
+  src: url('../../fonts/univers-lt-std/UniversLTStd-Black.otf');
 }
 
 .in-store-image {
@@ -25,7 +25,7 @@
 
 .home-extra-section-phrase .main-text {
   color: #000000;
-  font-family: "Gotham";
+  font-family: 'Gotham';
   font-weight: bold;
   font-size: 60px;
   text-align: center;
@@ -42,7 +42,7 @@
 
 .home-extra-section-phrase .content-text {
   color: #000000;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 26.27px;
   text-align: center;
@@ -79,14 +79,14 @@
 }
 
 .blog-summary .bs-date span {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   color: #9f9f9f;
   display: block;
 }
 
 .blog-summary .bs-category span {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   text-transform: uppercase;
   color: #9f9f9f;
@@ -94,7 +94,7 @@
 }
 
 .blog-summary .bs-title span {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   color: #000000;
   display: block;
@@ -103,7 +103,7 @@
 }
 
 .blog-summary .view-more {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   color: #000000;
   display: block;
@@ -143,7 +143,7 @@ a.header-text.active {
   background-color: #f7ed4a;
   border-color: #f7ed4a;
   color: #3f3c03;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 18px !important;
   padding: 5px 15px 5px 15px;
@@ -172,7 +172,7 @@ a.header-text.active {
   border: 1px solid #f7ed4a;
   border-radius: 30px;
   color: #3f3c03;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   padding: 10px 20px 10px 20px;
   text-transform: uppercase;
@@ -193,7 +193,7 @@ a.header-text.active {
 .square-button {
   border: 1px solid #f7ed4a;
   color: #3f3c03;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   padding: 10px 20px 10px 20px;
   text-transform: uppercase;
@@ -246,7 +246,7 @@ a.header-text.active {
 }
 
 .products-propaganda-top-text {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   color: #282828;
   font-size: 43.55px;
@@ -262,7 +262,7 @@ a.header-text.active {
 }
 
 .products-propaganda-band .default-text {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   color: #ffffff;
   font-size: 20.56px;
@@ -271,7 +271,7 @@ a.header-text.active {
 }
 
 .products-propaganda-band .resalted-text {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   color: #f7ed4a;
   font-size: 20.56px;
@@ -300,7 +300,7 @@ a.header-text.active {
 
 .categories-header {
   margin-top: 20px;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   color: #282828;
   font-size: 28.45px;
@@ -326,7 +326,7 @@ a.header-text.active {
 
 .product-title {
   color: #282828;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 15.71px;
   text-transform: uppercase;
@@ -338,7 +338,7 @@ a.header-text.active {
 
 .product-subtitle {
   color: #282828;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 17px;
   height: 50px;
@@ -351,7 +351,7 @@ a.header-text.active {
 
 .product-code {
   color: #282828;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 15px;
 }
@@ -377,7 +377,7 @@ a.header-text.active {
 }
 
 .price-product {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   color: #9a9a9a;
   font-size: 15px;
@@ -466,7 +466,7 @@ a.header-text.active {
   color: #ffffff;
   border-radius: 10px;
   padding: 0px 10px 0px 10px;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 15px;
   margin-left: 5px;
@@ -570,7 +570,7 @@ a.header-text.active {
 
 .product-description-header {
   color: #333333;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 18px;
   text-transform: uppercase;
@@ -585,7 +585,7 @@ a.header-text.active {
 
 .product-description {
   color: #282828;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 15px;
   display: block;
@@ -598,7 +598,7 @@ a.header-text.active {
 
 .related-products-header {
   color: #333333;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 35px;
   text-transform: uppercase;
@@ -613,7 +613,7 @@ a.header-text.active {
 
 .price-offer {
   text-decoration: line-through;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   color: #9a9a9a;
   font-size: 13px;
@@ -622,7 +622,7 @@ a.header-text.active {
 }
 
 .rob-header {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 60px;
   color: #000000;
@@ -635,7 +635,7 @@ a.header-text.active {
 }
 
 .rob-subtitle {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 28.67px;
   color: #000000;
@@ -652,7 +652,7 @@ a.header-text.active {
   border: 1px solid #f7ed4a !important;
   border-radius: 0;
   text-transform: uppercase;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 21.74px;
   color: #000000 !important;
@@ -670,7 +670,7 @@ a.header-text.active {
 }
 
 .product-count {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 15px;
   color: #000000;
@@ -678,14 +678,14 @@ a.header-text.active {
 }
 
 .product-price {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 25px;
   color: #000000;
 }
 
 .price-header {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 18px;
   color: #000000;
@@ -720,7 +720,7 @@ a.header-text.active {
   float: left;
   font-size: 16px;
   text-align: center;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   border: 0px;
 }
 
@@ -733,7 +733,7 @@ a.header-text.active {
 
 .cart-table-header .span {
   color: #3f3c03;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 15px;
 }
@@ -794,7 +794,7 @@ a.header-text.active {
 }
 
 .nav-item a {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 13px;
   color: #ffffff;
@@ -806,7 +806,7 @@ a.header-text.active {
   color: #ffffff;
   padding-left: 10px;
   text-transform: uppercase;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
 }
 
@@ -855,7 +855,7 @@ a.header-text.active {
 }
 
 .section-subtitle {
-  font-family: "Roboto" !important;
+  font-family: 'Roboto' !important;
   font-weight: lighter !important;
   font-size: 15px !important;
   margin-top: -10px;
@@ -890,10 +890,6 @@ a.header-text.active {
   margin-left: 0.1rem;
 }
 
-.social-networks-text {
-  margin-left: 45px;
-}
-
 .decoration-design-section {
   background-color: #f7ed4a;
   padding: 40px;
@@ -905,7 +901,7 @@ a.header-text.active {
 }
 
 .decoration-design-title {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 32px;
   color: #000000;
@@ -919,7 +915,7 @@ a.header-text.active {
 }
 
 .decoration-design-description {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 20px;
   color: #000000;
@@ -951,7 +947,7 @@ a.header-text.active {
 }
 
 .inspiration-text {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 90px;
   color: #ffffff;
@@ -971,7 +967,7 @@ a.header-text.active {
 }
 
 .projects-title {
-  font-family: "Univers LT Std";
+  font-family: 'Univers LT Std';
   font-weight: bold;
   font-size: 32px;
   color: #282828;
@@ -981,7 +977,7 @@ a.header-text.active {
 }
 
 .projects-title-short {
-  font-family: "Univers LT Std";
+  font-family: 'Univers LT Std';
   font-weight: bold;
   font-size: 25px;
   color: #282828;
@@ -991,7 +987,7 @@ a.header-text.active {
 }
 
 .project-title {
-  font-family: "Univers LT Std";
+  font-family: 'Univers LT Std';
   font-weight: bold;
   font-size: 32px;
   color: #282828;
@@ -1004,7 +1000,7 @@ a.header-text.active {
 }
 
 .project-title-short {
-  font-family: "Univers LT Std";
+  font-family: 'Univers LT Std';
   font-weight: bold;
   font-size: 20px;
   color: #282828;
@@ -1017,7 +1013,7 @@ a.header-text.active {
 }
 
 .projects-subtitle {
-  font-family: "Univers LT Std";
+  font-family: 'Univers LT Std';
   font-weight: lighter;
   font-size: 28px;
   color: #282828;
@@ -1026,7 +1022,7 @@ a.header-text.active {
 }
 
 .projects-subtitle-short {
-  font-family: "Univers LT Std";
+  font-family: 'Univers LT Std';
   font-weight: lighter;
   font-size: 20px;
   color: #282828;
@@ -1047,7 +1043,7 @@ a.header-text.active {
 }
 
 .testimony-title {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 30px;
   color: #282828;
@@ -1057,7 +1053,7 @@ a.header-text.active {
 }
 
 .testimony-title-short {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 20px;
   color: #282828;
@@ -1067,7 +1063,7 @@ a.header-text.active {
 }
 
 .testimony-description {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 30px;
   color: #282828;
@@ -1082,7 +1078,7 @@ a.header-text.active {
 }
 
 .testimony-author {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 30px;
   color: #282828;
@@ -1146,7 +1142,7 @@ a.header-text.active {
 }
 
 .member-name {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 20px;
   color: #272727;
@@ -1161,7 +1157,7 @@ a.header-text.active {
 }
 
 .member-role {
-  font-family: "Univers LT Std";
+  font-family: 'Univers LT Std';
   font-weight: bold;
   font-size: 15px;
   color: #272727;
@@ -1171,7 +1167,7 @@ a.header-text.active {
 }
 
 .member-description {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 15px;
   color: #272727;
@@ -1186,7 +1182,7 @@ a.header-text.active {
 }
 
 .members-section-footer span {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 30px;
   color: #f6ed4a;
@@ -1207,7 +1203,7 @@ a.header-text.active {
   font-size: 1rem;
   line-height: 1.5;
   color: #495057;
-  font-family: "Rubik", sans-serif;
+  font-family: 'Rubik', sans-serif;
   min-height: 0px;
   background-color: #f5f5f5;
   background-clip: padding-box;
@@ -1227,14 +1223,14 @@ a.header-text.active {
 }
 
 .filter-section .ac-custom label {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 20px;
   color: #000000;
 }
 
-.filter-section .ac-custom input[type="checkbox"]:checked + label,
-.filter-section .ac-custom input[type="radio"]:checked + label {
+.filter-section .ac-custom input[type='checkbox']:checked + label,
+.filter-section .ac-custom input[type='radio']:checked + label {
   color: #000000;
 }
 
@@ -1243,7 +1239,7 @@ a.header-text.active {
 }
 
 #filterProductsModal .filter-section .ac-custom label {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 12px;
   color: #000000;
@@ -1318,7 +1314,7 @@ a.header-text.active {
 
 .dropdown-submenu > a:after {
   display: block;
-  content: " ";
+  content: ' ';
   float: right;
   width: 0;
   height: 0;
@@ -1481,32 +1477,6 @@ a.header-text.active {
   margin-top: 0px;
 }
 
-#social-networks {
-  top: 40%;
-  left: 20px;
-  position: fixed;
-  z-index: 5000;
-}
-
-#social-networks .dropdown-item {
-  padding-left: 0px;
-}
-
-#social-networks .dropdown-menu {
-  background-color: transparent;
-  border: none;
-}
-
-#social-networks .dropdown-menu .dropdown-item:hover {
-  background-color: transparent;
-}
-
-#social-networks i.main-share-icon {
-  color: #ffffff;
-  background-color: #333333;
-  padding: 10px;
-}
-
 #products-search {
   top: 25%;
   left: 20px;
@@ -1554,7 +1524,7 @@ i.share-icon:hover {
 
 .card-header-category a {
   color: #000000;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   text-decoration: none;
   text-transform: uppercase;
@@ -1629,7 +1599,7 @@ i.share-icon:hover {
 
 .shop-cart .product-subtitle-card {
   color: #282828;
-  font-family: "Univers LT Std";
+  font-family: 'Univers LT Std';
   font-weight: bold;
   font-size: 28px;
   text-overflow: ellipsis;
@@ -1700,7 +1670,7 @@ i.share-icon:hover {
 }
 
 .rob-table-text {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 20px;
   color: #333333;
@@ -1737,7 +1707,7 @@ i.share-icon:hover {
 }
 
 .membership-field {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 15px;
   color: #000000;
@@ -1770,7 +1740,7 @@ i.share-icon:hover {
 }
 
 .membership-content-section .main-text {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   color: #333333;
   font-size: 50px;
@@ -1778,14 +1748,14 @@ i.share-icon:hover {
 }
 
 .membership-content-section .bottom-text {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   color: #333333;
   font-size: 25px;
 }
 
 .membership-content-section .highlighted-text {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   color: #333333;
   font-size: 20px;
@@ -1810,7 +1780,7 @@ i.share-icon:hover {
 }
 
 .membership-gift-card-section .main-text {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   color: #333333;
   font-size: 70px;
@@ -1821,7 +1791,7 @@ i.share-icon:hover {
 }
 
 .membership-gift-card-section .bottom-text {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   color: #333333;
   font-size: 30px;
@@ -1859,7 +1829,7 @@ i.share-icon:hover {
 }
 
 .membership-form .main-text {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 20px;
   text-transform: uppercase;
@@ -1870,7 +1840,7 @@ i.share-icon:hover {
 }
 
 .membership-form .bottom-text {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 15px;
   color: #333333;
@@ -1879,7 +1849,7 @@ i.share-icon:hover {
 }
 
 .membership-form input {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-style: italic;
   color: #333333;
@@ -1930,7 +1900,7 @@ i.share-icon:hover {
 }
 
 .in-store-text span {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 60px;
   color: #000000 !important;
@@ -1949,7 +1919,7 @@ i.share-icon:hover {
 }
 
 .carouse-in-store-text-content h6 {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 15px;
   color: #000000;
@@ -1958,7 +1928,7 @@ i.share-icon:hover {
 }
 
 .carouse-in-store-text-content p {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 17px;
   color: #000000;
@@ -1971,7 +1941,7 @@ i.share-icon:hover {
   border: 1px solid #000000 !important;
   border-radius: 0;
   text-transform: uppercase;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 21.74px;
   margin-right: 20px;
@@ -1983,7 +1953,7 @@ i.share-icon:hover {
 }
 
 .carouse-in-store-text-content .btn-custom {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 15px !important;
   color: #000000;
@@ -2194,7 +2164,7 @@ i.share-icon:hover {
 }
 
 .app-title {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: bold;
   font-size: 20px;
   color: #000000;
@@ -2209,7 +2179,7 @@ i.share-icon:hover {
 }
 
 .app-description {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: lighter;
   font-size: 15px;
   color: #000000;

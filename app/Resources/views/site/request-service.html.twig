@@ -13,9 +13,8 @@
           <div class="d-flex flex-column">
             <span class="conceptos-title-strong">SOLICITAR SERVICIO</span>
             {{ form_widget(form.name, {'attr': {'class': 'mt-2', 'data-form-field': 'Nombre', 'placeholder': 'Nombre'}}) }}
-            {{ form_widget(form.lastName, {'attr': {'class': 'mt-2', 'data-form-field': 'Apellidos', 'placeholder': 'Apellidos'}}) }}
-            {{ form_widget(form.email, {'attr': {'class': 'mt-2', 'data-form-field':'Correo', 'placeholder': 'Correo'}}) }}
             {{ form_widget(form.phone, {'attr': {'class': 'mt-2', 'data-form-field': 'Teléfono', 'placeholder': 'Teléfono'}}) }}
+            {{ form_widget(form.email, {'attr': {'class': 'mt-2', 'data-form-field':'Correo', 'placeholder': 'Correo'}}) }}
             {{ form_widget(form.text, {'attr': {'class': 'mt-2', 'data-form-field': 'Mensaje', 'rows':'7', 'placeholder': 'Mensaje'}}) }}
             <button id="send-mail-button" type="submit" class="conceptos-primary-button align-self-start mt-2">ENVIAR</button>
           </div>

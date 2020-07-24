@@ -32,46 +32,44 @@
   {% endif %}
 {% endblock %}
 
-<div id="home-header" class="d-flex flex-column justify-content-center home__hero align-items-start">
-  {% if page.data.slides and page.data.slides is not empty %}
-    <img class="conceptos-image d-none d-lg-flex" src="{{page.data.slides[0].path}}">
-    <img class="conceptos-image d-flex d-lg-none" src="{% if page.data.slides[0].mobileImage is defined %}{{page.data.slides[0].mobileImage.path}}{% else %}{{page.data.slides[0].path}}{% endif %}">
-  {% endif %}
+{% if page.data.slides and page.data.slides is not empty %}
+  <div id="home-header" class="d-flex flex-column justify-content-center home__hero align-items-start">
+    <div class="carousel pb-3 w-100" data-ride="carousel" id="carousel-slide" data-interval="10000">
+      {% if page.data.slides|length > 1 %}
+        <ol class="carousel-indicators carousel-indicators">
+          {% for slide in page.data.slides %}
+            <li data-app-prevent-settings="" data-target="#slider1-28" class="{% if loop.first %}active{% endif %}" data-slide-to="{{ loop.index }}"></li>
+          {% endfor %}
+        </ol>
+      {% endif %}
+      <div class="carousel-inner">
+        {% for slide in page.data.slides %}
+          <div class="container-fluid carousel-item p-0 mb-2 {% if loop.first %}active{% endif %}">
+            <div class="d-flex w-100">
+              <img class="conceptos-image d-none d-lg-flex" src="{{slide.path}}">
+              <img class="conceptos-image d-flex d-lg-none" src="{% if slide.mobileImage is defined %}{{slide.mobileImage.path}}{% else %}{{slide.path}}{% endif %}">
 
-  <div class="d-flex home__hero__content pl-0 h-100 {% if page.data.verticalPosition %}align-items-{{page.data.verticalPosition}}{% endif %} {% if page.data.horizontalPosition is defined %}justify-content-{{page.data.horizontalPosition}}{% endif %}">
-    {% set offer = offers | last %}
-    {% if offer and not page.data.prioritizeSlideText %}
-      <div class="home__hero__content__title">
-        {% if offer.name %}
-          <h1>{{ offer.name }}</h1>
-        {% endif %}
-        {% if offer.description %}
-          <h2>{{ offer.description }}</h2>
-        {% endif %}
-      </div>
-      <div class="home__hero__content__btn">
-        <a href="{{path('products', {inOffer:true})}}">VER OFERTAS</a>
-      </div>
-    {% elseif page.data.slides and page.data.slides is not empty %}
-      {% set slide = page.data.slides[0] %}
-      <div class="d-flex flex-column home__hero__content__title p-2"
-           style="{% if page.data.slideTopMargin is defined %}margin-top: {{page.data.slideTopMargin}}em;{% endif %}{% if page.data.slideBottomMargin is defined %}margin-bottom: {{page.data.slideBottomMargin}}em;{% endif %}{% if page.data.slideLeftMargin is defined %}margin-left: {{page.data.slideLeftMargin}}em;{% endif %}{% if page.data.slideRightMargin is defined %}margin-right: {{page.data.slideRightMargin}}em;{% endif %}">
-        {% if slide.main is defined %}
-          <h1 class="d-flex" style="{% if page.data.slideFontSize %}font-size: {{page.data.slideFontSize + 0.75}}em;{% endif %}{% if page.data.slideFontColor %}color: {{page.data.slideFontColor}};{% endif %}">{{ slide.main }}</h1>
-        {% endif %}
-        {% if slide.secondary is defined %}
-          <h2 class="d-flex" style="{% if page.data.slideFontSize %}font-size: {{page.data.slideFontSize}}em;{% endif %}{% if page.data.slideFontColor %}color: {{page.data.slideFontColor}};{% endif %}">{{ slide.secondary }}</h2>
-        {% endif %}
-        {% if slide.link is defined %}
-          <div class="d-flex home__hero__content__btn">
-            <a href="{{slide.link}}">VER MÁS</a>
+              <div class="d-flex home__hero__content pl-0 h-100 {% if page.data.verticalPosition %}align-items-{{page.data.verticalPosition}}{% endif %} {% if page.data.horizontalPosition is defined %}justify-content-{{page.data.horizontalPosition}}{% endif %}">
+                {% set slide = slide %}
+                <div class="d-flex flex-column home__hero__content__title p-2"
+                      style="{% if page.data.slideTopMargin is defined %}margin-top: {{page.data.slideTopMargin}}em;{% endif %}{% if page.data.slideBottomMargin is defined %}margin-bottom: {{page.data.slideBottomMargin}}em;{% endif %}{% if page.data.slideLeftMargin is defined %}margin-left: {{page.data.slideLeftMargin}}em;{% endif %}{% if page.data.slideRightMargin is defined %}margin-right: {{page.data.slideRightMargin}}em;{% endif %}">
+                  {% if slide.main is defined %}
+                    <h1 class="d-flex" style="{% if page.data.slideFontSize %}font-size: {{page.data.slideFontSize + 0.75}}em;{% endif %}{% if page.data.slideFontColor %}color: {{page.data.slideFontColor}};{% endif %}">{{ slide.main }}</h1>
+                  {% endif %}
+                  {% if slide.secondary is defined %}
+                    <h2 class="d-flex" style="{% if page.data.slideFontSize %}font-size: {{page.data.slideFontSize}}em;{% endif %}{% if page.data.slideFontColor %}color: {{page.data.slideFontColor}};{% endif %}">{{ slide.secondary }}</h2>
+                  {% endif %}
+                  {% if slide.link is defined %}
+                    <div class="d-flex home__hero__content__btn">
+                      <a href="{{slide.link}}">VER MÁS</a>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
           </div>
-        {% endif %}
+        {% endfor %}
       </div>
-    {% else %}
-      <div class="home__hero__content__title">
-        <h1>Bienvenidos a Conceptos</h1>
-      </div>
-    {% endif %}
+    </div>
   </div>
-</div>
+{% endif %}

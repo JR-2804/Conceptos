@@ -32,23 +32,23 @@ var logoImage = undefined;
 
 var editingAdvertisement = undefined;
 
-var hoverColorParent = document.querySelector("#hover-color");
+var hoverColorParent = document.querySelector('#hover-color');
 var hoverColorPicker = new Picker(hoverColorParent);
 var hoverColor = undefined;
-hoverColorPicker.onChange = function(color) {
+hoverColorPicker.onChange = function (color) {
   hoverColor = color.rgbaString;
   hoverColorParent.style.background = hoverColor;
 };
 
-var fontColorParent = document.querySelector("#slide-font-color");
+var fontColorParent = document.querySelector('#slide-font-color');
 var fontColorPicker = new Picker(fontColorParent);
 var fontColor = undefined;
-fontColorPicker.onChange = function(color) {
+fontColorPicker.onChange = function (color) {
   fontColor = color.rgbaString;
   fontColorParent.style.background = fontColor;
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
   if (data.popularProductsStyleDesktop) {
     popularProductsStyleDesktop = data.popularProductsStyleDesktop;
   }
@@ -93,469 +93,467 @@ $(document).ready(function() {
   }
   init();
 
-  dropzone = new Dropzone("form#picture-dropzone-header", {
-    url: $("#picture-dropzone-header").attr("action"),
+  dropzone = new Dropzone('form#picture-dropzone-header', {
+    url: $('#picture-dropzone-header').attr('action'),
     maxFiles: 1,
     thumbnailWidth: 100,
     thumbnailHeight: 100,
     addRemoveLinks: true,
-    dictCancelUpload: "Cancelar",
-    dictRemoveFile: "Eliminar",
-    previewTemplate: document.querySelector("#preview-template").innerHTML,
-    acceptedFiles: ".jpg,.jpeg,.png,.gif",
-    init: function() {
+    dictCancelUpload: 'Cancelar',
+    dictRemoveFile: 'Eliminar',
+    previewTemplate: document.querySelector('#preview-template').innerHTML,
+    acceptedFiles: '.jpg,.jpeg,.png,.gif',
+    init: function () {
       dropzone = this;
-      dropzone.on("removedfile", function() {
+      dropzone.on('removedfile', function () {
         if (headerImage != undefined) {
-          var path = $(".remove-path-image").val() + "/" + headerImage.id;
+          var path = $('.remove-path-image').val() + '/' + headerImage.id;
           headerImage = undefined;
           dropzone.options.maxFiles = 1;
         }
       });
     },
-    success: function(e, r) {
+    success: function (e, r) {
       headerImage = r;
-    }
+    },
   });
-  dropzoneMobile = new Dropzone("form#picture-dropzone-header-mobile", {
-    url: $("#picture-dropzone-header-mobile").attr("action"),
+  dropzoneMobile = new Dropzone('form#picture-dropzone-header-mobile', {
+    url: $('#picture-dropzone-header-mobile').attr('action'),
     maxFiles: 1,
     thumbnailWidth: 100,
     thumbnailHeight: 100,
     addRemoveLinks: true,
-    dictCancelUpload: "Cancelar",
-    dictRemoveFile: "Eliminar",
-    previewTemplate: document.querySelector("#preview-template").innerHTML,
-    acceptedFiles: ".jpg,.jpeg,.png,.gif",
-    init: function() {
+    dictCancelUpload: 'Cancelar',
+    dictRemoveFile: 'Eliminar',
+    previewTemplate: document.querySelector('#preview-template').innerHTML,
+    acceptedFiles: '.jpg,.jpeg,.png,.gif',
+    init: function () {
       dropzoneMobile = this;
-      dropzoneMobile.on("removedfile", function() {
+      dropzoneMobile.on('removedfile', function () {
         if (headerImageMobile != undefined) {
-          var path = $(".remove-path-image").val() + "/" + headerImageMobile.id;
+          var path = $('.remove-path-image').val() + '/' + headerImageMobile.id;
           headerImageMobile = undefined;
           dropzoneMobile.options.maxFiles = 1;
         }
       });
     },
-    success: function(e, r) {
+    success: function (e, r) {
       headerImageMobile = r;
-    }
+    },
   });
-  dropzoneTop1 = new Dropzone("form#picture-dropzone-top-1", {
-    url: $("#picture-dropzone-top-1").attr("action"),
+  dropzoneTop1 = new Dropzone('form#picture-dropzone-top-1', {
+    url: $('#picture-dropzone-top-1').attr('action'),
     maxFiles: 1,
     thumbnailWidth: 100,
     thumbnailHeight: 100,
     addRemoveLinks: true,
-    dictCancelUpload: "Cancelar",
-    dictRemoveFile: "Eliminar",
-    previewTemplate: document.querySelector("#preview-template").innerHTML,
-    acceptedFiles: ".jpg,.jpeg,.png,.gif",
-    init: function() {
+    dictCancelUpload: 'Cancelar',
+    dictRemoveFile: 'Eliminar',
+    previewTemplate: document.querySelector('#preview-template').innerHTML,
+    acceptedFiles: '.jpg,.jpeg,.png,.gif',
+    init: function () {
       dropzoneTop1 = this;
       if (topImage1 != undefined) {
         var mockFile = { name: topImage1.name, size: topImage1.size };
-        dropzoneTop1.emit("addedfile", mockFile);
-        dropzoneTop1.emit("thumbnail", mockFile, topImage1.path);
-        dropzoneTop1.emit("complete", mockFile);
+        dropzoneTop1.emit('addedfile', mockFile);
+        dropzoneTop1.emit('thumbnail', mockFile, topImage1.path);
+        dropzoneTop1.emit('complete', mockFile);
       }
-      dropzoneTop1.on("removedfile", function() {
-        var path = $(".remove-path-image").val() + "/" + topImage1.id;
+      dropzoneTop1.on('removedfile', function () {
+        var path = $('.remove-path-image').val() + '/' + topImage1.id;
         topImage1 = undefined;
         dropzoneTop1.options.maxFiles = 1;
       });
     },
-    success: function(e, r) {
+    success: function (e, r) {
       topImage1 = r;
-    }
+    },
   });
-  dropzoneTop2 = new Dropzone("form#picture-dropzone-top-2", {
-    url: $("#picture-dropzone-top-2").attr("action"),
+  dropzoneTop2 = new Dropzone('form#picture-dropzone-top-2', {
+    url: $('#picture-dropzone-top-2').attr('action'),
     maxFiles: 1,
     thumbnailWidth: 100,
     thumbnailHeight: 100,
     addRemoveLinks: true,
-    dictCancelUpload: "Cancelar",
-    dictRemoveFile: "Eliminar",
-    previewTemplate: document.querySelector("#preview-template").innerHTML,
-    acceptedFiles: ".jpg,.jpeg,.png,.gif",
-    init: function() {
+    dictCancelUpload: 'Cancelar',
+    dictRemoveFile: 'Eliminar',
+    previewTemplate: document.querySelector('#preview-template').innerHTML,
+    acceptedFiles: '.jpg,.jpeg,.png,.gif',
+    init: function () {
       dropzoneTop2 = this;
       if (topImage2 != undefined) {
         var mockFile = { name: topImage2.name, size: topImage2.size };
-        dropzoneTop2.emit("addedfile", mockFile);
-        dropzoneTop2.emit("thumbnail", mockFile, topImage2.path);
-        dropzoneTop2.emit("complete", mockFile);
+        dropzoneTop2.emit('addedfile', mockFile);
+        dropzoneTop2.emit('thumbnail', mockFile, topImage2.path);
+        dropzoneTop2.emit('complete', mockFile);
       }
-      dropzoneTop2.on("removedfile", function() {
-        var path = $(".remove-path-image").val() + "/" + topImage2.id;
+      dropzoneTop2.on('removedfile', function () {
+        var path = $('.remove-path-image').val() + '/' + topImage2.id;
         topImage2 = undefined;
         dropzoneTop2.options.maxFiles = 1;
       });
     },
-    success: function(e, r) {
+    success: function (e, r) {
       topImage2 = r;
-    }
+    },
   });
-  dropzoneServices = new Dropzone("form#services-dropzone", {
-    url: $("#services-dropzone").attr("action"),
+  dropzoneServices = new Dropzone('form#services-dropzone', {
+    url: $('#services-dropzone').attr('action'),
     maxFiles: 1,
     thumbnailWidth: 100,
     thumbnailHeight: 100,
     addRemoveLinks: true,
-    dictCancelUpload: "Cancelar",
-    dictRemoveFile: "Eliminar",
-    previewTemplate: document.querySelector("#preview-template").innerHTML,
-    acceptedFiles: ".jpg,.jpeg,.png,.gif",
-    init: function() {
+    dictCancelUpload: 'Cancelar',
+    dictRemoveFile: 'Eliminar',
+    previewTemplate: document.querySelector('#preview-template').innerHTML,
+    acceptedFiles: '.jpg,.jpeg,.png,.gif',
+    init: function () {
       dropzoneServices = this;
       if (servicesImage != undefined) {
         var mockFile = { name: servicesImage.name, size: servicesImage.size };
-        dropzoneServices.emit("addedfile", mockFile);
-        dropzoneServices.emit("thumbnail", mockFile, servicesImage.path);
-        dropzoneServices.emit("complete", mockFile);
+        dropzoneServices.emit('addedfile', mockFile);
+        dropzoneServices.emit('thumbnail', mockFile, servicesImage.path);
+        dropzoneServices.emit('complete', mockFile);
       }
-      dropzoneServices.on("removedfile", function() {
+      dropzoneServices.on('removedfile', function () {
         servicesImage = undefined;
         dropzoneServices.options.maxFiles = 1;
       });
     },
-    success: function(e, r) {
+    success: function (e, r) {
       servicesImage = r;
-    }
+    },
   });
-  dropzoneApp = new Dropzone("form#picture-dropzone-app", {
-    url: $("#picture-dropzone-app").attr("action"),
+  dropzoneApp = new Dropzone('form#picture-dropzone-app', {
+    url: $('#picture-dropzone-app').attr('action'),
     maxFiles: 1,
     thumbnailWidth: 100,
     thumbnailHeight: 100,
     addRemoveLinks: true,
-    dictCancelUpload: "Cancelar",
-    dictRemoveFile: "Eliminar",
-    previewTemplate: document.querySelector("#preview-template").innerHTML,
-    acceptedFiles: ".jpg,.jpeg,.png,.gif",
-    init: function() {
+    dictCancelUpload: 'Cancelar',
+    dictRemoveFile: 'Eliminar',
+    previewTemplate: document.querySelector('#preview-template').innerHTML,
+    acceptedFiles: '.jpg,.jpeg,.png,.gif',
+    init: function () {
       dropzoneApp = this;
       if (appImage != undefined) {
         var mockFile = { name: appImage.name, size: appImage.size };
-        dropzoneApp.emit("addedfile", mockFile);
-        dropzoneApp.emit("thumbnail", mockFile, appImage.path);
-        dropzoneApp.emit("complete", mockFile);
+        dropzoneApp.emit('addedfile', mockFile);
+        dropzoneApp.emit('thumbnail', mockFile, appImage.path);
+        dropzoneApp.emit('complete', mockFile);
       }
-      dropzoneApp.on("removedfile", function() {
-        var path = $(".remove-path-image").val() + "/" + appImage.id;
+      dropzoneApp.on('removedfile', function () {
+        var path = $('.remove-path-image').val() + '/' + appImage.id;
         appImage = undefined;
         dropzoneApp.options.maxFiles = 1;
       });
     },
-    success: function(e, r) {
+    success: function (e, r) {
       appImage = r;
-    }
+    },
   });
-  dropzoneCataloge = new Dropzone("form#picture-dropzone-cataloge", {
-    url: $("#picture-dropzone-cataloge").attr("action"),
+  dropzoneCataloge = new Dropzone('form#picture-dropzone-cataloge', {
+    url: $('#picture-dropzone-cataloge').attr('action'),
     maxFiles: 1,
     thumbnailWidth: 100,
     thumbnailHeight: 100,
     addRemoveLinks: true,
-    dictCancelUpload: "Cancelar",
-    dictRemoveFile: "Eliminar",
-    previewTemplate: document.querySelector("#preview-template").innerHTML,
-    acceptedFiles: ".pdf",
-    init: function() {
+    dictCancelUpload: 'Cancelar',
+    dictRemoveFile: 'Eliminar',
+    previewTemplate: document.querySelector('#preview-template').innerHTML,
+    acceptedFiles: '.pdf',
+    init: function () {
       dropzoneCataloge = this;
       if (cataloge != undefined) {
         var mockFile = { name: cataloge.name, size: cataloge.size };
-        dropzoneCataloge.emit("addedfile", mockFile);
-        dropzoneCataloge.emit("thumbnail", mockFile, cataloge.path);
-        dropzoneCataloge.emit("complete", mockFile);
+        dropzoneCataloge.emit('addedfile', mockFile);
+        dropzoneCataloge.emit('thumbnail', mockFile, cataloge.path);
+        dropzoneCataloge.emit('complete', mockFile);
       }
-      dropzoneCataloge.on("removedfile", function() {
+      dropzoneCataloge.on('removedfile', function () {
         cataloge = undefined;
         dropzoneCataloge.options.maxFiles = 1;
       });
     },
-    success: function(e, r) {
+    success: function (e, r) {
       cataloge = r;
-    }
+    },
   });
-  dropzoneContact = new Dropzone("form#picture-dropzone-contact", {
-    url: $("#picture-dropzone-contact").attr("action"),
+  dropzoneContact = new Dropzone('form#picture-dropzone-contact', {
+    url: $('#picture-dropzone-contact').attr('action'),
     maxFiles: 1,
     thumbnailWidth: 100,
     thumbnailHeight: 100,
     addRemoveLinks: true,
-    dictCancelUpload: "Cancelar",
-    dictRemoveFile: "Eliminar",
-    previewTemplate: document.querySelector("#preview-template").innerHTML,
-    acceptedFiles: ".jpg,.jpeg,.png,.gif",
-    init: function() {
+    dictCancelUpload: 'Cancelar',
+    dictRemoveFile: 'Eliminar',
+    previewTemplate: document.querySelector('#preview-template').innerHTML,
+    acceptedFiles: '.jpg,.jpeg,.png,.gif',
+    init: function () {
       dropzoneContact = this;
       if (contactImage != undefined) {
         var mockFile = { name: contactImage.name, size: contactImage.size };
-        dropzoneContact.emit("addedfile", mockFile);
-        dropzoneContact.emit("thumbnail", mockFile, contactImage.path);
-        dropzoneContact.emit("complete", mockFile);
+        dropzoneContact.emit('addedfile', mockFile);
+        dropzoneContact.emit('thumbnail', mockFile, contactImage.path);
+        dropzoneContact.emit('complete', mockFile);
       }
-      dropzoneContact.on("removedfile", function() {
-        var path = $(".remove-path-image").val() + "/" + contactImage.id;
+      dropzoneContact.on('removedfile', function () {
+        var path = $('.remove-path-image').val() + '/' + contactImage.id;
         contactImage = undefined;
         dropzoneContact.options.maxFiles = 1;
       });
     },
-    success: function(e, r) {
+    success: function (e, r) {
       contactImage = r;
-    }
+    },
   });
   advertisementDropzone = new Dropzone(
-    "form#picture-dropzone-advertisement-image",
+    'form#picture-dropzone-advertisement-image',
     {
-      url: $("#picture-dropzone-advertisement-image").attr("action"),
+      url: $('#picture-dropzone-advertisement-image').attr('action'),
       maxFiles: 1,
       thumbnailWidth: 100,
       thumbnailHeight: 100,
       addRemoveLinks: true,
-      dictCancelUpload: "Cancelar",
-      dictRemoveFile: "Eliminar",
-      previewTemplate: document.querySelector("#preview-template").innerHTML,
-      acceptedFiles: ".jpg,.jpeg,.png,.gif",
-      init: function() {
+      dictCancelUpload: 'Cancelar',
+      dictRemoveFile: 'Eliminar',
+      previewTemplate: document.querySelector('#preview-template').innerHTML,
+      acceptedFiles: '.jpg,.jpeg,.png,.gif',
+      init: function () {
         advertisementDropzone = this;
-        advertisementDropzone.on("removedfile", function() {
+        advertisementDropzone.on('removedfile', function () {
           if (advertisementImage != undefined) {
             var path =
-              $(".remove-path-image").val() + "/" + advertisementImage.id;
+              $('.remove-path-image').val() + '/' + advertisementImage.id;
             advertisementImage = undefined;
             advertisementDropzone.options.maxFiles = 1;
           }
         });
       },
-      success: function(e, r) {
+      success: function (e, r) {
         advertisementImage = r;
-      }
-    }
+      },
+    },
   );
-  dropzoneLogin = new Dropzone("form#picture-dropzone-login", {
-    url: $("#picture-dropzone-login").attr("action"),
+  dropzoneLogin = new Dropzone('form#picture-dropzone-login', {
+    url: $('#picture-dropzone-login').attr('action'),
     maxFiles: 1,
     thumbnailWidth: 100,
     thumbnailHeight: 100,
     addRemoveLinks: true,
-    dictCancelUpload: "Cancelar",
-    dictRemoveFile: "Eliminar",
-    previewTemplate: document.querySelector("#preview-template").innerHTML,
-    acceptedFiles: ".jpg,.jpeg,.png,.gif",
-    init: function() {
+    dictCancelUpload: 'Cancelar',
+    dictRemoveFile: 'Eliminar',
+    previewTemplate: document.querySelector('#preview-template').innerHTML,
+    acceptedFiles: '.jpg,.jpeg,.png,.gif',
+    init: function () {
       dropzoneLogin = this;
       if (loginImage != undefined) {
         var mockFile = { name: loginImage.name, size: loginImage.size };
-        dropzoneLogin.emit("addedfile", mockFile);
-        dropzoneLogin.emit("thumbnail", mockFile, loginImage.path);
-        dropzoneLogin.emit("complete", mockFile);
+        dropzoneLogin.emit('addedfile', mockFile);
+        dropzoneLogin.emit('thumbnail', mockFile, loginImage.path);
+        dropzoneLogin.emit('complete', mockFile);
       }
-      dropzoneLogin.on("removedfile", function() {
-        var path = $(".remove-path-image").val() + "/" + loginImage.id;
+      dropzoneLogin.on('removedfile', function () {
+        var path = $('.remove-path-image').val() + '/' + loginImage.id;
         loginImage = undefined;
         dropzoneLogin.options.maxFiles = 1;
       });
     },
-    success: function(e, r) {
+    success: function (e, r) {
       loginImage = r;
-    }
+    },
   });
-  dropzoneLoginShort = new Dropzone("form#picture-dropzone-login-short", {
-    url: $("#picture-dropzone-login-short").attr("action"),
+  dropzoneLoginShort = new Dropzone('form#picture-dropzone-login-short', {
+    url: $('#picture-dropzone-login-short').attr('action'),
     maxFiles: 1,
     thumbnailWidth: 100,
     thumbnailHeight: 100,
     addRemoveLinks: true,
-    dictCancelUpload: "Cancelar",
-    dictRemoveFile: "Eliminar",
-    previewTemplate: document.querySelector("#preview-template").innerHTML,
-    acceptedFiles: ".jpg,.jpeg,.png,.gif",
-    init: function() {
+    dictCancelUpload: 'Cancelar',
+    dictRemoveFile: 'Eliminar',
+    previewTemplate: document.querySelector('#preview-template').innerHTML,
+    acceptedFiles: '.jpg,.jpeg,.png,.gif',
+    init: function () {
       dropzoneLoginShort = this;
       if (loginImageShort != undefined) {
         var mockFile = {
           name: loginImageShort.name,
-          size: loginImageShort.size
+          size: loginImageShort.size,
         };
-        dropzoneLoginShort.emit("addedfile", mockFile);
-        dropzoneLoginShort.emit("thumbnail", mockFile, loginImageShort.path);
-        dropzoneLoginShort.emit("complete", mockFile);
+        dropzoneLoginShort.emit('addedfile', mockFile);
+        dropzoneLoginShort.emit('thumbnail', mockFile, loginImageShort.path);
+        dropzoneLoginShort.emit('complete', mockFile);
       }
-      dropzoneLoginShort.on("removedfile", function() {
+      dropzoneLoginShort.on('removedfile', function () {
         loginImageShort = undefined;
         dropzoneLoginShort.options.maxFiles = 1;
       });
     },
-    success: function(e, r) {
+    success: function (e, r) {
       loginImageShort = r;
-    }
+    },
   });
-  dropzoneSuccessMail = new Dropzone("form#picture-dropzone-success-mail", {
-    url: $("#picture-dropzone-success-mail").attr("action"),
+  dropzoneSuccessMail = new Dropzone('form#picture-dropzone-success-mail', {
+    url: $('#picture-dropzone-success-mail').attr('action'),
     maxFiles: 1,
     thumbnailWidth: 100,
     thumbnailHeight: 100,
     addRemoveLinks: true,
-    dictCancelUpload: "Cancelar",
-    dictRemoveFile: "Eliminar",
-    previewTemplate: document.querySelector("#preview-template").innerHTML,
-    acceptedFiles: ".jpg,.jpeg,.png,.gif",
-    init: function() {
+    dictCancelUpload: 'Cancelar',
+    dictRemoveFile: 'Eliminar',
+    previewTemplate: document.querySelector('#preview-template').innerHTML,
+    acceptedFiles: '.jpg,.jpeg,.png,.gif',
+    init: function () {
       dropzoneSuccessMail = this;
       if (successMailImage != undefined) {
         var mockFile = {
           name: successMailImage.name,
-          size: successMailImage.size
+          size: successMailImage.size,
         };
-        dropzoneSuccessMail.emit("addedfile", mockFile);
-        dropzoneSuccessMail.emit("thumbnail", mockFile, successMailImage.path);
-        dropzoneSuccessMail.emit("complete", mockFile);
+        dropzoneSuccessMail.emit('addedfile', mockFile);
+        dropzoneSuccessMail.emit('thumbnail', mockFile, successMailImage.path);
+        dropzoneSuccessMail.emit('complete', mockFile);
       }
-      dropzoneSuccessMail.on("removedfile", function() {
-        var path = $(".remove-path-image").val() + "/" + successMailImage.id;
+      dropzoneSuccessMail.on('removedfile', function () {
+        var path = $('.remove-path-image').val() + '/' + successMailImage.id;
         successMailImage = undefined;
         dropzoneSuccessMail.options.maxFiles = 1;
       });
     },
-    success: function(e, r) {
+    success: function (e, r) {
       successMailImage = r;
-    }
+    },
   });
-  dropzoneLogo = new Dropzone("form#picture-dropzone-logo", {
-    url: $("#picture-dropzone-logo").attr("action"),
+  dropzoneLogo = new Dropzone('form#picture-dropzone-logo', {
+    url: $('#picture-dropzone-logo').attr('action'),
     maxFiles: 1,
     thumbnailWidth: 100,
     thumbnailHeight: 100,
     addRemoveLinks: true,
-    dictCancelUpload: "Cancelar",
-    dictRemoveFile: "Eliminar",
-    previewTemplate: document.querySelector("#preview-template").innerHTML,
-    acceptedFiles: ".jpg,.jpeg,.png,.gif,.svg",
-    init: function() {
+    dictCancelUpload: 'Cancelar',
+    dictRemoveFile: 'Eliminar',
+    previewTemplate: document.querySelector('#preview-template').innerHTML,
+    acceptedFiles: '.jpg,.jpeg,.png,.gif,.svg',
+    init: function () {
       dropzoneLogo = this;
       if (logoImage != undefined) {
         var mockFile = {
           name: logoImage.name,
-          size: logoImage.size
+          size: logoImage.size,
         };
-        dropzoneLogo.emit("addedfile", mockFile);
-        dropzoneLogo.emit("thumbnail", mockFile, logoImage.path);
-        dropzoneLogo.emit("complete", mockFile);
+        dropzoneLogo.emit('addedfile', mockFile);
+        dropzoneLogo.emit('thumbnail', mockFile, logoImage.path);
+        dropzoneLogo.emit('complete', mockFile);
       }
-      dropzoneLogo.on("removedfile", function() {
+      dropzoneLogo.on('removedfile', function () {
         logoImage = undefined;
         dropzoneLogo.options.maxFiles = 1;
       });
     },
-    success: function(e, r) {
+    success: function (e, r) {
       logoImage = r;
-    }
+    },
   });
 
   $(
-    "#social-network-select, #popular-products-style-select-desktop, #store-products-style-select-desktop, #popular-products-style-select-mobile, #store-products-style-select-mobile"
+    '#social-network-select, #popular-products-style-select-desktop, #store-products-style-select-desktop, #popular-products-style-select-mobile, #store-products-style-select-mobile',
   ).select2({
-    theme: "bootstrap",
-    language: "es",
+    theme: 'bootstrap',
+    language: 'es',
     allowClear: true,
-    maximumSelectionLength: 1
+    maximumSelectionLength: 1,
   });
 
-  $(".btn-add-social-network").click(function() {
-    if ($("#social-network-select").val() && $("#social-network-link").val()) {
-      var edit = $(this).data("edit");
+  $('.btn-add-social-network').click(function () {
+    if ($('#social-network-select').val() && $('#social-network-link').val()) {
+      var edit = $(this).data('edit');
       if ($.isNumeric(edit)) {
-        social_networks[edit].network = $("#social-network-select").val()[0];
-        social_networks[edit].link = $("#social-network-link").val();
-        $(this).data("edit", false);
-        $(this).text("Añadir");
+        social_networks[edit].network = $('#social-network-select').val()[0];
+        social_networks[edit].link = $('#social-network-link').val();
+        $(this).data('edit', false);
+        $(this).text('Añadir');
       } else {
         social_networks.push({
-          network: $("#social-network-select").val()[0],
-          link: $("#social-network-link").val()
+          network: $('#social-network-select').val()[0],
+          link: $('#social-network-link').val(),
         });
       }
-      $("#social-network-select")
-        .val([])
-        .trigger("change");
-      $("#social-network-link").val("");
+      $('#social-network-select').val([]).trigger('change');
+      $('#social-network-link').val('');
       populateSocialNetworksTable();
     } else {
-      alert("Debe llenar todos los campos de la red social");
+      alert('Debe llenar todos los campos de la red social');
     }
   });
 
-  $("#btn-add-image-video").click(function() {
+  $('#btn-add-image-video').click(function () {
     if (headerImage != undefined) {
-      if ($("#slide-link").val()) {
-        headerImage.link = $("#slide-link").val();
+      if ($('#slide-link').val()) {
+        headerImage.link = $('#slide-link').val();
       }
-      headerImage.main = $("#header-main").val();
-      headerImage.secondary = $("#header-secondary").val();
+      headerImage.main = $('#header-main').val();
+      headerImage.secondary = $('#header-secondary').val();
       headerImage.mobileImage = headerImageMobile;
       headerImages.push(headerImage);
       headerImage = undefined;
-      Dropzone.forElement("form#picture-dropzone-header").removeAllFiles(true);
-      Dropzone.forElement("form#picture-dropzone-header-mobile").removeAllFiles(
-        true
+      Dropzone.forElement('form#picture-dropzone-header').removeAllFiles(true);
+      Dropzone.forElement('form#picture-dropzone-header-mobile').removeAllFiles(
+        true,
       );
-      $("#slide-link").val("");
-      $("#header-main").val("");
-      $("#header-secondary").val("");
+      $('#slide-link').val('');
+      $('#header-main').val('');
+      $('#header-secondary').val('');
       populateHeaderImages();
     } else {
       alert(
-        "Debe seleccionar una imágen, introducir un texto principal y secundario para añadir un Slide porfavor"
+        'Debe seleccionar una imágen, introducir un texto principal y secundario para añadir un Slide porfavor',
       );
     }
   });
 
-  $("#btn-add-advertisement").click(function() {
+  $('#btn-add-advertisement').click(function () {
     if (
       advertisementImage != undefined &&
-      $("#advertisement-name").val() &&
-      $("#advertisement-section").val() &&
-      $("#advertisement-link").val() &&
-      $("#advertisement-priority").val()
+      $('#advertisement-name').val() &&
+      $('#advertisement-section').val() &&
+      $('#advertisement-link').val() &&
+      $('#advertisement-priority').val()
     ) {
-      advertisementImage.name = $("#advertisement-name").val();
-      advertisementImage.section = $("#advertisement-section").val();
-      advertisementImage.link = $("#advertisement-link").val();
-      advertisementImage.priority = $("#advertisement-priority").val();
+      advertisementImage.name = $('#advertisement-name').val();
+      advertisementImage.section = $('#advertisement-section').val();
+      advertisementImage.link = $('#advertisement-link').val();
+      advertisementImage.priority = $('#advertisement-priority').val();
       advertisementImages.push(advertisementImage);
       advertisementImage = undefined;
       var dropzoneAdvertisement = Dropzone.forElement(
-        "form#picture-dropzone-advertisement-image"
+        'form#picture-dropzone-advertisement-image',
       );
       dropzoneAdvertisement.removeAllFiles(true);
-      $("#advertisement-name").val("");
-      $("#advertisement-section").val(1);
-      $("#advertisement-link").val("");
-      $("#advertisement-priority").val("");
+      $('#advertisement-name').val('');
+      $('#advertisement-section').val(1);
+      $('#advertisement-link').val('');
+      $('#advertisement-priority').val('');
       populateAdvertisementsImages();
     } else {
-      alert("Debe insertar los datos correctamente");
+      alert('Debe insertar los datos correctamente');
     }
   });
 
-  $("#btn-edit-advertisement").click(function() {
+  $('#btn-edit-advertisement').click(function () {
     if (
       advertisementImage != undefined &&
-      $("#advertisement-name").val() &&
-      $("#advertisement-section").val() &&
-      $("#advertisement-link").val() &&
-      $("#advertisement-priority").val()
+      $('#advertisement-name').val() &&
+      $('#advertisement-section').val() &&
+      $('#advertisement-link').val() &&
+      $('#advertisement-priority').val()
     ) {
-      advertisementImage.name = $("#advertisement-name").val();
-      advertisementImage.section = $("#advertisement-section").val();
-      advertisementImage.link = $("#advertisement-link").val();
-      advertisementImage.priority = $("#advertisement-priority").val();
+      advertisementImage.name = $('#advertisement-name').val();
+      advertisementImage.section = $('#advertisement-section').val();
+      advertisementImage.link = $('#advertisement-link').val();
+      advertisementImage.priority = $('#advertisement-priority').val();
 
       var tmpAdvertisementImages = [];
-      advertisementImages.forEach(function(a) {
+      advertisementImages.forEach(function (a) {
         if (a.id != editingAdvertisement.id) {
           tmpAdvertisementImages.push(a);
         }
@@ -567,79 +565,79 @@ $(document).ready(function() {
 
       populateAdvertisementsImages();
 
-      $("#advertisement-name").val("");
-      $("#advertisement-section").val("");
-      $("#advertisement-link").val("");
-      $("#advertisement-priority").val("");
+      $('#advertisement-name').val('');
+      $('#advertisement-section').val('');
+      $('#advertisement-link').val('');
+      $('#advertisement-priority').val('');
 
-      $("#picture-dropzone-advertisement-image .dz-image-preview").remove();
+      $('#picture-dropzone-advertisement-image .dz-image-preview').remove();
 
-      $("#btn-add-advertisement").show();
-      $("#btn-edit-advertisement").hide();
-      $("#btn-cancel-edit-advertisement").hide();
+      $('#btn-add-advertisement').show();
+      $('#btn-edit-advertisement').hide();
+      $('#btn-cancel-edit-advertisement').hide();
     } else {
-      alert("Inserte los datos correctamente");
+      alert('Inserte los datos correctamente');
     }
   });
 
-  $("#btn-cancel-edit-advertisement").click(function() {
-    $("#advertisement-name").val("");
-    $("#advertisement-section").val("");
-    $("#advertisement-link").val("");
-    $("#advertisement-priority").val("");
+  $('#btn-cancel-edit-advertisement').click(function () {
+    $('#advertisement-name').val('');
+    $('#advertisement-section').val('');
+    $('#advertisement-link').val('');
+    $('#advertisement-priority').val('');
 
-    $("#picture-dropzone-advertisement-image .dz-image-preview").remove();
+    $('#picture-dropzone-advertisement-image .dz-image-preview').remove();
 
-    $("#btn-add-advertisement").show();
-    $("#btn-edit-advertisement").hide();
-    $("#btn-cancel-edit-advertisement").hide();
+    $('#btn-add-advertisement').show();
+    $('#btn-edit-advertisement').hide();
+    $('#btn-cancel-edit-advertisement').hide();
   });
 
-  $("#show-slide-preview").change(function() {
-    if ($("#show-slide-preview").prop("checked")) {
-      $("#slide-section").show();
+  $('#show-slide-preview').change(function () {
+    if ($('#show-slide-preview').prop('checked')) {
+      $('#slide-section').show();
     } else {
-      $("#slide-section").hide();
+      $('#slide-section').hide();
     }
   });
 
-  $("#update-slide-preview").click(function() {
+  $('#update-slide-preview').click(function () {
     ajax(
-      $(this).data("path"),
-      "POST",
+      $(this).data('path'),
+      'POST',
       {
-        data: JSON.stringify(generateData())
+        data: JSON.stringify(generateData()),
       },
-      function() {
+      function () {
         document
-          .getElementById("slide-preview")
+          .getElementById('slide-preview')
           .contentWindow.location.reload(true);
       },
-      function() {
-        alert("Ha ocurrido un error actualizando la vista previa");
-      }
+      function () {
+        alert('Ha ocurrido un error actualizando la vista previa');
+      },
     );
   });
 
-  $("#slide-preview").on("load", function() {
+  $('#slide-preview').on('load', function () {
     $(this)
       .contents()
-      .find("head")
-      .append("<style>.home__hero:after {}</style>");
+      .find('head')
+      .append('<style>.home__hero:after {}</style>');
   });
 
   ajax(
-    $("#update-slide-preview").data("path"),
-    "POST",
+    $('#update-slide-preview').data('path'),
+    'POST',
     {
-      data: JSON.stringify(generateData())
+      data: JSON.stringify(generateData()),
     },
-    function() {
-      $("#slide-preview").attr("src", $("#slide-preview").data("path"));
+    function () {
+      $('#slide-preview').attr('src', $('#slide-preview').data('path'));
     },
-    function() {
-      alert("Ha ocurrido un error actualizando la vista previa");
-    }
+    function () {
+      alert('Ha ocurrido un error actualizando la vista previa');
+    },
   );
 });
 
@@ -647,126 +645,123 @@ function init() {
   populateHeaderImages();
   populateAdvertisementsImages();
   if (data.popularProductsStyleDesktop) {
-    $("#popular-products-style-select-desktop").val(
-      data.popularProductsStyleDesktop
+    $('#popular-products-style-select-desktop').val(
+      data.popularProductsStyleDesktop,
     );
   }
   if (data.popularProductsStyleMobile) {
-    $("#popular-products-style-select-mobile").val(
-      data.popularProductsStyleMobile
+    $('#popular-products-style-select-mobile').val(
+      data.popularProductsStyleMobile,
     );
   }
   if (data.storeProductsStyleDesktop) {
-    $("#store-products-style-select-desktop").val(
-      data.storeProductsStyleDesktop
+    $('#store-products-style-select-desktop').val(
+      data.storeProductsStyleDesktop,
     );
   }
   if (data.storeProductsStyleMobile) {
-    $("#store-products-style-select-mobile").val(data.storeProductsStyleMobile);
+    $('#store-products-style-select-mobile').val(data.storeProductsStyleMobile);
   }
   if (data.top.image1Link) {
-    $("#top-image-1-link").val(data.top.image1Link);
-    $("#top-image-2-link").val(data.top.image2Link);
+    $('#top-image-1-link').val(data.top.image1Link);
+    $('#top-image-2-link').val(data.top.image2Link);
   }
   if (data.subtitles) {
-    $("#in-store-subtitle").val(data.subtitles.inStore);
-    $("#recent-subtitle").val(data.subtitles.recent);
+    $('#in-store-subtitle').val(data.subtitles.inStore);
+    $('#recent-subtitle').val(data.subtitles.recent);
   }
   if (data.populars) {
-    $("#populars-title").val(data.populars.title);
-    $("#populars-subtitle").val(data.populars.subtitle);
+    $('#populars-title').val(data.populars.title);
+    $('#populars-subtitle').val(data.populars.subtitle);
   }
   if (data.store) {
-    $("#store-title").val(data.store.title);
-    $("#store-subtitle").val(data.store.subtitle);
+    $('#store-title').val(data.store.title);
+    $('#store-subtitle').val(data.store.subtitle);
   }
   if (data.cubanBrands) {
-    $("#cuban-brands-title").val(data.cubanBrands.title);
-    $("#cuban-brands-subtitle").val(data.cubanBrands.subtitle);
+    $('#cuban-brands-title').val(data.cubanBrands.title);
+    $('#cuban-brands-subtitle').val(data.cubanBrands.subtitle);
   }
   if (data.shopCart) {
-    $("#shop-cart-main-text").val(data.shopCart.mainText);
-    $("#shop-cart-secondary-text").val(data.shopCart.secondaryText);
+    $('#shop-cart-main-text').val(data.shopCart.mainText);
+    $('#shop-cart-secondary-text').val(data.shopCart.secondaryText);
 
     if (data.shopCart.homeDeliveryText) {
-      $("#home-delivery-text").val(data.shopCart.homeDeliveryText);
+      $('#home-delivery-text').val(data.shopCart.homeDeliveryText);
     }
     if (data.shopCart.currencyTypeText) {
-      $("#currency-type-text").val(data.shopCart.currencyTypeText);
+      $('#currency-type-text').val(data.shopCart.currencyTypeText);
     }
     if (data.shopCart.paymentTypeText) {
-      $("#payment-type-text").val(data.shopCart.paymentTypeText);
+      $('#payment-type-text').val(data.shopCart.paymentTypeText);
     }
   }
   if (data.services) {
-    $("#services-title").val(data.services.title);
-    $("#services-subtitle").val(data.services.subtitle);
+    $('#services-title').val(data.services.title);
+    $('#services-subtitle').val(data.services.subtitle);
   }
   if (data.testimonies) {
-    $("#testimony-text-1").val(data.testimonies.text1);
-    $("#testimony-author-1").val(data.testimonies.author1);
-    $("#testimony-text-2").val(data.testimonies.text2);
-    $("#testimony-author-2").val(data.testimonies.author2);
-    $("#testimony-text-3").val(data.testimonies.text3);
-    $("#testimony-author-3").val(data.testimonies.author3);
-  }
-  if (data.prioritizeSlideText) {
-    $("#prioritize-slide-text").prop("checked", data.prioritizeSlideText);
+    $('#testimony-text-1').val(data.testimonies.text1);
+    $('#testimony-author-1').val(data.testimonies.author1);
+    $('#testimony-text-2').val(data.testimonies.text2);
+    $('#testimony-author-2').val(data.testimonies.author2);
+    $('#testimony-text-3').val(data.testimonies.text3);
+    $('#testimony-author-3').val(data.testimonies.author3);
   }
   if (data.horizontalPosition) {
-    $("#horizontal-position").val(data.horizontalPosition);
+    $('#horizontal-position').val(data.horizontalPosition);
   }
   if (data.verticalPosition) {
-    $("#vertical-position").val(data.verticalPosition);
+    $('#vertical-position').val(data.verticalPosition);
   }
   if (data.hoverStyle) {
-    $("#hover-style").val(data.hoverStyle);
+    $('#hover-style').val(data.hoverStyle);
   }
   if (data.hoverColor) {
     hoverColorPicker.setColor(data.hoverColor);
   }
   if (data.slideTopMargin) {
-    $("#slide-top-margin").val(data.slideTopMargin);
+    $('#slide-top-margin').val(data.slideTopMargin);
   }
   if (data.slideBottomMargin) {
-    $("#slide-bottom-margin").val(data.slideBottomMargin);
+    $('#slide-bottom-margin').val(data.slideBottomMargin);
   }
   if (data.slideLeftMargin) {
-    $("#slide-left-margin").val(data.slideLeftMargin);
+    $('#slide-left-margin').val(data.slideLeftMargin);
   }
   if (data.slideRightMargin) {
-    $("#slide-right-margin").val(data.slideRightMargin);
+    $('#slide-right-margin').val(data.slideRightMargin);
   }
   if (data.slideFontSize) {
-    $("#slide-font-size").val(data.slideFontSize);
+    $('#slide-font-size').val(data.slideFontSize);
   }
   if (data.slideFontColor) {
     fontColorPicker.setColor(data.slideFontColor);
   }
 
-  $("#app-app").val(data.app.app);
-  $("#app-db").val(data.app.db);
+  $('#app-app').val(data.app.app);
+  $('#app-db').val(data.app.db);
 
-  $("#social-network").val(data.social_network.text);
+  $('#social-network').val(data.social_network.text);
   social_networks = data.social_network.networks;
   populateSocialNetworksTable();
-  $("#blog-main").val(data.blog.main);
-  $("#blog-secondary").val(data.blog.secondary);
+  $('#blog-main').val(data.blog.main);
+  $('#blog-secondary').val(data.blog.secondary);
   if (data.contact) {
-    $("#contact-main").val(data.contact.main);
-    $("#contact-secondary").val(data.contact.secondary);
+    $('#contact-main').val(data.contact.main);
+    $('#contact-secondary').val(data.contact.secondary);
 
     if (data.contact.phone) {
-      $("#contact-phone").val(data.contact.phone);
+      $('#contact-phone').val(data.contact.phone);
     }
     if (data.contact.email) {
-      $("#contact-email").val(data.contact.email);
+      $('#contact-email').val(data.contact.email);
     }
     if (data.contact.address) {
-      $("#contact-address").val(data.contact.address);
+      $('#contact-address').val(data.contact.address);
     }
     if (data.contact.schedule) {
-      $("#contact-schedule").val(data.contact.schedule);
+      $('#contact-schedule').val(data.contact.schedule);
     }
   }
 }
@@ -775,103 +770,102 @@ function generateData() {
   var data = {
     slides: headerImages,
     popularProductsStyleDesktop: $(
-      "#popular-products-style-select-desktop"
+      '#popular-products-style-select-desktop',
     ).val()[0],
     popularProductsStyleMobile: $(
-      "#popular-products-style-select-mobile"
+      '#popular-products-style-select-mobile',
     ).val()[0],
     storeProductsStyleDesktop: $(
-      "#store-products-style-select-desktop"
+      '#store-products-style-select-desktop',
     ).val()[0],
-    storeProductsStyleMobile: $("#store-products-style-select-mobile").val()[0],
-    prioritizeSlideText: $("#prioritize-slide-text").prop("checked"),
-    horizontalPosition: $("#horizontal-position").val(),
-    verticalPosition: $("#vertical-position").val(),
-    hoverStyle: $("#hover-style").val(),
+    storeProductsStyleMobile: $('#store-products-style-select-mobile').val()[0],
+    horizontalPosition: $('#horizontal-position').val(),
+    verticalPosition: $('#vertical-position').val(),
+    hoverStyle: $('#hover-style').val(),
     hoverColor: hoverColor,
-    slideTopMargin: $("#slide-top-margin").val(),
-    slideBottomMargin: $("#slide-bottom-margin").val(),
-    slideLeftMargin: $("#slide-left-margin").val(),
-    slideRightMargin: $("#slide-right-margin").val(),
-    slideFontSize: $("#slide-font-size").val(),
+    slideTopMargin: $('#slide-top-margin').val(),
+    slideBottomMargin: $('#slide-bottom-margin').val(),
+    slideLeftMargin: $('#slide-left-margin').val(),
+    slideRightMargin: $('#slide-right-margin').val(),
+    slideFontSize: $('#slide-font-size').val(),
     slideFontColor: fontColor,
     top: {
       image1: topImage1,
       image2: topImage2,
-      image1Link: $("#top-image-1-link").val(),
-      image2Link: $("#top-image-2-link").val()
+      image1Link: $('#top-image-1-link').val(),
+      image2Link: $('#top-image-2-link').val(),
     },
     services: {
       image: servicesImage,
-      title: $("#services-title").val(),
-      subtitle: $("#services-subtitle").val()
+      title: $('#services-title').val(),
+      subtitle: $('#services-subtitle').val(),
     },
     subtitles: {
-      inStore: $("#in-store-subtitle").val(),
-      recent: $("#recent-subtitle").val()
+      inStore: $('#in-store-subtitle').val(),
+      recent: $('#recent-subtitle').val(),
     },
     populars: {
-      title: $("#populars-title").val(),
-      subtitle: $("#populars-subtitle").val()
+      title: $('#populars-title').val(),
+      subtitle: $('#populars-subtitle').val(),
     },
     store: {
       title:
-        $("#store-title").val() === "" ? "Almacen" : $("#store-title").val(),
-      subtitle: $("#store-subtitle").val()
+        $('#store-title').val() === '' ? 'Almacen' : $('#store-title').val(),
+      subtitle: $('#store-subtitle').val(),
     },
     cubanBrands: {
-      title: $("#cuban-brands-title").val(),
-      subtitle: $("#cuban-brands-subtitle").val()
+      title: $('#cuban-brands-title').val(),
+      subtitle: $('#cuban-brands-subtitle').val(),
     },
     cataloge: cataloge,
     app: {
-      app: $("#app-app").val(),
-      db: $("#app-db").val(),
-      image: appImage
+      app: $('#app-app').val(),
+      db: $('#app-db').val(),
+      image: appImage,
     },
     social_network: {
-      text: $("#social-network").val(),
-      networks: social_networks
+      text: $('#social-network').val(),
+      networks: social_networks,
     },
     blog: {
-      main: $("#blog-main").val(),
-      secondary: $("#blog-secondary").val()
+      main: $('#blog-main').val(),
+      secondary: $('#blog-secondary').val(),
     },
     contact: {
-      main: $("#contact-main").val(),
-      secondary: $("#contact-secondary").val(),
-      phone: $("#contact-phone").val(),
-      email: $("#contact-email").val(),
-      address: $("#contact-address").val(),
-      schedule: $("#contact-schedule").val(),
-      image: contactImage
+      main: $('#contact-main').val(),
+      secondary: $('#contact-secondary').val(),
+      phone: $('#contact-phone').val(),
+      email: $('#contact-email').val(),
+      address: $('#contact-address').val(),
+      schedule: $('#contact-schedule').val(),
+      image: contactImage,
     },
     shopCart: {
-      mainText: $("#shop-cart-main-text").val(),
-      secondaryText: $("#shop-cart-secondary-text").val(),
-      homeDeliveryText: $("#home-delivery-text").val(),
-      currencyTypeText: $("#currency-type-text").val(),
-      paymentTypeText: $("#payment-type-text").val()
+      mainText: $('#shop-cart-main-text').val(),
+      secondaryText: $('#shop-cart-secondary-text').val(),
+      homeDeliveryText: $('#home-delivery-text').val(),
+      currencyTypeText: $('#currency-type-text').val(),
+      paymentTypeText: $('#payment-type-text').val(),
     },
     testimonies: {
-      text1: $("#testimony-text-1").val(),
-      author1: $("#testimony-author-1").val(),
-      text2: $("#testimony-text-2").val(),
-      author2: $("#testimony-author-2").val(),
-      text3: $("#testimony-text-3").val(),
-      author3: $("#testimony-author-3").val()
+      text1: $('#testimony-text-1').val(),
+      author1: $('#testimony-author-1').val(),
+      text2: $('#testimony-text-2').val(),
+      author2: $('#testimony-author-2').val(),
+      text3: $('#testimony-text-3').val(),
+      author3: $('#testimony-author-3').val(),
     },
     advertisements: advertisementImages,
     login: {
       image: loginImage,
-      imageShort: loginImageShort
+      imageShort: loginImageShort,
     },
     successMail: {
-      image: successMailImage
+      image: successMailImage,
     },
     logo: {
-      image: logoImage
-    }
+      image: logoImage,
+    },
   };
   return data;
 }
@@ -880,34 +874,34 @@ function validateSubmitData() {
   var valid = true;
   if (
     !topImage1 ||
-    !$("#top-image-1-link").val() ||
+    !$('#top-image-1-link').val() ||
     !topImage2 ||
-    !$("#top-image-2-link").val()
+    !$('#top-image-2-link').val()
   ) {
     valid = false;
   }
   if (!servicesImage) {
     valid = false;
   }
-  if (!$("#in-store-subtitle").val() || !$("#recent-subtitle").val()) {
+  if (!$('#in-store-subtitle').val() || !$('#recent-subtitle').val()) {
     valid = false;
   }
-  if (!$("#populars-title").val()) {
+  if (!$('#populars-title').val()) {
     valid = false;
   }
-  if (!$("#store-title").val()) {
+  if (!$('#store-title').val()) {
     valid = false;
   }
-  if (!$("#cuban-brands-title").val() || !$("#cuban-brands-subtitle").val()) {
+  if (!$('#cuban-brands-title').val() || !$('#cuban-brands-subtitle').val()) {
     valid = false;
   }
-  if (!$("#app-app").val() || !$("#app-db").val()) {
+  if (!$('#app-app').val() || !$('#app-db').val()) {
     valid = false;
   }
-  if (!$("#social-network").val()) {
+  if (!$('#social-network').val()) {
     valid = false;
   }
-  if (!$("#blog-main").val() || !$("#blog-secondary").val()) {
+  if (!$('#blog-main').val() || !$('#blog-secondary').val()) {
     valid = false;
   }
   if (!loginImage) {
@@ -926,37 +920,37 @@ function validateSubmitData() {
 }
 
 function populateHeaderImages() {
-  $(".row-header-images .col-3").remove();
+  $('.row-header-images .col-3').remove();
   if (headerImages) {
-    headerImages.forEach(function(image, index) {
+    headerImages.forEach(function (image, index) {
       var tmp_image = template_image_header
         .substring(-1)
-        .replace("%1", image.path)
-        .replace("%2", image.id);
+        .replace('%1', image.path)
+        .replace('%2', image.id);
       if (image.link) {
         var link = image.link;
       } else {
-        link = "";
+        link = '';
       }
       var index1 = index + 1;
-      tmp_image = tmp_image.substring(-1).replace("%3", link);
+      tmp_image = tmp_image.substring(-1).replace('%3', link);
       if (image.main) {
-        tmp_image = tmp_image.replace("%4", image.main);
+        tmp_image = tmp_image.replace('%4', image.main);
       } else {
-        tmp_image = tmp_image.replace("%4", "");
+        tmp_image = tmp_image.replace('%4', '');
       }
       if (image.secondary) {
-        tmp_image = tmp_image.replace("%5", image.secondary);
+        tmp_image = tmp_image.replace('%5', image.secondary);
       } else {
-        tmp_image = tmp_image.replace("%5", "");
+        tmp_image = tmp_image.replace('%5', '');
       }
-      tmp_image = tmp_image.replace("%6", index1);
-      $(".row-header-images").append(tmp_image);
+      tmp_image = tmp_image.replace('%6', index1);
+      $('.row-header-images').append(tmp_image);
     });
-    $(".btn-remove-header-image").click(function() {
-      var id = $(this).data("id");
+    $('.btn-remove-header-image').click(function () {
+      var id = $(this).data('id');
       var tmpImages = [];
-      headerImages.forEach(function(image) {
+      headerImages.forEach(function (image) {
         if (image.id != id) {
           tmpImages.push(image);
         }
@@ -968,33 +962,33 @@ function populateHeaderImages() {
 }
 
 function populateSocialNetworksTable() {
-  $(".table-social-networks tbody tr").remove();
+  $('.table-social-networks tbody tr').remove();
   if (social_networks.length == 0) {
     var tmp_empty = template_row_social_empty.substring(-1);
-    $(".table-social-networks tbody").append(tmp_empty);
+    $('.table-social-networks tbody').append(tmp_empty);
   } else {
-    $.each(social_networks, function(i, s) {
+    $.each(social_networks, function (i, s) {
       var tmp = template_row_social
         .substring(-1)
-        .replace("%1", s.network)
-        .replace("%2", s.link)
-        .replace("%3", i)
-        .replace("%4", i);
-      $(".table-social-networks tbody").append(tmp);
+        .replace('%1', s.network)
+        .replace('%2', s.link)
+        .replace('%3', i)
+        .replace('%4', i);
+      $('.table-social-networks tbody').append(tmp);
     });
-    $(".btn-edit-social-network").click(function() {
-      var index = $(this).data("index");
+    $('.btn-edit-social-network').click(function () {
+      var index = $(this).data('index');
       var socialNetwork = social_networks[index];
-      $("#social-network-select")
+      $('#social-network-select')
         .val([socialNetwork.network])
-        .trigger("change");
-      $("#social-network-link").val(socialNetwork.link);
+        .trigger('change');
+      $('#social-network-link').val(socialNetwork.link);
       var indexSocial = parseInt(index) + 1;
-      $(".btn-add-social-network").text("Editar #" + indexSocial);
-      $(".btn-add-social-network").data("edit", index);
+      $('.btn-add-social-network').text('Editar #' + indexSocial);
+      $('.btn-add-social-network').data('edit', index);
     });
-    $(".btn-remove-social-network").click(function() {
-      var index = $(this).data("index");
+    $('.btn-remove-social-network').click(function () {
+      var index = $(this).data('index');
       social_networks.splice(index, 1);
       populateSocialNetworksTable();
     });
@@ -1002,28 +996,29 @@ function populateSocialNetworksTable() {
 }
 
 function populateAdvertisementsImages() {
-  $(".row-advertisement .col-3").remove();
+  $('.row-advertisement .col-3').remove();
   if (advertisementImages) {
-    advertisementImages.forEach(function(image, index) {
+    advertisementImages.forEach(function (image, index) {
       var tmp_image = template_advertisement
         .substring(-1)
-        .replace("%1", image.path)
-        .replace("%2", image.id)
-        .replace("%7", image.id)
-        .replace("%3", image.name)
-        .replace("%4", image.priority)
+        .replace('%1', image.path)
+        .replace('%2', image.id)
+        .replace('%7', image.id)
+        .replace('%3', image.name)
+        .replace('%4', image.priority)
         .replace(
-          "%5",
-          $("#advertisement-section").children("option")[image.section - 1].text
+          '%5',
+          $('#advertisement-section').children('option')[image.section - 1]
+            .text,
         )
-        .replace("%6", index + 1);
+        .replace('%6', index + 1);
 
-      $(".row-advertisement").append(tmp_image);
+      $('.row-advertisement').append(tmp_image);
     });
-    $(".btn-remove-advertisement").click(function() {
-      var id = $(this).data("id");
+    $('.btn-remove-advertisement').click(function () {
+      var id = $(this).data('id');
       var tmpImages = [];
-      advertisementImages.forEach(function(image) {
+      advertisementImages.forEach(function (image) {
         if (image.id != id) {
           tmpImages.push(image);
         }
@@ -1031,29 +1026,29 @@ function populateAdvertisementsImages() {
       advertisementImages = tmpImages;
       populateAdvertisementsImages();
     });
-    $(".btn-edit-advertisement").click(function() {
-      $("#btn-add-advertisement").hide();
-      $("#btn-edit-advertisement").show();
-      $("#btn-cancel-edit-advertisement").show();
-      var id = $(this).data("id");
+    $('.btn-edit-advertisement').click(function () {
+      $('#btn-add-advertisement').hide();
+      $('#btn-edit-advertisement').show();
+      $('#btn-cancel-edit-advertisement').show();
+      var id = $(this).data('id');
       var advertisement;
-      advertisementImages.forEach(function(image) {
+      advertisementImages.forEach(function (image) {
         if (image.id === id) {
           advertisement = image;
         }
       });
       advertisementImage = advertisement;
       editingAdvertisement = advertisement;
-      $("#advertisement-name").val(advertisement.name);
-      $("#advertisement-section").val(advertisement.section);
-      $("#advertisement-link").val(advertisement.link);
-      $("#advertisement-priority").val(advertisement.priority);
+      $('#advertisement-name').val(advertisement.name);
+      $('#advertisement-section').val(advertisement.section);
+      $('#advertisement-link').val(advertisement.link);
+      $('#advertisement-priority').val(advertisement.priority);
 
-      $("#picture-dropzone-advertisement-image .dz-image-preview").remove();
+      $('#picture-dropzone-advertisement-image .dz-image-preview').remove();
       var mockFile = { name: advertisement.name, size: advertisement.size };
-      advertisementDropzone.emit("addedfile", mockFile);
-      advertisementDropzone.emit("thumbnail", mockFile, advertisement.path);
-      advertisementDropzone.emit("complete", mockFile);
+      advertisementDropzone.emit('addedfile', mockFile);
+      advertisementDropzone.emit('thumbnail', mockFile, advertisement.path);
+      advertisementDropzone.emit('complete', mockFile);
     });
   }
 }

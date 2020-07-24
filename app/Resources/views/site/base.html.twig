@@ -162,15 +162,6 @@
 {% block js %}
 {% endblock %}
 <script>
-  $(document).ready(function() {
-    $("#conceptos-contact-form").height($("#conceptos-contact-form .conceptos-image").height());
-    $("#shop-cart-contact-form").height($("#shop-cart-contact-form .conceptos-image").height());
-
-    var marginTop = $(".navbar.navbar-dropdown").css("height");
-    $("#conceptos-services-badge").css("top", marginTop);
-  });
-</script>
-<script>
   products = [];
   {% if shopCartProducts is defined %}
     {% for product in shopCartProducts %}

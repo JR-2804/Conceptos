@@ -8,7 +8,6 @@ use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
 class EmailDTO
 {
     private $name;
-    private $lastName;
     private $email;
     private $path;
     private $phone;
@@ -22,16 +21,6 @@ class EmailDTO
     public function setName($name)
     {
         $this->name = $name;
-    }
-
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
     }
 
     public function getEmail()
