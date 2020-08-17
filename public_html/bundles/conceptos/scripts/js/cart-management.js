@@ -8,11 +8,9 @@ var homeCollect = false;
 var totalIkeaPriceWithTaxes = 0;
 var totalPriceBase = 0;
 
-$(document).ready(function() {
+$(document).ready(function () {
   function getProductIdByElement(element) {
-    return $(element)
-      .parents(".shop-cart-product")
-      .data("product");
+    return $(element).parents(".shop-cart-product").data("product");
   }
 
   function getCalculatePricePathByProductId(productId) {
@@ -22,15 +20,11 @@ $(document).ready(function() {
   }
 
   function getRemovePathByElement(element) {
-    return $(element)
-      .parents(".shop-cart-product")
-      .data("remove-path");
+    return $(element).parents(".shop-cart-product").data("remove-path");
   }
 
   function GetQuantityElement(element) {
-    var productId = $(element)
-      .parents(".shop-cart-product")
-      .data("product");
+    var productId = $(element).parents(".shop-cart-product").data("product");
     return $(
       '.shop-cart-product[data-product="' +
         productId +
@@ -105,7 +99,7 @@ $(document).ready(function() {
   }
 
   function UpdateProductDeliveryType(productId, deliveryType) {
-    var product = products.find(function(p) {
+    var product = products.find(function (p) {
       return p.id == productId;
     });
 
@@ -139,17 +133,17 @@ $(document).ready(function() {
         isDesk: product.isDesk,
         isBookcase: product.isBookcase,
         isComoda: product.isComoda,
-        isRepisa: product.isRepisa
+        isRepisa: product.isRepisa,
       },
-      function(response) {
+      function (response) {
         var calculatedPrice = Number(response);
-        products.find(function(p) {
+        products.find(function (p) {
           return p.id == productId;
         }).price = calculatedPrice;
         setProductPriceByProductId(productId, calculatedPrice);
         recalculateAllPrices();
       },
-      function() {
+      function () {
         alert("Ha ocurrido un error calculando el precio del producto");
       }
     );
@@ -158,7 +152,7 @@ $(document).ready(function() {
   function CheckIfCanPerformHomeCollect() {
     var allInStore = true;
 
-    products.forEach(product => {
+    products.forEach((product) => {
       if (!product.type) {
         var count = getProductQuantityByProductId(product.id);
         if (parseInt(count) > parseInt(product.storeCount || 0)) {
@@ -177,14 +171,14 @@ $(document).ready(function() {
   }
 
   function PersistCountIfNecessary(productId, count) {
-    products.forEach(function(product) {
+    products.forEach(function (product) {
       if (product.id == productId) {
         if (product.count != count) {
           product.count = count;
 
           var uuid = getProductUuid(product.id);
           var path = $("#persist-count-path").val() + "/" + uuid + "/" + count;
-          ajax(path, "POST", {}, function(response) {
+          ajax(path, "POST", {}, function (response) {
             UpdateProductsSummary(response.html);
             CreateCartSummaryActions();
             var count = response.count;
@@ -212,7 +206,7 @@ $(document).ready(function() {
   }
 
   function UpdateDeliveryIconsState() {
-    products.forEach(function(product) {
+    products.forEach(function (product) {
       var selector = '.shop-cart-product[data-product="' + product.id + '"]';
       if (product.type) {
         HideBothIcons(selector);
@@ -259,7 +253,7 @@ $(document).ready(function() {
     var totalWeight = 0;
     totalIkeaPriceWithTaxes = 0;
     totalPriceBase = 0;
-    products.forEach(function(product) {
+    products.forEach(function (product) {
       var productId = product.id;
       var count = getProductQuantityByProductId(productId);
       var price = getProductPriceByProductId(productId);
@@ -329,7 +323,7 @@ $(document).ready(function() {
 
     var currencyExtraSection = $(".shop-cart-currency-extra");
     if (paymentCurrency == "cuc") {
-      var currencyExtra = Math.ceil(totalPriceBase * 0.15);
+      var currencyExtra = Math.ceil(totalPriceBase * 0.3);
       totalPrice += currencyExtra;
       $(".shop-cart-currency").text("CUC");
       currencyExtraSection.parent().removeClass("d-none");
@@ -471,7 +465,7 @@ $(document).ready(function() {
   }
 
   function CreateCartSummaryActions() {
-    $(".cart-quantity-up").click(function() {
+    $(".cart-quantity-up").click(function () {
       var quantity = getProductQuantityByElement(this);
       var storeCount = getStoreCountByElement(this);
       if (!storeCount || quantity < storeCount) {
@@ -483,7 +477,7 @@ $(document).ready(function() {
       }
     });
 
-    $(".cart-quantity-down").click(function() {
+    $(".cart-quantity-down").click(function () {
       var quantity = getProductQuantityByElement(this);
       if (quantity >= 2) {
         quantity--;
@@ -494,7 +488,7 @@ $(document).ready(function() {
       }
     });
 
-    $(".cart-quantity-input").change(function() {
+    $(".cart-quantity-input").change(function () {
       var oldQuantity = $(this).data("quantity");
       var newQuantity = $(this).val();
       var productCount =
@@ -504,14 +498,14 @@ $(document).ready(function() {
       recalculateAllPrices();
     });
 
-    $(".shop-cart-trash").click(function() {
+    $(".shop-cart-trash").click(function () {
       var path = getRemovePathByElement(this);
       var product = getProductIdByElement(this);
       ajax(
         path,
         "POST",
         {},
-        function(response) {
+        function (response) {
           if (response.count > 99) {
             $("#conceptos-shop-cart-count").text("+99");
           } else {
@@ -536,10 +530,10 @@ $(document).ready(function() {
             textAlign: "center",
             position: "mid-center",
             icon: "success",
-            heading: "Correcto"
+            heading: "Correcto",
           });
         },
-        function() {
+        function () {
           $.toast({
             text: "Ha ocurrido un error eliminando el producto del carrito",
             showHideTransition: "fade",
@@ -551,19 +545,19 @@ $(document).ready(function() {
             textAlign: "center",
             position: "mid-center",
             icon: "error",
-            heading: "Error"
+            heading: "Error",
           });
         }
       );
     });
 
-    $(".add-bag-icon").click(function() {
+    $(".add-bag-icon").click(function () {
       var url = $(this).data("path");
       ajax(
         url,
         "POST",
         {},
-        function(response) {
+        function (response) {
           UpdateProductsSummary(response.html);
           CreateCartSummaryActions();
           $.toast({
@@ -577,10 +571,10 @@ $(document).ready(function() {
             textAlign: "center",
             position: "mid-center",
             icon: "success",
-            heading: "Correcto"
+            heading: "Correcto",
           });
         },
-        function() {
+        function () {
           $.toast({
             text: "Ha ocurrido un error añadiendo las bolsas al carrito",
             showHideTransition: "fade",
@@ -592,19 +586,19 @@ $(document).ready(function() {
             textAlign: "center",
             position: "mid-center",
             icon: "error",
-            heading: "Error"
+            heading: "Error",
           });
         }
       );
     });
 
-    $(".remove-bag-icon").click(function() {
+    $(".remove-bag-icon").click(function () {
       var url = $(this).data("path");
       ajax(
         url,
         "POST",
         {},
-        function(response) {
+        function (response) {
           UpdateProductsSummary(response.html);
           CreateCartSummaryActions();
           $.toast({
@@ -618,10 +612,10 @@ $(document).ready(function() {
             textAlign: "center",
             position: "mid-center",
             icon: "success",
-            heading: "Correcto"
+            heading: "Correcto",
           });
         },
-        function() {
+        function () {
           $.toast({
             text: "Ha ocurrido un error eliminando las bolsas del carrito",
             showHideTransition: "fade",
@@ -633,7 +627,7 @@ $(document).ready(function() {
             textAlign: "center",
             position: "mid-center",
             icon: "error",
-            heading: "Error"
+            heading: "Error",
           });
         }
       );
@@ -641,14 +635,10 @@ $(document).ready(function() {
   }
 
   function UpdateProductsSummary(html) {
-    $("#products-summary")
-      .children()
-      .remove();
+    $("#products-summary").children().remove();
     $("#products-summary").append(html);
 
-    $("#products-summary-shop-cart")
-      .children()
-      .remove();
+    $("#products-summary-shop-cart").children().remove();
     $("#products-summary-shop-cart").append(html);
 
     MoveBagsBadge();
@@ -681,7 +671,7 @@ $(document).ready(function() {
         url,
         "POST",
         {},
-        function(response) {
+        function (response) {
           if (response.count > 99) {
             $("#conceptos-shop-cart-count").text("+99");
           } else {
@@ -704,10 +694,10 @@ $(document).ready(function() {
             textAlign: "center",
             position: "mid-center",
             icon: "success",
-            heading: "Correcto"
+            heading: "Correcto",
           });
         },
-        function() {
+        function () {
           $.toast({
             text: "Ha ocurrido un error añadiendo el producto al carrito",
             showHideTransition: "fade",
@@ -719,7 +709,7 @@ $(document).ready(function() {
             textAlign: "center",
             position: "mid-center",
             icon: "error",
-            heading: "Error"
+            heading: "Error",
           });
         }
       );
@@ -735,7 +725,7 @@ $(document).ready(function() {
 
   let containerBlog = document.querySelector(".post-single");
   if (containerBlog !== null) {
-    containerBlog.addEventListener("DOMNodeInserted", e => {
+    containerBlog.addEventListener("DOMNodeInserted", (e) => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -750,7 +740,7 @@ $(document).ready(function() {
 
   $(".conceptos-add-to-cart-icon").click(OnCartIconCLick);
 
-  $(".conceptos-add-gift-card-to-cart-button").click(function(e) {
+  $(".conceptos-add-gift-card-to-cart-button").click(function (e) {
     e.preventDefault();
     e.stopPropagation();
     $("#gift-card-modal-toggle").click();
@@ -759,7 +749,7 @@ $(document).ready(function() {
       $(this).data("path"),
       "POST",
       {},
-      function(response) {
+      function (response) {
         var title = "Tarjeta añadida al carrito correctamente";
         if (response.exist) {
           title = "La tarjeta seleccionada ya está en su carrito de compras";
@@ -785,10 +775,10 @@ $(document).ready(function() {
           textAlign: "center",
           position: "mid-center",
           icon: "success",
-          heading: "Correcto"
+          heading: "Correcto",
         });
       },
-      function() {
+      function () {
         $.toast({
           text: "Ha ocurrido un error añadiendo la tarjeta al carrito",
           showHideTransition: "fade",
@@ -800,13 +790,13 @@ $(document).ready(function() {
           textAlign: "center",
           position: "mid-center",
           icon: "error",
-          heading: "Error"
+          heading: "Error",
         });
       }
     );
   });
 
-  $(".ship-delivery").click(function() {
+  $(".ship-delivery").click(function () {
     if ($(this).hasClass("ship-delivery-focused")) {
       return;
     }
@@ -820,7 +810,7 @@ $(document).ready(function() {
     UpdateProductDeliveryType(productId, 1);
   });
 
-  $(".airplane-delivery").click(function() {
+  $(".airplane-delivery").click(function () {
     if ($(this).hasClass("airplane-delivery-focused")) {
       return;
     }
@@ -834,26 +824,26 @@ $(document).ready(function() {
     UpdateProductDeliveryType(productId, 2);
   });
 
-  $("#home-delivery").change(function() {
+  $("#home-delivery").change(function () {
     recalculateAllPrices();
   });
 
-  $("#payment-type").change(function() {
+  $("#payment-type").change(function () {
     recalculateAllPrices();
   });
 
-  $("#payment-currency").change(function() {
+  $("#payment-currency").change(function () {
     recalculateAllPrices();
   });
 
-  $("#shop-cart-member-number").change(function() {
+  $("#shop-cart-member-number").change(function () {
     memberNumber = $(this).val();
     if (memberNumber) {
       ajax(
         "/app_dev.php/validate-membership-number/" + memberNumber,
         "POST",
         {},
-        function(response) {
+        function (response) {
           var isValid = Boolean(response);
           if (isValid) {
             DisplayMembershipSuccess();
@@ -863,7 +853,7 @@ $(document).ready(function() {
           }
           recalculateAllPrices();
         },
-        function() {
+        function () {
           DisplayMembershipError();
           memberNumber = undefined;
           recalculateAllPrices();
@@ -877,12 +867,12 @@ $(document).ready(function() {
     }
   });
 
-  $(".home-collect-checkbox").change(function() {
+  $(".home-collect-checkbox").change(function () {
     homeCollect = $(this).prop("checked");
     recalculateAllPrices();
   });
 
-  $("#type-select").change(function() {
+  $("#type-select").change(function () {
     if ($(this).val() === "facture") {
       $("#request-select").show();
       $("#prefactures-select").show();
@@ -918,24 +908,24 @@ $(document).ready(function() {
     }
   });
 
-  $("#budget").change(function() {
+  $("#budget").change(function () {
     CalculateExternalRequestTotalPrice();
   });
 
-  $("#ticket-price").change(function() {
+  $("#ticket-price").change(function () {
     CalculateExternalRequestTotalPrice();
   });
 
-  $("#provider-profit").change(function() {
+  $("#provider-profit").change(function () {
     CalculateExternalRequestTotalPrice();
   });
 
-  $(".combo-product-toggle").click(function() {
+  $(".combo-product-toggle").click(function () {
     var uuid = $(this).data("uuid");
     $(".shop-cart-product[data-uuid='" + uuid + "']").toggleClass("opened");
   });
 
-  $("form[name='check_out']").submit(function(e) {
+  $("form[name='check_out']").submit(function (e) {
     if (ValidateContactInfo()) {
       $("#memberNumber").val(memberNumber);
       $("#transportCost").val(transportCost);
