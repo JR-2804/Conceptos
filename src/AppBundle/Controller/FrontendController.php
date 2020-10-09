@@ -19,7 +19,7 @@ class FrontendController extends Controller
 {
 
     /**
-     * @Route(name="site_home", path="new/")
+     * @Route(name="site_home", path="/new")
      *
      * @param Request $request
      *
@@ -47,7 +47,7 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route(name="store_home", path="new/tienda")
+     * @Route(name="store_home", path="/new/tienda")
      *
      * @param Request $request
      * @param OfferRepository $offerRepository
@@ -256,7 +256,7 @@ class FrontendController extends Controller
 
 
     /**
-     * @Route(name="construction", path="new/construccion")
+     * @Route(name="construction", path="/new/construccion")
      *
      * @param Request $request
      *
@@ -283,7 +283,7 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route(name="construction_work", path="new/construccion/obra/{work}")
+     * @Route(name="construction_work", path="/new/construccion/obra/{work}")
      *
      * @param Request $request
      *
@@ -311,7 +311,7 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route(name="construction_service", path="new/construccion/servicio/{servicio}")
+     * @Route(name="construction_service", path="/new/construccion/servicio/{servicio}")
      *
      * @param Request $request
      *
@@ -339,7 +339,7 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route(name="desing", path="new/diseno")
+     * @Route(name="desing", path="/new/diseno")
      *
      * @param Request $request
      *
@@ -366,7 +366,7 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route(name="desing_work", path="new/diseno/obra/{work}")
+     * @Route(name="desing_work", path="/new/diseno/obra/{work}")
      *
      * @param Request $request
      *
@@ -394,7 +394,7 @@ class FrontendController extends Controller
 
 
     /**
-     * @Route(name="desing_service", path="new/diseno/servicio/{service}")
+     * @Route(name="desing_service", path="/new/diseno/servicio/{service}")
      *
      * @param Request $request
      *
@@ -423,7 +423,7 @@ class FrontendController extends Controller
 
 
     /**
-     * @Route(name="store_section", path="new/tienda/{category}")
+     * @Route(name="store_section", path="/new/tienda/{category}")
      *
      * @param Request $request
      *
@@ -455,7 +455,7 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route(name="product", path="new/tienda/producto/{id}")
+     * @Route(name="product", path="/new/tienda/producto/{id}")
      *
      * @param Request $request
      *
