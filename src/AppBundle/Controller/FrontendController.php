@@ -19,7 +19,7 @@ class FrontendController extends Controller
 {
 
     /**
-     * @Route(name="site_home", path="/new")
+     * @Route(name="home", path="/new")
      *
      * @param Request $request
      *
