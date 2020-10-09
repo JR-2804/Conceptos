@@ -1,0 +1,23 @@
+.gallery {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+
+    &__content {
+        width: 100%;
+        height: 50vh;
+
+    }
+
+    &__small{
+        margin-top: .5em;
+        width: 100%;
+        height: 15vh;
+
+        &__item{
+            width: 24%;
+            margin: 0 .25em;
+
+        }
+    }
+}

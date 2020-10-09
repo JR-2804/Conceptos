@@ -1,0 +1,21 @@
+<section class="sub_categories">
+    <div class="sub_categories__list">
+
+        {% for subCategory in mainCategory.subcategories %}
+
+            <a href="{{ path('products', {categories:subCategory.id}) }}">
+                <div class="sub_categories__list__item">
+
+                    <div class="sub_categories__list__item__image">
+                        <img src="{{ vich_uploader_asset(subCategory, 'imageSiteFile') }}" alt="">
+                    </div>
+
+                    <div class="sub_categories__list__item__name">
+                        <p>{{ subCategory }}</p>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+
+    </div>
+</section>

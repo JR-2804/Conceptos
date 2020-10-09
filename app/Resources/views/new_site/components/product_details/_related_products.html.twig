@@ -1,0 +1,18 @@
+<section class="related_products">
+    <div class="related_products__title">
+        <h2>Productos relacionados</h2>
+    </div>
+
+    <div class="related_products__content">
+        {% for products in relatedChunk | slice(0,8) %}
+            <div class="related_products__content__container">
+
+                {% for product in products %}
+                    {{ include('new_site/components/global/_product_small.html.twig') }}
+                {% endfor %}
+
+            </div>
+        {% endfor %}
+    </div>
+
+</section>

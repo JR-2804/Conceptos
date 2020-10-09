@@ -1,0 +1,76 @@
+.sub_categories {
+  position: relative;
+  margin: 2em 0;
+  border-bottom: 1px rgba(40, 40, 39, 0.25) solid; }
+  .sub_categories__list a {
+    text-decoration: none; }
+  .sub_categories__list__item {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 7em; }
+  .sub_categories__list__item__image {
+      border-radius: 50%;
+      width: 6em;
+      height: 6em;
+      border: 3px white solid;
+      overflow: hidden; }
+  .sub_categories__list__item__name {
+      width: 100%;
+      padding: 5%;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+  .sub_categories__list__item__name p {
+        text-align: center;
+        color: #434343;
+        text-decoration: none;
+        font-size: .8em;
+        margin: .25em 0 0; }
+  .section_store {
+  width: 100%; }
+  .section_store__title {
+    width: 100%;
+    background: #434343;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1em;
+    padding: .75em 0; }
+  .section_store__title h2 {
+      color: #e8e8e8;
+      font-weight: 400;
+      margin: 0; }
+  .section_store__title h2::before, .section_store__title h2::after {
+        content: '-';
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        margin: 0 .25em; }
+  .section_store__title small {
+      width: 100%;
+      color: #e8e8e8;
+      font-weight: 400;
+      font-size: 1.1em;
+      text-align: center; }
+  .section_store__top_content {
+    margin-left: .5em; }
+  .section_store__content {
+    margin: auto 2.5%; }
+  .section_store__content__container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap; }
+  .section_store__more {
+    margin: 1em 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+  .flickity-page-dots {
+  bottom: inherit;
+  position: relative; }

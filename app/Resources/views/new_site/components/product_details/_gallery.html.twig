@@ -1,0 +1,31 @@
+<section class="gallery">
+
+    <div class="gallery__content carousel">
+
+        {% for imageSet in imageSets %}
+            {% for image in imageSet %}
+
+                <div class="gallery__content__item carousel__cell">
+                    {{  vich_uploader_asset(image, 'imageFile') | imgTag(sizes = '100vw') | raw }}
+                </div>
+
+            {% endfor %}
+        {% endfor %}
+
+    </div>
+
+    <div class="gallery__small carousel">
+
+        {% for imageSet in imageSets %}
+            {% for image in imageSet %}
+
+                <div class="gallery__small__item carousel__cell">
+                    {{  vich_uploader_asset(image, 'imageFile') | imgTag(sizes = '25vw') | raw }}
+                </div>
+
+            {% endfor %}
+        {% endfor %}
+
+    </div>
+
+</section>

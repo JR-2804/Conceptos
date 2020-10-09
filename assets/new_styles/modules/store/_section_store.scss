@@ -1,0 +1,59 @@
+.section_store{
+    &__title{
+        width: 100%;
+        background: $mainDarkGrey;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.1em;
+        padding: .75em 0;
+
+        & h2{
+            color: $mainLightGrey;
+            font-weight: 400;
+            margin: 0;
+
+            &::before, &::after{
+                content: '-';
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%);
+                margin: 0 .25em;
+            }
+        }
+
+        & small{
+            width: 100%;
+            color: $mainLightGrey;
+            font-weight: 400;
+            font-size: 1.1em;
+            text-align: center;
+        }
+    }
+
+    &__content{
+
+
+        &__container{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    }
+
+    &__more{
+        margin: 1em 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.flickity-page-dots{
+    bottom: inherit;
+    position: relative;
+}

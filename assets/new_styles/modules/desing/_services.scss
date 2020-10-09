@@ -1,0 +1,29 @@
+.services{
+
+
+    &__title{
+        position: relative;
+        width: 105%;
+        left: -2.5%;
+        padding: 0 5%;
+
+        justify-content: start;
+        text-transform: uppercase;
+        background-color: $mainDark;
+        color: white;
+
+        & h2{
+            font-size: 1.2em;
+        }
+    }
+
+    &__list{
+        position: relative;
+        height: 60vh;
+        overflow-y: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+    }
+}

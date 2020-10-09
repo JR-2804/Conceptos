@@ -1,0 +1,10 @@
+.section{
+    position: relative;
+    width: 95%;
+    margin: 1em 2.5%;
+
+    &--no-margin{
+        width: 100%;
+        margin: 0;
+    }
+}

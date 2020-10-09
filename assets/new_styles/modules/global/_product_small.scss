@@ -1,0 +1,31 @@
+.product_small{
+    display: flex;
+    position: relative;
+    width: 45%;
+    margin: .5em;
+    background: white;
+    border-radius: 10px;
+    height: 25vh;
+    box-shadow: 2px 2px 5px rgba(black, .2);
+
+
+
+    &__image{
+        height: 20vh;
+        width: 100%;
+        overflow: hidden;
+        & img{
+            object-fit: contain;
+        }
+    }
+
+    &__price{
+        position: absolute;
+        bottom: .5em;
+        left: .5em;
+
+        & span{
+            font-weight: 700;
+        }
+    }
+}

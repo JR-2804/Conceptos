@@ -1,0 +1,13 @@
+<section class="gallery gallery--active">
+    <div class="gallery__title">
+        <h3>Galeria del proyecto</h3>
+    </div>
+
+    <div class="gallery__content">
+        {% for i in 1..12 %}
+            <div class="gallery__content__item">
+                <img src="{{ asset('/uploads/images/blog/5e7f83497ac5b.jpg') }}" alt="">
+            </div>
+        {% endfor %}
+    </div>
+</section>

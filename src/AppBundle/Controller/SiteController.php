@@ -417,7 +417,6 @@ class SiteController extends Controller
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
-
         $product = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($id);
         if ($product == null) {
             #TODO: We should return a better 404 not found template and return the header code
@@ -475,7 +474,6 @@ class SiteController extends Controller
             $offerPrice = $this->get('product_service')->findProductOfferPrice($productR);
             $productR->setPriceOffer($offerPrice);
         }
-
 
         $images = $product->getImages()->toArray();
         foreach ($product->getComboProducts() as $comboProduct) {

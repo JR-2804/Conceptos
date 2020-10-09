@@ -1,0 +1,347 @@
+.navbar{
+    position: fixed;
+    //position: relative;
+    top: 0;
+    left: 0;
+    background: $mainDark;
+    z-index: 3;
+    padding: .25em;
+
+    display: grid;
+    grid-template-areas: "logo logo user favorite cart"
+                         "menu search search search search";
+    grid-template-columns: 13% 45% 12% 12% 12%;
+    grid-template-rows: 3em 3em;
+    width: 100%;
+    grid-gap: 1%;
+
+    @include atLarge{
+      grid-template-areas: "menu logo search user favorite cart";
+      grid-template-columns: 3em 15em auto 3em 3em 3em;
+      grid-template-rows: 3em;
+      grid-gap: .5%;
+    }
+
+    &__logo{
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        & img {
+            width: auto;
+            height: 3em;
+        }
+    }
+
+    &__content{
+
+        &__menu{
+            grid-area: menu;
+
+            position: relative;
+            width: 1.75em;
+            height: 1.3em;
+            top: .85em;
+            margin-left: .5em;
+            display: flex;
+            align-items: center;
+
+            &:before, &:after{
+                position: absolute;
+                content: '';
+                background: white;
+                width: 100%;
+                height: .2em;
+            }
+
+            &:before{
+                top: 0;
+            }
+
+            &:after{
+                bottom: 0;
+            }
+
+            &__middle{
+                content: '';
+                background: white;
+                width: 100%;
+                height: .2em;
+            }
+        }
+
+        &__search{
+            grid-area: search;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+
+
+	        @include atLarge{
+		        justify-content: flex-end;
+	        }
+
+            form{
+                position: relative;
+                width: 100%;
+
+                @include atMedium{
+                    width: 50%;
+                    transform: translateX(-5%);
+                }
+
+                & input[type='text']{
+                    border-radius: 30px;
+                    border: 1px solid white;
+                    background: white;
+                    padding: 0 .75em;
+                    height: 2.25em;
+                    font-size: 1em;
+                    width: calc(100% - 1.7em);
+                    outline:0;
+                }
+
+                & button[type='submit']{
+                    border: 1px transparent solid;
+                    background-color: transparent;
+                    width: 3em;
+                    height: auto;
+                    position: absolute;
+                    z-index: 4;
+                    right: 0;
+                    transform: scale(.8);
+                    outline:0;
+                    cursor: pointer;
+	                top: -2px;
+                }
+            }
+        }
+
+        &__user, &__cart, &__favorite{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            & img{
+                width: 2em;
+                height: 2em;
+                object-fit: contain;
+
+                @include atLarge{
+                    width: auto;
+                }
+            }
+        }
+
+        &__favorite{
+            grid-area: favorite;
+        }
+
+        &__user{
+            grid-area: user;
+        }
+
+        &__cart{
+            grid-area: cart;
+
+            position: relative;
+
+            & span {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                position: absolute;
+
+                z-index: 1;
+                width: 1.1em;
+                height: 1.1em;
+                padding: .25em;
+
+                bottom: .25em;
+                left: 1em;
+                border-radius: 50%;
+
+                color: #282827;
+                background-color: #c2b930;
+            }
+        }
+
+    }
+}
+
+.lateral_menu {
+    position: absolute;
+    background: $mainDark;
+    width: 85%;
+    top: 6.5em;
+    left: 0;
+    overflow: hidden;
+    transform: translateX(-100%);
+    transition: transform .5s ease-in-out;
+
+    @include atMedium{
+        width: 20%;
+        top: 3.5em;
+    }
+
+    &--visible{
+        transform: translateX(0);
+    }
+
+    &__close{
+        position: absolute;
+        border-radius: 50%;
+        border: 2px transparent solid;
+        width: 2em;
+        height: 2em;
+        top: .5em;
+        right: .5em;
+        background: transparent;
+        z-index: 3;
+        outline:0;
+
+        &:before, &:after{
+            top: 50%;
+            left: 50%;
+            position: absolute;
+            background: white;
+            content: '';
+            width: 1.25em;
+            height: 3px;
+        }
+
+        &:before{
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        &:after{
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+    }
+
+    &__content {
+        transition: transform .5s ease-in-out;
+
+        &--level_1{
+            transform: translateX(-105%);
+        }
+
+        &--level_2{
+            transform: translateX(-210%);
+        }
+
+        & ul, & ul.sub{
+            margin: 0;
+            padding: .75em 1em;
+            width: 100%;
+            height: 90vh;
+            padding-bottom: 2em;
+
+            & li {
+                list-style: none;
+                margin: .5em .25em;
+                display: flex;
+
+                & a {
+                    color: white;
+                    font-weight: 500;
+                    font-size: 1em;
+                    text-transform: uppercase;
+                    width: 100%;
+
+                    &:active{
+                        color: $mainYellow;
+                    }
+                }
+
+                & img{
+                    width: 1.25em;
+                    height: auto;
+                    max-height: 1.25em;
+                    margin-right: 1em;
+                    filter: invert(1);
+                    object-fit: contain;
+
+                    &.no-invert{
+                        filter: invert(0);
+                    }
+                }
+            }
+
+            & ul.sub{
+                position: absolute;
+                transform: translateX(100%);
+                top: 0;
+
+                & li:first-child{
+                    position: relative;
+                    width: 75%;
+
+                    &:before, &:after{
+                        position: absolute;
+                        content: '';
+                        background: white;
+                        right: 1em;
+                        width: 1em;
+                        height: .25em;
+                        top: 50%;
+                    }
+
+                    &:before{
+                        transform: translateY(-100%) rotate(-45deg);
+                    }
+                    &:after{
+                        transform: translateY(100%) rotate(45deg);
+                    }
+                }
+
+                & li:nth-child(2){
+                    width: 70%;
+                }
+
+                & ul.sub {
+                    opacity: 0;
+                    position: absolute;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+
+                    &.show {
+                        opacity: 1;
+                        z-index: 2;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Note: I have omitted any vendor-prefixes for clarity.
+ * Adding them is left as an exercise for the reader.
+ */
+.headroom {
+    will-change: transform;
+    transition: transform 200ms linear;
+}
+.headroom--pinned {
+    transform: translateY(0%);
+}
+.headroom--unpinned {
+    transform: translateY(-100%);
+}
+
+.no-scroll{
+    overflow-y: hidden;
+}
+
+.push_element{
+  position: relative;
+  height: 6.5em;
+
+  @include atLarge{
+    height: 3.5em;
+  }
+}

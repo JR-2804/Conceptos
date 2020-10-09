@@ -1,0 +1,40 @@
+.services__title {
+  position: relative;
+  width: 105%;
+  left: -2.5%;
+  padding: 0 5%;
+  justify-content: start;
+  text-transform: uppercase;
+  background-color: #282827;
+  color: white; }
+  .services__title h2 {
+    font-size: 1.2em; }
+  .services__list {
+  position: relative;
+  height: 60vh;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; }
+  .service {
+  display: flex;
+  padding: 1em;
+  width: 98%;
+  margin: .5em 1%;
+  justify-content: space-between;
+  align-items: center;
+  background: white; }
+  .service__image {
+    width: 45%; }
+  .service__text {
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%; }
+  .service__text h4 {
+      margin: 0; }
+  .service__text p {
+      margin: .5em 0; }
+  .service__text .btn {
+      position: relative;
+      left: 100%;
+      transform: translateX(-100%); }

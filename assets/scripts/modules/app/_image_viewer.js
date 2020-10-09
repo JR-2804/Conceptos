@@ -1,14 +1,11 @@
 class ImageViewer {
   constructor() {
     this.modal = document.querySelector("#imageViewerModal");
-
     this.init();
   }
 
   init() {
-    document
-      .querySelectorAll(".image-viewer")
-      .forEach(this.displayModalOnClick.bind(this));
+    document.querySelectorAll(".image-viewer").forEach(this.displayModalOnClick.bind(this));
   }
 
   displayModalOnClick(node) {
@@ -16,9 +13,7 @@ class ImageViewer {
   }
 
   displayModal(e) {
-    this.modal
-      .querySelector("img")
-      .setAttribute("src", e.target.getAttribute("src"));
+    this.modal.querySelector("img").setAttribute("src", e.target.getAttribute("src"));
     $(this.modal).modal();
   }
 }

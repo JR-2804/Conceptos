@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>
+        {% block title %}{% endblock %} | Conceptos
+    </title>
+
+    {{ include('new_site/components/global/_meta.html.twig') }}
+
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/new_styles/app.css') }}" type="text/css">
+    {% block style %}{% endblock %}
+</head>
+
+<body>
+    {{ include('new_site/components/global/_navbar.html.twig') }}
+
+    <main>
+        {% block body %}{% endblock %}
+    </main>
+
+    {{ include('new_site/components/global/_footer.html.twig') }}
+
+    <script src="{{ asset('bundles/conceptos/14ndy15/new_scripts/app.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

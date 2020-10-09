@@ -1,0 +1,12 @@
+<section class="section services">
+    <div class="section__title services__title">
+        <h2>Servicios realizados</h2>
+    </div>
+
+    <div class="services__list">
+        {% for title in ['Levantamiento', 'Defectación',
+                        'Conceptualización y diseño', 'Proyecto ejecutivo'] %}
+            {{ include('new_site/components/desing/_service.html.twig') }}
+        {% endfor %}
+    </div>
+</section>

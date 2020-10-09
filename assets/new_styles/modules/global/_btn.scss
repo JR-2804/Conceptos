@@ -1,0 +1,30 @@
+.btn {
+    border: 1px transparent solid;
+    border-radius: 3px;
+    background: $mainYellow;
+    color: $mainDark;
+    padding: .5em 1em;
+    font-size: 1.1em;
+    text-decoration: none;
+
+    &--big{
+        font-size: 1.25em;
+    }
+
+    &--small{
+        font-size: 1em;
+    }
+
+    &--grey{
+        background-color: $mainDarkGrey;
+        color: $mainLightGrey;
+    }
+
+    &--dark{
+        background: $mainDark;
+        color: $mainLightGrey;
+        text-transform: uppercase;
+        border-radius: 0;
+        padding: .5em;
+    }
+}

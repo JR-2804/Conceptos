@@ -1,0 +1,91 @@
+.products_breadcrumbs{
+	display: flex;
+}
+
+.my_dropdown {
+	position: relative;
+	display: inline-block;
+	background: $mainDark;
+	color: $mainLightGrey;
+	margin: 1em;
+	padding: 1em;
+	border-radius: 5px;
+
+	&__content {
+		display: none;
+		position: absolute;
+		background-color: $mainDark;
+		min-width: 160px;
+		list-style: none;
+		left: 0;
+		width: 75vw;
+		max-height: 50vh;
+		overflow-y: auto;
+
+		box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+		padding: 12px 16px;
+		z-index: 2;
+		border-radius: 4px;
+
+		animation: swing-out-top-bck .25s cubic-bezier(0.600, -0.280, 0.735, 0.045) both;
+
+		@include atLarge{
+			width: 20vw;
+		}
+
+		& li{
+			margin: .5em auto;
+
+			& a{
+				color: $mainLightGrey;
+				text-decoration: none;
+			}
+		}
+	}
+
+	&:hover .my_dropdown__content {
+		display: block;
+		animation: swing-in-top-bck .9s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+	}
+
+	& img{
+		height: 1em;
+		width: auto;
+	}
+}
+
+
+
+
+/**
+ * ----------------------------------------
+ * animation swing-in-top-bck
+ * ----------------------------------------
+ */
+
+@keyframes swing-in-top-bck {
+	0% {
+		transform: rotateX(70deg);
+		transform-origin: top;
+		opacity: 0;
+	}
+	100% {
+		transform: rotateX(0deg);
+		transform-origin: top;
+		opacity: 1;
+	}
+}
+
+
+@keyframes swing-out-top-bck {
+	0% {
+		transform: rotateX(0deg);
+		transform-origin: top;
+		opacity: 1;
+	}
+	100% {
+		transform: rotateX(-90deg);
+		transform-origin: top;
+		opacity: 0;
+	}
+}

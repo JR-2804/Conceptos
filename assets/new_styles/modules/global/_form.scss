@@ -1,0 +1,25 @@
+.form{
+    &__item{
+        margin: .75em 0;
+        display: flex;
+        flex-wrap: wrap;
+
+        & label{
+            width: 100%;
+            margin: .25em 0;
+        }
+
+        & input[type='text'], input[type='email'], & textarea{
+            width: 100%;
+            border-radius: 4px;
+            border: 1px transparent solid;
+            background: white;
+            color: $mainDarkGrey;
+            padding: .5em .75em;
+        }
+
+        &--center{
+            justify-content: center;
+        }
+    }
+}

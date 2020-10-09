@@ -1,0 +1,21 @@
+{% extends ':new_site:base.html.twig' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/new_styles/home.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    {{ include('new_site/components/home/_hero.html.twig') }}
+
+    {{ include('new_site/components/home/_services.html.twig') }}
+
+    {{ include('new_site/components/global/_blog.html.twig') }}
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('bundles/conceptos/14ndy15/new_scripts/home.js') }}" ></script>
+{% endblock %}

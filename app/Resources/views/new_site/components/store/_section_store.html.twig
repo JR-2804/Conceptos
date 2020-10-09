@@ -1,0 +1,23 @@
+<section class="section_store">
+    <div class="section_store__title">
+        <h2>{{ section }}</h2>
+        <small>Precios únicos</small>
+    </div>
+
+    <div class="section_store__content section_store__content--{{ loop.index0 }}">
+        {% for products in products_chunks | slice(0,8) %}
+            <div class="section_store__content__container">
+
+                {% for product in products %}
+                    {{ include('new_site/components/global/_product_small.html.twig') }}
+                {% endfor %}
+
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="section_store__more">
+        <button class="btn btn--grey">Ver más</button>
+    </div>
+
+</section>

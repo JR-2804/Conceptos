@@ -1,0 +1,35 @@
+.services_selector{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 2em auto;
+
+    & select{
+        width: 80%;
+        border-radius: 20px;
+        box-shadow: 2px 2px 10px rgba(black, .2);
+        padding: .75em;
+    }
+
+    &__button{
+        position: absolute;
+        right: 0;
+        transform: translateX(-50%);
+        width: 3em;
+        height: 3em;
+        border-radius: 50%;
+        background: $mainYellow;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &__inner{
+            position: absolute;
+            width: 2.25em;
+            height: 2.25em;
+            border-radius: 50%;
+            background: $mainDark;
+        }
+    }
+}

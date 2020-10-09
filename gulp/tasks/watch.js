@@ -21,10 +21,13 @@ gulp.task('watch', function(){
     //     gulp.start('cssInject');
     // });
 
-    watch('./assets/styles/**/*.scss', function(){
+    watch('./assets/new_styles/**/*.scss', function(){
         gulp.start('styles');
     });
 
+    watch('./assets/new_scripts/**/*.js', function(){
+        gulp.start('scripts');
+    });
     watch('./assets/scripts/**/*.js', function(){
         gulp.start('scripts');
     });

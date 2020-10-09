@@ -1,0 +1,11 @@
+<div class="product_small">
+    <div class="product_small__image">
+{#        <img src="{{ asset('/uploads/images/blog/5e7f83497ac5b.jpg') }}" alt="">#}
+        {{ vich_uploader_asset(product.mainImage, 'imageFile') | imgTag(sizes = '50vw') | raw }}
+    </div>
+
+    <div class="product_small__price">
+        <span>${{ product.calculatePrice }}.00</span>
+{#        <span>$8.00</span>#}
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<section class="hero">
+    <div class="hero__slides carousel">
+        {% for i in 1..3 %}
+            <div class="hero__slides__slide carousel__cell">
+                
+                <div class="hero__slides__slide__image">
+                    <img src="{{ asset('/uploads/images/blog/5e7f83497ac5b.jpg') }}" alt="">
+                </div>
+
+                <div class="hero__slides__slide__content">
+                    <div class="hero__slides__slide__content__title">
+                        <h1>Bienvenido <br>a Conceptos</h1>
+                    </div>
+                    <div class="hero__slides__slide__content__text">
+                        <p>Lorem ipsum dolor sit amet, consectetur
+                            adipisicing elit. Animi asperiores assumenda
+                            dignissimos dolore, doloremque dolores eum in</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="hero__subscribe_btn">
+        <button class="btn btn--big">Subscribirme</button>
+    </div>
+</section>

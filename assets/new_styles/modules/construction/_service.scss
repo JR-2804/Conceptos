@@ -1,0 +1,34 @@
+.service{
+    display: flex;
+    padding: 1em;
+    width: 98%;
+    margin: .5em 1%;
+
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+
+    &__image{
+        width: 45%;
+    }
+
+    &__text{
+        display: flex;
+        flex-wrap: wrap;
+        width: 50%;
+
+        & h4{
+            margin: .5em 0;
+        }
+
+        & p{
+            margin-bottom: 0;
+        }
+
+        & .btn{
+            position: relative;
+            left: 100%;
+            transform: translateX(-100%);
+        }
+    }
+}

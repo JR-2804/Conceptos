@@ -71,8 +71,6 @@ class NavBar{
 
             let subMenuId = item.getAttribute('data-show');
             let subMenu = document.querySelector(`#${subMenuId}`);
-            console.log(subMenu);
-            console.log(subMenuId);
             subMenu.classList.add('show');
         }
     }

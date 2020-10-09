@@ -1,0 +1,45 @@
+.sub_categories{
+    position: relative;
+    margin: 2em 0;
+    border-bottom: 1px rgba($mainDark, .25) solid;
+
+    &__list{
+
+        & a{
+            text-decoration: none;
+        }
+
+        &__item{
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 7em;
+
+            &__image{
+                border-radius: 50%;
+                width: 6em;
+                height: 6em;
+                border: 3px white solid;
+                overflow: hidden;
+            }
+
+
+            &__name{
+                width: 100%;
+                padding: 5%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                & p{
+                    text-align: center;
+                    color: $mainDarkGrey;
+                    text-decoration: none;
+                    font-size: .8em;
+                    margin: .25em 0 0;
+                }
+            }
+        }
+    }
+}

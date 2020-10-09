@@ -1,0 +1,57 @@
+.hero{
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+
+    &__slides{
+        width: 100%;
+        height: 75vh;
+
+        &__slide{
+            position: relative;
+            width: 100%;
+
+            &__image{
+                position: relative;
+                width: 100%;
+                overflow: hidden;
+            }
+
+            &__content{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 90%;
+                margin: 5%;
+
+                &__title{
+                    margin-bottom: 3em;
+
+                    & h1{
+                        color: white;
+                        height: 1.5em;
+                        font-weight: 700;
+                    }
+                }
+
+                &__text{
+
+                    & p {
+                        color: white;
+                        font-size: 1.25em;
+                        line-height: 1.75;
+                    }
+
+                }
+            }
+
+        }
+    }
+
+    &__subscribe_btn{
+        position: absolute;
+        top: 40vh;
+        left: 1em;
+
+    }
+}

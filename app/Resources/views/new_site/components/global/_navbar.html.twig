@@ -1,0 +1,180 @@
+<header class="navbar">
+
+    <div class="navbar__logo">
+        <a href="{{ path('site_home') }}">
+            <img src="{{ home.data.logo.image.path }}" alt="">
+        </a>
+    </div>
+
+    <div class="navbar__content__menu">
+        <div class="navbar__content__menu__middle"></div>
+    </div>
+
+    <div class="lateral_menu">
+        <button class="lateral_menu__close"></button>
+        <nav class="lateral_menu__content">
+            <ul>
+                <li><a href="{{ path('site_home') }}">Inicio</a></li>
+                <li><a data-next="next" href="#">Productos</a>
+
+                    <ul class="sub">
+                        <li><a data-next="prev" href="">Productos</a></li>
+                        <li><div class="conceptos-navbar-divider" role="separator"></div></li>
+
+                        <li>
+                            <img src="{{ asset('bundles/conceptos/images/icons/todos.svg') }}">
+                            <a href="{{ path('products') }}">TODOS</a>
+                        </li>
+                        <li>
+                            <img src="{{ asset('bundles/conceptos/images/icons/ofertas.svg') }}">
+                            <a  href="{{ path('products', {inOffer:true}) }}">OFERTAS</a>
+                        </li>
+                        <li>
+                            <img src="{{ asset('bundles/conceptos/images/icons/almacen.svg') }}">
+                            <a href="{{ path('products', {inStore:true}) }}">ENTREGA EN 24H</a>
+                        </li>
+                        <li>
+                            <img src="{{ asset('bundles/conceptos/images/icons/novedades.svg') }}">
+                            <a href="{{ path('products', {recent:true}) }}">NOVEDADES</a>
+                        </li>
+
+
+                        {% if app.user|default %}
+                            <li>
+                                <img src="{{ asset('bundles/conceptos/images/icons/corazon.svg') }}">
+                                <a href="{{ path('favorite_products') }}">FAVORITOS</a>
+                            </li>
+                        {% endif %}
+
+                        {% for category in categories %}
+
+                            {% if category.parents | length == 0 %}
+                                {% set subCategories = '' %}
+                                {% for subCategory in category.subCategories %}
+                                    {% set subCategories = subCategory.id ~ ', '~ subCategories %}
+                                {% endfor %}
+
+                                {% if category.name == "PARA ENAMORADOS" %}
+                                    {% set order = 'order-1' %}
+                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/corazon.svg') %}
+                                {% elseif category.name == "DECORACIÓN" %}
+                                    {% set order = 'order-5' %}
+                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/decoracion.svg') %}
+                                {% elseif category.name == "INFANTIL" %}
+                                    {% set order = 'order-5' %}
+                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/infantil.svg') %}
+                                {% elseif category.name == "COCINA" %}
+                                    {% set order = 'order-5' %}
+                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/cocina.svg') %}
+                                {% elseif category.name == "LUMINARIAS" %}
+                                    {% set order = 'order-5' %}
+                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/luminaria.svg') %}
+                                {% elseif category.name == "BAÑO" %}
+                                    {% set order = 'order-5' %}
+                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/bano.svg') %}
+                                {% elseif category.name == "TEXTILES" %}
+                                    {% set order = 'order-5' %}
+                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/textiles.svg') %}
+                                {% elseif category.name == "ORDEN Y ALMACENAMIENTO" %}
+                                    {% set order = 'order-5' %}
+                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/almacen.svg') %}
+                                {% elseif category.name == "COMEDOR" %}
+                                    {% set order = 'order-5' %}
+                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/comedor.svg') %}
+                                {% elseif category.name == "MOBILIARIO" %}
+                                    {% set order = 'order-2' %}
+                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/mobiliario.svg') %}
+                                {% elseif category.name == "MASCOTAS" %}
+                                    {% set order = 'order-5' %}
+                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/mascotas.svg') %}
+                                {% else %}
+                                    {% set order = 'order-5' %}
+                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/todos.svg') %}
+                                {% endif %}
+                            {% set _categoryName = category.name | lower |replace({' ': ''}) %}
+                            <li><img src="{{categoryIcon}}"> <a href="#" data-next="next" data-show="{{_categoryName}}">{{category.name}}</a>
+
+                                <ul class="sub" id="{{ _categoryName }}">
+                                    <li><img src="{{categoryIcon}}"> <a href="#" data-next="false">{{category.name}}</a></li>
+                                    <li><div class="conceptos-navbar-divider" role="separator"></div></li>
+
+                                    <li>
+                                        <img class="no-invert"  src="{{asset('bundles/conceptos/images/home/category.png')}}">
+                                        <a href="{{ path('products', {categories:subCategories}) }}">TODOS</a>
+                                    </li>
+
+                                    {% for subCategory in category.subCategories %}
+                                        <li>
+                                            <img class="no-invert" src="{{asset('bundles/conceptos/images/home/category.png')}}">
+                                            <a href="{{ path('products', {categories:subCategory.id}) }}">{{subCategory.name}}</a>
+                                        </li>
+                                    {% endfor %}
+
+                                </ul>
+                            </li>
+
+                            {% endif %}
+                        {% endfor %}
+
+                    </ul>
+                </li>
+                <li><a class="" href="{{ path('services') }}">Servicios</a></li>
+                <li><a class="" href="{{ path('membership') }}">Membresia</a></li>
+                <li><a class="" href="{{ path('blog_home') }}">Inspiraciones</a></li>
+                <li><a class="" href="{{ path('help') }}">Ayuda</a></li>
+
+                <li><div class="conceptos-navbar-divider" role="separator"></div></li>
+
+                {% if app.user|default %}
+                    <li><a class="" href="{{ path('favorite_products') }}">Favoritos</a></li>
+                    {% if is_granted('ROLE_EXTERNAL') %}
+                        <li><a class="" href="{{ path('external_requests') }}">Ordenes de Compra</a></li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li><a class="" href="{{ path('easyadmin') }}">Administrar</a></li>
+                    {% endif %}
+                    <li><a class="" href="{{ path('fos_user_security_logout') }}">Cerrar Sesión</a></li>
+                {% endif %}
+            </ul>
+
+
+        </nav>
+    </div>
+
+    <div class="navbar__content__search">
+        <form id="home-search-form" action="{{ path('products') }}" method="get">
+            <label for="search_bar_products" class="sr-only">Buscar</label>
+            <input name="term" id="search_bar_products" type="text" placeholder="buscar">
+
+            <button type="submit" value="buscar">
+                <img src="{{ asset('bundles/conceptos/images/icons/lupa.svg')  }}" alt="">
+            </button>
+        </form>
+    </div>
+
+    <div class="navbar__content__user">
+        {% if app.user|default %}
+            <a href="{{ path('site_profile') }}">
+                <img src="{{ asset('bundles/conceptos/images/icons/user.svg') }}">
+            </a>
+        {% else %}
+            <a href="" data-toggle="modal" data-target="#loginModal">
+                <img src="{{ asset('bundles/conceptos/images/icons/user.svg') }}">
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="navbar__content__favorite">
+        <a href="{{ path('favorite_products') }}">
+            <img src="{{ asset('bundles/conceptos/images/icons/favorito.svg') }}">
+        </a>
+    </div>
+
+    <div class="navbar__content__cart" data-toggle="modal" data-target="#cartPreviewModal">
+            <img src="{{ asset('bundles/conceptos/images/icons/carrito.svg') }}">
+            <span class="navbar__content__cart__count" id="conceptos-shop-cart-count" data-count="{{count}}">{% if count > 99 %}+99{% else %}{{count}}{% endif %}</span>
+        </div>
+
+</header>
+
+<div class="push_element"></div>

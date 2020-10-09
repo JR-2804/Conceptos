@@ -7,7 +7,17 @@ hexrgba =require('postcss-hexrgba');
 
 
 gulp.task('styles', function(){
-    return gulp.src('./assets/styles/**/*.scss')
+    gulp.src('./assets/styles/**/*.scss')
+        .pipe(sass())
+        .on('error', sass.logError)
+        .pipe(postcss([cssImport, autoprefixer, hexrgba]))
+        .on('error', function (errorInfo) {
+            console.log(errorInfo.toString());
+            this.emit('end');
+        })
+        .pipe(gulp.dest('./public_html/bundles/conceptos/14ndy15/styles'));
+
+    return gulp.src('./assets/new_styles/**/*.scss')
         .pipe(sass())
         .on('error', sass.logError)
         .pipe(postcss([cssImport, autoprefixer, hexrgba]))
@@ -15,5 +25,5 @@ gulp.task('styles', function(){
             console.log(errorInfo.toString());
             this.emit('end');
          })
-        .pipe(gulp.dest('./public_html/bundles/conceptos/14ndy15/styles'));
+        .pipe(gulp.dest('./public_html/bundles/conceptos/14ndy15/new_styles'));
 });

@@ -1,0 +1,23 @@
+{% if mainCategory %}
+    <nav class="products_breadcrumbs">
+        <div class="my_dropdown">
+            <span>
+                {{mainCategory.name}}
+                <img src="{{ asset('bundles/conceptos/14ndy15/images/arrow.svg') }}" alt="">
+            </span>
+
+            <ul class="my_dropdown__content">
+                {% for category in categories %}
+
+                    {% set subCategories = '' %}
+                    {% for subCategory in category.subCategories %}
+                        {% set subCategories = subCategory.id ~ ', '~ subCategories %}
+                    {% endfor %}
+
+                    {% if category.parents | length == 0 %}
+                        <li><a href="{{ path('products', {categories:subCategories}) }}">{{ category.name }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+    </nav>
+{% endif %}

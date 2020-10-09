@@ -1,0 +1,67 @@
+.description{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+
+    &__badge{
+        background: rgba($mainYellow, .85);
+        position: absolute;
+        top: 0;
+        transform: translateY(-50%);
+        padding: 2em 1em 1em;
+        left: 2.5%;
+
+        & p{
+            font-weight: 700;
+            font-size: 1em;
+            margin: 0;
+        }
+    }
+
+    &__info{
+        width: 95%;
+        margin: 2.5em 2.5% 0;
+
+        & h2{
+
+        }
+
+        & ul{
+            padding: 0;
+            list-style: none;
+
+            & li{
+                margin: .5em;
+                &:before{
+                    content: '-';
+                    position: relative;
+                }
+
+                & span{
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+
+    &__explain{
+        width: 95%;
+        margin: auto 2.5%;
+        background: white;
+        padding: .5em;
+
+        & h3{
+
+        }
+
+        &__content{
+            max-height: 45vh;
+            overflow-y: auto;
+
+            p{
+
+            }
+        }
+
+    }
+}

@@ -1,0 +1,25 @@
+{% extends ':new_site:base.html.twig' %}
+
+{% block title %}Construccion Obra{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/new_styles/construction_work.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    {{ include('new_site/components/global/_section_site.html.twig') }}
+
+    {{ include('new_site/components/global/_breadcrumbs.html.twig') }}
+
+    {{ include('new_site/components/construction_work/_hero.html.twig') }}
+
+    {{ include('new_site/components/construction_work/_description.html.twig') }}
+
+    {{ include('new_site/components/construction_work/_gallery_products.html.twig') }}
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('bundles/conceptos/14ndy15/new_scripts/construction_work.js') }}" ></script>
+{% endblock %}

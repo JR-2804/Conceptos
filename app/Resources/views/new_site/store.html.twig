@@ -1,0 +1,37 @@
+{% extends ':new_site:base.html.twig' %}
+
+{% block title %}Tienda{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/new_styles/store.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    {{ include('new_site/components/global/_section_site.html.twig') }}
+
+    {{ include('new_site/components/global/_breadcrumbs.html.twig') }}
+
+    {{ include('new_site/components/global/_hero.html.twig') }}
+
+    {{ include('new_site/components/store/_categories_list.html.twig') }}
+
+
+    {% set sections = ['Ofertas', 'Entrega en 24 horas', 'Lo más vendido'] %}
+    {% set products_sections = [inStoreChunks, inStoreChunks, popularChunks] %}
+
+    {% for section in sections %}
+
+        {% set products_chunks = products_sections[loop.index0] %}
+        {{ include('new_site/components/store/_section_store.html.twig') }}
+
+    {% endfor %}
+
+
+    {{ include('new_site/components/global/_blog.html.twig') }}
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('bundles/conceptos/14ndy15/new_scripts/store.js') }}" ></script>
+{% endblock %}
