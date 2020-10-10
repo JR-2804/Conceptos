@@ -81,10 +81,22 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./assets/new_scripts/store.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./assets/new_scripts/design.js");
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ "./assets/new_scripts/design.js":
+/*!**************************************!*\
+  !*** ./assets/new_scripts/design.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nvar _carousel = __webpack_require__(/*! ./modules/global/_carousel */ \"./assets/new_scripts/modules/global/_carousel.js\");\n\nvar _carousel2 = _interopRequireDefault(_carousel);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar options = {\n    cellAlign: 'left',\n    pageDots: true,\n    wrapAround: true,\n    pauseAutoPlayOnHover: false,\n    prevNextButtons: false\n};\n\nnew _carousel2.default('.blog__slides', options);\n\n//# sourceURL=webpack:///./assets/new_scripts/design.js?");
+
+/***/ }),
 
 /***/ "./assets/new_scripts/modules/global/_carousel.js":
 /*!********************************************************!*\
@@ -95,18 +107,6 @@
 
 "use strict";
 eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _flickity = __webpack_require__(/*! flickity */ \"./node_modules/flickity/js/index.js\");\n\nvar _flickity2 = _interopRequireDefault(_flickity);\n\nvar _flickityAsNavFor = __webpack_require__(/*! flickity-as-nav-for */ \"./node_modules/flickity-as-nav-for/as-nav-for.js\");\n\nvar _flickityAsNavFor2 = _interopRequireDefault(_flickityAsNavFor);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar Carousel = function () {\n    function Carousel(selector, options) {\n        _classCallCheck(this, Carousel);\n\n        this.carousel = document.querySelector(selector);\n        this.options = options;\n        this.initFlickity();\n    }\n\n    _createClass(Carousel, [{\n        key: \"initFlickity\",\n        value: function initFlickity() {\n            new _flickity2.default(this.carousel, this.options);\n        }\n    }]);\n\n    return Carousel;\n}();\n\nexports.default = Carousel;\n\n//# sourceURL=webpack:///./assets/new_scripts/modules/global/_carousel.js?");
-
-/***/ }),
-
-/***/ "./assets/new_scripts/store.js":
-/*!*************************************!*\
-  !*** ./assets/new_scripts/store.js ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nvar _carousel = __webpack_require__(/*! ./modules/global/_carousel */ \"./assets/new_scripts/modules/global/_carousel.js\");\n\nvar _carousel2 = _interopRequireDefault(_carousel);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar lite_options = {\n    cellAlign: 'left',\n    pageDots: false,\n    pauseAutoPlayOnHover: false,\n    autoplay: true,\n    prevNextButtons: true,\n    wrapAround: true\n};\n\nvar options = {\n    cellAlign: 'left',\n    pageDots: true,\n    wrapAround: true,\n    pauseAutoPlayOnHover: false,\n    prevNextButtons: false\n};\n\nvar storeSectionOptions = {\n    cellAlign: 'left',\n    pageDots: true,\n    pauseAutoPlayOnHover: false,\n    prevNextButtons: true\n};\n\nnew _carousel2.default('.categories__list', lite_options);\nnew _carousel2.default('.blog__slides', options);\nnew _carousel2.default('.section_store__content--0', storeSectionOptions);\nnew _carousel2.default('.section_store__content--1', storeSectionOptions);\nnew _carousel2.default('.section_store__content--2', storeSectionOptions);\n\n//# sourceURL=webpack:///./assets/new_scripts/store.js?");
 
 /***/ }),
 

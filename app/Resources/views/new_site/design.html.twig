@@ -3,7 +3,7 @@
 {% block title %}Diseño{% endblock %}
 
 {% block style %}
-    <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/new_styles/desing.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/conceptos/14ndy15/new_styles/design.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -14,14 +14,14 @@
 
     {{ include('new_site/components/global/_hero.html.twig') }}
 
-{#    {{ include('new_site/components/desing/_services_selector.html.twig') }}#}
+    {{ include('new_site/components/design/_services_selector.html.twig') }}
 
-    {{ include('new_site/components/desing/_services.html.twig') }}
+    {{ include('new_site/components/design/_works.html.twig') }}
 
     {{ include('new_site/components/global/_blog.html.twig') }}
 
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{ asset('bundles/conceptos/14ndy15/new_scripts/desing.js') }}" ></script>
+    <script src="{{ asset('bundles/conceptos/14ndy15/new_scripts/design.js') }}" ></script>
 {% endblock %}

@@ -41,7 +41,6 @@
     padding: .75em 0; }
   .section_store__title h2 {
       color: #e8e8e8;
-      font-weight: 400;
       margin: 0; }
   .section_store__title h2::before, .section_store__title h2::after {
         content: '-';

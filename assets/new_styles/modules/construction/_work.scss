@@ -1,4 +1,4 @@
-.service{
+.work{
     display: flex;
     padding: 1em;
     width: 98%;
@@ -10,6 +10,7 @@
 
     &__image{
         width: 45%;
+        height: 100%;
     }
 
     &__text{
@@ -18,11 +19,11 @@
         width: 50%;
 
         & h4{
-            margin: .5em 0;
+            margin: .25em 0;
         }
 
         & p{
-            margin-bottom: 0;
+            margin: 0  0 1em;
         }
 
         & .btn{

@@ -1,0 +1,13 @@
+<section class="section works">
+    <div class="works__title works__title">
+        <h2>Obras realizadas</h2>
+    </div>
+
+    <div class="works__list">
+        {% for i in 1..5 %}
+            {% for constructionWork in constructionWorks %}
+                {{ include('new_site/components/construction/_work.html.twig') }}
+            {% endfor %}
+        {% endfor %}
+    </div>
+</section>

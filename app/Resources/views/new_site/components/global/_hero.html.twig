@@ -1,6 +1,12 @@
 <section class="hero">
     <div class="hero__image">
-        <img src="{{ asset('/uploads/images/blog/5e7f83497ac5b.jpg') }}" alt="">
+
+        {% if  heroImage is defined %}
+            <img src="{{ asset(heroImage) }}" alt="">
+        {% else %}
+            <img src="{{ asset('/uploads/images/blog/5e7f83497ac5b.jpg') }}" alt="">
+        {% endif %}
+
     </div>
     <div class="hero__content">
         <div class="hero__content__title">

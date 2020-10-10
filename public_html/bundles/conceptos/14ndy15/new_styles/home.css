@@ -110,6 +110,7 @@ https://flickity.metafizzy.co
       background: #c2b930; }.flickity-prev-next-button {
   width: 22px;
   height: 22px; }.services__service {
+  position: relative;
   margin: 1em auto 0;
   display: flex;
   justify-content: center;

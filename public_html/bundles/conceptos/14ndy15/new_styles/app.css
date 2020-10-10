@@ -380,6 +380,10 @@ main {
 a {
   text-decoration: underline; }
 
+a.hide {
+    text-decoration: none;
+    color: #434343; }
+
 img {
   height: 100%;
   width: 100%;
@@ -980,6 +984,9 @@ img {
     height: 3px;
     background: #c2b930; }
 
+.footer__subscribe__form {
+    width: 100%; }
+
 .footer__subscribe__title {
     width: 100%;
     align-content: start; }
@@ -1036,8 +1043,8 @@ img {
 .product_small {
   display: flex;
   position: relative;
-  width: 45%;
-  margin: .5em;
+  width: 46%;
+  margin: .5em .25em;
   background: white;
   border-radius: 10px;
   height: 25vh;
@@ -1059,6 +1066,17 @@ img {
 
 .product_small__price span {
       font-weight: 700; }
+
+.product_small__cart {
+    position: absolute;
+    bottom: .5em;
+    right: .5em;
+    width: 2em;
+    height: 2em; }
+
+.product_small__cart img {
+      -o-object-fit: contain;
+         object-fit: contain; }
 
 .product {
   position: relative;

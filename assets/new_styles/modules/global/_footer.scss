@@ -94,6 +94,14 @@
             background: $mainYellow;
         }
 
+        &__form{
+            width: 100%;
+
+            & input[type='submit']{
+
+            }
+        }
+
         &__title {
             width: 100%;
             align-content: start;

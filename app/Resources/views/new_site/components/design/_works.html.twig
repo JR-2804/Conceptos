@@ -1,0 +1,11 @@
+<section class="section works">
+    <div class="section__title works__title">
+        <h2>Servicios realizados</h2>
+    </div>
+
+    <div class="works__list">
+        {% for designWork in designWorks %}
+            {{ include('new_site/components/design/_work.html.twig') }}
+        {% endfor %}
+    </div>
+</section>

@@ -19,7 +19,7 @@ class FrontendController extends Controller
 {
 
     /**
-     * @Route(name="home", path="/new")
+     * @Route(name="home", path="/new/")
      *
      * @param Request $request
      *
@@ -47,7 +47,7 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route(name="store_home", path="/new/tienda")
+     * @Route(name="store", path="/new/tienda")
      *
      * @param Request $request
      * @param OfferRepository $offerRepository
@@ -56,7 +56,7 @@ class FrontendController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request)
+    public function storeAction(Request $request)
     {
         $onlySlide = $request->query->get('onlySlide');
 
@@ -266,10 +266,20 @@ class FrontendController extends Controller
      */
     public function constructionAction(Request $request){
 
+
+
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
+
+        $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Obras',
+        ]);
+
+        $heroImage = $services->getData()['services']['header']['image']['path'];
+        $constructionServices = $services->getData()['services']['designersTeam']['services'];
+        $constructionWorks =$services->getData()['services']['projects']['projects'];
 
         $breadcrumbs = ['Inicio', 'Construcción'];
         return $this->render('new_site/construction.html.twig',[
@@ -278,7 +288,11 @@ class FrontendController extends Controller
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
-            'breadcrumbs' => $breadcrumbs
+            'breadcrumbs' => $breadcrumbs,
+            'services'=>$services,
+            'constructionServices'=>$constructionServices,
+            'constructionWorks'=>$constructionWorks,
+            'heroImage'=>$heroImage,
         ]);
     }
 
@@ -339,7 +353,7 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route(name="desing", path="/new/diseno")
+     * @Route(name="design", path="/new/diseno")
      *
      * @param Request $request
      *
@@ -354,14 +368,24 @@ class FrontendController extends Controller
         ]);
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
+        $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Interiorismo',
+        ]);
+
+        $designServices = $services->getData()['services']['designersTeam']['services'];
+        $designWorks =$services->getData()['services']['projects']['projects'];
+
+
         $breadcrumbs = ['Inicio', 'Diseño'];
-        return $this->render('new_site/desing.html.twig',[
+        return $this->render('new_site/design.html.twig',[
             'home'=>$page,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
-            'breadcrumbs' => $breadcrumbs
+            'breadcrumbs' => $breadcrumbs,
+            'designServices' => $designServices,
+            'designWorks' => $designWorks,
         ]);
     }
 

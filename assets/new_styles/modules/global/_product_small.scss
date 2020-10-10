@@ -1,8 +1,8 @@
 .product_small{
     display: flex;
     position: relative;
-    width: 45%;
-    margin: .5em;
+    width: 46%;
+    margin: .5em .25em;
     background: white;
     border-radius: 10px;
     height: 25vh;
@@ -26,6 +26,18 @@
 
         & span{
             font-weight: 700;
+        }
+    }
+
+    &__cart{
+        position: absolute;
+        bottom: .5em;
+        right: .5em;
+        width: 2em;
+        height: 2em;
+
+        & img{
+            object-fit: contain;
         }
     }
 }

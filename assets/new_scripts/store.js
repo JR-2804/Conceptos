@@ -4,7 +4,9 @@ const lite_options = {
     cellAlign: 'left',
     pageDots: false,
     pauseAutoPlayOnHover: false,
-    prevNextButtons: false,
+    autoplay: true,
+    prevNextButtons: true,
+    wrapAround: true,
 };
 
 const options = {
@@ -19,7 +21,7 @@ const storeSectionOptions = {
     cellAlign: 'left',
     pageDots: true,
     pauseAutoPlayOnHover: false,
-    prevNextButtons: false,
+    prevNextButtons: true,
 };
 
 new Carousel('.categories__list', lite_options);

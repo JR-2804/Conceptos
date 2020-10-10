@@ -9,9 +9,9 @@ module.exports = [
             construction: "./assets/new_scripts/construction.js",
             construction_work: "./assets/new_scripts/construction_work.js",
             construction_service: "./assets/new_scripts/construction_service.js",
-            desing: "./assets/new_scripts/desing.js",
-            desing_work: "./assets/new_scripts/desing_work.js",
-            desing_service: "./assets/new_scripts/desing_service.js",
+            design: "./assets/new_scripts/design.js",
+            design_work: "./assets/new_scripts/design_work.js",
+            design_service: "./assets/new_scripts/design_service.js",
             store_section: "./assets/new_scripts/store_section.js",
             product_details: "./assets/new_scripts/product_details.js",
 
