@@ -20,8 +20,8 @@
                 border-radius: 50%;
                 width: 6em;
                 height: 6em;
-                border: 3px white solid;
                 overflow: hidden;
+                border: 3px white solid;
             }
 
 
@@ -33,11 +33,10 @@
                 align-items: center;
 
                 & p{
-                    text-align: center;
-                    color: $mainDarkGrey;
-                    text-decoration: none;
-                    font-size: .8em;
+                    font-size: .75em;
+                    font-weight: 700;
                     margin: .25em 0 0;
+                    text-align: center;
                 }
             }
         }

@@ -4,9 +4,10 @@ const liteOptions = {
     cellAlign: 'left',
     pageDots: false,
     pauseAutoPlayOnHover: false,
-    prevNextButtons: false,
+    prevNextButtons: true,
     wrapAround: true,
 };
+
 const storeSectionOptions = {
     cellAlign: 'left',
     pageDots: true,

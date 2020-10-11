@@ -265,9 +265,6 @@ class FrontendController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function constructionAction(Request $request){
-
-
-
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
@@ -447,7 +444,7 @@ class FrontendController extends Controller
 
 
     /**
-     * @Route(name="store_section", path="/new/tienda/{category}")
+     * @Route(name="store_section", path="/new/tienda/categorias")
      *
      * @param Request $request
      *
@@ -455,14 +452,14 @@ class FrontendController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function storeSectionAction(Request $request, $category){
+    public function storeSectionAction(Request $request){
 
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
-        $breadcrumbs = ['Inicio', 'Tienda', $category];
+        $breadcrumbs = ['Inicio', 'Tienda'];
         $data = [];
         $data += $this->get('product_service')->filterProducts($request, $this->getUser());
         $data += [
@@ -493,7 +490,6 @@ class FrontendController extends Controller
             'name' => 'Home',
         ]);
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
-
 
         $product = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($id);
 

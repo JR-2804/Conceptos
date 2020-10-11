@@ -4,13 +4,20 @@
         {% for category in categories %}
             {%  if category.parents | length == 0 %}
 
+                {% set subCategories = '' %}
+                {% for subCategory in category.subCategories %}
+                    {% set subCategories = subCategory.id ~ ', '~ subCategories %}
+                {% endfor %}
+
                 <div class="categories__list__item">
-                    <div class="categories__list__item__image">
-                        <img src="{{ vich_uploader_asset(category, 'imageSiteFile') }}" alt="">
-                    </div>
-                    <div class="categories__list__item__name">
-                        <p>{{ category }}</p>
-                    </div>
+                    <a class="hide" href="{{ path('store_section', {categories: subCategories}) }}">
+                        <div class="categories__list__item__image">
+                            <img src="{{ vich_uploader_asset(category, 'imageSiteFile') }}" alt="">
+                        </div>
+                        <div class="categories__list__item__name">
+                            <p>{{ category }}</p>
+                        </div>
+                    </a>
                 </div>
 
             {% endif %}
