@@ -12,7 +12,7 @@ const storeSectionOptions = {
     cellAlign: 'left',
     pageDots: true,
     pauseAutoPlayOnHover: false,
-    prevNextButtons: false,
+    prevNextButtons: true,
 };
 
 const topPopularOptions = {
@@ -20,6 +20,7 @@ const topPopularOptions = {
     pageDots: false,
     pauseAutoPlayOnHover: false,
     prevNextButtons: true,
+    wrapAround: true,
 };
 
 new Carousel('.sub_categories__list', liteOptions);

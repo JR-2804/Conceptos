@@ -471,7 +471,6 @@ class FrontendController extends Controller
             'breadcrumbs' => $breadcrumbs
         ];
 
-
         return $this->render('new_site/store_section.html.twig', $data);
     }
 

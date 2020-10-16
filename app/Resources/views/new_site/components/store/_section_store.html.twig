@@ -5,7 +5,7 @@
     </div>
 
     <div class="section_store__content section_store__content--{{ loop.index0 }}">
-        {% for products in products_chunks | slice(0,8) %}
+        {% for products in products_chunks | slice(0, 8) %}
             <div class="section_store__content__container">
 
                 {% for product in products %}

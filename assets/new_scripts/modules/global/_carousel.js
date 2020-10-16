@@ -9,6 +9,13 @@ class Carousel{
     }
 
     initFlickity(){
+        let amount = this.carousel.children.length;
+        if (amount <= 3) {
+            this.options.wrapAround = false;
+            this.options.pageDots = true;
+            this.options.prevNextButtons = false;
+        }
+
         new Flickity( this.carousel, this.options);
     }
 }

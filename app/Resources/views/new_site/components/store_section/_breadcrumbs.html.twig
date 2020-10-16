@@ -9,13 +9,18 @@
             <ul class="my_dropdown__content">
                 {% for category in categories %}
 
-                    {% set subCategories = '' %}
-                    {% for subCategory in category.subCategories %}
-                        {% set subCategories = subCategory.id ~ ', '~ subCategories %}
-                    {% endfor %}
+                    {%  if category.parents | length == 0 %}
+                        {% set subCategories = '' %}
+                        {% for subCategory in category.subCategories %}
+                            {% set subCategories = subCategory.id ~ ', '~ subCategories %}
+                        {% endfor %}
 
-                    {% if category.parents | length == 0 %}
-                        <li><a href="{{ path('products', {categories:subCategories}) }}">{{ category.name }}</a></li>
+
+                        <li><a href="{{ path('store_section', {categories: subCategories}) }}">
+                                {{ category.name }}
+                            </a>
+                        </li>
+
                     {% endif %}
                 {% endfor %}
             </ul>

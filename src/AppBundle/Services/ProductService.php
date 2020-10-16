@@ -450,8 +450,6 @@ class ProductService
         }
 
 
-
-
         $popularProducts = [];
         if ($categories != -1) {
             $popularProductsCount = 15;

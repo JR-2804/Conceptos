@@ -1,5 +1,5 @@
 <div class="product_extra_small">
     <div class="product_extra_small__image">
-        <img src="{{ asset('/uploads/images/blog/5e7f83497ac5b.jpg') }}" alt="">
+        {{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes = '28vw') | raw }}
     </div>
 </div>
