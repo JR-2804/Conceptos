@@ -294,7 +294,7 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route(name="construction_work", path="/new/construccion/obra/{work}")
+     * @Route(name="construction_work", path="/new/construccion/obra/{id}/{work}")
      *
      * @param Request $request
      *
@@ -302,14 +302,26 @@ class FrontendController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function constructionWorkAction(Request $request, $work){
+    public function constructionWorkAction(Request $request, $id, $work){
 
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
+        $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Obras',
+        ]);
 
+        $constructionWorks = $services->getData()['services']['projects']['projects'];
+        $constructionWork = null;
+
+        foreach ($constructionWorks as $constructionWork_){
+            if ($constructionWork_['id'] == $id)
+                $constructionWork = $constructionWork_;
+        }
+
+        $products = $constructionWork['products'];
         $breadcrumbs = ['Inicio', 'Construcción', 'Obras', $work];
         return $this->render('new_site/construction_work.html.twig',[
             'home'=>$page,
@@ -317,7 +329,9 @@ class FrontendController extends Controller
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
-            'breadcrumbs' => $breadcrumbs
+            'breadcrumbs' => $breadcrumbs,
+            'constructionWork' => $constructionWork,
+            'products'=>$products
         ]);
     }
 
@@ -387,7 +401,7 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route(name="desing_work", path="/new/diseno/obra/{work}")
+     * @Route(name="desing_work", path="/new/diseno/obra/{id}/{work}")
      *
      * @param Request $request
      *
@@ -395,21 +409,37 @@ class FrontendController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function desingWorkAction(Request $request, $work){
+    public function desingWorkAction(Request $request, $id, $work){
 
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
+        $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
+            'name' => 'Interiorismo',
+        ]);
+
+        $designWorks =$services->getData()['services']['projects']['projects'];
+        $designWork = null;
+
+
+        foreach ($designWorks as $designWork_){
+
+            if ($designWork_['id'] == $id) {
+                $designWork = $designWork_;
+            }
+        }
+
         $breadcrumbs = ['Inicio', 'Diseño', 'Obras', $work];
-        return $this->render('new_site/desing_work.html.twig',[
+        return $this->render('new_site/design_work.html.twig',[
             'home'=>$page,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),
             'categories' => $this->get('category_service')->getAll(),
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
-            'breadcrumbs' => $breadcrumbs
+            'breadcrumbs' => $breadcrumbs,
+            'designWork' => $designWork,
         ]);
     }
 

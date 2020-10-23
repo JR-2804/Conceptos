@@ -8,6 +8,8 @@
 
 {% block body %}
 
+    {{ dump(designWork) }}
+
     {{ include('new_site/components/global/_section_site.html.twig') }}
 
     {{ include('new_site/components/global/_breadcrumbs.html.twig') }}
@@ -16,7 +18,7 @@
 
     {{ include('new_site/components/design_work/_description.html.twig') }}
 
-    {{ include('new_site/components/design_work/_gallery.html.twig') }}
+{#    {{ include('new_site/components/design_work/_gallery_products.html.twig') }}#}
 
 {% endblock %}
 
