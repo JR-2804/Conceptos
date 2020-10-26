@@ -4,7 +4,7 @@
         {% for subCategory in mainCategory.subcategories %}
 
             <div class="sub_categories__list__item">
-                <a class="hide" href="{{ path('products', {categories:subCategory.id}) }}">
+                <a class="hide" href="{{ path('store_section', {categories:subCategory.id}) }}">
                     <div class="sub_categories__list__item__image">
                         <img src="{{ vich_uploader_asset(subCategory, 'imageSiteFile') }}" alt="">
                     </div>

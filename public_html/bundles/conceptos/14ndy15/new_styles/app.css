@@ -386,6 +386,11 @@ a.hide {
     width: 100%;
     height: 100%; }
 
+a.hide.soft {
+      color: inherit;
+      width: auto;
+      height: auto; }
+
 img {
   height: 100%;
   width: 100%;
@@ -764,7 +769,6 @@ img {
 .breadcrumb {
   display: flex;
   width: 100%;
-  padding: 0 5%;
   background: #282827;
   color: #e8e8e8; }
 
@@ -780,7 +784,8 @@ img {
       display: flex;
       align-items: center;
       text-transform: uppercase;
-      font-size: .9em; }
+      font-size: .9em;
+      white-space: nowrap; }
 
 .breadcrumb ul li:after {
         position: relative;

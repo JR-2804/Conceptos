@@ -6,9 +6,9 @@
         </div>
 
         <div class="gallery__content">
-            {% for i in 1..12 %}
+            {% for image in designWork.extraImages %}
                 <div class="gallery__content__item">
-                    <img src="{{ asset('/uploads/images/blog/5e7f83497ac5b.jpg') }}" alt="">
+                    <img src="{{ asset(image.path) }}" alt="">
                 </div>
             {% endfor %}
         </div>

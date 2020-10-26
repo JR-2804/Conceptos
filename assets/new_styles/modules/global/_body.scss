@@ -30,6 +30,12 @@ a{
         color: $mainDarkGrey;
         width: 100%;
         height: 100%;
+
+        &.soft{
+            color: inherit;
+            width: auto;
+            height: auto;
+        }
     }
 }
 

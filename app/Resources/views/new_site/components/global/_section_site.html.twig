@@ -1,7 +1,7 @@
 <nav class="section_site">
     <ul class="section_site__list">
-        <li class="{% if 'Tienda' in breadcrumbs %} active {% endif %}">Tienda</li>
-        <li class="{% if 'Construcción' in breadcrumbs %} active {% endif %}">Construcción</li>
-        <li class="{% if 'Diseño' in breadcrumbs %} active {% endif %}">Diseño</li>
+        <li class="{% if 'Tienda' in breadcrumbs %} active {% endif %}"><a class="hide soft" href="{{ path('store') }}">Tienda</a></li>
+        <li class="{% if 'Construcción' in breadcrumbs %} active {% endif %}"><a class="hide soft" href="{{ path('construction') }}">Construcción</a></li>
+        <li class="{% if 'Diseño' in breadcrumbs %} active {% endif %}"><a class="hide soft" href="{{ path('design') }}">Diseño</a></li>
     </ul>
 </nav>

@@ -414,6 +414,9 @@ class FrontendController extends Controller
         $page = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
         ]);
+
+        $productsRepositories = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product');
+
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
         $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
@@ -423,13 +426,21 @@ class FrontendController extends Controller
         $designWorks =$services->getData()['services']['projects']['projects'];
         $designWork = null;
 
-
         foreach ($designWorks as $designWork_){
 
             if ($designWork_['id'] == $id) {
                 $designWork = $designWork_;
             }
         }
+
+        $products = [];
+        foreach ($designWork['products'] as $product_id){
+
+            $product = $productsRepositories->find($product_id);
+            $products[] = $product;
+        }
+
+        $designWork['products'] = $products;
 
         $breadcrumbs = ['Inicio', 'Diseño', 'Obras', $work];
         return $this->render('new_site/design_work.html.twig',[
@@ -439,7 +450,7 @@ class FrontendController extends Controller
             'terms' => $config->getTermAndConditions(),
             'privacy' => $config->getPrivacyPolicy(),
             'breadcrumbs' => $breadcrumbs,
-            'designWork' => $designWork,
+            'designWork' => $designWork
         ]);
     }
 
@@ -489,9 +500,13 @@ class FrontendController extends Controller
         ]);
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
-        $breadcrumbs = ['Inicio', 'Tienda'];
+
         $data = [];
         $data += $this->get('product_service')->filterProducts($request, $this->getUser());
+
+        $mainCategory = $data['mainCategory']->getName();
+        $breadcrumbs = ['Inicio', 'Tienda', $mainCategory, $mainCategory];
+
         $data += [
             'home'=>$page,
             'count' => $this->get('shop_cart_service')->countShopCart($this->getUser()),

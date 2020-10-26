@@ -9,7 +9,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    width: 7em; }
+    width: 6em;
+    margin: 0 .5em; }
   .sub_categories__list__item__image {
       border-radius: 50%;
       width: 6em;

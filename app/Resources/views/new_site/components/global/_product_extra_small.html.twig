@@ -1,5 +1,7 @@
 <div class="product_extra_small">
+    <a class="hide" href="{{ path('product', {id: product.id}) }}">
     <div class="product_extra_small__image">
         {{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes = '28vw') | raw }}
     </div>
+    </a>
 </div>

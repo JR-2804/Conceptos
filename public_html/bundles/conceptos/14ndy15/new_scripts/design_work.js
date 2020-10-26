@@ -94,7 +94,19 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\n//# sourceURL=webpack:///./assets/new_scripts/design_work.js?");
+eval("\n\nvar _galley_used_products = __webpack_require__(/*! ./modules/construction_work/_galley_used_products */ \"./assets/new_scripts/modules/construction_work/_galley_used_products.js\");\n\nvar _galley_used_products2 = _interopRequireDefault(_galley_used_products);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nnew _galley_used_products2.default();\n\n//# sourceURL=webpack:///./assets/new_scripts/design_work.js?");
+
+/***/ }),
+
+/***/ "./assets/new_scripts/modules/construction_work/_galley_used_products.js":
+/*!*******************************************************************************!*\
+  !*** ./assets/new_scripts/modules/construction_work/_galley_used_products.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar GalleryUsedProducts = function () {\n    function GalleryUsedProducts() {\n        _classCallCheck(this, GalleryUsedProducts);\n\n        this.gallery = document.querySelector('.gallery');\n        this.used_products = document.querySelector('.used_products');\n\n        this.events();\n    }\n\n    _createClass(GalleryUsedProducts, [{\n        key: 'events',\n        value: function events() {\n            var _this = this;\n\n            [this.gallery, this.used_products].forEach(function (elem) {\n                elem.addEventListener('click', _this.toggleActiveElement.bind(_this));\n            });\n        }\n    }, {\n        key: 'toggleActiveElement',\n        value: function toggleActiveElement() {\n            this.gallery.classList.toggle('gallery--active');\n            this.used_products.classList.toggle('used_products--active');\n        }\n    }]);\n\n    return GalleryUsedProducts;\n}();\n\nexports.default = GalleryUsedProducts;\n\n//# sourceURL=webpack:///./assets/new_scripts/modules/construction_work/_galley_used_products.js?");
 
 /***/ })
 
