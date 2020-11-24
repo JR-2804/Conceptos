@@ -21,5 +21,6 @@
 public_html/.htaccess
 app/config/parameters.yml
 /.vscode/
+/.idea/
 public_html/error_log
 /node_modules/
