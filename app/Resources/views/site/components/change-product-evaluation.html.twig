@@ -90,7 +90,9 @@
         <div class="modal-body conceptos-white-background">
           <div class="d-flex flex-column">
             <span class="conceptos-title-strong">Evaluar y Comentar</span>
-            <img class="evaluation-image align-self-center" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+            {% if product.mainImage %}
+              <img class="evaluation-image align-self-center" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+            {% endif %}
             <div class="d-flex align-items-center">
               <span class="conceptos-title conceptos-title-lowercase">Su opinión general la clasifica como</span>
               <span id="general-opinion" class="conceptos-title-strong ml-1">{{userEvaluation.generalOpinion}}</span>
@@ -211,7 +213,9 @@
             </button>
             <div class="d-flex justify-content-between">
               <div class="d-flex flex-column justify-content-center col-6 pl-0">
-                <img class="evaluation-image align-self-center" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+                {% if product.mainImage %}
+                  <img class="evaluation-image align-self-center" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+                {% endif %}
                 <span class="conceptos-title-strong">{{product.name}}</span>
               </div>
               <div class="d-flex flex-column align-items-center col-6 pl-0">

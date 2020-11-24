@@ -35,7 +35,7 @@
       </div>
       <div class="d-flex col-12 col-lg-6 flex-column mt-3 pl-lg-5 pr-lg-5 pb-lg-3">
         <span class="conceptos-title">{{project.title}}</span>
-        <span class="conceptos-subtitle">{{project.description}}</span>
+        <span class="conceptos-subtitle">{{project.description|raw}}</span>
       </div>
     </div>
     {% if products|length > 0 %}

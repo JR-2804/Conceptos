@@ -226,7 +226,9 @@
                   <span>{{product.code}}</span>
                 </td>
                 <td>
-                  <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.mainImage, 'imageFile')) }}" />
+                  {% if product.mainImage %}
+                    <img class="ml-5 mt-2 mb-2 product-image" src="{{ absolute_url(vich_uploader_asset(product.mainImage, 'imageFile')) }}" />
+                  {% endif %}
                 </td>
                 <td class="pl-3 pt-2">
                   <span class="product-description">{{product.item}}</span>

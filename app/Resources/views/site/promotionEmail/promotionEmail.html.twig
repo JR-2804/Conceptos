@@ -954,12 +954,15 @@
                                                                     <a target="_blank" style="position: relative;" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}">
                                                                         <img style="position: absolute; width: 65px; z-index: 1;" src="{{ absolute_url(asset('uploads/images/oferta.png')) }}" alt="">
 
-                                                                        <img class="adapt-img product-image"
-                                                                             src="{{ absolute_url(vich_uploader_asset(product.mainImage, 'imageFile')) }}"
-                                                                             alt="{{ product.item }}"
-                                                                             style="display: block;"
-                                                                             title="{{ product.item }}"
-                                                                             width="134"></a></td>
+                                                                        {% if product.mainImage %}
+                                                                          <img class="adapt-img product-image"
+                                                                              src="{{ absolute_url(vich_uploader_asset(product.mainImage, 'imageFile')) }}"
+                                                                              alt="{{ product.item }}"
+                                                                              style="display: block;"
+                                                                              title="{{ product.item }}"
+                                                                              width="134">
+                                                                        {% endif %}
+                                                                    </a></td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="esd-block-text es-p10t es-p15r es-p15l" align="left">
@@ -1052,12 +1055,15 @@
                                                                             {% if productsOffers[loop.index0] %}
                                                                                 <img style="position: absolute; width: 65px;  z-index: 1;" src="{{ absolute_url(asset('uploads/images/oferta.png')) }}" alt="">
                                                                             {% endif %}
-                                                                            <img class="adapt-img product-image"
-                                                                                 src="{{ absolute_url(vich_uploader_asset(product.mainImage, 'imageFile')) }}"
-                                                                                 alt="{{ product.item }}"
-                                                                                 style="display: block;"
-                                                                                 title="{{ product.item }}"
-                                                                                 width="134"></a></td>
+                                                                            {% if product.mainImage %}
+                                                                              <img class="adapt-img product-image"
+                                                                                  src="{{ absolute_url(vich_uploader_asset(product.mainImage, 'imageFile')) }}"
+                                                                                  alt="{{ product.item }}"
+                                                                                  style="display: block;"
+                                                                                  title="{{ product.item }}"
+                                                                                  width="134">
+                                                                            {% endif %}
+                                                                    </a></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="esd-block-text es-p10t es-p15r es-p15l" align="left">

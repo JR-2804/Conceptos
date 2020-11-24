@@ -10,7 +10,9 @@
           </span>
         {% endif %}
 
-        {{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes, null, 'conceptos-image conceptos-popular-product-image') | raw }}
+        {% if product.mainImage %}
+          {{ vich_uploader_asset(product.mainImage, 'imageFile') }}
+        {% endif %}
 
         <div class="d-flex justify-content-between align-items-center">
           {% if isExternalRequestProduct is defined %}

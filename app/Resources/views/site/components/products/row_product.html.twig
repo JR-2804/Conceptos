@@ -1,7 +1,9 @@
 <div class="row_product">
 	<div class="row_product__image">
 		<a href="{{ path('product_details', {id: product.id, name: product.name}) }}">
-			{{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes, null, 'conceptos-image conceptos-popular-product-image') | raw }}
+      {% if product.mainImage %}
+			  {{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes, null, 'conceptos-image conceptos-popular-product-image') | raw }}
+      {% endif %}
 		</a>
 	</div>
 
