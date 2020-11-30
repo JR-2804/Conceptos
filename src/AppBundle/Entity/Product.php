@@ -148,7 +148,7 @@ class Product
 
     private $favorite;
 
-    
+
 
     /**
      * @ORM\Column(type="boolean")
@@ -220,21 +220,87 @@ class Product
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Evaluation", mappedBy="product")
      */
     private $evaluations;
-
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ComboProduct", mappedBy="parentProduct")
      */
     private $comboProducts;
-
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ComplementaryProduct", mappedBy="parentProduct")
      */
     private $complementaryProducts;
-
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product")
      */
     private $similarProducts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductMetaname", mappedBy="product")
+     */
+    private $metaNames;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $widthLeft;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $widthRight;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $width;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $heightMin;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $heightMax;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $height;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $deepMin;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $deepMax;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $deep;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $length;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $diameter;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $maxLoad;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $area;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $thickness;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $volume;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $surfaceDensity;
 
     /**
      * Product constructor.
@@ -253,6 +319,7 @@ class Product
         $this->comboProducts = new ArrayCollection();
         $this->complementaryProducts = new ArrayCollection();
         $this->similarProducts = new ArrayCollection();
+        $this->metaNames = new ArrayCollection();
     }
 
     public function __toString()
@@ -972,4 +1039,212 @@ class Product
         return count($this->similarProducts);
     }
 
+    public function addMetaName(ProductMetaName $metaName)
+    {
+        $this->metaNames[] = $metaName;
+
+        return $this;
+    }
+
+    public function removeMetaName(ProductMetaName $metaName)
+    {
+        $this->metaNames->removeElement($metaName);
+    }
+
+    public function getMetaNames()
+    {
+        return $this->metaNames;
+    }
+
+    public function setWidthLeft($widthLeft)
+    {
+        $this->widthLeft = $widthLeft;
+
+        return $this;
+    }
+
+    public function getWidthLeft()
+    {
+        return $this->widthLeft;
+    }
+
+    public function setWidthRight($widthRight)
+    {
+        $this->widthRight = $widthRight;
+
+        return $this;
+    }
+
+    public function getWidthRight()
+    {
+        return $this->widthRight;
+    }
+
+    public function setWidth($width)
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    public function setHeightMin($heightMin)
+    {
+        $this->heightMin = $heightMin;
+
+        return $this;
+    }
+
+    public function getHeightMin()
+    {
+        return $this->heightMin;
+    }
+
+    public function setHeightMax($heightMax)
+    {
+        $this->heightMax = $heightMax;
+
+        return $this;
+    }
+
+    public function getHeightMax()
+    {
+        return $this->heightMax;
+    }
+
+    public function setHeight($height)
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    public function setDeepMin($deepMin)
+    {
+        $this->deepMin = $deepMin;
+
+        return $this;
+    }
+
+    public function getDeepMin()
+    {
+        return $this->deepMin;
+    }
+
+    public function setDeepMax($deepMax)
+    {
+        $this->deepMax = $deepMax;
+
+        return $this;
+    }
+
+    public function getDeepMax()
+    {
+        return $this->deepMax;
+    }
+
+    public function setDeep($deep)
+    {
+        $this->deep = $deep;
+
+        return $this;
+    }
+
+    public function getDeep()
+    {
+        return $this->deep;
+    }
+
+    public function setLength($length)
+    {
+        $this->length = $length;
+
+        return $this;
+    }
+
+    public function getLength()
+    {
+        return $this->length;
+    }
+
+    public function setDiameter($diameter)
+    {
+        $this->diameter = $diameter;
+
+        return $this;
+    }
+
+    public function getDiameter()
+    {
+        return $this->diameter;
+    }
+
+    public function setMaxLoad($maxLoad)
+    {
+        $this->maxLoad = $maxLoad;
+
+        return $this;
+    }
+
+    public function getMaxLoad()
+    {
+        return $this->maxLoad;
+    }
+
+    public function setArea($area)
+    {
+        $this->area = $area;
+
+        return $this;
+    }
+
+    public function getArea()
+    {
+        return $this->area;
+    }
+
+    public function setThickness($thickness)
+    {
+        $this->thickness = $thickness;
+
+        return $this;
+    }
+
+    public function getThickness()
+    {
+        return $this->thickness;
+    }
+
+    public function setVolume($volume)
+    {
+        $this->volume = $volume;
+
+        return $this;
+    }
+
+    public function getVolume()
+    {
+        return $this->volume;
+    }
+
+    public function setSurfaceDensity($surfaceDensity)
+    {
+        $this->surfaceDensity = $surfaceDensity;
+
+        return $this;
+    }
+
+    public function getSurfaceDensity()
+    {
+        return $this->surfaceDensity;
+    }
 }

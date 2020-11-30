@@ -48,6 +48,23 @@ class ProductDTO
     private $isComoda;
     private $isRepisa;
     private $numberOfPackages;
+    private $metaNames;
+    private $widthLeft;
+    private $widthRight;
+    private $width;
+    private $heightMin;
+    private $heightMax;
+    private $height;
+    private $deepMin;
+    private $deepMax;
+    private $deep;
+    private $length;
+    private $diameter;
+    private $maxLoad;
+    private $area;
+    private $thickness;
+    private $volume;
+    private $surfaceDensity;
 
     public function getId()
     {
@@ -487,5 +504,207 @@ class ProductDTO
     public function getNumberOfPackages()
     {
         return $this->numberOfPackages;
+    }
+
+    public function getMetaNames()
+    {
+        return $this->metaNames;
+    }
+
+    public function setMetaNames($metaNames)
+    {
+        $this->metaNames = $metaNames;
+    }
+
+    public function setWidthLeft($widthLeft)
+    {
+        $this->widthLeft = $widthLeft;
+
+        return $this;
+    }
+
+    public function getWidthLeft()
+    {
+        return $this->widthLeft;
+    }
+
+    public function setWidthRight($widthRight)
+    {
+        $this->widthRight = $widthRight;
+
+        return $this;
+    }
+
+    public function getWidthRight()
+    {
+        return $this->widthRight;
+    }
+
+    public function setWidth($width)
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    public function setHeightMin($heightMin)
+    {
+        $this->heightMin = $heightMin;
+
+        return $this;
+    }
+
+    public function getHeightMin()
+    {
+        return $this->heightMin;
+    }
+
+    public function setHeightMax($heightMax)
+    {
+        $this->heightMax = $heightMax;
+
+        return $this;
+    }
+
+    public function getHeightMax()
+    {
+        return $this->heightMax;
+    }
+
+    public function setHeight($height)
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    public function setDeepMin($deepMin)
+    {
+        $this->deepMin = $deepMin;
+
+        return $this;
+    }
+
+    public function getDeepMin()
+    {
+        return $this->deepMin;
+    }
+
+    public function setDeepMax($deepMax)
+    {
+        $this->deepMax = $deepMax;
+
+        return $this;
+    }
+
+    public function getDeepMax()
+    {
+        return $this->deepMax;
+    }
+
+    public function setDeep($deep)
+    {
+        $this->deep = $deep;
+
+        return $this;
+    }
+
+    public function getDeep()
+    {
+        return $this->deep;
+    }
+
+    public function setLength($length)
+    {
+        $this->length = $length;
+
+        return $this;
+    }
+
+    public function getLength()
+    {
+        return $this->length;
+    }
+
+    public function setDiameter($diameter)
+    {
+        $this->diameter = $diameter;
+
+        return $this;
+    }
+
+    public function getDiameter()
+    {
+        return $this->diameter;
+    }
+
+    public function setMaxLoad($maxLoad)
+    {
+        $this->maxLoad = $maxLoad;
+
+        return $this;
+    }
+
+    public function getMaxLoad()
+    {
+        return $this->maxLoad;
+    }
+
+    public function setArea($area)
+    {
+        $this->area = $area;
+
+        return $this;
+    }
+
+    public function getArea()
+    {
+        return $this->area;
+    }
+
+    public function setThickness($thickness)
+    {
+        $this->thickness = $thickness;
+
+        return $this;
+    }
+
+    public function getThickness()
+    {
+        return $this->thickness;
+    }
+
+    public function setVolume($volume)
+    {
+        $this->volume = $volume;
+
+        return $this;
+    }
+
+    public function getVolume()
+    {
+        return $this->volume;
+    }
+
+    public function setSurfaceDensity($surfaceDensity)
+    {
+        $this->surfaceDensity = $surfaceDensity;
+
+        return $this;
+    }
+
+    public function getSurfaceDensity()
+    {
+        return $this->surfaceDensity;
     }
 }

@@ -53,6 +53,23 @@ class ProductType extends AbstractType
             ->add('isComoda', HiddenType::class)
             ->add('isRepisa', HiddenType::class)
             ->add('numberOfPackages', HiddenType::class)
+            ->add('metaNames', HiddenType::class)
+            ->add('widthLeft', HiddenType::class)
+            ->add('widthRight', HiddenType::class)
+            ->add('width', HiddenType::class)
+            ->add('heightMin', HiddenType::class)
+            ->add('heightMax', HiddenType::class)
+            ->add('height', HiddenType::class)
+            ->add('deepMin', HiddenType::class)
+            ->add('deepMax', HiddenType::class)
+            ->add('deep', HiddenType::class)
+            ->add('length', HiddenType::class)
+            ->add('diameter', HiddenType::class)
+            ->add('maxLoad', HiddenType::class)
+            ->add('area', HiddenType::class)
+            ->add('thickness', HiddenType::class)
+            ->add('volume', HiddenType::class)
+            ->add('surfaceDensity', HiddenType::class)
         ;
         parent::buildForm($builder, $options);
     }

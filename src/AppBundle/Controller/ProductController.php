@@ -8,6 +8,7 @@ use AppBundle\Entity\Image;
 use AppBundle\Entity\Material;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\ComboProduct;
+use AppBundle\Entity\ProductMetaname;
 use AppBundle\Entity\ComplementaryProduct;
 use AppBundle\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -43,6 +44,22 @@ class ProductController extends Controller
             $product->setShippingLimit($form->get('shippingLimit')->getData());
             $product->setIkeaPrice($form->get('ikeaPrice')->getData());
             $product->setNumberOfPackages($form->get('numberOfPackages')->getData());
+            $product->setWidthLeft($form->get('widthLeft')->getData());
+            $product->setWidthRight($form->get('widthRight')->getData());
+            $product->setWidth($form->get('width')->getData());
+            $product->setHeightMin($form->get('heightMin')->getData());
+            $product->setHeightMax($form->get('heightMax')->getData());
+            $product->setHeight($form->get('height')->getData());
+            $product->setDeepMin($form->get('deepMin')->getData());
+            $product->setDeepMax($form->get('deepMax')->getData());
+            $product->setDeep($form->get('deep')->getData());
+            $product->setLength($form->get('length')->getData());
+            $product->setDiameter($form->get('diameter')->getData());
+            $product->setMaxLoad($form->get('maxLoad')->getData());
+            $product->setArea($form->get('area')->getData());
+            $product->setThickness($form->get('thickness')->getData());
+            $product->setVolume($form->get('volume')->getData());
+            $product->setSurfaceDensity($form->get('surfaceDensity')->getData());
 
             $isFurniture = $form->get('isFurniture')->getData();
             if (is_string($isFurniture) && ('1' == $isFurniture || 'true' == $isFurniture)) {
@@ -395,6 +412,22 @@ class ProductController extends Controller
         $dto->setIsComoda($product->getIsComoda());
         $dto->setIsRepisa($product->getIsRepisa());
         $dto->setNumberOfPackages($product->getNumberOfPackages());
+        $dto->setWidthLeft($product->getWidthLeft());
+        $dto->setWidthRight($product->getWidthRight());
+        $dto->setWidth($product->getWidth());
+        $dto->setHeightMin($product->getHeightMin());
+        $dto->setHeightMax($product->getHeightMax());
+        $dto->setHeight($product->getHeight());
+        $dto->setDeepMin($product->getDeepMin());
+        $dto->setDeepMax($product->getDeepMax());
+        $dto->setDeep($product->getDeep());
+        $dto->setLength($product->getLength());
+        $dto->setDiameter($product->getDiameter());
+        $dto->setMaxLoad($product->getMaxLoad());
+        $dto->setArea($product->getArea());
+        $dto->setThickness($product->getThickness());
+        $dto->setVolume($product->getVolume());
+        $dto->setSurfaceDensity($product->getSurfaceDensity());
 
         $categories = [];
         foreach ($product->getCategories() as $category) {
@@ -468,6 +501,13 @@ class ProductController extends Controller
             ];
         }
         $dto->setHighlightImages(json_encode($highlightImages));
+        $metaNames = [];
+        foreach ($product->getMetaNames() as $metaName) {
+            $metaNames[] = [
+              "name" => $metaName->getName(),
+            ];
+        }
+        $dto->setMetaNames(json_encode($metaNames));
         $form = $this->createForm(ProductType::class, $dto);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -478,6 +518,22 @@ class ProductController extends Controller
             $productDB->setCode($form->get('code')->getData());
             $productDB->setDescription($form->get('description')->getData());
             $productDB->setNumberOfPackages($form->get('numberOfPackages')->getData());
+            $productDB->setWidthLeft($form->get('widthLeft')->getData());
+            $productDB->setWidthRight($form->get('widthRight')->getData());
+            $productDB->setWidth($form->get('width')->getData());
+            $productDB->setHeightMin($form->get('heightMin')->getData());
+            $productDB->setHeightMax($form->get('heightMax')->getData());
+            $productDB->setHeight($form->get('height')->getData());
+            $productDB->setDeepMin($form->get('deepMin')->getData());
+            $productDB->setDeepMax($form->get('deepMax')->getData());
+            $productDB->setDeep($form->get('deep')->getData());
+            $productDB->setLength($form->get('length')->getData());
+            $productDB->setDiameter($form->get('diameter')->getData());
+            $productDB->setMaxLoad($form->get('maxLoad')->getData());
+            $productDB->setArea($form->get('area')->getData());
+            $productDB->setThickness($form->get('thickness')->getData());
+            $productDB->setVolume($form->get('volume')->getData());
+            $productDB->setSurfaceDensity($form->get('surfaceDensity')->getData());
 
             $isFurniture = $form->get('isFurniture')->getData();
             if (is_string($isFurniture) && ('1' == $isFurniture || 'true' == $isFurniture)) {
@@ -837,6 +893,24 @@ class ProductController extends Controller
                       $this->getDoctrine()->getManager()->persist($complementaryProduct);
 
                       $product->addComplementaryProduct($complementaryProduct);
+                  }
+                }
+            }
+            $metaNames = json_decode($form->get('metaNames')->getData(), true);
+            foreach ($product->getMetaNames() as $metaName) {
+                $product->removeMetaName($metaName);
+                $this->getDoctrine()->getManager()->remove($metaName);
+            }
+            $product->getMetaNames()->clear();
+            if ($metaNames != null) {
+                foreach ($metaNames as $metaName) {
+                  if (null != $productDB) {
+                      $meta = new ProductMetaname();
+                      $meta->setName($metaName["name"]);
+                      $meta->setProduct($productDB);
+                      $this->getDoctrine()->getManager()->persist($meta);
+
+                      $product->addMetaName($meta);
                   }
                 }
             }

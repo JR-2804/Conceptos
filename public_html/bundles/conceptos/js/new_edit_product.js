@@ -2,23 +2,28 @@ var template_combo_product_empty =
   '<tr><td colspan="3" class="text-center">Sin combos añadidos</td></tr>';
 var template_combo_product =
   '<tr><td>%1</td><td>%2</td><td><a class="btn btn-secondary btn-remove-combo-product" data-index="%3"><i class="fa fa-remove"></i></a></td></tr>';
+var template_metaname_empty =
+  '<tr><td colspan="3" class="text-center">Sin metanames añadidos</td></tr>';
+var template_metaname =
+  '<tr><td>%1</td><td><a class="btn btn-secondary btn-remove-metaname" data-index="%2"><i class="fa fa-remove"></i></a></td></tr>';
 
 var data = {
   image: {
-    id: 0
+    id: 0,
   },
   images: [],
   imagesToDelete: [],
-  highlightImages: []
+  highlightImages: [],
 };
 
 Dropzone.autoDiscover = false;
 var comboProducts = [];
+var metaNames = [];
 var currentComboProductCode = undefined;
 var currentComboProductPrice = undefined;
 var dropzone = undefined;
 var dropzoneImages = undefined;
-$(document).ready(function() {
+$(document).ready(function () {
   dropzone = new Dropzone("form#picture-dropzone", {
     url: $("#picture-dropzone").attr("action"),
     maxFiles: 1,
@@ -29,7 +34,7 @@ $(document).ready(function() {
     dictRemoveFile: "Eliminar",
     previewTemplate: document.querySelector("#preview-template").innerHTML,
     acceptedFiles: ".jpg,.jpeg,.png,.gif",
-    init: function() {
+    init: function () {
       dropzone = this;
       if (data.image.id != 0) {
         var mockFile = { name: data.image.name, size: data.image.size };
@@ -41,17 +46,17 @@ $(document).ready(function() {
         dropzone.options.maxFiles =
           dropzone.options.maxFiles - existingFileCount;
       }
-      dropzone.on("removedfile", function() {
+      dropzone.on("removedfile", function () {
         dropzone.removeAllFiles(true);
         dropzone.options.maxFiles = 1;
         data.image = {
-          id: 0
+          id: 0,
         };
       });
     },
-    success: function(e, r) {
+    success: function (e, r) {
       data.image = r;
-    }
+    },
   });
 
   dropzoneImages = new Dropzone("form#pictures-dropzone", {
@@ -61,19 +66,19 @@ $(document).ready(function() {
     dictRemoveFile: "Eliminar",
     previewTemplate: document.querySelector("#preview-template").innerHTML,
     acceptedFiles: "image/*",
-    init: function() {
+    init: function () {
       dropzoneImages = this;
       if (data.images.length > 0) {
-        $.each(data.images, function(i, r) {
+        $.each(data.images, function (i, r) {
           var mockFile = { name: r.name, size: r.size };
           dropzoneImages.emit("addedfile", mockFile);
           dropzoneImages.emit("thumbnail", mockFile, r.path);
           dropzoneImages.emit("complete", mockFile);
         });
       }
-      dropzoneImages.on("removedfile", function(file) {
+      dropzoneImages.on("removedfile", function (file) {
         var imagesTmp = [];
-        $.each(data.images, function(i, f) {
+        $.each(data.images, function (i, f) {
           if (file.name != f.name) {
             imagesTmp.push(f);
           } else {
@@ -83,9 +88,9 @@ $(document).ready(function() {
         data.images = imagesTmp;
       });
     },
-    success: function(e, r) {
+    success: function (e, r) {
       data.images.push(r);
-    }
+    },
   });
 
   dropzoneImages = new Dropzone("form#picture-highlight-dropzone", {
@@ -95,19 +100,19 @@ $(document).ready(function() {
     dictRemoveFile: "Eliminar",
     previewTemplate: document.querySelector("#preview-template").innerHTML,
     acceptedFiles: "image/*",
-    init: function() {
+    init: function () {
       dropzoneImages = this;
       if (data.highlightImages.length > 0) {
-        $.each(data.highlightImages, function(i, r) {
+        $.each(data.highlightImages, function (i, r) {
           var mockFile = { name: r.name, size: r.size };
           dropzoneImages.emit("addedfile", mockFile);
           dropzoneImages.emit("thumbnail", mockFile, r.path);
           dropzoneImages.emit("complete", mockFile);
         });
       }
-      dropzoneImages.on("removedfile", function(file) {
+      dropzoneImages.on("removedfile", function (file) {
         var imagesTmp = [];
-        $.each(data.highlightImages, function(i, f) {
+        $.each(data.highlightImages, function (i, f) {
           if (file.name != f.name) {
             imagesTmp.push(f);
           } else {
@@ -117,32 +122,34 @@ $(document).ready(function() {
         data.highlightImages = imagesTmp;
       });
     },
-    success: function(e, r) {
+    success: function (e, r) {
       data.highlightImages.push(r);
-    }
+    },
   });
 
-  $("#category, #combo-product, #complementary-products, #similar-products").select2({
+  $(
+    "#category, #combo-product, #complementary-products, #similar-products, #codes, #colors, #materials, #rooms"
+  ).select2({
     theme: "bootstrap",
     language: "es",
-    allowClear: true
+    allowClear: true,
   });
 
-  $("#color, #material").select2({
+  $("#color, #material, #classification").select2({
     theme: "bootstrap",
     language: "es",
     allowClear: true,
     tags: true,
-    maximumSelectionLength: 1
+    maximumSelectionLength: 1,
   });
 
   $("#category-favorite").select2({
     theme: "bootstrap",
     language: "es",
-    allowClear: true
+    allowClear: true,
   });
 
-  $("#in-store").change(function() {
+  $("#in-store").change(function () {
     if ($(this).prop("checked")) {
       $(".store-count-content").show();
     } else {
@@ -150,7 +157,7 @@ $(document).ready(function() {
     }
   });
 
-  $("#is-combo").change(function() {
+  $("#is-combo").change(function () {
     if ($(this).prop("checked") == true) {
       setComboMode(true);
     } else {
@@ -158,7 +165,7 @@ $(document).ready(function() {
     }
   });
 
-  $("#combo-product").change(function() {
+  $("#combo-product").change(function () {
     currentComboProductCode = $(
       "#combo-product option[value=" + $(this).val() + "]"
     ).data("code");
@@ -167,7 +174,7 @@ $(document).ready(function() {
     ).data("price");
   });
 
-  $(".btn-calculate-price").click(function() {
+  $(".btn-calculate-price").click(function () {
     var weight = getWeight();
     var ikeaPrice = $("#ikea-price").val();
     if (weight && ikeaPrice) {
@@ -192,14 +199,14 @@ $(document).ready(function() {
           isDesk: $("#is-desk").prop("checked"),
           isBookcase: $("#is-bookcase").prop("checked"),
           isComoda: $("#is-comoda").prop("checked"),
-          isRepisa: $("#is-repisa").prop("checked")
+          isRepisa: $("#is-repisa").prop("checked"),
         },
-        function(response) {
+        function (response) {
           var valueResponse = Number(response).toFixed(2);
           $("#calculate-price").val(valueResponse);
           $("#price").val(valueResponse);
         },
-        function(error) {
+        function (error) {
           alert("Ha ocurrido un error calculando el precio del producto");
         }
       );
@@ -208,18 +215,16 @@ $(document).ready(function() {
     }
   });
 
-  $(".btn-add-combo-product").click(function() {
+  $(".btn-add-combo-product").click(function () {
     if ($("#combo-product").val() && $("#combo-product-count").val()) {
       comboProducts.push({
         id: $("#combo-product").val(),
         count: $("#combo-product-count").val(),
         code: currentComboProductCode,
-        price: currentComboProductPrice
+        price: currentComboProductPrice,
       });
 
-      $("#combo-product")
-        .val([])
-        .trigger("change");
+      $("#combo-product").val([]).trigger("change");
       $("#combo-product-count").val("");
 
       RecalculateComboPrice();
@@ -229,7 +234,21 @@ $(document).ready(function() {
     }
   });
 
-  $('form[name="product"]').submit(function(e) {
+  $(".btn-add-metaname").click(function () {
+    if ($("#metaname").val()) {
+      metaNames.push({
+        name: $("#metaname").val(),
+      });
+
+      $("#metaname").val([]).trigger("change");
+
+      populateMetaNamesTable();
+    } else {
+      alert("Debe insertar el metaname");
+    }
+  });
+
+  $('form[name="product"]').submit(function (e) {
     if (!validForm()) {
       e.preventDefault();
     } else {
@@ -273,7 +292,7 @@ $(document).ready(function() {
       );
 
       $("#product_similarProducts").val(
-          JSON.stringify($("#similar-products").val())
+        JSON.stringify($("#similar-products").val())
       );
 
       $("#product_weight").val(weight);
@@ -301,17 +320,34 @@ $(document).ready(function() {
       );
       $("#product_isLamp").val($("#is-lamp").prop("checked") == true ? 1 : 0);
       $("#product_numberOfPackages").val($("#number-of-packages").val());
+      $("#product_metaNames").val(JSON.stringify(metaNames));
+      $("#product_widthLeft").val($("#width-left").val());
+      $("#product_widthRight").val($("#width-right").val());
+      $("#product_width").val($("#width").val());
+      $("#product_heightMin").val($("#height-min").val());
+      $("#product_heightMax").val($("#height-max").val());
+      $("#product_height").val($("#height").val());
+      $("#product_deepMin").val($("#deep-min").val());
+      $("#product_deepMax").val($("#deep-max").val());
+      $("#product_deep").val($("#deep").val());
+      $("#product_length").val($("#length").val());
+      $("#product_diameter").val($("#diameter").val());
+      $("#product_maxLoad").val($("#max-load").val());
+      $("#product_area").val($("#area").val());
+      $("#product_thickness").val($("#thickness").val());
+      $("#product_volume").val($("#volume").val());
+      $("#product_surfaceDensity").val($("#surface-density").val());
     }
   });
 
-  $("#combo-product")
-    .val([])
-    .trigger("change");
+  $("#combo-product").val([]).trigger("change");
+  $("#metaname").val([]).trigger("change");
 
   if (comboProducts.length === 0) {
     setComboMode(false);
   }
   populateComboProductsTable();
+  populateMetaNamesTable();
 });
 
 function setComboMode(comboMode) {
@@ -483,25 +519,17 @@ function validForm() {
 
 function addRemoveErrorClass(input, add) {
   if (add) {
-    if (
-      !$(input)
-        .parent()
-        .hasClass("has-error")
-    ) {
-      $(input)
-        .parent()
-        .addClass("has-error");
+    if (!$(input).parent().hasClass("has-error")) {
+      $(input).parent().addClass("has-error");
     }
   } else {
-    $(input)
-      .parent()
-      .removeClass("has-error");
+    $(input).parent().removeClass("has-error");
   }
 }
 
 function RecalculateComboPrice() {
   var price = 0;
-  comboProducts.forEach(comboProduct => {
+  comboProducts.forEach((comboProduct) => {
     price += comboProduct.price * comboProduct.count;
   });
   $("#price").val(price);
@@ -514,7 +542,7 @@ function populateComboProductsTable() {
     var tmp_empty = template_combo_product_empty.substring(-1);
     $(".table-combo-products tbody").append(tmp_empty);
   } else {
-    $.each(comboProducts, function(i, s) {
+    $.each(comboProducts, function (i, s) {
       var tmp = template_combo_product
         .substring(-1)
         .replace("%1", s.code)
@@ -522,11 +550,32 @@ function populateComboProductsTable() {
         .replace("%3", i);
       $(".table-combo-products tbody").append(tmp);
     });
-    $(".btn-remove-combo-product").click(function() {
+    $(".btn-remove-combo-product").click(function () {
       var index = $(this).data("index");
       comboProducts.splice(index, 1);
       populateComboProductsTable();
       RecalculateComboPrice();
+    });
+  }
+}
+
+function populateMetaNamesTable() {
+  $(".table-metanames tbody tr").remove();
+  if (metaNames.length == 0) {
+    var tmp_empty = template_metaname_empty.substring(-1);
+    $(".table-metanames tbody").append(tmp_empty);
+  } else {
+    $.each(metaNames, function (i, s) {
+      var tmp = template_metaname
+        .substring(-1)
+        .replace("%1", s.name)
+        .replace("%2", i);
+      $(".table-metanames tbody").append(tmp);
+    });
+    $(".btn-remove-metaname").click(function () {
+      var index = $(this).data("index");
+      metaNames.splice(index, 1);
+      populateMetaNamesTable();
     });
   }
 }

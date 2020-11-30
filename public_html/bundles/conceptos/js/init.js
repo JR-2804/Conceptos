@@ -1,6 +1,7 @@
 var comboProducts = [];
+var metaNames = [];
 
-$(document).ready(function() {
+$(document).ready(function () {
   $("#name").val($("#product_name").val());
   $("#priority").val($("#product_priority").val());
   $("#code").val($("#product_code").val());
@@ -29,9 +30,7 @@ $(document).ready(function() {
   }
   $("#calculate-price").val($("#product_calculatePrice").val());
   var categories = JSON.parse($("#product_category").val());
-  $("#category")
-    .val(categories)
-    .trigger("change");
+  $("#category").val(categories).trigger("change");
   $("#popular").prop("checked", $("#product_popular").val() == 1);
   $("#recent").prop("checked", $("#product_recent").val() == 1);
   var inStore = $("#product_inStore").val() == 1;
@@ -41,21 +40,17 @@ $(document).ready(function() {
     $(".store-count-content").show();
   }
 
-    $("#similar-products")
-        .val(JSON.parse($("#product_similarProducts").val()))
-        .trigger("change");
+  $("#similar-products")
+    .val(JSON.parse($("#product_similarProducts").val()))
+    .trigger("change");
 
-    var colorDB = $("#product_color").val();
+  var colorDB = $("#product_color").val();
   if (colorDB) {
-    $("#color")
-      .val([colorDB])
-      .trigger("change");
+    $("#color").val([colorDB]).trigger("change");
   }
   var materialDB = $("#product_material").val();
   if (materialDB) {
-    $("#material")
-      .val([materialDB])
-      .trigger("change");
+    $("#material").val([materialDB]).trigger("change");
   }
   data.image = JSON.parse($("#product_image").val());
   data.images = JSON.parse($("#product_images").val());
@@ -63,6 +58,7 @@ $(document).ready(function() {
     .val(JSON.parse($("#product_favoritesCategories").val()))
     .trigger("change");
   comboProducts = JSON.parse($("#product_comboProducts").val());
+  metaNames = JSON.parse($("#product_metaNames").val());
   $("#complementary-products")
     .val(JSON.parse($("#product_complementaryProducts").val()))
     .trigger("change");
@@ -91,4 +87,20 @@ $(document).ready(function() {
   $("#is-comoda").prop("checked", $("#product_isComoda").val() == 1);
   $("#is-repisa").prop("checked", $("#product_isRepisa").val() == 1);
   $("#number-of-packages").val($("#product_numberOfPackages").val());
+  $("#width-left").val($("#product_widthLeft").val());
+  $("#width-right").val($("#product_widthRight").val());
+  $("#width").val($("#product_width").val());
+  $("#height-min").val($("#product_heightMin").val());
+  $("#height-max").val($("#product_heightMax").val());
+  $("#height").val($("#product_height").val());
+  $("#deep-min").val($("#product_deepMin").val());
+  $("#deep-max").val($("#product_deepMax").val());
+  $("#deep").val($("#product_deep").val());
+  $("#length").val($("#product_length").val());
+  $("#diameter").val($("#product_diameter").val());
+  $("#max-load").val($("#product_maxLoad").val());
+  $("#area").val($("#product_area").val());
+  $("#thickness").val($("#product_thickness").val());
+  $("#volume").val($("#product_volume").val());
+  $("#surface-density").val($("#product_surfaceDensity").val());
 });

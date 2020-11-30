@@ -358,7 +358,7 @@
                 </div>
             </div>
         </div>
-        <br><br>
+        <br />
         <div id="combo-products-section" class="row">
           <div class="col-6">
             <div class="form-group">
@@ -394,7 +394,7 @@
           </div>
         </div>
         </div>
-        <br><br>
+        <br />
         <div class="row">
           <div class="col-12">
             <div class="form-group">
@@ -407,7 +407,198 @@
             </div>
           </div>
         </div>
-        <br><br>
+        <br />
+        <div class="row">
+          <div class="col-12">
+            <label class="control-label">Metadatos</label>
+          </div>
+          <div class="col-12">
+            <div style="display: flex;padding: 15px;">
+              <div class="col-6">
+                <div class="form-group">
+                  <label class="control-label">Metaname</label>
+                  <input type="text" class="form-control" id="metaname">
+                </div>
+                <button class="btn btn-primary btn-add-metaname" data-edit="false">Añadir</button>
+              </div>
+              <div class="col-6">
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover table-striped table-condensed table-metanames">
+                    <thead>
+                    <tr>
+                      <th>Metaname</th>
+                      <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td colspan="3" class="text-center">Sin metanames añadidos</td>
+                    </tr>
+                    </tbody>
+                  </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="col-12">
+              <div class="form-group">
+                <label class="control-label">Códigos que lo componen</label>
+                <select class="form-control" id="codes" multiple>
+                  {% for product in products %}
+                    <option value="{{ product.id }}">{{ product.code }}</option>
+                  {% endfor %}
+              </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <label class="control-label">Colores</label>
+                <select class="form-control" id="colors" multiple>
+                  {% for color in colors %}
+                    <option value="{{ color.id }}">{{ color.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <label class="control-label">Materiales</label>
+                <select class="form-control" id="materials" multiple>
+                  {% for material in materials %}
+                    <option value="{{ material.id }}">{{ material.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <label class="control-label">Clasificación</label>
+                <select class="form-control" id="classification" multiple>
+                  {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="form-group">
+                <label class="control-label">Estancias</label>
+                <select class="form-control" id="rooms" multiple>
+                  {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Ancho (Izquierda)</label>
+                <input type="text" class="form-control" id="width-left">
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Ancho (Derecha)</label>
+                <input type="text" class="form-control" id="width-right">
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Ancho</label>
+                <input type="text" class="form-control" id="width">
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Altura (Mínima)</label>
+                <input type="text" class="form-control" id="height-min">
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Altura (Máxima)</label>
+                <input type="text" class="form-control" id="height-max">
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Altura</label>
+                <input type="text" class="form-control" id="height">
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Profundidad (Mínima)</label>
+                <input type="text" class="form-control" id="deep-min">
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Profundidad (Máxima)</label>
+                <input type="text" class="form-control" id="deep-max">
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Profundidad</label>
+                <input type="text" class="form-control" id="deep">
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Largo</label>
+                <input type="text" class="form-control" id="length">
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Diámetro</label>
+                <input type="text" class="form-control" id="diameter">
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Carga Máxima</label>
+                <input type="text" class="form-control" id="max-load">
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Área</label>
+                <input type="text" class="form-control" id="area">
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Grosor</label>
+                <input type="text" class="form-control" id="thickness">
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Volumen</label>
+                <input type="text" class="form-control" id="volume">
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">Densidad de la Superficie</label>
+                <input type="text" class="form-control" id="surface-density">
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
         <div class="row">
             <div class="col-12">
                 {{ form_start(form) }}
