@@ -53,6 +53,7 @@ class ProductType extends AbstractType
             ->add('isComoda', HiddenType::class)
             ->add('isRepisa', HiddenType::class)
             ->add('numberOfPackages', HiddenType::class)
+            ->add('isDisabled', HiddenType::class)
             ->add('metaNames', HiddenType::class)
             ->add('widthLeft', HiddenType::class)
             ->add('widthRight', HiddenType::class)

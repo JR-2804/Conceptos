@@ -48,6 +48,7 @@ class ProductDTO
     private $isComoda;
     private $isRepisa;
     private $numberOfPackages;
+    private $isDisabled;
     private $metaNames;
     private $widthLeft;
     private $widthRight;
@@ -504,6 +505,18 @@ class ProductDTO
     public function getNumberOfPackages()
     {
         return $this->numberOfPackages;
+    }
+
+    public function setIsDisabled($isDisabled)
+    {
+        $this->isDisabled = $isDisabled;
+
+        return $this;
+    }
+
+    public function getIsDisabled()
+    {
+        return $this->isDisabled;
     }
 
     public function getMetaNames()

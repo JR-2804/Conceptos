@@ -276,6 +276,7 @@ class ProductController extends Controller
                 $product->getHighlightImages()->add($imgDB);
             }
             $product->setPopular(boolval($form->get('popular')->getData()));
+            $product->setIsDisabled(boolval($form->get('isDisabled')->getData()));
             $product->setRecent(boolval($form->get('recent')->getData()));
             $product->setInStore(boolval($form->get('inStore')->getData()));
             if (boolval($form->get('inStore')->getData())) {
@@ -437,6 +438,7 @@ class ProductController extends Controller
         $dto->setPrice($product->getPrice());
         $dto->setDescription($product->getDescription());
         $dto->setPopular($product->getPopular());
+        $dto->setIsDisabled($product->getIsDisabled());
         $dto->setRecent($product->getRecent());
         $dto->setInStore($product->getInStore());
         if ($product->getInStore()) {
@@ -713,6 +715,17 @@ class ProductController extends Controller
                 $isRepisa = false;
             }
             $product->setIsRepisa($isRepisa);
+            $isDisabled = $form->get('isDisabled')->getData();
+            if (is_string($isDisabled) && ('1' == $isDisabled || 'true' == $isDisabled)) {
+                $isComoda = true;
+            } elseif (is_int($isDisabled) && 1 == $isDisabled) {
+                $isComoda = true;
+            } elseif (is_bool($isDisabled) && $isDisabled) {
+                $isDisabled = true;
+            } else {
+                $isDisabled = false;
+            }
+            $product->setIsDisabled($isDisabled);
 
             $productDB->setWeight($form->get('weight')->getData());
             $productDB->setShippingLimit($form->get('shippingLimit')->getData());

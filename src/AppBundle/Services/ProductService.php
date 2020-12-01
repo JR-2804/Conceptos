@@ -400,6 +400,9 @@ class ProductService
             $firstResult = (($page - 1) * 50);
         }
 
+        $qbProduct->andWhere('p.isDisabled = false');
+        $qbProductCount->andWhere('p.isDisabled = false');
+
         $_products = $qbProduct
             ->orderBy('p.name', 'ASC')
             ->addOrderBy('o.price', 'DESC')

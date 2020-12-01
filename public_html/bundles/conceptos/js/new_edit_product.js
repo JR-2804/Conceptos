@@ -280,6 +280,9 @@ $(document).ready(function () {
       $("#product_popular").val($("#popular").prop("checked") == true ? 1 : 0);
       $("#product_recent").val($("#recent").prop("checked") == true ? 1 : 0);
       $("#product_inStore").val($("#in-store").prop("checked") == true ? 1 : 0);
+      $("#product_isDisabled").val(
+        $("#is-disabled").prop("checked") == true ? 1 : 0
+      );
       $("#product_countStore").val($("#store-count").val());
       $("#product_color").val($("#color").val());
       $("#product_material").val($("#material").val());

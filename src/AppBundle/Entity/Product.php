@@ -234,6 +234,10 @@ class Product
     private $similarProducts;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isDisabled;
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductMetaname", mappedBy="product")
      */
     private $metaNames;
@@ -1037,6 +1041,18 @@ class Product
     public function getSimilarProductsCount()
     {
         return count($this->similarProducts);
+    }
+
+    public function setIsDisabled($isDisabled)
+    {
+        $this->isDisabled = $isDisabled;
+
+        return $this;
+    }
+
+    public function getIsDisabled()
+    {
+        return $this->isDisabled;
     }
 
     public function addMetaName(ProductMetaName $metaName)

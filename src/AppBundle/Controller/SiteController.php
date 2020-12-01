@@ -89,10 +89,12 @@ class SiteController extends Controller
             ->setMaxResults(3)->getQuery()->getResult();
         $lasted = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findBy([
             'recent' => true,
+            'isDisabled' => false,
         ], null, 50);
 
         $inStore = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findBy([
             'inStore' => true,
+            'isDisabled' => false,
         ], null, 50);
 
         $rowsOfPopularProductsInDesktop = 2;
@@ -133,7 +135,7 @@ class SiteController extends Controller
 
         $populars = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')
           ->createQueryBuilder('product')
-          ->where('product.popular = true')
+          ->where('product.popular = true AND product.isDisabled = false')
           ->orderBy('product.priority', 'DESC')
           ->setMaxResults(150)
           ->getQuery()
@@ -147,7 +149,9 @@ class SiteController extends Controller
           }
         }
 
-        $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findAll();
+        $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findBy([
+          'isDisabled' => false,
+        ]);
 
         $inStoreHighlight = null;
         $lastedHighlight = null;
@@ -456,7 +460,7 @@ class SiteController extends Controller
             }
             $otherRelated = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->createQueryBuilder('p')
                 ->join('p.categories', 'c')
-                ->where('c.id IN (:category) AND p.id NOT IN (:current)')
+                ->where('c.id IN (:category) AND p.id NOT IN (:current) AND p.isDisabled = false')
                 ->setParameter('category', $categories)
                 ->setParameter('current', $filterParameter)
                 ->orderBy('p.name', 'ASC')
@@ -1063,7 +1067,7 @@ class SiteController extends Controller
         $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')
             ->createQueryBuilder('p')
             ->join('p.offers', 'o')
-            ->where('o.startDate <= :current AND o.endDate >= :current')
+            ->where('o.startDate <= :current AND o.endDate >= :current AND p.isDisabled = false')
             ->andWhere('o.onlyForMembers = 1')
             ->setParameter('current', new \DateTime(), Type::DATE)
             ->getQuery()
@@ -1162,7 +1166,7 @@ class SiteController extends Controller
           $prod = implode(', ', $project['products']);
           $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')
             ->createQueryBuilder('p')
-            ->where('p.id IN ('.$prod.')')
+            ->where('p.id IN ('.$prod.') AND p.isDisabled = false')
             ->orderBy('p.inStore', 'DESC')
             ->addOrderBy('p.popular', 'DESC')
             ->addOrderBy('p.price', 'ASC')
@@ -1237,7 +1241,7 @@ class SiteController extends Controller
           $prod = implode(', ', $service['products']);
           $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')
               ->createQueryBuilder('p')
-              ->where('p.id IN ('.$prod.')')
+              ->where('p.id IN ('.$prod.') AND p.isDisabled = false')
               ->orderBy('p.inStore', 'DESC')
               ->addOrderBy('p.popular', 'DESC')
               ->addOrderBy('p.price', 'ASC')
@@ -1350,7 +1354,7 @@ class SiteController extends Controller
             $products = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')
               ->createQueryBuilder('p')
               ->join('p.offers', 'o')
-              ->where('o.startDate <= :current AND o.endDate >= :current')
+              ->where('o.startDate <= :current AND o.endDate >= :current AND p.isDisabled = false')
               ->andWhere('o.onlyForMembers = 1')
               ->setParameter('current', new \DateTime(), Type::DATE)
               ->getQuery()
@@ -1624,6 +1628,7 @@ class SiteController extends Controller
 
         $inStore = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findBy([
             'inStore' => true,
+            'isDisabled' => false,
         ], null, 3);
 
         $body = $this->renderView(':site:request-email.html.twig', [

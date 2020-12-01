@@ -32,6 +32,7 @@ $(document).ready(function () {
   var categories = JSON.parse($("#product_category").val());
   $("#category").val(categories).trigger("change");
   $("#popular").prop("checked", $("#product_popular").val() == 1);
+  $("#is-disabled").prop("checked", $("#product_isDisabled").val() == 1);
   $("#recent").prop("checked", $("#product_recent").val() == 1);
   var inStore = $("#product_inStore").val() == 1;
   $("#in-store").prop("checked", inStore);
