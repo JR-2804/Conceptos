@@ -477,12 +477,14 @@ class ProductController extends Controller
         $material = $product->getMaterial();
         $dto->setMaterial(null != $material ? $material->getId() : null);
         $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
-        $dto->setImage(json_encode([
-            'id' => $product->getMainImage()->getId(),
-            'name' => $product->getMainImage()->getOriginalName(),
-            'size' => filesize($this->getParameter('kernel.root_dir').'/../public_html'.$helper->asset($product->getMainImage(), 'imageFile')),
-            'path' => $helper->asset($product->getMainImage(), 'imageFile'),
-        ]));
+        if ($product->getMainImage()) {
+          $dto->setImage(json_encode([
+              'id' => $product->getMainImage()->getId(),
+              'name' => $product->getMainImage()->getOriginalName(),
+              'size' => filesize($this->getParameter('kernel.root_dir').'/../public_html'.$helper->asset($product->getMainImage(), 'imageFile')),
+              'path' => $helper->asset($product->getMainImage(), 'imageFile'),
+          ]));
+        }
         $images = [];
         foreach ($product->getImages() as $image) {
             $images[] = [

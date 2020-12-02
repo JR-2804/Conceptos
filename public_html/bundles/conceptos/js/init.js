@@ -53,7 +53,9 @@ $(document).ready(function () {
   if (materialDB) {
     $("#material").val([materialDB]).trigger("change");
   }
-  data.image = JSON.parse($("#product_image").val());
+  if ($("#product_image").val()) {
+    data.image = JSON.parse($("#product_image").val());
+  }
   data.images = JSON.parse($("#product_images").val());
   $("#category-favorite")
     .val(JSON.parse($("#product_favoritesCategories").val()))
