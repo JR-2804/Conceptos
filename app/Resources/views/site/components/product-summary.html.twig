@@ -11,7 +11,7 @@
     {% endif %}
     {% if product.highlightImages|length > 0 %}
       <img class="conceptos-image conceptos-highlight-product-image" src="{{ vich_uploader_asset(product.highlightImages[0], 'imageFile') }}">
-    {% elseif product.mainImage %}
+    {% elseif product.mainImage and product.mainImage %}
       <img class="conceptos-image conceptos-highlight-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
     {% endif %}
   </div>
@@ -88,7 +88,9 @@
           <i class="fa fa-heart"></i>
         </span>
       {% endif %}
-      <img class="conceptos-image conceptos-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+      {% if product.mainImage %}
+        <img class="conceptos-image conceptos-product-image" src="{{ vich_uploader_asset(product.mainImage, 'imageFile') }}">
+      {% endif %}
     </div>
     <div class="d-flex flex-column conceptos-white-background pl-2 pr-2 pb-3 w-100">
       <span class="conceptos-product-info">{{product.name}}</span>
