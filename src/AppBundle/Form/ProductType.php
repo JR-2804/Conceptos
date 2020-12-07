@@ -71,6 +71,11 @@ class ProductType extends AbstractType
             ->add('thickness', HiddenType::class)
             ->add('volume', HiddenType::class)
             ->add('surfaceDensity', HiddenType::class)
+            ->add('codes', HiddenType::class)
+            ->add('colors', HiddenType::class)
+            ->add('materials', HiddenType::class)
+            ->add('classification', HiddenType::class)
+            ->add('rooms', HiddenType::class)
         ;
         parent::buildForm($builder, $options);
     }

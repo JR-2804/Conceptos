@@ -106,4 +106,20 @@ $(document).ready(function () {
   $("#thickness").val($("#product_thickness").val());
   $("#volume").val($("#product_volume").val());
   $("#surface-density").val($("#product_surfaceDensity").val());
+  $("#codes")
+    .val(JSON.parse($("#product_codes").val()))
+    .trigger("change");
+  $("#colors")
+    .val(JSON.parse($("#product_colors").val()))
+    .trigger("change");
+  $("#materials")
+    .val(JSON.parse($("#product_materials").val()))
+    .trigger("change");
+  var classificationDB = $("#product_classification").val();
+  if (classificationDB) {
+    $("#classification").val([classificationDB]).trigger("change");
+  }
+  $("#rooms")
+    .val(JSON.parse($("#product_rooms").val()))
+    .trigger("change");
 });

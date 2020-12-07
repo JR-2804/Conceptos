@@ -66,6 +66,12 @@ class ProductDTO
     private $thickness;
     private $volume;
     private $surfaceDensity;
+    private $codes;
+    private $colors;
+    private $materials;
+    private $classification;
+    private $rooms;
+
 
     public function getId()
     {
@@ -719,5 +725,55 @@ class ProductDTO
     public function getSurfaceDensity()
     {
         return $this->surfaceDensity;
+    }
+
+    public function setCodes($codes)
+    {
+        $this->codes = $codes;
+    }
+
+    public function getCodes()
+    {
+        return $this->codes;
+    }
+
+    public function setColors($colors)
+    {
+        $this->colors = $colors;
+    }
+
+    public function getColors()
+    {
+        return $this->colors;
+    }
+
+    public function setMaterials($materials)
+    {
+        $this->materials = $materials;
+    }
+
+    public function getMaterials()
+    {
+        return $this->materials;
+    }
+
+    public function setClassification($classification)
+    {
+        $this->classification = $classification;
+    }
+
+    public function getClassification()
+    {
+        return $this->classification;
+    }
+
+    public function setRooms($rooms)
+    {
+        $this->rooms = $rooms;
+    }
+
+    public function getRooms()
+    {
+        return $this->rooms;
     }
 }

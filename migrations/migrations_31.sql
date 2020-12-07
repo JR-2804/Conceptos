@@ -1,4 +1,4 @@
-CREATE TABLE `product_metanames` (
+CREATE TABLE `product_metaname` (
   `id`  int(11) NOT NULL AUTO_INCREMENT ,
   `product_id`  int(11) NULL DEFAULT NULL ,
   `name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
@@ -8,7 +8,7 @@ CREATE TABLE `product_metanames` (
 );
 
 ALTER TABLE `product`
-  ADD COLUMN `width_left`  double NULL DEFAULT NULL AFTER `creation_date`,
+  ADD COLUMN `width_left`  double NULL DEFAULT NULL AFTER `store_count`,
   ADD COLUMN `width_right`  double NULL DEFAULT NULL AFTER `width_left`,
   ADD COLUMN `width`  double NULL DEFAULT NULL AFTER `width_right`,
   ADD COLUMN `height_min`  double NULL DEFAULT NULL AFTER `width`,

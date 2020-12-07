@@ -9,6 +9,10 @@ use AppBundle\Entity\Material;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\ComboProduct;
 use AppBundle\Entity\ProductMetaname;
+use AppBundle\Entity\ProductCode;
+use AppBundle\Entity\ProductColor;
+use AppBundle\Entity\ProductMaterial;
+use AppBundle\Entity\ProductRoom;
 use AppBundle\Entity\ComplementaryProduct;
 use AppBundle\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -345,6 +349,88 @@ class ProductController extends Controller
                     }
                 }
             }
+            $metaNames = json_decode($form->get('metaNames')->getData(), true);
+            foreach ($product->getMetaNames() as $metaName) {
+                $product->removeMetaName($metaName);
+                $this->getDoctrine()->getManager()->remove($metaName);
+            }
+            $product->getMetaNames()->clear();
+            if ($metaNames != null) {
+                foreach ($metaNames as $metaName) {
+                    $meta = new ProductMetaname();
+                    $meta->setName($metaName["name"]);
+                    $meta->setProduct($product);
+                    $this->getDoctrine()->getManager()->persist($meta);
+
+                    $product->addMetaName($meta);
+                }
+            }
+            $codes = json_decode($form->get('codes')->getData(), true);
+            foreach ($product->getCodes() as $code) {
+                $product->removeCode($code);
+                $this->getDoctrine()->getManager()->remove($code);
+            }
+            $product->getCodes()->clear();
+            if ($codes != null) {
+                foreach ($codes as $code) {
+                    $productCode = new ProductCode();
+                    $productCode->setCode($code);
+                    $productCode->setProduct($product);
+                    $this->getDoctrine()->getManager()->persist($productCode);
+
+                    $product->addCode($productCode);
+                }
+            }
+            $colors = json_decode($form->get('colors')->getData(), true);
+            foreach ($product->getColors() as $color) {
+                $product->removeColor($color);
+                $this->getDoctrine()->getManager()->remove($color);
+            }
+            $product->getColors()->clear();
+            if ($colors != null) {
+                foreach ($colors as $color) {
+                    $productColor = new ProductColor();
+                    $productColor->setColor($color);
+                    $productColor->setProduct($product);
+                    $this->getDoctrine()->getManager()->persist($productColor);
+
+                    $product->addColor($productColor);
+                }
+            }
+            $materials = json_decode($form->get('materials')->getData(), true);
+            foreach ($product->getMaterials() as $material) {
+                $product->removeMaterial($material);
+                $this->getDoctrine()->getManager()->remove($material);
+            }
+            $product->getMaterials()->clear();
+            if ($materials != null) {
+                foreach ($materials as $material) {
+                    $productMaterial = new ProductMaterial();
+                    $productMaterial->setMaterial($material);
+                    $productMaterial->setProduct($product);
+                    $this->getDoctrine()->getManager()->persist($productMaterial);
+
+                    $product->addMaterial($productMaterial);
+                }
+            }
+            $rooms = json_decode($form->get('rooms')->getData(), true);
+            foreach ($product->getRooms() as $room) {
+                $product->removeRoom($room);
+                $this->getDoctrine()->getManager()->remove($room);
+            }
+            $product->getRooms()->clear();
+            if ($rooms != null) {
+                foreach ($rooms as $room) {
+                    $productRoom = new ProductRoom();
+                    $productRoom->setRoom($room);
+                    $productRoom->setProduct($product);
+                    $this->getDoctrine()->getManager()->persist($productRoom);
+
+                    $product->addRoom($productRoom);
+                }
+            }
+            $classification = $this->getDoctrine()->getRepository('AppBundle:Category')->find($form->get('classification')->getData());
+            $product->setClassification($classification);
             $this->getDoctrine()->getManager()->persist($product);
             $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
             $config->setLastProductUpdate(new \DateTime());
@@ -434,7 +520,6 @@ class ProductController extends Controller
         foreach ($product->getCategories() as $category) {
             $categories[] = $category->getId();
         }
-        $dto->setCategory(json_encode($categories));
         $dto->setPrice($product->getPrice());
         $dto->setDescription($product->getDescription());
         $dto->setPopular($product->getPopular());
@@ -512,6 +597,31 @@ class ProductController extends Controller
             ];
         }
         $dto->setMetaNames(json_encode($metaNames));
+        $dto->setCategory(json_encode($categories));
+        $codes = [];
+        foreach ($product->getCodes() as $code) {
+            $codes[] = $code->getCode();
+        }
+        $dto->setCodes(json_encode($codes));
+        $colors = [];
+        foreach ($product->getColors() as $color) {
+            $colors[] = $color->getColor();
+        }
+        $dto->setColors(json_encode($colors));
+        $materials = [];
+        foreach ($product->getMaterials() as $material) {
+            $materials[] = $material->getMaterial();
+        }
+        $dto->setMaterials(json_encode($materials));
+        $rooms = [];
+        foreach ($product->getRooms() as $room) {
+            $rooms[] = $room->getRoom();
+        }
+        $classification = $product->getClassification();
+        if ($product->getClassification()) {
+          $dto->setClassification(null != $classification ? $classification->getId() : null);
+        }
+        $dto->setRooms(json_encode($rooms));
         $form = $this->createForm(ProductType::class, $dto);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -929,6 +1039,80 @@ class ProductController extends Controller
                   }
                 }
             }
+            $codes = json_decode($form->get('codes')->getData(), true);
+            foreach ($product->getCodes() as $code) {
+                $product->removeCode($code);
+                $this->getDoctrine()->getManager()->remove($code);
+            }
+            $product->getCodes()->clear();
+            if ($codes != null) {
+                foreach ($codes as $code) {
+                  if (null != $productDB) {
+                      $productCode = new ProductCode();
+                      $productCode->setCode($code);
+                      $productCode->setProduct($productDB);
+                      $this->getDoctrine()->getManager()->persist($productCode);
+
+                      $product->addCode($productCode);
+                  }
+                }
+            }
+            $colors = json_decode($form->get('colors')->getData(), true);
+            foreach ($product->getColors() as $color) {
+                $product->removeColor($color);
+                $this->getDoctrine()->getManager()->remove($color);
+            }
+            $product->getColors()->clear();
+            if ($colors != null) {
+                foreach ($colors as $color) {
+                  if (null != $productDB) {
+                      $productColor = new ProductColor();
+                      $productColor->setColor($color);
+                      $productColor->setProduct($productDB);
+                      $this->getDoctrine()->getManager()->persist($productColor);
+
+                      $product->addColor($productColor);
+                  }
+                }
+            }
+            $materials = json_decode($form->get('materials')->getData(), true);
+            foreach ($product->getMaterials() as $material) {
+                $product->removeMaterial($material);
+                $this->getDoctrine()->getManager()->remove($material);
+            }
+            $product->getMaterials()->clear();
+            if ($materials != null) {
+                foreach ($materials as $material) {
+                  if (null != $productDB) {
+                      $productMaterial = new ProductMaterial();
+                      $productMaterial->setMaterial($material);
+                      $productMaterial->setProduct($productDB);
+                      $this->getDoctrine()->getManager()->persist($productMaterial);
+
+                      $product->addMaterial($productMaterial);
+                  }
+                }
+            }
+            $rooms = json_decode($form->get('rooms')->getData(), true);
+            foreach ($product->getRooms() as $room) {
+                $product->removeRoom($room);
+                $this->getDoctrine()->getManager()->remove($room);
+            }
+            $product->getRooms()->clear();
+            if ($rooms != null) {
+                foreach ($rooms as $room) {
+                  if (null != $productDB) {
+                      $productRoom = new ProductRoom();
+                      $productRoom->setRoom($room);
+                      $productRoom->setProduct($productDB);
+                      $this->getDoctrine()->getManager()->persist($productRoom);
+
+                      $product->addRoom($productRoom);
+                  }
+                }
+            }
+            $classification = $this->getDoctrine()->getRepository('AppBundle:Category')->find($form->get('classification')->getData());
+            $productDB->setClassification($classification);
             $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
             $config->setLastProductUpdate(new \DateTime());
             $this->getDoctrine()->getManager()->flush();

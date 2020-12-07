@@ -305,6 +305,27 @@ class Product
      * @ORM\Column(type="float")
      */
     private $surfaceDensity;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductCode", mappedBy="product")
+     */
+    private $codes;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductColor", mappedBy="product")
+     */
+    private $colors;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductMaterial", mappedBy="product")
+     */
+    private $materials;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category")
+     * @ORM\JoinColumn(name="classification_id", referencedColumnName="id")
+     */
+    private $classification;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductRoom", mappedBy="product")
+     */
+    private $rooms;
 
     /**
      * Product constructor.
@@ -324,6 +345,10 @@ class Product
         $this->complementaryProducts = new ArrayCollection();
         $this->similarProducts = new ArrayCollection();
         $this->metaNames = new ArrayCollection();
+        $this->codes = new ArrayCollection();
+        $this->colors = new ArrayCollection();
+        $this->materials = new ArrayCollection();
+        $this->rooms = new ArrayCollection();
     }
 
     public function __toString()
@@ -1262,5 +1287,85 @@ class Product
     public function getSurfaceDensity()
     {
         return $this->surfaceDensity;
+    }
+
+    public function addCode(ProductCode $code)
+    {
+        $this->codes[] = $code;
+
+        return $this;
+    }
+
+    public function removeCode(ProductCode $code)
+    {
+        $this->codes->removeElement($code);
+    }
+
+    public function getCodes()
+    {
+        return $this->codes;
+    }
+
+    public function addColor(ProductColor $color)
+    {
+        $this->colors[] = $color;
+
+        return $this;
+    }
+
+    public function removeColor(ProductColor $color)
+    {
+        $this->colors->removeElement($color);
+    }
+
+    public function getColors()
+    {
+        return $this->colors;
+    }
+
+    public function addMaterial(ProductMaterial $material)
+    {
+        $this->materials[] = $material;
+
+        return $this;
+    }
+
+    public function removeMaterial(ProductMaterial $material)
+    {
+        $this->materials->removeElement($material);
+    }
+
+    public function getMaterials()
+    {
+        return $this->materials;
+    }
+
+    public function setClassification(Category $classification = null)
+    {
+        $this->classification = $classification;
+
+        return $this;
+    }
+
+    public function getClassification()
+    {
+        return $this->classification;
+    }
+
+    public function addRoom(ProductRoom $room)
+    {
+        $this->rooms[] = $room;
+
+        return $this;
+    }
+
+    public function removeRoom(ProductRoom $room)
+    {
+        $this->rooms->removeElement($room);
+    }
+
+    public function getRooms()
+    {
+        return $this->rooms;
     }
 }

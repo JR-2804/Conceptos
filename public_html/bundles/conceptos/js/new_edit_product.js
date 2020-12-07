@@ -340,6 +340,11 @@ $(document).ready(function () {
       $("#product_thickness").val($("#thickness").val());
       $("#product_volume").val($("#volume").val());
       $("#product_surfaceDensity").val($("#surface-density").val());
+      $("#product_codes").val(JSON.stringify($("#codes").val()));
+      $("#product_colors").val(JSON.stringify($("#colors").val()));
+      $("#product_materials").val(JSON.stringify($("#materials").val()));
+      $("#product_classification").val($("#classification").val());
+      $("#product_rooms").val(JSON.stringify($("#rooms").val()));
     }
   });
 
