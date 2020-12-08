@@ -605,7 +605,7 @@ class SiteController extends Controller
             }
 
             if ($paymentCurrency == 'cuc') {
-              $cucExtra = ceil($totalPriceBase * 0.3);
+              $cucExtra = ceil($totalPriceBase * 1);
               $totalPrice += $cucExtra;
             }
 

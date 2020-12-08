@@ -323,7 +323,7 @@ $(document).ready(function () {
 
     var currencyExtraSection = $(".shop-cart-currency-extra");
     if (paymentCurrency == "cuc") {
-      var currencyExtra = Math.ceil(totalPriceBase * 0.3);
+      var currencyExtra = Math.ceil(totalPriceBase * 1);
       totalPrice += currencyExtra;
       $(".shop-cart-currency").text("CUC");
       currencyExtraSection.parent().removeClass("d-none");
