@@ -454,7 +454,7 @@ class ProductService
 
 
         $popularProducts = [];
-        if ($categories != -1) {
+        if ($categories != -1 && $categories != "") {
             $popularProductsCount = 15;
             $categoriesPopularProducts = [];
 
