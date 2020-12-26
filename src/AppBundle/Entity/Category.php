@@ -86,6 +86,10 @@ class Category
      * @ORM\Column(type="text", nullable=true)
      */
     private $brandDescription;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $priority;
 
     public function __construct()
     {
@@ -327,5 +331,17 @@ class Category
     public function getBrandDescription()
     {
         return $this->brandDescription;
+    }
+
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+
+        return $this;
+    }
+
+    public function getPriority()
+    {
+        return $this->priority;
     }
 }

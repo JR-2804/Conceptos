@@ -15,6 +15,10 @@ class CategoryService
 
     public function getAll()
     {
-        return $this->categoryRepository->findAll();
+        return $this->categoryRepository
+          ->createQueryBuilder('category')
+          ->orderBy('category.priority', 'DESC')
+          ->getQuery()
+          ->getResult();
     }
 }

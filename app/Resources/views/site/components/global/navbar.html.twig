@@ -54,41 +54,9 @@
                                     {% set subCategories = subCategory.id ~ ', '~ subCategories %}
                                 {% endfor %}
 
-                                {% if category.name == "PARA ENAMORADOS" %}
-                                    {% set order = 'order-1' %}
-                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/corazon.svg') %}
-                                {% elseif category.name == "DECORACIÓN" %}
-                                    {% set order = 'order-5' %}
-                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/decoracion.svg') %}
-                                {% elseif category.name == "INFANTIL" %}
-                                    {% set order = 'order-5' %}
-                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/infantil.svg') %}
-                                {% elseif category.name == "COCINA" %}
-                                    {% set order = 'order-5' %}
-                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/cocina.svg') %}
-                                {% elseif category.name == "LUMINARIAS" %}
-                                    {% set order = 'order-5' %}
-                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/luminaria.svg') %}
-                                {% elseif category.name == "BAÑO" %}
-                                    {% set order = 'order-5' %}
-                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/bano.svg') %}
-                                {% elseif category.name == "TEXTILES" %}
-                                    {% set order = 'order-5' %}
-                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/textiles.svg') %}
-                                {% elseif category.name == "ORDEN Y ALMACENAMIENTO" %}
-                                    {% set order = 'order-5' %}
-                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/almacen.svg') %}
-                                {% elseif category.name == "COMEDOR" %}
-                                    {% set order = 'order-5' %}
-                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/comedor.svg') %}
-                                {% elseif category.name == "MOBILIARIO" %}
-                                    {% set order = 'order-2' %}
-                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/mobiliario.svg') %}
-                                {% elseif category.name == "MASCOTAS" %}
-                                    {% set order = 'order-5' %}
-                                    {% set categoryIcon = asset('bundles/conceptos/images/icons/mascotas.svg') %}
+                                {% if category.icon %}
+                                    {% set categoryIcon = asset('/categories/icon/' ~ category.icon) %}
                                 {% else %}
-                                    {% set order = 'order-5' %}
                                     {% set categoryIcon = asset('bundles/conceptos/images/icons/todos.svg') %}
                                 {% endif %}
                             {% set _categoryName = category.name | lower |replace({' ': ''}) %}
@@ -103,7 +71,7 @@
                                         <a href="{{ path('products', {categories:subCategories}) }}">TODOS</a>
                                     </li>
 
-                                    {% for subCategory in category.subCategories %}
+                                    {% for subCategory in category.subCategories|sortByPriority %}
                                         <li>
                                             <img class="no-invert" src="{{asset('bundles/conceptos/images/home/category.png')}}">
                                             <a href="{{ path('products', {categories:subCategory.id}) }}">{{subCategory.name}}</a>
@@ -119,7 +87,7 @@
                     </ul>
                 </li>
                 <li><a class="" href="{{ path('services') }}">Servicios</a></li>
-                <li><a class="" href="{{ path('membership') }}">Membresia</a></li>
+                <li><a class="" href="{{ path('membership') }}">Membresía</a></li>
                 <li><a class="" href="{{ path('blog_home') }}">Inspiraciones</a></li>
                 <li><a class="" href="{{ path('help') }}">Ayuda</a></li>
 

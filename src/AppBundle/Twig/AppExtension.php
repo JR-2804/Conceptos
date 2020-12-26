@@ -19,6 +19,7 @@ class AppExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('imgTag', [$this, 'imgTag']),
+            new \Twig_SimpleFilter('sortByPriority', [$this, 'sortByPriority']),
         );
     }
 
@@ -52,4 +53,16 @@ class AppExtension extends \Twig_Extension
         return $html;
     }
 
+    public function sortByPriority($item) {
+      $array = [];
+      foreach ($item as $i) {
+        $array[] = $i;
+      }
+
+      usort($array, function($c1, $c2) {
+        return $c1->getPriority() < $c2->getPriority();
+      });
+
+      return $array;
+    }
 }
