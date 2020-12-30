@@ -57,21 +57,6 @@
         </div>
         <div class="col-12 col-lg-6 pl-0 shop-cart-section mt-3 mt-lg-0">
           <div class="d-flex flex-column pt-3 ml-3 mr-3">
-            <div class="d-flex flex-column">
-              <span class="conceptos-title">TIPO DE MONEDA</span>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="switch m-0" id="payment-currency">
-                  <input type="radio" class="switch-input" name="currency" value="usd" id="usd" checked>
-                  <label for="usd" class="switch-label switch-label-off">USD</label>
-                  <input type="radio" class="switch-input" name="currency" value="cuc" id="cuc">
-                  <label for="cuc" class="switch-label switch-label-on">CUC</label>
-                  <span class="switch-selection"></span>
-                </div>
-              </div>
-              {% if home.data.shopCart.currencyTypeText is defined %}
-                <span class="conceptos-subtitle">{{home.data.shopCart.currencyTypeText|raw}}</span>
-              {% endif %}
-            </div>
             <div class="d-flex flex-column mt-3">
               <span class="conceptos-title">PLAZOS DE PAGO</span>
               <div class="d-flex justify-content-between align-items-center">
