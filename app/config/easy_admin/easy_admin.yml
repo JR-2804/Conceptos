@@ -26,6 +26,7 @@ easy_admin:
                     - {property: 'price', label: 'Precio'}
                     - {property: 'categoryText', label: 'Categoría'}
                     - {property: 'getSimilarProductsCount', label: 'PA'}
+                    - {property: 'isDisabled', label: 'Desactivado', type: 'toggle'}
                     - {property: 'popular', label: 'Popular', type: 'toggle'}
                     - {property: 'recent', label: 'Novedades', type: 'toggle'}
                     - {property: 'inStore', label: 'Entrega en 24h', type: 'toggle'}
