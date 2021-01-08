@@ -403,7 +403,7 @@ class ProductService
         $qbProduct->andWhere('p.isDisabled = false');
         $qbProductCount->andWhere('p.isDisabled = false');
 
-        $_products = $qbProduct
+        $products = $qbProduct
             ->orderBy('p.name', 'ASC')
             ->addOrderBy('o.price', 'DESC')
             ->addOrderBy('p.inStore', 'DESC')
@@ -412,16 +412,6 @@ class ProductService
             ->setMaxResults(50)
             ->getQuery()
             ->getResult();
-
-        $similars = [];
-        foreach ($_products as $product){
-            foreach ($product->getSimilarProducts() as $similarProduct)
-                $similars[] = $similarProduct->getId();
-
-            if (!in_array($product->getId(), $similars))
-                $products[] = $product;
-        }
-
 
         $countProducts = $qbProductCount->getQuery()->getSingleScalarResult();
 
