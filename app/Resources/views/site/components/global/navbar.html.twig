@@ -55,12 +55,14 @@
                                 {% endfor %}
 
                                 {% if category.icon %}
+                                    {% set categoryClass = "no-invert" %}
                                     {% set categoryIcon = asset('/categories/icon/' ~ category.icon) %}
                                 {% else %}
+                                    {% set categoryClass = "" %}
                                     {% set categoryIcon = asset('bundles/conceptos/images/icons/todos.svg') %}
                                 {% endif %}
                             {% set _categoryName = category.name | lower |replace({' ': ''}) %}
-                            <li><img src="{{categoryIcon}}"> <a href="#" data-next="next" data-show="{{_categoryName}}">{{category.name}}</a>
+                            <li><img class="{{categoryClass}}" src="{{categoryIcon}}"> <a href="#" data-next="next" data-show="{{_categoryName}}">{{category.name}}</a>
 
                                 <ul class="sub" id="{{ _categoryName }}">
                                     <li><img src="{{categoryIcon}}"> <a href="#" data-next="false">{{category.name}}</a></li>
