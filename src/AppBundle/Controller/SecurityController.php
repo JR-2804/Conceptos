@@ -283,6 +283,7 @@ class SecurityController extends Controller
           }
         }
 
+        $clientExternalRequests = [];
         $externalRequests = $user->getExternalRequests();
         foreach($externalRequests as $externalRequest) {
           $remainingTimeFromCreation = $externalRequest->getDate()->diff(new \DateTime('now'));
@@ -293,12 +294,23 @@ class SecurityController extends Controller
             $externalRequest->setIsExpired(false);
           }
 
+          $validProducts = true;
           foreach($externalRequest->getExternalRequestProducts() as $externalRequestProduct) {
-            $offerPrice = $this->get('product_service')->findProductOfferPrice($externalRequestProduct->getProduct());
-            $externalRequestProduct->getProduct()->setPriceOffer($offerPrice);
+            if ($this->IsEntityDefined($externalRequestProduct)) {
+              $offerPrice = $this->get('product_service')->findProductOfferPrice($externalRequestProduct->getProduct());
+              $externalRequestProduct->getProduct()->setPriceOffer($offerPrice);
+            } else {
+              $validProducts = false;
+            }
+          }
+
+          if ($validProducts) {
+            $clientExternalRequests[] = $externalRequest;
           }
         }
 
+        $clientCommercialPreFactures = [];
+        $clientCommercialFactures = [];
         $commercialPreFactures = [];
         $commercialFactures = [];
         $commercialClients = [];
@@ -324,13 +336,22 @@ class SecurityController extends Controller
               $commercialClients[] = $client;
             }
 
+            $validProducts = true;
             foreach($commercialPreFacture->getPreFactureProducts() as $preFactureProducts) {
-              $offerPrice = $this->get('product_service')->findProductOfferPrice($preFactureProducts->getProduct());
-              $preFactureProducts->getProduct()->setPriceOffer($offerPrice);
+              if ($this->IsEntityDefined($preFactureProducts)) {
+                $offerPrice = $this->get('product_service')->findProductOfferPrice($preFactureProducts->getProduct());
+                $preFactureProducts->getProduct()->setPriceOffer($offerPrice);
+              } else {
+                $validProducts = false;
+              }
             }
 
             if (count($commercialPreFacture->getFactures()) <= 0) {
               $commercialPaymentCharge += $commercialPreFacture->getFinalPrice();
+            }
+
+            if ($validProducts) {
+              $clientCommercialPreFactures[] = $commercialPreFacture;
             }
           }
 
@@ -346,12 +367,21 @@ class SecurityController extends Controller
               $commercialClients[] = $client;
             }
 
+            $validProducts = true;
             foreach($commercialFacture->getFactureProducts() as $factureProduct) {
-              $offerPrice = $this->get('product_service')->findProductOfferPrice($factureProduct->getProduct());
-              $factureProduct->getProduct()->setPriceOffer($offerPrice);
+              if ($this->IsEntityDefined($factureProduct)) {
+                $offerPrice = $this->get('product_service')->findProductOfferPrice($factureProduct->getProduct());
+                $factureProduct->getProduct()->setPriceOffer($offerPrice);
+              } else {
+                $validProducts = false;
+              }
             }
 
             $commercialPaymentTotal += $commercialFacture->getFinalPrice();
+
+            if ($validProducts) {
+              $clientCommercialFactures[] = $commercialFacture;
+            }
           }
         }
 
@@ -361,9 +391,9 @@ class SecurityController extends Controller
             'showSuccessToast' => $showSuccessToast,
             'requests' => $clientRequests,
             'prefactures' => $clientPrefactures,
-            'externalRequests' => $externalRequests,
-            'commercialPreFactures' => $commercialPreFactures,
-            'commercialFactures' => $commercialFactures,
+            'externalRequests' => $clientExternalRequests,
+            'commercialPreFactures' => $clientCommercialPreFactures,
+            'commercialFactures' => $clientCommercialFactures,
             'commercialPaymentCharge' => $commercialPaymentCharge,
             'commercialPaymentTotal' => $commercialPaymentTotal,
             'commercialClients' => $commercialClients,
