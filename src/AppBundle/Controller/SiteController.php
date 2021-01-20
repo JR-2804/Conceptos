@@ -1723,9 +1723,11 @@ class SiteController extends Controller
           $productDB = $product->getProduct();
 
           if ($productDB != null) {
-            $airplane = 'Marítimo';
-            if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
-              $airplane = 'Aéreo';
+            $airplane = 'Aéreo';
+            if (
+              ($productDB->getIsFurniture() || $productDB->getIsMattress()) &&
+              (!$product->getIsAriplaneForniture() && !$product->getIsAriplaneMattress())) {
+              $airplane = 'Marítimo';
             }
 
             $numberOfProducts += $product->getCount();
@@ -1798,9 +1800,11 @@ class SiteController extends Controller
         $productDB = $product->getProduct();
 
         if ($productDB != null) {
-          $airplane = 'Marítimo';
-          if ($product->getIsAriplaneForniture() || $product->getIsAriplaneMattress()) {
-            $airplane = 'Aéreo';
+          $airplane = 'Aéreo';
+          if (
+            ($productDB->getIsFurniture() || $productDB->getIsMattress()) &&
+            (!$product->getIsAriplaneForniture() && !$product->getIsAriplaneMattress())) {
+            $airplane = 'Marítimo';
           }
 
           $numberOfProducts += $product->getCount();
