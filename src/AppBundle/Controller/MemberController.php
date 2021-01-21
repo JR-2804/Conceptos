@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityNotFoundException;
 
 class MemberController extends Controller
 {
@@ -21,8 +22,15 @@ class MemberController extends Controller
         $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->find($request->query->get('id'));
         $products = $this->get('member_service')->findFavoriteProductsEntity($user->getId());
 
+        $clientProducts = [];
+        foreach($products as $product) {
+          if ($this->IsEntityDefined($product)) {
+            $clientProducts[] = $product;
+          }
+        }
+
         return $this->render(':admin/user:favorite-products.html.twig', [
-            'products' => $products,
+            'products' => $clientProducts,
             'user' => $user,
             'menuIndex' => $request->query->get('menuIndex'),
             'submenuIndex' => $request->query->get('submenuIndex'),
@@ -74,18 +82,20 @@ class MemberController extends Controller
           ];
         } else {
           $product = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($id);
-          $price = $product->getPrice();
-          $offerPrice = $this->get('product_service')->findProductOfferPrice($product);
-          if ($offerPrice != -1) {
-            $price = $offerPrice;
-          }
+          if($product) {
+            $price = $product->getPrice();
+            $offerPrice = $this->get('product_service')->findProductOfferPrice($product);
+            if ($offerPrice != -1) {
+              $price = $offerPrice;
+            }
 
-          $products[] = [
-            "code" => $product->getCode(),
-            "image" => $product->getMainImage(),
-            "count" => $shopCartProducts->getCount(),
-            "price" => $price,
-          ];
+            $products[] = [
+              "code" => $product->getCode(),
+              "image" => $product->getMainImage(),
+              "count" => $shopCartProducts->getCount(),
+              "price" => $price,
+            ];
+          }
         }
       }
 
@@ -123,5 +133,17 @@ class MemberController extends Controller
         }
 
         return new JsonResponse($isValid);
+    }
+
+    public function IsEntityDefined($favoriteProduct) {
+      try {
+        if ($favoriteProduct->getProduct() != null && $favoriteProduct->getProduct()->getName() != null) {
+          return true;
+        } else {
+          return false;
+        }
+      } catch (EntityNotFoundException $e) {
+        return false;
+      }
     }
 }
