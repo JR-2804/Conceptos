@@ -447,6 +447,17 @@ class SiteController extends Controller
             $product->setFavorite($this->get('product_service')->existProductInFavorite($product->getId(), $this->getUser()->getId()));
         }
 
+        $similarProducts = [];
+        foreach ($product->getSimilarProducts() as $similarProduct) {
+          $offerPrice = $this->get('product_service')->findProductOfferPrice($similarProduct);
+          $similarProduct->setPriceOffer($offerPrice);
+
+          if (!$similarProduct->getIsDisabled()) {
+            $similarProducts[] = $similarProduct;
+          }
+        }
+        $product->setSimilarProducts($similarProducts);
+
         $filterParameter = [$product->getId()];
         foreach ($product->getComboProducts() as $comboProduct) {
           $filterParameter[] = $comboProduct->getProduct()->getId();

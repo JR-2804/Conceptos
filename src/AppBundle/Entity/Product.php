@@ -1056,11 +1056,14 @@ class Product
         $this->similarProducts->removeElement($similarProduct);
     }
 
-
-    //Poner explicacions
     public function getSimilarProducts()
     {
         return $this->similarProducts;
+    }
+
+    public function setSimilarProducts($similarProducts)
+    {
+        return $this->similarProducts = $similarProducts;
     }
 
     public function getSimilarProductsCount()
