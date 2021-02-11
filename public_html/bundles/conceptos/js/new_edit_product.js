@@ -272,7 +272,7 @@ $(document).ready(function () {
       $("#product_isComoda").val($("#is-comoda").prop("checked"));
       $("#product_isRepisa").val($("#is-repisa").prop("checked"));
       $("#product_description").val($("#description").val());
-      $("#product_category").val(JSON.stringify($("#category").val()));
+      $("#product_category").val(JSON.stringify($("#classification").val()));
       $("#product_image").val(data.image.id);
       $("#product_price").val($("#price").val());
       $("#product_images").val(JSON.stringify(data.images));
@@ -495,12 +495,12 @@ function validForm() {
   } else {
     addRemoveErrorClass(price, false);
   }
-  var category = $("#category");
-  if ($(category).val() == null || $(category).val().length == 0) {
-    addRemoveErrorClass(category, true);
+  var classification = $("#classification");
+  if ($(classification).val() == null || $(classification).val().length == 0) {
+    addRemoveErrorClass(classification, true);
     valid = false;
   } else {
-    addRemoveErrorClass(category, false);
+    addRemoveErrorClass(classification, false);
   }
   if (data.image.id == 0) {
     valid = false;
