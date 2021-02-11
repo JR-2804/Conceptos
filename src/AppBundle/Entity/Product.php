@@ -326,6 +326,10 @@ class Product
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductRoom", mappedBy="product")
      */
     private $rooms;
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $brand;
 
     /**
      * Product constructor.
@@ -1370,5 +1374,17 @@ class Product
     public function getRooms()
     {
         return $this->rooms;
+    }
+
+    public function setBrand($brand)
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
+    public function getBrand()
+    {
+        return $this->brand;
     }
 }

@@ -71,7 +71,7 @@ class ProductDTO
     private $materials;
     private $classification;
     private $rooms;
-
+    private $brand;
 
     public function getId()
     {
@@ -775,5 +775,15 @@ class ProductDTO
     public function getRooms()
     {
         return $this->rooms;
+    }
+
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    public function setBrand($brand)
+    {
+        $this->brand = $brand;
     }
 }

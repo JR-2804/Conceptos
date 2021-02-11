@@ -3,6 +3,7 @@ var metaNames = [];
 
 $(document).ready(function () {
   $("#name").val($("#product_name").val());
+  $("#brand").val($("#product_brand").val() || "Ikea");
   $("#priority").val($("#product_priority").val());
   $("#code").val($("#product_code").val());
   $("#item").val($("#product_item").val());

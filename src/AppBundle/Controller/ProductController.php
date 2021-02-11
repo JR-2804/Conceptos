@@ -40,6 +40,7 @@ class ProductController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $product = new Product();
             $product->setName($form->get('name')->getData());
+            $product->setBrand($form->get('brand')->getData());
             $product->setPriority($form->get('priority')->getData());
             $product->setItem($form->get('item')->getData());
             $product->setDescription($form->get('description')->getData());
@@ -475,6 +476,7 @@ class ProductController extends Controller
         $product = $this->getDoctrine()->getRepository('AppBundle:Product')->find($id);
         $dto = new ProductDTO();
         $dto->setName($product->getName());
+        $dto->setBrand($product->getBrand());
         $dto->setPriority($product->getPriority());
         $dto->setCode($product->getCode());
         $dto->setItem($product->getItem());
@@ -627,6 +629,7 @@ class ProductController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $productDB = $this->getDoctrine()->getRepository('AppBundle:Product')->find($id);
             $productDB->setName($form->get('name')->getData());
+            $productDB->setBrand($form->get('brand')->getData());
             $productDB->setPriority($form->get('priority')->getData());
             $productDB->setItem($form->get('item')->getData());
             $productDB->setCode($form->get('code')->getData());

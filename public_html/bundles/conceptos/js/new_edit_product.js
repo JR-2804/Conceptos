@@ -259,6 +259,7 @@ $(document).ready(function () {
       }
 
       $("#product_name").val($("#name").val());
+      $("#product_brand").val($("#brand").val());
       $("#product_priority").val($("#priority").val());
       $("#product_code").val($("#code").val());
       $("#product_item").val($("#item").val());
@@ -424,6 +425,13 @@ function validForm() {
     valid = false;
   } else {
     addRemoveErrorClass(name, false);
+  }
+  var brand = $("#brand");
+  if (!$(brand).val()) {
+    addRemoveErrorClass(brand, true);
+    valid = false;
+  } else {
+    addRemoveErrorClass(brand, false);
   }
   var code = $("#code");
   if (!$(code).val()) {
