@@ -25,398 +25,52 @@
 {% block main %}
     <div class="container-fluid" style="padding: 0px;">
         <div class="row flex-wrap">
-            <div class="col-12">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" id="is-disabled"><strong>Desactivado</strong>
-                </label>
-              </div>
-            </div>
-            {% if action == 'new' %}
+          {% if action == 'edit' %}
               <div class="col-12">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" id="is-combo"> <strong>Es un combo</strong>
-                  </label>
-                </div>
+                  <div class="form-group">
+                      <label class="control-label">Variaciones de este producto</label>
+                      <select class="form-control" id="similar-products" multiple>
+                          {% for otherProduct in products %}
+                              {% if product.id != otherProduct.id %}
+                              <option value="{{ otherProduct.id }}">{{ otherProduct.name }}
+                                  ({{ otherProduct.code }} - ${{ otherProduct.price }} - {{ otherProduct.id }})
+                              </option>
+                              {% endif %}
+                          {% endfor %}
+                      </select>
+                  </div>
               </div>
-            {% endif %}
-            <div class="col-12 col-lg-4">
-                <div class="form-group">
-                    <label class="control-label">Nombre</label>
-                    <input type="text" class="form-control" id="name">
-                </div>
-            </div>
-            <div class="col-12 col-lg-4">
-                <div class="form-group">
-                    <label class="control-label">Código</label>
-                    <input type="text" class="form-control" id="code">
-                </div>
-            </div>
-            <div class="col-12 col-lg-4">
-                <div class="form-group">
-                    <label class="control-label">Item</label>
-                    <input type="text" class="form-control" id="item">
-                </div>
-            </div>
-        </div>
-        <hr>
-        <div class="row flex-wrap">
-            <div class="col-12 col-lg-6">
-                <div class="form-group">
-                    <label class="control-label">Descripción</label>
-                    <textarea class="form-control" id="description" rows="4"></textarea>
-                </div>
-            </div>
-            <div class="col-12 col-lg-3">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" id="popular"> <strong>Popular</strong>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label class="control-label">Prioridad</label>
-                            <input type="number" class="form-control" id="priority">
-                        </div>
-                    </div>
-                </div>
-                <div id="color-section" class="row">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label class="control-label">Color</label>
-                            <select class="form-control" id="color" multiple>
-                                {% for color in colors %}
-                                    <option value="{{ color.id }}">{{ color.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-3">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" id="recent"> <strong>Proximamente</strong>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div id="material-section" class="row">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label class="control-label">Material</label>
-                            <select class="form-control" id="material" multiple>
-                                {% for material in materials %}
-                                    <option value="{{ material.id }}">{{ material.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr>
-        <div class="row flex-wrap">
-            <div class="col-12 col-lg-2">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" id="in-store"> <strong>Entrega en 24h</strong>
-                    </label>
-                </div>
-            </div>
-            <div class="col-12 col-lg-4">
-                <div class="form-group store-count-content" style="display: none;">
-                    <label class="control-label">Cantidad en Almacén</label>
-                    <input type="number" class="form-control" id="store-count">
-                </div>
-            </div>
-        </div>
-
-        {% if action == 'edit' %}
-            <hr>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label class="control-label">Variaciones de este producto</label>
-                        <select class="form-control" id="similar-products" multiple>
-                            {% for otherProduct in products %}
-                                {% if product.id != otherProduct.id %}
-                                <option value="{{ otherProduct.id }}">{{ otherProduct.name }}
-                                    ({{ otherProduct.code }} - ${{ otherProduct.price }} - {{ otherProduct.id }})
-                                </option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-            </div>
-        {% else %}
-            <h5>Para añadir variaciones es necesario guardar este producto primero.</h5>
-        {% endif %}
-
-
-
-        <hr>
-        <div class="row flex-wrap">
-            <div class="col-12 col-lg-6">
-                <div class="row">
-                    <div class="col-12">
-                        <div id="weight-section" class="row">
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label class="control-label">Peso (Kg)</label>
-                                    <input type="number" class="form-control" id="weight-kg" min="1">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                              <div class="form-group">
-                                  <label class="control-label">Peso (oz)</label>
-                                  <input type="number" class="form-control" id="weight-oz" min="1">
-                              </div>
-                            </div>
-                            <div class="col-3">
-                              <div class="form-group">
-                                  <label class="control-label">Peso (lb)</label>
-                                  <input type="number" class="form-control" id="weight-lb" min="1">
-                              </div>
-                            </div>
-                        </div>
-                        <div id="price-section" class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="control-label">Precio IKEA</label>
-                                    <input type="number" class="form-control" id="ikea-price" min="1">
-                                </div>
-                            </div>
-                        </div>
-                        <div id="shipping-section" class="row">
-                            <div class="col-12 col-lg-6">
-                                <div class="form-group">
-                                    <label class="control-label">Límite por envío</label>
-                                    <input type="number" class="form-control" id="shipping-limit" min="1">
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                <div class="form-group">
-                                    <label class="control-label">Número de Paquetes</label>
-                                    <input type="number" class="form-control" id="number-of-packages" min="1">
-                                </div>
-                            </div>
-                        </div>
-                        <div id="labels-section" class="row">
-                            <div class="col-12">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="is-oversize"> <strong>Bulto Independiente</strong>
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="is-desk"><strong>Buró</strong>
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="is-mattress"> <strong>Colchón</strong>
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="is-comoda"><strong>Cómoda o Gavetero</strong>
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="is-airplane-mattress"><strong>Colchón por Avión</strong>
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="is-shelf"><strong>Estante</strong>
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="is-fragile"><strong>Frágil</strong>
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="is-faucet"><strong>Grifo</strong>
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="is-grill"><strong>Grill</strong>
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="is-tableware"><strong>Juego de Vajilla</strong>
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="is-lamp"><strong>Lámpara</strong>
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="is-bookcase"><strong>Librero</strong>
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="is-furniture"><strong>Mobiliario</strong>
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="is-airplane-furniture"><strong>Mobiliario por Avión</strong>
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="is-repisa"><strong>Repisa</strong>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div id="calculate-section" class="col-12 col-lg-4">
-                                <button class="btn btn-danger btn-calculate-price"
-                                        data-path="{{ path('calculate_product_price') }}" style="margin-top: 20px;">
-                                    Calcular Precio
-                                </button>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label">Precio Calculado</label>
-                                    <input type="number" class="form-control" id="calculate-price">
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label">Precio</label>
-                                    <input type="number" class="form-control" id="price">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" id="is-highlight"> <strong>Destacado</strong>
-                    </label>
-                </div>
-                <form class="dropzone" id="picture-highlight-dropzone" action="{{ path('upload') }}">
-                    <div class="dz-message needsclick colp" style="font-size: 25px;">
-                        Seleccione las imágenes del producto destacado
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <form class="dropzone" id="picture-dropzone" action="{{ path('upload') }}">
-                    <div class="dz-message needsclick colp" style="font-size: 25px;">
-                        Seleccione una imágen
-                    </div>
-                </form>
-            </div>
-            <div class="col-12">
-                <form class="dropzone" id="pictures-dropzone" action="{{ path('upload') }}">
-                    <div class="dz-message needsclick colp" style="font-size: 25px;">
-                        Seleccione el resto de las imágenes
-                    </div>
-                </form>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-12">
-                <div class="form-group">
-                    <label class="control-label">Categorías Favoritas</label>
-                    <select class="form-control" id="category-favorite" multiple>
-                        {% for category in parents %}
-                            <option value="{{ category.id }}">{{ category.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-        </div>
-        <br />
-        <div id="combo-products-section" class="row">
-          <div class="col-6">
-            <div class="form-group">
-              <label class="control-label">Producto</label>
-              <select class="form-control" id="combo-product">
-                {% for product in products %}
-                  <option value="{{ product.id }}" data-price="{{product.price}}" data-code="{{product.code}}">{{ product.code }}</option>
-                {% endfor %}
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="control-label">Cantidad</label>
-              <input type="number" class="form-control" id="combo-product-count">
-            </div>
-            <button class="btn btn-primary btn-add-combo-product" data-edit="false">Añadir</button>
+          {% else %}
+              <h5>Para añadir variaciones es necesario guardar este producto primero.</h5>
+          {% endif %}
+          <div class="col-12 col-lg-4">
+              <div class="form-group">
+                  <label class="control-label">Nombre</label>
+                  <input type="text" class="form-control" id="name">
+              </div>
           </div>
-          <div class="col-6">
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover table-striped table-condensed table-combo-products">
-                <thead>
-                <tr>
-                  <th>Producto</th>
-                  <th class="text-center">Cantidad</th>
-                  <th>Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td colspan="3" class="text-center">Sin productos añadidos</td>
-                </tr>
-                </tbody>
-              </table>
+          <div class="col-12 col-lg-4">
+              <div class="form-group">
+                  <label class="control-label">Código</label>
+                  <input type="text" class="form-control" id="code">
+              </div>
           </div>
-        </div>
-        </div>
-        <br />
-        <div class="row">
-          <div class="col-12">
-            <div class="form-group">
-              <label class="control-label">Productos complementarios</label>
-              <select class="form-control" id="complementary-products" multiple>
-                {% for product in products %}
-                  <option value="{{ product.id }}">{{ product.code }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-        </div>
-        <br />
-        <div class="row">
-          <div class="col-12">
-            <label class="control-label">Metadatos</label>
+          <div class="col-12 col-lg-4">
+              <div class="form-group">
+                  <label class="control-label">Item</label>
+                  <input type="text" class="form-control" id="item">
+              </div>
           </div>
           <div class="col-12">
-            <div style="display: flex;padding: 15px;">
-              <div class="col-6">
+            <div style="display: flex;">
+              <div class="col-6" style="padding: 0;">
                 <div class="form-group">
                   <label class="control-label">Metaname</label>
                   <input type="text" class="form-control" id="metaname">
                 </div>
                 <button class="btn btn-primary btn-add-metaname" data-edit="false">Añadir</button>
               </div>
-              <div class="col-6">
+              <div class="col-6" style="padding-right: 0;">
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover table-striped table-condensed table-metanames">
                     <thead>
@@ -431,183 +85,506 @@
                     </tr>
                     </tbody>
                   </table>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-12">
-            <div class="col-12">
+          <div class="col-12" style="padding-top: 10px;">
               <div class="form-group">
-                <label class="control-label">Códigos que lo componen</label>
-                <select class="form-control" id="codes" multiple>
-                  {% for product in products %}
-                    <option value="{{ product.id }}">{{ product.code }}</option>
-                  {% endfor %}
+                  <label class="control-label">Descripción</label>
+                  <textarea class="form-control" id="description" rows="4"></textarea>
+              </div>
+          </div>
+          <div id="color-section" class="col-12 col-lg-6">
+              <div class="form-group">
+                  <label class="control-label">Color</label>
+                  <select class="form-control" id="color" multiple>
+                      {% for color in colors %}
+                          <option value="{{ color.id }}">{{ color.name }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group">
+              <label class="control-label">Colores</label>
+              <select class="form-control" id="colors" multiple>
+                {% for color in colors %}
+                  <option value="{{ color.id }}">{{ color.name }}</option>
+                {% endfor %}
               </select>
+            </div>
+          </div>
+          <div id="material-section" class="col-12 col-lg-6">
+              <div class="form-group">
+                  <label class="control-label">Material</label>
+                  <select class="form-control" id="material" multiple>
+                      {% for material in materials %}
+                          <option value="{{ material.id }}">{{ material.name }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group">
+              <label class="control-label">Materiales</label>
+              <select class="form-control" id="materials" multiple>
+                {% for material in materials %}
+                  <option value="{{ material.id }}">{{ material.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group">
+              <label class="control-label">Clasificación</label>
+              <select class="form-control" id="classification" multiple>
+                {% for category in categories %}
+                  <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group">
+              <label class="control-label">Estancias</label>
+              <select class="form-control" id="rooms" multiple>
+                {% for category in categories %}
+                  <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div id="weight-section" class="col-12">
+              <div class="row">
+                  <div class="col-4">
+                      <div class="form-group">
+                          <label class="control-label">Peso (Kg)</label>
+                          <input type="number" class="form-control" id="weight-kg" min="1">
+                      </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="form-group">
+                        <label class="control-label">Peso (lb)</label>
+                        <input type="number" class="form-control" id="weight-lb" min="1">
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="form-group">
+                        <label class="control-label">Peso (oz)</label>
+                        <input type="number" class="form-control" id="weight-oz" min="1">
+                    </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-12">
+            <div class="row">
+              <div class="col-4">
+                <div class="form-group">
+                  <label class="control-label">Ancho (Izquierda)</label>
+                  <input type="text" class="form-control" id="width-left">
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="form-group">
+                  <label class="control-label">Ancho (Derecha)</label>
+                  <input type="text" class="form-control" id="width-right">
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="form-group">
+                  <label class="control-label">Ancho</label>
+                  <input type="text" class="form-control" id="width">
+                </div>
               </div>
             </div>
           </div>
           <div class="col-12">
-            <div class="col-12 col-lg-6">
-              <div class="form-group">
-                <label class="control-label">Colores</label>
-                <select class="form-control" id="colors" multiple>
-                  {% for color in colors %}
-                    <option value="{{ color.id }}">{{ color.name }}</option>
-                  {% endfor %}
-                </select>
+            <div class="row">
+              <div class="col-4">
+                <div class="form-group">
+                  <label class="control-label">Profundidad (Mínima)</label>
+                  <input type="text" class="form-control" id="deep-min">
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-lg-6">
-              <div class="form-group">
-                <label class="control-label">Materiales</label>
-                <select class="form-control" id="materials" multiple>
-                  {% for material in materials %}
-                    <option value="{{ material.id }}">{{ material.name }}</option>
-                  {% endfor %}
-                </select>
+              <div class="col-4">
+                <div class="form-group">
+                  <label class="control-label">Profundidad (Máxima)</label>
+                  <input type="text" class="form-control" id="deep-max">
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-lg-6">
-              <div class="form-group">
-                <label class="control-label">Clasificación</label>
-                <select class="form-control" id="classification" multiple>
-                  {% for category in categories %}
-                    <option value="{{ category.id }}">{{ category.name }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-            <div class="col-12 col-lg-6">
-              <div class="form-group">
-                <label class="control-label">Estancias</label>
-                <select class="form-control" id="rooms" multiple>
-                  {% for category in categories %}
-                    <option value="{{ category.id }}">{{ category.name }}</option>
-                  {% endfor %}
-                </select>
+              <div class="col-4">
+                <div class="form-group">
+                  <label class="control-label">Profundidad</label>
+                  <input type="text" class="form-control" id="deep">
+                </div>
               </div>
             </div>
           </div>
           <div class="col-12">
-            <div class="col-12 col-lg-4">
-              <div class="form-group">
-                <label class="control-label">Ancho (Izquierda)</label>
-                <input type="text" class="form-control" id="width-left">
+            <div class="row">
+              <div class="col-4">
+                <div class="form-group">
+                  <label class="control-label">Altura (Mínima)</label>
+                  <input type="text" class="form-control" id="height-min">
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="form-group">
+                  <label class="control-label">Altura (Máxima)</label>
+                  <input type="text" class="form-control" id="height-max">
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="form-group">
+                  <label class="control-label">Altura</label>
+                  <input type="text" class="form-control" id="height">
+                </div>
               </div>
             </div>
-            <div class="col-12 col-lg-4">
-              <div class="form-group">
-                <label class="control-label">Ancho (Derecha)</label>
-                <input type="text" class="form-control" id="width-right">
-              </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label class="control-label">Largo</label>
+              <input type="text" class="form-control" id="length">
             </div>
-            <div class="col-12 col-lg-4">
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label class="control-label">Diámetro</label>
+              <input type="text" class="form-control" id="diameter">
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label class="control-label">Grosor</label>
+              <input type="text" class="form-control" id="thickness">
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label class="control-label">Carga Máxima</label>
+              <input type="text" class="form-control" id="max-load">
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label class="control-label">Área</label>
+              <input type="text" class="form-control" id="area">
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label class="control-label">Volumen</label>
+              <input type="text" class="form-control" id="volume">
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label class="control-label">Densidad de la Superficie (g/m2)</label>
+              <input type="text" class="form-control" id="surface-density">
+            </div>
+          </div>
+          <div id="price-section" class="col-12">
               <div class="form-group">
-                <label class="control-label">Ancho</label>
-                <input type="text" class="form-control" id="width">
+                  <label class="control-label">Precio IKEA</label>
+                  <input type="number" class="form-control" id="ikea-price" min="1">
               </div>
+          </div>
+          <div class="col-6">
+              <div class="form-group">
+                  <label class="control-label">Límite por envío</label>
+                  <input type="number" class="form-control" id="shipping-limit" min="1">
+              </div>
+          </div>
+          <div class="col-6">
+              <div class="form-group">
+                  <label class="control-label">Número de Paquetes</label>
+                  <input type="number" class="form-control" id="number-of-packages" min="1">
+              </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label class="control-label">Códigos que lo componen</label>
+              <select class="form-control" id="codes" multiple>
+                {% for product in products %}
+                  <option value="{{ product.id }}">{{ product.code }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-oversize"> <strong>Bulto Independiente</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-desk"><strong>Buró</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-mattress"> <strong>Colchón</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-comoda"><strong>Cómoda o Gavetero</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-airplane-mattress"><strong>Colchón por Avión</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-shelf"><strong>Estante</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-fragile"><strong>Frágil</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-faucet"><strong>Grifo</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-grill"><strong>Grill</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                  <input type="checkbox" id="is-tableware"><strong>Juego de Vajilla</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-lamp"><strong>Lámpara</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-bookcase"><strong>Librero</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-furniture"><strong>Mobiliario</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-airplane-furniture"><strong>Mobiliario por Avión</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-repisa"><strong>Repisa</strong>
+              </label>
             </div>
           </div>
           <div class="col-12">
-            <div class="col-12 col-lg-4">
-              <div class="form-group">
-                <label class="control-label">Altura (Mínima)</label>
-                <input type="text" class="form-control" id="height-min">
+            <div class="row">
+              <div class="col-6">
+                  <div class="form-group">
+                      <label class="control-label">Precio Calculado</label>
+                      <input type="number" class="form-control" id="calculate-price">
+                  </div>
+              </div>
+              <div class="col-6">
+                  <div class="form-group">
+                      <label class="control-label">Precio</label>
+                      <input type="number" class="form-control" id="price">
+                  </div>
               </div>
             </div>
-            <div class="col-12 col-lg-4">
-              <div class="form-group">
-                <label class="control-label">Altura (Máxima)</label>
-                <input type="text" class="form-control" id="height-max">
-              </div>
+          </div>
+          <div id="calculate-section" class="col-4">
+              <button class="btn btn-danger btn-calculate-price" data-path="{{ path('calculate_product_price') }}">
+                  Calcular Precio
+              </button>
+          </div>
+          <div class="col-12">
+              <form class="dropzone" id="picture-dropzone" action="{{ path('upload') }}">
+                  <div class="dz-message needsclick colp" style="font-size: 25px;">
+                      Seleccione una imágen
+                  </div>
+              </form>
+          </div>
+          <div class="col-12">
+              <form class="dropzone" id="pictures-dropzone" action="{{ path('upload') }}">
+                  <div class="dz-message needsclick colp" style="font-size: 25px;">
+                      Seleccione el resto de las imágenes
+                  </div>
+              </form>
+          </div>
+          <div class="col-12" style="padding-top: 10px;">
+            <div class="form-group">
+              <label class="control-label">Productos complementarios</label>
+              <select class="form-control" id="complementary-products" multiple>
+                {% for product in products %}
+                  <option value="{{ product.id }}">{{ product.code }}</option>
+                {% endfor %}
+              </select>
             </div>
-            <div class="col-12 col-lg-4">
-              <div class="form-group">
-                <label class="control-label">Altura</label>
-                <input type="text" class="form-control" id="height">
-              </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-disabled"><strong>Desactivado</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="popular"> <strong>Popular</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="recent"> <strong>Próximamente</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="in-store"> <strong>Entrega en 24h</strong>
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="is-highlight"> <strong>Destacado</strong>
+              </label>
             </div>
           </div>
           <div class="col-12">
-            <div class="col-12 col-lg-4">
-              <div class="form-group">
-                <label class="control-label">Profundidad (Mínima)</label>
-                <input type="text" class="form-control" id="deep-min">
-              </div>
-            </div>
-            <div class="col-12 col-lg-4">
-              <div class="form-group">
-                <label class="control-label">Profundidad (Máxima)</label>
-                <input type="text" class="form-control" id="deep-max">
-              </div>
-            </div>
-            <div class="col-12 col-lg-4">
-              <div class="form-group">
-                <label class="control-label">Profundidad</label>
-                <input type="text" class="form-control" id="deep">
-              </div>
+            <div class="form-group store-count-content" style="display: none;">
+              <label class="control-label">Cantidad en Almacén</label>
+              <input type="number" class="form-control" id="store-count">
             </div>
           </div>
           <div class="col-12">
-            <div class="col-12 col-lg-4">
-              <div class="form-group">
-                <label class="control-label">Largo</label>
-                <input type="text" class="form-control" id="length">
+            <form class="dropzone" id="picture-highlight-dropzone" action="{{ path('upload') }}">
+              <div class="dz-message needsclick colp" style="font-size: 25px;">
+                Seleccione las imágenes del producto destacado
               </div>
-            </div>
-            <div class="col-12 col-lg-4">
-              <div class="form-group">
-                <label class="control-label">Diámetro</label>
-                <input type="text" class="form-control" id="diameter">
-              </div>
-            </div>
-            <div class="col-12 col-lg-4">
-              <div class="form-group">
-                <label class="control-label">Carga Máxima</label>
-                <input type="text" class="form-control" id="max-load">
-              </div>
-            </div>
-            <div class="col-12 col-lg-4">
-              <div class="form-group">
-                <label class="control-label">Área</label>
-                <input type="text" class="form-control" id="area">
-              </div>
-            </div>
-            <div class="col-12 col-lg-4">
-              <div class="form-group">
-                <label class="control-label">Grosor</label>
-                <input type="text" class="form-control" id="thickness">
-              </div>
-            </div>
-            <div class="col-12 col-lg-4">
-              <div class="form-group">
-                <label class="control-label">Volumen</label>
-                <input type="text" class="form-control" id="volume">
-              </div>
-            </div>
-            <div class="col-12 col-lg-4">
-              <div class="form-group">
-                <label class="control-label">Densidad de la Superficie</label>
-                <input type="text" class="form-control" id="surface-density">
-              </div>
+            </form>
+          </div>
+          <div class="col-12" style="padding-top: 10px;">
+            <div class="form-group">
+              <label class="control-label">Prioridad</label>
+              <input type="number" class="form-control" id="priority">
             </div>
           </div>
-        </div>
-        <br />
-        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label class="control-label">Categorías Favoritas</label>
+              <select class="form-control" id="category-favorite" multiple>
+                {% for category in parents %}
+                  <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          {% if action == 'new' %}
             <div class="col-12">
-                {{ form_start(form) }}
-                <button class="btn btn-primary pull-left" type="submit" id="save_data">
-                    <i class="fa fa-plus"></i>
-                    Aceptar
-                </button>
-                <a class="btn btn-secondary action-list pull-left"
-                   href="{{ path('easyadmin', {'entity': 'Product', 'action': 'list'}) }}">
-                    Cancelar
-                </a>
-                {{ form_end(form) }}
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="is-combo"> <strong>Es un combo</strong>
+                </label>
+              </div>
             </div>
-        </div>
+          {% endif %}
+          <div id="combo-products-section" class="col-12">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label class="control-label">Producto</label>
+                  <select class="form-control" id="combo-product">
+                    {% for product in products %}
+                      <option value="{{ product.id }}" data-price="{{product.price}}" data-code="{{product.code}}">{{ product.code }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Cantidad</label>
+                  <input type="number" class="form-control" id="combo-product-count">
+                </div>
+                <button class="btn btn-primary btn-add-combo-product" data-edit="false">Añadir</button>
+              </div>
+              <div class="col-6">
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover table-striped table-condensed table-combo-products">
+                    <thead>
+                    <tr>
+                      <th>Producto</th>
+                      <th class="text-center">Cantidad</th>
+                      <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td colspan="3" class="text-center">Sin productos añadidos</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+              {{ form_start(form) }}
+              <button class="btn btn-primary pull-left" type="submit" id="save_data">
+                  <i class="fa fa-plus"></i>
+                  Aceptar
+              </button>
+              <a class="btn btn-secondary action-list pull-left"
+                  href="{{ path('easyadmin', {'entity': 'Product', 'action': 'list'}) }}">
+                  Cancelar
+              </a>
+              {{ form_end(form) }}
+          </div>
     </div>
 
     <div id="preview-template" style="display: none;">
