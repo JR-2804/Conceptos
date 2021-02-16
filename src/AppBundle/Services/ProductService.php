@@ -414,12 +414,17 @@ class ProductService
             ->getResult();
 
         $similars = [];
+        $numberOfSimilars = 0;
         foreach ($_products as $product){
-            foreach ($product->getSimilarProducts() as $similarProduct)
-                $similars[] = $similarProduct->getId();
+          foreach ($product->getSimilarProducts() as $similarProduct) {
+            $similars[] = $similarProduct->getId();
+          }
 
-            if (!in_array($product->getId(), $similars))
-                $products[] = $product;
+          if (!in_array($product->getId(), $similars)) {
+            $products[] = $product;
+          } else {
+            $numberOfSimilars = $numberOfSimilars + 1;
+          }
         }
 
 
@@ -480,6 +485,7 @@ class ProductService
 
         return [
             'products' => $products,
+            'numberOfSimilars' => $numberOfSimilars,
             'countProducts' => $countProducts,
             'popularProducts'=>$popularProducts,
             'mainCategory' => $mainCategory,
