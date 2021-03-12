@@ -9,7 +9,7 @@
 
 {% block meta %}
     {% if product %}
-        <link rel="canonical" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}"/>
+        <link rel="canonical" href="{{ absolute_url(path('product_details', {code: product.code})) }}"/>
 
         {#TODO: faltan las imagenes en otra dimensiones #}
         <script type="application/ld+json">

@@ -100,6 +100,7 @@ class ShopCartService
 
             $productsDB[] = [
               'id' => $productDB->getId(),
+              'code' => $productDB->getCode(),
               'uuid' => $shopCartProduct->getUuid(),
               'price' => $price,
               'offerExists' => $offerExists,

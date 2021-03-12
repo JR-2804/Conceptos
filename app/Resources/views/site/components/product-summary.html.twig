@@ -1,6 +1,6 @@
 {% if preventHighlight is not defined and product.isHighlight %}
 <a class="d-flex flex-column conceptos-product-card col-12 col-lg-3 p-2 p-lg-3 {% if product.priceOffer != -1 %}popular_product{% endif %}"
-   href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+   href="{{ path('product_details', {code: product.code}) }}">
    <div class="d-flex align-items-center conceptos-white-background pb-2">
     {% if app.user|default %}
       <span data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"
@@ -79,7 +79,7 @@
 </a>
 {% else %}
   <a class="d-flex flex-column conceptos-product-card col-6 col-lg-3 p-2 p-lg-3 {% if product.priceOffer != -1 %}popular_product{% endif %}"
-    href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+    href="{{ path('product_details', {code: product.code}) }}">
     <div class="d-flex align-items-center conceptos-white-background p-2">
       {% if app.user|default %}
         <span data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"

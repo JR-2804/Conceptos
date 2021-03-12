@@ -62,7 +62,7 @@
       {% endif %}
       <div class="d-flex {% if product.comboProducts is defined and product.comboProducts|length > 0 %} col-4 col-lg-2 {% else %} col-5 col-lg-3 {% endif %} conceptos-white-background justify-content-center align-items-center p-0 {% if product.offerExists is defined and product.offerExists %}popular_product{% endif %}">
         <div class="d-flex pl-1">
-          <a href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+          <a href="{{ path('product_details', {code: product.code}) }}">
             <img class="conceptos-image conceptos-product-summary-image" src="{{imagePath}}" alt="{{productName}}">
           </a>
         </div>
@@ -97,7 +97,7 @@
                 <span class="conceptos-product-info">{{comboProduct.count}}x</span>
               </div>
               <div class="d-flex col-4 col-lg-2 pl-0">
-                <a href="{{ path('product_details', {id: comboProduct.product.id, name: comboProduct.product.name}) }}">
+                <a href="{{ path('product_details', {code: comboProduct.product.code}) }}">
                   <img class="conceptos-image conceptos-product-summary-image" src="{{vich_uploader_asset(comboProduct.product.mainImage, 'imageFile')}}" alt="{{comboProduct.product.name}}">
                 </a>
               </div>

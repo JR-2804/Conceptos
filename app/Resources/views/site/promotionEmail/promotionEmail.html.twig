@@ -951,7 +951,7 @@
                                                             <tbody>
                                                             <tr>
                                                                 <td class="esd-block-image es-p10t" align="center" style="font-size:0">
-                                                                    <a target="_blank" style="position: relative;" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}">
+                                                                    <a target="_blank" style="position: relative;" href="{{ absolute_url(path('product_details', {code: product.code})) }}">
                                                                         <img style="position: absolute; width: 65px; z-index: 1;" src="{{ absolute_url(asset('uploads/images/oferta.png')) }}" alt="">
 
                                                                         {% if product.mainImage %}
@@ -966,7 +966,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td class="esd-block-text es-p10t es-p15r es-p15l" align="left">
-                                                                    <a href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}" style="text-decoration: none;">
+                                                                    <a href="{{ absolute_url(path('product_details', {code: product.code})) }}" style="text-decoration: none;">
                                                                         <h4 style="color: #333;">$<span style="font-weight: 700; font-family: Montserrat !important;" class="price">{{ price }}.00 </span></h4>
                                                                     </a>
                                                                 </td>
@@ -1051,7 +1051,7 @@
                                                                 <tbody>
                                                                 <tr>
                                                                     <td class="esd-block-image es-p10t" align="center" style="font-size:0">
-                                                                        <a target="_blank" style="position: relative;" href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}">
+                                                                        <a target="_blank" style="position: relative;" href="{{ absolute_url(path('product_details', {code: product.code})) }}">
                                                                             {% if productsOffers[loop.index0] %}
                                                                                 <img style="position: absolute; width: 65px;  z-index: 1;" src="{{ absolute_url(asset('uploads/images/oferta.png')) }}" alt="">
                                                                             {% endif %}
@@ -1067,7 +1067,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="esd-block-text es-p10t es-p15r es-p15l" align="left">
-                                                                        <a href="{{ absolute_url(path('product_details', {id: product.id, name: product.name})) }}" style="text-decoration: none;">
+                                                                        <a href="{{ absolute_url(path('product_details', {code: product.code})) }}" style="text-decoration: none;">
                                                                             <h4 style="color: #333;">$<span style="font-weight: 700;font-family: Montserrat !important;" class="price">{{ product.price }}.00 </span></h4>
                                                                         </a>
                                                                     </td>

@@ -6,7 +6,7 @@
 		<div class="popular_products carousel">
 			{% for product in popularProducts %}
 				<div class="carousel__cell">
-					<a href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+					<a href="{{ path('product_details', {code: product.code}) }}">
             {% if product.mainImage %}
 						  {{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes = '28vw') | raw }}
             {% endif %}

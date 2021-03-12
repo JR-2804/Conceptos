@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center conceptos-product-card w-100 {% if isExternalRequestProduct is not defined and product.priceOffer != -1 %}popular_product{% endif %} {% if imageColumns is defined and imageColumns == 12 %}big-product p-2{% elseif imageColumns is defined and imageColumns <= 4 %}small-product p-1{% else %}p-2{% endif %}">
   <div class="d-flex align-items-center conceptos-white-background w-100 {% if imageColumns is defined and imageColumns == 12 %}big-product p-2{% elseif imageColumns is defined and imageColumns <= 4 %}small-product p-1{% else %}p-2{% endif %}">
-    <a class="h-100 w-100" href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+    <a class="h-100 w-100" href="{{ path('product_details', {code: product.code}) }}">
       <div class="d-flex flex-column justify-content-between h-100">
         {% if isExternalRequestProduct is not defined and app.user|default %}
           <span data-path-add="{{ path('add_to_favorite', {id: product.id}) }}"

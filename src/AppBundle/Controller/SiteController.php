@@ -401,16 +401,16 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route(name="product_details", path="/product/{id}")
+     * @Route(name="product_details", path="/products/{code}")
      *
      * @param Request $request
-     * @param $id
+     * @param $code
      *
      * @throws \Exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function detailsAction(Request $request, $id)
+    public function detailsAction(Request $request, $code)
     {
         $home = $this->getDoctrine()->getManager()->getRepository('AppBundle:Page\Page')->findOneBy([
             'name' => 'Home',
@@ -421,7 +421,9 @@ class SiteController extends Controller
 
         $config = $this->getDoctrine()->getManager()->getRepository('AppBundle:Configuration')->find(1);
 
-        $product = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->find($id);
+        $product = $this->getDoctrine()->getManager()->getRepository('AppBundle:Product')->findOneBy([
+          'code' => $code,
+        ]);
         if ($product == null) {
             #TODO: We should return a better 404 not found template and return the header code
             return $this->render(':site:product-details.html.twig', [

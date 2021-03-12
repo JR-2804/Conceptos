@@ -1,6 +1,6 @@
 <div class="row_product">
 	<div class="row_product__image">
-		<a href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+		<a href="{{ path('product_details', {code: product.code}) }}">
       {% if product.mainImage %}
 			  {{  asset(vich_uploader_asset(product.mainImage, 'imageFile')) | imgTag(sizes, null, 'conceptos-image conceptos-popular-product-image') | raw }}
       {% endif %}
@@ -10,7 +10,7 @@
 	<div class="row_product__content">
 
 		<div class="row_product__content__info">
-			<a href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+			<a href="{{ path('product_details', {code: product.code}) }}">
 				<span class="conceptos-product-info">{{product.name}}</span>
 				<span class="conceptos-product-info-description">{{product.item}}</span>
 			</a>
@@ -19,7 +19,7 @@
 		<div class="row_product__content__actions">
 
 			<div class="row_product__content__actions__price">
-				<a href="{{ path('product_details', {id: product.id, name: product.name}) }}">
+				<a href="{{ path('product_details', {code: product.code}) }}">
 					{% if product.priceOffer != -1 %}
 						<span class="conceptos-product-info conceptos-product-price mr-2">$ {{product.priceOffer}}</span>
 						<span class="conceptos-product-info conceptos-offer-price">$ {{product.price}}</span>
