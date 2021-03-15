@@ -135,6 +135,8 @@ $(document).ready(function () {
     allowClear: true,
   });
 
+  $("#brand").val($("#product_brand").val() || "Ikea");
+
   $("#color, #material, #classification").select2({
     theme: "bootstrap",
     language: "es",
