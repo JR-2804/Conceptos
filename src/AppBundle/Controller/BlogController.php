@@ -74,7 +74,7 @@ class BlogController extends Controller
         $productJson['description'] = $product->getDescription();
         $productJson['price'] = $product->getPrice();
         $productJson['image'] = '/uploads/'.$product->getMainImage()->getImage();
-        $productJson['url'] = $this->generateUrl('product_details', ['id'=>$product->getId()]);
+        $productJson['url'] = $this->generateUrl('product_details', ['code'=>$product->getCode()]);
         $productJson['addCart'] = $this->generateUrl('add_shop_card', ['id'=>$product->getId()]);
         $productJson['inStore'] = $product->getInStore();
 
