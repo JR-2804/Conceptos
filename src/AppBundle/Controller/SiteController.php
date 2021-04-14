@@ -542,7 +542,10 @@ class SiteController extends Controller
         ]);
 
         $memberNumber = json_decode($request->request->get('memberNumber', false), true);
+        $logisticCost = json_decode($request->request->get('logisticCost', false), true);
+        $securityCost = json_decode($request->request->get('securityCost', false), true);
         $transportCost = json_decode($request->request->get('transportCost', false), true);
+        $taxes = json_decode($request->request->get('taxes', false), true);
         $paymentType = $request->request->get('paymentType', false);
         $paymentCurrency = $request->request->get('paymentCurrency', false);
         $requestProducts = $request->request->get('products', []);
@@ -638,7 +641,10 @@ class SiteController extends Controller
               $memberBalance = ceil($totalPrice * 0.05);
             }
 
+            $totalPrice += $logisticCost;
+            $totalPrice += $securityCost;
             $totalPrice += $transportCost;
+            $totalPrice += $taxes;
             $data = $form->getData();
             if ($data->getIgnoreTransport() == "true") {
               $totalPrice -= $transportCost;
@@ -826,7 +832,10 @@ class SiteController extends Controller
               $facture->setBagsExtra($bagsExtra);
               $facture->setFirstClientDiscount(0);
               $facture->setComboDiscount($comboDiscount);
+              $facture->setLogisticCost($logisticCost);
+              $facture->setSecurityCost($securityCost);
               $facture->setTransportCost($transportCost);
+              $facture->setTaxes($taxes);
               $facture->setFinalPrice($totalPrice);
               $facture->setCommercial($this->getUser());
               $this->getDoctrine()->getManager()->persist($facture);
@@ -837,7 +846,10 @@ class SiteController extends Controller
               $prefacture->setBagsExtra($bagsExtra);
               $prefacture->setFirstClientDiscount(0);
               $prefacture->setComboDiscount($comboDiscount);
+              $prefacture->setLogisticCost($logisticCost);
+              $prefacture->setSecurityCost($securityCost);
               $prefacture->setTransportCost($transportCost);
+              $prefacture->setTaxes($taxes);
               $prefacture->setFinalPrice($totalPrice);
               $prefacture->setCommercial($this->getUser());
               $this->getDoctrine()->getManager()->persist($prefacture);
@@ -870,7 +882,10 @@ class SiteController extends Controller
               $requestDB->setBagsExtra($bagsExtra);
               $requestDB->setFirstClientDiscount(0);
               $requestDB->setComboDiscount($comboDiscount);
+              $requestDB->setLogisticCost($logisticCost);
+              $requestDB->setSecurityCost($securityCost);
               $requestDB->setTransportCost($transportCost);
+              $requestDB->setTaxes($taxes);
               $requestDB->setFinalPrice($totalPrice);
               $this->getDoctrine()->getManager()->persist($requestDB);
 

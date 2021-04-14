@@ -118,9 +118,16 @@ class ProductService
         $isDesk,
         $isBookcase,
         $isComoda,
-        $isRepisa
+        $isRepisa,
+        $brand
     ) {
-        if (($isFurniture && !$isAriplaneForniture) || ($isMattress && !$isAriplaneMattress)) {
+        // Nacionales
+        if ($brand !== "Ikea" && $brand !== "" && $brand !== null) {
+          return ceil(
+            ($ikeaPrice*1.3)*1.2
+          );
+        // Marítimo
+        } elseif (($isFurniture && !$isAriplaneForniture) || ($isMattress && !$isAriplaneMattress)) {
           $numberOfPackagesExtra = ($numberOfPackages && $numberOfPackages > 1) ? $numberOfPackages * 10 : 10;
           $mattressExtra = $isMattress ? 20 : 0;
           $grillExtra = $isGrill ? 20 : 0;
@@ -131,12 +138,11 @@ class ProductService
           $repisaExtra = $isRepisa ? 20 : 0;
 
           return ceil(
-            ($ikeaPrice*1.2 + $weight*5 + $numberOfPackagesExtra + $mattressExtra + $grillExtra + $shelfExtra + $deskExtra + $bookcaseExtra + $comodaExtra + $repisaExtra + 20)*1.8
+            ($ikeaPrice*1.07 + $weight*5.5)*1.8 + $numberOfPackagesExtra + $mattressExtra + $grillExtra + $shelfExtra + $deskExtra + $bookcaseExtra + $comodaExtra + $repisaExtra
           );
+        // Aéreo
         } else {
-          $fragileExtra = $isFragile ? 4 : 0;
           $lampExtra = $isLamp ? 20 : 0;
-          $oversizeExtra = $isOversize ? 20 : 0;
           $mattressExtra = $isMattress ? 50 : 0;
           $tablewareExtra = $isTableware ? 60 : 0;
           $faucetExtra = $isFaucet ? 20 : 0;
@@ -148,7 +154,7 @@ class ProductService
           $repisaExtra = $isRepisa ? 50 : 0;
 
           return ceil(
-            ($ikeaPrice*1.2 + $weight*17.5 + $fragileExtra + $lampExtra + $oversizeExtra + $mattressExtra + $tablewareExtra + $faucetExtra + $grillExtra + $shelfExtra + $deskExtra + $bookcaseExtra + $comodaExtra + $repisaExtra)*1.8
+            ($ikeaPrice*1.07 + $weight*18)*1.8 + $lampExtra + $mattressExtra + $tablewareExtra + $faucetExtra + $grillExtra + $shelfExtra + $deskExtra + $bookcaseExtra + $comodaExtra + $repisaExtra
           );
         }
     }
@@ -179,7 +185,8 @@ class ProductService
                 $product->getIsDesk(),
                 $product->getIsBookcase(),
                 $product->getIsComoda(),
-                $product->getIsRepisa()
+                $product->getIsRepisa(),
+                $product->getBrand()
             );
             $product->setPrice($finalPrice);
             if (0 === ($i % $batchSize)) {

@@ -11,7 +11,11 @@ class PreFactureType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
-    $builder->add('preFactureProducts', HiddenType::class);
+    $builder->add('preFactureProducts', HiddenType::class)
+      ->add('logisticCost', HiddenType::class)
+      ->add('transportCost', HiddenType::class)
+      ->add('securityCost', HiddenType::class)
+      ->add('taxes', HiddenType::class);
     parent::buildForm($builder, $options);
   }
 

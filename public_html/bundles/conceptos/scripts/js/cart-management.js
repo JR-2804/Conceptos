@@ -1,6 +1,9 @@
 var updatingProductId = undefined;
 var memberNumber = undefined;
-var transportCost = 5;
+var logisticCost = 0;
+var securityCost = 0;
+var transportCost = 0;
+var taxes = 0;
 var homeDelivery = undefined;
 var paymentType = undefined;
 var paymentCurrency = undefined;
@@ -134,6 +137,7 @@ $(document).ready(function () {
         isBookcase: product.isBookcase,
         isComoda: product.isComoda,
         isRepisa: product.isRepisa,
+        brand: product.brand,
       },
       function (response) {
         var calculatedPrice = Number(response);
@@ -220,13 +224,16 @@ $(document).ready(function () {
         $(selector + " .conceptos-in-store-product-badge").show();
       } else if (!product.isFurniture && !product.isMattress) {
         DisplayOnlyAirplaneDelivery(selector);
+        product.deliveryType = 2;
       } else if (
         (product.isFurniture && !product.isAirplaneFurniture) ||
         (product.isMattress && !product.isAirplaneMattress)
       ) {
         DisplayOnlyShipDelivery(selector);
+        product.deliveryType = 1;
       } else {
         $(selector + " .ship-delivery").addClass("ship-delivery-focused");
+        product.deliveryType = 1;
       }
     });
   }
@@ -348,14 +355,49 @@ $(document).ready(function () {
       bagsSection.parent().addClass("d-none");
     }
 
-    if (homeDelivery == "yes") {
-      transportCost = 10;
-    } else {
-      transportCost = 5;
-    }
-
     if (totalPrice < 0) {
       totalPrice = 0;
+    }
+
+    logisticCost = 9.99;
+    for (let i = 0; i < products.length; i++) {
+      const product = products[i];
+      if (product.isFurniture || product.isMattress) {
+        logisticCost = 59.99;
+        break;
+      }
+    }
+
+    securityCost = 0;
+    for (let i = 0; i < products.length; i++) {
+      const product = products[i];
+      if (product.isFragile) {
+        securityCost = 9.99;
+        break;
+      }
+    }
+    if (securityCost === 0) {
+      $("#security-cost").addClass("d-none");
+      $("#security-cost").removeClass("d-flex");
+    } else {
+      $("#security-cost").addClass("d-flex");
+      $("#security-cost").removeClass("d-none");
+    }
+
+    transportCost = 0;
+    for (let i = 0; i < products.length; i++) {
+      const product = products[i];
+      if (product.deliveryType === 2) {
+        transportCost += 5.99;
+        break;
+      }
+    }
+    for (let i = 0; i < products.length; i++) {
+      const product = products[i];
+      if (product.deliveryType === 1) {
+        transportCost += 20.99;
+        break;
+      }
     }
 
     $(".shop-cart-total-weight").text(Number(totalWeight).toFixed(2) + " Kg");
@@ -363,8 +405,17 @@ $(document).ready(function () {
       "$" + Number(totalIkeaPriceWithTaxes).toFixed(2)
     );
     $(".shop-cart-total-price").text("$" + Number(totalPriceBase).toFixed(2));
+    $(".shop-cart-logistic-cost").text("$" + logisticCost.toFixed(2));
+    $(".shop-cart-security-cost").text("$" + securityCost.toFixed(2));
     $(".shop-cart-transport-cost").text("$" + transportCost.toFixed(2));
+    totalPrice += logisticCost;
+    totalPrice += securityCost;
     totalPrice += transportCost;
+
+    taxes = totalPrice * 0.07;
+    $(".shop-cart-taxes").text("$" + taxes.toFixed(2));
+    totalPrice += taxes;
+
     $(".shop-cart-total-price-with-extra").text(
       "$" + Number(totalPrice).toFixed(2)
     );
@@ -928,7 +979,10 @@ $(document).ready(function () {
   $("form[name='check_out']").submit(function (e) {
     if (ValidateContactInfo()) {
       $("#memberNumber").val(memberNumber);
+      $("#logisticCost").val(logisticCost);
+      $("#securityCost").val(securityCost);
       $("#transportCost").val(transportCost);
+      $("#taxes").val(taxes);
       $("#paymentType").val(paymentType);
       $("#paymentCurrency").val(paymentCurrency);
       $("#products").val(JSON.stringify(products));

@@ -178,6 +178,11 @@
         {% else %}
           ikeaPrice: 0,
         {% endif %}
+        {% if product.brand is defined and product.brand %}
+          brand: "{{product.brand}}",
+        {% else %}
+          brand: "Ikea",
+        {% endif %}
         {% if product.isFurniture is defined and product.isFurniture %}
           isFurniture: true,
         {% else %}

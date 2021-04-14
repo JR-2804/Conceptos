@@ -125,8 +125,20 @@
               </div>
             {% endif %}
             <div class="d-flex justify-content-between align-items-center">
+              <span class="conceptos-badge-text">IMPORTACIÓN Y LOGÍSTICA</span>
+              <span class="conceptos-badge-text shop-cart-logistic-cost"></span>
+            </div>
+            <div id="security-cost" class="d-flex justify-content-between align-items-center">
+              <span class="conceptos-badge-text">ASEGURAMIENTO Y PROTECCIÓN</span>
+              <span class="conceptos-badge-text shop-cart-security-cost"></span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
               <span class="conceptos-badge-text">COSTO DE TRANSPORTE</span>
               <span class="conceptos-badge-text shop-cart-transport-cost"></span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="conceptos-badge-text">TAXES</span>
+              <span class="conceptos-badge-text shop-cart-taxes"></span>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-2">
               <span class="conceptos-badge-text-strong">TOTAL A PAGAR</span>
@@ -140,7 +152,10 @@
           <div class="d-flex flex-column">
             <span class="conceptos-title">DATOS DEL CLIENTE</span>
             <input type="hidden" name="memberNumber" id="memberNumber">
+            <input type="hidden" name="logisticCost" id="logisticCost">
+            <input type="hidden" name="securityCost" id="securityCost">
             <input type="hidden" name="transportCost" id="transportCost">
+            <input type="hidden" name="taxes" id="taxes">
             <input type="hidden" name="paymentType" id="paymentType">
             <input type="hidden" name="paymentCurrency" id="paymentCurrency">
             <input type="hidden" name="products" id="products">

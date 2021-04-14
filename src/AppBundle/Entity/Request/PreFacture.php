@@ -41,7 +41,19 @@ class PreFacture
     /**
      * @ORM\Column(type="float")
      */
+    private $logisticCost;
+    /**
+     * @ORM\Column(type="float")
+     */
     private $transportCost;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $securityCost;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $taxes;
     /**
      * @ORM\Column(type="float")
      */
@@ -169,6 +181,30 @@ class PreFacture
         return $this->preFactureCards;
     }
 
+    public function setLogisticCost($logisticCost)
+    {
+        $this->logisticCost = $logisticCost;
+
+        return $this;
+    }
+
+    public function getLogisticCost()
+    {
+        return $this->logisticCost;
+    }
+
+    public function setSecurityCost($securityCost)
+    {
+        $this->securityCost = $securityCost;
+
+        return $this;
+    }
+
+    public function getSecurityCost()
+    {
+        return $this->securityCost;
+    }
+
     public function setTransportCost($transportCost)
     {
         $this->transportCost = $transportCost;
@@ -179,6 +215,18 @@ class PreFacture
     public function getTransportCost()
     {
         return $this->transportCost;
+    }
+
+    public function setTaxes($taxes)
+    {
+        $this->taxes = $taxes;
+
+        return $this;
+    }
+
+    public function getTaxes()
+    {
+        return $this->taxes;
     }
 
     public function setDiscount($discount)
@@ -281,7 +329,8 @@ class PreFacture
             $prefactureProduct->getProduct()->getIsDesk(),
             $prefactureProduct->getProduct()->getIsBookcase(),
             $prefactureProduct->getProduct()->getIsComoda(),
-            $prefactureProduct->getProduct()->getIsRepisa()
+            $prefactureProduct->getProduct()->getIsRepisa(),
+            $prefactureProduct->getProduct()->getBrand()
           );
         } else {
           $price = $prefactureProduct->getProduct()->getPrice();

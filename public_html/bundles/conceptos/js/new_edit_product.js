@@ -202,6 +202,7 @@ $(document).ready(function () {
           isBookcase: $("#is-bookcase").prop("checked"),
           isComoda: $("#is-comoda").prop("checked"),
           isRepisa: $("#is-repisa").prop("checked"),
+          brand: $("#brand").val(),
         },
         function (response) {
           var valueResponse = Number(response).toFixed(2);

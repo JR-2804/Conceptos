@@ -1423,6 +1423,7 @@ class ProductController extends Controller
         $weight = $request->request->get('weight');
         $weight = floatval($weight);
         $ikeaPrice = $request->request->get('ikeaPrice');
+        $brand = $request->request->get('brand');
         $ikeaPrice = floatval($ikeaPrice);
         $isFurniture = $request->request->get('isFurniture');
         $numberOfPackages = $request->request->get('numberOfPackages');
@@ -1595,7 +1596,8 @@ class ProductController extends Controller
             $isDesk,
             $isBookcase,
             $isComoda,
-            $isRepisa
+            $isRepisa,
+            $brand
         );
 
         return new JsonResponse($price);

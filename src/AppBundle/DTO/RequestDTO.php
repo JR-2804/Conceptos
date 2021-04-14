@@ -10,7 +10,10 @@ class RequestDTO
   private $requestProducts;
   private $requestCards;
   private $finalPrice;
+  private $logisticCost;
   private $transportCost;
+  private $securityCost;
+  private $taxes;
   private $discount;
   private $firstClientDiscount;
   private $preFactures;
@@ -78,14 +81,44 @@ class RequestDTO
       $this->finalPrice = $finalPrice;
   }
 
-  public function getTransportCost()
+  public function setLogisticCost($logisticCost)
   {
-      return $this->transportCost;
+      $this->logisticCost = $logisticCost;
+  }
+
+  public function getLogisticCost()
+  {
+      return $this->logisticCost;
+  }
+
+  public function setSecurityCost($securityCost)
+  {
+      $this->securityCost = $securityCost;
+  }
+
+  public function getSecurityCost()
+  {
+      return $this->securityCost;
   }
 
   public function setTransportCost($transportCost)
   {
       $this->transportCost = $transportCost;
+  }
+
+  public function getTransportCost()
+  {
+      return $this->transportCost;
+  }
+
+  public function setTaxes($taxes)
+  {
+      $this->taxes = $taxes;
+  }
+
+  public function getTaxes()
+  {
+      return $this->taxes;
   }
 
   public function getDiscount()

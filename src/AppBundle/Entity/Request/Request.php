@@ -41,7 +41,19 @@ class Request
     /**
      * @ORM\Column(type="float")
      */
+    private $logisticCost;
+    /**
+     * @ORM\Column(type="float")
+     */
     private $transportCost;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $securityCost;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $taxes;
     /**
      * @ORM\Column(type="float")
      */
@@ -168,6 +180,30 @@ class Request
         return $this->requestCards;
     }
 
+    public function setLogisticCost($logisticCost)
+    {
+        $this->logisticCost = $logisticCost;
+
+        return $this;
+    }
+
+    public function getLogisticCost()
+    {
+        return $this->logisticCost;
+    }
+
+    public function setSecurityCost($securityCost)
+    {
+        $this->securityCost = $securityCost;
+
+        return $this;
+    }
+
+    public function getSecurityCost()
+    {
+        return $this->securityCost;
+    }
+
     public function setTransportCost($transportCost)
     {
         $this->transportCost = $transportCost;
@@ -178,6 +214,18 @@ class Request
     public function getTransportCost()
     {
         return $this->transportCost;
+    }
+
+    public function setTaxes($taxes)
+    {
+        $this->taxes = $taxes;
+
+        return $this;
+    }
+
+    public function getTaxes()
+    {
+        return $this->taxes;
     }
 
     public function setDiscount($discount)
@@ -294,7 +342,8 @@ class Request
             $requestProduct->getProduct()->getIsDesk(),
             $requestProduct->getProduct()->getIsBookcase(),
             $requestProduct->getProduct()->getIsComoda(),
-            $requestProduct->getProduct()->getIsRepisa()
+            $requestProduct->getProduct()->getIsRepisa(),
+            $requestProduct->getProduct()->getBrand()
           );
         } else {
           $price = $requestProduct->getProduct()->getPrice();

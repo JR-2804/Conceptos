@@ -29,7 +29,7 @@ $(document).ready(function () {
   ) {
     $("#is-mattress").prop("checked", true);
   }
-  $("#calculate-price").val($("#product_calculatePrice").val());
+  $("#calculate-price").val($("#price").val());
   var categories = JSON.parse($("#product_category").val());
   $("#category").val(categories).trigger("change");
   $("#popular").prop("checked", $("#product_popular").val() == 1);

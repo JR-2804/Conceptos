@@ -154,7 +154,10 @@ easy_admin:
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
                     - {property: 'bagsExtra', label: 'Extra bolsas'}
+                    - {property: 'logisticCost', label: 'Importación y logística'}
+                    - {property: 'securityCost', label: 'Aseguramiento y protección'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
+                    - {property: 'taxes', label: 'Taxes'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
@@ -165,7 +168,10 @@ easy_admin:
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
                     - {property: 'bagsExtra', label: 'Extra bolsas'}
+                    - {property: 'logisticCost', label: 'Importación y logística'}
+                    - {property: 'securityCost', label: 'Aseguramiento y protección'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
+                    - {property: 'taxes', label: 'Taxes'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
@@ -203,7 +209,10 @@ easy_admin:
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
                     - {property: 'bagsExtra', label: 'Extra bolsas'}
+                    - {property: 'logisticCost', label: 'Importación y logística'}
+                    - {property: 'securityCost', label: 'Aseguramiento y protección'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
+                    - {property: 'taxes', label: 'Taxes'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
@@ -214,7 +223,10 @@ easy_admin:
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
                     - {property: 'bagsExtra', label: 'Extra bolsas'}
+                    - {property: 'logisticCost', label: 'Importación y logística'}
+                    - {property: 'securityCost', label: 'Aseguramiento y protección'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
+                    - {property: 'taxes', label: 'Taxes'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
@@ -251,7 +263,10 @@ easy_admin:
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
                     - {property: 'bagsExtra', label: 'Extra bolsas'}
+                    - {property: 'logisticCost', label: 'Importación y logística'}
+                    - {property: 'securityCost', label: 'Aseguramiento y protección'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
+                    - {property: 'taxes', label: 'Taxes'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}
@@ -262,7 +277,10 @@ easy_admin:
                     - {property: 'twoStepExtra', label: 'Extra 2 plazos'}
                     - {property: 'cucExtra', label: 'Extra CUC'}
                     - {property: 'bagsExtra', label: 'Extra bolsas'}
+                    - {property: 'logisticCost', label: 'Importación y logística'}
+                    - {property: 'securityCost', label: 'Aseguramiento y protección'}
                     - {property: 'transportCost', label: 'Costo de transporte'}
+                    - {property: 'taxes', label: 'Taxes'}
                     - {property: 'discount', label: 'Descuento de miembro'}
                     - {property: 'comboDiscount', label: 'Descuento de combo'}
                     - {property: 'finalPrice', label: 'Precio final'}

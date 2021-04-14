@@ -127,6 +127,7 @@ class ShopCartService
               'isComoda' => $productDB->getIsComoda(),
               'isRepisa' => $productDB->getIsRepisa(),
               'comboProducts' => $productDB->getComboProducts(),
+              'brand' => $productDB->getBrand(),
               'categories' => json_encode($categories),
             ];
           }
