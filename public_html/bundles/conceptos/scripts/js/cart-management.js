@@ -363,7 +363,7 @@ $(document).ready(function () {
     for (let i = 0; i < products.length; i++) {
       const product = products[i];
       if (product.isFurniture || product.isMattress) {
-        logisticCost = 59.99;
+        logisticCost = 49.99;
         break;
       }
     }

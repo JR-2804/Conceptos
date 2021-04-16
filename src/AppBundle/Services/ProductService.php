@@ -138,7 +138,7 @@ class ProductService
           $repisaExtra = $isRepisa ? 20 : 0;
 
           return ceil(
-            ($ikeaPrice*1.07 + $weight*5.5)*1.8 + $numberOfPackagesExtra + $mattressExtra + $grillExtra + $shelfExtra + $deskExtra + $bookcaseExtra + $comodaExtra + $repisaExtra
+            ($ikeaPrice*1.07 + $weight*4.8)*1.8 + $numberOfPackagesExtra + $mattressExtra + $grillExtra + $shelfExtra + $deskExtra + $bookcaseExtra + $comodaExtra + $repisaExtra
           );
         // Aéreo
         } else {
